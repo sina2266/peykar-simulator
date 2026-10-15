@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "peykar-engines"
+version = "0.3.0"
+description = "Trusted reference engines for Peykar contract verification"
+requires-python = ">=3.12,<3.14"
+license = "LicenseRef-Peykar-Noncommercial-1.1.0"
+license-files = ["LICENSE", "NOTICE", "LICENSING.md", "licenses/*.txt", "licenses/*.json"]
+dependencies = ["peykar-core", "numpy>=2,<3"]
+
+[project.entry-points."peykar.engines"]
+reference = "peykar_engines:reference_engines"
+
+[tool.uv.sources]
+peykar-core = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/peykar_engines"]

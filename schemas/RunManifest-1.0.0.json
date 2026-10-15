@@ -1,0 +1,653 @@
+{
+  "$defs": {
+    "ExecutionBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_samples": {
+          "default": 10001,
+          "maximum": 100001,
+          "minimum": 2,
+          "title": "Max Samples",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 60.0,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ExecutionBudget",
+      "type": "object"
+    },
+    "Intervention": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "kind": {
+          "const": "parameter_set",
+          "default": "parameter_set",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameter": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Parameter",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "parameter",
+        "quantity"
+      ],
+      "title": "Intervention",
+      "type": "object"
+    },
+    "ModelPackage": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilities": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "dependencies": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Reference"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "engine": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Engine",
+          "type": "string"
+        },
+        "engine_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "parameters": {
+          "items": {
+            "$ref": "#/$defs/ParameterSpec"
+          },
+          "title": "Parameters",
+          "type": "array"
+        },
+        "ports": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ScientificPort"
+          },
+          "title": "Ports",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "source_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Digest",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "validity": {
+          "$ref": "#/$defs/ValidityProfile"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "title",
+        "engine",
+        "engine_version",
+        "license",
+        "source",
+        "source_digest",
+        "capabilities",
+        "context",
+        "validity",
+        "parameters"
+      ],
+      "title": "ModelPackage",
+      "type": "object"
+    },
+    "ParameterSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "maximum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maximum"
+        },
+        "minimum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum"
+        },
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "default"
+      ],
+      "title": "ParameterSpec",
+      "type": "object"
+    },
+    "ParameterValue": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "quantity"
+      ],
+      "title": "ParameterValue",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "RuntimeEnvironment": {
+      "additionalProperties": false,
+      "properties": {
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "engine_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Engine Digest",
+          "type": "string"
+        },
+        "engine_id": {
+          "title": "Engine Id",
+          "type": "string"
+        },
+        "engine_version": {
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "lock_digest": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lock Digest"
+        },
+        "platform_version": {
+          "title": "Platform Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "platform_version",
+        "python_version",
+        "engine_id",
+        "engine_version",
+        "engine_digest",
+        "dependencies"
+      ],
+      "title": "RuntimeEnvironment",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "ScientificPort": {
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "input",
+            "output"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "frame": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frame"
+        },
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "ownership": {
+          "default": "read",
+          "enum": [
+            "read",
+            "write"
+          ],
+          "title": "Ownership",
+          "type": "string"
+        },
+        "scale": {
+          "enum": [
+            "molecular",
+            "cellular",
+            "tissue",
+            "organ",
+            "organism",
+            "population"
+          ],
+          "title": "Scale",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_id": {
+          "title": "Semantic Id",
+          "type": "string"
+        },
+        "shape": {
+          "default": "scalar",
+          "enum": [
+            "scalar",
+            "field",
+            "agents"
+          ],
+          "title": "Shape",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "direction",
+        "unit",
+        "semantic_id",
+        "scale"
+      ],
+      "title": "ScientificPort",
+      "type": "object"
+    },
+    "SimulationPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "$ref": "#/$defs/ExecutionBudget",
+          "default": {
+            "max_samples": 10001,
+            "schema_version": "1.0.0",
+            "wall_seconds": 60.0
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "duration": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "interventions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Intervention"
+          },
+          "title": "Interventions",
+          "type": "array"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "parameters": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ParameterValue"
+          },
+          "title": "Parameters",
+          "type": "array"
+        },
+        "purpose": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        },
+        "sample_interval": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "default": 42,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model",
+        "context",
+        "duration",
+        "sample_interval",
+        "purpose"
+      ],
+      "title": "SimulationPlan",
+      "type": "object"
+    },
+    "ValidityProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "endpoints": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Endpoints",
+          "type": "array"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "default": "unvalidated",
+          "enum": [
+            "unvalidated",
+            "reference_verified",
+            "context_validated"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "context",
+        "limitations"
+      ],
+      "title": "ValidityProfile",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:RunManifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "dependency_snapshots": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ModelPackage"
+      },
+      "title": "Dependency Snapshots",
+      "type": "array"
+    },
+    "environment": {
+      "$ref": "#/$defs/RuntimeEnvironment"
+    },
+    "model_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Model Digest",
+      "type": "string"
+    },
+    "model_snapshot": {
+      "$ref": "#/$defs/ModelPackage"
+    },
+    "plan": {
+      "$ref": "#/$defs/SimulationPlan"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "created_at",
+    "plan",
+    "model_snapshot",
+    "model_digest",
+    "environment"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

@@ -1,0 +1,58 @@
+[project]
+name = "peykar-workspace"
+version = "0.3.0"
+description = "Peykar: Biological Modeling & Simulation Platform"
+requires-python = ">=3.12,<3.14"
+license = "LicenseRef-Peykar-Noncommercial-1.1.0"
+dependencies = ["peykar-platform"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/core", "packages/engines", "packages/platform"]
+
+[tool.uv.sources]
+peykar-core = { workspace = true }
+peykar-engines = { workspace = true }
+peykar-platform = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1",
+  "mypy>=1.14,<2",
+  "build>=1.2,<2",
+  "jsonschema>=4.23,<5",
+  "httpx2>=2.13.1,<3",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["packages/core/src", "packages/engines/src", "packages/platform/src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["packages/core/src", "packages/engines/src", "packages/platform/src"]
+
+[[tool.mypy.overrides]]
+module = ["pint", "pint.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+source = ["peykar_core", "peykar_engines", "peykar"]
+omit = ["*/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true

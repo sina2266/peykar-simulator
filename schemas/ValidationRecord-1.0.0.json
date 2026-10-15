@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "ValidationReport": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "dataset": {
+          "$ref": "#/$defs/Reference"
+        },
+        "endpoint": {
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic_verification",
+            "independent_experimental_validation"
+          ],
+          "title": "Evidence Class",
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "max_absolute_error": {
+          "minimum": 0,
+          "title": "Max Absolute Error",
+          "type": "number"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "n": {
+          "title": "N",
+          "type": "integer"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "rmse": {
+          "minimum": 0,
+          "title": "Rmse",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tolerance": {
+          "minimum": 0,
+          "title": "Tolerance",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model",
+        "dataset",
+        "endpoint",
+        "n",
+        "rmse",
+        "max_absolute_error",
+        "unit",
+        "tolerance",
+        "passed",
+        "evidence_class",
+        "context",
+        "limitations"
+      ],
+      "title": "ValidationReport",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:ValidationRecord:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration_groups": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Calibration Groups",
+      "type": "array"
+    },
+    "dataset_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Dataset Digest",
+      "type": "string"
+    },
+    "evaluation_set": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Reference"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evaluation_set_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evaluation Set Digest"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "manifest_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    },
+    "observation_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Observation Digest",
+      "type": "string"
+    },
+    "report": {
+      "$ref": "#/$defs/ValidationReport"
+    },
+    "result_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Result Digest",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "run_id",
+    "manifest_digest",
+    "result_digest",
+    "dataset_digest",
+    "observation_digest",
+    "report"
+  ],
+  "title": "ValidationRecord",
+  "type": "object"
+}

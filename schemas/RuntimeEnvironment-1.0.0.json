@@ -1,0 +1,64 @@
+{
+  "$id": "urn:peykar:schema:RuntimeEnvironment:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "dependencies": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "engine_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Engine Digest",
+      "type": "string"
+    },
+    "engine_id": {
+      "title": "Engine Id",
+      "type": "string"
+    },
+    "engine_version": {
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "lock_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lock Digest"
+    },
+    "platform_version": {
+      "title": "Platform Version",
+      "type": "string"
+    },
+    "python_version": {
+      "title": "Python Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "platform_version",
+    "python_version",
+    "engine_id",
+    "engine_version",
+    "engine_digest",
+    "dependencies"
+  ],
+  "title": "RuntimeEnvironment",
+  "type": "object"
+}

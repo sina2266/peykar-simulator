@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "RunStatus": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    }
+  },
+  "$id": "urn:peykar:schema:RunRecord:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cancel_requested": {
+      "default": false,
+      "title": "Cancel Requested",
+      "type": "boolean"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "manifest_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    },
+    "result_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Result Digest"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "manifest_digest",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "RunRecord",
+  "type": "object"
+}

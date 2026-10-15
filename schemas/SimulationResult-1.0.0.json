@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "Series": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "unit",
+        "values"
+      ],
+      "title": "Series",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:SimulationResult:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "origin": {
+      "const": "simulation",
+      "default": "simulation",
+      "title": "Origin",
+      "type": "string"
+    },
+    "outputs": {
+      "items": {
+        "$ref": "#/$defs/Series"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "time": {
+      "$ref": "#/$defs/Series"
+    },
+    "validity_status": {
+      "const": "unvalidated",
+      "default": "unvalidated",
+      "title": "Validity Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "time",
+    "outputs",
+    "seed",
+    "limitations"
+  ],
+  "title": "SimulationResult",
+  "type": "object"
+}

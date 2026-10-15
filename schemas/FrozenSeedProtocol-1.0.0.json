@@ -1,0 +1,241 @@
+{
+  "$defs": {
+    "DatasetSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Artifact Digest",
+          "type": "string"
+        },
+        "independence_group": {
+          "title": "Independence Group",
+          "type": "string"
+        },
+        "reference": {
+          "$ref": "#/$defs/Reference"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "spec_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Spec Digest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "spec_digest",
+        "artifact_digest",
+        "independence_group"
+      ],
+      "title": "DatasetSnapshot",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "RepeatedSeedProtocol": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "endpoint": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "references": {
+          "items": {
+            "$ref": "#/$defs/Reference"
+          },
+          "maxItems": 200,
+          "minItems": 2,
+          "title": "References",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "context",
+        "endpoint",
+        "references",
+        "tolerance"
+      ],
+      "title": "RepeatedSeedProtocol",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "SeededDataset": {
+      "additionalProperties": false,
+      "properties": {
+        "lineage_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Lineage Digest",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/DatasetSnapshot"
+        }
+      },
+      "required": [
+        "snapshot",
+        "seed",
+        "lineage_digest"
+      ],
+      "title": "SeededDataset",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:FrozenSeedProtocol:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "references": {
+      "items": {
+        "$ref": "#/$defs/SeededDataset"
+      },
+      "title": "References",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "spec": {
+      "$ref": "#/$defs/RepeatedSeedProtocol"
+    }
+  },
+  "required": [
+    "spec",
+    "references"
+  ],
+  "title": "FrozenSeedProtocol",
+  "type": "object"
+}

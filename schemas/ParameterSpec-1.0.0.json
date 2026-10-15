@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:ParameterSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "default": {
+      "$ref": "#/$defs/Quantity"
+    },
+    "maximum": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Maximum"
+    },
+    "minimum": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Minimum"
+    },
+    "name": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "default"
+  ],
+  "title": "ParameterSpec",
+  "type": "object"
+}

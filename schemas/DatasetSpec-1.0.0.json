@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:DatasetSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Artifact Digest",
+      "type": "string"
+    },
+    "context": {
+      "$ref": "#/$defs/ScientificContext"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "independence_group": {
+      "title": "Independence Group",
+      "type": "string"
+    },
+    "license": {
+      "title": "License",
+      "type": "string"
+    },
+    "origin": {
+      "enum": [
+        "experimental",
+        "synthetic",
+        "simulation"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "calibration",
+        "validation",
+        "benchmark"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source": {
+      "title": "Source",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "origin",
+    "role",
+    "context",
+    "artifact_digest",
+    "license",
+    "source",
+    "independence_group"
+  ],
+  "title": "DatasetSpec",
+  "type": "object"
+}

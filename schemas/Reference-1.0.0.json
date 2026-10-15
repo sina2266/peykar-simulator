@@ -1,0 +1,29 @@
+{
+  "$id": "urn:peykar:schema:Reference:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version"
+  ],
+  "title": "Reference",
+  "type": "object"
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "peykar-platform"
+version = "0.3.0"
+description = "Peykar modular biological simulation platform"
+requires-python = ">=3.12,<3.14"
+license = "LicenseRef-Peykar-Noncommercial-1.1.0"
+license-files = ["LICENSE", "NOTICE", "LICENSING.md", "licenses/*.txt", "licenses/*.json"]
+dependencies = [
+  "peykar-core", "peykar-engines", "fastapi>=0.115,<1",
+  "uvicorn>=0.32,<1", "typer>=0.15,<1",
+]
+
+[project.scripts]
+peykar = "peykar.cli:main"
+
+[tool.uv.sources]
+peykar-core = { workspace = true }
+peykar-engines = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/peykar"]

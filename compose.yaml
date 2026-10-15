@@ -1,0 +1,28 @@
+services:
+  api:
+    build: .
+    environment:
+      PEYKAR_API_TOKEN: ${PEYKAR_API_TOKEN:?Set a random PEYKAR_API_TOKEN in .env}
+      PEYKAR_READ_TOKEN: ${PEYKAR_READ_TOKEN:-}
+    ports: ["127.0.0.1:8000:8000"]
+    volumes: ["peykar-data:/var/lib/peykar"]
+    read_only: true
+    tmpfs: ["/tmp:size=32m"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 512m
+  worker:
+    build: .
+    command: ["peykar", "worker"]
+    volumes: ["peykar-data:/var/lib/peykar"]
+    read_only: true
+    tmpfs: ["/tmp:size=32m"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 512m
+    healthcheck:
+      disable: true
+volumes:
+  peykar-data:

@@ -1,0 +1,39 @@
+{
+  "$id": "urn:peykar:schema:ScientificContext:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "biological_system": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Biological System",
+      "type": "string"
+    },
+    "conditions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Conditions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "species": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Species",
+      "type": "string"
+    }
+  },
+  "required": [
+    "species",
+    "biological_system"
+  ],
+  "title": "ScientificContext",
+  "type": "object"
+}

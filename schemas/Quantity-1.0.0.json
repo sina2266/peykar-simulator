@@ -1,0 +1,29 @@
+{
+  "$id": "urn:peykar:schema:Quantity:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unit": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Unit",
+      "type": "string"
+    },
+    "value": {
+      "title": "Value",
+      "type": "number"
+    }
+  },
+  "required": [
+    "value",
+    "unit"
+  ],
+  "title": "Quantity",
+  "type": "object"
+}

@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "ArtifactFilePin": {
+      "additionalProperties": false,
+      "description": "A portable relative file name and its expected exact-byte SHA-256.",
+      "properties": {
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "digest"
+      ],
+      "title": "ArtifactFilePin",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:ExternalArtifactSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Offline admission inventory; it does not authorize execution or redistribution.",
+  "properties": {
+    "artifact": {
+      "$ref": "#/$defs/ArtifactFilePin"
+    },
+    "dependencies": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ArtifactFilePin"
+      },
+      "maxItems": 200,
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "license": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "License",
+      "type": "string"
+    },
+    "runtime_lock": {
+      "$ref": "#/$defs/ArtifactFilePin"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "source",
+    "license",
+    "artifact",
+    "runtime_lock"
+  ],
+  "title": "ExternalArtifactSpec",
+  "type": "object"
+}

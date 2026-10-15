@@ -1,0 +1,49 @@
+{
+  "$id": "urn:peykar:schema:BiologicalEntity:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "title": "Kind",
+      "type": "string"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "ontology_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ontology Id"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "species": {
+      "title": "Species",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "kind",
+    "species"
+  ],
+  "title": "BiologicalEntity",
+  "type": "object"
+}

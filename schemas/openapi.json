@@ -1,0 +1,2954 @@
+{
+  "components": {
+    "schemas": {
+      "CSVImportRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "csv_text": {
+            "title": "Csv Text",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/CSVImportSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "csv_text"
+        ],
+        "title": "CSVImportRequest",
+        "type": "object"
+      },
+      "CSVImportSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "endpoint": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "independence_group": {
+            "minLength": 1,
+            "title": "Independence Group",
+            "type": "string"
+          },
+          "license": {
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "origin": {
+            "enum": [
+              "experimental",
+              "synthetic",
+              "simulation"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "calibration",
+              "validation",
+              "benchmark"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source": {
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "time_column": {
+            "minLength": 1,
+            "title": "Time Column",
+            "type": "string"
+          },
+          "time_unit": {
+            "title": "Time Unit",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "value_column": {
+            "minLength": 1,
+            "title": "Value Column",
+            "type": "string"
+          },
+          "value_unit": {
+            "title": "Value Unit",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "origin",
+          "role",
+          "context",
+          "license",
+          "source",
+          "independence_group",
+          "endpoint",
+          "time_column",
+          "value_column",
+          "time_unit",
+          "value_unit"
+        ],
+        "title": "CSVImportSpec",
+        "type": "object"
+      },
+      "DatasetLineage": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "import_spec": {
+            "$ref": "#/components/schemas/CSVImportSpec"
+          },
+          "importer": {
+            "const": "peykar.csv/1.0.0",
+            "default": "peykar.csv/1.0.0",
+            "title": "Importer",
+            "type": "string"
+          },
+          "normalized_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Normalized Digest",
+            "type": "string"
+          },
+          "quality_checks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Quality Checks",
+            "type": "array"
+          },
+          "raw_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Raw Digest",
+            "type": "string"
+          },
+          "rows": {
+            "maximum": 100001.0,
+            "minimum": 2.0,
+            "title": "Rows",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset",
+          "raw_digest",
+          "normalized_digest",
+          "import_spec",
+          "rows",
+          "quality_checks"
+        ],
+        "title": "DatasetLineage",
+        "type": "object"
+      },
+      "DatasetRegistration": {
+        "additionalProperties": false,
+        "properties": {
+          "observation": {
+            "$ref": "#/components/schemas/Observation"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/DatasetSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "observation"
+        ],
+        "title": "DatasetRegistration",
+        "type": "object"
+      },
+      "DatasetSnapshot": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Artifact Digest",
+            "type": "string"
+          },
+          "independence_group": {
+            "title": "Independence Group",
+            "type": "string"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Spec Digest",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference",
+          "spec_digest",
+          "artifact_digest",
+          "independence_group"
+        ],
+        "title": "DatasetSnapshot",
+        "type": "object"
+      },
+      "DatasetSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Artifact Digest",
+            "type": "string"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "independence_group": {
+            "title": "Independence Group",
+            "type": "string"
+          },
+          "license": {
+            "title": "License",
+            "type": "string"
+          },
+          "origin": {
+            "enum": [
+              "experimental",
+              "synthetic",
+              "simulation"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "calibration",
+              "validation",
+              "benchmark"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "origin",
+          "role",
+          "context",
+          "artifact_digest",
+          "license",
+          "source",
+          "independence_group"
+        ],
+        "title": "DatasetSpec",
+        "type": "object"
+      },
+      "EvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "calibration_groups": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Calibration Groups",
+            "type": "array"
+          },
+          "dataset": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "tolerance": {
+            "$ref": "#/components/schemas/Quantity"
+          }
+        },
+        "required": [
+          "run_id",
+          "dataset",
+          "tolerance"
+        ],
+        "title": "EvaluationRequest",
+        "type": "object"
+      },
+      "EvaluationSetSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "calibration": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "title": "Calibration",
+            "type": "array"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "endpoint": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "evaluation": {
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Evaluation",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "tolerance": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "context",
+          "endpoint",
+          "evaluation",
+          "tolerance"
+        ],
+        "title": "EvaluationSetSpec",
+        "type": "object"
+      },
+      "ExecutionBudget": {
+        "additionalProperties": false,
+        "properties": {
+          "max_samples": {
+            "default": 10001,
+            "maximum": 100001.0,
+            "minimum": 2.0,
+            "title": "Max Samples",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "wall_seconds": {
+            "default": 60.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 3600.0,
+            "title": "Wall Seconds",
+            "type": "number"
+          }
+        },
+        "title": "ExecutionBudget",
+        "type": "object"
+      },
+      "FrozenEvaluationSet": {
+        "additionalProperties": false,
+        "properties": {
+          "calibration": {
+            "items": {
+              "$ref": "#/components/schemas/DatasetSnapshot"
+            },
+            "title": "Calibration",
+            "type": "array"
+          },
+          "evaluation": {
+            "items": {
+              "$ref": "#/components/schemas/DatasetSnapshot"
+            },
+            "title": "Evaluation",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/EvaluationSetSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "calibration",
+          "evaluation"
+        ],
+        "title": "FrozenEvaluationSet",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Intervention": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "kind": {
+            "const": "parameter_set",
+            "default": "parameter_set",
+            "title": "Kind",
+            "type": "string"
+          },
+          "parameter": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Parameter",
+            "type": "string"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "parameter",
+          "quantity"
+        ],
+        "title": "Intervention",
+        "type": "object"
+      },
+      "ModelPackage": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "title": "Capabilities",
+            "type": "array"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "dependencies": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "title": "Dependencies",
+            "type": "array"
+          },
+          "engine": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Engine",
+            "type": "string"
+          },
+          "engine_version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Engine Version",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "parameters": {
+            "items": {
+              "$ref": "#/components/schemas/ParameterSpec"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "ports": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ScientificPort"
+            },
+            "title": "Ports",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Digest",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "validity": {
+            "$ref": "#/components/schemas/ValidityProfile"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "engine",
+          "engine_version",
+          "license",
+          "source",
+          "source_digest",
+          "capabilities",
+          "context",
+          "validity",
+          "parameters"
+        ],
+        "title": "ModelPackage",
+        "type": "object"
+      },
+      "Observation": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "endpoint": {
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "time": {
+            "$ref": "#/components/schemas/Series"
+          },
+          "values": {
+            "$ref": "#/components/schemas/Series"
+          }
+        },
+        "required": [
+          "dataset",
+          "endpoint",
+          "time",
+          "values"
+        ],
+        "title": "Observation",
+        "type": "object"
+      },
+      "ParameterSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "default": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximum"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum"
+          },
+          "name": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Name",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "default"
+        ],
+        "title": "ParameterSpec",
+        "type": "object"
+      },
+      "ParameterValue": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Name",
+            "type": "string"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "quantity"
+        ],
+        "title": "ParameterValue",
+        "type": "object"
+      },
+      "Quantity": {
+        "additionalProperties": false,
+        "properties": {
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "unit": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "unit"
+        ],
+        "title": "Quantity",
+        "type": "object"
+      },
+      "Reference": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version"
+        ],
+        "title": "Reference",
+        "type": "object"
+      },
+      "RunManifest": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "dependency_snapshots": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ModelPackage"
+            },
+            "title": "Dependency Snapshots",
+            "type": "array"
+          },
+          "environment": {
+            "$ref": "#/components/schemas/RuntimeEnvironment"
+          },
+          "model_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Model Digest",
+            "type": "string"
+          },
+          "model_snapshot": {
+            "$ref": "#/components/schemas/ModelPackage"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/SimulationPlan"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "created_at",
+          "plan",
+          "model_snapshot",
+          "model_digest",
+          "environment"
+        ],
+        "title": "RunManifest",
+        "type": "object"
+      },
+      "RunRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "cancel_requested": {
+            "default": false,
+            "title": "Cancel Requested",
+            "type": "boolean"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Manifest Digest",
+            "type": "string"
+          },
+          "result_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Digest"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "manifest_digest",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "RunRecord",
+        "type": "object"
+      },
+      "RunStatus": {
+        "enum": [
+          "queued",
+          "running",
+          "succeeded",
+          "failed",
+          "cancelled"
+        ],
+        "title": "RunStatus",
+        "type": "string"
+      },
+      "RuntimeEnvironment": {
+        "additionalProperties": false,
+        "properties": {
+          "dependencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Dependencies",
+            "type": "array"
+          },
+          "engine_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Engine Digest",
+            "type": "string"
+          },
+          "engine_id": {
+            "title": "Engine Id",
+            "type": "string"
+          },
+          "engine_version": {
+            "title": "Engine Version",
+            "type": "string"
+          },
+          "lock_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lock Digest"
+          },
+          "platform_version": {
+            "title": "Platform Version",
+            "type": "string"
+          },
+          "python_version": {
+            "title": "Python Version",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "platform_version",
+          "python_version",
+          "engine_id",
+          "engine_version",
+          "engine_digest",
+          "dependencies"
+        ],
+        "title": "RuntimeEnvironment",
+        "type": "object"
+      },
+      "Scenario": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan": {
+            "$ref": "#/components/schemas/SimulationPlan"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "plan",
+          "rationale"
+        ],
+        "title": "Scenario",
+        "type": "object"
+      },
+      "ScientificContext": {
+        "additionalProperties": false,
+        "properties": {
+          "biological_system": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Biological System",
+            "type": "string"
+          },
+          "conditions": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Conditions",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "species": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Species",
+            "type": "string"
+          }
+        },
+        "required": [
+          "species",
+          "biological_system"
+        ],
+        "title": "ScientificContext",
+        "type": "object"
+      },
+      "ScientificPort": {
+        "additionalProperties": false,
+        "properties": {
+          "direction": {
+            "enum": [
+              "input",
+              "output"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "frame": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frame"
+          },
+          "name": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Name",
+            "type": "string"
+          },
+          "ownership": {
+            "default": "read",
+            "enum": [
+              "read",
+              "write"
+            ],
+            "title": "Ownership",
+            "type": "string"
+          },
+          "scale": {
+            "enum": [
+              "molecular",
+              "cellular",
+              "tissue",
+              "organ",
+              "organism",
+              "population"
+            ],
+            "title": "Scale",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "semantic_id": {
+            "title": "Semantic Id",
+            "type": "string"
+          },
+          "shape": {
+            "default": "scalar",
+            "enum": [
+              "scalar",
+              "field",
+              "agents"
+            ],
+            "title": "Shape",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "direction",
+          "unit",
+          "semantic_id",
+          "scale"
+        ],
+        "title": "ScientificPort",
+        "type": "object"
+      },
+      "Series": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "values": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Values",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "unit",
+          "values"
+        ],
+        "title": "Series",
+        "type": "object"
+      },
+      "SetEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "evaluation_set": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "evaluation_set"
+        ],
+        "title": "SetEvaluationRequest",
+        "type": "object"
+      },
+      "SimulationPlan": {
+        "additionalProperties": false,
+        "properties": {
+          "budget": {
+            "$ref": "#/components/schemas/ExecutionBudget",
+            "default": {
+              "max_samples": 10001,
+              "schema_version": "1.0.0",
+              "wall_seconds": 60.0
+            }
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "interventions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Intervention"
+            },
+            "title": "Interventions",
+            "type": "array"
+          },
+          "model": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "parameters": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ParameterValue"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "purpose": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Purpose",
+            "type": "string"
+          },
+          "sample_interval": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "seed": {
+            "default": 42,
+            "maximum": 4294967295.0,
+            "minimum": 0.0,
+            "title": "Seed",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "model",
+          "context",
+          "duration",
+          "sample_interval",
+          "purpose"
+        ],
+        "title": "SimulationPlan",
+        "type": "object"
+      },
+      "SimulationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "origin": {
+            "const": "simulation",
+            "default": "simulation",
+            "title": "Origin",
+            "type": "string"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/Series"
+            },
+            "title": "Outputs",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "time": {
+            "$ref": "#/components/schemas/Series"
+          },
+          "validity_status": {
+            "const": "unvalidated",
+            "default": "unvalidated",
+            "title": "Validity Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "time",
+          "outputs",
+          "seed",
+          "limitations"
+        ],
+        "title": "SimulationResult",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "ValidationRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "calibration_groups": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Calibration Groups",
+            "type": "array"
+          },
+          "dataset_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Dataset Digest",
+            "type": "string"
+          },
+          "evaluation_set": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evaluation_set_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Set Digest"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Manifest Digest",
+            "type": "string"
+          },
+          "observation_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Observation Digest",
+            "type": "string"
+          },
+          "report": {
+            "$ref": "#/components/schemas/ValidationReport"
+          },
+          "result_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Result Digest",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "run_id",
+          "manifest_digest",
+          "result_digest",
+          "dataset_digest",
+          "observation_digest",
+          "report"
+        ],
+        "title": "ValidationRecord",
+        "type": "object"
+      },
+      "ValidationReport": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "dataset": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "endpoint": {
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "evidence_class": {
+            "enum": [
+              "synthetic_verification",
+              "independent_experimental_validation"
+            ],
+            "title": "Evidence Class",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "max_absolute_error": {
+            "minimum": 0.0,
+            "title": "Max Absolute Error",
+            "type": "number"
+          },
+          "model": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "n": {
+            "title": "N",
+            "type": "integer"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "rmse": {
+            "minimum": 0.0,
+            "title": "Rmse",
+            "type": "number"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "tolerance": {
+            "minimum": 0.0,
+            "title": "Tolerance",
+            "type": "number"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model",
+          "dataset",
+          "endpoint",
+          "n",
+          "rmse",
+          "max_absolute_error",
+          "unit",
+          "tolerance",
+          "passed",
+          "evidence_class",
+          "context",
+          "limitations"
+        ],
+        "title": "ValidationReport",
+        "type": "object"
+      },
+      "ValidityProfile": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "endpoints": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Endpoints",
+            "type": "array"
+          },
+          "evidence": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "default": "unvalidated",
+            "enum": [
+              "unvalidated",
+              "reference_verified",
+              "context_validated"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "context",
+          "limitations"
+        ],
+        "title": "ValidityProfile",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Biological Modeling & Simulation Platform. Research use only.",
+    "title": "Peykar",
+    "version": "0.3.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "health_healthz_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Health Healthz Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "operations"
+        ]
+      }
+    },
+    "/v1/datasets": {
+      "post": {
+        "operationId": "dataset_v1_datasets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Dataset V1 Datasets Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dataset",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/datasets/import-csv": {
+      "post": {
+        "operationId": "csv_dataset_v1_datasets_import_csv_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CSVImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetLineage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Csv Dataset",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/datasets/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_dataset_v1_datasets__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetRegistration"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Dataset",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/datasets/{id}/versions/{version}/lineage": {
+      "get": {
+        "operationId": "dataset_lineage_v1_datasets__id__versions__version__lineage_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetLineage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dataset Lineage",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/engines": {
+      "get": {
+        "operationId": "engines_v1_engines_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "title": "Response Engines V1 Engines Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Engines",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "operationId": "models_v1_models_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "capability",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Capability"
+            }
+          },
+          {
+            "in": "query",
+            "name": "species",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Species"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ModelPackage"
+                  },
+                  "title": "Response Models V1 Models Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Models",
+        "tags": [
+          "models"
+        ]
+      },
+      "post": {
+        "operationId": "register_model_v1_models_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelPackage"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Register Model V1 Models Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Register Model",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/v1/models/{id}/versions/{version}": {
+      "get": {
+        "operationId": "model_v1_models__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelPackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Model",
+        "tags": [
+          "models"
+        ]
+      }
+    },
+    "/v1/scenarios": {
+      "post": {
+        "operationId": "scenario_v1_scenarios_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Scenario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Scenario V1 Scenarios Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Scenario",
+        "tags": [
+          "scenarios"
+        ]
+      }
+    },
+    "/v1/scenarios/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_scenario_v1_scenarios__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Scenario"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Scenario",
+        "tags": [
+          "scenarios"
+        ]
+      }
+    },
+    "/v1/simulations": {
+      "get": {
+        "operationId": "runs_v1_simulations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RunRecord"
+                  },
+                  "title": "Response Runs V1 Simulations Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Runs",
+        "tags": [
+          "simulations"
+        ]
+      },
+      "post": {
+        "operationId": "submit_v1_simulations_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "idempotency-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulationPlan"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/simulations/estimate": {
+      "post": {
+        "operationId": "estimate_v1_simulations_estimate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulationPlan"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "title": "Response Estimate V1 Simulations Estimate Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Estimate",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/simulations/validate": {
+      "post": {
+        "operationId": "check_v1_simulations_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulationPlan"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Check V1 Simulations Validate Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Check",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/simulations/{id}": {
+      "get": {
+        "operationId": "status_v1_simulations__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Status",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/simulations/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_v1_simulations__id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/simulations/{id}/events": {
+      "get": {
+        "operationId": "events_v1_simulations__id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "title": "Response Events V1 Simulations  Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Events",
+        "tags": [
+          "provenance"
+        ]
+      }
+    },
+    "/v1/simulations/{id}/manifest": {
+      "get": {
+        "operationId": "manifest_v1_simulations__id__manifest_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunManifest"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Manifest",
+        "tags": [
+          "provenance"
+        ]
+      }
+    },
+    "/v1/simulations/{id}/provenance": {
+      "get": {
+        "operationId": "prov_v1_simulations__id__provenance_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Prov V1 Simulations  Id  Provenance Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Prov",
+        "tags": [
+          "provenance"
+        ]
+      }
+    },
+    "/v1/simulations/{id}/results": {
+      "get": {
+        "operationId": "results_v1_simulations__id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimulationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Results",
+        "tags": [
+          "simulations"
+        ]
+      }
+    },
+    "/v1/validation/evaluations": {
+      "post": {
+        "operationId": "evaluate_set_v1_validation_evaluations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationRecord"
+                  },
+                  "title": "Response Evaluate Set V1 Validation Evaluations Post",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Evaluate Set",
+        "tags": [
+          "validation"
+        ]
+      }
+    },
+    "/v1/validation/reports/{id}": {
+      "get": {
+        "operationId": "validation_report_v1_validation_reports__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Validation Report",
+        "tags": [
+          "validation"
+        ]
+      }
+    },
+    "/v1/validation/runs": {
+      "post": {
+        "operationId": "validation_v1_validation_runs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Validation",
+        "tags": [
+          "validation"
+        ]
+      }
+    },
+    "/v1/validation/sets": {
+      "post": {
+        "operationId": "freeze_set_v1_validation_sets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationSetSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenEvaluationSet"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Freeze Set",
+        "tags": [
+          "validation"
+        ]
+      }
+    },
+    "/v1/validation/sets/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_set_v1_validation_sets__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenEvaluationSet"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Set",
+        "tags": [
+          "validation"
+        ]
+      }
+    }
+  }
+}

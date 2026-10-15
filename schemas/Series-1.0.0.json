@@ -1,0 +1,35 @@
+{
+  "$id": "urn:peykar:schema:Series:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unit": {
+      "title": "Unit",
+      "type": "string"
+    },
+    "values": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Values",
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "unit",
+    "values"
+  ],
+  "title": "Series",
+  "type": "object"
+}

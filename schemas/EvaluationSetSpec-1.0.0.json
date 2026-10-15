@@ -1,0 +1,154 @@
+{
+  "$defs": {
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:EvaluationSetSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "title": "Calibration",
+      "type": "array"
+    },
+    "context": {
+      "$ref": "#/$defs/ScientificContext"
+    },
+    "endpoint": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Endpoint",
+      "type": "string"
+    },
+    "evaluation": {
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "maxItems": 200,
+      "minItems": 1,
+      "title": "Evaluation",
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tolerance": {
+      "$ref": "#/$defs/Quantity"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "context",
+    "endpoint",
+    "evaluation",
+    "tolerance"
+  ],
+  "title": "EvaluationSetSpec",
+  "type": "object"
+}

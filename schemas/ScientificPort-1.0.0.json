@@ -1,0 +1,86 @@
+{
+  "$id": "urn:peykar:schema:ScientificPort:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "enum": [
+        "input",
+        "output"
+      ],
+      "title": "Direction",
+      "type": "string"
+    },
+    "frame": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Frame"
+    },
+    "name": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Name",
+      "type": "string"
+    },
+    "ownership": {
+      "default": "read",
+      "enum": [
+        "read",
+        "write"
+      ],
+      "title": "Ownership",
+      "type": "string"
+    },
+    "scale": {
+      "enum": [
+        "molecular",
+        "cellular",
+        "tissue",
+        "organ",
+        "organism",
+        "population"
+      ],
+      "title": "Scale",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "semantic_id": {
+      "title": "Semantic Id",
+      "type": "string"
+    },
+    "shape": {
+      "default": "scalar",
+      "enum": [
+        "scalar",
+        "field",
+        "agents"
+      ],
+      "title": "Shape",
+      "type": "string"
+    },
+    "unit": {
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "direction",
+    "unit",
+    "semantic_id",
+    "scale"
+  ],
+  "title": "ScientificPort",
+  "type": "object"
+}

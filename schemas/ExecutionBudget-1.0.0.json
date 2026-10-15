@@ -1,0 +1,29 @@
+{
+  "$id": "urn:peykar:schema:ExecutionBudget:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "max_samples": {
+      "default": 10001,
+      "maximum": 100001,
+      "minimum": 2,
+      "title": "Max Samples",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "wall_seconds": {
+      "default": 60.0,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Wall Seconds",
+      "type": "number"
+    }
+  },
+  "title": "ExecutionBudget",
+  "type": "object"
+}

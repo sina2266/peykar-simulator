@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "CSVImportSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "endpoint": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "independence_group": {
+          "minLength": 1,
+          "title": "Independence Group",
+          "type": "string"
+        },
+        "license": {
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "experimental",
+            "synthetic",
+            "simulation"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "calibration",
+            "validation",
+            "benchmark"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "time_column": {
+          "minLength": 1,
+          "title": "Time Column",
+          "type": "string"
+        },
+        "time_unit": {
+          "title": "Time Unit",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "value_column": {
+          "minLength": 1,
+          "title": "Value Column",
+          "type": "string"
+        },
+        "value_unit": {
+          "title": "Value Unit",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "title",
+        "origin",
+        "role",
+        "context",
+        "license",
+        "source",
+        "independence_group",
+        "endpoint",
+        "time_column",
+        "value_column",
+        "time_unit",
+        "value_unit"
+      ],
+      "title": "CSVImportSpec",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:CompuCellImportSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Operator-declared scalar export mapping, never a native-format assumption.",
+  "properties": {
+    "dataset": {
+      "$ref": "#/$defs/CSVImportSpec"
+    },
+    "delimiter": {
+      "enum": [
+        ",",
+        "\t",
+        ";"
+      ],
+      "title": "Delimiter",
+      "type": "string"
+    },
+    "engine_version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "runtime_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Runtime Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "source_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "time_mapping_evidence": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Time Mapping Evidence",
+      "type": "string"
+    },
+    "time_per_step": {
+      "$ref": "#/$defs/Quantity"
+    }
+  },
+  "required": [
+    "dataset",
+    "delimiter",
+    "time_per_step",
+    "time_mapping_evidence",
+    "seed",
+    "source_digest",
+    "runtime_digest",
+    "engine_version"
+  ],
+  "title": "CompuCellImportSpec",
+  "type": "object"
+}

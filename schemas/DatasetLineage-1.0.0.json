@@ -1,0 +1,226 @@
+{
+  "$defs": {
+    "CSVImportSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "endpoint": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "independence_group": {
+          "minLength": 1,
+          "title": "Independence Group",
+          "type": "string"
+        },
+        "license": {
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "experimental",
+            "synthetic",
+            "simulation"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "calibration",
+            "validation",
+            "benchmark"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "time_column": {
+          "minLength": 1,
+          "title": "Time Column",
+          "type": "string"
+        },
+        "time_unit": {
+          "title": "Time Unit",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "value_column": {
+          "minLength": 1,
+          "title": "Value Column",
+          "type": "string"
+        },
+        "value_unit": {
+          "title": "Value Unit",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "title",
+        "origin",
+        "role",
+        "context",
+        "license",
+        "source",
+        "independence_group",
+        "endpoint",
+        "time_column",
+        "value_column",
+        "time_unit",
+        "value_unit"
+      ],
+      "title": "CSVImportSpec",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:DatasetLineage:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "dataset": {
+      "$ref": "#/$defs/Reference"
+    },
+    "import_spec": {
+      "$ref": "#/$defs/CSVImportSpec"
+    },
+    "importer": {
+      "const": "peykar.csv/1.0.0",
+      "default": "peykar.csv/1.0.0",
+      "title": "Importer",
+      "type": "string"
+    },
+    "normalized_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Normalized Digest",
+      "type": "string"
+    },
+    "quality_checks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Quality Checks",
+      "type": "array"
+    },
+    "raw_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Digest",
+      "type": "string"
+    },
+    "rows": {
+      "maximum": 100001,
+      "minimum": 2,
+      "title": "Rows",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset",
+    "raw_digest",
+    "normalized_digest",
+    "import_spec",
+    "rows",
+    "quality_checks"
+  ],
+  "title": "DatasetLineage",
+  "type": "object"
+}

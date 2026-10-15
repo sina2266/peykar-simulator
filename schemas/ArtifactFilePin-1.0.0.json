@@ -1,0 +1,31 @@
+{
+  "$id": "urn:peykar:schema:ArtifactFilePin:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A portable relative file name and its expected exact-byte SHA-256.",
+  "properties": {
+    "digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Digest",
+      "type": "string"
+    },
+    "path": {
+      "maxLength": 255,
+      "minLength": 1,
+      "title": "Path",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "path",
+    "digest"
+  ],
+  "title": "ArtifactFilePin",
+  "type": "object"
+}
