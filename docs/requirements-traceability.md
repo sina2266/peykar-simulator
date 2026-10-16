@@ -2,9 +2,10 @@
 
 This table connects the supplied blueprint, accepted name/scope decisions and
 subsequent clarifications to files in this repository. It is a requirement map,
-not a claim that all planned capabilities are implemented. The provided conversation
-contains explicit sections 45-55 and other architecture summaries; missing earlier
-text is not falsely reproduced word for word.
+not a claim that all planned capabilities are implemented. The complete original
+55-section v3.0 proposal is [archived verbatim](blueprints/README.md); the
+[original section and scenario map](blueprint-v3-coverage.md) supplements this
+consolidated engineering map.
 
 | Requirement | Self-contained explanation | Current implementation/evidence |
 |---|---|---|
@@ -12,10 +13,13 @@ text is not falsely reproduced word for word.
 | Independent of HomBon; thin external adapter | architecture.md; master-blueprint.md 1,14 | ScientificInstrument facade and lifecycle integration test |
 | Five fundamental capabilities | master-blueprint.md 2 | Separate modules; status.md distinguishes partial/designed parts |
 | Hierarchy and interaction graph | master-blueprint.md 3 | Biology graph, hierarchy cycle/evidence checks |
+| Separate entity, computational model and runtime instance | Original v3.0 section 5; master-blueprint.md 3 | Explicit design; no bulk simulation state in the knowledge graph |
 | Stable ontology/species/context identities | scientific-contracts.md; master-blueprint.md 3 | Context contracts and exact applicability checks |
-| Explicit missing knowledge | master-blueprint.md 3 | KnowledgeGap schema; persistent registry designed |
+| Explicit missing knowledge | master-blueprint.md 3; knowledge-gaps.md | Persistent immutable KnowledgeGap declarations, exact model references, API roles and CLI |
 | Source inspection and reuse/adapt/compose/build | master-blueprint.md 5 | Declarative inspector and offline digest-pinned inventory; executable remote import designed |
+| Four admission paths and publication reconstruction label | Original v3.0 section 9; master-blueprint.md 5 | Standard/repository/reconstruction/data-construction routes designed; no equivalent-author-code claim |
 | Scientific Model Package and engine separation | master-blueprint.md 4 | ModelPackage and EngineAdapter contracts |
+| Five model interfaces | Original v3.0 section 10.1; master-blueprint.md 5 | Input/output/state/intervention/observation target; current contracts implement a subset |
 | Licenses for every model and external engine | LICENSING.md; master-blueprint.md 4-5 | Model/dataset license fields; external permission gates |
 | Capability-based discovery and dependencies | master-blueprint.md 4-5 | Exact-version registry, filters, dependency snapshots/tests |
 | Typed scientific ports and unit conversion | master-blueprint.md 6 | Port contracts, Pint, compatibility tests |
@@ -26,7 +30,8 @@ text is not falsely reproduced word for word.
 | Independent scientific/run state | master-blueprint.md 8 | Immutable manifests separate from mutable queue state |
 | Scenario branching and repeatable experiments | master-blueprint.md 8 | Scenario parent references, pinned plans and tests |
 | Checkpoints, ensembles and adaptive fidelity | master-blueprint.md 8 | Explicit later engine capabilities; no fake implementations |
-| All seven intervention categories | master-blueprint.md 9; interventions/README | Parameter-set events only; remaining types designed |
+| All ten intervention categories | Original v3.0 section 22; master-blueprint.md 9 | Parameter-set events only; includes planned epigenetic/electrical/systemic categories |
+| Structural and functional recovery separately | Original v3.0 section 24; master-blueprint.md 9 | Scientific composition requirement; no cell-count-to-function shortcut |
 | Genetic perturbation to tissue response | master-blueprint.md 9,18 | P5 with evidence per bridge; not implemented |
 | Multimodal data and connector ecosystem | master-blueprint.md 10 | Local observation registry; connector plans |
 | Raw/normalized/derived data and lineage | master-blueprint.md 10 | CSV and explicitly mapped scalar export hashes/lineage; richer provenance planned |
@@ -35,9 +40,12 @@ text is not falsely reproduced word for word.
 | Feasibility, structure refinement, construction, surrogates and optimization | master-blueprint.md 12 | Limited calibration implemented; other learning designed |
 | Champion/challenger and independent evaluation | master-blueprint.md 12-13 | No automatic promotion; independent authority designed |
 | Sensitivity, identifiability and uncertainty | master-blueprint.md 11-12 | Requirements stated; no false numerical uncertainty output |
+| Five trust axes and six scientific uncertainty sources | Original v3.0 sections 32-35; master-blueprint.md 11 | Explicit target with measured/unknown disclosure; no complete implementation claim |
 | Provenance and immutable reproducibility | scientific-contracts.md; master-blueprint.md 8,13 | Checked runtime/result contracts, snapshots, artifacts, frozen seed protocols, event log, limited PROV-O export |
 | Dependency impact and revalidation | master-blueprint.md 13 | Designed controls; full impact service not implemented |
 | Permissions, governance, approvals and change control | operations.md; master-blueprint.md 13 | Local admin/read tokens; independent approvals designed |
+| Scientific claims, conflicts and decision history | Original v3.0 sections 29-31, 39-40; master-blueprint.md 13 | Designed registries; simulation evidence must retain its origin/context |
+| Four authority levels L0-L3 | Original v3.0 section 42; master-blueprint.md 13 | Designed separation of immutable policy, independent criteria, candidates and authorized runs |
 | Section 45: one repository and complete target organization | target-layout.md | Three-package workspace with mapped future boundaries |
 | Section 46: library/model/composite distinction | master-blueprint.md 4 | Immutable components; full composite admission designed |
 | Section 47: full proposed API categories | api-target.md | api.md/openapi.json describe executable subset |

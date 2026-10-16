@@ -1,6 +1,78 @@
 # Verification record
 
-## Current edition: 0.3.0
+## Engineering continuation: 2026-10-16 (unreleased, on 0.3.0)
+
+Observed on this macOS checkout and Docker Desktop's Linux ARM64 runtime:
+
+- `uv sync --frozen --all-packages --group dev` succeeded on the host using
+  Python 3.12.2. The lockfile was not regenerated.
+- Final `make check-docker` passed. It runs `make check` and `make build` in a
+  separate Linux/Python 3.12.14 verification container without the live data
+  volume or test-time network. Ruff lint/format passed, strict Mypy checked
+  **54 source files**, **184 tests passed**, and observed statement coverage was
+  **90%**. Generated contracts/examples/OpenAPI were current.
+- Targeted checks preceded the complete regression. New coverage includes runtime
+  lock/platform drift, result seed/grid/unit/port mismatches, cancellation/recovery
+  ownership loss, offline artifact bounds/digests, explicit scalar mapping,
+  equivalent physical time units, seed cohorts, concurrent cross-import provenance
+  conflicts, legacy reimports, knowledge-gap immutability, exact model references,
+  filters before pagination and API reader/admin roles.
+- The first Docker-check attempt stopped before tests because `uv run` attempted
+  to reconcile noneditable wheel installs into editable installs without a cached
+  build dependency. The verification stage now sets `UV_NO_SYNC=1` and
+  `UV_OFFLINE=1`; the complete final offline run above passed.
+- `make build` also succeeded on the host: all three 0.3.0 wheels and source
+  distributions are under `dist/`. Direct wheel inspection found the new modules,
+  the current license expression and byte-identical LICENSE text in each wheel.
+  This is a working-tree continuation, not a claim of a newly published release.
+- `docker compose up -d --build --wait` rebuilt/recreated API and worker against
+  the existing named volume. No queued/running jobs existed before recreation.
+  The API became healthy; the separate worker subsequently completed real jobs.
+  Previous image tags and SQLite/artifact backups were preserved for recovery.
+- `scripts/verify_api.py` exercised authenticated live submission, idempotent
+  resubmission, polling, manifest/result checksum verification and lifecycle events
+  for both reference engines. Final deployed runs were
+  `a34e51a5-dba3-484d-a1a2-5c0825fe1980` (decay) and
+  `d3767d46-5c03-4842-a241-01439136b1e6` (logistic), both succeeded with 11 samples
+  and a nonempty pinned lock digest.
+- Authenticated live HTTP checks registered/retrieved/filtered
+  `vcornea.integration.pending`; anonymous reads returned 401. The gap explicitly
+  records missing integration evidence and does not claim that vCornea ran.
+- Live endpoint evaluation of the decay run returned `passed: true`,
+  RMSE **1.9229626863835638e-16 mole/liter**, and
+  `evidence_class: synthetic_verification`. Retrieval of the run-bound record
+  `report.1bd416795e14e6888ddd9ff85db18b30bb870c43f48ad1603cc725bca83059e9`
+  succeeded. This is synthetic numerical verification, not biological validation.
+- SQLite backup used its backup API while services were active; exact artifacts
+  were archived separately. A copy of the initial backup is in ignored
+  `.peykar/backups/`. Final comparison retained every original object/run/event
+  row; `PRAGMA integrity_check` returned `ok`. There were 7 succeeded runs,
+  5 objects and 21 events after retained verification work; every result checksum
+  was readable and verified. Existing user rows were not reset or rewritten.
+- All **24** license/notice/historical-license files checked against the local
+  baseline remained byte-identical. Existing scientific schema/model exports were
+  unchanged; only new contract files and the expanded OpenAPI were added/updated.
+- The supplied full Persian architecture was archived byte for byte as
+  `blueprints/universal-biological-platform-v3.fa.md`, SHA-256
+  `5a65971deb58b186ae66bb6c7899f5585b35da9410304f048e5a23f0aa9d3e6d`.
+  Its coverage document maps all 55 sections and separately retains the 24
+  original biological architecture scenarios; neither table claims those future
+  scientific scenarios passed software tests.
+- A local Markdown link/count check passed for 23 current documents, all 55
+  ordered source sections and all 24 ordered original scenarios. The archived
+  source checksum still matched after the design/documentation updates.
+- Read-only source-permission rechecks: GitHub's repository-license API returned
+  404; the Zenodo web/API record could not be retrieved (web-tool failure/TLS
+  timeout). Permission remains unverified. No external model code/archive was
+  downloaded, installed or executed.
+
+Child instrumentation is still excluded from the minimal child environment.
+Coverage is the observed parent/test statement measurement. Docker testing here
+does not validate an untrusted-code sandbox, multi-host deployment, Python 3.13,
+the dashboard or any published biological reproduction. Remaining gates are in
+`roadmap.md` and `status.md`; no independent approval or clinical validity is claimed.
+
+## Earlier edition: 0.3.0
 
 Verified locally on 2026-10-15 with Python 3.12.14 on Linux x86_64:
 
@@ -83,11 +155,12 @@ references, scenario parents, concurrent queue claims, idempotency, cancellation
 races, stale-worker fencing, redacted failures, corrupted data, API roles/body
 limits, generated schemas, calibration split constraints and the HomBon facade.
 
-## Checks not claimed
+## Checks not claimed by the historical 2026-10-15 checks
 
 - Python 3.13 is configured in CI but was not executed locally.
 - GitHub Actions jobs have not been observed running remotely.
-- Docker/Compose build and runtime were not executed; Docker is not installed here.
+- Docker/Compose were not executed in that earlier environment. The 2026-10-16
+  continuation above records subsequent local Docker build/runtime verification.
 - CompuCell3D/vCornea and specialist engines were not installed or reproduced.
 - No independent biological dataset, clinical claim, generic co-simulation runtime,
   dashboard, GPU, HPC or multi-host deployment was validated.

@@ -1,4 +1,6 @@
 import json
+from concurrent.futures import ThreadPoolExecutor
+from threading import Barrier
 
 import pytest
 from pydantic import ValidationError
@@ -6,6 +8,7 @@ from typer.testing import CliRunner
 
 from peykar.compucell_cli import compucell_app
 from peykar.data_fabric.compucell_import import CompuCellImporter
+from peykar.data_fabric.csv_import import import_csv
 from peykar.data_fabric.service import DatasetService
 from peykar.examples import SYNTHETIC
 from peykar.validation.repeated_seeds import RepeatedSeedService
@@ -233,3 +236,80 @@ def test_seed_commands_import_freeze_compare_and_read(tmp_path, monkeypatch):
     report_id = json.loads(result.stdout)["id"]
     result = runner.invoke(compucell_app, ["seed-report", report_id])
     assert result.exit_code == 0 and json.loads(result.stdout)["passed"], result.output
+
+
+def csv_equivalent(spec):
+    return spec.dataset.model_copy(update={"time_column": "seconds"})
+
+
+@pytest.mark.parametrize("first", ["csv", "compucell"])
+def test_cross_importer_provenance_collision_preserves_legacy_versions(service, first):
+    datasets = DatasetService(service.db, service.artifacts)
+    importer = CompuCellImporter(datasets)
+    spec = mapping()
+    csv_raw = b"seconds,scalar\n0,10\n5,11\n10,12\n"
+    if first == "csv":
+        original = import_csv(datasets, csv_equivalent(spec), csv_raw)
+    else:
+        original = importer.import_output(spec, data())
+    # Simulate the pre-identity registry without changing the historical lineage.
+    with datasets.db.connection(immediate=True) as db:
+        db.execute("DELETE FROM objects WHERE kind='dataset_import'")
+    if first == "csv":
+        with pytest.raises(Conflict, match="different import origin"):
+            importer.import_output(spec, data())
+        assert import_csv(datasets, csv_equivalent(spec), csv_raw) == original
+        assert datasets.lineage(original.dataset) == original
+    else:
+        with pytest.raises(Conflict, match="different import origin"):
+            import_csv(datasets, csv_equivalent(spec), csv_raw)
+        assert importer.import_output(spec, data()) == original
+        assert importer.lineage(original.dataset) == original
+    identity = json.loads(datasets.db.object("dataset_import", spec.dataset.id, "1.0.0"))
+    assert identity["lineage_kind"] == (
+        "dataset_lineage" if first == "csv" else "compucell_lineage"
+    )
+
+
+def test_concurrent_cross_importer_collision_has_one_atomic_winner(service, monkeypatch):
+    datasets = DatasetService(service.db, service.artifacts)
+    importer = CompuCellImporter(datasets)
+    spec = mapping()
+    barrier = Barrier(2)
+    lookup = datasets.db.object
+
+    def synchronized_lookup(kind, id, version):
+        try:
+            return lookup(kind, id, version)
+        except NotFound:
+            if kind == "dataset" and id == spec.dataset.id:
+                barrier.wait(timeout=5)
+            raise
+
+    monkeypatch.setattr(datasets.db, "object", synchronized_lookup)
+
+    def attempt(kind):
+        try:
+            if kind == "csv":
+                import_csv(
+                    datasets,
+                    csv_equivalent(spec),
+                    b"seconds,scalar\n0,10\n5,11\n10,12\n",
+                )
+            else:
+                importer.import_output(spec, data())
+        except Conflict:
+            return kind, False
+        return kind, True
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = tuple(pool.map(attempt, ("csv", "compucell")))
+    assert sum(succeeded for _, succeeded in results) == 1
+    winner = next(kind for kind, succeeded in results if succeeded)
+    losing_kind = "compucell_lineage" if winner == "csv" else "dataset_lineage"
+    with pytest.raises(NotFound):
+        lookup(losing_kind, spec.dataset.id, "1.0.0")
+    identity = json.loads(lookup("dataset_import", spec.dataset.id, "1.0.0"))
+    assert identity["lineage_kind"] == (
+        "dataset_lineage" if winner == "csv" else "compucell_lineage"
+    )

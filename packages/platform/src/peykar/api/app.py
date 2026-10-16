@@ -21,6 +21,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.middleware import BodyLimitMiddleware
+from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
 from peykar.data_fabric.csv_import import import_csv
 from peykar.data_fabric.service import DatasetService
 from peykar.governance.provenance import provenance
@@ -34,6 +35,7 @@ from peykar_core.contracts import (
     EvaluationSetSpec,
     FrozenEvaluationSet,
     Identifier,
+    KnowledgeGap,
     ModelPackage,
     Observation,
     Quantity,
@@ -171,6 +173,45 @@ def create_app(
         if body.validity.status != "unvalidated":
             raise InvalidRequest("API registration cannot self-certify scientific validity")
         return {"digest": svc.models.register(body)}
+
+    @read.get("/knowledge-gaps", tags=["knowledge"])
+    def knowledge_gaps(
+        svc: Annotated[SimulationService, Depends(service)],
+        species: Annotated[str | None, Query(min_length=1, max_length=100)] = None,
+        biological_system: Annotated[str | None, Query(min_length=1, max_length=200)] = None,
+        condition: Annotated[str | None, Query(min_length=1, max_length=1000)] = None,
+        severity: Severity | None = None,
+        model_id: Identifier | None = None,
+        model_version: Version | None = None,
+        limit: Annotated[int, Query(ge=1, le=200)] = 100,
+        offset: Annotated[int, Query(ge=0)] = 0,
+    ) -> tuple[KnowledgeGap, ...]:
+        return KnowledgeGapService(svc.db).discover(
+            species=species,
+            biological_system=biological_system,
+            condition=condition,
+            severity=severity,
+            model_id=model_id,
+            model_version=model_version,
+            limit=limit,
+            offset=offset,
+        )
+
+    @read.get("/knowledge-gaps/{id}", tags=["knowledge"])
+    def knowledge_gap(
+        id: Identifier, svc: Annotated[SimulationService, Depends(service)]
+    ) -> KnowledgeGap:
+        return KnowledgeGapService(svc.db).get(id)
+
+    @write.post("/knowledge-gaps", status_code=201, tags=["knowledge"])
+    def register_knowledge_gap(
+        body: KnowledgeGap,
+        response: Response,
+        svc: Annotated[SimulationService, Depends(service)],
+    ) -> dict[str, str]:
+        checksum = KnowledgeGapService(svc.db).register(body)
+        response.headers["Location"] = f"/v1/knowledge-gaps/{body.id}"
+        return {"digest": checksum}
 
     @write.post("/simulations/validate", tags=["simulations"])
     def check(

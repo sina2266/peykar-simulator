@@ -13,6 +13,7 @@ interfaces/acceptance criteria without an executable integration.
 | Offline external artifact admission | Partial | SHA-256 checks for every declared source/dependency/runtime-lock file; immutable local inventory; no installation, execution or undeclared dependency discovery |
 | Species/context checks and capability search | Implemented | Exact matching; no inferred transfer |
 | Biological graph | Partial | In-memory reference graph, selected relations |
+| Persistent knowledge-gap declarations | Implemented locally | Immutable manual records; exact affected-model versions; filtered API/CLI reads; no automatic closure or execution blocking |
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
 | Conserved two-compartment exchange | Implemented | Analytical verification primitive |
@@ -31,6 +32,8 @@ interfaces/acceptance criteria without an executable integration.
 | Calibration | Partial | Log-linear decay-rate proposal only |
 | Hold-out separation | Partial | Declared role/group checks; no independent split authority |
 | Contextual uncertainty estimation | Designed | No confidence intervals reported |
+| Full Scientific Trust Profile | Designed | Five separate axes; current validity contract is a limited subset |
+| Scientific claim/conflict registries and decision approvals | Designed | Explicit v3.0 requirements; local gap records do not implement those workflows |
 | Champion/challenger promotion | Designed | Never automatic self-certification |
 | HomBon Instrument Adapter | Implemented | In-process facade, transport-neutral lifecycle |
 | HTTP API and CLI | Implemented | Static admin/read tokens, bounded bodies, local operator CLI |
@@ -49,5 +52,10 @@ mapped in requirements-traceability.md, with target paths in target-layout.md an
 future APIs in api-target.md. The current source-available, noncommercial license
 is a project-specific draft awaiting legal review; see ../LICENSING.md. This is a
 licensing status, not a scientific-validity status.
+
+The complete original 55-section Persian proposal and its 24 biological stress
+scenarios are retained under `docs/blueprints/` and `blueprint-v3-coverage.md`.
+They describe the product target; the original scenarios are not passing software
+tests or implemented biological integrations.
 
 Validation details for this delivered snapshot are in `docs/verification.md`.

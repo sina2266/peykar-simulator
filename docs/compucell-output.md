@@ -31,6 +31,10 @@ The lineage pins the complete mapping, raw/normalized hashes, seed and declared
 environment/source identity. Reusing an ID/version with different bytes or mapping
 fails without replacing previous metadata. Artifacts written before a rejected
 registration may remain unreferenced, as with the generic CSV importer.
+Both importers also commit one shared import-identity record, so concurrent imports
+through different parsers cannot attach conflicting raw provenance to one version.
+Historical imports remain readable and identical reimports add that identity
+without replacing existing metadata or lineage.
 
 These records use a dedicated `compucell_lineage` kind. Retrieve them with
 `peykar compucell lineage DATASET_ID VERSION`; the generic CSV lineage endpoint
@@ -71,7 +75,7 @@ those descriptors explicitly state that no engine was executed. The version
 `4.7.0` is example mapping metadata, not evidence of an installed environment.
 
 ```bash
-export PEYKAR_DATA_DIR=.peykar-scalar-demo
+export PEYKAR_DATA_DIR=.peykar/scalar-demo
 for name in reference-7 reference-11 candidate-7 candidate-11; do
   uv run peykar compucell import-output \
     "experiments/data/compucell-scalar-synthetic/$name.tsv" \

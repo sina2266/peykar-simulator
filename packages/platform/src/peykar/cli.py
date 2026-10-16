@@ -12,6 +12,7 @@ from peykar.compucell_cli import compucell_app
 from peykar.data_fabric.csv_import import MAX_CSV_BYTES, import_csv
 from peykar.data_fabric.service import DatasetService
 from peykar.examples import bootstrap, demo
+from peykar.knowledge_gap_cli import knowledge_gap_app
 from peykar.model_import.cli import external_artifact_app
 from peykar.simulation.service import SimulationService
 from peykar.simulation.worker import Worker
@@ -28,6 +29,7 @@ from peykar_core.errors import InvalidRequest, PeykarError
 app = typer.Typer(no_args_is_help=True, help="Peykar biological modeling and simulation platform")
 app.add_typer(external_artifact_app, name="external-artifacts")
 app.add_typer(compucell_app, name="compucell")
+app.add_typer(knowledge_gap_app, name="knowledge-gaps")
 
 
 def local_service() -> SimulationService:

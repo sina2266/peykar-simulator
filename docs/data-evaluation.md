@@ -27,6 +27,11 @@ unchanged. Content-addressed artifacts written before a rejected registration ca
 remain unreferenced; there is no automatic garbage collector in this release.
 Re-importing identical bytes/spec is idempotent. Different bytes require a new
 version even when they parse to the same numeric observations.
+Generic CSV and mapped CompuCell scalar imports share an immutable import identity
+committed with their dataset and lineage. A parser cannot attach a different import
+origin to an existing dataset version, including under concurrent registration.
+Historical lineage remains readable and identical reimport adds the identity
+without rewriting old records. See [local scalar exports](compucell-output.md).
 
 ## Freeze and evaluate
 

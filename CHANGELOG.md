@@ -10,6 +10,10 @@ script and a separate Linux Docker regression/build target.
 
 Add offline source/dependency/runtime-lock digest admission, explicit local
 CompuCell3D scalar output mappings and immutable repeated-seed comparisons.
+Prevent concurrent cross-importer provenance collisions. Add persistent immutable
+knowledge-gap declarations with context/model filters, authenticated API and CLI.
+Archive the complete original Persian v3.0 proposal and restore missing design
+details in the consolidation and section/scenario coverage mapping.
 No existing contract/model version, data, license or reference engine algorithm
 is replaced. Native vCornea execution and published reproduction remain gated.
 

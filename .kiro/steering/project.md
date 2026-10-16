@@ -17,6 +17,14 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
   comparisons do not authorize remote model execution or biological claims.
   P1 still requires permission verification, the actual 4.7.0 runtime and a
   reproduced published reference before advancing its scientific exit gate.
+- The complete original Persian v3.0 blueprint is preserved verbatim under
+  `docs/blueprints/`; `docs/blueprint-v3-coverage.md` maps all 55 sections and the
+  original 24 biological scenarios. Preserve its ten intervention categories and
+  entity/model/instance distinctions in future design work. These target scenarios
+  are separate from the executable software failure matrix in `docs/scenarios.md`.
+- Persistent knowledge gaps are immutable manual declarations, not approvals,
+  automatic resolution or scheduler enforcement. Scientific claims, conflicts and
+  independent L0-L3 authority remain separate design requirements.
 
 Update this context when these operational facts change; record only observed
 commands/outcomes in `docs/verification.md`.

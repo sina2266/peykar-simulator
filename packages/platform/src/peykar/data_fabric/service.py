@@ -1,3 +1,6 @@
+import json
+from typing import Literal
+
 from peykar.infrastructure.artifacts import ArtifactStore
 from peykar.infrastructure.database import Database
 from peykar_core.contracts import DatasetLineage, DatasetSpec, Observation, Quantity, Reference
@@ -74,6 +77,3 @@ class DatasetService:
             raise InvalidRequest("Dataset lineage does not match the observation")
         self.artifacts.get(lineage.raw_digest)
         return lineage
-import json
-from typing import Literal
-

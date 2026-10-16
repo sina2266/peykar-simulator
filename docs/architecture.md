@@ -41,15 +41,15 @@ modules or explicitly planned extension points.
 | Domain | Responsibility | Current boundary |
 |---|---|---|
 | Core | Types, identifiers, units, contracts, hashes, errors | Independent distribution |
-| Biology | Entities, ontologies, anatomy and interactions | Species-aware reference graph |
+| Biology | Entities, ontologies, anatomy, interactions and unknowns | Species-aware reference graph; persistent declared knowledge gaps |
 | Model registry | Packages, versions, capabilities and dependencies | Persistent exact-version registry |
-| Model import | Discovery, inspection, mapping and sandbox admission | Declarative JSON inspector |
+| Model import | Discovery, inspection, mapping and sandbox admission | Declarative JSON inspector and offline digest-checked file admission; no external execution |
 | Composition | Ports, semantics, ownership and numerical coupling | Compatibility/DAG checks and exchange primitive |
 | Simulation | Planning, time, events, state and execution | Durable queue, bounded Linux child lifecycle and two reference engines |
 | Interventions | Molecular through environmental changes | Parameter-set implementation; other classes planned |
-| Data fabric | Ingestion, quality, lineage and observation | Scalar CSV import, raw/normalized lineage and observation registry |
+| Data fabric | Ingestion, quality, lineage and observation | CSV and explicitly mapped scalar exports; raw/normalized lineage and shared import identity |
 | Model learning | Calibration, refinement, construction and surrogates | Decay parameter candidate estimator |
-| Validation | Verification, independent benchmarks and uncertainty | Endpoint comparison, frozen declared splits and run-bound reports |
+| Validation | Verification, independent benchmarks and uncertainty | Endpoint comparison, frozen splits/seed protocols and retrievable reports; no quantified uncertainty |
 | Governance | Provenance, permissions, approvals and promotion | API roles, event log, provenance export |
 
 ## Biological representation
@@ -65,6 +65,8 @@ organ-system, organism, population and environment are analysis scales, not an
 assertion that every biological relationship is containment. Population/ecosystem
 execution remains future work. KnowledgeGap records make missing mechanisms
 explicit rather than filling them with model-generated guesses.
+These local gap declarations are immutable, manually registered records. They do
+not resolve scientific conflicts, certify evidence or automatically block jobs.
 
 ## Model ecosystem
 
@@ -135,8 +137,10 @@ run frozen historical benchmarks, endpoint-specific held-out tests, sensitivity,
 identifiability and uncertainty checks, with an evaluator independent of the model
 author. It cannot let the candidate redefine its own success criteria.
 
-Represent parameter, observation, structural, numerical and cross-context
-uncertainty separately. This release does not calculate posterior confidence
+The complete v3.0 design separates parameter, structural, measurement, biological,
+coupling and extrapolation uncertainty, with numerical error additionally tracked
+as an engineering concern. Disclose which sources are measured versus unknown.
+This release does not calculate posterior confidence
 intervals, sensitivity indices or cross-species transfer confidence.
 
 ## Infrastructure evolution
@@ -166,3 +170,9 @@ The HomBon facade exposes describe, validate, estimate_cost, submit, status,
 collect and cancel. It returns structured results including origin and limitations.
 The outer research system owns hypothesis selection and scientific interpretation.
 Changing the outer research use case should not require a core engine change.
+
+The [complete original proposal](blueprints/README.md) and its
+[section/scenario coverage map](blueprint-v3-coverage.md) preserve further design
+requirements. [The master blueprint](master-blueprint.md) includes the restored
+ten intervention categories, five model interfaces, distinct entity/model/instance
+identities, trust axes, claim/conflict registries and L0-L3 authority levels.

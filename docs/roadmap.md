@@ -20,6 +20,10 @@ Continuation on 2026-10-16: the live API/worker path has been exercised for both
 reference engines. Result/manifest checks and the cancellation/recovery race are
 fixed. Offline digest admission and mapped scalar/seed comparison tools are working
 increments toward P1; they do not satisfy its published-reproduction exit gate.
+The original full v3.0 proposal is now archived and mapped to all 55 sections.
+Persistent manual knowledge-gap records make absent mechanisms/reference data
+queryable without inventing them; claim/conflict registries, independent authority
+and the scientific exit gates remain separate future work.
 
 1. Verify vCornea source/archive permissions and reconstruct its required 4.7.0 environment.
    The upstream commit/tree are now pinned in the adapter admission record.

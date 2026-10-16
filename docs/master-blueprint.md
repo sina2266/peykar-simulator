@@ -1,6 +1,7 @@
 # Peykar master blueprint
 
-Architecture edition: 0.2.0. This is the consolidated product/design reference;
+Architecture consolidation: 2026-10-16, including the complete original v3.0
+proposal. This is the consolidated product/design reference;
 `status.md` is the authority for what is executable today. A designed capability
 is not an implemented feature. Licensing is governed separately by `../LICENSE`
 and `../LICENSING.md`; public source access does not establish OSI open-source status.
@@ -53,6 +54,14 @@ interpretation. Association alone must not silently become a causal effect. A
 model's state variables, geometry and measurement definitions are separate from
 general biological knowledge. The current graph only implements selected relations.
 
+Keep three identities explicit: a **biological entity** is the represented thing
+(for example EGF), a **model** is one computational representation, and a runtime
+**instance** is that model initialized in a particular tissue/context. The same
+entity can have several models and many independently evolving instances. Bulk
+cell positions, fields and time-varying instance state belong in numerical state
+stores, not millions of knowledge-graph assertions. State restoration remains a
+declared engine capability, not a consequence of an entity existing in the graph.
+
 Species is a real applicability constraint, not a label users can switch to convert
 a human model into a plant or mouse model. Cross-species use requires a separately
 versioned mapping with justified parameters, assumptions and evidence. Population
@@ -61,6 +70,11 @@ and ecosystem views are future extension points, not implemented engines.
 Unknown mechanisms, missing reference data, unsupported interventions and gaps in
 couplings should create KnowledgeGap records. Do not fill them with invented model
 parameters or LLM-generated facts merely to complete a pipeline.
+
+Multi-participant reactions and processes need explicit reaction/process nodes or
+equivalent participant-role contracts. Pairwise association edges cannot by
+themselves represent stoichiometry, catalysts and a shared process rate. This
+richer process representation is designed; the current graph is not that solver.
 
 ## 4. Library, model package, composite, and engine
 
@@ -99,6 +113,22 @@ External engine environments should be separate and pinned. No claim that an eng
 has a particular redistribution license is made without checking its actual release
 and dependencies. The platform's license never overrides an engine or dataset license.
 
+Preserve all four admission paths from the original proposal: standard declarative
+models, standalone source repositories, reconstruction from publication, and new
+construction from data. A reconstruction must retain the explicit
+`RECONSTRUCTED_FROM_PUBLICATION` provenance in its future admission metadata.
+Claims of result agreement require reviewed comparison, and even agreement does
+not turn reconstructed source into the authors' released code. This is a planned
+provenance category, not a new value
+silently added to the immutable current ModelPackage schema.
+
+The target package has five distinct interfaces: input, output, state,
+intervention and observation. Current ports and engine calls cover a subset.
+The full contract must additionally identify authorship, model type, internal state,
+time/spatial scales, assumptions, constraints, supported intervention semantics,
+snapshot/restore support and observation operators. Any extension uses a new
+contract/version rather than changing existing published schemas in place.
+
 ## 6. Ports, geometry, and state ownership
 
 A scientific port carries units, semantic quantity identity, direction, scale,
@@ -115,6 +145,12 @@ Give each state variable or physical process one owner. Do not count the same
 molecular flux, cell proliferation process or metabolic sink in multiple components.
 The present checker prevents duplicate writers to an input, but full process-level
 responsibility accounting is a later composition feature.
+
+Temporal semantics are part of a coupling contract too: instantaneous values,
+time-averaged values, synchronization intervals and delays are not interchangeable.
+An interaction needs its mechanism/mathematical representation, context, evidence,
+spatial mapping and uncertainty in addition to source/target. Equal physical units
+do not justify temporal averaging or a missing extracellular/intracellular mapping.
 
 ## 7. Coupled numerical execution
 
@@ -154,10 +190,16 @@ reuse partial state or manufacture a successful result. Native checkpoints,
 resumption, ensembles and adaptive-fidelity scheduling need additional engine
 capabilities and acceptance tests before being exposed as implemented functions.
 
+The complete target execution-mode catalog is single model, composite, multiscale,
+parameter sweep, ensemble, replication, counterfactual, sensitivity, calibration,
+benchmark, hybrid and adaptive resolution. A current seeded run or scalar
+comparison is not an implementation of that whole catalog.
+
 ## 9. General intervention framework
 
-The planned classes are genetic, molecular, cellular, tissue, mechanical, chemical
-and environmental. A request identifies a supported target, operation, magnitude,
+The original proposal has ten planned classes: genetic, epigenetic, molecular,
+cellular, tissue, mechanical, chemical, electrical, environmental and systemic.
+A request identifies a supported target, operation, magnitude,
 units, time window, spatial extent and context. Admission checks model capability,
 parameter range, available mechanisms and any required approvals/resources.
 
@@ -171,6 +213,18 @@ at regular sample boundaries. At time t the new parameter applies to the followi
 interval. Runtime changes to initialization-only variables are rejected. The other
 classes remain designed extension points.
 
+Separate direct state perturbation (assuming a gene activity changed) from
+simulating whether an intervention mechanism can produce that change. Genotype,
+RNA expression, protein activity and mutable cell state remain distinct. Future
+variant/zygosity/mosaicism support, nonlinear combinations and changing geometry
+need explicit engine/model contracts and evidence.
+
+Regeneration must compare structural recovery and functional recovery separately.
+More cells alone do not establish restored transparency, neural connectivity or
+organ function. Migration, integration, vascular/immune context, extracellular
+matrix and remodeling may require additional models; missing mechanisms must stay
+visible instead of being replaced with a growth-rate proxy.
+
 ## 10. Scientific data fabric
 
 Target data sources include curated local data, NCBI GEO, CELLxGENE, HuBMAP and
@@ -178,11 +232,24 @@ versioned model/dataset repositories such as Hugging Face where appropriate.
 Connectors have source-specific contracts and access/license checks; a connector
 name is not evidence that a dataset was downloaded or validated.
 
+The original source also names Human Cell Atlas and scPerturb for data, and
+BioModels, Physiome and ModelDB for models; MoBi and GEARS are candidate specialist
+tools. Model repositories and experimental-data repositories follow different
+admission pipelines. Listing a source/tool neither installs it nor establishes
+release compatibility, permissions or scientific applicability.
+
 Store raw data separately from normalized data and derived measurements. Retain
 source identity, revision, checksum, license/access basis, biological context,
 quality assessment, transformation code and lineage. Large imaging, spatial,
 single-cell, array and time-series data have different representations and resource
 needs; do not force all of them into a graph database or a small JSON response.
+
+The richer target Dataset Contract includes modality, observation definitions,
+temporal/interventional experimental design, quality-review status, sampling
+method, equipment, batches and donor counts/identities at the appropriate privacy
+boundary. Cross-dataset matching needs explicit ontology/context mappings and
+record-level transformation/merge lineage. Dataset-to-model impact must identify
+known links without claiming that undeclared training relationships were discovered.
 
 Datasets declare experimental/synthetic/simulated origin and calibration/validation/
 benchmark role. Independence groups must reflect donors, experiments, publications
@@ -206,6 +273,21 @@ metrics, tolerances, sensitivity, identifiable parameters and separate uncertain
 sources. Numerical, observational, parameter, structural and cross-context
 uncertainty should not become one unsupported confidence score. The current evaluator
 only compares aligned scalar series and does not estimate these uncertainty components.
+
+The original Scientific Trust Profile has five separate, context/version-specific
+axes: verification, validation, applicability, robustness and reproducibility.
+The current ValidityProfile is only a limited contract, not a complete quantified
+trust profile. Model-specific metrics must distinguish engineering performance
+(execution, time, memory, numerical error, cost and interface compatibility) from
+scientific performance (prediction/calibration, constraints, mechanistic consistency,
+out-of-distribution behavior, cross-context transfer and intervention effect error).
+
+Preserve the original six scientific uncertainty sources: parameter, structural,
+measurement, biological variation, coupling and extrapolation. Numerical error is
+an additional engineering concern. Future reports must state which sources were
+estimated and which remain unknown, with context and method; one interval must
+never imply that all six sources were measured. Synthetic, published simulation
+and independent experimental benchmarks remain separate evidence classes.
 
 ## 12. Model learning and evolution
 
@@ -238,6 +320,24 @@ role-based actions, frozen evaluation sets and change control. Current static AP
 tokens and application events are a local development profile. Database checksums
 are integrity checks, not signatures or proof against a privileged database editor.
 PROV-O vocabulary use is not a claim of full RO-Crate or SED-ML conformance.
+
+Retain five independent histories: models, datasets, simulations, validation and
+scientific decisions. The future **Scientific Claim Registry** is limited to
+claims about Peykar models/runs, pinned evidence and context. A simulated change
+must remain identified as simulation evidence; it cannot become a human/clinical
+claim or a replacement research-knowledge platform. The **Scientific Conflict
+Registry** must retain contradictory observations/assumptions, provenance and
+their unresolved interpretation rather than silently choosing convenient data.
+These two richer registries and independent decision history remain designed;
+an immutable KnowledgeGap record does not supply them.
+
+The original authority levels are L0 (security/audit/permissions/foundational
+scientific rules, no automatic changes), L1 (ground truth and acceptance criteria,
+independent approval), L2 (candidate structures/equations/learning methods,
+proposal and reviewed sandbox testing) and L3 (authorized bounded experiments and
+parameter changes). The current local admin/read tokens do not establish this
+independent approval system. Preserve historical evidence and report unknown
+dependency links instead of claiming a complete revalidation impact graph.
 
 ## 14. Public API and scientific instrument boundary
 
@@ -284,7 +384,7 @@ bounded trusted-engine worker does not supply that untrusted-code boundary.
 | Artifacts | S3-compatible object storage at larger scale | Local content-addressed files |
 | Experiment tracking | MLflow for ML-specific tracking | Planned, not the scientific provenance authority |
 | Cell/spatial/array/image data | AnnData, SpatialData, Xarray, Zarr, OME-Zarr | Planned connector-specific choices |
-| Jobs/containers/HPC | Durable workers, containers, SLURM adapter | Local queue; Docker/Compose configured; HPC planned |
+| Jobs/containers/HPC | Durable workers, containers, SLURM adapter | Local queue and locally verified Docker/Compose; HPC planned |
 | UI | Next.js, graph editor such as React Flow, scientific plots such as Plotly | Designed, not implemented |
 | Operations | OpenTelemetry and GitHub Actions | CI configured; telemetry integration planned |
 
@@ -340,7 +440,8 @@ scientific model execution and evaluation, with a path to justified expansion.
 
 ## 20. Reading and coverage
 
-This document consolidates the architecture and all requirements visible in the
-supplied conversation. It is not a verbatim transcript of earlier, unprovided
-sections. `requirements-traceability.md` shows the mapping to design, code,
-tests and later phases; future work remains explicitly labeled.
+The complete original 55-section proposal is now archived verbatim in
+[blueprints/](blueprints/README.md). [Its coverage map](blueprint-v3-coverage.md)
+also retains the original 24 biological stress scenarios, separately from the
+software failure matrix in `scenarios.md`. `requirements-traceability.md` maps
+the design to code, tests and later phases; future work remains explicitly labeled.

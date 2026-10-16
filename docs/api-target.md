@@ -10,6 +10,8 @@ the executable API, including auth, request bodies and actual response schemas.
 | GET /entities | Discover biological entities | Designed persistent explorer API |
 | GET /entities/{id} | Inspect entity | Designed; in-memory reference graph exists |
 | GET /entities/{id}/relationships | Inspect contextual/evidenced relationships | Designed query contract; no claimed endpoint |
+| POST /knowledge-gaps | Record an explicit missing mechanism/evidence item | POST /v1/knowledge-gaps; local immutable declarations only |
+| GET /knowledge-gaps | Discover explicit unknowns | GET /v1/knowledge-gaps and /{id}; context/severity/exact model filters |
 | GET /models | Discover models | GET /v1/models with capability/species filters and pagination |
 | GET /models/{id} | Inspect model | GET /v1/models/{id}/versions/{version}; exact version required |
 | GET /models/{id}/versions | Version index | Designed dedicated index; versioned records are currently listed by /models |
@@ -48,3 +50,7 @@ Release 0.3 adds POST /v1/datasets/import-csv, POST /v1/validation/sets,
 GET /v1/validation/sets/{id}/versions/{version}, and POST /v1/validation/evaluations.
 The older POST /v1/validation/runs response still returns a ValidationReport; its
 Location header identifies the new stored, run-bound ValidationRecord.
+
+The complete original proposal is retained in [blueprints/](blueprints/README.md).
+Claim/conflict registries and L0-L3 independent approval workflows are designed;
+the knowledge-gap endpoints do not provide those services.

@@ -10,6 +10,9 @@ Authentication, local deployment and body limits: [operations.md](operations.md)
 | GET | /v1/models | Discover capability/species and versioned packages | Read |
 | POST | /v1/models | Register unvalidated immutable descriptor | Admin |
 | GET | /v1/models/{id}/versions/{version} | Read pinned model | Read |
+| POST | /v1/knowledge-gaps | Register immutable explicit unknown | Admin |
+| GET | /v1/knowledge-gaps | Filter by context, severity and affected model before pagination | Read |
+| GET | /v1/knowledge-gaps/{id} | Read an explicit unknown | Read |
 | POST | /v1/scenarios | Register baseline or branch with parent reference | Admin |
 | GET | /v1/scenarios/{id}/versions/{version} | Read pinned scenario | Read |
 | POST | /v1/datasets | Register metadata and normalized observation | Admin |
@@ -53,3 +56,8 @@ CSV and frozen-set contracts and limits are described in [data-evaluation.md](da
 Future endpoints for importing remote executable models, composing full engines,
 model construction, calibration jobs, approvals and dataset impact graphs are
 specified in the architecture but not exposed as fake successful operations.
+
+Knowledge gaps preserve declared missing evidence/mechanisms. Registration resolves
+all affected model references exactly; a general gap may name none. IDs are
+immutable and reader tokens cannot register them. See [knowledge gaps](knowledge-gaps.md)
+for filters, limits and the lack of automatic job blocking/closure.

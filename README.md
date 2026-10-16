@@ -13,13 +13,19 @@ have explicit designs and acceptance gates; they are not implemented claims.
 
 The current engineering continuation adds checked worker result/runtime contracts,
 offline admission of digest-pinned external files, operator-mapped CompuCell3D
-scalar exports and frozen seed-paired comparisons. None of these installs or runs
+scalar exports, frozen seed-paired comparisons and persistent knowledge-gap
+declarations. None of these installs or runs
 vCornea, reproduces a published scenario or establishes biological validity.
 
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·
 [Scientific contracts](docs/scientific-contracts.md) · [Blueprint coverage](docs/requirements-traceability.md) ·
 [Licensing](LICENSING.md) · [Research sources](docs/sources.md)
+
+The complete original Persian v3.0 architecture, supplied before the Peykar name
+was chosen, is [archived verbatim](docs/blueprints/README.md). Its
+[55-section and 24-scenario coverage map](docs/blueprint-v3-coverage.md) keeps future
+requirements distinct from the implemented inventory.
 
 ## Run in two commands
 
@@ -104,6 +110,8 @@ Each verification creates one retained synthetic run and checks idempotency,
 manifest/result hashes and lifecycle events. It never resets existing state.
 See [external artifact admission](docs/external-artifacts.md) and
 [mapped scalar imports](docs/compucell-output.md) for the new offline commands.
+The [knowledge-gap API and CLI](docs/knowledge-gaps.md) record missing evidence or
+mechanisms without pretending they are implemented or scientifically resolved.
 
 ## Repository boundaries
 
