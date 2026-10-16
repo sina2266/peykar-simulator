@@ -28,6 +28,7 @@ interfaces/acceptance criteria without an executable integration.
 | CSV ingestion and transformation lineage | Implemented | Strict UTF-8 scalar time series, exact raw bytes and normalized hashes |
 | Frozen evaluation sets and run-bound report retrieval | Implemented | Pinned datasets/groups/tolerance; declarations still require independent review |
 | Mapped CompuCell3D scalar export ingestion | Partial | Explicit columns, MCS/time mapping and declared source/runtime/seed; exact raw bytes retained; no universal native-output reader |
+| Native vCornea output ingestion | Implemented locally | Strict four-cell-count CSV and ten-bin Parquet height import; raw/decoded/normalized lineage; hours and lattice coordinates preserved; seed unknown unless evidenced |
 | Frozen repeated-seed scalar comparisons | Partial | Seed-paired datasets and fixed tolerance; no statistical distribution test or published reproduction |
 | Calibration | Partial | Log-linear decay-rate proposal only |
 | Hold-out separation | Partial | Declared role/group checks; no independent split authority |
@@ -38,7 +39,9 @@ interfaces/acceptance criteria without an executable integration.
 | HomBon Instrument Adapter | Implemented | In-process facade, transport-neutral lifecycle |
 | HTTP API and CLI | Implemented | Static admin/read tokens, bounded bodies, local operator CLI |
 | PROV-O vocabulary export | Partial | Not a conformant RO-Crate/SED-ML exporter |
-| vCornea / CompuCell3D execution | Designed | Upstream revision/tree pinned; source permissions unverified; environment/results not reproduced; mapped local-output tools are separate |
+| vCornea / CompuCell3D execution | Partial | EPIC E1 operator profile works: licensed archive, locked 4.7.0 image, bounded seeded runs and injury crossing; no general queued adapter, full published replay or biological validation |
+| Published vCornea reference acquisition | Implemented locally | Six complete count/height files for three archived severities; selected ZIP member checks only; per-run seed/parameters unknown |
+| Small experimental scratch dataset | Implemented ingestion only | Attributed Rho et al. 2015 aggregate control means/SD; different assay and GM-CSF context; not vCornea validation |
 | PhysiCell, VCell, COPASI, Chaste, NEURON, PK-Sim | Designed | No adapters installed or code bundled |
 | GEO, CELLxGENE, HuBMAP, Hugging Face connectors | Designed | No automatic dataset import or clinical data handling |
 | PostgreSQL, S3, SLURM, distributed leases | Designed | Local migration interfaces and operational design only |
@@ -59,3 +62,7 @@ They describe the product target; the original scenarios are not passing softwar
 tests or implemented biological integrations.
 
 Validation details for this delivered snapshot are in `docs/verification.md`.
+The completed engineering acceptance and remaining P1 scientific gate are recorded
+in [EPIC E1](epics/E1-vcornea-native-runtime.md). Native execution is an explicit
+operator workflow outside the management API; archived simulation benchmarks remain
+distinct from experimental observations.

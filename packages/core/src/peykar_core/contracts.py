@@ -352,6 +352,105 @@ class KnowledgeGap(Contract):
     severity: Literal["blocking", "limitation", "informational"]
 
 
+class VCorneaOutputSpec(Contract):
+    """Metadata for the pinned upstream native output, separate from a Peykar run."""
+
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    kind: Literal["cell_count", "thickness"]
+    origin: Literal["simulation", "synthetic"]
+    context: ScientificContext
+    license: Annotated[str, Field(min_length=1, max_length=200)]
+    source: Annotated[str, Field(min_length=1, max_length=2000)]
+    upstream_commit: Literal["f5c03afb9c4c7d909494146c5db608389e957070"] | None = None
+    source_archive_doi: Literal["10.5281/zenodo.16884414"] | None = None
+    source_archive_digest: Sha256 | None = None
+    variant: Literal["paper_version", "paper_version_STEM_ONLY"]
+    source_tree_digest: Sha256
+    runtime_digest: Sha256 | None = None
+    parameter_digest: Sha256 | None = None
+    normalizer_digest: Sha256 | None = None
+    seed: Annotated[StrictInt, Field(ge=0, le=2**32 - 1)] | None = None
+    seed_evidence: Annotated[str, Field(min_length=1, max_length=2000)] | None = None
+
+    @model_validator(mode="after")
+    def recorded_seed_and_reader(self) -> Self:
+        if self.upstream_commit is None and self.source_archive_doi is None:
+            raise ValueError("Native output requires its pinned commit or exact archive DOI")
+        if (self.source_archive_doi is None) != (self.source_archive_digest is None):
+            raise ValueError("Archive provenance requires both exact DOI and archive digest")
+        if self.seed is not None and (self.seed_evidence is None or not self.seed_evidence.strip()):
+            raise ValueError("An imported seed requires explicit runtime or sidecar evidence")
+        if self.seed is None and self.seed_evidence is not None:
+            raise ValueError("Seed evidence cannot supply an unavailable seed")
+        if self.kind == "thickness" and self.normalizer_digest is None:
+            raise ValueError("Parquet output requires the trusted normalizer digest")
+        return self
+
+
+class VCorneaOutputArtifact(Contract):
+    reference: Reference
+    kind: Literal["cell_count", "thickness"]
+    origin: Literal["simulation", "synthetic"]
+    time: Series
+    outputs: tuple[Series, ...]
+    seed: Annotated[StrictInt, Field(ge=0, le=2**32 - 1)] | None = None
+    validity_status: Literal["unvalidated"] = "unvalidated"
+    limitations: tuple[str, ...]
+
+    @model_validator(mode="after")
+    def native_series(self) -> Self:
+        times = self.time.values
+        if (
+            self.time.unit != "hour"
+            or len(times) < 2
+            or len(times) > 100_001
+            or times[0] < 0
+            or any(b <= a for a, b in zip(times, times[1:], strict=False))
+        ):
+            raise ValueError("Native output requires increasing nonnegative hourly time values")
+        names = (
+            ("Superficial", "Wing", "Basal", "Stem")
+            if self.kind == "cell_count"
+            else tuple(f"bin.{index}" for index in range(10))
+        )
+        expected_unit = "count" if self.kind == "cell_count" else "lattice_y_coordinate"
+        if tuple(series.name for series in self.outputs) != names:
+            raise ValueError("Output series differ from the pinned upstream schema")
+        for series in self.outputs:
+            if series.unit != expected_unit or len(series.values) != len(times):
+                raise ValueError("Native output units or alignment differ from the upstream schema")
+            if any(value < 0 for value in series.values):
+                raise ValueError("Native cell counts and height coordinates cannot be negative")
+            if self.kind == "cell_count" and any(not value.is_integer() for value in series.values):
+                raise ValueError("Native cell counts must be nonnegative integers")
+        return self
+
+
+class VCorneaOutputLineage(Contract):
+    reference: Reference
+    raw_digest: Sha256
+    normalized_digest: Sha256
+    decoded_digest: Sha256 | None = None
+    spec: VCorneaOutputSpec
+    importer: Literal["peykar.vcornea-native/1.0.0"] = "peykar.vcornea-native/1.0.0"
+    rows: Annotated[StrictInt, Field(ge=2, le=1_000_010)]
+    columns: tuple[str, ...]
+    quality_checks: tuple[str, ...]
+    limitations: tuple[str, ...]
+
+
+class VCorneaScalarLineage(Contract):
+    dataset: Reference
+    native_output: Reference
+    native_lineage_digest: Sha256
+    normalized_digest: Sha256
+    column: Literal["Superficial", "Wing", "Basal", "Stem"]
+    importer: Literal["peykar.vcornea-scalar/1.0.0"] = "peykar.vcornea-scalar/1.0.0"
+    limitations: tuple[str, ...]
+
+
 class CompuCellImportSpec(Contract):
     """Operator-declared scalar export mapping, never a native-format assumption."""
 

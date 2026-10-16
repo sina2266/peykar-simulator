@@ -7,15 +7,18 @@ evaluating versioned biological models. Its long-term scope extends from molecul
 and cellular models to tissues, organs, and interacting systems.
 
 **Release 0.3.0 is an executable engineering foundation, not a validated biological
-simulator.** It includes two synthetic reference engines. vCornea integration,
-general multiscale execution, independent biological validation, and the dashboard
-have explicit designs and acceptance gates; they are not implemented claims.
+simulator.** It includes two synthetic reference engines and a working, explicit
+operator workflow for the archived vCornea model in isolated CompuCell3D 4.7.0.
+General multiscale execution, independent biological validation and the dashboard
+remain future work.
 
 The current engineering continuation adds checked worker result/runtime contracts,
 offline admission of digest-pinned external files, operator-mapped CompuCell3D
 scalar exports, frozen seed-paired comparisons and persistent knowledge-gap
-declarations. None of these installs or runs
-vCornea, reproduces a published scenario or establishes biological validity.
+declarations. [EPIC E1](docs/epics/E1-vcornea-native-runtime.md) adds licensed source
+acquisition, a locked native runtime, real CSV/Parquet ingestion and seeded native
+regression. Six published reference files and bounded native runs were verified.
+Full published-scenario reproduction and biological validity remain separate gates.
 
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·
@@ -112,6 +115,34 @@ See [external artifact admission](docs/external-artifacts.md) and
 [mapped scalar imports](docs/compucell-output.md) for the new offline commands.
 The [knowledge-gap API and CLI](docs/knowledge-gaps.md) record missing evidence or
 mechanisms without pretending they are implemented or scientifically resolved.
+
+## Run the admitted vCornea source
+
+This optional runtime is separate from the default API/worker image. Execution is
+an explicit local operator action; the API does not fetch or execute model code.
+
+```bash
+uv run python scripts/acquire_vcornea.py code --destination .peykar/external/archives
+uv run python scripts/prepare_vcornea.py \
+  --archive .peykar/external/archives/vCornea-16884414.zip \
+  --pins engine_adapters/compucell3d/vcornea-source-16884414.json \
+  --destination .peykar/external/vcornea-archive-16884414
+docker build --platform linux/amd64 \
+  -f engine_adapters/compucell3d/runtime/Dockerfile \
+  -t peykar-cc3d:4.7.0-linux64 engine_adapters/compucell3d/runtime
+uv run python scripts/run_vcornea.py \
+  --source .peykar/external/vcornea-archive-16884414 \
+  --pins engine_adapters/compucell3d/vcornea-source-16884414.json \
+  --output .peykar/external/my-native-run --scenario injury \
+  --steps 600 --seed 7 --image peykar-cc3d:4.7.0-linux64 --wall-seconds 900
+```
+
+Use a new output directory for each run. Original source is checksum-verified and
+preserved; only a private copy receives the recorded horizon and seed controls.
+Native counts retain four cell types and hours; Parquet heights retain lattice
+coordinates. See [integration](docs/vcornea-integration.md),
+[native import/API](docs/vcornea-native-output.md), and
+[dataset/tool assessment](docs/integration-candidates.md).
 
 ## Repository boundaries
 

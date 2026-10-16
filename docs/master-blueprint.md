@@ -19,6 +19,12 @@ model through CompuCell3D. That domain tests the platform; it must not hard-code
 cornea, humans, or a particular solver into the shared core. Current reference
 engines are synthetic verification tools, not vCornea implementations.
 
+The [E1 operator integration](epics/E1-vcornea-native-runtime.md) now runs the pinned
+licensed vCornea archive in a separate CompuCell3D 4.7.0 environment, imports actual
+native reference outputs and verifies bounded seeded repeats. Full published
+reproduction and independent biological validation remain gated; these results do
+not turn the reference engines into tissue models or imply a general queued adapter.
+
 HomBon is an independent autonomous research system. It may discover a question,
 form a hypothesis, request a bounded computational experiment and interpret its
 evidence. Peykar owns simulation planning/execution and reports its actual limits.

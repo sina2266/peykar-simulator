@@ -1,0 +1,233 @@
+{
+  "$defs": {
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:VCorneaOutputSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Metadata for the pinned upstream native output, separate from a Peykar run.",
+  "properties": {
+    "context": {
+      "$ref": "#/$defs/ScientificContext"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "cell_count",
+        "thickness"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "license": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "License",
+      "type": "string"
+    },
+    "normalizer_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Normalizer Digest"
+    },
+    "origin": {
+      "enum": [
+        "simulation",
+        "synthetic"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "parameter_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parameter Digest"
+    },
+    "runtime_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Digest"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "maximum": 4294967295,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed"
+    },
+    "seed_evidence": {
+      "anyOf": [
+        {
+          "maxLength": 2000,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed Evidence"
+    },
+    "source": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "source_archive_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Archive Digest"
+    },
+    "source_archive_doi": {
+      "anyOf": [
+        {
+          "const": "10.5281/zenodo.16884414",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Archive Doi"
+    },
+    "source_tree_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Tree Digest",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "upstream_commit": {
+      "anyOf": [
+        {
+          "const": "f5c03afb9c4c7d909494146c5db608389e957070",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Upstream Commit"
+    },
+    "variant": {
+      "enum": [
+        "paper_version",
+        "paper_version_STEM_ONLY"
+      ],
+      "title": "Variant",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "kind",
+    "origin",
+    "context",
+    "license",
+    "source",
+    "variant",
+    "source_tree_digest"
+  ],
+  "title": "VCorneaOutputSpec",
+  "type": "object"
+}

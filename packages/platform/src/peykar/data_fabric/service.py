@@ -21,7 +21,7 @@ class DatasetService:
     def register_import(
         self,
         spec: DatasetSpec,
-        lineage_kind: Literal["dataset_lineage", "compucell_lineage"],
+        lineage_kind: Literal["dataset_lineage", "compucell_lineage", "vcornea_scalar_lineage"],
         lineage_payload: str,
     ) -> None:
         """Pin one import identity across parsers, preserving historical lineage rows."""

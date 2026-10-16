@@ -19,6 +19,9 @@ Authentication, local deployment and body limits: [operations.md](operations.md)
 | GET | /v1/datasets/{id}/versions/{version} | Read data and lineage metadata | Read |
 | POST | /v1/datasets/import-csv | Import scalar CSV and retain raw bytes | Admin |
 | GET | /v1/datasets/{id}/versions/{version}/lineage | Read CSV transformation record | Read |
+| POST | /v1/vcornea/outputs/cell-counts | Import native four-column counts and retain exact raw bytes | Admin |
+| GET | /v1/vcornea/outputs/{id}/versions/{version} | Read immutable native output and provenance spec | Read |
+| GET | /v1/vcornea/outputs/{id}/versions/{version}/lineage | Read raw/normalized native lineage | Read |
 | POST | /v1/simulations/validate | Check execution feasibility | Admin |
 | POST | /v1/simulations/estimate | Resource estimate; money cost unknown | Admin |
 | POST | /v1/simulations | Durable submission, HTTP 202 | Admin |
@@ -39,6 +42,13 @@ Creation endpoints are not promises of scientific approval. Results are availabl
 only after worker success. Domain errors: 404 unknown reference; 409 immutable
 content/state/idempotency conflict; 422 scientific/execution constraint or schema
 validation; 501 unsupported engine capability. Authentication uses 401 and 403.
+
+Native vCornea ingestion uses `{ "spec": VCorneaOutputSpec, "csv_text": "..." }`.
+It returns HTTP 201 with the lineage and an output `Location`. Reusing an identical
+version is idempotent; changing its bytes/spec returns 409. Counts are in `count`
+and native Time is in `hour`. Preserve CRLF when serializing the original CSV.
+Thickness decoding/import is a separate operator CLI operation. These endpoints
+do not download or execute model code. See [native outputs](vcornea-native-output.md).
 
 `Idempotency-Key` is scoped to the local workspace and checked against the normalized
 plan digest. Reuse with the same plan returns the existing run; use with a different

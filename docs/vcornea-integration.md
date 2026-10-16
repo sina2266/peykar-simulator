@@ -1,7 +1,54 @@
 # vCornea integration gate
 
-Integration status: **designed, not executed**. The reference population engine in
-this repository is not vCornea and must never be presented as a substitute.
+Integration status: **working explicit operator profile**, verified 2026-10-16.
+[EPIC E1](epics/E1-vcornea-native-runtime.md) delivers licensed source acquisition,
+a locked CompuCell3D 4.7.0 environment, bounded native runs, actual reference
+ingestion, seeded regression and authenticated output retrieval. Full published
+reproduction and independent biological validation remain open. The synthetic
+population engine remains a separate infrastructure fixture.
+
+## Current admitted archive and execution
+
+The exact [Zenodo record 16884414](https://zenodo.org/records/16884414) declares
+CC-BY-4.0 for its code and simulation-data files. Attribution: Vanin, Joel; Getz,
+Michael; Knudsen, Thomas; Mahony, Catherine; Glazier, James Alexander (2025),
+*V-Cornea Data and Simulation Code for Local or HPC Runs*.
+Preserve attribution, [license](https://creativecommons.org/licenses/by/4.0/) and
+the record link when sharing these files or controlled derivatives. Peykar's
+project license does not replace these terms; no author endorsement is implied.
+This record-level permission does not establish a standalone GitHub code license.
+
+The complete 228,842,524-byte code archive passed its published MD5 and local
+SHA-256 `855245e200cc322371b133a8c9e9fc0e81310ab7f3603ebf49afc4afcaf718dc`.
+[The source manifest](../engine_adapters/compucell3d/vcornea-source-16884414.json)
+pins 27 reviewed files. Extraction excludes all bundled `.git` contents/hooks.
+The source-tree digest is
+`af65f6f2ec17f9e1ebef0af5327a23d4b295fa3f74a272015ff88e8d94fa72a9`.
+Git and archive are distinct identities; the paper XML differs, so execution uses
+the licensed archive and does not describe that as an exact Git replay.
+
+The [runtime lock](../engine_adapters/compucell3d/runtime/README.md) fixes 424
+Linux/AMD64 packages, including CompuCell3D 4.7.0, Python 3.12.2 and PyArrow.
+It is reconstructed, not the recovered author environment. Source/data remain
+under ignored `.peykar/external/`; the default API/worker image excludes this
+runtime and model. `scripts/run_vcornea.py` executes only the fixed reviewed source
+after digest checks, on an explicit local command. It disables network, drops
+capabilities and bounds memory, CPU, processes, wall time, logs and working files.
+The container sees only a private writable execution directory. Horizon and RNG
+controls are recorded separately; original model mechanisms/source are preserved.
+This profile is not a general hostile-code execution service.
+
+Six complete published count/height files were acquired with bounded ZIP64 range
+reads. Whole-archive data MD5 remains unverified. Native hours, unknown seeds and
+lattice height semantics are preserved; see [native outputs](vcornea-native-output.md)
+and [dataset acquisition](integration-candidates.md). Two seeds repeated exactly
+in a frozen bounded regression. A separate 600-MCS run crossed the source injury
+at 500 MCS/50 hours. These are engineering results, not full published replay.
+
+## Historical inspection records
+
+The records below retain what was known at the time; the successful archive
+admission and execution above supersede their unresolved implementation status.
 
 ## Pinned admission inspection, 2026-10-15
 
@@ -65,7 +112,7 @@ digital twin. Upstream documentation is not independent validation of our adapte
    invent a revision or use a moving branch as the reproducibility reference.
 3. Reconstruct the documented 4.7.0 environment in a separate environment/container.
    Verify compatibility before considering an engine version upgrade.
-4. Run the original published scenario without changing scientific code. Record
+4. Run the original published scenario without changing scientific mechanisms. Record
    environment, input files, seed behavior, engine command and raw output checksums.
 5. Inspect actual raw output schema. Implement an importer with units, time-step
    mapping, biological context and explicit observation operators. Do not guess

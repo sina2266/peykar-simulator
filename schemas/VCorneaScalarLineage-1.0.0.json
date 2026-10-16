@@ -1,0 +1,91 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:VCorneaScalarLineage:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "column": {
+      "enum": [
+        "Superficial",
+        "Wing",
+        "Basal",
+        "Stem"
+      ],
+      "title": "Column",
+      "type": "string"
+    },
+    "dataset": {
+      "$ref": "#/$defs/Reference"
+    },
+    "importer": {
+      "const": "peykar.vcornea-scalar/1.0.0",
+      "default": "peykar.vcornea-scalar/1.0.0",
+      "title": "Importer",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "native_lineage_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Native Lineage Digest",
+      "type": "string"
+    },
+    "native_output": {
+      "$ref": "#/$defs/Reference"
+    },
+    "normalized_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Normalized Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset",
+    "native_output",
+    "native_lineage_digest",
+    "normalized_digest",
+    "column",
+    "limitations"
+  ],
+  "title": "VCorneaScalarLineage",
+  "type": "object"
+}

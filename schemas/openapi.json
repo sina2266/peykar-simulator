@@ -1368,6 +1368,374 @@
         "title": "SimulationResult",
         "type": "object"
       },
+      "VCorneaCellCountRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "csv_text": {
+            "title": "Csv Text",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/VCorneaOutputSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "csv_text"
+        ],
+        "title": "VCorneaCellCountRequest",
+        "type": "object"
+      },
+      "VCorneaOutputArtifact": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "cell_count",
+              "thickness"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "origin": {
+            "enum": [
+              "simulation",
+              "synthetic"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/Series"
+            },
+            "title": "Outputs",
+            "type": "array"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "maximum": 4294967295.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "time": {
+            "$ref": "#/components/schemas/Series"
+          },
+          "validity_status": {
+            "const": "unvalidated",
+            "default": "unvalidated",
+            "title": "Validity Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference",
+          "kind",
+          "origin",
+          "time",
+          "outputs",
+          "limitations"
+        ],
+        "title": "VCorneaOutputArtifact",
+        "type": "object"
+      },
+      "VCorneaOutputLineage": {
+        "additionalProperties": false,
+        "properties": {
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Columns",
+            "type": "array"
+          },
+          "decoded_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decoded Digest"
+          },
+          "importer": {
+            "const": "peykar.vcornea-native/1.0.0",
+            "default": "peykar.vcornea-native/1.0.0",
+            "title": "Importer",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "normalized_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Normalized Digest",
+            "type": "string"
+          },
+          "quality_checks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Quality Checks",
+            "type": "array"
+          },
+          "raw_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Raw Digest",
+            "type": "string"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "rows": {
+            "maximum": 1000010.0,
+            "minimum": 2.0,
+            "title": "Rows",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/VCorneaOutputSpec"
+          }
+        },
+        "required": [
+          "reference",
+          "raw_digest",
+          "normalized_digest",
+          "spec",
+          "rows",
+          "columns",
+          "quality_checks",
+          "limitations"
+        ],
+        "title": "VCorneaOutputLineage",
+        "type": "object"
+      },
+      "VCorneaOutputSpec": {
+        "additionalProperties": false,
+        "description": "Metadata for the pinned upstream native output, separate from a Peykar run.",
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "cell_count",
+              "thickness"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "normalizer_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalizer Digest"
+          },
+          "origin": {
+            "enum": [
+              "simulation",
+              "synthetic"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "parameter_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameter Digest"
+          },
+          "runtime_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runtime Digest"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "maximum": 4294967295.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "seed_evidence": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed Evidence"
+          },
+          "source": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "source_archive_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Archive Digest"
+          },
+          "source_archive_doi": {
+            "anyOf": [
+              {
+                "const": "10.5281/zenodo.16884414",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Archive Doi"
+          },
+          "source_tree_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Tree Digest",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "upstream_commit": {
+            "anyOf": [
+              {
+                "const": "f5c03afb9c4c7d909494146c5db608389e957070",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upstream Commit"
+          },
+          "variant": {
+            "enum": [
+              "paper_version",
+              "paper_version_STEM_ONLY"
+            ],
+            "title": "Variant",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "kind",
+          "origin",
+          "context",
+          "license",
+          "source",
+          "variant",
+          "source_tree_digest"
+        ],
+        "title": "VCorneaOutputSpec",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -3265,6 +3633,168 @@
         "summary": "Get Set",
         "tags": [
           "validation"
+        ]
+      }
+    },
+    "/v1/vcornea/outputs/cell-counts": {
+      "post": {
+        "operationId": "import_vcornea_counts_v1_vcornea_outputs_cell_counts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VCorneaCellCountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VCorneaOutputLineage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Import Vcornea Counts",
+        "tags": [
+          "vcornea"
+        ]
+      }
+    },
+    "/v1/vcornea/outputs/{id}/versions/{version}": {
+      "get": {
+        "operationId": "vcornea_output_v1_vcornea_outputs__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VCorneaOutputArtifact"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Vcornea Output",
+        "tags": [
+          "vcornea"
+        ]
+      }
+    },
+    "/v1/vcornea/outputs/{id}/versions/{version}/lineage": {
+      "get": {
+        "operationId": "vcornea_lineage_v1_vcornea_outputs__id__versions__version__lineage_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VCorneaOutputLineage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Vcornea Lineage",
+        "tags": [
+          "vcornea"
         ]
       }
     }

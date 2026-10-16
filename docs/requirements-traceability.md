@@ -58,7 +58,7 @@ consolidated engineering map.
 | Section 54: populations/environment as analysis scales | master-blueprint.md 3 | Planned schema/engine expansion, not a containment claim |
 | Section 55: milestones A-G and model evolution | roadmap.md; master-blueprint.md 18 | Acceptance definitions, not unearned success claims |
 | Explicit initial deferrals | master-blueprint.md 19; roadmap.md | Status list keeps deferred capabilities visible |
-| First real result: unchanged vCornea reproduction, evaluation, weakness and challenger | vcornea-integration.md; roadmap.md | Not claimed completed; source/environment/reference gates defined |
+| First real result: unchanged vCornea reproduction, evaluation, weakness and challenger | vcornea-integration.md; epics/E1-vcornea-native-runtime.md; roadmap.md | E1 operator runtime, native reference import and bounded repeats work; full published replay, independent evaluation and challenger improvement remain open |
 | Later molecular-to-vCornea composition test | master-blueprint.md 7,18 | P4 requires numerical and biological evidence |
 | Source-visible, noncommercial licensing request | LICENSING.md; licensing-rationale.md | Custom draft and explicit preservation of earlier Apache grants |
 

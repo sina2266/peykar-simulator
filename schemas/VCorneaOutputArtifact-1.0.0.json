@@ -1,0 +1,141 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "Series": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "unit",
+        "values"
+      ],
+      "title": "Series",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:VCorneaOutputArtifact:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "enum": [
+        "cell_count",
+        "thickness"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "origin": {
+      "enum": [
+        "simulation",
+        "synthetic"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "outputs": {
+      "items": {
+        "$ref": "#/$defs/Series"
+      },
+      "title": "Outputs",
+      "type": "array"
+    },
+    "reference": {
+      "$ref": "#/$defs/Reference"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "maximum": 4294967295,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed"
+    },
+    "time": {
+      "$ref": "#/$defs/Series"
+    },
+    "validity_status": {
+      "const": "unvalidated",
+      "default": "unvalidated",
+      "title": "Validity Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reference",
+    "kind",
+    "origin",
+    "time",
+    "outputs",
+    "limitations"
+  ],
+  "title": "VCorneaOutputArtifact",
+  "type": "object"
+}

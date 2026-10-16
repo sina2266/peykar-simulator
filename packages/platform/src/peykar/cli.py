@@ -17,6 +17,7 @@ from peykar.model_import.cli import external_artifact_app
 from peykar.simulation.service import SimulationService
 from peykar.simulation.worker import Worker
 from peykar.validation.service import EvaluationService
+from peykar.vcornea_cli import vcornea_app
 from peykar_core.contracts import (
     CSVImportSpec,
     EvaluationSetSpec,
@@ -30,6 +31,7 @@ app = typer.Typer(no_args_is_help=True, help="Peykar biological modeling and sim
 app.add_typer(external_artifact_app, name="external-artifacts")
 app.add_typer(compucell_app, name="compucell")
 app.add_typer(knowledge_gap_app, name="knowledge-gaps")
+app.add_typer(vcornea_app, name="vcornea")
 
 
 def local_service() -> SimulationService:

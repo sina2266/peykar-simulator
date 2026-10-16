@@ -24,6 +24,7 @@ from peykar.api.middleware import BodyLimitMiddleware
 from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
 from peykar.data_fabric.csv_import import import_csv
 from peykar.data_fabric.service import DatasetService
+from peykar.data_fabric.vcornea_import import VCorneaImporter
 from peykar.governance.provenance import provenance
 from peykar.simulation.service import SimulationService
 from peykar.validation.service import EvaluationService
@@ -47,6 +48,9 @@ from peykar_core.contracts import (
     SimulationResult,
     ValidationRecord,
     ValidationReport,
+    VCorneaOutputArtifact,
+    VCorneaOutputLineage,
+    VCorneaOutputSpec,
     Version,
 )
 from peykar_core.errors import Conflict, InvalidRequest, NotFound, PeykarError, Unsupported
@@ -72,6 +76,11 @@ class CSVImportRequest(Contract):
 class SetEvaluationRequest(Contract):
     run_id: str
     evaluation_set: Reference
+
+
+class VCorneaCellCountRequest(Contract):
+    spec: VCorneaOutputSpec
+    csv_text: str
 
 
 def create_app(
@@ -219,6 +228,34 @@ def create_app(
     ) -> dict[str, str]:
         svc.validate(body)
         return {"status": "execution_valid", "scientific_validity": "not_established"}
+
+    @write.post("/vcornea/outputs/cell-counts", status_code=201, tags=["vcornea"])
+    def import_vcornea_counts(
+        body: VCorneaCellCountRequest,
+        response: Response,
+        svc: Annotated[SimulationService, Depends(service)],
+    ) -> VCorneaOutputLineage:
+        try:
+            raw = body.csv_text.encode("utf-8")
+        except UnicodeEncodeError as exc:
+            raise InvalidRequest("Native CSV text must be valid UTF-8") from exc
+        lineage = VCorneaImporter(svc.db, svc.artifacts).import_cell_counts(body.spec, raw)
+        response.headers["Location"] = (
+            f"/v1/vcornea/outputs/{body.spec.id}/versions/{body.spec.version}"
+        )
+        return lineage
+
+    @read.get("/vcornea/outputs/{id}/versions/{version}", tags=["vcornea"])
+    def vcornea_output(
+        id: Identifier, version: Version, svc: Annotated[SimulationService, Depends(service)]
+    ) -> VCorneaOutputArtifact:
+        return VCorneaImporter(svc.db, svc.artifacts).get_output(Reference(id=id, version=version))
+
+    @read.get("/vcornea/outputs/{id}/versions/{version}/lineage", tags=["vcornea"])
+    def vcornea_lineage(
+        id: Identifier, version: Version, svc: Annotated[SimulationService, Depends(service)]
+    ) -> VCorneaOutputLineage:
+        return VCorneaImporter(svc.db, svc.artifacts).get_lineage(Reference(id=id, version=version))
 
     @write.post("/simulations/estimate", tags=["simulations"])
     def estimate(

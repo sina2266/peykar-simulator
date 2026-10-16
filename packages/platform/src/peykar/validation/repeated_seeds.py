@@ -1,11 +1,12 @@
 """Frozen seed-paired scalar regression; no inferred stochastic or biological validity."""
 
 import math
+from dataclasses import dataclass
 
 from peykar.data_fabric.compucell_import import CompuCellImporter
 from peykar.data_fabric.service import DatasetService
+from peykar.data_fabric.vcornea_import import VCorneaImporter
 from peykar_core.contracts import (
-    CompuCellImportLineage,
     DatasetSnapshot,
     DatasetSpec,
     FrozenSeedProtocol,
@@ -17,9 +18,20 @@ from peykar_core.contracts import (
     SeedComparison,
     SeededDataset,
 )
-from peykar_core.errors import Conflict, InvalidRequest
+from peykar_core.errors import Conflict, InvalidRequest, NotFound
 from peykar_core.hashing import digest
 from peykar_core.units import convert
+
+
+@dataclass(frozen=True)
+class _SeedIdentity:
+    seed: int
+    source_digest: str
+    runtime_digest: str
+    engine_version: str
+    origin: str
+    seconds_per_step: float
+    lineage_digest: str
 
 
 class RepeatedSeedService:
@@ -27,11 +39,47 @@ class RepeatedSeedService:
         self.datasets = datasets
         self.importer = CompuCellImporter(datasets)
 
+    def _seed_identity(self, reference: Reference) -> _SeedIdentity:
+        try:
+            lineage = self.importer.lineage(reference)
+        except NotFound:
+            native_importer = VCorneaImporter(self.datasets.db, self.datasets.artifacts)
+            scalar = native_importer.get_scalar_lineage(reference)
+            native = native_importer.get_lineage(scalar.native_output)
+            if native.spec.seed is None or native.spec.runtime_digest is None:
+                raise InvalidRequest(
+                    "Native seed protocols require recorded seed evidence and runtime digest"
+                ) from None
+            return _SeedIdentity(
+                seed=native.spec.seed,
+                source_digest=digest(
+                    {
+                        "source_tree_digest": native.spec.source_tree_digest,
+                        "variant": native.spec.variant,
+                        "parameter_digest": native.spec.parameter_digest,
+                    }
+                ),
+                runtime_digest=native.spec.runtime_digest,
+                engine_version="4.7.0",
+                origin=native.spec.origin,
+                seconds_per_step=360.0,  # Pinned writer: ten MCS per hour.
+                lineage_digest=digest(scalar),
+            )
+        return _SeedIdentity(
+            seed=lineage.import_spec.seed,
+            source_digest=lineage.import_spec.source_digest,
+            runtime_digest=lineage.import_spec.runtime_digest,
+            engine_version=lineage.import_spec.engine_version,
+            origin=lineage.import_spec.dataset.origin,
+            seconds_per_step=convert(lineage.import_spec.time_per_step, "second"),
+            lineage_digest=digest(lineage),
+        )
+
     def _resolve(
         self, reference: Reference, protocol: RepeatedSeedProtocol
-    ) -> tuple[DatasetSpec, Observation, CompuCellImportLineage, SeededDataset]:
+    ) -> tuple[DatasetSpec, Observation, _SeedIdentity, SeededDataset]:
         spec, observation = self.datasets.get(reference)
-        lineage = self.importer.lineage(reference)
+        lineage = self._seed_identity(reference)
         if spec.context != protocol.context or observation.endpoint != protocol.endpoint:
             raise InvalidRequest("Scalar endpoint or context differs from seed protocol")
         if spec.role != "benchmark" or spec.origin == "experimental":
@@ -44,30 +92,30 @@ class RepeatedSeedService:
                 artifact_digest=spec.artifact_digest,
                 independence_group=spec.independence_group,
             ),
-            seed=lineage.import_spec.seed,
-            lineage_digest=digest(lineage),
+            seed=lineage.seed,
+            lineage_digest=lineage.lineage_digest,
         )
         return spec, observation, lineage, snapshot
 
     @staticmethod
-    def _check_cohort(lineages: tuple[CompuCellImportLineage, ...]) -> None:
+    def _check_cohort(lineages: tuple[_SeedIdentity, ...]) -> None:
         identities = {
             (
-                item.import_spec.source_digest,
-                item.import_spec.runtime_digest,
-                item.import_spec.engine_version,
-                item.import_spec.dataset.origin,
+                item.source_digest,
+                item.runtime_digest,
+                item.engine_version,
+                item.origin,
             )
             for item in lineages
         }
-        steps = tuple(convert(item.import_spec.time_per_step, "second") for item in lineages)
+        steps = tuple(item.seconds_per_step for item in lineages)
         if len(identities) != 1 or any(
             not math.isclose(step, steps[0], rel_tol=1e-12, abs_tol=0.0) for step in steps
         ):
             raise InvalidRequest(
                 "A seed cohort must share source, runtime, origin and time mapping"
             )
-        seeds = [item.import_spec.seed for item in lineages]
+        seeds = [item.seed for item in lineages]
         if len(set(seeds)) != len(seeds):
             raise InvalidRequest("Repeated-seed protocol requires distinct seeds")
 
@@ -111,8 +159,8 @@ class RepeatedSeedService:
                 candidate_snapshot.seed
             ]
             if not math.isclose(
-                convert(candidate_lineage.import_spec.time_per_step, "second"),
-                convert(reference_lineage.import_spec.time_per_step, "second"),
+                candidate_lineage.seconds_per_step,
+                reference_lineage.seconds_per_step,
                 rel_tol=1e-12,
                 abs_tol=0.0,
             ):
@@ -156,7 +204,7 @@ class RepeatedSeedService:
                     reference=reference.dataset,
                     candidate=candidate.dataset,
                     candidate_digest=candidate_spec.artifact_digest,
-                    candidate_lineage_digest=digest(candidate_lineage),
+                    candidate_lineage_digest=candidate_lineage.lineage_digest,
                     n=len(errors),
                     rmse=rmse,
                     max_absolute_error=maximum,
@@ -179,7 +227,7 @@ class RepeatedSeedService:
             ),
             limitations=(
                 "Every sample of every paired seed must pass the frozen scalar tolerance.",
-                "Seeds and time mappings are declarations; no external scenario executed.",
+                "Seed/runtime evidence is recorded or declared; comparison runs no external code.",
                 "No confidence intervals, distribution equivalence or biological validation.",
                 "Time conversion roundoff permitted at relative tolerance 1e-12; no resampling.",
                 "Local freezing provides immutability, not independent preregistration authority.",

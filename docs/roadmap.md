@@ -16,6 +16,34 @@ solved on a software schedule. Work may overlap where dependencies permit it.
 
 ## Next engineering increments
 
+### Completed EPIC E1: native vCornea engineering path, 2026-10-16
+
+[E1 acceptance and replay commands](epics/E1-vcornea-native-runtime.md) record the
+delivered licensed archive acquisition, locked CompuCell3D 4.7.0 environment,
+bounded execution, six published native count/height imports, seed-paired regression
+and API/CLI retrieval. A 600-MCS run crossed the configured injury at 500 MCS.
+This completes the operator engineering epic. P1's scientific exit remains open:
+the published files omit verified seeds/per-run parameters, the original author
+environment is unrecovered and full-length published replay has not been established.
+
+### Next EPIC E2: published-scenario reproduction
+
+1. Establish the exact published scenario, parameter combination, initial state,
+   original analysis and seed policy for one reference; record unrecoverable items
+   as evidence gaps rather than guessing from replicate folder names.
+2. Freeze an affordable full-horizon protocol, biological observation definition,
+   stochastic acceptance and reference distribution before candidate execution.
+3. Run the admitted model at that horizon and compare native outputs through the
+   pinned original analysis; preserve interpretable failures as well as successes.
+4. Seek independent experimental evidence only after an assay/context/measurement
+   mapping is defensible. The included scratch-control aggregate is not such a mapping.
+
+General queued external execution, distribution-level statistics and independent
+evaluator identity remain separate extensions. The bounded operator profile is for
+the reviewed pinned model; it is not a general hostile-code execution service.
+
+### Earlier continuation record (superseded implementation inventory)
+
 Continuation on 2026-10-16: the live API/worker path has been exercised for both
 reference engines. Result/manifest checks and the cancellation/recovery race are
 fixed. Offline digest admission and mapped scalar/seed comparison tools are working
@@ -25,15 +53,17 @@ Persistent manual knowledge-gap records make absent mechanisms/reference data
 queryable without inventing them; claim/conflict registries, independent authority
 and the scientific exit gates remain separate future work.
 
-1. Verify vCornea source/archive permissions and reconstruct its required 4.7.0 environment.
-   The upstream commit/tree are now pinned in the adapter admission record.
+1. Source permissions and required 4.7.0 reconstruction are now delivered by E1;
+   the earlier upstream commit/tree admission is retained as historical evidence.
 2. Extend the working bounded child lifecycle and scalar CSV importer to the actual
    CompuCell3D output format; add a reviewed container sandbox for untrusted code.
    Operator-mapped delimited scalar exports now have explicit MCS/time mapping and
-   provenance; actual native output inspection and the sandbox remain open.
+   provenance. E1 adds actual native formats and a restricted operator container;
+   a general untrusted execution service remains open.
 3. Freeze a published reference scenario and a repeated-seed comparison protocol.
    Local seed-paired protocols can now be frozen and compared; a licensed published
-   reference, reproduced runtime and distribution-level acceptance remain open.
+   reference and working reconstructed runtime are supplied by E1;
+   full published replay and distribution-level acceptance remain open.
 4. Extend the working frozen evaluation sets to donor-level provenance and independent evaluator identity.
 5. Add dependency/runtime digest checks for every imported external artifact.
    Offline admission now verifies every declared source/dependency/runtime-lock

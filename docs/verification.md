@@ -1,6 +1,105 @@
 # Verification record
 
-## Engineering continuation: 2026-10-16 (unreleased, on 0.3.0)
+## E1 native vCornea: 2026-10-16 (unreleased, on 0.3.0)
+
+Observed on this macOS checkout, Docker Desktop, and a separate emulated
+Linux/AMD64 scientific runtime. [E1 acceptance](epics/E1-vcornea-native-runtime.md)
+and its [portable receipt](../engine_adapters/compucell3d/vcornea-verification-2026-10-16.json)
+distinguish engineering completion from the remaining P1 published-replay gate.
+
+- The public Git checkout was cloned and pinned at
+  `f5c03afb9c4c7d909494146c5db608389e957070`; the licensed execution source is the
+  distinct exact Zenodo record **16884414**, declaring **CC-BY-4.0**. The complete
+  228,842,524-byte code ZIP passed published MD5 and local SHA-256 checks.
+  `scripts/prepare_vcornea.py` extracted 27 pinned reviewed files without `.git`;
+  a fresh extraction and matching-source reuse were observed. The archive's Local
+  paper XML differs from Git; these identities are not silently equated.
+- `scripts/acquire_vcornea.py members` acquired six complete native reference
+  files for three severities through checked HTTP Range/ZIP64 reads. Size/CRC32
+  and local SHA-256 passed. The acquisition transferred **16,317,077 bytes** including
+  ZIP indexing. Whole Data.zip MD5 is **unverified**; the stopped bulk download's
+  214,036,480-byte partial file was preserved, not reported as a full download.
+- `docker build --platform linux/amd64 -f engine_adapters/compucell3d/runtime/Dockerfile
+  -t peykar-cc3d:4.7.0-linux64 engine_adapters/compucell3d/runtime` passed after
+  repairing an observed missing `libGL.so.1` with explicit pinned GL/X11 dependencies.
+  The final lock contains **424** packages; **405** package-provided notice
+  directories were preserved with the full inventory. Engine/Qt imports and an
+  actual PyArrow Parquet round trip passed. The runtime receipt records CC3D 4.7.0
+  revision 5, Python 3.12.2, NumPy 2.2.6, pandas 3.0.6 and PyArrow 16.1.0.
+  The authors' complete original environment was not recovered.
+- `scripts/run_vcornea.py` first completed a 20-MCS, seed-7 native probe in
+  32.013 seconds. Its private copy produced actual count, surfactant and thickness
+  files. Source mechanisms were preserved; horizon and Python/NumPy/Potts seed
+  controls were recorded. No API token, home directory or live data volume was
+  mounted; execution was offline with resource/deadline/output bounds.
+- The exact `scripts/verify_vcornea_epic.py` command in the E1 document completed
+  six published imports and four real 60-MCS runs (reference/candidate seeds 7,11).
+  Published count and height series have **5,041 / 4,621 / 5,041** hourly samples;
+  archived seeds/runtime/per-run parameters stay unknown. Acceptance was written
+  before runs and the reference protocol frozen before candidates.
+- Both seven-sample Basal comparisons passed the frozen **0 count** tolerance with
+  RMSE/max error **0**. All three raw native output hashes also match within each
+  seed pair. Stored report retrieval passed:
+  `seed-report.a4e212d71f85c7e198ab604e8bb26f9a0938b04ff9126923403b9051380f3d06`.
+  Its class is `simulation_reference_comparison`, not biological validation.
+- The E1 `scripts/run_vcornea.py --steps 600 --seed 7 --wall-seconds 900` command
+  succeeded in **221.084646 seconds**, producing **61** count/height samples over
+  **0–60 hours**. Inspection of the actual 601-row surfactant CSV found zero before
+  hour 50 and first positive integral **750** at hour **50** (500 MCS), confirming
+  execution crossed the injury event. Physical units of that raw integral remain
+  unestablished. Its native Parquet was decoded/imported with ten lattice-coordinate
+  series. No native-run containers remained after cleanup.
+- Targeted importer/source/runtime/API tests passed before the final full run.
+  Final **`make check-docker` passed**: Ruff lint and format (189 files), strict
+  Mypy (**59 source files**), **242 tests** in 12.14 seconds, **88%** observed statement
+  coverage, current generated contracts/OpenAPI and all three wheels/sdists.
+  The host's subsequent **`make build`** also produced all three 0.3.0 wheel/sdist
+  pairs. No application code changed after the final full regression.
+- `PEYKAR_DATA_DIR=.peykar/vcornea-epic uv run peykar import-csv
+  experiments/data/rho2015-scratch/control.csv --spec experiments/data/rho2015-scratch/import.json`
+  stored two real experimental aggregate control means. Attribution, source XML
+  hash, original eight-row means/SD transcription and percent-to-fraction transform
+  are retained. The different monolayer/GM-CSF context is explicitly excluded from
+  vCornea independent validation; SD remains raw metadata, not an uncertainty model.
+- Before service recreation, active-job checks returned zero. SQLite's backup API
+  and a separate artifact archive produced
+  `backups/pre-vcornea-20261016T205315Z/`, also copied to local ignored backups.
+  `docker compose build` and `docker compose up -d --wait` succeeded against the
+  unchanged named volume; API healthy and the separate worker running.
+- Authenticated live HTTP POST imported the three published count outputs and
+  `vcornea.epic.injury600` (201). Output/lineage GETs returned 200, exact raw CRLF
+  digests matched, identical reimport preserved lineage, and anonymous reads
+  returned 401. Three published Parquet files and the actual injury Parquet were
+  admitted by the deployed `peykar vcornea import-thickness` CLI and read through
+  HTTP with ten `lattice_y_coordinate` series. The execution manifest/record were
+  stored as content-addressed artifacts. Docker's read-only-root filesystem rejected
+  `docker cp` into the container; streaming the same local files through `exec` into
+  its existing writable `/tmp` succeeded without weakening container settings.
+- A new live gap `vcornea.published-replay.evidence-gap.20261016` was registered/read;
+  the historical `vcornea.integration.pending` record was preserved unchanged.
+- The deployed `scripts/verify_api.py experiments/manifests/decay.json` workflow
+  again passed real submission, idempotency, polling, manifest/result hashes and
+  events. Run `888a8f16-7891-4c96-8874-d2ff5c8a0dec` succeeded with 11 samples.
+- Final SQLite integrity was `ok`: **22 objects, 8 succeeded runs, 24 events**.
+  Every object/run/event row from both the original and pre-E1 backups remained
+  byte-identical; all **25** live artifact hashes passed. All **24** existing license
+  files, all **27** pinned model source files and the original Persian blueprint
+  checksum remained unchanged.
+- A final local link/JSON/package inspection passed for **42** Markdown documents,
+  generated schema JSON and the new receipt/data descriptors. All three host-built
+  wheels retain byte-identical LICENSE text; the platform wheel includes native
+  acquisition/runtime/import/CLI modules.
+
+Local detailed logs are retained under ignored `.peykar/external/`, notably
+`final-epic-check.log`, `epic60/`, `injury600/`, `live-native-api.json` and
+`final-epic-preservation.json`. Neither bounded exact repeats nor selected published
+simulation imports establish full-horizon reproduction, independent biological
+validation, hostile-code isolation or a general queued vCornea adapter.
+
+## Earlier engineering continuation: 2026-10-16 (unreleased, on 0.3.0)
+
+Historical observations below precede E1; the native runtime/source permissions and
+output-import status are superseded by the verified E1 record above.
 
 Observed on this macOS checkout and Docker Desktop's Linux ARM64 runtime:
 

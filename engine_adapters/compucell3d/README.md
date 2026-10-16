@@ -1,9 +1,15 @@
 # CompuCell3D integration
 
-Status: execution adapter designed, not installed or executed. A local,
-operator-mapped delimited scalar export importer and frozen seed-paired regression
-protocol are implemented; see [output import](../../docs/compucell-output.md).
-This does not establish a native format, reconstruct a runtime or reproduce vCornea.
+Status: **working operator integration**, verified on 2026-10-16. The archived
+vCornea source is licensed and pinned; a separately locked CompuCell3D 4.7.0 image
+executes private copies with explicit resource/seed/horizon controls. Native
+cell-count and thickness imports, frozen seed comparisons and authenticated output
+retrieval are implemented. The general API worker does not execute this model.
+
+See [EPIC E1](../../docs/epics/E1-vcornea-native-runtime.md),
+[runtime](runtime/README.md), [native import](../../docs/vcornea-native-output.md)
+and [mapped scalar import](../../docs/compucell-output.md). Full published-scenario
+reproduction and independent biological validation remain open.
 
 Official project/documentation: https://compucell3d.org/
 

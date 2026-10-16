@@ -24,6 +24,8 @@ certify Peykar's implementation or establish biological validity. The delivered
 | Imaging data | https://ngff.openmicroscopy.org/latest/ | Planned OME-Zarr representation; no large imaging importer today |
 | First scientific model | https://github.com/VaninJoel/vCornea | Separate untouched reference reproduction from candidate modification |
 | vCornea publication | https://doi.org/10.1371/journal.pcbi.1013410 | Defined tissue-model scope; no complete-eye claims |
+| Admitted vCornea source/data archive | https://doi.org/10.5281/zenodo.16884414 | Exact CC-BY-4.0 record; source and selected reference hashes in E1 receipts |
+| Experimental scratch aggregate | https://doi.org/10.1371/journal.pone.0138020 | CC-BY-4.0 transcription; monolayer/GM-CSF context, not vCornea validation |
 
 No source code from specialist engines was copied. Citation of a standard does not
 mean the current JSON contracts implement that standard. Schema/export adapters
