@@ -21,6 +21,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.batch_routes import install_batch_routes
+from peykar.api.hybrid_routes import install_hybrid_routes
 from peykar.api.middleware import BodyLimitMiddleware
 from peykar.api.native_routes import install_native_routes
 from peykar.api.platform_routes import install_platform_routes
@@ -159,6 +160,7 @@ def create_app(
     write = APIRouter(prefix="/v1", dependencies=[Depends(write_access)])
     install_native_routes(read, write, service)
     install_batch_routes(read, write, service)
+    install_hybrid_routes(read, write, service)
 
     @read.get("/engines", tags=["models"])
     def engines(svc: Annotated[SimulationService, Depends(service)]) -> tuple[dict[str, str], ...]:

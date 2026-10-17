@@ -13,6 +13,7 @@ from peykar.compucell_cli import compucell_app
 from peykar.data_fabric.csv_import import MAX_CSV_BYTES, import_csv
 from peykar.data_fabric.service import DatasetService
 from peykar.examples import bootstrap, demo
+from peykar.hybrid_cli import hybrid_app
 from peykar.knowledge_gap_cli import knowledge_gap_app
 from peykar.model_import.cli import external_artifact_app
 from peykar.native_cli import native_app
@@ -41,6 +42,7 @@ app.add_typer(experiment_app, name="experiments")
 app.add_typer(runtime_app, name="runtimes")
 app.add_typer(native_app, name="native")
 app.add_typer(batch_app, name="batches")
+app.add_typer(hybrid_app, name="flows")
 
 
 def local_service() -> SimulationService:

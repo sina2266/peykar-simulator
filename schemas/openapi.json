@@ -1394,6 +1394,170 @@
         "title": "ExperimentSpec",
         "type": "object"
       },
+      "FlowNodeRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "derivation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "manifest_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manifest Digest"
+          },
+          "node_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Node Id",
+            "type": "string"
+          },
+          "queue": {
+            "enum": [
+              "reference",
+              "native"
+            ],
+            "title": "Queue",
+            "type": "string"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "skipped",
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "transfer_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transfer Digest"
+          }
+        },
+        "required": [
+          "node_id",
+          "queue",
+          "run_id",
+          "manifest_digest",
+          "transfer_digest",
+          "derivation",
+          "status"
+        ],
+        "title": "FlowNodeRecord",
+        "type": "object"
+      },
+      "FlowTransfer": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_manifest_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Manifest Digest",
+            "type": "string"
+          },
+          "source_node": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Node",
+            "type": "string"
+          },
+          "source_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Port",
+            "type": "string"
+          },
+          "source_quantity": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "source_result_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Result Digest",
+            "type": "string"
+          },
+          "source_run_id": {
+            "title": "Source Run Id",
+            "type": "string"
+          },
+          "target_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Port",
+            "type": "string"
+          },
+          "target_quantity": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "target_selector": {
+            "title": "Target Selector",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_node",
+          "source_run_id",
+          "source_manifest_digest",
+          "source_result_digest",
+          "source_port",
+          "target_port",
+          "target_selector",
+          "source_quantity",
+          "target_quantity",
+          "evidence"
+        ],
+        "title": "FlowTransfer",
+        "type": "object"
+      },
       "FrozenBatch": {
         "additionalProperties": false,
         "properties": {
@@ -1577,6 +1741,97 @@
         "title": "FrozenExperiment",
         "type": "object"
       },
+      "FrozenFlowNode": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunManifest"
+              },
+              {
+                "$ref": "#/components/schemas/NativeRunManifest"
+              }
+            ],
+            "title": "Manifest"
+          },
+          "native_interface": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NativeInterfaceSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "manifest",
+          "native_interface"
+        ],
+        "title": "FrozenFlowNode",
+        "type": "object"
+      },
+      "FrozenHybridFlow": {
+        "additionalProperties": false,
+        "properties": {
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/FrozenFlowNode"
+            },
+            "title": "Nodes",
+            "type": "array"
+          },
+          "order": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "title": "Order",
+            "type": "array"
+          },
+          "sample_upper_bound": {
+            "title": "Sample Upper Bound",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/HybridFlowSpec"
+          },
+          "total_wall_seconds_limit": {
+            "minimum": 0.0,
+            "title": "Total Wall Seconds Limit",
+            "type": "number"
+          }
+        },
+        "required": [
+          "spec",
+          "nodes",
+          "order",
+          "sample_upper_bound",
+          "total_wall_seconds_limit"
+        ],
+        "title": "FrozenHybridFlow",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -1588,6 +1843,252 @@
           }
         },
         "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HybridFlowBinding": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_node": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Node",
+            "type": "string"
+          },
+          "source_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Port",
+            "type": "string"
+          },
+          "target_node": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Node",
+            "type": "string"
+          },
+          "target_parameter": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Parameter"
+          },
+          "target_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Port",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_node",
+          "source_port",
+          "target_node",
+          "target_port",
+          "evidence"
+        ],
+        "title": "HybridFlowBinding",
+        "type": "object"
+      },
+      "HybridFlowNode": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "native_interface": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimulationPlan"
+              },
+              {
+                "$ref": "#/components/schemas/NativeRunSpec"
+              }
+            ],
+            "title": "Plan"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "plan"
+        ],
+        "title": "HybridFlowNode",
+        "type": "object"
+      },
+      "HybridFlowRunRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "cancel_requested": {
+            "title": "Cancel Requested",
+            "type": "boolean"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "flow": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "flow_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Flow Digest",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/FlowNodeRecord"
+            },
+            "title": "Nodes",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "flow",
+          "flow_digest",
+          "status",
+          "cancel_requested",
+          "error",
+          "created_at",
+          "updated_at",
+          "nodes"
+        ],
+        "title": "HybridFlowRunRecord",
+        "type": "object"
+      },
+      "HybridFlowSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "bindings": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/HybridFlowBinding"
+            },
+            "maxItems": 32,
+            "title": "Bindings",
+            "type": "array"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/BatchBudget",
+            "default": {
+              "max_in_flight": 4,
+              "max_jobs": 64,
+              "max_total_samples": 1000000,
+              "max_total_wall_seconds": 14400.0,
+              "schema_version": "1.0.0"
+            }
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/HybridFlowNode"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Nodes",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "nodes",
+          "limitations"
+        ],
+        "title": "HybridFlowSpec",
         "type": "object"
       },
       "Intervention": {
@@ -2025,6 +2526,49 @@
         "title": "NativeCompletionRequest",
         "type": "object"
       },
+      "NativeDerivationReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "child_content_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Child Content Digest",
+            "type": "string"
+          },
+          "interface": {
+            "$ref": "#/components/schemas/NativeInterfaceSpec"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/NativeModelPackage"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "transfers": {
+            "items": {
+              "$ref": "#/components/schemas/FlowTransfer"
+            },
+            "title": "Transfers",
+            "type": "array"
+          },
+          "transformer": {
+            "const": "sbml.initial_concentration.1.0.0",
+            "default": "sbml.initial_concentration.1.0.0",
+            "title": "Transformer",
+            "type": "string"
+          }
+        },
+        "required": [
+          "parent",
+          "interface",
+          "transfers",
+          "child_content_digest"
+        ],
+        "title": "NativeDerivationReceipt",
+        "type": "object"
+      },
       "NativeExecutionProfile": {
         "additionalProperties": false,
         "properties": {
@@ -2079,6 +2623,67 @@
           "limitations"
         ],
         "title": "NativeExecutionProfile",
+        "type": "object"
+      },
+      "NativeInterfaceSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "model": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "ports": {
+            "items": {
+              "$ref": "#/components/schemas/NativeModelPort"
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Ports",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "model",
+          "ports",
+          "evidence",
+          "limitations"
+        ],
+        "title": "NativeInterfaceSpec",
         "type": "object"
       },
       "NativeModelImport": {
@@ -2227,6 +2832,60 @@
           "inspection"
         ],
         "title": "NativeModelPackage",
+        "type": "object"
+      },
+      "NativeModelPort": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "native_output",
+              "sbml_initial_concentration"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "port": {
+            "$ref": "#/components/schemas/ScientificPort"
+          },
+          "quantity_key": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity Key"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "species_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Species Id"
+          }
+        },
+        "required": [
+          "port",
+          "kind"
+        ],
+        "title": "NativeModelPort",
         "type": "object"
       },
       "NativeModelSpec": {
@@ -5414,6 +6073,495 @@
         ]
       }
     },
+    "/v1/hybrid-flows": {
+      "get": {
+        "operationId": "flows_v1_hybrid_flows_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "title": "Response Flows V1 Hybrid Flows Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Flows",
+        "tags": [
+          "hybrid flows"
+        ]
+      },
+      "post": {
+        "operationId": "freeze_v1_hybrid_flows_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HybridFlowSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenHybridFlow"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Freeze",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-flows/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_v1_hybrid_flows__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenHybridFlow"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs": {
+      "post": {
+        "operationId": "submit_v1_hybrid_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "idempotency-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reference"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HybridFlowRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs/{id}": {
+      "get": {
+        "operationId": "record_v1_hybrid_runs__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HybridFlowRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_v1_hybrid_runs__id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HybridFlowRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs/{id}/events": {
+      "get": {
+        "operationId": "events_v1_hybrid_runs__id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "title": "Response Events V1 Hybrid Runs  Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Events",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs/{id}/nodes/{node_id}/transfers": {
+      "get": {
+        "operationId": "transfers_v1_hybrid_runs__id__nodes__node_id__transfers_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "node_id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Node Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FlowTransfer"
+                  },
+                  "title": "Response Transfers V1 Hybrid Runs  Id  Nodes  Node Id  Transfers Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Transfers",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/hybrid-runs/{id}/results": {
+      "get": {
+        "operationId": "results_v1_hybrid_runs__id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Results V1 Hybrid Runs  Id  Results Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Results",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
     "/v1/knowledge-gaps": {
       "get": {
         "operationId": "knowledge_gaps_v1_knowledge_gaps_get",
@@ -6000,6 +7148,200 @@
         "summary": "Model",
         "tags": [
           "models"
+        ]
+      }
+    },
+    "/v1/native-derivations/{id}/versions/{version}": {
+      "get": {
+        "operationId": "derivation_v1_native_derivations__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NativeDerivationReceipt"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Derivation",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/native-interfaces": {
+      "get": {
+        "operationId": "interfaces_v1_native_interfaces_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NativeInterfaceSpec"
+                  },
+                  "title": "Response Interfaces V1 Native Interfaces Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Interfaces",
+        "tags": [
+          "hybrid flows"
+        ]
+      },
+      "post": {
+        "operationId": "interface_v1_native_interfaces_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NativeInterfaceSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Interface V1 Native Interfaces Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Interface",
+        "tags": [
+          "hybrid flows"
+        ]
+      }
+    },
+    "/v1/native-interfaces/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_interface_v1_native_interfaces__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NativeInterfaceSpec"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Interface",
+        "tags": [
+          "hybrid flows"
         ]
       }
     },

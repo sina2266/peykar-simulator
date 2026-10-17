@@ -4,7 +4,9 @@ The platform now admits declarative SBML/PKML and manages their actual execution
 through a separate operator agent. Two reviewed drivers are implemented:
 `copasi.sbml@1.0.0` and `osp.pkml@1.0.0`. Other native runtime probes remain
 operator workflows; they do not gain queue support from this change. CellML,
-native DAG composition, checkpoints, feedback coupling and the frontend remain open.
+general native composition, checkpoints, feedback coupling and the frontend remain open.
+[Hybrid scalar flows](epics/E3-native-scalar-flows.md) now support explicit
+COPASI/reference dependencies through immutable initial-concentration derivatives.
 
 ## Admission and execution identities
 

@@ -1,5 +1,54 @@
 # Verification record
 
+## E3 native/reference scalar DAGs: 2026-10-17 local
+
+[Observed hybrid-flow evidence](hybrid-flow-verification-2026-10-17.json) retains
+actual node/transfer/result identities and numerical outputs.
+
+- Targeted hybrid/cohort/native/workflow checks passed **95 tests**; after adding
+  source-integrity/failure/fanout gates, **26 E3 tests** passed. Tests cover exact
+  unit transfer, byte-preserving XML edits including BOM/comments, immutable parents,
+  atomic derived registry/receipt/child rollback, concurrency/capacity, restart,
+  cancellation/late success, cycles/duplicate writers, semantics/context, unsupported
+  amount/assigned/event inputs, corrupted source manifests and API roles/idempotency.
+- Final **`make check-docker` passed: 366 tests in 24.61 seconds, 88% coverage**,
+  strict Mypy **80** source files, Ruff lint/format, current schemas/OpenAPI and all
+  three wheel/sdist pairs. **`make build` passed** on the host; the platform wheel
+  includes `005_hybrid_flows.sql` and hybrid modules. Earlier schema JSON versions
+  and `uv.lock` are unchanged. An earlier Docker check stopped at lint before tests;
+  the corrected final command above completed successfully.
+- SQLite backup API/artifact copy created
+  `backups/pre-hybrid-flows-20261017T103604Z/`, also copied locally. All existing
+  queues were idle before `docker compose build` / `docker compose up -d --no-build`.
+  API/ordinary Worker use the same original volume; native host image/driver pins
+  and the absence of API Docker access remain unchanged.
+- `uv run python scripts/verify_hybrid_flows.py --output
+  .peykar/e3-live-verification` passed against the deployed services and real COPASI
+  containers. It admitted the interface/reference descriptors through HTTP, froze
+  both flows idempotently, executed dependencies and verified transfer/derivation
+  hashes and unchanged original model bytes.
+- Three-stage COPASI → reference → COPASI flow
+  `95649676-962b-454f-b3de-98096e19deb8` returned terminal A
+  **0.04978705189575012** against analytical `exp(-3)` = **0.049787068367863944**,
+  absolute error **1.6472114e-8**. Units passed through explicit millimolar,
+  micromolar and molar declarations. The downstream native model was admitted as
+  a separate derivative with original license/context and parent/upstream lineage.
+- Direct native → native flow `823eb118-fc25-4416-be6e-67d032fb79cd` returned
+  **0.13533523846075707** against `exp(-2)` = **0.1353352832366127**,
+  absolute error **4.4775856e-8**. These are authored synthetic numerical checks.
+- Running native-source cancellation in flow
+  `817d3c6d-4474-4a17-bb6e-a5c34b7494f2` ended cancelled and skipped both remaining
+  nodes. Actual source timeout in `fe0d823b-ce94-43ab-ba30-8cd2450f1e99` ended failed
+  and skipped downstream nodes. No native container remained; all queues were idle.
+- Preservation comparisons retained every earlier **65 object versions, 40 ordinary
+  runs/120 events, 2 experiments/4 nodes/8 events, 15 native runs/47 events and
+  7 batches/38 members/57 events**. All **367** previous artifact byte sequences
+  and **24** original license hashes match. SQLite `user_version` remains **1**.
+
+E3 establishes the restricted sequential scalar initial-condition workflow. It does
+not close general native mappings, PKML inputs, shared-time feedback, checkpoint
+continuation, independent biological bridges or full UI gates.
+
 ## E2 cohorts, parameter sweeps and terminal statistics: 2026-10-17 local
 
 [Actual cohort evidence](cohort-verification-2026-10-17.json) retains exact member,

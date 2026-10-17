@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "id": "flow.native-reference-native",
+  "version": "1.0.0",
+  "title": "Actual COPASI to reference to COPASI initial concentration transfer",
+  "nodes": [
+    {
+      "schema_version": "1.0.0",
+      "id": "first",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.transfer",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "copasi.sbml",
+          "version": "1.0.0"
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "intervals": 10,
+        "wall_seconds": 120.0
+      },
+      "native_interface": {
+        "schema_version": "1.0.0",
+        "id": "interface.transfer.concentration",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "second",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "flow.reference-decay",
+          "version": "1.0.0"
+        },
+        "context": {
+          "schema_version": "1.0.0",
+          "species": "synthetic",
+          "biological_system": "reference verification",
+          "conditions": []
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "sample_interval": {
+          "schema_version": "1.0.0",
+          "value": 1.0,
+          "unit": "second"
+        },
+        "parameters": [],
+        "interventions": [],
+        "seed": 42,
+        "budget": {
+          "schema_version": "1.0.0",
+          "max_samples": 10001,
+          "wall_seconds": 60.0
+        },
+        "purpose": "Synthetic infrastructure verification"
+      },
+      "native_interface": null
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "third",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.transfer",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "copasi.sbml",
+          "version": "1.0.0"
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "intervals": 10,
+        "wall_seconds": 120.0
+      },
+      "native_interface": {
+        "schema_version": "1.0.0",
+        "id": "interface.transfer.concentration",
+        "version": "1.0.0"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "schema_version": "1.0.0",
+      "source_node": "first",
+      "source_port": "a_out",
+      "target_node": "second",
+      "target_port": "initial_in",
+      "target_parameter": "initial",
+      "evidence": [
+        "Synthetic serial decay; explicitly converted mM to micromolar input, then model canonical molar units"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "source_node": "second",
+      "source_port": "concentration",
+      "target_node": "third",
+      "target_port": "a_in",
+      "target_parameter": null,
+      "evidence": [
+        "Explicit molar to mM transfer and immutable initial-state derivation"
+      ]
+    }
+  ],
+  "budget": {
+    "schema_version": "1.0.0",
+    "max_jobs": 64,
+    "max_total_samples": 1000000,
+    "max_total_wall_seconds": 14400.0,
+    "max_in_flight": 4
+  },
+  "limitations": [
+    "Synthetic sequential initial-state transfer only; no continuous feedback or biological validity."
+  ]
+}

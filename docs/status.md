@@ -10,7 +10,7 @@ interfaces/acceptance criteria without an executable integration.
 | Model/data/scenario contracts and JSON Schemas | Implemented | Schema 1.0.0 only |
 | Versioned model registry and pinned dependencies | Implemented | Local persistent profile |
 | Declarative model import inspection | Partial | JSON plus bounded SBML core L2/L3 and PKML XML; exact raw bytes, context/license and original units; no execution during admission; CellML open |
-| External native agent and durable queue | Implemented for two kinds | COPASI SBML and OSPSuite PKML; immutable model/profile/runtime, local driver/image allowlist, leases/cancellation/timeout and validated native artifacts; separate host agent, no API Docker socket; other engines and native DAG composition open |
+| External native agent and durable queue | Implemented for two kinds | COPASI SBML and OSPSuite PKML; immutable model/profile/runtime, local driver/image allowlist, leases/cancellation/timeout and validated native artifacts; separate host agent, no API Docker socket; bounded COPASI/reference scalar DAG composition now implemented separately; other engine adapters open |
 | Offline external artifact admission | Partial | SHA-256 checks for every declared source/dependency/runtime-lock file; immutable local inventory; no installation, execution or undeclared dependency discovery |
 | Managed specialist source ecosystem | Implemented local source distribution | 25 permanent vendor distributions / 52,167 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
 | Native runtime evidence registry | Implemented locally | 11 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
@@ -20,6 +20,7 @@ interfaces/acceptance criteria without an executable integration.
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
 | Durable multi-model experiments | Partial | Working sequential terminal-output to initial-parameter transfer; frozen models, atomic child dispatch, retries/cancellation/results/events; no simultaneous feedback or spatial coupling |
+| Native/reference scalar workflows | Implemented bounded subset | Explicit native interfaces, dependency-driven mixed queues, semantic/context/unit gates, immutable SBML initial-concentration derivatives and atomic provenance/dispatch; PKML outputs supported, PKML inputs/general native mappings/continuous feedback open |
 | Batch/ensemble execution and parameter grids | Implemented for current queues | Immutable bounded cohorts, reference Cartesian sweeps/unique seeds, mixed COPASI/OSP/reference dispatch, capacity/cancel/failure policy and terminal mean/sample SD with explicit missing members; native seed/parameter overrides unsupported |
 | Conserved two-compartment exchange | Implemented | Analytical verification primitive |
 | Persistent runs and separate worker | Implemented | Single-host SQLite WAL queue |

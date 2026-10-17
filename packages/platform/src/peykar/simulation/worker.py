@@ -66,7 +66,9 @@ class Worker:
     def tick(self) -> RunRecord | None:
         from peykar.composition.batches import BatchService
         from peykar.composition.experiments import ExperimentService
+        from peykar.composition.hybrid_flows import HybridFlowService
 
+        HybridFlowService(self.service).advance_pending()
         BatchService(self.service).advance_pending()
         ExperimentService(self.service).advance_pending()
         claim = self.service.db.claim()

@@ -1,0 +1,441 @@
+{
+  "successful_flows": [
+    {
+      "result": {
+        "run": {
+          "schema_version": "1.0.0",
+          "id": "95649676-962b-454f-b3de-98096e19deb8",
+          "flow": {
+            "schema_version": "1.0.0",
+            "id": "flow.native-reference-native",
+            "version": "1.0.0"
+          },
+          "flow_digest": "397ebbba68d8c593c0847167029ecc84254dde2abd9723a3b3c3ca546abac169",
+          "status": "succeeded",
+          "cancel_requested": false,
+          "error": null,
+          "created_at": "2026-10-17T10:37:58.245327+00:00",
+          "updated_at": "2026-10-17T10:38:05.126495+00:00",
+          "nodes": [
+            {
+              "schema_version": "1.0.0",
+              "node_id": "first",
+              "queue": "native",
+              "run_id": "0ba98776-2d36-44ef-ac43-340d5cd59b60",
+              "manifest_digest": "c114702912e4a1a4313ae1744b7c72ef17ded995fde59fcd1a059a8033e2befb",
+              "transfer_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "derivation": null,
+              "status": "succeeded"
+            },
+            {
+              "schema_version": "1.0.0",
+              "node_id": "second",
+              "queue": "reference",
+              "run_id": "456f676b-55a5-498f-aad3-669ace3e147e",
+              "manifest_digest": "c64657501e0ccce5fd8f48907352022117c1dc376f875fadac8cc246bac83909",
+              "transfer_digest": "7d8cf331a85156b862485d253574c1ca8e11f13ce405d68374463844fbf1a421",
+              "derivation": null,
+              "status": "succeeded"
+            },
+            {
+              "schema_version": "1.0.0",
+              "node_id": "third",
+              "queue": "native",
+              "run_id": "9b6ad6b5-189a-4f3b-ad0e-6c3f2427437b",
+              "manifest_digest": "c65a13939e6c6251e8c6ce552549685e10f77a0d1ebd8c4e4291b4f0227605b4",
+              "transfer_digest": "fb27eefc0060f83d79a43e7ce07dd7d0fe960c12c624fad413e1655c76eda6a9",
+              "derivation": {
+                "schema_version": "1.0.0",
+                "id": "derived.cdf51d79bc0825d2bfcdf68453edd06ec5061a1d05e587134ad78eb860bce52c",
+                "version": "1.0.0"
+              },
+              "status": "succeeded"
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "node_id": "first",
+            "queue": "native",
+            "run_id": "0ba98776-2d36-44ef-ac43-340d5cd59b60",
+            "manifest_digest": "c114702912e4a1a4313ae1744b7c72ef17ded995fde59fcd1a059a8033e2befb",
+            "result_digest": "df7fd540239e4d4e6c4453dc1dae6157514f54267eec2ff4616a08491f7eae3d",
+            "terminal_values": {
+              "A": {
+                "schema_version": "1.0.0",
+                "value": 0.36787938031507966,
+                "unit": "mol/l"
+              },
+              "B": {
+                "schema_version": "1.0.0",
+                "value": 0.6321206196849203,
+                "unit": "mol/l"
+              }
+            },
+            "transfers": []
+          },
+          {
+            "node_id": "second",
+            "queue": "reference",
+            "run_id": "456f676b-55a5-498f-aad3-669ace3e147e",
+            "manifest_digest": "c64657501e0ccce5fd8f48907352022117c1dc376f875fadac8cc246bac83909",
+            "result_digest": "effe688b51d369a770f4dc4f625c38a49d56a6e160748a97243ea09cd6900e22",
+            "terminal_values": {
+              "concentration": {
+                "schema_version": "1.0.0",
+                "value": 0.13533526084880795,
+                "unit": "mole / liter"
+              }
+            },
+            "transfers": [
+              {
+                "schema_version": "1.0.0",
+                "source_node": "first",
+                "source_run_id": "0ba98776-2d36-44ef-ac43-340d5cd59b60",
+                "source_manifest_digest": "c114702912e4a1a4313ae1744b7c72ef17ded995fde59fcd1a059a8033e2befb",
+                "source_result_digest": "df7fd540239e4d4e6c4453dc1dae6157514f54267eec2ff4616a08491f7eae3d",
+                "source_port": "a_out",
+                "target_port": "initial_in",
+                "target_selector": "initial",
+                "source_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 367.8793803150797,
+                  "unit": "millimole/liter"
+                },
+                "target_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 367879.3803150797,
+                  "unit": "micromole/liter"
+                },
+                "evidence": [
+                  "Synthetic serial decay; explicitly converted mM to micromolar input, then model canonical molar units"
+                ]
+              }
+            ]
+          },
+          {
+            "node_id": "third",
+            "queue": "native",
+            "run_id": "9b6ad6b5-189a-4f3b-ad0e-6c3f2427437b",
+            "manifest_digest": "c65a13939e6c6251e8c6ce552549685e10f77a0d1ebd8c4e4291b4f0227605b4",
+            "result_digest": "dbc4316ec5deedc1632f58945e74e00cb7a50980fac5dff96f459773c9e82730",
+            "terminal_values": {
+              "A": {
+                "schema_version": "1.0.0",
+                "value": 0.04978705189575012,
+                "unit": "mol/l"
+              },
+              "B": {
+                "schema_version": "1.0.0",
+                "value": 0.08554820895305776,
+                "unit": "mol/l"
+              }
+            },
+            "transfers": [
+              {
+                "schema_version": "1.0.0",
+                "source_node": "second",
+                "source_run_id": "456f676b-55a5-498f-aad3-669ace3e147e",
+                "source_manifest_digest": "c64657501e0ccce5fd8f48907352022117c1dc376f875fadac8cc246bac83909",
+                "source_result_digest": "effe688b51d369a770f4dc4f625c38a49d56a6e160748a97243ea09cd6900e22",
+                "source_port": "concentration",
+                "target_port": "a_in",
+                "target_selector": "A",
+                "source_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 0.13533526084880795,
+                  "unit": "mole/liter"
+                },
+                "target_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 135.33526084880796,
+                  "unit": "millimole/liter"
+                },
+                "evidence": [
+                  "Explicit molar to mM transfer and immutable initial-state derivation"
+                ]
+              }
+            ]
+          }
+        ],
+        "execution_mode": "sequential_scalar_initial_conditions",
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Synthetic sequential initial-state transfer only; no continuous feedback or biological validity."
+        ]
+      },
+      "expected_terminal": 0.049787068367863944,
+      "actual_terminal": 0.04978705189575012,
+      "idempotency_verified": true
+    },
+    {
+      "result": {
+        "run": {
+          "schema_version": "1.0.0",
+          "id": "823eb118-fc25-4416-be6e-67d032fb79cd",
+          "flow": {
+            "schema_version": "1.0.0",
+            "id": "flow.native-native",
+            "version": "1.0.0"
+          },
+          "flow_digest": "21991850a814ae9f9e1ebfe0552807e7df4121f6053013a17d8c3bbfc2dc3f43",
+          "status": "succeeded",
+          "cancel_requested": false,
+          "error": null,
+          "created_at": "2026-10-17T10:38:05.236417+00:00",
+          "updated_at": "2026-10-17T10:38:13.266792+00:00",
+          "nodes": [
+            {
+              "schema_version": "1.0.0",
+              "node_id": "first",
+              "queue": "native",
+              "run_id": "dde458dc-0448-4f98-bb70-e977cf3788a4",
+              "manifest_digest": "ebc8e98084a74d0578251d6483294b746c3d4a514a67d21552f3dff02b232a24",
+              "transfer_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "derivation": null,
+              "status": "succeeded"
+            },
+            {
+              "schema_version": "1.0.0",
+              "node_id": "third",
+              "queue": "native",
+              "run_id": "2dcfe17d-5962-4216-b0ab-cfced629cbae",
+              "manifest_digest": "68874f5ce0c39fe6e6e6088f6e97ad8ae6bdaa5347be90399f315a088c00fdd4",
+              "transfer_digest": "33cbb16a3df169c9bb79e325a165a497a43a64909f812b13aacc8a8c30fb8f6f",
+              "derivation": {
+                "schema_version": "1.0.0",
+                "id": "derived.cb52a3b2e81d7d708780667792fff9c616961b880a8fb5abc31319f824316f28",
+                "version": "1.0.0"
+              },
+              "status": "succeeded"
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "node_id": "first",
+            "queue": "native",
+            "run_id": "dde458dc-0448-4f98-bb70-e977cf3788a4",
+            "manifest_digest": "ebc8e98084a74d0578251d6483294b746c3d4a514a67d21552f3dff02b232a24",
+            "result_digest": "d845de70fa594639f9a3e7bcb1e862b7db203d220d293385c38e1acbe3c7740c",
+            "terminal_values": {
+              "A": {
+                "schema_version": "1.0.0",
+                "value": 0.36787938031507966,
+                "unit": "mol/l"
+              },
+              "B": {
+                "schema_version": "1.0.0",
+                "value": 0.6321206196849203,
+                "unit": "mol/l"
+              }
+            },
+            "transfers": []
+          },
+          {
+            "node_id": "third",
+            "queue": "native",
+            "run_id": "2dcfe17d-5962-4216-b0ab-cfced629cbae",
+            "manifest_digest": "68874f5ce0c39fe6e6e6088f6e97ad8ae6bdaa5347be90399f315a088c00fdd4",
+            "result_digest": "445c50da464a6e897b80aced9a189931149c18b98f88dcdf2da51c3c6a815412",
+            "terminal_values": {
+              "A": {
+                "schema_version": "1.0.0",
+                "value": 0.13533523846075707,
+                "unit": "mol/l"
+              },
+              "B": {
+                "schema_version": "1.0.0",
+                "value": 0.23254414185432276,
+                "unit": "mol/l"
+              }
+            },
+            "transfers": [
+              {
+                "schema_version": "1.0.0",
+                "source_node": "first",
+                "source_run_id": "dde458dc-0448-4f98-bb70-e977cf3788a4",
+                "source_manifest_digest": "ebc8e98084a74d0578251d6483294b746c3d4a514a67d21552f3dff02b232a24",
+                "source_result_digest": "d845de70fa594639f9a3e7bcb1e862b7db203d220d293385c38e1acbe3c7740c",
+                "source_port": "a_out",
+                "target_port": "a_in",
+                "target_selector": "A",
+                "source_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 367.8793803150797,
+                  "unit": "millimole/liter"
+                },
+                "target_quantity": {
+                  "schema_version": "1.0.0",
+                  "value": 367.8793803150797,
+                  "unit": "millimole/liter"
+                },
+                "evidence": [
+                  "Analytical two consecutive ten-second decay stages"
+                ]
+              }
+            ]
+          }
+        ],
+        "execution_mode": "sequential_scalar_initial_conditions",
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Synthetic sequential initial-state transfer only; no continuous feedback or biological validity."
+        ]
+      },
+      "expected_terminal": 0.1353352832366127,
+      "actual_terminal": 0.13533523846075707,
+      "idempotency_verified": true
+    }
+  ],
+  "running_cancellation": {
+    "schema_version": "1.0.0",
+    "id": "817d3c6d-4474-4a17-bb6e-a5c34b7494f2",
+    "flow": {
+      "schema_version": "1.0.0",
+      "id": "flow.native-reference-native",
+      "version": "1.0.0"
+    },
+    "flow_digest": "397ebbba68d8c593c0847167029ecc84254dde2abd9723a3b3c3ca546abac169",
+    "status": "cancelled",
+    "cancel_requested": true,
+    "error": null,
+    "created_at": "2026-10-17T10:38:13.460901+00:00",
+    "updated_at": "2026-10-17T10:38:15.296763+00:00",
+    "nodes": [
+      {
+        "schema_version": "1.0.0",
+        "node_id": "first",
+        "queue": "native",
+        "run_id": "adbc141f-a556-442c-8b46-8a08a998414a",
+        "manifest_digest": "771a75ca381406d6400d817b6e2436e6cba4c03dbeb9774e0dc2f9b2d4adbfa6",
+        "transfer_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "derivation": null,
+        "status": "cancelled"
+      },
+      {
+        "schema_version": "1.0.0",
+        "node_id": "second",
+        "queue": "reference",
+        "run_id": null,
+        "manifest_digest": null,
+        "transfer_digest": null,
+        "derivation": null,
+        "status": "skipped"
+      },
+      {
+        "schema_version": "1.0.0",
+        "node_id": "third",
+        "queue": "native",
+        "run_id": null,
+        "manifest_digest": null,
+        "transfer_digest": null,
+        "derivation": null,
+        "status": "skipped"
+      }
+    ]
+  },
+  "original_model_bytes_unchanged": true,
+  "scientific_validity": "not_established",
+  "failure_propagation": {
+    "schema_version": "1.0.0",
+    "id": "fe0d823b-ce94-43ab-ba30-8cd2450f1e99",
+    "flow": {
+      "schema_version": "1.0.0",
+      "id": "flow.failed-source-verification",
+      "version": "1.0.0"
+    },
+    "flow_digest": "2e2921fc15033d75a8815d642eb095a3b4f507ab78ee980a17572011bbe9fe6a",
+    "status": "failed",
+    "cancel_requested": false,
+    "error": "node_failed",
+    "created_at": "2026-10-17T10:39:06.790490+00:00",
+    "updated_at": "2026-10-17T10:39:07.981599+00:00",
+    "nodes": [
+      {
+        "schema_version": "1.0.0",
+        "node_id": "first",
+        "queue": "native",
+        "run_id": "83057c83-bf50-4f80-a367-7d41519ceb31",
+        "manifest_digest": "6eb2160b62c3e55c265a36ff3620574be0cc3cb11d1a812fe49a7c5d2c18b84c",
+        "transfer_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "derivation": null,
+        "status": "failed"
+      },
+      {
+        "schema_version": "1.0.0",
+        "node_id": "second",
+        "queue": "reference",
+        "run_id": null,
+        "manifest_digest": null,
+        "transfer_digest": null,
+        "derivation": null,
+        "status": "skipped"
+      },
+      {
+        "schema_version": "1.0.0",
+        "node_id": "third",
+        "queue": "native",
+        "run_id": null,
+        "manifest_digest": null,
+        "transfer_digest": null,
+        "derivation": null,
+        "status": "skipped"
+      }
+    ]
+  },
+  "observed_at": "2026-10-17T10:39:26.124167+00:00",
+  "data_preservation": {
+    "all_previous_rows_retained": {
+      "objects": 65,
+      "runs": 40,
+      "events": 120,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8,
+      "native_runs": 15,
+      "native_events": 47,
+      "batch_runs": 7,
+      "batch_members": 38,
+      "batch_events": 57
+    },
+    "previous_artifact_hashes_unchanged": 367,
+    "sqlite_user_version": 1,
+    "current_counts": {
+      "objects": 74,
+      "runs": 41,
+      "events": 123,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8,
+      "native_runs": 21,
+      "native_events": 66,
+      "batch_runs": 7,
+      "batch_members": 38,
+      "batch_events": 57,
+      "hybrid_runs": 4,
+      "hybrid_nodes": 11,
+      "hybrid_events": 19
+    },
+    "original_license_hashes_unchanged": 24
+  },
+  "final_queue_check": {
+    "all_queues_idle": true,
+    "hybrid_events": 20
+  },
+  "no_leftover_native_containers": true,
+  "final_linux_regression": {
+    "command": "make check-docker",
+    "tests_passed": 366,
+    "seconds": 24.61,
+    "coverage_percent": 88,
+    "strict_mypy_files": 80,
+    "schemas_current": true,
+    "all_three_wheels_and_sdists_built": true
+  },
+  "host_package_build": {
+    "command": "make build",
+    "passed": true
+  },
+  "engineering_scope": "sequential_scalar_initial_conditions; no biological validity or continuous feedback established"
+}

@@ -19,7 +19,7 @@ combines them into a misleading overall completion score.
 | S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
 | S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
 | S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet and declarative SBML/PKML working; CellML/omics/image admission open |
-| S4 | General experiment orchestration | S0,S3 | Durable scalar DAG workflows, COPASI/OSP native agent and bounded mixed cohorts/sweeps; other native adapters and bindings open |
+| S4 | General experiment orchestration | S0,S3 | Durable reference/native scalar DAGs, COPASI/OSP agent and bounded cohorts/sweeps; remaining native adapters and richer bindings open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
 | S7 | Controlled model optimization and improvement | S1,S4,S6 | Limited decay calibration only; challenger/promotion workflow open |
@@ -105,7 +105,8 @@ units/context/transformations testable and no automatic execution from data impo
 - [x] S4.4 Expose register/submit/status/cancel/results/events through authenticated API/CLI; retain each child's manifest/result provenance.
 - [x] S4.5 Add frozen batch/ensemble/sweep plans with aggregate budgets, deterministic reference seed allocation and capacity-bounded atomic dispatch across reference/native queues. E2 includes terminal statistics and explicit incomplete groups; native seed/parameter overrides are rejected.
 - [x] S4.6 Add a durable external-engine agent protocol consuming admitted runtime/source identities, with no API Docker socket or host credentials. Actual COPASI SBML and OSPSuite PKML jobs pass model admission → claim → solver → verified API output.
-- [ ] S4.6b Extend the reviewed agent to remaining native engines and explicitly bound native experiment nodes; runtime probes alone do not provide queue adapters.
+- [x] S4.6b.1 Implement explicit native/reference scalar DAGs with declared interfaces, unit/context/semantic checks and atomic initial-condition derivation/dispatch. E3 executes COPASI/reference chains; PKML provides output-only interfaces.
+- [ ] S4.6b.2 Extend the reviewed agent/flow interfaces to remaining native engines, PKML inputs and richer mappings; runtime probes alone do not provide queue adapters.
 - [ ] S4.7 Add checkpoint/restart and engine capability negotiation; never claim unsupported state restoration.
 
 Exit for the delivered subset: a real upstream result initializes the downstream
@@ -210,7 +211,7 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
 1. **Delivered in this continuation:** S1–S4 shared source/graph/workflow backends,
    full Linux verification and live deployment without resetting data.
 2. Native computational profiles are installed/executed, and S4.6 now delivers
-   actual COPASI/OSP model jobs. Extend agent adapters/native DAG nodes (S4.6b),
+   actual COPASI/OSP model jobs and E3 scalar DAGs. Extend remaining native adapters/mappings (S4.6b.2),
    CellML admission (S3.4b) and independent original benchmarks (S1.5).
 3. Build the shared UI and Biological/Model/Experiment workspaces on those actual APIs
    while S6 gathers measurement/context evidence.

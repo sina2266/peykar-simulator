@@ -59,24 +59,27 @@ class Database:
 
     def register_many(self, entries: tuple[tuple[str, str, str, str], ...]) -> tuple[str, ...]:
         """Commit related immutable objects together or leave all of them unchanged."""
-        checksums = tuple(digest(json.loads(entry[3])) for entry in entries)
         with self.connection(immediate=True) as db:
-            for (kind, id, version, payload), checksum in zip(entries, checksums, strict=True):
-                row = db.execute(
-                    "SELECT digest,payload FROM objects WHERE kind=? AND id=? AND version=?",
-                    (kind, id, version),
-                ).fetchone()
-                if row:
-                    if row["digest"] != checksum or digest(json.loads(row["payload"])) != checksum:
-                        raise Conflict(
-                            "This immutable version already exists with different content"
-                        )
-                    continue
-                db.execute(
-                    "INSERT INTO objects VALUES (?, ?, ?, ?, ?)",
-                    (kind, id, version, checksum, payload),
-                )
-        return checksums
+            return tuple(self.register_in_transaction(db, *entry) for entry in entries)
+
+    @staticmethod
+    def register_in_transaction(
+        db: sqlite3.Connection, kind: str, id: str, version: str, payload: str
+    ) -> str:
+        """Preserve immutable objects in a caller-owned atomic dispatch transaction."""
+        checksum = digest(json.loads(payload))
+        row = db.execute(
+            "SELECT digest,payload FROM objects WHERE kind=? AND id=? AND version=?",
+            (kind, id, version),
+        ).fetchone()
+        if row:
+            if row["digest"] != checksum or digest(json.loads(row["payload"])) != checksum:
+                raise Conflict("This immutable version already exists with different content")
+        else:
+            db.execute(
+                "INSERT INTO objects VALUES (?,?,?,?,?)", (kind, id, version, checksum, payload)
+            )
+        return checksum
 
     def object(self, kind: str, id: str, version: str) -> str:
         with self.connection() as db:

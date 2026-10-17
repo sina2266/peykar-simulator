@@ -93,4 +93,9 @@ separately advertise reviewed queue drivers; `/v1/native-models` admits declarat
 SBML/PKML and `/v1/native-runs` manages explicit native jobs through an operator
 agent. Installation/profile registration stays offline; API has no Docker access.
 Full routes, permissions, limits and commands: [native agent](native-agent.md).
+
+`/v1/native-interfaces`, `/v1/native-derivations`, `/v1/hybrid-flows` and
+`/v1/hybrid-runs` now expose explicit native/reference scalar DAGs. Transfers retain
+source/target quantities and child identities, with original models preserved.
+Routes/roles and supported SBML subset: [E3](epics/E3-native-scalar-flows.md).
 See [runtime profiles](../runtime_profiles/README.md).

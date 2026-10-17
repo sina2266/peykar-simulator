@@ -1,0 +1,526 @@
+{
+  "$defs": {
+    "BatchBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_in_flight": {
+          "default": 4,
+          "maximum": 16,
+          "minimum": 1,
+          "title": "Max In Flight",
+          "type": "integer"
+        },
+        "max_jobs": {
+          "default": 64,
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Max Jobs",
+          "type": "integer"
+        },
+        "max_total_samples": {
+          "default": 1000000,
+          "maximum": 2000000,
+          "minimum": 2,
+          "title": "Max Total Samples",
+          "type": "integer"
+        },
+        "max_total_wall_seconds": {
+          "default": 14400.0,
+          "exclusiveMinimum": 0,
+          "maximum": 86400,
+          "title": "Max Total Wall Seconds",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "BatchBudget",
+      "type": "object"
+    },
+    "ExecutionBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_samples": {
+          "default": 10001,
+          "maximum": 100001,
+          "minimum": 2,
+          "title": "Max Samples",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 60.0,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ExecutionBudget",
+      "type": "object"
+    },
+    "HybridFlowBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_node": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Source Node",
+          "type": "string"
+        },
+        "source_port": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Source Port",
+          "type": "string"
+        },
+        "target_node": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Target Node",
+          "type": "string"
+        },
+        "target_parameter": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Parameter"
+        },
+        "target_port": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Target Port",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_node",
+        "source_port",
+        "target_node",
+        "target_port",
+        "evidence"
+      ],
+      "title": "HybridFlowBinding",
+      "type": "object"
+    },
+    "HybridFlowNode": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "native_interface": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Reference"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SimulationPlan"
+            },
+            {
+              "$ref": "#/$defs/NativeRunSpec"
+            }
+          ],
+          "title": "Plan"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "plan"
+      ],
+      "title": "HybridFlowNode",
+      "type": "object"
+    },
+    "Intervention": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "kind": {
+          "const": "parameter_set",
+          "default": "parameter_set",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameter": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Parameter",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "parameter",
+        "quantity"
+      ],
+      "title": "Intervention",
+      "type": "object"
+    },
+    "NativeRunSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "intervals": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intervals"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "profile": {
+          "$ref": "#/$defs/Reference"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 180.0,
+          "exclusiveMinimum": 0,
+          "maximum": 600,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "model",
+        "profile"
+      ],
+      "title": "NativeRunSpec",
+      "type": "object"
+    },
+    "ParameterValue": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "quantity"
+      ],
+      "title": "ParameterValue",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "SimulationPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "$ref": "#/$defs/ExecutionBudget",
+          "default": {
+            "max_samples": 10001,
+            "schema_version": "1.0.0",
+            "wall_seconds": 60.0
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "duration": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "interventions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Intervention"
+          },
+          "title": "Interventions",
+          "type": "array"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "parameters": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ParameterValue"
+          },
+          "title": "Parameters",
+          "type": "array"
+        },
+        "purpose": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        },
+        "sample_interval": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "default": 42,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model",
+        "context",
+        "duration",
+        "sample_interval",
+        "purpose"
+      ],
+      "title": "SimulationPlan",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:HybridFlowSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bindings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/HybridFlowBinding"
+      },
+      "maxItems": 32,
+      "title": "Bindings",
+      "type": "array"
+    },
+    "budget": {
+      "$ref": "#/$defs/BatchBudget",
+      "default": {
+        "max_in_flight": 4,
+        "max_jobs": 64,
+        "max_total_samples": 1000000,
+        "max_total_wall_seconds": 14400.0,
+        "schema_version": "1.0.0"
+      }
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/HybridFlowNode"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Nodes",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "nodes",
+    "limitations"
+  ],
+  "title": "HybridFlowSpec",
+  "type": "object"
+}

@@ -866,3 +866,118 @@ class BatchReport(Contract):
     )
     scientific_validity: Literal["not_established"] = "not_established"
     limitations: tuple[str, ...]
+
+
+class NativeModelPort(Contract):
+    port: ScientificPort
+    kind: Literal["native_output", "sbml_initial_concentration"]
+    quantity_key: Annotated[str, Field(min_length=1, max_length=1000)] | None = None
+    species_id: (
+        Annotated[str, Field(pattern=r"^[A-Za-z_][A-Za-z0-9_]*$", max_length=200)] | None
+    ) = None
+
+    @model_validator(mode="after")
+    def scalar_direction(self) -> Self:
+        if self.port.shape != "scalar":
+            raise ValueError("Native flow ports support scalar quantities")
+        if self.kind == "native_output":
+            if (
+                self.port.direction != "output"
+                or not self.quantity_key
+                or self.quantity_key in ("Time", "IndividualId")
+            ):
+                raise ValueError("Native output requires a physical output column")
+        elif self.port.direction != "input" or not self.species_id or self.quantity_key:
+            raise ValueError("SBML initial concentration requires an input species identity")
+        return self
+
+
+class NativeInterfaceSpec(Contract):
+    id: Identifier
+    version: Version
+    model: Reference
+    ports: Annotated[tuple[NativeModelPort, ...], Field(min_length=1, max_length=32)]
+    evidence: Annotated[tuple[str, ...], Field(min_length=1, max_length=20)]
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=20)]
+
+
+class HybridFlowNode(Contract):
+    id: Identifier
+    plan: SimulationPlan | NativeRunSpec
+    native_interface: Reference | None = None
+
+
+class HybridFlowBinding(Contract):
+    source_node: Identifier
+    source_port: Identifier
+    target_node: Identifier
+    target_port: Identifier
+    target_parameter: Identifier | None = None
+    evidence: Annotated[tuple[str, ...], Field(min_length=1, max_length=20)]
+
+
+class HybridFlowSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    nodes: Annotated[tuple[HybridFlowNode, ...], Field(min_length=1, max_length=16)]
+    bindings: Annotated[tuple[HybridFlowBinding, ...], Field(max_length=32)] = ()
+    budget: BatchBudget = BatchBudget()
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=20)]
+
+
+class FrozenFlowNode(Contract):
+    id: Identifier
+    manifest: RunManifest | NativeRunManifest
+    native_interface: NativeInterfaceSpec | None
+
+
+class FrozenHybridFlow(Contract):
+    spec: HybridFlowSpec
+    nodes: tuple[FrozenFlowNode, ...]
+    order: tuple[Identifier, ...]
+    sample_upper_bound: StrictInt
+    total_wall_seconds_limit: NonNegative
+
+
+class FlowTransfer(Contract):
+    source_node: Identifier
+    source_run_id: str
+    source_manifest_digest: Sha256
+    source_result_digest: Sha256
+    source_port: Identifier
+    target_port: Identifier
+    target_selector: str
+    source_quantity: Quantity
+    target_quantity: Quantity
+    evidence: tuple[str, ...]
+
+
+class NativeDerivationReceipt(Contract):
+    parent: NativeModelPackage
+    interface: NativeInterfaceSpec
+    transfers: tuple[FlowTransfer, ...]
+    child_content_digest: Sha256
+    transformer: Literal["sbml.initial_concentration.1.0.0"] = "sbml.initial_concentration.1.0.0"
+
+
+class FlowNodeRecord(Contract):
+    node_id: Identifier
+    queue: Literal["reference", "native"]
+    run_id: str | None
+    manifest_digest: Sha256 | None
+    transfer_digest: Sha256 | None
+    derivation: Reference | None
+    status: Literal["pending", "skipped", "queued", "running", "succeeded", "failed", "cancelled"]
+
+
+class HybridFlowRunRecord(Contract):
+    id: str
+    flow: Reference
+    flow_digest: Sha256
+    status: RunStatus
+    cancel_requested: bool
+    error: str | None
+    created_at: str
+    updated_at: str
+    nodes: tuple[FlowNodeRecord, ...]

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "id": "interface.transfer.concentration",
+  "version": "1.0.0",
+  "model": {
+    "schema_version": "1.0.0",
+    "id": "native.transfer",
+    "version": "1.0.0"
+  },
+  "ports": [
+    {
+      "schema_version": "1.0.0",
+      "port": {
+        "schema_version": "1.0.0",
+        "name": "a_out",
+        "direction": "output",
+        "unit": "millimole/liter",
+        "semantic_id": "synthetic.concentration",
+        "scale": "molecular",
+        "shape": "scalar",
+        "frame": null,
+        "ownership": "read"
+      },
+      "kind": "native_output",
+      "quantity_key": "A",
+      "species_id": "A"
+    },
+    {
+      "schema_version": "1.0.0",
+      "port": {
+        "schema_version": "1.0.0",
+        "name": "a_in",
+        "direction": "input",
+        "unit": "millimole/liter",
+        "semantic_id": "synthetic.concentration",
+        "scale": "molecular",
+        "shape": "scalar",
+        "frame": null,
+        "ownership": "write"
+      },
+      "kind": "sbml_initial_concentration",
+      "quantity_key": null,
+      "species_id": "A"
+    }
+  ],
+  "evidence": [
+    "Peykar authored A to B analytical fixture with explicit mole/litre units"
+  ],
+  "limitations": [
+    "Synthetic numerical interface; no biological applicability is established."
+  ]
+}

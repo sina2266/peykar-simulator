@@ -1,66 +1,20 @@
 """Terminal cohort statistics with exact child lineage and explicit missing members."""
 
-import csv
-import io
-import json
 import statistics
 
 from peykar.composition.batches import TERMINAL, BatchService
+from peykar.simulation.terminal_values import terminal_values
 from peykar_core.contracts import (
     BatchGroupSummary,
     BatchMemberEvidence,
     BatchReport,
     EndpointStatistics,
-    FrozenBatchMember,
     Quantity,
     RunManifest,
 )
 from peykar_core.errors import Conflict
 from peykar_core.hashing import digest
 from peykar_core.units import convert
-
-
-def terminal_values(
-    batches: BatchService, member: FrozenBatchMember, run_id: str
-) -> dict[str, Quantity]:
-    template = member.manifest
-    if isinstance(template, RunManifest):
-        actual = batches.db.manifest(run_id)
-        if (
-            actual.model_copy(update={"run_id": template.run_id, "created_at": template.created_at})
-            != template
-        ):
-            raise Conflict("Batch child manifest differs from its frozen template")
-        result = batches.service.result(run_id)
-        if result.seed != template.plan.seed:
-            raise Conflict("Batch child seed differs from its frozen allocation")
-        return {s.name: Quantity(value=s.values[-1], unit=s.unit) for s in result.outputs}
-    actual_native = batches.native.manifest(run_id)
-    if (
-        actual_native.model_copy(
-            update={"run_id": template.run_id, "created_at": template.created_at}
-        )
-        != template
-    ):
-        raise Conflict("Native batch child differs from its frozen template")
-    native_result = batches.native.result(run_id)
-    if native_result.manifest_digest != digest(actual_native):
-        raise Conflict("Native result manifest differs")
-    blobs = {n: batches.service.artifacts.get(h) for n, h in native_result.artifacts.items()}
-    try:
-        metadata = json.loads(blobs["quantities.json"])
-        rows = list(csv.DictReader(io.StringIO(blobs["native.csv"].decode("utf-8-sig"))))
-        if template.profile_snapshot.kind == "copasi_sbml":
-            units = {s["name"]: s["unit"] for s in metadata["species"]}
-        else:
-            units = {n: q["unit"] for n, q in metadata["quantities"].items()}
-        return {
-            n: Quantity(value=float(value), unit=units[n])
-            for n, value in rows[-1].items()
-            if n not in ("Time", "IndividualId")
-        }
-    except (ValueError, TypeError, KeyError, IndexError) as error:
-        raise Conflict("Native terminal outputs lack unambiguous quantity units") from error
 
 
 def report(batches: BatchService, id: str) -> BatchReport:
@@ -91,7 +45,7 @@ def report(batches: BatchService, id: str) -> BatchReport:
             else None
         )
         if child and member.status == "succeeded":
-            values = terminal_values(batches, template, str(member.run_id))
+            values = terminal_values(batches.service, template.manifest, str(member.run_id))
             result = (
                 batches.service.result(str(member.run_id))
                 if member.queue == "reference"

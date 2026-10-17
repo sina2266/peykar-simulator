@@ -1,0 +1,64 @@
+{
+  "$id": "urn:peykar:schema:HybridFlowBinding:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_node": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Source Node",
+      "type": "string"
+    },
+    "source_port": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Source Port",
+      "type": "string"
+    },
+    "target_node": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Target Node",
+      "type": "string"
+    },
+    "target_parameter": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target Parameter"
+    },
+    "target_port": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Target Port",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_node",
+    "source_port",
+    "target_node",
+    "target_port",
+    "evidence"
+  ],
+  "title": "HybridFlowBinding",
+  "type": "object"
+}

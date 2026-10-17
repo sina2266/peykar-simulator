@@ -126,6 +126,11 @@ native checkpoints and coupled adaptive stepping remain later engine capabilitie
 Frozen cohorts now schedule independent reference/native jobs, reference parameter
 grids and seeded reference replicas with aggregate budgets and terminal statistics.
 They do not introduce a continuous shared-time solver; see the E2 cohort guide.
+E3 hybrid flows now execute dependency-driven native/reference scalar stages.
+Native input transformation preserves the original model and records a separate
+SBML initial-concentration derivative with source-result lineage. Explicit port,
+unit, context and write-ownership gates apply; this remains sequential initial-state
+transfer, not feedback or a validated biological bridge.
 
 ## Data, learning and validation
 

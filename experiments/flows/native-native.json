@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "id": "flow.native-native",
+  "version": "1.0.0",
+  "title": "Actual native to native concentration transfer",
+  "nodes": [
+    {
+      "schema_version": "1.0.0",
+      "id": "first",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.transfer",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "copasi.sbml",
+          "version": "1.0.0"
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "intervals": 10,
+        "wall_seconds": 120.0
+      },
+      "native_interface": {
+        "schema_version": "1.0.0",
+        "id": "interface.transfer.concentration",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "third",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.transfer",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "copasi.sbml",
+          "version": "1.0.0"
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "intervals": 10,
+        "wall_seconds": 120.0
+      },
+      "native_interface": {
+        "schema_version": "1.0.0",
+        "id": "interface.transfer.concentration",
+        "version": "1.0.0"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "schema_version": "1.0.0",
+      "source_node": "first",
+      "source_port": "a_out",
+      "target_node": "third",
+      "target_port": "a_in",
+      "target_parameter": null,
+      "evidence": [
+        "Analytical two consecutive ten-second decay stages"
+      ]
+    }
+  ],
+  "budget": {
+    "schema_version": "1.0.0",
+    "max_jobs": 64,
+    "max_total_samples": 1000000,
+    "max_total_wall_seconds": 14400.0,
+    "max_in_flight": 4
+  },
+  "limitations": [
+    "Synthetic sequential initial-state transfer only; no continuous feedback or biological validity."
+  ]
+}

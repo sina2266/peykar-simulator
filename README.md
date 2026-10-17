@@ -40,6 +40,9 @@ adapters, continuous feedback coupling and the full UI remain explicit system ta
 [E2 job cohorts](docs/epics/E2-reproducible-cohorts.md) now add bounded parameter
 sweeps, deterministic reference seed allocation, mixed native/reference batches
 and lineage-checked terminal statistics with explicit excluded members.
+[E3 hybrid flows](docs/epics/E3-native-scalar-flows.md) now connect actual native
+and reference stages through explicit scalar ports, unit conversions and immutable
+SBML initial-state derivatives; original source models and their notices are preserved.
 
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·

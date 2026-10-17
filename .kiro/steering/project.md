@@ -166,3 +166,41 @@ commands/outcomes in `docs/verification.md`.
 - Final regression after this fix: 340 tests in 22.04 seconds, 88% coverage, strict
   mypy 75 files, schemas and builds pass. All pre-cohort rows, 349 artifact byte sequences
   and 24 original license hashes are preserved. See docs/cohort-verification-2026-10-17.json.
+
+## E3 native/reference scalar flows, 2026-10-17
+
+- Previous E2 milestone 299a49a5 was pushed to main with a clean working tree.
+  E3 adds NativeInterfaceSpec/HybridFlowSpec and composition/hybrid_flows.py,
+  model_import/native_interfaces.py, API/CLI and additive 005_hybrid_flows.sql.
+- Scalar DAG bindings require exact context, semantic/scale/frame/unit agreement,
+  explicit destination write ownership and one writer per target. Ordinary Worker
+  schedules both queues; native host agent remains separate with unchanged image/
+  driver pins. Native interface registration starts no solver.
+- Native inputs currently support only explicit SBML L3 dynamic molar initial
+  concentrations in fixed 3D litre compartments. Unknown/amount-only/assigned/event
+  overridden inputs are rejected; PKML exposes output paths but no input rewriting.
+- Derived models are new immutable versions, not edits to the original. Only the
+  numeric initialConcentration byte spans change, preserving all other bytes,
+  notices, units and namespaces. Receipts pin parent/interface and upstream child
+  result/manifest/quantity identities. Derivation/model registration, child enqueue
+  and association share one SQLite transaction. CAS blobs may remain after rollback.
+- Shared simulation/terminal_values.py verifies child/result identities for E2/E3.
+  Database.register_in_transaction preserves the existing immutable-object checks
+  inside atomic dispatch. Existing model/schema contracts and uv.lock are unchanged.
+- Targeted native/cohort/workflow/E3 checks passed 95 tests, then 26 E3 tests passed.
+  Final make check-docker: 366 tests in 24.61 seconds, 88% coverage, strict mypy 80
+  files, schemas/OpenAPI and all three wheel/sdist pairs pass. Host make build passed.
+- Backup backups/pre-hybrid-flows-20261017T103604Z/ is copied locally: 65 objects,
+  40 ordinary runs/120 events, 2 experiments/4 nodes/8 events, 15 native runs/47 events,
+  7 batches/38 members/57 events and 367 artifact byte sequences. Preserve it and
+  older backups; never reset the shared volume.
+- Actual deployed COPASI→reference→COPASI and COPASI→COPASI flows passed analytical
+  endpoint checks (absolute errors 1.65e-8 / 4.48e-8). Original XML bytes, source
+  notices/context and units survived; downstream derivatives/receipts are separately
+  admitted and readable. Actual running cancellation and source timeout skipped
+  dependent nodes, with no remaining native container and all queues idle.
+- All pre-E3 rows and 367 earlier artifact byte sequences plus 24 original license
+  hashes survived the upgrade. Exact retained identities are in
+  docs/hybrid-flow-verification-2026-10-17.json. E3 is sequential initial-state
+  transfer; PKML inputs, general native mappings, feedback and biological bridges
+  remain open. Continue using meaningful verified main commits and normal pushes.

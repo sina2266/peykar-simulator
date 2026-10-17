@@ -26,3 +26,8 @@ pin an existing runtime and reviewed driver; admission starts no engine. A separ
 external agent executes explicitly submitted native jobs. See docs/native-agent.md.
 
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.
+
+`native_interfaces.py` admits explicit scalar native ports and prepares immutable
+SBML initial-concentration derivatives. Only numeric attribute bytes are changed;
+parent XML, notices, units/context and exact upstream result lineage are retained.
+It starts no engine. See docs/epics/E3-native-scalar-flows.md for the supported subset.

@@ -1,0 +1,102 @@
+{
+  "$defs": {
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:FlowTransfer:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_manifest_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Manifest Digest",
+      "type": "string"
+    },
+    "source_node": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Source Node",
+      "type": "string"
+    },
+    "source_port": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Source Port",
+      "type": "string"
+    },
+    "source_quantity": {
+      "$ref": "#/$defs/Quantity"
+    },
+    "source_result_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Result Digest",
+      "type": "string"
+    },
+    "source_run_id": {
+      "title": "Source Run Id",
+      "type": "string"
+    },
+    "target_port": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Target Port",
+      "type": "string"
+    },
+    "target_quantity": {
+      "$ref": "#/$defs/Quantity"
+    },
+    "target_selector": {
+      "title": "Target Selector",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_node",
+    "source_run_id",
+    "source_manifest_digest",
+    "source_result_digest",
+    "source_port",
+    "target_port",
+    "target_selector",
+    "source_quantity",
+    "target_quantity",
+    "evidence"
+  ],
+  "title": "FlowTransfer",
+  "type": "object"
+}
