@@ -1,3 +1,11 @@
+FROM node:22.14.0-bookworm-slim AS dashboard
+WORKDIR /app/apps/dashboard
+COPY apps/dashboard/package*.json ./
+RUN npm ci --ignore-scripts --no-fund --no-audit
+COPY apps/dashboard ./
+COPY schemas /app/schemas
+RUN npm run check && npm run build
+
 FROM python:3.12-slim AS build
 RUN pip install --no-cache-dir uv==0.12.23
 WORKDIR /app
@@ -14,11 +22,16 @@ COPY engine_adapters engine_adapters
 COPY biological_libraries biological_libraries
 COPY dataset_connectors dataset_connectors
 COPY runtime_profiles runtime_profiles
+COPY --from=dashboard /app/packages/platform/src/peykar/web_assets packages/platform/src/peykar/web_assets
 RUN uv sync --frozen --all-packages --no-dev --no-editable
 
 FROM build AS verification
-RUN apt-get update && apt-get install -y --no-install-recommends make git \
-    && rm -rf /var/lib/apt/lists/*
+COPY --from=dashboard /usr/local/bin/node /usr/local/bin/node
+COPY --from=dashboard /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
+COPY --from=dashboard /app/apps/dashboard apps/dashboard
+RUN apt-get update && apt-get install -y --no-install-recommends make git libstdc++6 \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 RUN uv sync --frozen --all-packages --group dev --no-editable
 ENV UV_NO_SYNC=1 UV_OFFLINE=1
 CMD ["make", "check", "build"]

@@ -27,7 +27,7 @@ combines them into a misleading overall completion score.
 | S9 | Multicellular/tissue execution across engines | S1,S4,S6 | vCornea, PhysiCell/PhysiBoSS, VCell and Chaste native operator paths execute; general queue adapters and validated bridges open |
 | S10 | Organ and multi-organ composition | S5,S6,S8,S9 | NEURON and OSP PK-Sim/MoBi headless models execute; validated organ/system bridges and Windows GUI profile open |
 | S11 | Governance and research-system integration | S0,S2,S6,S7 | Local roles/provenance/HomBon facade/gaps working; scientific approvals/claims/conflicts open |
-| S12 | Interactive six-workspace application | S2,S3,S4,S6,S11 | API foundations working; full frontend open |
+| S12 | Interactive six-workspace application | S2,S3,S4,S6,S11 | E4 local six-workspace application implemented on current APIs; richer scientific authoring/quality authority/spatial workflows remain open |
 | S13 | Scalable operation and release | S0,S4,S11,S12 | Single-host Docker working; PostgreSQL/object storage/HPC/multi-host open |
 
 Independent engineering work on S1–S4 proceeds without waiting for missing
@@ -185,14 +185,20 @@ at every bridge; source availability does not establish those links.
 The complete product needs an interactive UI. Build each workspace once its
 required operations and error states exist; do not wait for every biological engine.
 
-- [ ] S12.1 Shared application shell, accessible design system, authentication, localization/RTL and responsive layouts.
-- [ ] S12.2 Biological Explorer using versioned graph/neighborhood/evidence APIs; distinguish evidence links from runnable bridges.
-- [ ] S12.3 Model Studio with source/runtime/adapter/validity states and a port-compatible experiment editor.
-- [ ] S12.4 Dataset Studio with origin/license/lineage, quality decisions and declared split provenance.
-- [ ] S12.5 Experiment Studio with real submit/estimate/cancel/dependency states; resume persisted experiments.
-- [ ] S12.6 Simulation Viewer with computed series/artifacts and explicit geometry limits; no invented cell motion.
-- [ ] S12.7 Validation Center with frozen benchmarks, failure explanations, uncertainty and missing evidence.
-- [ ] S12.8 Browser-test desktop/tablet/mobile, keyboard access, loading/empty/error/forbidden/degraded/conflict states and RTL.
+- [x] S12.1 Shared application shell, accessible design system, authentication, localization/RTL and responsive layouts.
+- [x] S12.2 Biological Explorer using versioned graph/neighborhood/evidence APIs; distinguish evidence links from runnable bridges.
+- [x] S12.3 Model Studio with source/runtime/adapter/validity states and a port-compatible experiment editor.
+- [x] S12.4a Dataset Studio with origin/license/lineage, declared groups and original-unit scalar observations/CSV imports.
+- [ ] S12.4b Add quality adjudication and independent split authority after their backend contracts exist.
+- [x] S12.5 Experiment Studio with real submit/estimate/cancel/dependency states; resume persisted experiments.
+- [x] S12.6 Simulation Viewer with computed series/artifacts and explicit geometry limits; no invented cell motion.
+- [x] S12.7 Validation Center with frozen benchmarks, failure explanations, uncertainty and missing evidence.
+- [x] S12.8 Browser-test desktop/tablet/mobile, keyboard access, loading/empty/error/forbidden/degraded/conflict states and RTL.
+
+E4 closes this bounded browser delivery for existing contracts; see
+[workbench scope and deferred scientific authoring](epics/E4-research-workbench.md).
+Advanced metadata/frozen definitions use validated JSON editors. Current unit/context
+gates do not implement biological bridges, independent quality review or spatial UI.
 
 Exit: complete end-to-end user workflows on real APIs, with no decorative actions
 or unlabeled illustrative scientific state. Swagger remains developer tooling.
@@ -213,8 +219,8 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
 2. Native computational profiles are installed/executed, and S4.6 now delivers
    actual COPASI/OSP model jobs and E3 scalar DAGs. Extend remaining native adapters/mappings (S4.6b.2),
    CellML admission (S3.4b) and independent original benchmarks (S1.5).
-3. Build the shared UI and Biological/Model/Experiment workspaces on those actual APIs
-   while S6 gathers measurement/context evidence.
+3. E4 now delivers the shared six-workspace UI on those APIs. Extend richer
+   authoring and independent quality/split workflows as S3/S6/S11 add their contracts.
 4. Add one explicit numerical coupling and its biological bridge (S5), then expand
    the remaining specialist profiles and workflows according to their dependencies.
 5. Advance improvement, integrated organs and cross-organ endpoints only when their

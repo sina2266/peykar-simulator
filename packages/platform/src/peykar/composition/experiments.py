@@ -93,10 +93,10 @@ class ExperimentService:
                 raise Conflict("Frozen model differs from its registered immutable version")
         return frozen
 
-    def discover(self) -> tuple[FrozenExperiment, ...]:
+    def discover(self, limit: int = 200, offset: int = 0) -> tuple[FrozenExperiment, ...]:
         return tuple(
             self.get(Reference(id=r["id"], version=r["version"]))
-            for r in self.db.objects("experiment", limit=200)
+            for r in self.db.objects("experiment", limit=limit, offset=offset)
         )
 
     @staticmethod

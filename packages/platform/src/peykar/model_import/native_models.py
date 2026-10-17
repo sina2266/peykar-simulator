@@ -116,10 +116,10 @@ class NativeModelService:
         self.artifacts.get(package.content_digest)
         return package
 
-    def discover(self) -> tuple[NativeModelPackage, ...]:
+    def discover(self, limit: int = 200, offset: int = 0) -> tuple[NativeModelPackage, ...]:
         return tuple(
             self.get(Reference(id=r["id"], version=r["version"]))
-            for r in self.db.objects("native_model", limit=200)
+            for r in self.db.objects("native_model", limit=limit, offset=offset)
         )
 
     def register_profile(self, profile: NativeExecutionProfile) -> str:

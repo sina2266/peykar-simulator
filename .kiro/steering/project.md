@@ -204,3 +204,43 @@ commands/outcomes in `docs/verification.md`.
   docs/hybrid-flow-verification-2026-10-17.json. E3 is sequential initial-state
   transfer; PKML inputs, general native mappings, feedback and biological bridges
   remain open. Continue using meaningful verified main commits and normal pushes.
+
+## E4 local six-workspace research workbench, 2026-10-17
+
+- E3 commit 8da671e2 was pushed to main. E4 adds the actual React/TypeScript client
+  in apps/dashboard, compiled with Vite and packaged in the platform wheel/sdist
+  at /app/. The prior Next.js frontend was designed only; a static build retains
+  same-origin FastAPI authorization without another production Node service.
+- Biology, model/native/source/runtime inspection, scalar datasets/CSV lineage,
+  reference/native run forms, structured mixed scalar flow editor, frozen cohorts/
+  DAGs, persisted all-queue Viewer and evaluation/report/gap workflows now operate
+  on actual APIs. Advanced metadata/definitions use JSON editors. No spatial views,
+  independent quality/split authority, feedback or new native driver is claimed.
+- New bounded workspace catalog/session and experiment/hybrid run discovery keep
+  old scientific contracts and SQLite schema version 1. Original model/source/raw
+  bytes remain immutable; no remote scientific code installs through the UI.
+- Tokens stay only in React memory, never browser storage/cookies/URLs/bundles.
+  Reload/disconnect clears credentials. Reader controls and server roles agree;
+  same-origin fetch rejects redirects. Packaged assets use strict CSP/no-store/
+  denied framing. Native agent and original Docker volume remain separate/preserved.
+- Node/npm lock and original React/React DOM/Scheduler MIT notices are retained;
+  make install/check/build and Docker/CI now build/check the client. uv.lock and
+  all historical scientific JSON schemas remain unchanged. Use make check-docker
+  on macOS for the Linux child-worker paths, not unrestricted host execution.
+- Final checks: 376 Linux tests, 89% coverage, strict mypy 82 files, 15 frontend
+  tests and all wheels/sdists; host make build passes. Real browser reference and
+  COPASI runs, a designed reference→native flow, CSV immutable conflict, frozen
+  evaluation, cancellation, degraded/retry and role/storage checks pass. Chromium
+  desktop/tablet/mobile/landscape/Persian RTL audits have zero final violations.
+- Actual UI testing found/fixed COPASI time_unit metadata handling, stale evaluation
+  selectors after freeze, accidental form submission from download buttons, empty
+  heading order, narrow chart legibility and landscape navigation. Native plotting
+  errors retain artifact access, never replace missing values with zero.
+- Pre-upgrade backup backups/pre-workbench-20261017T203213Z is copied locally.
+  All 74 original objects, 41 reference/21 native/7 cohort/4 hybrid/2 experiment
+  runs, related nodes/events, 380 artifact byte sequences and 24 project license
+  files survive deployment. Permanent vendor rehash matches all 52,167 files and
+  37 Git links. API/Worker are healthy on the original volume; real deployed
+  reference/native smoke checks pass. Exact receipts are in
+  docs/workbench-verification-2026-10-17.json. Continue meaningful verified main
+  commits/pushes; richer scientific authoring and remaining roadmap EPICs stay open.

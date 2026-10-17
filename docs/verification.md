@@ -1,5 +1,81 @@
 # Verification record
 
+## E4 local research workbench: 2026-10-17 local
+
+[Observed receipt](workbench-verification-2026-10-17.json) records actual browser,
+solver, artifact, source and preservation evidence. Scope and operation are in
+[E4](epics/E4-research-workbench.md).
+
+- `npm --prefix apps/dashboard run check` passed strict TypeScript, formatting,
+  generated OpenAPI freshness and **15 frontend tests**. Tests reject missing/
+  nonfinite native quantities, preserve physical units/quoted paths, exclude PKML
+  identity columns, confine token-bearing fetches to the API, reject redirects,
+  clear expired sessions, retain explicit idempotency keys and prevent a download
+  button from implicitly submitting its surrounding run/editor form.
+- `uv run pytest tests/integration/test_workspace_api.py -q`: **10 passed**.
+  New checks cover authenticated role discovery, metadata allowlists/integrity,
+  bounded persisted parent-run/native-model discovery, static traversal denial,
+  real packaged assets/CSP/no-store and retained frontend notices. A separate host
+  attempt that included the existing Linux child-worker API tests had two platform
+  failures on macOS; those actual paths pass in the Linux regression below.
+- Final **`make check-docker` passed: 376 tests in 28.94 seconds, 89% coverage**,
+  strict Mypy **82** source files, Ruff lint/format, scientific schema/OpenAPI
+  freshness, frontend checks and all three wheel/sdist pairs. Host **`make build`
+  passed**; the actual wheel contains the browser index/assets and all three
+  original frontend notices. The first frontend Docker build stopped at formatter
+  differences inherited from host configuration; an explicit project formatter
+  configuration fixed deterministic host/container builds. Historical scientific
+  schemas and `uv.lock` remain unchanged; only additive OpenAPI discovery changed.
+- Pinned `agent-browser@0.39.1` ran real Chromium UI actions against a separate
+  clone, with a Linux worker and an explicitly started pinned native agent. Browser
+  reference run `010c82d9-cea1-4d56-83b4-22c2727948f0` and COPASI run
+  `63d44249-1aed-4420-aa3f-65d6bc6af724` succeeded and displayed actual output.
+  The original Aciclovir result displayed **491 samples**, minutes and µmol/l.
+- The structured flow editor froze `ui.browser-flow@1.0.0` and executed reference
+  → COPASI run `a16472bf-6c1b-4909-93fd-2654576496d2`. Its final A was
+  **0.13533526084862807**, analytical `exp(-2)` **0.1353352832366127**, absolute
+  error **2.2387985e-8** after explicit molar/millimolar transfer. This remains a
+  synthetic engineering check.
+- Browser CSV import retained `ui.browser-observations@1.0.0` and real lineage.
+  A changed title under the same version returned HTTP 409 without altering it.
+  Freezing an evaluation set, evaluating the completed reference run and retrieving
+  the run-bound report passed as **synthetic_verification**. Queued cancellation
+  `f9ebc0b6-041e-46c2-9323-f288f1870fe3` published no result. Stopping only the
+  isolated API displayed the degraded state; Retry reconnected after restart.
+- Browser checks exercised reader-disabled mutations, storage-free credentials,
+  reconnect on reload, keyboard access, Escape/focus return, reduced motion,
+  **1440×1000**, **768×1024**, **375×812**, **812×375**, and Persian RTL. Final
+  default axe audits for these seven workspace/size combinations plus Persian
+  mobile reported **zero violations**; SVG contrast/manual checks remain explicitly
+  incomplete in the automated report and were visually reviewed. An initial empty
+  heading-order issue, narrow plot-axis legibility and landscape navigation/route
+  anchor detection were corrected and repeated. Screenshots were visually inspected.
+- `uv run python scripts/verify_vendor.py` rehashed **25 distributions / 52,167
+  files / 1,799,838,581 bytes / 37 materialized Git links** with no differences.
+  All **24** original project license files match Git HEAD byte for byte; the
+  complete previous third-party notice remains, with React/React DOM/Scheduler
+  attribution appended. `npm --prefix apps/dashboard audit --omit=dev --json` reported **0 runtime
+  dependency vulnerabilities**; this is an observed scan, not a permanent guarantee.
+- SQLite backup API/artifact copy created
+  `backups/pre-workbench-20261017T203213Z/`, also copied locally. Pre-restart checks
+  found all queues idle. `docker compose build` and `docker compose up -d --no-build`
+  deployed the same original `peykar3_peykar-data` volume. API is healthy and the
+  Worker runs without Docker access; the original production native agent remains
+  separate. Temporary browser-test containers used their own volume.
+- Final live `uv run python .peykar/e4-live-verify.py` checked the deployed app/CSP,
+  role and bounded discovery APIs, reference run 1e6c7c76-1c0e-4e8c-a740-2f3fa4040b06 and actual
+  COPASI run 057d76e3-c55c-443f-afce-9e97a0f93f04. Both succeeded; native CSV/metadata hashes and its
+  11-sample analytic endpoint passed. This private operator replay read credentials
+  from `.env` without printing or placing them in arguments/assets.
+- Post-upgrade comparison retained **74 object versions, 41 ordinary runs/123
+  events, 2 experiments/4 nodes/8 events, 21 native runs/66 events, 7 batches/38
+  members/57 events, 4 hybrid flows/11 nodes/20 events**, and all **380** previous
+  artifact byte sequences. SQLite `user_version` remains **1**; all queues are idle.
+
+The engineering workbench is delivered for the existing bounded local contracts.
+Independent quality/split authority, scientific approvals, richer authoring,
+spatial/feedback control and remaining specialist adapters retain their own gates.
+
 ## E3 native/reference scalar DAGs: 2026-10-17 local
 
 [Observed hybrid-flow evidence](hybrid-flow-verification-2026-10-17.json) retains

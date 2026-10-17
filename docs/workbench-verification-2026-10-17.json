@@ -1,0 +1,395 @@
+{
+  "observed_at": "2026-10-17T20:53:46.382662+00:00",
+  "scope": "local_single_workspace_workbench_engineering",
+  "browser": {
+    "scope": "isolated_clone_browser_engineering_verification",
+    "reference_run": {
+      "schema_version": "1.0.0",
+      "id": "010c82d9-cea1-4d56-83b4-22c2727948f0",
+      "manifest_digest": "7f8c10d760f8554d8ec0bc5aaf74db708a001af395e2b2cead741489de994f1f",
+      "status": "succeeded",
+      "created_at": "2026-10-17T20:34:00.426954+00:00",
+      "updated_at": "2026-10-17T20:34:01.721790+00:00",
+      "cancel_requested": false,
+      "result_digest": "7eca7312bf341d2b28e448048c5b7a5987a3f6db1f36a19bf692b10bb37ef81b",
+      "error": null
+    },
+    "copasi_run": {
+      "schema_version": "1.0.0",
+      "id": "63d44249-1aed-4420-aa3f-65d6bc6af724",
+      "manifest_digest": "ec0f29980824994cfce18fd5dd468b07d4ab7dba569d22a776feac770abcecd7",
+      "status": "succeeded",
+      "created_at": "2026-10-17T20:34:58.919238+00:00",
+      "updated_at": "2026-10-17T20:35:02.842753+00:00",
+      "cancel_requested": false,
+      "result_digest": "b82ed2b7369f0190c838cbea1272590baccd8c6c56619c83565ffc7a6f403db1",
+      "error": null
+    },
+    "browser_designed_flow": {
+      "schema_version": "1.0.0",
+      "id": "a16472bf-6c1b-4909-93fd-2654576496d2",
+      "flow": {
+        "schema_version": "1.0.0",
+        "id": "ui.browser-flow",
+        "version": "1.0.0"
+      },
+      "flow_digest": "fc068a14df8d0516879fd6d871c659665b4357fcd0a669e68b3a877077b1a323",
+      "status": "succeeded",
+      "cancel_requested": false,
+      "error": null,
+      "created_at": "2026-10-17T20:38:38.971296+00:00",
+      "updated_at": "2026-10-17T20:38:43.066882+00:00",
+      "nodes": [
+        {
+          "schema_version": "1.0.0",
+          "node_id": "node1",
+          "queue": "reference",
+          "run_id": "7b758fd0-5329-4861-89e4-2efc0dbd9360",
+          "manifest_digest": "8ec6dce268628937a2b3011fb366ed78bad2d8d11342ab13ee5bd0bff69a3189",
+          "transfer_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "derivation": null,
+          "status": "succeeded"
+        },
+        {
+          "schema_version": "1.0.0",
+          "node_id": "node2",
+          "queue": "native",
+          "run_id": "355affb7-125d-40ef-82a1-44fe4592bfb1",
+          "manifest_digest": "d1dcbfc0b7fe62bde005ed9698c71d0bed593b315c4a2f4c8b07cf8d183c7824",
+          "transfer_digest": "fb3e62dc10a58c0138b80c253d868d90c9ce085f0adadb5fca29f50011bbb5eb",
+          "derivation": {
+            "schema_version": "1.0.0",
+            "id": "derived.8d0018bb92d11d14bc3122b5102bf5e2aaf2436bb19dd103530699cb4c4c786d",
+            "version": "1.0.0"
+          },
+          "status": "succeeded"
+        }
+      ]
+    },
+    "terminal_A": 0.13533526084862807,
+    "analytic_expected": 0.1353352832366127,
+    "absolute_error": 2.2387984632832314e-08,
+    "cancelled_run": {
+      "schema_version": "1.0.0",
+      "id": "f9ebc0b6-041e-46c2-9323-f288f1870fe3",
+      "manifest_digest": "b96db3c55b57d23825255550b82c2a57ddf80dc41585c838a0363d29ca9d79ac",
+      "status": "cancelled",
+      "created_at": "2026-10-17T20:40:32.341365+00:00",
+      "updated_at": "2026-10-17T20:40:41.690417+00:00",
+      "cancel_requested": true,
+      "result_digest": null,
+      "error": null
+    },
+    "dataset": {
+      "id": "ui.browser-observations",
+      "version": "1.0.0"
+    },
+    "evaluation": {
+      "schema_version": "1.0.0",
+      "id": "report.99ba71c7ced5f83944020b1fe8b84994adbce3d6a1b6ba3eb621da04c7d7f5b2",
+      "run_id": "7b758fd0-5329-4861-89e4-2efc0dbd9360",
+      "manifest_digest": "8ec6dce268628937a2b3011fb366ed78bad2d8d11342ab13ee5bd0bff69a3189",
+      "result_digest": "7eca7312bf341d2b28e448048c5b7a5987a3f6db1f36a19bf692b10bb37ef81b",
+      "dataset_digest": "7678f84be6df5049aea18c7c5877b39449f578b88787933d4c653e647ac0e5f4",
+      "observation_digest": "763daf5bc73b15648e1100fba566ceee7bc09ac2f8e7597ed95818533b4714ed",
+      "report": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "flow.reference-decay",
+          "version": "1.0.0"
+        },
+        "dataset": {
+          "schema_version": "1.0.0",
+          "id": "ui.browser-observations",
+          "version": "1.0.0"
+        },
+        "endpoint": "concentration",
+        "n": 11,
+        "rmse": 1.9229626863835638e-16,
+        "max_absolute_error": 2.220446049250313e-16,
+        "unit": "mole / liter",
+        "tolerance": 1e-12,
+        "passed": true,
+        "evidence_class": "synthetic_verification",
+        "context": {
+          "schema_version": "1.0.0",
+          "species": "synthetic",
+          "biological_system": "reference verification",
+          "conditions": []
+        },
+        "limitations": [
+          "Dataset independence and provenance require external review.",
+          "This report does not automatically promote model validity.",
+          "Declared splits do not prove that model tuning avoided evaluation data."
+        ]
+      },
+      "calibration_groups": [],
+      "evaluation_set": {
+        "schema_version": "1.0.0",
+        "id": "ui.browser-evaluation",
+        "version": "1.0.0"
+      },
+      "evaluation_set_digest": "7542e727ad4caed7a91c5ece15ebafba32ebdadd6c7e9b2365549baf5b12cffb"
+    },
+    "osp_existing_original_run": {
+      "id": "e682d2cc-6404-493a-9cda-d725eafb9381",
+      "samples": 491,
+      "time_unit": "min",
+      "output_unit": "µmol/l"
+    },
+    "browser_audits": [
+      {
+        "width": 1440,
+        "height": 1000,
+        "page": "models",
+        "counts": {
+          "inapplicable": 54,
+          "incomplete": 0,
+          "passes": 35,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "page": "datasets",
+        "counts": {
+          "inapplicable": 56,
+          "incomplete": 0,
+          "passes": 33,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "page": "validation",
+        "counts": {
+          "inapplicable": 56,
+          "incomplete": 0,
+          "passes": 33,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "page": "biology",
+        "counts": {
+          "inapplicable": 49,
+          "incomplete": 2,
+          "passes": 40,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "page": "experiments",
+        "counts": {
+          "inapplicable": 48,
+          "incomplete": 0,
+          "passes": 41,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 768,
+          "scroll": 768
+        }
+      },
+      {
+        "width": 375,
+        "height": 812,
+        "page": "viewer/native-runs/e682d2cc-6404-493a-9cda-d725eafb9381",
+        "counts": {
+          "inapplicable": 43,
+          "incomplete": 1,
+          "passes": 46,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 375,
+          "scroll": 375
+        }
+      },
+      {
+        "width": 812,
+        "height": 375,
+        "page": "datasets",
+        "counts": {
+          "inapplicable": 55,
+          "incomplete": 0,
+          "passes": 34,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 812,
+          "scroll": 812
+        }
+      }
+    ],
+    "rtl_audit": {
+      "inapplicable": 43,
+      "incomplete": 1,
+      "passes": 46,
+      "violations": 0
+    },
+    "role_and_storage": {
+      "reader_mutations_disabled": true,
+      "local_storage_keys": 0,
+      "session_storage_keys": 0,
+      "reload_requires_reconnect": true
+    },
+    "failure_states": {
+      "immutable_csv_conflict": "HTTP409 with original data retained",
+      "degraded_api": "stopped isolated API, displayed Service unavailable, Retry reconnected",
+      "cancel": "queued reference run cancelled through browser, result absent"
+    }
+  },
+  "live_deployed": {
+    "reference": {
+      "run_id": "1e6c7c76-1c0e-4e8c-a740-2f3fa4040b06",
+      "status": "succeeded",
+      "manifest_digest": "6505ab79b5d60c4029c27a8664cfe03ea1f0c36f82d3570cf25d6cc05ac1f0a7",
+      "result_digest": "7eca7312bf341d2b28e448048c5b7a5987a3f6db1f36a19bf692b10bb37ef81b",
+      "samples": 11,
+      "idempotency_verified": true,
+      "evidence_class": "engineering_verification",
+      "scientific_validity": "not_established"
+    },
+    "copasi": {
+      "run": {
+        "schema_version": "1.0.0",
+        "id": "057d76e3-c55c-443f-afce-9e97a0f93f04",
+        "manifest_digest": "a29f715f6e4e17aab50c16f76323789e0848d2e07aae12bde0576eb5f80ce061",
+        "status": "succeeded",
+        "created_at": "2026-10-17T20:51:59.449686+00:00",
+        "updated_at": "2026-10-17T20:52:02.345446+00:00",
+        "cancel_requested": false,
+        "result_digest": "d9f0ddcada86460320f7f01d305e902e179ac92310c20e3d4f08599c93f38fd2",
+        "error": null
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "run_id": "057d76e3-c55c-443f-afce-9e97a0f93f04",
+        "manifest_digest": "a29f715f6e4e17aab50c16f76323789e0848d2e07aae12bde0576eb5f80ce061",
+        "image_digest": "06f7dae30d19071ba732b4fe0a5957f7beabba49cbef31dbf20694547b4acded",
+        "driver_digest": "8d7f5d7b958458070d5e650b258f8da334ac81bf93c8a8fb388ae5f18aabce72",
+        "artifacts": {
+          "native.csv": "1ea1140267f5b6a4cd30fa446eb86fc5c3a9a615dcbb0f3f0c7db824ed0df306",
+          "quantities.json": "042b3c9463a4ba0f99f6d3f2fd19a0d47476cd335890b6c17480fa52d46a71d2"
+        },
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Actual native solver output; independent scientific validity remains open.",
+          "Original model, native units and exact image/driver identities retained."
+        ]
+      },
+      "metadata": {
+        "engine": "COPASI",
+        "model_units": {
+          "time_unit": "s",
+          "quantity_unit": "mol",
+          "length_unit": "m",
+          "area_unit": "m²",
+          "volume_unit": "l"
+        },
+        "samples": 11,
+        "species": [
+          {
+            "name": "A",
+            "display_name": "A",
+            "unit": "mol/l",
+            "compartment": "cell",
+            "sbml_id": "A"
+          },
+          {
+            "name": "B",
+            "display_name": "B",
+            "unit": "mol/l",
+            "compartment": "cell",
+            "sbml_id": "B"
+          }
+        ],
+        "columns": [
+          "A",
+          "B"
+        ],
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Native deterministic integration; scientific applicability remains unvalidated.",
+          "Original SBML, compartment/species/parameter units and runtime identity are retained."
+        ]
+      },
+      "samples": 11,
+      "max_terminal_error": 6.085636267139094e-08
+    },
+    "same_origin_app_and_csp": true,
+    "authenticated_bounded_discovery": true
+  },
+  "source_verification": {
+    "releases": 25,
+    "files": 52167,
+    "bytes": 1799838581,
+    "materialized_gitlinks": 37
+  },
+  "preservation": {
+    "all_previous_rows_retained": {
+      "objects": 74,
+      "runs": 41,
+      "events": 123,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8,
+      "native_runs": 21,
+      "native_events": 66,
+      "batch_runs": 7,
+      "batch_members": 38,
+      "batch_events": 57,
+      "hybrid_runs": 4,
+      "hybrid_nodes": 11,
+      "hybrid_events": 20
+    },
+    "previous_artifact_hashes_unchanged": 380,
+    "sqlite_user_version": 1,
+    "all_queues_idle": true
+  },
+  "original_project_license_hashes_unchanged": 24,
+  "original_third_party_notice_retained_as_prefix": true,
+  "backup": "backups/pre-workbench-20261017T203213Z",
+  "verification": {
+    "python_tests": 376,
+    "frontend_tests": 15,
+    "coverage_percent": 89,
+    "mypy_files": 82,
+    "linux_test_seconds": 28.94,
+    "make_check_docker": "passed",
+    "make_build": "passed",
+    "wheel_contains_assets_and_original_frontend_notices": true,
+    "runtime_frontend_dependency_audit_vulnerabilities": 0
+  },
+  "scientific_validity": "not_established",
+  "limits": [
+    "Chromium local workspace only, no multi-user isolation claim.",
+    "Advanced scientific metadata/definitions use validated JSON editors.",
+    "No independent quality/split authority or biological bridge inferred.",
+    "No spatial geometry, continuous feedback or additional native queue adapters implemented by E4."
+  ]
+}

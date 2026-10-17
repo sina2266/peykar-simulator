@@ -9,8 +9,9 @@ and cellular models to tissues, organs, and interacting systems.
 **Release 0.3.0 is an executable engineering foundation, not a validated biological
 simulator.** It includes two synthetic reference engines and a working, explicit
 operator workflow for the archived vCornea model in isolated CompuCell3D 4.7.0.
-General multiscale execution, independent biological validation and the dashboard
-remain future work.
+General multiscale execution and independent biological validation remain future
+work. The local six-workspace [research workbench](docs/epics/E4-research-workbench.md)
+now exposes the implemented scientific workflows.
 
 The current engineering continuation adds checked worker result/runtime contracts,
 offline admission of digest-pinned external files, operator-mapped CompuCell3D
@@ -36,7 +37,7 @@ parameters, with atomic dispatch, units/context checks, cancellation and provena
 A separate [native execution agent](docs/native-agent.md) now runs admitted SBML
 through COPASI and original PKML through OSPSuite from durable API jobs, with
 frozen identities, cancellation and checksum-verified outputs. Other native queue
-adapters, continuous feedback coupling and the full UI remain explicit system tasks.
+adapters and continuous feedback coupling remain explicit system tasks.
 [E2 job cohorts](docs/epics/E2-reproducible-cohorts.md) now add bounded parameter
 sweeps, deterministic reference seed allocation, mixed native/reference batches
 and lineage-checked terminal statistics with explicit excluded members.
@@ -78,6 +79,19 @@ uv run peykar models
 ```
 
 Use `PEYKAR_DATA_DIR` to change the default local `.peykar` state directory.
+
+## Open the research workbench
+
+The Docker build includes the browser application at **http://127.0.0.1:8000/app/**.
+Connect with the existing API administrator or reader token. The client supports
+model/data/evidence inspection, reference/native run submission, scalar flow design,
+cohorts, persistent results and frozen evaluation. Tokens stay in page memory and
+are cleared on reload/disconnect. Native jobs still require the separate host agent.
+
+For source development, use Node 22.14+ and run `make install` (frozen Python/npm
+locks) or `npm --prefix apps/dashboard ci --ignore-scripts` followed by
+`make dashboard`. `make check` includes frontend checks; `make build` packages the
+client into the platform wheel/sdist. See [dashboard development](apps/dashboard/README.md).
 
 ## Import data and freeze an evaluation
 
@@ -193,7 +207,7 @@ scope are in [the library guide](docs/library-ecosystem.md).
 | `packages/core` | Independent contracts, units, hashing and engine protocol |
 | `packages/engines` | Trusted reference engines behind the shared protocol |
 | `packages/platform` | Domain modules, registries, local infrastructure, API, CLI |
-| `apps` | Entrypoints and dashboard design |
+| `apps` | Entrypoints and the implemented six-workspace research workbench |
 | `biological_libraries` | Reusable mechanisms and promotion criteria |
 | `model_packages` | Immutable descriptors, separate from executable engines |
 | `engine_adapters` | Integration plans and evidence for specialist engines |

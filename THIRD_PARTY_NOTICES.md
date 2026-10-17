@@ -34,3 +34,13 @@ Runtime Python packages are pinned in each profile's `uv.lock`; native package a
 R package inventories are retained inside the corresponding images. COPASI's
 BasiCO interface and its compatibility bridge are credited in the runtime profile.
 Official Chaste/VCell images preserve the upstream distributions' bundled notices.
+
+## Browser workbench runtime
+
+React 19.3.1, React DOM 19.3.1 and Scheduler 0.28.0: Meta Platforms, Inc. and
+affiliates/contributors, under the original MIT notices. Exact npm distributions
+are pinned in [the dashboard lock](apps/dashboard/package-lock.json); unchanged
+notices are retained in [third-party](apps/dashboard/third-party) and copied into
+the packaged `/app/licenses/` directory. The build verifies those notices against
+the installed distributions. These components retain their own terms; Peykar's
+project license and all specialist library notices remain unchanged.

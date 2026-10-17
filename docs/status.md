@@ -54,7 +54,7 @@ interfaces/acceptance criteria without an executable integration.
 | Real perturbation AnnData | Operator reader/QC working | Complete provider ZIP/member checksums, 37,160-cell/19,264-gene Dixit K562 release, bounded backed matrix inspection; original GEARS split/training/accuracy and general API admission remain open |
 | GEO, CELLxGENE, HuBMAP, Hugging Face connectors | Designed | No automatic dataset import or clinical data handling |
 | PostgreSQL, S3, SLURM, distributed leases | Designed | Local migration interfaces and operational design only |
-| Six-workspace dashboard | Designed | No frontend implementation in this release |
+| Six-workspace research workbench | Implemented local bounded subset | React/TypeScript client packaged at `/app/`; real biology/model/dataset/experiment/viewer/evaluation workflows, mixed scalar flow editor, original-unit plots, persistence, reader/admin controls and English/Persian RTL; advanced metadata/definitions use validated JSON editors; independent quality/split authority, spatial views and richer authoring remain open |
 | Genetic interventions / cross-organ / whole body | Designed | No biological efficacy claims |
 | Docker/Compose | Implemented locally | API/worker shared-volume lifecycle verified on Docker Desktop; isolated Linux regression target supplied; no production or multi-host claim |
 | GitHub Actions | Configured | Remote matrix runs after publishing to GitHub |

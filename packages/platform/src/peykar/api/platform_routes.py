@@ -98,8 +98,10 @@ def install_platform_routes(
     @read.get("/experiments", tags=["experiments"])
     def experiments(
         svc: Annotated[SimulationService, Depends(service)],
+        limit: Annotated[int, Query(ge=1, le=200)] = 200,
+        offset: Annotated[int, Query(ge=0)] = 0,
     ) -> tuple[FrozenExperiment, ...]:
-        return ExperimentService(svc).discover()
+        return ExperimentService(svc).discover(limit, offset)
 
     @read.get("/experiments/{id}/versions/{version}", tags=["experiments"])
     def experiment(

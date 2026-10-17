@@ -58,8 +58,10 @@ def install_native_routes(
     @read.get("/native-models", tags=["native models"])
     def models(
         svc: Annotated[SimulationService, Depends(service)],
+        limit: Annotated[int, Query(ge=1, le=200)] = 200,
+        offset: Annotated[int, Query(ge=0)] = 0,
     ) -> tuple[NativeModelPackage, ...]:
-        return NativeModelService(svc.db, svc.artifacts).discover()
+        return NativeModelService(svc.db, svc.artifacts).discover(limit, offset)
 
     @read.get("/native-models/{id}/versions/{version}", tags=["native models"])
     def model(

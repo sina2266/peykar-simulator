@@ -21,10 +21,12 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.batch_routes import install_batch_routes
+from peykar.api.dashboard import install_dashboard
 from peykar.api.hybrid_routes import install_hybrid_routes
 from peykar.api.middleware import BodyLimitMiddleware
 from peykar.api.native_routes import install_native_routes
 from peykar.api.platform_routes import install_platform_routes
+from peykar.api.workspace_routes import install_workspace_routes
 from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
 from peykar.data_fabric.csv_import import import_csv
 from peykar.data_fabric.service import DatasetService
@@ -397,6 +399,8 @@ def create_app(
         return EvaluationService(svc).evaluate_set(body.run_id, body.evaluation_set)
 
     install_platform_routes(read, write, service)
+    install_workspace_routes(read, service, role)
     app.include_router(read)
     app.include_router(write)
+    install_dashboard(app)
     return app
