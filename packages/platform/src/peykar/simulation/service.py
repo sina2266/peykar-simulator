@@ -50,10 +50,14 @@ class SimulationService:
     def submit(self, plan: SimulationPlan, idempotency_key: str | None = None) -> RunRecord:
         if idempotency_key is not None and not 1 <= len(idempotency_key) <= 128:
             raise InvalidRequest("Idempotency key must contain 1 to 128 characters")
+        return self.db.submit(self.prepare(plan), idempotency_key)
+
+    def prepare(self, plan: SimulationPlan) -> RunManifest:
+        """Validate and snapshot inputs without writing queue state."""
         model = self.validate(plan)
         engine = self.engines.get(model.engine, model.engine_version)
         environment = capture_environment(engine)
-        manifest = RunManifest(
+        return RunManifest(
             run_id=str(uuid.uuid4()),
             created_at=now(),
             plan=plan,
@@ -62,7 +66,6 @@ class SimulationService:
             dependency_snapshots=self.models.dependencies(model),
             environment=environment,
         )
-        return self.db.submit(manifest, idempotency_key)
 
     def result(self, run_id: str) -> SimulationResult:
         run = self.db.run(run_id)

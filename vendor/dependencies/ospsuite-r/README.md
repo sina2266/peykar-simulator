@@ -1,0 +1,239 @@
+
+# OSPSuite R package
+
+<!-- badges: start -->
+
+[![Build
+Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/merge-to-main.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/merge-to-main.yaml)
+[![Codecov test coverage
+Badge](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
+
+<!-- badges: end -->
+
+# Overview
+
+The `{ospsuite}`R package provides the functionality of loading,
+manipulating, and running the simulations created in the Open Systems
+Pharmacology Software tools PK-Sim and MoBi.
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Known issues](#known-issues)
+- [Development](#development)
+- [Code of conduct](#code-of-conduct)
+- [Contribution](#contribution)
+- [Licence](#licence)
+
+# Documentation
+
+For complete documentation, see the [online
+documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
+
+## Essential Guides
+
+**Essential guides:**
+
+- [Get
+  Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) -
+  Complete beginner tutorial with working examples
+- [Loading a simulation and accessing
+  entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
+- [Changing parameter and molecule start
+  values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
+- [Running a
+  simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+
+**For advanced workflows:**
+
+- [Efficient
+  calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
+- [Creating
+  individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
+- [Population
+  simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
+- [PK
+  Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
+- [Sensitivity
+  analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
+
+**Data handling and visualization:**
+
+- [Working with data sets and import from
+  excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
+- [Working with `DataCombined`
+  class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
+- [Visualizations with
+  `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+
+**Reference:**
+
+- [Dimensions and
+  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+- [Table
+  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
+- [PK-Sim
+  Installation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
+
+# Installation
+
+The **ospsuite** package requires R version 4.x.x and supports
+[Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
+systems.
+
+`ospsuite` is not available on CRAN, and neither are the OSP packages it
+depends on. Both are published on the OSP R-universe, so the recommended
+installation below resolves the whole stack in one call.
+
+## Pre-requisites
+
+The `{ospsuite}` package requires `{rSharp}` and its external
+dependencies (Visual C++ Redistributable and .NET 8).
+
+`{ospsuite}` 12.4.x works only with [`{rSharp}`
+1.2.3](https://github.com/Open-Systems-Pharmacology/rSharp/releases/tag/v1.2.3)
+or older, together with .NET 8. Newer versions of `{rSharp}` use .NET 10
+and cannot load simulations that contain observed data with this version
+of `{ospsuite}`.
+
+Install these dependencies using the following instructions:
+
+- [For
+  Windows](https://github.com/Open-Systems-Pharmacology/rSharp/tree/v1.2.3?tab=readme-ov-file#prerequisites)
+- [For
+  Linux](https://github.com/Open-Systems-Pharmacology/rSharp/tree/v1.2.3?tab=readme-ov-file#ubuntu)
+
+## From the OSP R-universe (recommended)
+
+Install the released version from the [OSP
+R-universe](https://open-systems-pharmacology.r-universe.dev):
+
+``` r
+install.packages(
+  "ospsuite",
+  repos = c(OSP = "https://open-systems-pharmacology.r-universe.dev", getOption("repos"))
+)
+```
+
+## Development version
+
+To install the unreleased development version from GitHub, use
+[pak](https://pak.r-lib.org):
+
+``` r
+# install.packages("pak")
+options(repos = c(
+  OSP = "https://open-systems-pharmacology.r-universe.dev",
+  getOption("repos")
+))
+
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
+```
+
+# Known issues
+
+## Loading `ospsuite` fails with “namespace ‘rSharp’ … is being loaded, but \<= 1.2.3 is required”
+
+A newer `{rSharp}` is installed. `{ospsuite}` 12.4.x needs `{rSharp}`
+1.2.3 and .NET 8. Install that version and restart R:
+
+``` r
+pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")
+```
+
+Alternatively, upgrade to `{ospsuite}` 13, which works with the newer
+`{rSharp}`.
+
+## Loading `ospsuite` might fail if the system locale is not set to English
+
+- On Windows, set
+  `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
+  to `English (United States)` and reboot.
+
+- On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before
+  starting R:
+
+  `export LC_ALL=en_US.UTF-8`
+
+- add the path to the lib subfolder of installed ospsuite package to
+  LD_LIBRARY_PATH
+  `export LD_LIBRARY_PATH=/usr/local/lib/R/site-library/ospsuite/lib/:$LD_LIBRARY_PATH`
+
+## Saving and loading the workspace in RStudio does not restore objects
+
+The ospsuite package uses the features implemented in PK-Sim and MoBi by
+creating `.NET` objects (e.g. a simulation) and using them from R. These
+objects cannot be saved as part of the workspace and reloaded on next
+start. Upon restoring the workspace, the objects will be `NULL` and
+cannot be re-used.
+
+# Development
+
+## Development Setup
+
+When developing the `{ospsuite}` package, you need to prepare
+platform-specific library files before using `devtools::load_all()`. The
+package uses configure scripts during installation to rename
+platform-specific DLLs, but `devtools::load_all()` bypasses this
+process.
+
+**Run the development setup script:**
+
+``` r
+source("tools/setup_dev.R")
+setup_dev()
+```
+
+**When to run `setup_dev()`:** - After cloning the repository for the
+first time - After switching to a different branch - After pulling
+changes that might affect library files
+
+The script automatically detects your operating system and renames the
+appropriate DLL: - **Windows**: Renames
+`System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll` -
+**Linux**: Renames `System.Data.SQLite.windows_linux.dll` →
+`System.Data.SQLite.dll` - **macOS**: Renames
+`System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
+
+## Embedded binaries
+
+The `{ospsuite}` package requires shared libraries to access PK-Sim
+functionality. To obtain the latest libraries (**.dll** on Windows or
+**.so** on Linux), run the `update_core_files.R` script included with
+this package.
+
+Because `{ospsuite}` contains binary files, it is classified as a binary
+package and cannot be submitted to CRAN.
+
+## Versioning
+
+The package follows the versioning process described in the [OSP R
+collaboration
+guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
+
+For development versions, [this GitHub
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/merge-to-main.yaml)
+automatically increments the `.9000` version suffix when pull requests
+are merged.
+
+# Code of Conduct
+
+Everyone interacting in the Open Systems Pharmacology community
+(codebases, issue trackers, chat rooms, mailing lists etc.) is expected
+to follow the Open Systems Pharmacology [code of
+conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
+
+# Contribution
+
+Contributions to the Open Systems Pharmacology community are welcome.
+Before contributing, read the [contribution
+guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
+Code contributors should follow the [R coding
+standards](https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r)
+and [collaboration
+guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide).
+
+# License
+
+OSPSuite-R is released under the [GPLv2 License](LICENSE).
+
+All trademarks within this document belong to their legitimate owners.

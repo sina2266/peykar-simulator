@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:11 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for IDA module
+#
+# src/ida/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /EHsc /O2 /D_CRT_SECURE_NO_DEPRECATE
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+INCLUDES = -I.. -I..\..\include
+
+IDA_LIB       = sundials_ida.lib
+IDA_OBJ_FILES = ida.obj ida_ic.obj ida_io.obj ida_dense.obj ida_band.obj ida_spils.obj ida_spbcgs.obj ida_spgmr.obj ida_sptfqmr.obj ida_bbdpre.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+	
+all: $(IDA_LIB)
+
+$(IDA_LIB): $(IDA_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(IDA_OBJ_FILES)
+	copy $@ $(LIBDIR)
+
+clean:
+	del *.obj
+	del $(IDA_OBJ_FILES)

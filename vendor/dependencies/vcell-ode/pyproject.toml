@@ -1,0 +1,83 @@
+[build-system]
+requires = ["uv_build>=0.11.27,<0.12"]
+build-backend = "uv_build"
+
+[project]
+name = "pyvcell_odesolver"
+version = "0.9.6"
+description="Virtual Cell CVODE / IDA based ODE solver"
+readme = "README.md"
+authors = [
+    { name = "Jim Schaff", email = "schaff@uchc.edu" },
+    { name = "Logan Drescher", email = "drescher@uchc.edu"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "pydantic>=2.13.4"
+]
+
+[tool.uv.build-backend]
+module-name = "pyvcell_odesolver"
+module-root = ""
+
+[project.optional-dependencies]
+test = ["pytest"]
+build = ["build", "wheel"]
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+xfail_strict = true
+log_cli_level = "INFO"
+filterwarnings = [
+    "error",
+]
+testpaths = ["tests"]
+
+[tool.ruff]
+# The package lives at the repo root (module-root = "" above), not under src/.
+src = ["."]
+
+[tool.ruff.lint]
+extend-select = [
+    "B",           # flake8-bugbear
+    "I",           # isort
+    "ARG",         # flake8-unused-arguments
+    "C4",          # flake8-comprehensions
+    "EM",          # flake8-errmsg
+    "ICN",         # flake8-import-conventions
+    "G",           # flake8-logging-format
+    "PGH",         # pygrep-hooks
+    "PIE",         # flake8-pie
+    "PL",          # pylint
+    "PT",          # flake8-pytest-style
+    "PTH",         # flake8-use-pathlib
+    "RET",         # flake8-return
+    "RUF",         # Ruff-specific
+    "SIM",         # flake8-simplify
+    "T20",         # flake8-print
+    "UP",          # pyupgrade
+    "YTT",         # flake8-2020
+    "EXE",         # flake8-executable
+    "NPY",         # NumPy specific rules
+    "PD",          # pandas-vet
+]
+ignore = [
+    "PLR09",    # Too many X
+    "PLR2004",  # Magic comparison
+]
+isort.required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]

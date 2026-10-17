@@ -1,0 +1,22 @@
+[settings]
+os=Windows
+arch=armv8
+build_type=Release
+compiler=clang
+compiler.runtime=static
+compiler.cstd=23
+compiler.cppstd=17
+compiler.version=21
+compiler.runtime_version=v144
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.cmake.cmaketoolchain:extra_variables={"CMAKE_FIND_PACKAGE_PREFER_CONFIG": "ON"}
+tools.env.virtualenv:powershell=pwsh
+tools.build:cflags=["-w"]
+tools.build:cxxflags=["-w"]
+
+[buildenv]
+CC=clang-cl
+CXX=clang-cl
+FC=flang

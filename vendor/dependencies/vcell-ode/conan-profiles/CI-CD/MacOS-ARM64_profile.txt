@@ -1,0 +1,17 @@
+[settings]
+arch=armv8
+build_type=Release
+compiler=apple-clang
+compiler.cppstd=20
+compiler.libcxx=libc++
+compiler.version=13
+os=Macos
+# the oldest macOS the release archives run on; must match MACOSX_DEPLOYMENT_TARGET in cd.yml.
+# 13.3 is the floor for the std::format/to_chars this code uses from libc++.
+os.version=13.3
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators
+# and the workflow's `source generators/conanbuild.sh` fails.
+tools.cmake.cmaketoolchain:generator=Ninja

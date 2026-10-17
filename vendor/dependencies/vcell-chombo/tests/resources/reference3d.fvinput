@@ -1,0 +1,113 @@
+# 3D reference model: exchange across an embedded-boundary membrane.
+#
+# The regression and analytic cases each leave something out: the analytic one
+# has no embedded boundary at all, and the regression one has a membrane that
+# nothing crosses. This one is the smallest model that uses the machinery the
+# solver exists for -- two phases cut by an implicit-function sphere, a
+# species on each side, and a flux through the embedded boundary coupling them:
+#
+#     U in cyt (sphere of radius 0.25), a Gaussian bump on 1.0, D = 1
+#     V in ec  (the rest of the unit cube), starting at 0,  D = 0.5
+#     membrane flux J = 1.0 * (U - V), out of cyt and into ec
+#     zero flux on the outer box, no reaction terms
+#
+# Nothing enters or leaves the box, so total(U) + total(V) must stay at its
+# initial value while mass moves across the membrane. The
+# empty POST_PROCESSING_BLOCK turns on the solver's variable statistics
+# (mean/total/min/max per variable per saved time, in <base>.hdf5), which is
+# where tests/release/check_release.py reads the totals from.
+#
+# Signs follow VCell's jump-condition convention: FLUX <feature> is the flux
+# INTO that feature through the membrane (positive = influx), so cyt carries
+# -J and ec carries +J. (Written the other way round, the exchange runs
+# uphill and blows up -- conserving the total all the while, which is why the
+# check also requires V to end up positive and non-trivial.)
+SIMULATION_PARAM_BEGIN
+SOLVER CHOMBO_SEMIIMPLICIT_SOLVER
+BASE_FILE_NAME SimID_reference3d_0_
+TIME_INTERVALS 1
+0.2 0.005 10
+STORE_ENABLE 1
+SIMULATION_PARAM_END
+
+MODEL_BEGIN
+FEATURE cyt 0 flux flux flux flux flux flux
+FEATURE ec 1 flux flux flux flux flux flux
+MEMBRANE cyt_ec_membrane cyt ec flux flux flux flux flux flux
+MODEL_END
+
+CHOMBO_SPEC_BEGIN
+DIMENSION 3
+MESH_SIZE 16 16 16
+DOMAIN_SIZE 1.0 1.0 1.0
+DOMAIN_ORIGIN 0.0 0.0 0.0
+SUBDOMAINS 2
+cyt 0
+IF (pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0) - 0.0625);
+USER ((pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0)) < 0.0625);
+ec 1
+IF  - (pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0) - 0.0625);
+USER ((pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0)) > 0.0625);
+REFINEMENTS 1 1
+MAX_BOX_SIZE 16
+BLOCK_FACTOR 8
+FILL_RATIO 0.9
+RELATIVE_TOLERANCE 1.0E-9
+VIEW_LEVEL 0
+SAVE_VCELL_OUTPUT true
+SAVE_CHOMBO_OUTPUT false
+CHOMBO_SPEC_END
+
+VARIABLE_BEGIN
+VOLUME_PDE U cyt false false false
+VOLUME_PDE V ec false false false
+VARIABLE_END
+
+COMPARTMENT_BEGIN cyt
+BOUNDARY_CONDITIONS flux flux flux flux flux flux
+EQUATION_BEGIN U
+INITIAL (1.0 + exp( - (100.0 * (pow((x - 0.45),2.0) + pow((y - 0.55),2.0) + pow((z - 0.5),2.0)))));
+RATE 0.0;
+DIFFUSION 1.0;
+VELOCITY_X 0.0;
+VELOCITY_Y 0.0;
+VELOCITY_Z 0.0;
+BOUNDARY_XM 0.0;
+BOUNDARY_XP 0.0;
+BOUNDARY_YM 0.0;
+BOUNDARY_YP 0.0;
+BOUNDARY_ZM 0.0;
+BOUNDARY_ZP 0.0;
+EQUATION_END
+COMPARTMENT_END
+
+COMPARTMENT_BEGIN ec
+BOUNDARY_CONDITIONS flux flux flux flux flux flux
+EQUATION_BEGIN V
+INITIAL 0.0;
+RATE 0.0;
+DIFFUSION 0.5;
+VELOCITY_X 0.0;
+VELOCITY_Y 0.0;
+VELOCITY_Z 0.0;
+BOUNDARY_XM 0.0;
+BOUNDARY_XP 0.0;
+BOUNDARY_YM 0.0;
+BOUNDARY_YP 0.0;
+BOUNDARY_ZM 0.0;
+BOUNDARY_ZP 0.0;
+EQUATION_END
+COMPARTMENT_END
+
+MEMBRANE_BEGIN cyt_ec_membrane cyt ec
+BOUNDARY_CONDITIONS flux flux flux flux flux flux
+JUMP_CONDITION_BEGIN U
+FLUX cyt  - (1.0 * (U_cyt_membrane - V_ec_membrane));
+JUMP_CONDITION_END
+JUMP_CONDITION_BEGIN V
+FLUX ec (1.0 * (U_cyt_membrane - V_ec_membrane));
+JUMP_CONDITION_END
+MEMBRANE_END
+
+POST_PROCESSING_BLOCK_BEGIN
+POST_PROCESSING_BLOCK_END

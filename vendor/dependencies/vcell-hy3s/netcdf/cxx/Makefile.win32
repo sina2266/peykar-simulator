@@ -1,0 +1,37 @@
+CC= cl
+
+# Compilation options
+CPPOPTIONS = /EHsc /c /O2 -I..\win32 -I..\libsrc -I. /DPowerStationFortran
+
+.SUFFIXES: obj.cpp
+
+!ifdef VCELL_DEBUG
+CCOPTS1 = $(CPPOPTIONS) /MTd
+TARGET = netcdf_cxx_mtd.lib
+OBJDIR = .\mtd
+!else
+CCOPTS1 = $(CPPOPTIONS) /MT
+TARGET = netcdf_cxx.lib
+OBJDIR = .\obj
+!endif
+
+#
+.cpp{$(OBJDIR)}.obj :
+	$(CC) /Fo$@ $(CCOPTS1) $<
+
+default all: $(TARGET)
+
+OBJS = $(OBJDIR)\ncvalues.obj \
+	$(OBJDIR)\netcdf.obj \
+
+
+$(OBJDIR) :
+    if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
+    
+$(TARGET) : $(OBJDIR) $(OBJS)
+	lib /out:$@ $(OBJS)
+ 
+#
+clean:
+	del $(TARGET)
+	if exist "$(OBJDIR)" del /Q $(OBJDIR)\*.*

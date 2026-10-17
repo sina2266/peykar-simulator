@@ -1,0 +1,20 @@
+# vcell-chombo builds with GCC rather than the Clang/libc++ toolchain the other
+# VCell solver repos use.  Chombo is half Fortran, and gfortran's runtime is
+# built against libstdc++ -- mixing it with libc++ in one link is not supported.
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.version=13
+compiler.libcxx=libstdc++11
+compiler.cppstd=20
+os=Linux
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set.  Without it, cmake_layout() emits build/Release/generators.
+tools.cmake.cmaketoolchain:generator=Ninja
+
+[options]
+fPIC=True
+shared=False

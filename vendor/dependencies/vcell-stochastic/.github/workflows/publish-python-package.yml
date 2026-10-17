@@ -1,0 +1,131 @@
+name: Build and Publish Python Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 0.1.0)'
+        required: false
+        default: ''
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-14]
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Linux wheels are built inside the manylinux container, so their HDF5 is
+      # installed by the before-all hook in pyproject.toml instead of here.
+      - name: Install HDF5 (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install hdf5
+          echo "HDF5_PREFIX=$(brew --prefix hdf5)" >> "$GITHUB_ENV"
+
+      - name: Install HDF5 (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/microsoft/vcpkg.git "$env:RUNNER_TEMP\vcpkg"
+          & "$env:RUNNER_TEMP\vcpkg\bootstrap-vcpkg.bat"
+          if ($LASTEXITCODE -ne 0) { throw "vcpkg bootstrap failed" }
+          & "$env:RUNNER_TEMP\vcpkg\vcpkg.exe" install "hdf5[core,cpp]:x64-windows"
+          if ($LASTEXITCODE -ne 0) { throw "vcpkg install failed" }
+          $root = "$env:RUNNER_TEMP/vcpkg" -replace '\\','/'
+          Add-Content -Path $env:GITHUB_ENV -Value "VCPKG_TOOLCHAIN=$root/scripts/buildsystems/vcpkg.cmake"
+          # delvewheel needs to find the HDF5 DLLs in order to vendor them.
+          Add-Content -Path $env:GITHUB_ENV -Value "VCPKG_BIN=$env:RUNNER_TEMP\vcpkg\installed\x64-windows\bin"
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel==2.23.4
+
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+          # Homebrew bottles on the macos-14 runner are built for macOS 14.
+          CIBW_ENVIRONMENT_MACOS: >-
+            CMAKE_PREFIX_PATH=${{ env.HDF5_PREFIX }}
+            MACOSX_DEPLOYMENT_TARGET=14.0
+          # MSBUILDDISABLENODEREUSE stops MSBuild leaving worker nodes alive
+          # after the build; they hold handles on the build directory and break
+          # its cleanup.
+          CIBW_ENVIRONMENT_WINDOWS: 'CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_TOOLCHAIN }} -DVCPKG_TARGET_TRIPLET=x64-windows" PATH="$PATH;${{ env.VCPKG_BIN }}" MSBUILDDISABLENODEREUSE=1'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The submodule sources have to be in the sdist for it to be buildable.
+      - name: Build sdist
+        run: |
+          python -m pip install build
+          python -m build --sdist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  publish:
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: '*'
+          merge-multiple: true
+
+      - name: Display artifacts
+        run: ls -R dist
+
+#      - name: Publish to PyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          skip-existing: true
+#          verbose: true
+
+      - name: Create GitHub Release
+        if: github.event.inputs.version != ''
+        uses: softprops/action-gh-release@v1
+        with:
+          # python-v*: the solver's own releases use vX.Y.Z (release.yml)
+          tag_name: python-v${{ github.event.inputs.version }}
+          name: Python package v${{ github.event.inputs.version }}
+          files: dist/*
+          draft: false
+          prerelease: false

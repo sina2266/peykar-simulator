@@ -1,0 +1,25 @@
+#!/bin/sh
+##SBATCH --job-name=MaBoSS_test # Job name
+#SBATCH --ntasks=1                   # Run a single task	
+#SBATCH --ntasks-per-node=1            # Number of CPU cores per task
+#SBATCH -c 36 
+#SBATCH -vvv
+#SBATCH --mem=10gb                  # Total memory limit
+#SBATCH --time=96:00:00              # Time limit hrs:min:sec
+#SBATCH --output=maboss_%j.log     # Standard output and error log
+
+#make clean; make MAXNODES=128 
+
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=32 -o results/small/res_32 1>>results/small/timestamps_32 2>>results/small/stats_32
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=24 -o results/small/res_24 1>>results/small/timestamps_24 2>>results/small/stats_24
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=16 -o results/small/res_16 1>>results/small/timestamps_16 2>>results/small/stats_16
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=12 -o results/small/res_12 1>>results/small/timestamps_12 2>>results/small/stats_12
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=8 -o results/small/res_8 1>>results/small/timestamps_8 2>>results/small/stats_8
+
+
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=32 -o results/xlarge/res_32 1>>results/xlarge/timestamps_32 2>>results/xlarge/stats_32
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=24 -o results/xlarge/res_24 1>>results/xlarge/timestamps_24 2>>results/xlarge/stats_24
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=16 -o results/xlarge/res_16 1>>results/xlarge/timestamps_16 2>>results/xlarge/stats_16
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=12 -o results/xlarge/res_12 1>>results/xlarge/timestamps_12 2>>results/xlarge/stats_12
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=8 -o results/xlarge/res_8 1>>results/xlarge/timestamps_8 2>>results/xlarge/stats_8
+

@@ -1,0 +1,176 @@
+name: Wheels
+
+# Wheels build on every v* tag (and publish it to PyPI — the `publish` job below),
+# on pull requests that touch the Python bindings or the build, and on demand.
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+    paths:
+      - python/**
+      - pyproject.toml
+      - CMakeLists.txt
+      - vcpkg.json
+      - .github/workflows/wheels.yml
+  workflow_dispatch:
+    inputs:
+      testpypi:
+        description: "Dry run: publish built wheels + sdist to TestPyPI"
+        type: boolean
+        default: false
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: wheels-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_wheels:
+    name: Wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # macOS   : macos-15-intel (x86_64) + macos-15 (arm64)
+        # Linux   : ubuntu-latest (x86_64) + ubuntu-24.04-arm (arm64)
+        # Windows : windows-latest (x64) — vcpkg provides HDF5/Boost/CURL
+        os: [macos-15-intel, macos-15, ubuntu-latest, ubuntu-24.04-arm, windows-latest]
+
+    steps:
+      # vcell-messaging / vcell-expressionparser are PRIVATE submodules, so the
+      # default GITHUB_TOKEN cannot fetch them. Authenticate with SUBMODULE_TOKEN
+      # the same way build-and-release.yml does.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git for private submodules
+        shell: bash
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.SUBMODULE_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Initialize submodules
+        shell: bash
+        run: git submodule update --init --recursive
+
+      # -----------------------------------------------------------------------
+      # Windows: install Strawberry Perl (needed by some vcpkg ports) and run
+      # vcpkg in manifest mode to populate vcpkg_installed/.  The CMake/vcpkg
+      # flags are wired into the scikit-build-core configure step via
+      # CMAKE_ARGS in [tool.cibuildwheel.windows.environment] (pyproject.toml).
+      # -----------------------------------------------------------------------
+      - name: Cache vcpkg artifacts
+        if: runner.os == 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg_installed
+          key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            vcpkg-${{ runner.os }}-
+
+      - name: Install Windows system prerequisites
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: choco install strawberryperl -y
+
+      - name: Install Windows vcpkg dependencies
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $vcpkgRoot = if ($env:VCPKG_INSTALLATION_ROOT -and (Test-Path (Join-Path $env:VCPKG_INSTALLATION_ROOT 'vcpkg.exe'))) {
+            $env:VCPKG_INSTALLATION_ROOT
+          } elseif (Test-Path 'C:\vcpkg\vcpkg.exe') {
+            'C:\vcpkg'
+          } else {
+            throw 'vcpkg.exe not found on the runner'
+          }
+          Set-Location "$env:GITHUB_WORKSPACE"
+          & (Join-Path $vcpkgRoot 'vcpkg.exe') install --triplet x64-windows
+
+          # cibuildwheel expands $VAR references in [tool.cibuildwheel.windows.environment]
+          # (pyproject.toml) using its own bash-syntax evaluator, then scikit-build-core
+          # parses the resulting CMAKE_ARGS with Python's POSIX-mode shlex.split(), which
+          # silently strips backslashes. $VCPKG_INSTALLATION_ROOT / $GITHUB_WORKSPACE are
+          # backslash Windows paths (e.g. D:\a\vcell-mbsolver\vcell-mbsolver), so embedding
+          # them directly corrupts paths like HDF5_ROOT (e.g. into "D:avcell-mbsolver...")
+          # and vcpkg/HDF5/Boost/CURL become undiscoverable. Publish forward-slash versions
+          # via GITHUB_ENV so CMAKE_ARGS never contains a backslash.
+          $vcpkgRootFwd = $vcpkgRoot -replace '\\', '/'
+          $workspaceFwd = $env:GITHUB_WORKSPACE -replace '\\', '/'
+          "VCPKG_ROOT_FWD=$vcpkgRootFwd" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "GITHUB_WORKSPACE_FWD=$workspaceFwd" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.4.0
+        env:
+          CIBW_ARCHS: native
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}
+          path: ./wheelhouse/*.whl
+          retention-days: 7
+
+  make_sdist:
+    name: Source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure git for private submodules
+        shell: bash
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.SUBMODULE_TOKEN }}@github.com/".insteadOf "https://github.com/"
+      - name: Initialize submodules
+        shell: bash
+        run: git submodule update --init --recursive
+      - name: Build sdist
+        run: pipx run build --sdist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+          retention-days: 7
+
+  # Dry run: manually trigger this workflow (Actions tab → Run workflow, or
+  # `gh workflow run wheels.yml -f testpypi=true`) to publish to TestPyPI.
+  # Requires a TestPyPI trusted publisher for this repo + workflow + the
+  # `testpypi` environment (see README). skip-existing avoids a hard failure
+  # if that version was already uploaded in a previous dry run.
+  publish-testpypi:
+    name: Publish to TestPyPI (dry run)
+    needs: [build_wheels, make_sdist]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.testpypi
+    environment: testpypi
+    permissions:
+      id-token: write          # OIDC token for trusted publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+
+  # Real publish: dormant until a v* tag is pushed AND the PyPI project has a
+  # trusted publisher configured for this repo + workflow (see README). Normal
+  # pushes/PRs only produce downloadable wheel artifacts above.
+  publish:
+    name: Publish to PyPI
+    needs: [build_wheels, make_sdist]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    environment: pypi
+    permissions:
+      id-token: write          # OIDC token for trusted publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: pypa/gh-action-pypi-publish@release/v1

@@ -1,0 +1,19 @@
+#!/bin/sh
+##SBATCH --job-name=MaBoSS_test # Job name
+#SBATCH --ntasks=1                   # Run a single task	
+#SBATCH --ntasks-per-node=1            # Number of CPU cores per task
+#SBATCH -c 4 
+#SBATCH -vvv
+#SBATCH --mem=10gb                  # Total memory limit
+#SBATCH --time=96:00:00              # Time limit hrs:min:sec
+#SBATCH --output=maboss_%j.log     # Standard output and error log
+
+#make clean; make MAXNODES=128 
+
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=2 -o results/small/res_2 1>>results/small/timestamps_2 2>>results/small/stats_2
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=1 -o results/small/res_1 1>>results/small/timestamps_1 2>>results/small/stats_1
+
+
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=2 -o results/xlarge/res_2 1>>results/xlarge/timestamps_2 2>>results/xlarge/stats_2
+perf stat -r 3 /usr/bin/time -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=1 -o results/xlarge/res_1 1>>results/xlarge/timestamps_1 2>>results/xlarge/stats_1
+

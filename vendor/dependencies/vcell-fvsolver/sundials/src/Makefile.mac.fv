@@ -1,0 +1,11 @@
+all:
+	cd cvode; make -f Makefile.mac.fv
+	cd ida; make -f Makefile.mac.fv
+	cd nvec_ser; make -f Makefile.mac.fv
+	cd sundials; make -f Makefile.mac.fv
+
+clean:
+	cd cvode; make -f Makefile.mac.fv clean
+	cd ida; make -f Makefile.mac.fv clean
+	cd nvec_ser; make -f Makefile.mac.fv clean
+	cd sundials; make -f Makefile.mac.fv clean

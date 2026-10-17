@@ -1,0 +1,30 @@
+# vcell-hy3s builds with Homebrew GCC on macOS, not Apple Clang.
+#
+# Hy3S is Fortran, and Clang has no Fortran compiler at all. gfortran's runtime
+# links against libstdc++, so the libc++ toolchain the ODE solver repo uses is
+# not an option either -- hence gcc and libstdc++11 below.
+#
+# Conan Center publishes no macOS binaries for a GCC profile, so anything that
+# does come from Conan compiles from source here. That cost is small in this
+# repo: libcurl is the only dependency, and only when messaging is enabled.
+# NetCDF is vendored, for the reasons in README.md.
+#
+# Version pinned to 13 to match Linux-AMD64_profile.txt; the runners also carry
+# 14, 15 and 16.
+[settings]
+arch=armv8
+build_type=Release
+compiler=gcc
+compiler.version=13
+compiler.libcxx=libstdc++11
+compiler.cppstd=20
+os=Macos
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators.
+tools.cmake.cmaketoolchain:generator=Ninja
+
+[options]
+fPIC=True
+shared=False

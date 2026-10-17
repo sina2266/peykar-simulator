@@ -1,0 +1,361 @@
+---
+title: "Introduction to tlf-based workflow"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introduction to tlf-based workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
+)
+```
+
+```{r setup}
+require(tlf)
+```
+
+# 1. Introduction
+
+## 1.1. Objectives
+
+The aim of this vignette is to document and illustrate the typical workflow needed for the production of plots using the `tlf`-library.
+
+## 1.2. Libraries
+
+The main purpose of the `tlf`-library is to standardize the production of `ggplot` objects from data produced by the `OSPSuiteR` package. 
+As such, `tlf`-library requires that the `ggplot2` package be installed.
+
+## 1.3. `tlf` typical workflow
+
+The suggested workflow for producing any kind of plot with the `tlf`-library is illustrated in the figure below. 
+
+```{r workflow-illustration, echo=FALSE}
+knitr::include_graphics("workflow.png")
+```
+
+The standard workflow then proceeds as follows:
+
+**Step 0 - Data gathering.** Gather the data into tidy `data.frame` format.
+
+**Step 1 - Data pre-processing** Pre-process the data using `AggregationSummary` class.
+
+**Step 2 - Data grouping** Use the `GroupMapping` class to specify groupings according to which the data will be captioned in figure legends.
+
+**Step 3 - Data mapping.** Use the `DataMapping` class to select the independent and dependent variables of the processed data as well as the aesthetics that will be used to differentiate between the groupings of the data that were specified in step 2.
+
+**Step 4 - Plot configuration** Set the `PlotConfiguration` object which will define settings of the plot such as axis labeling, font sizes, and watermarks.
+
+**Step 5 - Plot generation** Create a `ggplot` object from the above classes using the dedicated plotting function.
+
+Steps 1, 2, 3, and 4 are not mandatory. If they are skipped, `tlf`-library uses default settings in lieu of the objects created otherwise. Additionally, the `PlotConfiguration` object and the `DataMapping` object can be created independently. 
+Sections 2 to 4 will focus on `AggregationSummary`, `DataMapping`, and `PlotConfiguration`.
+
+## 1.4. Naming Conventions
+
+In this package, it was chosen to use specific names for functions and classes referring to specific plots.
+The naming convention for classes is `<Plot Name><Class>` and for function `<function><Plot Name>`. 
+Below presents the table of specific classes and functions that are created using this convention:
+
+```{r naming-convention, echo = FALSE, results='asis'}
+# This small script gives a fast way to introduce the nomenclature of the classes and functions
+plotNames <- c("PKRatio", "DDIRatio", "IndividualIdProfile", "ObsVsPred", "Histogram", "BoxWhisker")
+classesNames <- c("DataMapping", "PlotConfiguration")
+functionNames <- c("plot")
+
+conventionTable <- data.frame(
+  sapply(classesNames, function(x) {
+    paste0(plotNames, x)
+  }),
+  sapply(functionNames, function(x) {
+    paste0(x, plotNames)
+  }),
+  row.names = plotNames
+)
+
+
+knitr::kable(conventionTable)
+```
+
+# 2. Data pre-processing: `AggregationSummary` class
+
+## 2.1. Data format
+
+The workflow assumes that the data to be plotted has been gathered in the form of a [*tidy*](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataframe.
+In a tidy format dataframe, each *measurement*, such as a simulation result or an experimental observation, is described entirely in one row.
+The columns of the data.frame are limited to no more than the *independent variable* columns of the measurement (for example, *time* and *IndividualId*) and the *dependent variable* columns (in this case *Organism|VenousBlood|Volume*), which hold the value of the measurement.
+Since no additional columns are allowed, two dependent variables that have differing sets of independent variables should each have their own tidy dataframes.
+
+In the sequel, we will use a dataset derived from the `OSPSuiteR` package: `testData`. Let's look at a few rows to get a sense of the data:
+
+```{r get-test-data, echo=FALSE, results='asis'}
+testData <- read.csv(
+  system.file("extdata", "ospsuite-data.csv", package = "tlf"),
+  check.names = FALSE,
+  stringsAsFactors = FALSE
+)
+
+knitr::kable(head(testData[, 1:6])) # For aesthetics of the table align='c', digits =2)
+```
+
+## 2.2. MetaData
+
+A `metaData` variable associated with the data can be used to define additional information such as the `dimension` and `unit` of each column in the `data.frame`. The lower limit of quantification of a IndividualId profile can also be stored in the `metaData`. The format of metaData is currently expected to be a list on each variable of lists showing unit and dimension.
+
+```{r get-test-metadata, results='asis', echo=FALSE}
+metaDataTable <- read.csv(
+  system.file("extdata", "ospsuite-metadata.csv", package = "tlf"),
+  check.names = FALSE,
+  stringsAsFactors = FALSE
+)
+
+knitr::kable(metaDataTable)
+```
+
+```{r get-test-metadata-as-list, include=FALSE}
+testMetaData <- list()
+for (variableIndex in 1:nrow(metaDataTable)) {
+  testMetaData[[metaDataTable$Variable[variableIndex]]] <- list(
+    dimension = metaDataTable$Dimension[variableIndex],
+    unit = metaDataTable$Unit[variableIndex]
+  )
+}
+```
+
+## 2.3. Aggregation
+
+A common processing of the data is its aggregation. The aggregation consists in splitting the data into subsets, then computing summary statistics for each, and returning the result in a convenient form.
+Visual predictive checks are typical plots where such method is useful.
+
+The `AggregationSummary` class is a helper class that simplifies the use of aggregation methods on the data.
+The `R6` class `AggregationSummary` automates the computation of multiple summary statistics of the raw data produced at **Step 0**. The output of this optional data pre-processing step is a dataframe with a column for each summary statistic.  This dataframe can be input into the subsequent steps of the workflow.  The user also has the option of generating `metaData` for each of the summary statistics evaluated.
+
+To illustrate the functions of this class for the example of the dataframe `testData`, let's suppose that for each individual in the *IndividualId* column, the *minimum* and the *mean* value of the simulated  *Organism|VenousBlood|Volume* column is to be computed for each gender in the *Gender* column.  The `AggregationSummary` class works in 3 steps:
+
+1. Three sets of columns are selected from the input dataframe `data`: an *independent variable* set called `xColumnNames` (in this case, the *IndividualId* column in `testData`),  a *grouping variables* set called `groupingColumnNames` (the *Gender* column in `testData`) and a *dependent variables* set called `yColumnNames` (the *Organism|VenousBlood|Volume* column in `testData`).
+
+2. For each value of the independent variable `xColumnNames`, the rows of the dataframe are aggregated into groups defined by unique combinations of the elements in the grouping variable columns `groupingColumnNames`.
+
+3. Summary statistics (in this case, the `minimum` and the `mean`) for the `yColumnNames` variables in each group are evaluated. The functions for computing the the summary statistics are specified when initializing an `AggregationSummary`, via `aggregationFunctionsVector`. User-specified descriptive names of these functions are supplied via the vector of strings named `aggregationFunctionNames`.  The units and dimensions of the outputs of these functions are supplied via the vectors of strings named `aggregationUnitsVector` and `aggregationDimensionsVector`, respectively. 
+
+For this example, the `AggregationSummary` object `aggSummary` is instantiated as follows:
+
+```{r aggregate-example, results='asis'}
+aggSummary <- AggregationSummary$new(
+  data = testData,
+  metaData = testMetaData,
+  xColumnNames = "IndividualId",
+  groupingColumnNames = "Gender",
+  yColumnNames = "Organism|VenousBlood|Volume",
+  aggregationFunctionsVector = c(min, mean),
+  aggregationFunctionNames = c(
+    "Simulated Min",
+    "Simulated Mean"
+  ),
+  aggregationUnitsVector = c("l", "l"),
+  aggregationDimensionsVector = c(
+    "Volume",
+    "Volume"
+  )
+)
+```
+
+The dataframe that holds the summary statistics of the aggregated rows is stored in the `dfHelper` property of the resulting `aggSummary` object. Since two functions (`min` and `mean`) were specified in `aggregationFunctionsVector`, the dataframe `aggSummary$dfHelper` has, in addition to the `xColumnNames`and `groupingColumnNames` columns, two additional columns named `Simulated Min` and `Simulated Mean`, which were the names specified in `aggregationFunctionNames`.
+
+```{r eval=FALSE}
+head(aggSummary$dfHelper)
+```
+
+```{r show-aggregation-summary, echo=FALSE, results='asis'}
+knitr::kable(head(aggSummary$dfHelper, digits = 2))
+```
+
+The `metaData` corresponding to the columns of the resulting dataframes are lists that are stored together in a list with the `metaData` of the `xColumnNames`and `groupingColumnNames` columns.  The `metaData` for the new `aggSummary$dfHelper` dataframe is stored as the `metaDataHelper` property of the `aggSummary` object. For this example, the two `metaData` lists corresponding to the `Simulated Min` and `Simulated Mean` columns are also are labeled `Simulated Min` and `Simulated Mean`. The contents of the list `aggSummary$metaDataHelper` are:
+
+```{r show-meta-data-of-aggregation, results='asis'}
+# Currently issue with metaData of Gender
+aggSummary$metaDataHelper[[2]] <- NULL
+aggMetaData <- data.frame(
+  "unit" = sapply(aggSummary$metaDataHelper, function(x) {
+    x$unit
+  }),
+  "dimension" = sapply(aggSummary$metaDataHelper, function(x) {
+    x$dimension
+  })
+)
+
+knitr::kable(aggMetaData)
+``` 
+
+# 3. Mapping and grouping of data: `DataMapping` class
+
+The role of the `DataMapping` class is to provide a user-friendly interface to indicate what data should be plotted.
+In most cases, this class needs to be initialized to map what variables are `x` and  `y`, and which IndividualIds variable(s) will group the data.
+Thus, the most common input are `x` and `y`; however, for more advanced plots, input such as `groupMapping` may be used often.
+For advanced plots, subclasses are derived from `DataMapping`, they use unique input and default related to the advanced plot to make it easier to use them.
+
+## 3.1. GroupMapping
+
+### 3.1.1. Grouping class
+
+An `R6` class called `Grouping` can be used to group the data into subsets that, in the final plots, are to be distinguished both aesthetically and in legend captions.  In addition, these subsets can be listed under descriptive legend titles.
+
+As an example, a `Grouping` object called `grouping1` can be used to specify that the data in a *tidy* data.frame should be grouped by both "Compound" and "Dose":
+
+```{r grouping-2-variables, results='asis'}
+# Grouping by variable names:
+grouping1 <- Grouping$new(c("Compound", "Dose"))
+```
+
+With this minimal input, a legend associated with this grouping will have the default title "Compound-Dose". On the other hand, a custom title for this grouping and its legend can be supplied by the user with the optional `label` input:
+
+```{r grouping-2-variable-with-label, results='asis'}
+# Grouping by variable names and overwriting the default label:
+grouping2 <- Grouping$new(group = c("Compound", "Dose"), label = "Compound & Dose")
+```
+
+In the above two examples, default captions are constructed by hyphenating the compound type and the dose amount for each row.  Alternatively, the captions can be customized by the user by supplying a dataframe with the custom captions to the `group` input of the `Grouping` object constructor.  The format of this dataframe is such that the rightmost column contains the desired captions, the name of this rightmost column is the default legend title for this grouping, and the remaining columns define the combinations of row entries that are to receive each caption in the rightmost column.  To illustrate this method, the following dataframe `mappingDataFrame` is used to assign captions based on entries in the "Dose" and "Compound" columns.  For example, the caption "6mg of Aspirin" is assigned to any row in which the "Dose" entry is 6 and the "Compound" entry is "Aspirin". 
+
+```{r grouping-using-dataframe, results='asis'}
+# Grouping using a data.frame:
+mappingDataFrame <- data.frame(
+  Compound = c("Aspirin", "Aspirin", "Sugar", "Sugar"),
+  Dose = c(6, 3, 6, 3),
+  "Compound & Dose" = c(
+    "6mg of Aspirin",
+    "3mg of Aspirin",
+    "6mg of Sugar",
+    "3mg of Sugar"
+  ),
+  check.names = FALSE
+)
+knitr::kable(mappingDataFrame)
+grouping3 <- Grouping$new(group = mappingDataFrame)
+```
+
+The default title of the legend that results from this grouping is the name of the rightmost column, which is "Compound & Dose".  Note that the `check.names` option should be set to `FALSE` when creating the dataframe `mappingDataFrame`, since the legend title contains spaces in this instance.  This legend title can be overridden to be another string by using the `label` input of the object constructor, as in the case of `grouping2` above.
+
+The three `Grouping` objects, `grouping1`, `grouping2`, and `grouping3` respectively yield the last three columns of the following dataframe:
+
+```{r grouping-show-captions, results='asis'}
+# Apply the mapping to get the grouping captions:
+groupingsDataFrame <- data.frame(
+  testData$IndividualId,
+  testData$Dose,
+  testData$Compound,
+  grouping1$getCaptions(testData),
+  grouping2$getCaptions(testData),
+  grouping3$getCaptions(testData)
+)
+
+names(groupingsDataFrame) <- c(
+  "IndividualId", "Dose", "Compound",
+  grouping1$label, grouping2$label, grouping3$label
+)
+
+# Show results for all groupings:
+knitr::kable(groupingsDataFrame)
+```
+
+A dataframe can also be used to create a `Grouping` object that subsets the data based on whether a numeric grouping variable satisfies an specific inequality.  For example, individuals in `testData` can be grouped according to whether or not their age exceeds 6 years by first defining the following dataframe:
+
+```{r binning-age, results='asis'}
+# Grouping using a data.frame:
+binningDataFrame <- data.frame(
+  Age = I(list(c(0, 6), c(7, 100))),
+  "Age Range" = c(
+    "Age 6 or lower",
+    "Above age 6"
+  ),
+  check.names = FALSE
+)
+```
+
+Then creating a new grouping:
+
+```{r grouping-with-age-bins, results='asis'}
+grouping4 <- Grouping$new(group = binningDataFrame)
+```
+ 
+This new `Grouping` object `grouping4` yields the following captions
+
+```{r show-grouping-with-age-bins, results='asis'}
+# Apply the mapping to get the grouping captions:
+testData$Age <- testData$`Organism|Age`
+binnedGroupingsDataFrame <- data.frame(
+  testData$IndividualId,
+  testData$Age,
+  grouping4$getCaptions(testData)
+)
+
+names(binnedGroupingsDataFrame) <- c("IndividualId", "Age", grouping4$label)
+
+# Show results for all groupings:
+knitr::kable(binnedGroupingsDataFrame)
+```
+
+### 3.1.2. GroupMapping class 
+
+An additional `R6` class called `GroupMapping` maps `Grouping` objects to aesthetic parameters such as `color` or `linetype`.  To distinguish between "Compound" and "Dose" groups by color and to use the captions and legend title specified in `grouping2`, the following groupings object `groups1` is constructed:
+
+```{r group-mapping-class, results='asis'}
+# Map groups to aesthetic properties
+groups1 <- GroupMapping$new(color = grouping2)
+```
+
+A `GroupMapping` object `groups2` can also be constructed more quickly by directly associating an aesthetic, such as `color`, to a vector of dataframe column names:
+
+```{r, results='asis'}
+# Map groups to aesthetic properties
+groups2 <- GroupMapping$new(color = c("Compound", "Dose"))
+```
+
+or to a `Grouping` object directly:
+
+```{r, results='asis'}
+# Map groups to aesthetic properties
+groups3 <- GroupMapping$new(color = Grouping$new(
+  group = c("Compound", "Dose"),
+  label = c("Compound & Dose")
+))
+```
+
+## 3.2. DataMapping
+
+The `R6` class `XYGDataMapping` extracts the maps the x, y, and grouping variables of data according to the aesthetics specified in an input `GroupMapping` object.  This mapping is carried out by an internal function of this class named `checkMapData` which checks if the variables indicated the `GroupMapping` are included in the data. This method then returns a simplified dataframe with the variables defined by the dataMapping. 
+ 
+When no `GroupMapping` object is supplied upon construction of a `XYGDataMapping` object, the function `checkMapData` returns a dataframe with `x` and `y`.
+A dummy variable named `aesDefault` is added to the data.frame, its sole purpose is to allow modifications of aesthetic properties after the creation of the ggplot object (not possible otherwise).
+
+```{r data-mapping, results='asis'}
+tpMapping <- XYGDataMapping$new(x = "IndividualId", y = "Organism|VenousBlood|Volume")
+knitr::kable(tpMapping$checkMapData(
+  data = testData,
+  metaData = IndividualIdProfileMetaData
+))
+```
+
+When a `GroupMapping` object is supplied upon construction of the `XYGDataMapping` object, each `x`,`y` pair is associated with a group that can be used to distinguish the pair aesthetically in the final plot:
+
+```{r data-mapping-groups-1, results='asis'}
+# Re-use the variable groups previously defined
+tpMapping <- XYGDataMapping$new(
+  x = "IndividualId", y = "Organism|VenousBlood|Volume",
+  groupMapping = groups1
+)
+
+knitr::kable(tpMapping$checkMapData(data = testData))
+```
+
+A feature of `XYGDataMapping` class is that, in addition to specifying a `y` column, the user may also supply `ymin` and `ymax` columns that can represent the boundaries of error bars. If only `ymin` and `ymax` are input when constructing the `XYGDataMapping` object, with `y` left undefined or `NULL`, the default profile that will ultimately be plotted is a range plot.   If `y`, `ymin` and `ymax` are all input, the default plot will be a IndividualId profile plot with an error bar.

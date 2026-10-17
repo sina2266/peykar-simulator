@@ -1,0 +1,138 @@
+name: CD
+on:
+  release:
+    types: [published]
+  workflow_dispatch:    # manual trigger for testing
+
+jobs:
+  CD:
+    name: Langevin on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-15-intel, windows-latest, ubuntu-latest, macos-14]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup graalvm for static native build
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm-community'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          components: 'native-image'
+          native-image-musl: 'true'
+          native-image-job-reports: 'true'
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: setup graalvm for non-static build
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm-community'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
+        if: matrix.os == 'macos-15-intel' || matrix.os == 'macos-14' || matrix.os == 'windows-latest'
+
+      - name: java build and test
+        run: mvn test
+        if: matrix.os == 'macos-15-intel'|| matrix.os == 'macos-14'  || matrix.os == 'windows-latest'
+
+      - name: static native build without test - linux only
+        run: mvn -Pnative-static -DskipTests=true package
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: non-static native build without test - macos or windows
+        run: mvn -Pnative -DskipTests=true package
+        if: matrix.os == 'macos-15-intel'|| matrix.os == 'macos-14'  || matrix.os == 'windows-latest'
+
+      - name: run native executable with --help option to verify build (zero return code)
+        run: ./target/langevin --help
+
+      - name: Upload macOS binary for universal merge
+        if: matrix.os == 'macos-15-intel' || matrix.os == 'macos-14'
+        uses: actions/upload-artifact@v4
+        with:
+          name: langevin-${{ matrix.os }}
+          path: ./target/langevin
+
+      - name: Upload MacOS or Linux solver binary to release assets
+        if: github.event_name == 'release' && (matrix.os == 'macos-15-intel' || matrix.os == 'macos-14' || matrix.os == 'ubuntu-latest')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/langevin
+          asset_name: langevin-${{ matrix.os }}
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows solver binary to release assets
+        if: github.event_name == 'release' && matrix.os == 'windows-latest'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/langevin.exe
+          asset_name: langevin-${{ matrix.os }}
+          asset_content_type: application/octet-stream
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+  macOS-Universal:
+    name: Create Universal macOS Binary
+    runs-on: macos-latest
+    needs:
+      - CD  # This refers to the matrix job name
+
+    # Both binaries are named "langevin", so as soon as we download one of them we
+    # need to rename it to avoid overwriting the other one.
+    steps:
+      - name: Download macOS-13 binary
+        uses: actions/download-artifact@v4
+        with:
+          name: langevin-macos-15-intel
+          path: binaries
+
+      - name: Rename macOS-13 binary
+        run: mv binaries/langevin binaries/langevin-macos-15-intel
+
+      - name: Download macOS-14 binary
+        uses: actions/download-artifact@v4
+        with:
+          name: langevin-macos-14
+          path: binaries
+
+      - name: Rename macOS-14 binary
+        run: mv binaries/langevin binaries/langevin-macos-14
+
+      # this will go in the log of the run, useful for debugging
+      - name: Inspect binaries directory
+        run: |
+          echo "Contents of binaries/:"
+          ls -lh binaries/
+          echo "File types:"
+          file binaries/*
+
+      # - name: Setup tmate session for inspection
+      #   uses: mxschmitt/action-tmate@v3
+
+      - name: Combine with lipo
+        run: |
+          lipo -create -output binaries/langevin-universal \
+            binaries/langevin-macos-15-intel \
+            binaries/langevin-macos-14
+          lipo -archs binaries/langevin-universal
+
+      - name: Upload universal binary to release
+        if: github.event_name == 'release'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: binaries/langevin-universal
+          asset_name: langevin-macos-universal
+          asset_content_type: application/octet-stream

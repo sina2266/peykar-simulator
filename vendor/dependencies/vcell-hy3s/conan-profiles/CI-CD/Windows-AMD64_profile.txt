@@ -1,0 +1,40 @@
+# vcell-hy3s builds on Windows with Intel Fortran (ifx) driving MSVC, which is
+# what this code was originally built with: the tree still carries
+# -DPowerStationFortran and netcdf/win32/config.h for the C layer and Intel's
+# /iface flags for the F90 layer. Nothing here needs MSYS2 or MinGW.
+#
+# Conan has no Fortran compiler setting, so the settings below describe the
+# MSVC half only; CMakeLists.txt checks that the Fortran half is Intel.
+#
+# Messaging is off on Windows, so there is no external dependency whatsoever --
+# NetCDF is vendored and libcurl is only needed for messaging. Conan is used
+# here purely for a current cmake and ninja.
+#
+# compiler.version=195 is MSVC 19.5x, which is Visual Studio 18 -- what the
+# windows-latest runner image currently ships. This has to match the installed
+# Visual Studio, not merely be a version Conan recognises: CMakeToolchain maps
+# the number to a VS installation and fails outright when that installation is
+# absent, which is how 194 failed here with "VS non-existing installation:
+# Visual Studio 17". The CI job verifies cl.exe against this value rather than
+# discovering the mismatch inside a generator.
+[settings]
+arch=x86_64
+build_type=Release
+compiler=msvc
+compiler.version=195
+compiler.cppstd=20
+compiler.runtime=dynamic
+os=Windows
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators.
+tools.cmake.cmaketoolchain:generator=Ninja
+# Stated explicitly rather than left to the version mapping, which is the
+# fallback the failure above recommended.
+tools.microsoft.msbuild:vs_version=18
+
+[options]
+fPIC=True
+shared=False
+include_messaging=False

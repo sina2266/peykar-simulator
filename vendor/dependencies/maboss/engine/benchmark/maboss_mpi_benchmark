@@ -1,0 +1,24 @@
+#!/bin/sh
+##SBATCH --job-name=MaBoSS_test # Job name
+#SBATCH --ntasks=6                   # Run a single task	
+#SBATCH --ntasks-per-node=1            # Number of CPU cores per task
+#SBATCH -c 22
+#SBATCH -vvv
+#SBATCH --mem=10gb                  # Total memory limit
+#SBATCH --time=12:00:00              # Time limit hrs:min:sec
+#SBATCH --output=maboss_%j.log     # Standard output and error log
+
+module use /mnt/beegfs/common/apps/hpcx/src/hpcx-v2.9.0-gcc-MLNX_OFED_LINUX-5.4-1.0.3.0-redhat7.6-x86_64/modulefiles/
+module load  hpcx-mt-ompi
+
+perf stat -r 3 /usr/bin/time -v mpirun -np 8 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=19 -o results/mpi/small/res_8 1>>results/mpi/small/timestamps_8 2>>results/mpi/small/stats_8
+perf stat -r 3 /usr/bin/time -v mpirun -np 6 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=19 -o results/mpi/small/res_6 1>>results/mpi/small/timestamps_6 2>>results/mpi/small/stats_6
+perf stat -r 3 /usr/bin/time -v mpirun -np 4 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=19 -o results/mpi/small/res_4 1>>results/mpi/small/timestamps_4 2>>results/mpi/small/stats_4
+perf stat -r 3 /usr/bin/time -v mpirun -np 3 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek.cfg -e thread_count=19 -o results/mpi/small/res_3 1>>results/mpi/small/timestamps_3 2>>results/mpi/small/stats_3
+
+
+perf stat -r 3 /usr/bin/time -v mpirun -np 8 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=19 -o results/mpi/xlarge/res_8 1>>results/mpi/xlarge/timestamps_8 2>>results/mpi/xlarge/stats_8
+perf stat -r 3 /usr/bin/time -v mpirun -np 6 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=19 -o results/mpi/xlarge/res_6 1>>results/mpi/xlarge/timestamps_6 2>>results/mpi/xlarge/stats_6
+perf stat -r 3 /usr/bin/time -v mpirun -np 4 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=19 -o results/mpi/xlarge/res_4 1>>results/mpi/xlarge/timestamps_4 2>>results/mpi/xlarge/stats_4
+perf stat -r 3 /usr/bin/time -v mpirun -np 3 --bind-to core --map-by socket:PE=19 -v ../pub/MaBoSS_128n ../examples/Sizek/sizek.bnd -c ../examples/Sizek/sizek_xlarge.cfg -e thread_count=19 -o results/mpi/xlarge/res_3 1>>results/mpi/xlarge/timestamps_3 2>>results/mpi/xlarge/stats_3
+

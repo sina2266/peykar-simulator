@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:11 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for IDA module
+#
+# src/ida/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC  = gcc
+BASE_CFLAGS0 = -D$(PLATFORM) -O2 -fexceptions
+DEL = rm
+
+ifeq ($(PLATFORM), MACOSX)
+BASE_CFLAGS = $(BASE_CFLAGS0) -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+else 
+BASE_CFLAGS = $(BASE_CFLAGS0) 
+endif
+
+ifdef NATIVELIB
+CFLAGS = -fPIC $(BASE_CFLAGS)
+else
+CFLAGS = $(BASE_CFLAGS)
+endif
+
+LIBTOOL = ar cru
+LIBDIR = ../../lib
+
+INCLUDES = -I.. -I../../include
+
+IDA_LIB       = libsundials_ida.a
+IDA_OBJ_FILES = ida.o ida_ic.o ida_io.o ida_dense.o ida_band.o ida_spils.o ida_spbcgs.o ida_spgmr.o ida_sptfqmr.o ida_bbdpre.o
+
+.SUFFIXES:		.c.o
+
+.c.o:	
+	$(CC) -c $(CFLAGS) $(INCLUDES) $<
+	
+all: $(IDA_LIB)
+
+$(IDA_LIB): $(IDA_OBJ_FILES)
+	$(LIBTOOL) $@ $(IDA_OBJ_FILES)
+	cp $@ $(LIBDIR)
+	ranlib $(LIBDIR)/$@
+
+clean:
+	$(DEL) *.o $(IDA_LIB)
+
+depend:
+	makedepend -Y -f Makefile.linux -- $(CFLAGS) $(INCLUDES) -- *.c *.cpp

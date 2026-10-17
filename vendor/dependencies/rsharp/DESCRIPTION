@@ -1,0 +1,55 @@
+Package: rSharp
+Type: Package
+Title: Accessing .NET from R
+Version: 1.2.3
+Authors@R: c(
+      person(given = "Open-Systems-Pharmacology Community",
+             role = "cph"),
+      person("esqLABS GmbH", role = "fnd"),
+      person(given = "Pavel",
+             family = "Balazki",
+             role = c("aut", "cre"),
+             email = "pavel.balazki@gmail.com"),
+      person(given = "Juri",
+             family = "Solodenko",
+             role = "aut",
+             comment = c(ORCID = "0000-0001-6922-588X")),
+      person(given = "Michael",
+             family = "Sevestre",
+             role = "aut",
+             email = "michael@design2code.ca"),
+      person(given = "Robert",
+             family = "McIntosh",
+             role = "aut"),
+     person(given = "Felix",
+             family = "Mil",
+             role = "aut"),
+     person(given = "Jean-Michel", 
+            family = "Perraud", 
+            email ="jean-michel.perraud@csiro.au", 
+            role = "aut"),
+      person(given = "Ian Peter",
+             family = "Du",
+             role = "ctb")
+           )
+Description: Enable low-level access to .NET runtime from R. Provides a set of functions to create and manipulate .NET objects, call methods, and access properties and fields.
+URL: https://github.com/Open-Systems-Pharmacology/rsharp/, http://www.open-systems-pharmacology.org/rSharp/
+Encoding: UTF-8
+Depends:
+    R (>= 4.1)
+Imports:
+    R6,
+    methods,
+    cli,
+    lifecycle
+Suggests:
+    devtools,
+    covr,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+License: file LICENSE
+SystemRequirements: dotnet8
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

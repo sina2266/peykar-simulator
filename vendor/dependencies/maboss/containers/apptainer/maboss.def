@@ -1,0 +1,54 @@
+Bootstrap: docker
+from: ubuntu:22.04
+
+%files
+    . /opt/MaBoSS
+
+%post
+    apt-get --quiet update
+    DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes --no-install-recommends \
+        flex bison gcc g++ make libxml2-dev cmake wget ca-certificates 
+    apt clean -y 
+    rm -rf /var/lib/apt/lists/*
+    wget https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.2.tar.gz
+    tar -zxf v5.20.2.tar.gz
+    cd libsbml-5.20.2
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_COMPILER=gcc \
+    -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
+    -DWITH_SWIG=OFF \
+    -DLIBXML_LIBRARY=/usr/lib/x86_64-linux-gnu/libxml2.so \
+    -DLIBXML_INCLUDE_DIR=/usr/include/libxml2 \
+    -DENABLE_COMP=ON \
+    -DENABLE_FBC=ON \
+    -DENABLE_GROUPS=ON \
+    -DENABLE_LAYOUT=ON \
+    -DENABLE_MULTI=ON \
+    -DENABLE_QUAL=ON \
+    -DENABLE_RENDER=ON \
+    -DENABLE_DISTRIB=ON \
+    -DWITH_CPP_NAMESPACE=ON \
+    ..
+    make
+    make install
+    cd ../../
+    rm -fr libsbml-5.20.2
+    rm -fr /opt/MaBoSS/.git
+    
+    bash -c "cd /opt/MaBoSS/engine/src/; make install SBML_COMPAT=1"
+    bash -c "cd /opt/MaBoSS/engine/src/; make MAXNODES=128 install SBML_COMPAT=1"
+    bash -c "cd /opt/MaBoSS/engine/src/; make MAXNODES=256 install SBML_COMPAT=1"
+    bash -c "cd /opt/MaBoSS/engine/src/; make MAXNODES=512 install SBML_COMPAT=1"
+    bash -c "cd /opt/MaBoSS/engine/src/; make MAXNODES=1024 install SBML_COMPAT=1"
+
+
+%runscript
+    /opt/MaBoSS/engine/pub/MaBoSS-server -q --host 0.0.0.0 --port 7777 \
+    & /opt/MaBoSS/engine/pub/MaBoSS_128n-server -q --host 0.0.0.0 --port 7778 \
+    & /opt/MaBoSS/engine/pub/MaBoSS_256n-server -q --host 0.0.0.0 --port 7779 \
+    & /opt/MaBoSS/engine/pub/MaBoSS_512n-server -q --host 0.0.0.0 --port 7780 \
+    & /opt/MaBoSS/engine/pub/MaBoSS_1024n-server -q --host 0.0.0.0 --port 7781

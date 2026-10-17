@@ -1,0 +1,257 @@
+---
+title: "PK Ratio Plots"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{PK Ratio Plots}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
+)
+```
+
+```{r setup}
+require(tlf)
+```
+
+# 1. Introduction
+
+The following vignette aims at documenting and illustrating workflows for producing PK ratio plots using the `tlf`-Library.
+
+This vignette focuses PK ratio plots examples. Detailed documentation on typical `tlf` workflow, use of `AgregationSummary`, `DataMapping`, `PlotConfiguration`, and `Theme` can be found in `vignette("tlf-workflow")`.
+
+# 2. Illustration of basic PK ratio plots
+
+## 2.1. Data
+
+The data showed in the sequel is available at the following path: `system.file("extdata", "test-data.csv", package = "tlf")`.
+In the code below, the data is loaded and assigned to `pkRatioData`.
+
+```{r load-data, results='asis'}
+# Load example
+pkRatioData <- read.csv(
+  system.file("extdata", "test-data.csv", package = "tlf"),
+  stringsAsFactors = FALSE
+)
+
+# pkRatioData
+knitr::kable(utils::head(pkRatioData), digits = 2)
+```
+
+<!-- TODO: this meta data is not used anywhere in the vignette, should it be removed? -->
+
+A list of information about `pkRatioData` can be provided through `metaData`.
+
+```{r load-metadata, echo=FALSE}
+# Load example
+pkRatioMetaData <- list(
+  Age = list(
+    dimension = "Age",
+    unit = "yrs"
+  ),
+  Obs = list(
+    dimension = "Clearance",
+    unit = "dL/h/kg"
+  ),
+  Pred = list(
+    dimension = "Clearance",
+    unit = "dL/h/kg"
+  ),
+  Ratio = list(
+    dimension = "Ratio",
+    unit = ""
+  )
+)
+```
+
+```{r show-metadata, results='asis'}
+knitr::kable(data.frame(
+  Variable = c("Age", "Obs", "Pred", "Ratio"),
+  Dimension = c("Age", "Clearance", "Clearance", "Ratio"),
+  Unit = c("yrs", "dL/h/kg", "dL/h/kg", "")
+))
+```
+
+<!-- TODO: uncomment when this function is available -->
+
+<!-- ## User interface: *runPKRatioPlot()* -->
+
+<!-- A user interface is available using the function `runPKRatioPlot()` and provides an easy way to understand and tune the feature of PK Ratio plots. -->
+
+<!-- ```{r embedded-app, echo=FALSE} -->
+<!-- #runPKRatioPlot() -->
+<!-- # or knitr::include_app() -->
+<!-- ``` -->
+
+## 2.2. `plotPKRatio`
+
+The function plotting PK ratios is: `plotPKRatio()`. 
+Basic documentation of the function can be found using: `?plotPKRatio`.
+The typical usage of this function is: `plotPKRatio(data, metaData = NULL, dataMapping = NULL, plotConfiguration = NULL)`.
+The output of the function is a `ggplot` object.
+It can be seen from this usage that only `data` is a necessary input.
+Default set ups are used for `metaData`, `dataMapping` and `plotConfiguration` within the call of `plotPKRatio`.
+For instance, if `dataMapping` is not provided, smart mapping will check if data contains `"x"` and `"y"` columns.
+If the `data` has only two columns not named `"x"` and `"y"`, it will assume the first one should be plot in x-axis and the second in y-axis.
+Then, `PKRatioPlotConfiguration` is initialized if not provided, defining a standard configuration with `PK Ratio Plot` as title, the current date as subtitle and using predefined fonts as defined by the current theme.
+
+## 2.3. Minimal example
+
+The minimal example can work using directly the function `plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])`.
+
+```{r minimal-example, fig.height=5, fig.width=7.5}
+plotPKRatio(data = pkRatioData[, c("Age", "Ratio")])
+```
+
+## 2.4. Examples with `dataMapping`
+
+For PK ratio, the `dataMapping` class `PKRatioDataMapping` includes 4 fields: `x`, `y`, `groupMapping` and `lines`.
+`x` and `y` define which variables from the data will be plotted in X- and Y-axes, `groupMapping` is a class mapping which aesthetic property will split which variables, and `lines` defines horizontal lines performed in PK ratio plots.
+
+### 2.4.1 `groupMapping`
+
+Some variables can be used to cluster the data.
+To this end, *PKRatioDataMapping* objects include *GroupMapping* objects that can define how to cluster based on a variable or a data.frame.
+As illustrated below, most of the time, the direct input of `color` and `shape` is faster to define such objects.
+Consequently, the following examples are identical:
+
+```{r group-mapping}
+# Two-step process
+colorMapping <- GroupMapping$new(color = "Sex")
+dataMappingA <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  groupMapping = colorMapping
+)
+
+print(dataMappingA$groupMapping$color$label)
+
+# One-step process
+dataMappingB <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = "Sex"
+)
+
+print(dataMappingB$groupMapping$color$label)
+```
+
+Then, in this example, `plotPKRatio` can use the groupMapping to split the data by "Gender" and associate different colors to each "Gender":
+
+```{r dataMappingB, fig.height=5, fig.width=7.5}
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = dataMappingB
+)
+```
+
+Multiple groupMappings can be performed for PK ratio: data can be regrouped by `color`, `shape` and/or `size`.
+The next example uses 2 groups in the groupMapping:
+One group splits "Gender" by `color`, the other splits `shape` by "Amount" and "Compound".
+
+```{r dataMapping2groups, fig.height=5, fig.width=7.5}
+dataMapping2groups <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = "Sex",
+  shape = c("Country", "AgeBin")
+)
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = dataMapping2groups
+)
+```
+
+The last examples uses another feature available in the `groupMapping` class. The class can be initialized using a `data.frame` where the last column of the data.frame will be used to split the data. In the following example, the data.frame is the following:
+
+```{r, echo=FALSE, results='asis'}
+groupDataFrame <- data.frame(
+  AgeBin = rep(c("Peds", "Adults"), 6),
+  Country = rep(rep(c("Canada", "Germany", "France"), each = 2), 2),
+  Sex = rep(c("Male", "Female"), each = 6),
+  Group = paste(rep(c("Young", "Old"), 6), rep(rep(c("Canadian", "German", "French"), each = 2), 2), rep(c("Males", "Females"), each = 6))
+)
+
+knitr::kable(groupDataFrame)
+```
+
+The `dataMapping` introduced below will split the `color` and `shape` using the data frame.
+
+```{r dataMappingDF, fig.height=5, fig.width=7.5}
+dataMappingDF <- PKRatioDataMapping$new(
+  x = "Age",
+  y = "Ratio",
+  color = groupDataFrame,
+  shape = groupDataFrame
+)
+plotPKRatio(
+  data = pkRatioData[!(pkRatioData$Country %in% "France"), ],
+  dataMapping = dataMappingDF
+)
+```
+
+
+### 2.4.2  PK values defined in `lines`
+
+In PK ratio examples, usually horizontal lines are added allowing to flag values in and out of the [0.67-1.5] as well as [0.5-2.0] ranges.
+The value mapping these horizontal lines was predefined as a list: "pkRatioLine1" is 1, "pkRatioLine2" is c(0.67, 1.5) and "pkRatioLine3" is c(0.5, 2).
+Consequently, for any default `PKRatioDataMapping`, you have:
+
+```{r linesMapping}
+linesMapping <- PKRatioDataMapping$new()
+linesMapping$lines
+```
+
+Overwriting these value is possible by updating the value either when initializing the mapping or afterwards.
+For instance:
+
+```{r linesMapping-plot, fig.height=5, fig.width=7.5}
+linesMapping <- PKRatioDataMapping$new(
+  lines = list(pkRatio1 = 1, pkRatio2 = c(0.2, 5)),
+  x = "Age",
+  y = "Ratio",
+  color = "Sex"
+)
+plotPKRatio(
+  data = pkRatioData,
+  dataMapping = linesMapping
+)
+```
+
+## 2.5. Qualification of PK Ratios
+
+The qualification of the PK Ratios can be performed using `getPKRatioMeasure`.
+This function return a `data.frame` with the PK ratios within specific ranges.
+As a default, these ranges are within 1.5 and 2 folds. However, they can be updated using the option `ratioLimits =` when running the function.
+
+```{r, results='asis'}
+# Test of getPKRatioMeasure
+PKRatioMeasure <- getPKRatioMeasure(data = pkRatioData[, c("Age", "Ratio")])
+
+knitr::kable(
+  x = PKRatioMeasure,
+  caption = "Qualification of PK Ratios"
+)
+```
+
+
+## 2.6. Plot Configuration
+
+To configure the plot properties, `PKRatioPlotConfiguration` objects can be used.
+They combine multiple features that set the plot properties.
+PK ratio plot consists in *lines* and *points*.
+As illustrated in the vignette related to *PlotConfiguration* objects and *Theme*, you can tune the aesthetic maps and their selections (see `vignette("plot-configuration")` and `vignette("theme-maker")`).
+Colors, shapes and size of the PK ratio scatter points can be tuned in the plotConfiguration *points* field.
+Likewise, colors, linetype and size of the PK ratio lines can be tuned in the plotConfiguration *lines* field.

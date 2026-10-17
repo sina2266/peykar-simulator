@@ -1,0 +1,5 @@
+if(EXISTS "/home/cbontempi/projects/vcell-solvers/MBSolver/Tests/TestMovingBoundary[1]_tests.cmake")
+  include("/home/cbontempi/projects/vcell-solvers/MBSolver/Tests/TestMovingBoundary[1]_tests.cmake")
+else()
+  add_test(TestMovingBoundary_NOT_BUILT TestMovingBoundary_NOT_BUILT)
+endif()

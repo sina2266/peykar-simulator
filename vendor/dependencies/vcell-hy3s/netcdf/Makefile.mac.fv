@@ -1,0 +1,17 @@
+default all:
+	cd libsrc; make -f Makefile.mac.fv
+	cd f90; make -f Makefile.mac.fv
+	cd fortran; make -f Makefile.mac.fv
+	cd cxx; make -f Makefile.mac.fv
+	
+clean:
+	cd libsrc; make -f Makefile.mac.fv clean
+	cd f90; make -f Makefile.mac.fv clean
+	cd fortran; make -f Makefile.mac.fv clean	
+	cd cxx; make -f Makefile.mac.fv clean
+
+depend:
+	cd libsrc; make -f Makefile.mac.fv depend
+	cd f90; make -f Makefile.mac.fv depend
+	cd fortran; make -f Makefile.mac.fv depend
+	cd cxx; make -f Makefile.mac.fv depend	

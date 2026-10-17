@@ -1,0 +1,10 @@
+      SUBROUTINEPCSCAL(N,W,A,V)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN
+      DOUBLEPRECISIONA,W(*),V(*)
+      INTEGERI
+      DO1I=1,N
+      W(I)=A*V(I)
+1     CONTINUE
+      RETURN
+      END

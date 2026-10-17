@@ -1,0 +1,22 @@
+# CMake / Conan build trees
+build/
+cmake-build-*/
+CMakeUserPresets.json
+
+# Chombo's GNU make build writes its intermediates and generated
+# ChomboFortran headers directly into the source tree.
+chombo/lib/*.a
+chombo/lib/include/
+chombo/lib/src/*/o/
+chombo/lib/src/*/d/
+chombo/lib/src/*/f/
+chombo/lib/src/*/p/
+chombo/lib/src/*/*_F.H
+chombo/lib/mk/.check.*
+
+.idea/
+.DS_Store
+
+# Release packaging (packaging/, .github/workflows/release.yml)
+/dist/
+/stage/

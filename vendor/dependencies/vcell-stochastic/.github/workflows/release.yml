@@ -1,0 +1,325 @@
+# Release archives for VCell's desktop client (the solver release contract, README
+# "Solver release contract" / VCell docs/plan-solver-repos.md §1):
+#
+#   linux64.tgz      x86_64, manylinux_2_28 (glibc >= 2.28), static HDF5, no bundled glibc
+#   linux64arm.tgz   aarch64, the same
+#   mac64.tgz        universal (x86_64 + arm64), static HDF5, no dylibs, ad-hoc signed
+#   win64.zip        x64, static HDF5 and static MSVC runtime
+#   SHA256SUMS       sha256 of each of the above
+#
+# Each archive holds, at its root: VCellStoch_x64[.exe], LICENSE, COPYING-HDF5, VERSION.
+# Every build runs the unit tests and the Gibson reference comparison against the legacy
+# vcell-solvers v0.0.44-dev4 results (Tests/reference/compare.py).
+#
+# Pull requests and pushes to main build and test only. A v* tag on main publishes the release.
+name: release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+permissions:
+  contents: read
+
+env:
+  HDF5_VERSION: "1.14.6"   # keep in step with ci/build-hdf5.sh
+
+jobs:
+  linux:
+    name: linux (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: x86_64, runner: ubuntu-24.04, asset: linux64.tgz }
+          - { arch: aarch64, runner: ubuntu-24.04-arm, asset: linux64arm.tgz }
+    runs-on: ${{ matrix.runner }}
+    # same dated image as pyproject.toml's cibuildwheel config and docker/Dockerfile
+    container: quay.io/pypa/manylinux_2_28_${{ matrix.arch }}:2026.09.23-1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Tools
+        run: |
+          git config --global --add safe.directory '*'
+          /opt/python/cp312-cp312/bin/pip install --no-cache-dir cmake ninja numpy h5py
+          echo /opt/python/cp312-cp312/bin >> "$GITHUB_PATH"
+
+      - name: Version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = tag ]; then v="${GITHUB_REF_NAME}"; else v="$(git describe --tags --match 'v*' --always --dirty)"; fi
+          echo "VCELLSTOCH_VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: Cache HDF5
+        id: hdf5
+        uses: actions/cache@v4
+        with:
+          path: /opt/hdf5
+          key: hdf5-${{ env.HDF5_VERSION }}-manylinux_2_28-${{ matrix.arch }}-${{ hashFiles('ci/build-hdf5.sh') }}
+
+      - name: Build HDF5 (static)
+        if: steps.hdf5.outputs.cache-hit != 'true'
+        run: HDF5_WORK_DIR=/tmp/hdf5 ci/build-hdf5.sh /opt/hdf5
+
+      - name: Build and unit-test VCellStoch
+        run: ci/build.sh /opt/hdf5 stage
+
+      - name: Check linkage (system libraries only)
+        run: |
+          set -eux
+          ldd stage/VCellStoch_x64
+          if ldd stage/VCellStoch_x64 | grep -Ev 'linux-vdso|ld-linux|/lib64/(libc|libm|libpthread|libdl|librt|libstdc\+\+|libgcc_s)\.so'; then
+            echo "::error::unexpected shared library dependency"; exit 1
+          fi
+
+      - name: Gibson reference comparison (exact vs legacy linux64)
+        run: python Tests/reference/compare.py stage/VCellStoch_x64 --exact --work reference-run
+
+      - name: Package
+        run: |
+          set -eux
+          tar -C stage -czf "${{ matrix.asset }}" VCellStoch_x64 LICENSE COPYING-HDF5 VERSION
+          tar -tzvf "${{ matrix.asset }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: asset-${{ matrix.asset }}
+          path: ${{ matrix.asset }}
+          if-no-files-found: error
+
+  mac-slice:
+    name: macOS slice (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: x86_64, runner: macos-15-intel }
+          - { arch: arm64, runner: macos-15 }
+    runs-on: ${{ matrix.runner }}
+    env:
+      # libc++'s std::format (used by vcell-messaging) needs macOS 13.3
+      MACOSX_DEPLOYMENT_TARGET: "13.3"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tools
+        run: python -m pip install --no-cache-dir cmake ninja numpy h5py
+
+      - name: Version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = tag ]; then v="${GITHUB_REF_NAME}"; else v="$(git describe --tags --match 'v*' --always --dirty)"; fi
+          echo "VCELLSTOCH_VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: Cache HDF5
+        id: hdf5
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/hdf5
+          key: hdf5-${{ env.HDF5_VERSION }}-macos-${{ matrix.arch }}-${{ env.MACOSX_DEPLOYMENT_TARGET }}-${{ hashFiles('ci/build-hdf5.sh') }}
+
+      - name: Build HDF5 (static)
+        if: steps.hdf5.outputs.cache-hit != 'true'
+        run: HDF5_WORK_DIR="$RUNNER_TEMP/hdf5-src" ci/build-hdf5.sh "$RUNNER_TEMP/hdf5" -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }}
+
+      - name: Build and unit-test VCellStoch
+        run: ci/build.sh "$RUNNER_TEMP/hdf5" stage -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }}
+
+      - name: Gibson reference comparison (exact vs legacy)
+        run: python Tests/reference/compare.py stage/VCellStoch_x64 --exact --work reference-run
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-slice-${{ matrix.arch }}
+          path: stage/
+          if-no-files-found: error
+
+  mac:
+    name: macOS universal
+    needs: mac-slice
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-slice-arm64
+          path: slices/arm64
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-slice-x86_64
+          path: slices/x86_64
+
+      - name: lipo + ad-hoc sign
+        run: |
+          set -eux
+          mkdir -p stage
+          lipo -create -output stage/VCellStoch_x64 slices/arm64/VCellStoch_x64 slices/x86_64/VCellStoch_x64
+          chmod 755 stage/VCellStoch_x64   # artifacts drop the mode bits
+          codesign --force --sign - stage/VCellStoch_x64
+          cp slices/arm64/LICENSE slices/arm64/COPYING-HDF5 slices/arm64/VERSION stage/
+          lipo -archs stage/VCellStoch_x64
+          test "$(lipo -archs stage/VCellStoch_x64)" = "x86_64 arm64"
+          codesign --verify --verbose stage/VCellStoch_x64
+          otool -L -arch all stage/VCellStoch_x64
+          # only the OS's own libraries: no Homebrew, no /usr/local, no bundled dylibs
+          if otool -L -arch all stage/VCellStoch_x64 | grep -E '^[[:space:]]' | grep -Ev '/usr/lib/|/System/Library/'; then
+            echo "::error::non-system dylib dependency"; exit 1
+          fi
+          otool -l stage/VCellStoch_x64 | grep -A3 LC_BUILD_VERSION | head -8
+
+      - name: Gibson reference comparison (arm64 slice, and x86_64 under Rosetta)
+        run: |
+          set -eux
+          python -m pip install --no-cache-dir numpy h5py
+          python Tests/reference/compare.py stage/VCellStoch_x64 --exact --work reference-run-arm64
+          if arch -x86_64 /usr/bin/true 2>/dev/null; then
+            python Tests/reference/compare.py "arch -x86_64 $PWD/stage/VCellStoch_x64" --exact --work reference-run-x86_64
+          else
+            echo "::notice::Rosetta not available on this runner; the x86_64 slice was tested on its own runner"
+          fi
+
+      - name: Package
+        run: |
+          set -eux
+          tar -C stage -czf mac64.tgz VCellStoch_x64 LICENSE COPYING-HDF5 VERSION
+          tar -tzvf mac64.tgz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: asset-mac64.tgz
+          path: mac64.tgz
+          if-no-files-found: error
+
+  windows:
+    name: windows (x64)
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Tools
+        run: |
+          python -m pip install --no-cache-dir cmake ninja numpy h5py
+          # Git for Windows' coreutils ship a `link` that would shadow MSVC's link.exe
+          rm -f /usr/bin/link
+
+      - name: Version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = tag ]; then v="${GITHUB_REF_NAME}"; else v="$(git describe --tags --match 'v*' --always --dirty)"; fi
+          echo "VCELLSTOCH_VERSION=$v" >> "$GITHUB_ENV"
+          echo "HDF5_PREFIX=$(cygpath -m "$RUNNER_TEMP")/hdf5" >> "$GITHUB_ENV"
+
+      - name: Cache HDF5
+        id: hdf5
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.HDF5_PREFIX }}
+          key: hdf5-${{ env.HDF5_VERSION }}-win64-mt-${{ hashFiles('ci/build-hdf5.sh') }}
+
+      - name: Build HDF5 (static, static CRT)
+        if: steps.hdf5.outputs.cache-hit != 'true'
+        run: >-
+          HDF5_WORK_DIR="$(cygpath -m "$RUNNER_TEMP")/hdf5-src" ci/build-hdf5.sh "$HDF5_PREFIX"
+          -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DBUILD_STATIC_CRT_LIBS=ON
+
+      - name: Build and unit-test VCellStoch
+        run: >-
+          ci/build.sh "$HDF5_PREFIX" stage
+          -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      - name: Check linkage (Windows system DLLs only)
+        shell: pwsh
+        run: |
+          $deps = & dumpbin /dependents stage\VCellStoch_x64.exe
+          $deps
+          $dlls = $deps | Where-Object { $_ -match '^\s+\S+\.dll\s*$' } | ForEach-Object { $_.Trim().ToLower() }
+          $bad = $dlls | Where-Object { $_ -notmatch '^(kernel32|user32|advapi32|shell32|shlwapi|ws2_32|wsock32|ole32|oleaut32|bcrypt|crypt32|ntdll|psapi|dbghelp|api-ms-win-.*)\.dll$' }
+          if ($bad) { Write-Error "unexpected DLL dependencies: $bad"; exit 1 }
+
+      - name: Gibson reference comparison (vs legacy)
+        run: python Tests/reference/compare.py stage/VCellStoch_x64.exe --exact --work reference-run
+
+      - name: Package
+        shell: pwsh
+        run: |
+          Compress-Archive -Path stage\VCellStoch_x64.exe, stage\LICENSE, stage\COPYING-HDF5, stage\VERSION -DestinationPath win64.zip
+          Get-ChildItem win64.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: asset-win64.zip
+          path: win64.zip
+          if-no-files-found: error
+
+  release:
+    name: publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, mac, windows]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: asset-*
+          path: assets
+          merge-multiple: true
+
+      - name: SHA256SUMS
+        working-directory: assets
+        run: |
+          set -eux
+          ls -la
+          for a in linux64.tgz linux64arm.tgz mac64.tgz win64.zip; do test -s "$a"; done
+          sha256sum linux64.tgz linux64arm.tgz mac64.tgz win64.zip > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        working-directory: assets
+        run: |
+          set -eux
+          notes="VCellStoch ${TAG} (Gibson next-reaction stochastic solver).
+
+          Assets follow VCell's solver release contract: \`VCellStoch_x64\` (\`.exe\` on Windows), LICENSE, COPYING-HDF5 and VERSION at each archive's root; HDF5 is linked statically.
+          The container image is \`ghcr.io/virtualcell/vcell-stochastic:${TAG#v}\` and the SIF \`oras://ghcr.io/virtualcell/vcell-stochastic_singularity:${TAG#v}\`."
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes "$notes" --verify-tag \
+            linux64.tgz linux64arm.tgz mac64.tgz win64.zip SHA256SUMS

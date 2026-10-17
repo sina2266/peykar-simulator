@@ -1,0 +1,240 @@
+name: build-c#-binaries
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  Linux-Build:
+    runs-on: ${{ vars.GHA_DEFAULT_RUNNER_UBUNTU }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Make
+        working-directory: ./shared
+        run: make
+
+      - name: Test C# binaries
+        run: |
+          export R_HOME=/usr/lib/R
+          dotnet test ./shared/RDotNet.Tests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/rSharpTests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/DynamicInterop.Tests/ -c Release -d log.txt --no-build
+
+      - name: Upload Linux binaries
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-binaries
+          path: inst/lib/rSharp.linux.so
+
+
+  macOS-Build:
+    runs-on: ${{ vars.GHA_DEFAULT_RUNNER_MACOS }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install Mono (needed by nuget CLI)
+        run: brew install mono
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Make
+        working-directory: ./shared
+        run: make
+
+      - name: Test C# binaries
+        run: |
+          export R_HOME=/Library/Frameworks/R.framework/Resources
+          dotnet test ./shared/RDotNet.Tests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/rSharpTests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/DynamicInterop.Tests/ -c Release -d log.txt --no-build
+
+      - name: Upload macOS arm64 binaries
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: macos-arm64-binaries
+          path: inst/lib/rSharp.mac.arm64.so
+
+  macOS-Build-x64:
+    runs-on: macos-15-intel
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install Mono (needed by nuget CLI)
+        run: brew install mono
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Make
+        working-directory: ./shared
+        run: make
+
+      - name: Test C# binaries
+        run: |
+          export R_HOME=/Library/Frameworks/R.framework/Resources
+          dotnet test ./shared/RDotNet.Tests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/rSharpTests/ -c Release -d log.txt --no-build
+          dotnet test ./shared/DynamicInterop.Tests/ -c Release -d log.txt --no-build
+
+      - name: Upload macOS x64 binaries
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: macos-x64-binaries
+          path: inst/lib/rSharp.mac.x64.so
+
+
+  Windows-Build:
+    runs-on: ${{ vars.GHA_DEFAULT_RUNNER_WINDOWS }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install dependencies
+        run: |
+          nuget restore ./shared/packages.config -PackagesDirectory ./shared/packages
+          dotnet restore ./shared/rSharp.sln
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build C# binaries
+        run: |
+          $env:R_INSTALL_PATH="C:\R"
+          msbuild ./shared/rSharp.sln -t:rebuild /p:Configuration=Release /p:Platform=x64
+
+      - name: Test C# binaries
+        run: |
+          dotnet test .\shared\RDotNet.Tests\ -c Release -d log.txt --no-build
+          dotnet test .\shared\rSharpTests\ -c Release -d log.txt --no-build
+          dotnet test .\shared\DynamicInterop.Tests\ -c Release -d log.txt --no-build
+
+      - name: Upload Windows binaries
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-binaries
+          path: |
+            inst/extdata/rSharp.Examples.dll
+            inst/lib/ClrFacade.dll
+            inst/lib/DynamicInterop.dll
+            inst/lib/RDotNet.dll
+            inst/lib/rSharp.dll
+
+
+  commit-binaries:
+    needs: [Linux-Build, macOS-Build, macOS-Build-x64, Windows-Build]
+    runs-on: ${{ vars.GHA_DEFAULT_RUNNER_UBUNTU || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Download Linux binaries
+        uses: actions/download-artifact@v7
+        with:
+          name: linux-binaries
+          path: inst/lib/
+
+      - name: Download macOS arm64 binaries
+        uses: actions/download-artifact@v7
+        with:
+          name: macos-arm64-binaries
+          path: inst/lib/
+
+      - name: Download macOS x64 binaries
+        uses: actions/download-artifact@v7
+        with:
+          name: macos-x64-binaries
+          path: inst/lib/
+
+      - name: Download Windows binaries
+        uses: actions/download-artifact@v7
+        with:
+          name: windows-binaries
+          path: inst/
+
+      - uses: EndBug/add-and-commit@v10
+        with:
+          pull: '--verbose'
+          message: 'Update C# binaries (Commit from Github Actions).'
+          default_author: github_actions
+          add: |
+            inst/lib/rSharp.linux.so
+            inst/lib/rSharp.mac.arm64.so
+            inst/lib/rSharp.mac.x64.so
+            inst/extdata/rSharp.Examples.dll
+            inst/lib/ClrFacade.dll
+            inst/lib/DynamicInterop.dll
+            inst/lib/RDotNet.dll
+            inst/lib/rSharp.dll

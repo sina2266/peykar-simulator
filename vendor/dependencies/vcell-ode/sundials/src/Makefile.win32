@@ -1,0 +1,11 @@
+all:
+	cd cvode && nmake -f Makefile.win32
+	cd ida && nmake -f Makefile.win32
+	cd nvec_ser && nmake -f Makefile.win32
+	cd sundials && nmake -f Makefile.win32
+
+clean:
+	cd cvode && nmake -f Makefile.win32 clean
+	cd ida && nmake -f Makefile.win32 clean
+	cd nvec_ser && nmake -f Makefile.win32 clean
+	cd sundials && nmake -f Makefile.win32 clean

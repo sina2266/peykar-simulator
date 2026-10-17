@@ -1,0 +1,17 @@
+all:
+	cd cvode; make -f Makefile64.linux
+	cd ida; make -f Makefile64.linux
+	cd nvec_ser; make -f Makefile64.linux
+	cd sundials; make -f Makefile64.linux
+
+clean:
+	cd cvode; make -f Makefile64.linux clean
+	cd ida; make -f Makefile64.linux clean
+	cd nvec_ser; make -f Makefile64.linux clean
+	cd sundials; make -f Makefile64.linux clean
+
+depend:
+	cd cvode; make -f Makefile64.linux depend
+	cd ida; make -f Makefile64.linux depend
+	cd nvec_ser; make -f Makefile64.linux depend
+	cd sundials; make -f Makefile64.linux depend

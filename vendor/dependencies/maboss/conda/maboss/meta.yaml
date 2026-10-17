@@ -1,0 +1,40 @@
+{% set name = "MaBoSS" %}
+{% set version = "2.5.6" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  path: ../..
+    
+build:
+  {% if CUSTOM_BUILD_NUMBER is defined %}
+    number: {{ CUSTOM_BUILD_NUMBER }}
+    binary_relocation: False
+  {% else %}
+    number: 0
+    binary_relocation: False
+  {% endif %}
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - flex
+    - bison
+    - make
+    - libsbml-plus-packages
+        
+  host:
+    - libsbml-plus-packages
+    
+  run:
+    - libsbml-plus-packages
+
+test:
+  requires:
+    - numpy
+
+about:
+  home:  https://maboss.curie.fr
+

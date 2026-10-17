@@ -1,0 +1,24 @@
+CC= g++
+
+# Compilation options
+CPPOPTIONS = -c -O2 -I../linux -I../libsrc
+
+.SUFFIXES: o.cpp
+SRCLIB = libnetcdf_cxx.a
+
+#
+.cpp.o :
+	$(CC) $(CPPOPTIONS) $<
+
+default all: $(SRCLIB)
+
+OBJS = ncvalues.o netcdf.o
+
+
+$(SRCLIB) : $(OBJS)
+	ar cru $@ $(OBJS)
+ 
+#
+clean:
+	rm $(SRCLIB)
+	rm $(OBJS)

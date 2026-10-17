@@ -1,0 +1,73 @@
+# 3D numerical regression case: a Gaussian bump diffusing inside a sphere.
+#
+# Unlike the smoke inputs, this one has to actually move -- a uniform field
+# would satisfy any baseline trivially. Zero flux at the membrane and no
+# reaction, so total mass is conserved while the profile spreads.
+SIMULATION_PARAM_BEGIN
+SOLVER CHOMBO_SEMIIMPLICIT_SOLVER
+BASE_FILE_NAME SimID_regress3d_0_
+TIME_INTERVALS 1
+0.02 0.0025 2
+STORE_ENABLE 1
+SIMULATION_PARAM_END
+
+MODEL_BEGIN
+FEATURE cyt 0 value value value value value value
+FEATURE ec 1 value value value value value value
+MEMBRANE cyt_ec_membrane cyt ec value value value value value value
+MODEL_END
+
+CHOMBO_SPEC_BEGIN
+DIMENSION 3
+MESH_SIZE 16 16 16
+DOMAIN_SIZE 1.0 1.0 1.0
+DOMAIN_ORIGIN 0.0 0.0 0.0
+SUBDOMAINS 2
+cyt 0
+IF (pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0) - 0.0625);
+USER ((pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0)) < 0.0625);
+ec 1
+IF  - (pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0) - 0.0625);
+USER ((pow((x - 0.5),2.0) + pow((y - 0.5),2.0) + pow((z - 0.5),2.0)) > 0.0625);
+REFINEMENTS 1 1
+MAX_BOX_SIZE 16
+BLOCK_FACTOR 8
+FILL_RATIO 0.9
+RELATIVE_TOLERANCE 1.0E-9
+VIEW_LEVEL 0
+SAVE_VCELL_OUTPUT true
+SAVE_CHOMBO_OUTPUT false
+CHOMBO_SPEC_END
+
+VARIABLE_BEGIN
+VOLUME_PDE U cyt false false false
+VARIABLE_END
+
+COMPARTMENT_BEGIN cyt
+BOUNDARY_CONDITIONS value value value value value value
+EQUATION_BEGIN U
+INITIAL (1.0 + exp( - (100.0 * (pow((x - 0.45),2.0) + pow((y - 0.55),2.0) + pow((z - 0.5),2.0)))));
+RATE 0.0;
+DIFFUSION 1.0;
+VELOCITY_X 0.0;
+VELOCITY_Y 0.0;
+VELOCITY_Z 0.0;
+BOUNDARY_XM 1.0;
+BOUNDARY_XP 1.0;
+BOUNDARY_YM 1.0;
+BOUNDARY_YP 1.0;
+BOUNDARY_ZM 1.0;
+BOUNDARY_ZP 1.0;
+EQUATION_END
+COMPARTMENT_END
+
+COMPARTMENT_BEGIN ec
+BOUNDARY_CONDITIONS value value value value value value
+COMPARTMENT_END
+
+MEMBRANE_BEGIN cyt_ec_membrane cyt ec
+BOUNDARY_CONDITIONS value value value value value value
+JUMP_CONDITION_BEGIN U
+FLUX cyt 0.0;
+JUMP_CONDITION_END
+MEMBRANE_END

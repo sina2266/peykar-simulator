@@ -1,0 +1,12 @@
+The classes that begin with a 'G' are global versions of the classes.  They store all of the basic information about the class that was read in from the input file.
+The classes that do not begin with a 'G' are the classes used to create the instances of the objects in the simulation.  
+There are three major differences between these classes. 
+
+1) The io methods are different.  The global classes have read/write methods that output the general data about the class.  The instance classes will only have outputs that describe the current state of the object. 
+
+2) There is no need for a sitetype class.  Each site will be assigned properties based on a specific Gsitetype, but thereafter the site never has to reference its sitetype again.  The sitetype class is invaluable when setting up the system, but is dispensable when running the simulation. If we included it, we'd basically be repeating lots of functions in both the site and sitetype classes.  For example, when we needed the radius of the site, we'd have to call site.getRadius(), which would do nothing but call type.getRadius().  Java might be smart enough to do this in one function call, but I can't rely on Java to perform all of the optimizations to avoid double method calls.
+
+3) The information on reactions is stored in different places.  Specifically, there are no classes corresponding to the GBindingReaction and GTransitionReaction classes.  Instead, each SiteType will store that information, so that when we loop over all of the sites, we can just grab the relevant information from the site itself. 
+
+4) The 'location' variable has been changed from a string to an integer. Since I'll be checking this a lot to determine the behavior at the boundaries, I'd like something which I can check very quickly. 
+

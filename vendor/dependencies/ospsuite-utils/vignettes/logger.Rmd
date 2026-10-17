@@ -1,0 +1,195 @@
+---
+title: "Logging utils"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Logging utils}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ospsuite.utils)
+```
+
+The `{ospsuite.utils}` package includes a set of utilities to help with logging in R. 
+The logging system takes avantage of 2 CRAN packages: [`{logger}`](https://daroczig.github.io/logger/) and [`{cli}`](https://cli.r-lib.org/).
+
+
+## Get started
+
+The function `setLogFolder()` aims at initializing the logging system.
+Its only argument is `logFolder`, which is `NULL` by default.
+
+When `logFolder=NULL`, no log file is created, and all logs are displayed in the console.
+When `logFolder` is set to a valid folder path, it will create a `log.txt` file in that folder, which will record all the log utilities defined below.
+
+The example below sets a log folder within the sub-directory `test-logs` of the current working directory.
+Thus, the log file will be located in `test-logs/log.txt` 
+
+```{r}
+dir.create("test-logs")
+setLogFolder("test-logs")
+```
+
+
+> &#128161; Note that you can use `setLogFolder()` without argument to stop logging.
+
+
+The log utilities define 4 levels of logging below. 
+Each log message is associated with a time stamp and the level of logging.
+
+*1 __Debug__: for debugging purposes, its content are not displayed on the console
+
+```{r}
+logDebug("Message for debugging purposes")
+```
+
+*2 __Info__: for general information, displayed in blue
+
+```{r}
+logInfo("Message for general information")
+```
+
+*3 __Warning__: for warnings, displayed in yellow
+
+```{r}
+logWarning("Warning message")
+```
+
+*4 __Error__: for errors, displayed in red
+
+```{r}
+logError("Error message")
+```
+
+
+Check the content of the log file `test-logs/log.txt` to see the logged messages.
+
+```{r}
+readLines("test-logs/log.txt")
+```
+
+
+## Taking advantage of glue and cli formatting
+
+The logging utilities are designed to work with the [`{glue}`](https://glue.tidyverse.org/) and [`{cli}`](https://cli.r-lib.org/) packages to format messages.
+
+Especially, the `logInfo()` function includes a second argument `type` that allows you to specify the type of message you want to log.
+
+Here is a first example using glue/cli formatting:
+
+```{r}
+logInfo("A logging example", type = "h1")
+# tic() and toc() functions were implemented in ospsuite.utils
+t0 <- tic()
+logInfo("Some {.strong useful} information taking advantage of {.code logger}")
+Sys.sleep(2)
+logInfo("First logging example done [{.field {toc(t0, 's')}}]", type = "success")
+```
+
+The content of the log has been appended to `test-logs/log.txt` removing most of the formatting displayed on console.
+
+```{r}
+readLines("test-logs/log.txt")
+```
+
+
+The package `{ospsuite.utils}` also provides a wrapper to store cli formatted messages: `cliFormat()`.
+
+> &#128161; Note that, when an array of messages is provided to the log utilities, it is expected that the first element is usually the information, warning, or error message and subsequent elements are additional information that aims at helping refine or troubleshoot the first message. Thus, they are indicated through arrows in both console and logs. 
+
+Here is a second example using `cliFormat()`, whose warning will provide information about the class and length of the variable `x`:
+
+```{r}
+myWarning <- function(x) {
+  cliFormat(
+    "Warning example about {.val x} !",
+    "{.val x} is of class {.code {class(x)}} and length {.strong {length(x)}}",
+    "The {length(x)} value{?s} of {.val x} {?is/are}: {.val {x}}"
+  )
+}
+
+x <- 10
+logWarning(myWarning(x))
+
+x <- letters[5:8]
+logWarning(myWarning(x))
+```
+
+The content of the log has also been appended to `test-logs/log.txt` removing most of the formatting displayed on console.
+
+```{r}
+readLines("test-logs/log.txt")
+```
+
+## Catching messages
+
+The logging utilities also provide a way to catch information provided by `message()`, `warning()` and `stop()`.
+
+You can use the `logCatch()` function to catch these messages and log them accordingly.
+
+
+```{r}
+logCatch({
+  logInfo("Testing {.fn logCatch}", type = "h1")
+  x <- c(
+    "This is a string",
+    "This is another string",
+    "This is a third string"
+  )
+  warning(cliFormat(
+    "Warning about {.val x} !",
+    "{.val x} is of class {.code {class(x)}} and length {.strong {length(x)}}",
+    "The {length(x)} value{?s} of {.val x} {?is/are}: {.val {x}}"
+  ))
+  logInfo("Warning message was caught", type = "success")
+})
+```
+The content caught by the `logCatch()` has also been appended to `test-logs/log.txt` removing most of the formatting displayed on console.
+
+```{r}
+readLines("test-logs/log.txt")
+```
+
+### Masking messages
+
+You can use masking utilities to prevent the display of messages on the console.
+The masking will use `grepl()` to check for patterns and will not display the message if a match is found.
+
+For __messages__ and __warnings__, the masking can be set by the functions `setInfoMasking()` and `setWarningMasking()`. 
+
+The example below will mask mask warning message that includes the following patterns: `not useful` and `another package`
+
+```{r}
+setWarningMasking("(not useful)*(another package)")
+
+logCatch({
+  warning("This is a not useful message that is warned by another package")
+  warning("This is a useful message that I want displayed")
+})
+```
+
+The content caught by the `logCatch()` includes the first warning as debug message:
+
+```{r}
+readLines("test-logs/log.txt")
+```
+
+
+For __errors__, the masking is set by the function `setErrorMasking()`. 
+The masking only affects the __error trace__ simplifying the final output.
+
+
+```{r, include=FALSE}
+# stop logging
+setLogFolder(NULL)
+# Clean up directory
+unlink("test-logs", recursive = TRUE)
+```

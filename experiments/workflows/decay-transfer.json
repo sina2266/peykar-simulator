@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "id": "workflow.decay-transfer",
+  "version": "1.0.0",
+  "title": "Sequential transfer of final concentration to the next initial state",
+  "nodes": [
+    {
+      "schema_version": "1.0.0",
+      "id": "first",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "workflow.decay",
+          "version": "1.0.0"
+        },
+        "context": {
+          "schema_version": "1.0.0",
+          "species": "synthetic",
+          "biological_system": "reference verification",
+          "conditions": []
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "sample_interval": {
+          "schema_version": "1.0.0",
+          "value": 1.0,
+          "unit": "second"
+        },
+        "parameters": [],
+        "interventions": [],
+        "seed": 42,
+        "budget": {
+          "schema_version": "1.0.0",
+          "max_samples": 10001,
+          "wall_seconds": 60.0
+        },
+        "purpose": "Synthetic infrastructure verification"
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "second",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "workflow.decay",
+          "version": "1.0.0"
+        },
+        "context": {
+          "schema_version": "1.0.0",
+          "species": "synthetic",
+          "biological_system": "reference verification",
+          "conditions": []
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "sample_interval": {
+          "schema_version": "1.0.0",
+          "value": 1.0,
+          "unit": "second"
+        },
+        "parameters": [],
+        "interventions": [],
+        "seed": 42,
+        "budget": {
+          "schema_version": "1.0.0",
+          "max_samples": 10001,
+          "wall_seconds": 60.0
+        },
+        "purpose": "Synthetic infrastructure verification"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "schema_version": "1.0.0",
+      "source_node": "first",
+      "source_port": "concentration",
+      "target_node": "second",
+      "target_port": "initial_input",
+      "target_parameter": "initial",
+      "mode": "terminal_to_initial",
+      "evidence": [
+        "Analytical exp(-k*t) over two serial intervals; synthetic engineering fixture"
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic fixture; no biological validation.",
+    "Terminal-to-initial transfer, not simultaneous feedback coupling."
+  ]
+}

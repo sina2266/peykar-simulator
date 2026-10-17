@@ -1,6 +1,158 @@
 {
   "components": {
     "schemas": {
+      "BiologicalEntity": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "ontology_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ontology Id"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "species": {
+            "title": "Species",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "species"
+        ],
+        "title": "BiologicalEntity",
+        "type": "object"
+      },
+      "BiologicalGraphSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "entities": {
+            "items": {
+              "$ref": "#/components/schemas/BiologicalEntity"
+            },
+            "maxItems": 5000,
+            "minItems": 1,
+            "title": "Entities",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "relationships": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/BiologicalRelationship"
+            },
+            "maxItems": 20000,
+            "title": "Relationships",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "context",
+          "entities"
+        ],
+        "title": "BiologicalGraphSpec",
+        "type": "object"
+      },
+      "BiologicalRelationship": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "relation": {
+            "enum": [
+              "is_a",
+              "part_of",
+              "located_in",
+              "regulates",
+              "interacts_with"
+            ],
+            "title": "Relation",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "target",
+          "relation",
+          "context",
+          "evidence"
+        ],
+        "title": "BiologicalRelationship",
+        "type": "object"
+      },
       "CSVImportRequest": {
         "additionalProperties": false,
         "properties": {
@@ -319,6 +471,67 @@
         "title": "DatasetSpec",
         "type": "object"
       },
+      "EndpointBinding": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "mode": {
+            "const": "terminal_to_initial",
+            "default": "terminal_to_initial",
+            "title": "Mode",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_node": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Node",
+            "type": "string"
+          },
+          "source_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Port",
+            "type": "string"
+          },
+          "target_node": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Node",
+            "type": "string"
+          },
+          "target_parameter": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Parameter",
+            "type": "string"
+          },
+          "target_port": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Target Port",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_node",
+          "source_port",
+          "target_node",
+          "target_port",
+          "target_parameter",
+          "evidence"
+        ],
+        "title": "EndpointBinding",
+        "type": "object"
+      },
       "EvaluationRequest": {
         "additionalProperties": false,
         "properties": {
@@ -441,6 +654,208 @@
         "title": "ExecutionBudget",
         "type": "object"
       },
+      "ExperimentNode": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/SimulationPlan"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "plan"
+        ],
+        "title": "ExperimentNode",
+        "type": "object"
+      },
+      "ExperimentNodeRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Node Id",
+            "type": "string"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "skipped"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "node_id",
+          "status"
+        ],
+        "title": "ExperimentNodeRecord",
+        "type": "object"
+      },
+      "ExperimentRunRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "cancel_requested": {
+            "title": "Cancel Requested",
+            "type": "boolean"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "experiment": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "experiment_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Experiment Digest",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/ExperimentNodeRecord"
+            },
+            "title": "Nodes",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "experiment",
+          "experiment_digest",
+          "status",
+          "cancel_requested",
+          "created_at",
+          "updated_at",
+          "nodes"
+        ],
+        "title": "ExperimentRunRecord",
+        "type": "object"
+      },
+      "ExperimentSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "bindings": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EndpointBinding"
+            },
+            "maxItems": 128,
+            "title": "Bindings",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/ExperimentNode"
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Nodes",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "nodes",
+          "limitations"
+        ],
+        "title": "ExperimentSpec",
+        "type": "object"
+      },
       "FrozenEvaluationSet": {
         "additionalProperties": false,
         "properties": {
@@ -474,6 +889,48 @@
           "evaluation"
         ],
         "title": "FrozenEvaluationSet",
+        "type": "object"
+      },
+      "FrozenExperiment": {
+        "additionalProperties": false,
+        "properties": {
+          "execution_mode": {
+            "const": "sequential_endpoint_transfer",
+            "default": "sequential_endpoint_transfer",
+            "title": "Execution Mode",
+            "type": "string"
+          },
+          "models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelPackage"
+            },
+            "title": "Models",
+            "type": "array"
+          },
+          "order": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "title": "Order",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/ExperimentSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "models",
+          "order"
+        ],
+        "title": "FrozenExperiment",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -570,6 +1027,164 @@
           "severity"
         ],
         "title": "KnowledgeGap",
+        "type": "object"
+      },
+      "LibrarySourceReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "inventory_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Inventory Digest",
+            "type": "string"
+          },
+          "lfs_pointers": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Lfs Pointers",
+            "type": "array"
+          },
+          "license_digests": {
+            "additionalProperties": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "title": "License Digests",
+            "type": "object"
+          },
+          "runtime_status": {
+            "const": "not_assessed_by_source_inspection",
+            "default": "not_assessed_by_source_inspection",
+            "title": "Runtime Status",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/LibrarySourceSpec"
+          },
+          "state": {
+            "const": "source_inspected",
+            "default": "source_inspected",
+            "title": "State",
+            "type": "string"
+          },
+          "tracked_bytes": {
+            "minimum": 0.0,
+            "title": "Tracked Bytes",
+            "type": "integer"
+          },
+          "tracked_files": {
+            "minimum": 1.0,
+            "title": "Tracked Files",
+            "type": "integer"
+          },
+          "unresolved_submodules": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Unresolved Submodules",
+            "type": "array"
+          }
+        },
+        "required": [
+          "spec",
+          "inventory_digest",
+          "license_digests",
+          "tracked_files",
+          "tracked_bytes"
+        ],
+        "title": "LibrarySourceReceipt",
+        "type": "object"
+      },
+      "LibrarySourceSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Capabilities",
+            "type": "array"
+          },
+          "commit": {
+            "pattern": "^[a-f0-9]{40}$",
+            "title": "Commit",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "license_files": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "License Files",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "repository": {
+            "pattern": "^https://github.com/[\\w.-]+/[\\w.-]+$",
+            "title": "Repository",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "repository",
+          "commit",
+          "license",
+          "license_files",
+          "capabilities",
+          "limitations"
+        ],
+        "title": "LibrarySourceSpec",
         "type": "object"
       },
       "ModelPackage": {
@@ -673,6 +1288,114 @@
           "parameters"
         ],
         "title": "ModelPackage",
+        "type": "object"
+      },
+      "NativeRuntimeEvidence": {
+        "additionalProperties": false,
+        "description": "An operator's retained execution evidence; never an executable API request.",
+        "properties": {
+          "artifact_digests": {
+            "additionalProperties": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "maxProperties": 2000,
+            "minProperties": 1,
+            "title": "Artifact Digests",
+            "type": "object"
+          },
+          "engine": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Engine",
+            "type": "string"
+          },
+          "execution_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Execution Digest",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "image_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "managed_queue_supported": {
+            "const": false,
+            "default": false,
+            "title": "Managed Queue Supported",
+            "type": "boolean"
+          },
+          "profile": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Profile",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "scientific_validity": {
+            "const": "not_established",
+            "default": "not_established",
+            "title": "Scientific Validity",
+            "type": "string"
+          },
+          "scope": {
+            "const": "operator_native_probe",
+            "default": "operator_native_probe",
+            "title": "Scope",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Sources",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "engine",
+          "profile",
+          "sources",
+          "image_digest",
+          "execution_digest",
+          "artifact_digests",
+          "limitations"
+        ],
+        "title": "NativeRuntimeEvidence",
         "type": "object"
       },
       "Observation": {
@@ -2035,6 +2758,263 @@
         ]
       }
     },
+    "/v1/biology/graphs": {
+      "get": {
+        "operationId": "graphs_v1_biology_graphs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "species",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Species"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BiologicalGraphSpec"
+                  },
+                  "title": "Response Graphs V1 Biology Graphs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Graphs",
+        "tags": [
+          "biology"
+        ]
+      },
+      "post": {
+        "operationId": "register_graph_v1_biology_graphs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BiologicalGraphSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Register Graph V1 Biology Graphs Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Register Graph",
+        "tags": [
+          "biology"
+        ]
+      }
+    },
+    "/v1/biology/graphs/{id}/versions/{version}": {
+      "get": {
+        "operationId": "graph_v1_biology_graphs__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BiologicalGraphSpec"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Graph",
+        "tags": [
+          "biology"
+        ]
+      }
+    },
+    "/v1/biology/graphs/{id}/versions/{version}/neighborhood": {
+      "get": {
+        "operationId": "neighbors_v1_biology_graphs__id__versions__version__neighborhood_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "entity_id",
+            "required": true,
+            "schema": {
+              "title": "Entity Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "depth",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 4,
+              "minimum": 1,
+              "title": "Depth",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "max_nodes",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Max Nodes",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Neighbors V1 Biology Graphs  Id  Versions  Version  Neighborhood Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Neighbors",
+        "tags": [
+          "biology"
+        ]
+      }
+    },
     "/v1/datasets": {
       "post": {
         "operationId": "dataset_v1_datasets_post",
@@ -2277,6 +3257,398 @@
         "summary": "Engines",
         "tags": [
           "models"
+        ]
+      }
+    },
+    "/v1/experiment-runs": {
+      "post": {
+        "operationId": "submit_experiment_v1_experiment_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "idempotency-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reference"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit Experiment",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiment-runs/{id}": {
+      "get": {
+        "operationId": "experiment_run_v1_experiment_runs__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Experiment Run",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiment-runs/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_experiment_v1_experiment_runs__id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel Experiment",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiment-runs/{id}/events": {
+      "get": {
+        "operationId": "experiment_events_v1_experiment_runs__id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "title": "Response Experiment Events V1 Experiment Runs  Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Experiment Events",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiment-runs/{id}/results": {
+      "get": {
+        "operationId": "experiment_results_v1_experiment_runs__id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Experiment Results V1 Experiment Runs  Id  Results Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Experiment Results",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiments": {
+      "get": {
+        "operationId": "experiments_v1_experiments_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FrozenExperiment"
+                  },
+                  "title": "Response Experiments V1 Experiments Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Experiments",
+        "tags": [
+          "experiments"
+        ]
+      },
+      "post": {
+        "operationId": "freeze_experiment_v1_experiments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperimentSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenExperiment"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Freeze Experiment",
+        "tags": [
+          "experiments"
+        ]
+      }
+    },
+    "/v1/experiments/{id}/versions/{version}": {
+      "get": {
+        "operationId": "experiment_v1_experiments__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenExperiment"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Experiment",
+        "tags": [
+          "experiments"
         ]
       }
     },
@@ -2550,6 +3922,122 @@
         ]
       }
     },
+    "/v1/libraries": {
+      "get": {
+        "operationId": "libraries_v1_libraries_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "capability",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Capability"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/LibrarySourceReceipt"
+                  },
+                  "title": "Response Libraries V1 Libraries Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Libraries",
+        "tags": [
+          "libraries"
+        ]
+      }
+    },
+    "/v1/libraries/{id}/versions/{version}": {
+      "get": {
+        "operationId": "library_v1_libraries__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibrarySourceReceipt"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Library",
+        "tags": [
+          "libraries"
+        ]
+      }
+    },
     "/v1/models": {
       "get": {
         "operationId": "models_v1_models_get",
@@ -2750,6 +4238,122 @@
         "summary": "Model",
         "tags": [
           "models"
+        ]
+      }
+    },
+    "/v1/runtimes": {
+      "get": {
+        "operationId": "runtimes_v1_runtimes_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "engine",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Engine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NativeRuntimeEvidence"
+                  },
+                  "title": "Response Runtimes V1 Runtimes Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Runtimes",
+        "tags": [
+          "runtimes"
+        ]
+      }
+    },
+    "/v1/runtimes/{id}/versions/{version}": {
+      "get": {
+        "operationId": "runtime_v1_runtimes__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NativeRuntimeEvidence"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Runtime",
+        "tags": [
+          "runtimes"
         ]
       }
     },

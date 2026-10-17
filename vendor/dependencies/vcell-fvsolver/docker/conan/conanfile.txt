@@ -1,0 +1,24 @@
+# Dependencies of the Linux release build (docker/Dockerfile). The same set as the top-level
+# conanfile.txt minus libaec: HDF5 is built without szip here, and libaec's upstream
+# (gitlab.dkrz.de) rate-limits CI downloads. libcurl (for VCell messaging) is built in the
+# Dockerfile with CMake: conan's libcurl recipe needs autotools, whose conan m4 fails on this image.
+[requires]
+hdf5/[~1.14.5]
+libzip/[~1.11.3]
+zlib/[~1.2.11]
+
+[options]
+*:shared=False
+hdf5/*:with_zlib=True
+libzip/*:crypto=False
+libzip/*:with_bzip2=False
+libzip/*:with_lzma=False
+libzip/*:with_zstd=False
+
+[tool_requires]
+cmake/[~3.31.6]
+ninja/[~1.12.1]
+
+[generators]
+CMakeDeps
+CMakeToolchain

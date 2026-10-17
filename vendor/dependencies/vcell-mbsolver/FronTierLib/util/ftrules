@@ -1,0 +1,31 @@
+######## FT BUILD INSTRUCTIONS ##############################
+VPATH =  $(build_cpu):../
+../../lib/$(build_cpu)/lib$(name)$(libext).a: make.dep $(build_cpu) $(FT_C_OBJECTS)
+	-rm -rf lib$(name)$(libext).a
+	-rm -rf ${build_cpu}/lib$(name)$(libext).a
+	-mkdir ../../lib/
+	-mkdir ../../lib/$(build_cpu)/
+	cd $(build_cpu); $(AR) cru lib$(name).a $(FT_C_OBJECTS)
+	cd $(build_cpu); $(RANLIB) lib$(name).a; mv lib$(name).a ../../../lib/$(build_cpu)/lib$(name)$(libext).a
+
+$(build_cpu):
+	-mkdir $(build_cpu)
+
+make.dep:../util/make.dep
+	cp ../util/make.dep make.util.dep
+	sed -e "1,$$ s,$(name)/,,g" make.util.dep > make.dep
+
+../util/make.dep:
+	cd ..;./util/mkfiles.pl
+	cd ..;./util/mkdep.pl
+	cd ..;mv make.dep util/make.dep
+
+include make.dep
+
+diff:
+	-diff -r . $(diffdir)/src/$(name) > DIFF
+
+$(FT_C_OBJECTS):%.o: %.c
+	$(CC) $(ftlibincs) -c $< -o $(build_cpu)/$@
+######## END FT BUILD INSTRUCTIONS ##############################
+

@@ -1,0 +1,95 @@
+os: linux
+dist: jammy
+language: cpp
+compiler: gcc
+addons:
+  apt:
+    update: true
+    packages:
+      - g++-9
+      - liblzma-dev
+      - libbz2-dev
+      - libssl-dev
+      - valgrind
+
+permissions:
+  contents: read
+
+branches:
+  only:
+    - master
+
+env:
+  - MATRIX_EVAL="CMAKE_VERSION=3.23.1 && CC=gcc-9 && CXX=g++-9" BUILD_TYPE=Debug   LIBZIPPP_BUILD_SHARED_LIBS=OFF
+  - MATRIX_EVAL="CMAKE_VERSION=3.23.1 && CC=gcc-9 && CXX=g++-9" BUILD_TYPE=Release LIBZIPPP_BUILD_SHARED_LIBS=OFF
+  - MATRIX_EVAL="CMAKE_VERSION=3.23.1 && CC=gcc-9 && CXX=g++-9" BUILD_TYPE=Debug   LIBZIPPP_BUILD_SHARED_LIBS=ON
+  - MATRIX_EVAL="CMAKE_VERSION=3.23.1 && CC=gcc-9 && CXX=g++-9" BUILD_TYPE=Release LIBZIPPP_BUILD_SHARED_LIBS=ON
+
+jobs:
+  include:
+    - env: MATRIX_EVAL="CMAKE_VERSION=3.23.1 && CC=gcc-9 && CXX=g++-9"
+      install:
+        - sudo apt-get -y install ca-certificates
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+        - travis_retry wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz
+        - tar -xvf cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz > /dev/null
+        - mv cmake-${CMAKE_VERSION}-linux-x86_64 cmake-install
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        - cd ..
+        - make libraries NBPROC=1
+      script:
+        - make NBPROC=1
+        - make tests
+        - make tests-direct
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+install:
+  - sudo apt-get -y install ca-certificates
+  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  - travis_retry wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz
+  - tar -xvf cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz > /dev/null
+  - mv cmake-${CMAKE_VERSION}-linux-x86_64 cmake-install
+  - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+  - cd ${TRAVIS_BUILD_DIR}
+  - THIRD_PARTY=$HOME/third_party
+  - THIRD_PARTY_PREFIX=$THIRD_PARTY/install
+  - |
+    mkdir -p $THIRD_PARTY/zlib && cd $THIRD_PARTY/zlib
+    travis_retry wget -O zlib.tar.gz "https://github.com/madler/zlib/archive/v1.3.1.tar.gz"
+    tar xzf zlib.tar.gz --strip-components=1
+    mkdir build && cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_PREFIX}
+    make -j3 install
+  - |
+    mkdir -p $THIRD_PARTY/libzip && cd $THIRD_PARTY/libzip
+    travis_retry wget -O libzip.tar.gz "https://github.com/nih-at/libzip/archive/v1.10.1.tar.gz"
+    tar xzf libzip.tar.gz --strip-components=1
+    mkdir build && cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${THIRD_PARTY_PREFIX} -DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_PREFIX} -DENABLE_COMMONCRYPTO=OFF -DENABLE_GNUTLS=OFF -DENABLE_MBEDTLS=OFF
+    make -j3 install
+  - cd $TRAVIS_BUILD_DIR # Reset CWD
+
+script:
+  - mkdir build && cd build
+  - cmake .. -DCMAKE_PREFIX_PATH=${THIRD_PARTY_PREFIX} -DCMAKE_INSTALL_PREFIX=$HOME/libzippp -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=$LIBZIPPP_BUILD_SHARED_LIBS
+  - make -j3 install
+  - make CTEST_OUTPUT_ON_FAILURE=1 test
+  - rm -r *
+  - cmake ../tests/exampleProject -DCMAKE_PREFIX_PATH="${THIRD_PARTY_PREFIX};$HOME/libzippp" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$THIRD_PARTY_PREFIX/lib" # For shared libs
+  - make -j3
+  - make CTEST_OUTPUT_ON_FAILURE=1 test
+  - rm -r *
+  - |
+    cmake .. -DCMAKE_PREFIX_PATH=${THIRD_PARTY_PREFIX} -DCMAKE_INSTALL_PREFIX=$HOME/libzippp-enc -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=$LIBZIPPP_BUILD_SHARED_LIBS -DLIBZIPPP_ENABLE_ENCRYPTION=ON
+  - make -j3 install
+  - make CTEST_OUTPUT_ON_FAILURE=1 test
+  - rm -r *
+  - cmake ../tests/exampleProject -DCMAKE_PREFIX_PATH="${THIRD_PARTY_PREFIX};$HOME/libzippp-enc" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$THIRD_PARTY_PREFIX/lib" # For shared libs
+  - make -j3
+  - make CTEST_OUTPUT_ON_FAILURE=1 test

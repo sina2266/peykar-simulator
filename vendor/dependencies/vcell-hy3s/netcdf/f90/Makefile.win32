@@ -1,0 +1,25 @@
+#
+#Fortran compiler
+FC= ifort
+# Compilation options
+FOPTIONS = /c /MT /check:bounds /iface:mixed_str_len_arg 
+#/names:uppercase
+.SUFFIXES: obj.f90
+#
+F90LIB = netcdf_f90.lib
+
+.f90.obj :
+	$(FC) $(FOPTIONS) $<
+
+default all: $(F90LIB)
+
+OBJS = typeSizes.obj netcdf.obj
+
+$(F90LIB) : $(OBJS)
+	lib /out:$@ $(OBJS)
+ 
+#
+clean:
+	del $(OBJS)
+	del $(F90LIB)
+	del typeSizes.mod netcdf.mod

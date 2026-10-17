@@ -1,0 +1,46 @@
+{% set name = "cMaBoSS" %}
+{% set version = "1.0.0b23" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  path: ../..
+
+
+build:
+  {% if CUSTOM_BUILD_NUMBER is defined %}
+    number: {{ CUSTOM_BUILD_NUMBER }}
+  {% else %}
+    number: 0
+  {% endif %}
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - flex
+    - bison
+    - make
+    - python {{ python }}
+    - numpy
+    - libsbml-plus-packages
+    
+  host: 
+    - python {{ python }}
+    - numpy
+    - libsbml-plus-packages
+  
+  run: 
+    - python {{ python }}
+    - {{ pin_compatible('numpy') }}
+    - libsbml-plus-packages
+
+test:
+  requires:
+    - numpy
+    - pandas
+  
+about:
+  home:  https://maboss.curie.fr
+

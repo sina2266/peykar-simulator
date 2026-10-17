@@ -1,0 +1,108 @@
+url: https://www.open-systems-pharmacology.org/TLF-Library/
+
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+
+reference:
+- title: "Atom Plots"
+  desc: "Functions for creating base plots"
+  contents:
+  - has_concept("atom plots")
+- title: "Molecule Plots"
+  desc: "Functions for creating advanced plots"
+  contents:
+  - has_concept("molecule plots")
+- title: "Updating Plots"
+  desc: "Functions for updating plot properties"
+  contents:
+  - starts_with("setBackground")
+  - starts_with("setCaption")
+  - starts_with("setLegend")
+  - starts_with("setPlot")
+  - starts_with("setX")
+  - starts_with("setY")
+  - matches("setGrid")
+  - matches("addWatermark")
+  - matches("createWatermarkGrob")
+  - matches("setWatermark")
+  - starts_with("update")
+  - starts_with("get")
+  - matches("geomTLFPoint")
+- title: "PlotConfiguration Classes"
+  desc: "Classes defining plot properties"
+  contents:
+  - has_concept("PlotConfiguration classes")
+  - ends_with("Label")
+  - matches("Font")
+- title: "DataMapping Classes"
+  desc: "Classes defining what data to plot"
+  contents:
+  - has_concept("DataMapping classes")
+  - matches("getLinesFromFoldDistance")
+- title: "Summary and Aggregation Helpers"
+  desc: "Classes, functions and objects summarizing data"
+  contents:
+  - has_concept("stat functions")
+  - starts_with("Aggregation")
+  - ends_with("Measure")
+  - matches("isBetween")
+  - starts_with("getGuestValues")
+- title: "Enum Helpers"
+  desc: "Enums listing available values for specific properties"
+  contents:
+  - has_concept("enum helpers")
+- title: "Shiny Apps"
+  desc: "Shiny applications"
+  contents:
+  - has_concept("shiny apps")
+- title: "Themes"
+  desc: "Functions and classes defining default plot properties."
+  contents:
+  - ends_with("Theme")
+  - starts_with("Theme")
+  - matches("saveThemeToJson")
+  - matches("loadThemeFromJson")
+  - matches("runThemeMaker")
+- title: "Default Settings"
+  desc: "Functions defining default package settings."
+  contents:
+  - starts_with("setDefault")
+  - starts_with("getDefault")
+  - matches("resetTLFSettingsToDefault")
+  - ends_with("TLFSettings")
+- title: "Exporting Plots"
+  desc: "Functions for saving and exporting plots."
+  contents:
+  - starts_with("export")
+
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: "Primary Plots"
+      - text: Atom Plots
+        href: articles/atom-plots.html
+      - text: Box-Whisker Plots
+        href: articles/box-whisker-vignette.html
+      - text: Histogram Plots
+        href: articles/histogram.html
+      - text: PK Ratio Plots
+        href: articles/pk-ratio-vignette.html
+      - text: Time Profile Plots
+        href: articles/plot-time-profile.html
+      - text: ——–
+      - text: "Plot configuration"
+      - text: Introduction to PlotConfiguration objects
+        href: articles/plot-configuration.html
+      - text: ——–
+      - text: "Shiny apps"
+      - text: Run Shiny App to Create Plots
+        href: articles/plot-maker.html
+      - text: Run Shiny App to Create Themes
+        href: articles/theme-maker.html
+

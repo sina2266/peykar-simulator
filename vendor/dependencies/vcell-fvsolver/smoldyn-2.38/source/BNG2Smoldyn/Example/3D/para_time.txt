@@ -1,0 +1,16 @@
+graphics opengl
+
+background_color 0 0 0
+frame_color 1 1 1
+
+time_start 0
+time_stop 100
+time_step 0.00001
+
+output_files molc.txt track_list1.txt
+cmd n 1000 molcount molc.txt
+
+cmd n 1 listmols3 t1(fsoln) track_list1.txt
+cmd n 1 listmols3 t2(front) track_list1.txt
+
+cmd b pause

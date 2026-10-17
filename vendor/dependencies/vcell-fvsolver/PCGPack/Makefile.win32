@@ -1,0 +1,66 @@
+#####################################################
+# Makefile for the PCGPack double library for Windows 
+#
+# Date: July 14, 2001
+#####################################################
+#
+#Fortran compiler
+FC= ifort
+# Compilation options
+#FOPTIONS = /Gm /O3 /Qipo /Qprec-div- /QxN /compile_only /thread
+FOPTIONS = /O3 /Qprec-div- /QxN /compile_only /MT /nologo /names:lowercase 
+LIBTOOL = xilib
+
+.SUFFIXES: obj.f
+#
+.f.obj :
+	$(FC) $(FOPTIONS) $<
+#
+# Source File Names
+#
+GNOEXTS  =  pc0v.obj    pcijup.obj  pcmlic.obj  pcrdpt.obj  pcsrfp.obj \
+	    pc0vi.obj   pcilu.obj   pcmlir.obj  pcric.obj   pcsrij.obj \
+	    pcaxpy.obj  pcilu1.obj  pcmlr.obj   pcrilu.obj  pcsrix.obj \
+	    pcbtrc.obj  pciluf.obj  pcmuc.obj   pcrsad.obj  pcsriz.obj \
+	    pccred.obj  pcilus.obj  pcmuic.obj  pcrsbs.obj  pcsro2.obj \
+	    pcd2i.obj   pciluz.obj  pcmuir.obj  pcrsfb.obj  pcsrob.obj \
+	    pcd2ii.obj  pciprm.obj  pcmur.obj   pcrsfm.obj  pcsrop.obj \
+	    pcd2it.obj  pciprp.obj  pcmvc.obj   pcrsfp.obj  pcsrrb.obj \
+	    pcdmv.obj   pcirsw.obj  pcmvr.obj   pcrslu.obj  pcsrrp.obj \
+	    pcdmva.obj  pclu1c.obj  pcmvs.obj   pcrspf.obj  pcsrsb.obj \
+	    pciabs.obj  pclu1r.obj  pcnegv.obj  pcrsps.obj  pcsrsp.obj \
+	    pciblk.obj  pclub1.obj  pcnopr.obj  pcrsrb.obj  pcsrti.obj \
+	    pcic.obj    pclub2.obj  pcpack.obj  pcrsrp.obj  pcsrzp.obj \
+	    pcic1.obj   pclub3.obj  pcpaxp.obj  pcsbge.obj  pcsscl.obj \
+	    pcicb.obj   pclub4.obj  pcpcnf.obj  pcsbgp.obj  pctran.obj \
+	    pcicmc.obj  pclub5.obj  pcpcsf.obj  pcsc1b.obj  pcunpk.obj \
+	    pcicmr.obj  pclubf.obj  pcprmb.obj  pcsc1p.obj  pcvadd.obj \
+	    pcicms.obj  pclup.obj   pcprmp.obj  pcsc2b.obj  pcvdiv.obj \
+	    pcicpr.obj  pclup1.obj  pcpunp.obj  pcscal.obj  pcverf.obj \
+	    pcicpy.obj  pclup2.obj  pcrc1b.obj  pcsd2f.obj  pcvers.obj \
+	    pcictr.obj  pclup3.obj  pcrc1p.obj  pcsd2s.obj  pcvmul.obj \
+	    pcictx.obj  pclup4.obj  pcrc2b.obj  pcsijb.obj  pcvsma.obj \
+	    pcicx.obj   pclup5.obj  pcrcpr.obj  pcspfa.obj  pcvsub.obj \
+	    pciipr.obj  pclupf.obj  pcrcpy.obj  pcspsl.obj  pcvtm.obj  \
+	    pcijab.obj  pcmlc.obj   pcrdpp.obj  pcsrfb.obj pcdslv.obj
+#
+GEXTS    =  pccg.obj    pcgcr.obj   pcop.obj    pcsp.obj   \
+	    pccgx.obj   pcgmr.obj   pcredb.obj  pcspr.obj  \
+	    pcdrv.obj   pcity.obj   pcredp.obj  pcsrb.obj  \
+	    pcend.obj   pcomn.obj   pcredu.obj  pcsrp.obj
+#
+VNOEXTS  =  pcily.obj   pclub.obj   pcmv.obj    pcvunp.obj
+#
+VEXTS    =  pcdrvx.obj
+#
+VCEXTS   =  pcgmrx.obj
+#
+CEXTS    =  pcitx.obj
+#
+default all: pcgpack_dbl.lib
+#
+pcgpack_dbl.lib: $(GNOEXTS) $(GEXTS) $(VNOEXTS) $(VEXTS) $(VCEXTS) $(CEXTS)
+	$(LIBTOOL) $(GNOEXTS) $(GEXTS) $(VNOEXTS) $(VEXTS) $(VCEXTS) $(CEXTS) /out:pcgpack_dbl.lib
+
+clean:
+	del pcgpack_dbl.lib $(GNOEXTS) $(GEXTS) $(VNOEXTS) $(VEXTS) $(VCEXTS) $(CEXTS)

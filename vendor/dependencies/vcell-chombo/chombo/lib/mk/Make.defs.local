@@ -1,0 +1,12 @@
+# -*- Mode: Makefile -*-
+#
+# Chombo requires this file to exist (lib/mk/Make.defs is a hard `include`),
+# but vcell-chombo drives the Chombo build from CMake and passes every
+# configuration variable -- DIM, OPT, FC, HDFINCFLAGS, ... -- on the `make`
+# command line, where it overrides anything set in a makefile.  So there is
+# deliberately nothing to configure here.  See cmake/BuildChomboLibs.cmake.
+#
+# Chombo's own defaults live in Make.defs.defaults; the documented list of
+# variables you *could* set is in Make.defs.local.template.
+
+makefiles+=Make.defs.local

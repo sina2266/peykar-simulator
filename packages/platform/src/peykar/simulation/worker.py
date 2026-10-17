@@ -64,6 +64,9 @@ class Worker:
         self.executor = executor or SubprocessExecutor()
 
     def tick(self) -> RunRecord | None:
+        from peykar.composition.experiments import ExperimentService
+
+        ExperimentService(self.service).advance_pending()
         claim = self.service.db.claim()
         if claim is None:
             return None

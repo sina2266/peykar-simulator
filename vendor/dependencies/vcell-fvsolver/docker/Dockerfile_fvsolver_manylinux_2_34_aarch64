@@ -1,0 +1,34 @@
+FROM quay.io/pypa/manylinux_2_34_aarch64
+
+# Get ready-made dependencies
+RUN yum install -y python3 python3-devel python3-pip curl lld clang cmake boost-devel hdf5-devel libzip-devel bzip2-devel ninja-build openssl-devel xz-devel
+RUN python3 -m pip install h5py
+RUN python3.14 -m pip install pyyaml
+
+RUN mkdir -p /opt/llvm
+RUN git clone --depth 1 --branch llvmorg-22.1.8 https://github.com/llvm/llvm-project.git /opt/llvm
+RUN mkdir /opt/llvm/build
+
+RUN cmake -G "Ninja" -S /opt/llvm/llvm -B /opt/llvm/build \
+    -DCMAKE_BUILD_TYPE=Release \
+#    -DLLVM_ENABLE_RTTI \
+#    -DLLVM_ENABLE_EH=ON \
+#    -DLLVM_ENABLE_LLD=ON \
+#    -DLLVM_ENABLE_ASSERTIONS=ON \
+    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;flang;lld;lldb;mlir" \
+    -DLLVM_ENABLE_RUNTIMES="libc;libunwind;libcxxabi;libcxx;compiler-rt;openmp;flang-rt"
+
+RUN cmake --build /opt/llvm/build
+ENV PATH=/opt/llvm/build/bin:$PATH
+ENV LD_LIBRARY_PATH=/opt/llvm/build/lib:/opt/llvm/build/lib/aarch64-unknown-linux-gnu:$LD_LIBRARY_PATH
+RUN cmake --build /opt/llvm/build --target install # Not entirely needed, but nice
+
+# Extra dependencies
+RUN dnf install -y perl mold
+RUN rm -rf /opt/rh/*
+RUN ln -sf /usr/local/bin/clang   /usr/local/bin/gcc
+RUN ln -sf /usr/local/bin/clang   /usr/local/bin/cc
+RUN ln -sf /usr/local/bin/clang++ /usr/local/bin/g++
+RUN ln -sf /usr/local/bin/clang++ /usr/local/bin/c++
+RUN ln -sf /usr/local/bin/clang++ /usr/local/bin/cpp
+RUN ln -sf /usr/local/bin/flang   /usr/local/bin/gfortran

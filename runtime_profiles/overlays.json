@@ -1,0 +1,36 @@
+{
+  "format": "peykar.runtime-overlays/1",
+  "overlays": [
+    {
+      "id": "copasi-output-flags-1",
+      "upstream_commit": "59c6c01dc3a8fffee7482d1f620ee393cbff8027",
+      "change_class": "runtime_compatibility",
+      "scientific_model_change": false,
+      "motivation": "Restore C++ integer output masks expected by the pinned SWIG initializeRaw API; reject unreviewed versions/layouts.",
+      "files": {
+        "runtime_profiles/copasi/copasi_compat.py": "0b642fdd0dee8b99276a7da1d9c445a42ec0934c262a4d77368387676c4ea0dd"
+      }
+    },
+    {
+      "id": "physicell-arm64-1",
+      "upstream_commit": "dbd3499250141b27600e91e501c54c46f68f2763",
+      "change_class": "runtime_compatibility",
+      "scientific_model_change": false,
+      "motivation": "Replace x86-only compiler flags with portable -O3/OpenMP/C++11 flags in private builds.",
+      "files": {
+        "runtime_profiles/physicell/Dockerfile": "a21343799a38c78a153fead0c7823e9d37b878f1ca4c6b505d491be8b4cb642e",
+        "runtime_profiles/physiboss/Dockerfile": "7ccb6f192641f30dd35192ca92542d0b96a10d724b9afb98e676f6418f052bdd"
+      }
+    },
+    {
+      "id": "chaste-nonroot-1",
+      "upstream_commit": "99f8a5061faf856d338440851ffb4b9f8fbd30d9",
+      "change_class": "runtime_compatibility",
+      "scientific_model_change": false,
+      "motivation": "Allow non-root caller UIDs to traverse the official image home directory; scientific executable bytes unchanged.",
+      "files": {
+        "runtime_profiles/chaste/Dockerfile": "dc1c996e8f1ae2ac2c72752cdc62af1ff36a1dd183afd57c9cd755680608babb"
+      }
+    }
+  ]
+}

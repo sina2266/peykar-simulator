@@ -1,11 +1,23 @@
 FROM python:3.12-slim AS build
 RUN pip install --no-cache-dir uv==0.12.23
 WORKDIR /app
-COPY . .
+COPY pyproject.toml uv.lock Makefile LICENSE NOTICE LICENSING.md README.md README.fa.md ./
+COPY packages packages
+COPY scripts scripts
+COPY tests tests
+COPY experiments experiments
+COPY schemas schemas
+COPY model_packages model_packages
+COPY licenses licenses
+COPY docs docs
+COPY engine_adapters engine_adapters
+COPY biological_libraries biological_libraries
+COPY dataset_connectors dataset_connectors
+COPY runtime_profiles runtime_profiles
 RUN uv sync --frozen --all-packages --no-dev --no-editable
 
 FROM build AS verification
-RUN apt-get update && apt-get install -y --no-install-recommends make \
+RUN apt-get update && apt-get install -y --no-install-recommends make git \
     && rm -rf /var/lib/apt/lists/*
 RUN uv sync --frozen --all-packages --group dev --no-editable
 ENV UV_NO_SYNC=1 UV_OFFLINE=1

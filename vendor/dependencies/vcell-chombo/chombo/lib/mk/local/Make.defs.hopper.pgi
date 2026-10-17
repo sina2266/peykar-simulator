@@ -1,0 +1,36 @@
+# -*- Mode: Makefile; Modified: "Fri 29 Jul 2005 15:14:39 by dbs"; -*-
+
+## This file defines variables for use on the login nodes of the NERSC Linux
+## machine 'hopper'.  
+##
+## NOTE: everything is always in 64bit mode
+
+makefiles+=local/Make.defs.hopper.pgi
+
+CXX=CC
+FC=ftn
+MPICXX=CC
+USE_64=TRUE
+
+CH_CPP=$(CXX)  -E
+
+cxxoptflags +=  -fast -O3
+foptflags += -O2 -fast
+# the pgf libs are needed for linking parallel HDF5
+#flibflags += -lgfortran -L/opt/pgi/default/linux86-64/default/lib 
+flibflags += 
+
+# The appropriate 'module' must be loaded for this to work.
+## dfm: relevant stuff from my .cshrc.ext
+## module load PrgEnv-pgi 
+## module load hdf5-parallel
+
+USE_HDF=TRUE
+
+HDFLIBFLAGS=   -L$(HDF5_DIR)/lib     $(HDF_POST_LINK_OPTS) -DH5_USE_16_API -lhdf5 -lz
+HDFMPILIBFLAGS=-L$(HDF5_DIR)/lib     $(HDF_POST_LINK_OPTS) -DH5_USE_16_API -lhdf5 -lz
+HDFINCFLAGS=   -I$(HDF5_DIR)/include $(HDF_INCLUDE_OPTS) -DH5_USE_16_API
+HDFMPIINCFLAGS=-I$(HDF5_DIR)/include $(HDF_INCLUDE_OPTS) -DH5_USE_16_API
+##ifeq ($(USE_64),FALSE)
+##  $(error Are you sure you want to run non-64bit?)
+##endif

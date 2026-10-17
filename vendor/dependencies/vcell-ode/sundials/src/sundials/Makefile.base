@@ -1,0 +1,42 @@
+
+CC       = gcc
+BASE_CFLAGS0 =	-D$(PLATFORM) -O2 -fexceptions
+DEL = rm
+
+ifeq ($(PLATFORM), MACOSX)
+BASE_CFLAGS = $(BASE_CFLAGS0) -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+else 
+BASE_CFLAGS = $(BASE_CFLAGS0) 
+endif
+
+ifdef NATIVELIB
+CFLAGS = -fPIC $(BASE_CFLAGS)
+else
+CFLAGS = $(BASE_CFLAGS)
+endif
+
+INCLUDES = -I.. -I../../include
+
+LIBTOOL = ar cru
+LIBDIR = ../../lib
+
+SUNDIALS_LIB = libsundials.a
+SUNDIALS_OBJ_FILES = sundials_band.o sundials_dense.o sundials_iterative.o sundials_math.o sundials_nvector.o sundials_smalldense.o sundials_spgmr.o sundials_spbcgs.o sundials_sptfqmr.o
+
+.SUFFIXES:		.c.o
+
+.c.o:	
+	$(CC) -c $(CFLAGS) $(INCLUDES) $<
+
+all: $(SUNDIALS_LIB)
+
+$(SUNDIALS_LIB): $(SUNDIALS_OBJ_FILES)
+	$(LIBTOOL) $@ $(SUNDIALS_OBJ_FILES)
+	cp $@ $(LIBDIR)	
+	ranlib $(LIBDIR)/$@
+
+clean:
+	$(DEL) *.o $(SUNDIALS_LIB)
+
+depend:
+	makedepend -Y -f Makefile.linux -- $(CFLAGS) $(INCLUDES) -- *.c *.cpp

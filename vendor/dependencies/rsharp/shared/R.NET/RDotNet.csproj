@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0923E1A0-2032-4997-AB73-49E42C4034A9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.8.1</Version>
+	<Copyright></Copyright>
+    <Description>A .NET interoperability library to access the R statistical language runtime from .NET languages. The library is designed for fast data exchange, in process.</Description>
+    <Product>R.NET</Product>
+    <Company />
+    <Authors>Open-Systems-Pharmacology</Authors>
+    <PackageId>R.NET</PackageId>
+    <Title>R.NET: Access R from .NET in process</Title>
+    <RepositoryUrl>https://github.com/Open-Systems-Pharmacology/rdotnet</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Open-Systems-Pharmacology/rdotnet</PackageProjectUrl>
+    <PackageTags>interop R statistical language</PackageTags>
+    <DocumentationFile>bin\$(Configuration)\netstandard2.0\RDotNet.xml</DocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicInterop\DynamicInterop.csproj" />
+  </ItemGroup>
+</Project>

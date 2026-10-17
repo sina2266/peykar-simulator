@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "id": "biology.human-egfr",
+  "version": "1.0.0",
+  "title": "Evidence-linked human EGF receptor interaction; not a kinetic model",
+  "context": {
+    "schema_version": "1.0.0",
+    "species": "NCBITaxon:9606",
+    "biological_system": "human EGF-EGFR signaling",
+    "conditions": [
+      "Pathway-level evidence; no tissue-specific kinetic calibration"
+    ]
+  },
+  "entities": [
+    {
+      "schema_version": "1.0.0",
+      "id": "egf",
+      "label": "EGF (mature ligand; precursor accession)",
+      "kind": "protein_ligand",
+      "species": "NCBITaxon:9606",
+      "ontology_id": "UniProt:P01133"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "egfr",
+      "label": "Epidermal growth factor receptor",
+      "kind": "receptor",
+      "species": "NCBITaxon:9606",
+      "ontology_id": "UniProt:P00533"
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "egfr-signaling",
+      "label": "Signaling by EGFR",
+      "kind": "pathway",
+      "species": "NCBITaxon:9606",
+      "ontology_id": "Reactome:R-HSA-177929"
+    }
+  ],
+  "relationships": [
+    {
+      "schema_version": "1.0.0",
+      "source": "egf",
+      "target": "egfr",
+      "relation": "interacts_with",
+      "context": {
+        "schema_version": "1.0.0",
+        "species": "NCBITaxon:9606",
+        "biological_system": "human EGF-EGFR signaling",
+        "conditions": [
+          "Pathway-level evidence; no tissue-specific kinetic calibration"
+        ]
+      },
+      "evidence": [
+        "https://reactome.org/content/detail/R-HSA-177929",
+        "https://www.uniprot.org/uniprotkb/P01133/entry",
+        "https://www.uniprot.org/uniprotkb/P00533/entry"
+      ]
+    },
+    {
+      "schema_version": "1.0.0",
+      "source": "egfr",
+      "target": "egfr-signaling",
+      "relation": "regulates",
+      "context": {
+        "schema_version": "1.0.0",
+        "species": "NCBITaxon:9606",
+        "biological_system": "human EGF-EGFR signaling",
+        "conditions": [
+          "Pathway-level evidence; no tissue-specific kinetic calibration"
+        ]
+      },
+      "evidence": [
+        "https://reactome.org/content/detail/R-HSA-177929"
+      ]
+    }
+  ]
+}

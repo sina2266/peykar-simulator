@@ -1,0 +1,43 @@
+---
+title: "Knowledge base"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Knowledge base}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This article is a knowledge base for the`{rSharp}` package. It is a collection of 
+useful information that may help troubleshooting and understanding the package.
+
+## Loading the workspace
+
+Saving the RStudio workspace (which is the default option on RStudio exit) will save 
+the R6 objects, but the pointers to .NET objects will be lost. Trying to access the 
+objects after loading a workspace will result in an error. There is currently no
+workaround for saving .NET objects.
+
+## Data type conversion
+
+- `NA` is a concept of marking "missing values" in R which is not available in .NET.
+What might appear conterintuitive is that `NA` has a type "logical" and is interpreted as 
+`TRUE` when sent to .NET. Attention should be payed when sending `NA` to .NET methods.
+- If the signature of a .NET method require an integer argument, it must be passed as an integer using `as.integer()` from R. R assumes all numerics as doubles by default, and will cause an error if passed to a method that expects an integer.
+- Objects in R are vectors, and single values are just a particular case of vectors 
+of length one. In the .NET, scalar values and arrays are different types.  In current implementation, 
+an R vector with length >1 will be translated to an array in the .NET, a length 
+of one becomes a scalar value. This might lead to problems when calling .NET methods
+expecting a an array when passing a vector of 1.
+- When trying to pass a vector containing a `NULL` from R to .NET, the `NULL` will be
+removed from the vector. This is how R treats `NULL` in vectors. E.g., trying 
+to call a .NET method with an argument that expects an array of doubles with a vector
+`c(0, NULL, 3)` will result in a call with `c(0, 3)`. In order to correctly pass 
+`NULL` to .NET, it should be passed as a list: `list(0, NULL, 3)`.

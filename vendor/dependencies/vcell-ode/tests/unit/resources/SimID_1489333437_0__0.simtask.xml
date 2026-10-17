@@ -1,0 +1,76 @@
+<SimulationTask xmlns="http://sourceforge.net/projects/vcell/vcml" TaskId="0" JobIndex="0" isPowerUser="false">
+  <MathDescription Name="Application0_generated">
+    <Constant Name="_F_">96485.3321</Constant>
+    <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+    <Constant Name="_K_GHK_">1.0E-9</Constant>
+    <Constant Name="_N_pmol_">6.02214179E11</Constant>
+    <Constant Name="_PI_">3.141592653589793</Constant>
+    <Constant Name="_R_">8314.46261815</Constant>
+    <Constant Name="_T_">300.0</Constant>
+    <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+    <Constant Name="Kf_r0">1.0</Constant>
+    <Constant Name="Kf_r1">0.0</Constant>
+    <Constant Name="KMOLE">0.001660538783162726</Constant>
+    <Constant Name="Kr_r0">2.0</Constant>
+    <Constant Name="Kr_r1">0.0</Constant>
+    <Constant Name="s0_init_uM">2.0</Constant>
+    <Constant Name="s1_init_uM">3.0</Constant>
+    <Constant Name="s2_init_uM">4.0</Constant>
+    <Constant Name="s3_init_uM">0.0</Constant>
+    <Constant Name="s4_init_uM">0.0</Constant>
+    <Constant Name="Size_c0">0.5</Constant>
+    <VolumeVariable Name="s2" Domain="Compartment" />
+    <VolumeVariable Name="s4" Domain="Compartment" />
+    <Function Name="J_r0" Domain="Compartment">(((Kf_r0 * s0) * s2) - (Kr_r0 * s1))</Function>
+    <Function Name="J_r1" Domain="Compartment">((Kf_r1 * s3) - (Kr_r1 * s4))</Function>
+    <Function Name="K_s0_total" Domain="Compartment">((Size_c0 * s0_init_uM) - (Size_c0 * s2_init_uM))</Function>
+    <Function Name="K_s1_total" Domain="Compartment">((Size_c0 * s1_init_uM) + (Size_c0 * s2_init_uM))</Function>
+    <Function Name="K_s3_total" Domain="Compartment">((Size_c0 * s3_init_uM) + (Size_c0 * s4_init_uM))</Function>
+    <Function Name="s0" Domain="Compartment">((K_s0_total + (Size_c0 * s2)) / Size_c0)</Function>
+    <Function Name="s1" Domain="Compartment">((K_s1_total - (Size_c0 * s2)) / Size_c0)</Function>
+    <Function Name="s3" Domain="Compartment">((K_s3_total - (Size_c0 * s4)) / Size_c0)</Function>
+    <CompartmentSubDomain Name="Compartment">
+      <BoundaryType Boundary="Xm" Type="Value" />
+      <BoundaryType Boundary="Xp" Type="Value" />
+      <BoundaryType Boundary="Ym" Type="Value" />
+      <BoundaryType Boundary="Yp" Type="Value" />
+      <BoundaryType Boundary="Zm" Type="Value" />
+      <BoundaryType Boundary="Zp" Type="Value" />
+      <OdeEquation Name="s2" SolutionType="Unknown">
+        <Rate>- J_r0</Rate>
+        <Initial>s2_init_uM</Initial>
+      </OdeEquation>
+      <OdeEquation Name="s4" SolutionType="Unknown">
+        <Rate>J_r1</Rate>
+        <Initial>s4_init_uM</Initial>
+      </OdeEquation>
+    </CompartmentSubDomain>
+    <Version Name="Application0_generated" KeyValue="95705054" BranchId="95705055" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+      <Owner Name="schaff" Identifier="17" />
+      <GroupAccess Type="1" />
+    </Version>
+  </MathDescription>
+  <Simulation Name="Simulation0">
+    <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+      <TimeBound StartTime="0.0" EndTime="1.0" />
+      <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+      <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+      <OutputOptions OutputTimes="0.0,1.0E-5,1.0E-4,0.001,0.01,0.1,0.5,1.0" />
+      <NumberProcessors>1</NumberProcessors>
+    </SolverTaskDescription>
+    <MathOverrides />
+    <Version Name="temp simulation" KeyValue="1489333437" BranchId="1" Archived="1" Date="28-Jul-2024 18:28:21" FromVersionable="false">
+      <Owner Name="temp" Identifier="123" />
+      <GroupAccess Type="1" />
+    </Version>
+  </Simulation>
+  <Geometry Name="non-spatial420951543" Dimension="0">
+    <Extent X="10.0" Y="10.0" Z="10.0" />
+    <Origin X="0.0" Y="0.0" Z="0.0" />
+    <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95705043" />
+    <Version Name="non-spatial420951543" KeyValue="95705039" BranchId="95705040" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+      <Owner Name="schaff" Identifier="17" />
+      <GroupAccess Type="1" />
+    </Version>
+  </Geometry>
+</SimulationTask>

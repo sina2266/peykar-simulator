@@ -1,0 +1,12 @@
+# -*- Mode: Makefile; Modified: "Thu 08 Apr 2004 14:45:57 by dbs"; -*-
+
+## This file contains compiler variables for all flavors of the Fortran compiler called "ftn"
+
+makefiles+=local/Make.defs.ftn
+
+ifeq ($(system),CRAY)
+  deffdbgflags = -g
+  deffoptflags = -O 3 -e o
+  # Or to be even more agressive
+  ## deffoptflags = -V -F -O inline3,scalar3,vector3,stream3,task0 -rm
+endif

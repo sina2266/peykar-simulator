@@ -1,0 +1,91 @@
+name: Pull Request Workflow
+
+# Runs on every pull request. sync-remotes pins/unpins `Remotes:` in DESCRIPTION
+# to match the package Version and commits the fix to the PR branch; the checks
+# then run on that synced tree so what gets validated is what will be merged.
+#
+# rSharp-specific: when C# sources under shared/** change, build-Csharp-binaries
+# rebuilds the per-OS native binaries and commits them back to the PR branch.
+
+on:
+  pull_request:
+
+# Cancel any in-progress run for the same PR when a new commit arrives.
+# When the bot pushes the single binary commit, run A (human commit) is
+# cancelled and replaced by run B which skips the rebuild and runs all
+# checks on the tip that already has all binaries.
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: read-all
+
+jobs:
+  sync-remotes:
+    permissions:
+      contents: write # commits the synced Remotes back to the PR branch
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/sync-remotes.yaml@main
+    secrets: inherit
+
+  # Decide whether to rebuild C# binaries. Two conditions must both be true:
+  # A) the PR as a whole introduces a net C# change vs the target branch, AND
+  # B) this specific push touched shared/ (or the PR was just opened).
+  # Both being required means bot binary commits (A=true, B=false) and pure R
+  # pushes after a prior C# change (A=true, B=false) correctly skip the build.
+  detect-changes:
+    runs-on: ${{ vars.GHA_DEFAULT_RUNNER_UBUNTU || 'ubuntu-latest' }}
+    outputs:
+      build: ${{ steps.decide.outputs.build }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - id: decide
+        env:
+          BASE:   ${{ github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.before }}
+          HEAD:   ${{ github.event.pull_request.head.sha }}
+          ACTION: ${{ github.event.action }}
+        run: |
+          git diff --quiet "$BASE...$HEAD" -- shared/ && a=false || a=true
+          if [ "$ACTION" = "synchronize" ] && [ -n "$BEFORE" ]; then
+            git diff --quiet "$BEFORE" "$HEAD" -- shared/ && b=false || b=true
+          else
+            b=true
+          fi
+          [ "$a" = true ] && [ "$b" = true ] && echo "build=true" >> "$GITHUB_OUTPUT" || echo "build=false" >> "$GITHUB_OUTPUT"
+
+  build-Csharp-binaries:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.build == 'true' }}
+    permissions:
+      contents: write # commits the rebuilt binaries back to the PR branch
+    uses: ./.github/workflows/build-c#.yaml
+
+  # `needs: build-Csharp-binaries` is load-bearing, not just ordering: it makes
+  # this job start only after the rebuilt binaries are committed to the PR
+  # branch, so the merge ref (refs/pull/N/merge) that checkout fetches live has
+  # been recomputed to include them. Dropping this edge would let R CMD check
+  # load the previous binaries.
+  R-CMD-Check:
+    needs: [sync-remotes, build-Csharp-binaries]
+    if: ${{ !cancelled() }} # a skipped sync (fork PR) or C# build must not block the check
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      os-matrix: '[{"os": "macos-latest", "r": "release"}, {"os": "macos-15-intel", "r": "release"}, {"os": "windows-latest", "r": "release"}, {"os": "ubuntu-latest", "r": "release"}]'
+
+  test-coverage:
+    needs: [sync-remotes, build-Csharp-binaries]
+    if: ${{ !cancelled() }}
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  pkgdown:
+    needs: [sync-remotes, build-Csharp-binaries]
+    if: ${{ !cancelled() }}
+    permissions:
+      contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
+      pull-requests: read # the workflow's check-changes job reads PR file changes
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main

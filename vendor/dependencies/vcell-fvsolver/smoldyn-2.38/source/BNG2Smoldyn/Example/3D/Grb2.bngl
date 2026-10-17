@@ -1,0 +1,36 @@
+begin model
+
+begin parameters
+	kp9			0.6			#Grb2 binding
+	km9			10.4			#Grb2 dissociation
+
+end parameters
+
+begin molecule types
+	EGFR(P)
+	Grb2(SH2,track~0~1)
+end molecule types
+
+begin seed species
+	EGFR(P)	1000
+	Grb2(SH2,track~0)					1
+	Grb2(SH2,track~1)					1
+end seed species
+
+begin reaction rules
+	# Grb2 binding
+	EGFR(P) + Grb2(SH2) <-> EGFR(P!1).Grb2(SH2!1) kp9, km9
+	
+end reaction rules
+
+begin observables
+	Molecules Grb2		Grb2()
+	Molecules	EGFR_total	EGFR()
+	Molecules	E_G		EGFR(P!1).Grb2(SH2!1)
+	Molecules track_1 Grb2(track~1)
+end observables
+
+end model
+
+#actions
+generate_network({overwrite=>1})

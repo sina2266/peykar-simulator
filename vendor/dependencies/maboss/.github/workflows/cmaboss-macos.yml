@@ -1,0 +1,296 @@
+name: cMaBoSS MacOS
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  cmaboss_macos:
+    name: cMaBoSS
+    runs-on: macos-12
+    env:
+      CC: clang
+      CXX: clang++
+      INSTALL_PATH: /usr/local/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/local/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /usr/local/opt/libxml2/include/libxml2/
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+    steps:
+    - uses: actions/checkout@v4 
+
+    - name: Downgrading to XCode 13.1
+      run: |
+        sudo xcode-select -s /Applications/Xcode_13.1.app/Contents/Developer
+    
+    - name: Install dependencies
+      run: |
+        brew install flex bison python3 cmake
+        python3 -m pip install --upgrade pip
+        pip3 install numpy wheel delocate pandas
+
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV
+
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+        
+    - name: Cache compiled libSBML
+      id: cache-libsbml-clang
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-${{ env.CMAKE_VERSION }}-libSBML-5.20.2-clang++-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-clang.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+    
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+            
+    - name: Build cMaBoSS
+      run: |
+        cd engine/src
+        make
+        cd ../python
+        cp -r ../src cmaboss
+        python3 -m pip wheel -w wheelhouse .
+        delocate-wheel -w fixed_wheels -v `ls wheelhouse/cmaboss*.whl`
+        pip3 install `ls fixed_wheels/cmaboss*.whl` 
+        
+    - name: Test cMaBoSS
+      run: bash scripts/run_cmaboss_tests.sh
+
+     
+  build_wheels_macos:
+    name: Build MacOS wheels
+    runs-on: macos-12
+    needs: cmaboss_macos
+    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Downgrading to XCode 13.1
+        run: |
+          sudo xcode-select -s /Applications/Xcode_13.1.app/Contents/Developer
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' 
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel numpy twine
+
+      - name: Build wheels
+        env: 
+          MACOSX_DEPLOYMENT_TARGET: 12.0
+          CIBW_ARCHS: x86_64
+          CIBW_BEFORE_ALL: >
+            wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb && 
+            brew install -s libxml2.rb && 
+            CC=clang CXX=clang++ INSTALL_PATH=/usr/local/ BUILD_PATH=/tmp/ \
+              LIBXML_LIBDIR=/usr/local/opt/libxml2/lib/libxml2.dylib \
+              LIBXML_INCLUDEDIR=/usr/local/opt/libxml2/include/libxml2/ \
+              bash scripts/build_libsbml.sh && 
+            BUILD_PATH=/tmp/ bash scripts/install_libsbml.sh
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            DYLD_LIBRARY_PATH=/usr/local/lib/ delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+
+        run: |
+          cd engine/src
+          make grammars
+          cd ../../
+          cp -r engine/src engine/python/cmaboss/
+          python -m cibuildwheel --output-dir wheelhouse engine/python
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-x86_64
+          path: wheelhouse/*.whl
+          
+      - name: Upload cMaBoSS to test Pypi
+        if: github.repository == 'vincent-noel/MaBoSS' && github.ref == 'refs/heads/master'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TEST_TOKEN }}
+        run: |
+          python -m twine upload --repository testpypi --skip-existing wheelhouse/cmaboss*
+          
+      - name: Upload cMaBoSS to Pypi
+        if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m twine upload --skip-existing wheelhouse/cmaboss*
+          
+  build_wheels_macos_arm64:
+    name: Build MacOS wheels
+    runs-on: macos-14
+    needs: cmaboss_macos
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' 
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel numpy twine
+
+      - name: Build wheels
+        env:
+          MACOSX_DEPLOYMENT_TARGET: 14.0 
+          CIBW_ARCHS: arm64
+          CIBW_BEFORE_ALL: >
+            wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb && 
+            brew install -s libxml2.rb && 
+            CC=clang CXX=clang++ INSTALL_PATH=/usr/local/ BUILD_PATH=/tmp/ \
+              LIBXML_LIBDIR=/opt/homebrew/opt/libxml2/lib/libxml2.dylib \
+              LIBXML_INCLUDEDIR=/opt/homebrew/opt/libxml2/include/ \
+              bash scripts/build_libsbml.sh && 
+            BUILD_PATH=/tmp/ sudo bash scripts/install_libsbml.sh
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            DYLD_LIBRARY_PATH=/usr/local/lib/ delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+
+        run: |
+          cd engine/src
+          make grammars
+          cd ../../
+          cp -r engine/src engine/python/cmaboss/
+          python -m cibuildwheel --output-dir wheelhouse engine/python
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-arm64
+          path: wheelhouse/*.whl
+          
+      - name: Upload cMaBoSS to test Pypi
+        if: github.repository == 'vincent-noel/MaBoSS' && github.ref == 'refs/heads/master'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TEST_TOKEN }}
+        run: |
+          python -m twine upload --repository testpypi --skip-existing wheelhouse/cmaboss*
+          
+      - name: Upload cMaBoSS to Pypi
+        if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m twine upload --skip-existing wheelhouse/cmaboss*
+                  
+
+  conda_cmaboss_macosx:
+    name: cMaBoSS Conda package
+    needs: cmaboss_macos
+
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/usr/local/miniconda"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/Users/runner/miniconda3"}
+        ]
+        version: [{python: "3.8", numpy: "1.22"}, {python: "3.9", numpy: "1.22"}, {python: "3.10", numpy: "1.22"}, {python: "3.11", numpy: "1.23"}, {python: "3.12", numpy: "1.26"}]
+        # os: [{version: macos-12, name: osx-64, sdk: MacOSX10.10.sdk}, {version: macos-14, name: osx-arm64, sdk: MacOSX11.0.sdk}]
+    runs-on: macos-12
+
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+        
+    - name: Install conda-build
+      run: |
+        conda install conda-build conda-verify anaconda-client
+    
+    - name: Installing MacOSX10.13 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.13.sdk.tar.xz
+        sudo tar xf MacOSX10.13.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX10.13.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+      
+    - name: Build cMaBoSS Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c ${{ matrix.repo.name }} -c colomoto --variants "{\"python\": [\"${{ matrix.version.python }}\"], \"numpy\": [\"${{ matrix.version.numpy }}\"]}" conda/cmaboss;
+       
+    - name: Upload MaBoSS to Anaconda cloud on vincent-noel
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/osx-64/*.tar.bz2 --force;
+    
+    - name: Upload MaBoSS to Anaconda cloud on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/osx-64/*.tar.bz2 --force;
+ 
+  conda_cmaboss_macosx_M1:
+    name: cMaBoSS Conda package for arm64
+    needs: cmaboss_macos
+
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/Users/runner/miniconda3"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/Users/runner/miniconda3"}
+        ]
+        version: [{python: "3.8", numpy: "1.22"}, {python: "3.9", numpy: "1.22"}, {python: "3.10", numpy: "1.22"}, {python: "3.11", numpy: "1.23"}, {python: "3.12", numpy: "1.26"}]
+        # os: [{version: macos-12, name: osx-64, sdk: MacOSX10.10.sdk}, {version: macos-14, name: osx-arm64, sdk: MacOSX11.0.sdk}]
+    runs-on: macos-14
+
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+        
+    - name: Install conda-build
+      run: |
+        conda install conda-build conda-verify anaconda-client
+    
+    - name: Installing MacOSX10.10 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
+        sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+      
+    - name: Build cMaBoSS Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c ${{ matrix.repo.name }} -c colomoto --variants "{\"python\": [\"${{ matrix.version.python }}\"], \"numpy\": [\"${{ matrix.version.numpy }}\"]}" conda/cmaboss;
+        
+    - name: Upload MaBoSS to Anaconda cloud on vincent-noel
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/osx-arm64/*.tar.bz2 --force;
+    
+    - name: Upload MaBoSS to Anaconda cloud on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/osx-arm64/*.tar.bz2 --force;
+  

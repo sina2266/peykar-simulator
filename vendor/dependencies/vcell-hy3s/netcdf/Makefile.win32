@@ -1,0 +1,12 @@
+all:
+	cd libsrc && nmake -f Makefile.win32
+	cd f90 && nmake -f Makefile.win32
+	cd fortran && nmake -f Makefile.win32	
+	cd cxx && nmake -f Makefile.win32
+	
+clean:
+	cd libsrc && nmake -f Makefile.win32 clean
+	cd f90 && nmake -f Makefile.win32 clean
+	cd fortran && nmake -f Makefile.win32 clean
+	cd cxx && nmake -f Makefile.win32 clean
+	

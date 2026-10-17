@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Authoritative, immutable logging configuration for the Langevin solver.
+
+    This file is the single source of truth for logging in BOTH the JVM (jar/tests) and the
+    GraalVM native executable. Log4j2 (>= 2.25) ships GraalVM reachability metadata whose
+    resource-config bundles the "log4j2.*" pattern, so this file is compiled into the native
+    image and loaded from the classpath at startup. There is no programmatic configuration and
+    no runtime lookup of an external log4j2.xml on the filesystem.
+
+    Level hierarchy (most -> least verbose): TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF.
+    <Root level="X"> shows X and everything below it. To change verbosity, edit the level here
+    and rebuild; it is intentionally not meant to be overridden at runtime.
+-->
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

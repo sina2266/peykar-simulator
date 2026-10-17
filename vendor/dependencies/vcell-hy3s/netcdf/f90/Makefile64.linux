@@ -1,0 +1,25 @@
+#
+#Fortran compiler
+FC= /opt/intel/fce/10.1.015/bin/ifort
+
+# Compilation options
+FOPTIONS = -c 
+
+F90LIB = libnetcdf_f90.a
+
+%.o : %.f90
+	$(FC) $(FOPTIONS) $<
+
+default all: $(F90LIB)
+
+OBJS = typeSizes.o netcdf.o
+
+$(F90LIB) : $(OBJS)
+	ar cru $@ $(OBJS)
+ 
+#
+clean:
+	rm *.o $(F90LIB) *.mod
+
+depend:
+	makedepend -f Makefile.linux -- $(FOPTIONS) -- *.c *.cpp

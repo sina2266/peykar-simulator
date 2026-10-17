@@ -1,0 +1,19 @@
+      SUBROUTINEPCMUIR(N,IJU,U,W)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN,IJU(*)
+      DOUBLEPRECISIONW(*),U(*)
+      INTEGERI,J1,J2,J
+      DOUBLEPRECISIONSUM
+      J1=IJU(N+1)
+      DO1I=N,1,-1
+      SUM=W(I)
+      J2=J1
+      J1=IJU(I)
+CVDIR PREFER SCALAR
+      DO3J=J2-1,J1,-1
+      SUM=SUM-U(J)*W(IJU(J))
+3     CONTINUE
+      W(I)=SUM
+1     CONTINUE
+      RETURN
+      END

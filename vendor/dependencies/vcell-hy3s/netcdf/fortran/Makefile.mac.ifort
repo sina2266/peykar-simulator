@@ -1,0 +1,38 @@
+CC = gcc
+
+# Compilation options
+COPTIONS = -c -O2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -fexceptions -I../linux -I../libsrc -DHAVE_CONFIG_H 
+
+FORLIB = libnetcdf_for.a
+
+#
+%.o : %.c
+	$(CC) $(COPTIONS) $<
+
+default all: $(FORLIB)
+
+OBJS = fort-attio.o \
+	fort-control.o \
+	fort-dim.o \
+	fort-genatt.o \
+	fort-geninq.o \
+	fort-genvar.o \
+	fort-lib.o \
+	fort-misc.o \
+	fort-nc4.o \
+	fort-v2compat.o \
+	fort-var1io.o \
+	fort-varaio.o \
+	fort-vario.o \
+	fort-varmio.o \
+	fort-varsio.o
+
+$(FORLIB) : $(OBJS)
+	ar cru $@ $(OBJS)
+ 
+#
+clean:
+	rm $(FORLIB) $(OBJS)
+
+depend:
+	makedepend -f Makefile.linux -- $(COPTIONS) -- *.c *.cpp

@@ -1,0 +1,58 @@
+CC     = cl
+CCOPTS1 = /c /Ox /TP /EHsc /D_CRT_SECURE_NO_DEPRECATE /I..\vcell\include
+
+!ifdef VCELL_DEBUG
+CCOPTS1 = $(CCOPTS1) /MTd
+TARGET = qhull_mtd.lib
+OBJDIR = .\mtd
+!else
+CCOPTS1 = $(CCOPTS1) /MT
+TARGET = qhull.lib
+OBJDIR = .\obj
+!endif
+
+OBJS = $(OBJDIR)\user.obj $(OBJDIR)\global.obj $(OBJDIR)\stat.obj $(OBJDIR)\io.obj $(OBJDIR)\geom2.obj $(OBJDIR)\poly2.obj \
+       $(OBJDIR)\merge.obj $(OBJDIR)\qhull.obj $(OBJDIR)\geom.obj $(OBJDIR)\poly.obj $(OBJDIR)\qset.obj $(OBJDIR)\mem.obj \
+       $(OBJDIR)\qvoronoi.obj
+
+CFILES= unix.c qhull.c geom.c geom2.c global.c io.c mem.c merge.c poly.c \
+        poly2.c qset.c stat.c user.c qconvex.c qhalf.c qvoronoi.c
+        
+HFILES= user.h qhull.h qhull_a.h geom.h io.h mem.h merge.h poly.h qset.h stat.h
+
+LIBTOOL = lib
+
+.SUFFIXES:	.c.obj
+
+    
+all: $(TARGET)
+
+$(OBJDIR)\qvoronoi.obj:   qhull.h user.h mem.h ..\vcell\include\vcell\VoronoiRidge.h
+$(OBJDIR)\qhull.obj:  $(HFILES)
+$(OBJDIR)\geom.obj:   $(HFILES)
+$(OBJDIR)\geom2.obj:  $(HFILES)
+$(OBJDIR)\global.obj: $(HFILES)
+$(OBJDIR)\io.obj:     $(HFILES)
+$(OBJDIR)\mem.obj:    mem.h 
+$(OBJDIR)\merge.obj:  $(HFILES)
+$(OBJDIR)\poly.obj:   $(HFILES)
+$(OBJDIR)\poly2.obj:  $(HFILES)
+$(OBJDIR)\qset.obj:   qset.h mem.h 
+$(OBJDIR)\stat.obj:   $(HFILES)
+$(OBJDIR)\user.obj:   $(HFILES)
+
+.c{$(OBJDIR)}.obj:
+	$(CC) $(CCOPTS1) -Fo$@ $<
+
+$(OBJDIR) :
+    if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
+    	
+clean:
+	if exist "$(OBJDIR)" del /Q $(OBJDIR)\*.*
+	del $(TARGET)
+
+$(TARGET): $(OBJDIR) $(OBJS)
+	$(LIBTOOL) $(OBJS) /out:$@
+
+
+# end of Makefile

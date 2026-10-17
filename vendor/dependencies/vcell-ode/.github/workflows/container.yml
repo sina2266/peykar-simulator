@@ -1,0 +1,231 @@
+# The vcell-ode solver image: build it (amd64 + arm64, messaging ON), prove it runs the way VCell's
+# cluster runs it, and — on master and published releases — publish it (README.md, "Release contract"):
+#
+#   ghcr.io/virtualcell/vcell-ode:<X.Y.Z>                      multi-arch Docker image (+ :latest on releases)
+#   oras://ghcr.io/virtualcell/vcell-ode_singularity:<X.Y.Z>   Apptainer SIF (amd64; Slurm, pre-pulled by FluxCD)
+#
+# Pull requests build and smoke-test only; nothing is pushed. Modelled on vcell-fenics'
+# .github/workflows/container.yml.
+name: container
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: container-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-ode
+  SIF: ghcr.io/virtualcell/vcell-ode_singularity
+  EXE: SundialsSolverStandalone_x64
+  PUBLISH: ${{ github.event_name != 'pull_request' }}
+
+jobs:
+  image:
+    name: image (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { platform: linux/amd64, runner: ubuntu-24.04,     arch: amd64 }
+          - { platform: linux/arm64, runner: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Version
+        run: .github/scripts/version.sh >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build and load
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          load: true
+          tags: vcell-ode:ci
+          build-args: VERSION=${{ env.VCELL_ODE_VERSION }}
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}
+
+      # The entrypoint contract (§1.5): --help/no args exit 0, a provided executable is exec'd with
+      # its exit code, anything else exits 2.
+      - name: Smoke — entrypoint
+        run: |
+          set -euxo pipefail
+          docker run --rm vcell-ode:ci | tee help.txt
+          grep -q "$VCELL_ODE_VERSION" help.txt && grep -q "$EXE" help.txt
+          docker run --rm vcell-ode:ci --help > /dev/null
+          rc=0; docker run --rm vcell-ode:ci bash -c true || rc=$?; test "$rc" = 2
+          rc=0; docker run --rm vcell-ode:ci "$EXE" /nonexistent.cvodeInput /tmp/x.ida -tid 0 || rc=$?
+          test "$rc" != 0
+
+      - name: Smoke — Docker, non-root, bind mount, -tid, reference outputs
+        run: |
+          set -euxo pipefail
+          work="$RUNNER_TEMP/docker"; mkdir -p "$work"; cp tests/reference/*Input "$work/"
+          chmod 0777 "$work"   # writable by the arbitrary uid below, as /simdata is for the job's user
+          for input in cvode_simple.cvodeInput cvode_events.cvodeInput cvode_delayed_events.cvodeInput ida_dae.idaInput; do
+            name="${input%.*}"
+            docker run --rm --read-only --user 12345:12345 -v "$work:/simdata" vcell-ode:ci \
+              "$EXE" "/simdata/$input" "/simdata/$name.ida" -tid 0
+            python3 tests/reference/compare_ida.py "tests/reference/$name.ida.ref" "$work/$name.ida"
+          done
+
+      # Messaging ON: with a JMS_PARAM block and -tid, every run must deliver JOB_COMPLETED
+      # (WorkerEvent_Status=1003) for its task id to the broker's REST endpoint before exiting — a
+      # stub on the host stands in for ActiveMQ. Repeated, since a lost final message is intermittent.
+      - name: Smoke — Docker, messaging delivers JOB_COMPLETED
+        run: |
+          set -euxo pipefail
+          work="$RUNNER_TEMP/msg"; mkdir -p "$work"; chmod 0777 "$work"
+          python3 tests/reference/stub_broker.py 8161 "$work/broker.log" &
+          stub=$!; trap 'kill $stub' EXIT; sleep 1
+          { cat tests/reference/cvode_simple.cvodeInput; printf '\nJMS_PARAM_BEGIN\nJMS_BROKER 127.0.0.1:8161\nJMS_USER clientUser dummy\nJMS_QUEUE workerEvent\nJMS_TOPIC serviceControl\nVCELL_USER ci\nSIMULATION_KEY 42\nJOB_INDEX 0\nJMS_PARAM_END\n'; } > "$work/msg.cvodeInput"
+          for tid in 1 2 3 4 5; do
+            docker run --rm --network host --read-only --user 12345:12345 -v "$work:/simdata" vcell-ode:ci \
+              "$EXE" /simdata/msg.cvodeInput "/simdata/msg$tid.ida" -tid "$tid"
+            grep "TaskID=$tid&" "$work/broker.log" | grep -q "WorkerEvent_Status=1003&" \
+              || { echo "::error::JOB_COMPLETED for -tid $tid never reached the broker"; cat "$work/broker.log"; exit 1; }
+            python3 tests/reference/compare_ida.py tests/reference/cvode_simple.ida.ref "$work/msg$tid.ida"
+          done
+          cut -c1-160 "$work/broker.log"
+
+      # Apptainer runs the image read-only under --containall — the cluster's conditions — with argv
+      # exactly as SlurmProxy writes it: bare executable name, /simdata paths, trailing -tid.
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke — the SIF under --containall
+        if: matrix.arch == 'amd64'
+        run: |
+          set -euxo pipefail
+          sif="$RUNNER_TEMP/vcell-ode.sif"
+          apptainer build "$sif" docker-daemon://vcell-ode:ci
+          ls -lh "$sif"
+          test "$(id -u)" != 0
+          apptainer run --containall "$sif" --help
+          work="$RUNNER_TEMP/sif"; mkdir -p "$work"; cp tests/reference/*Input "$work/"
+          for input in cvode_simple.cvodeInput cvode_events.cvodeInput cvode_delayed_events.cvodeInput ida_dae.idaInput; do
+            name="${input%.*}"
+            apptainer run --containall --bind "$work:/simdata" "$sif" \
+              "$EXE" "/simdata/$input" "/simdata/$name.ida" -tid 0
+            python3 tests/reference/compare_ida.py "tests/reference/$name.ida.ref" "$work/$name.ida"
+          done
+          rc=0; apptainer run --containall "$sif" not-a-solver || rc=$?; test "$rc" = 2
+          # messaging from the SIF (host network): JOB_COMPLETED must reach the broker
+          python3 tests/reference/stub_broker.py 8162 "$work/broker.log" &
+          stub=$!; trap 'kill $stub' EXIT; sleep 1
+          sed 's/127.0.0.1:8161/127.0.0.1:8162/' "$RUNNER_TEMP/msg/msg.cvodeInput" > "$work/msg.cvodeInput"
+          apptainer run --containall --bind "$work:/simdata" "$sif" \
+            "$EXE" /simdata/msg.cvodeInput /simdata/msg.ida -tid 7
+          grep "TaskID=7&" "$work/broker.log" | grep -q "WorkerEvent_Status=1003&"
+
+      # --- publishing (master and published releases only) ---------------------------------------
+      - name: Tags
+        if: env.PUBLISH == 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=branch
+            type=sha,format=short
+
+      - name: Log in to GHCR
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push by digest
+        if: env.PUBLISH == 'true'
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: VERSION=${{ env.VCELL_ODE_VERSION }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Record the digest
+        if: env.PUBLISH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v4
+        if: env.PUBLISH == 'true'
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: env.PUBLISH == 'true' && matrix.arch == 'amd64'
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          set -euxo pipefail
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          for ref in $TAGS; do
+            apptainer push "$RUNNER_TEMP/vcell-ode.sif" "oras://${SIF}:${ref##*:}"
+          done
+
+  manifest:
+    name: multi-arch manifest
+    if: github.event_name != 'pull_request'
+    needs: image
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=branch
+            type=sha,format=short
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          set -euxo pipefail
+          # shellcheck disable=SC2046  # word splitting is the point: one -t per tag, one ref per digest
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${{ steps.meta.outputs.version }}"

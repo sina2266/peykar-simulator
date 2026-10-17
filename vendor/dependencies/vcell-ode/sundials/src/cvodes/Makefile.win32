@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:09 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2005, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for CVODES module
+#
+# src/cvodes/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /GX /O2
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+INCLUDES = -I.. -I..\..\include
+
+CVODES_LIB       = sundials_cvodes.lib
+CVODES_OBJ_FILES = cvodes.obj cvodes_io.obj cvodea.obj cvodea_io.obj cvodes_band.obj cvodes_dense.obj cvodes_diag.obj cvodes_spils.obj cvodes_spbcgs.obj cvodes_spgmr.obj cvodes_sptfqmr.obj cvodes_bandpre.obj cvodes_bbdpre.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(CVODES_LIB)
+
+$(CVODES_LIB): $(CVODES_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(CVODES_OBJ_FILES)
+	copy $@ $(LIBDIR)	
+
+clean:
+	del $(CVODES_LIB)
+	del *.obj

@@ -1,0 +1,34 @@
+CC= cl
+
+# Compilation options
+COPTIONS = /c /O2 -I..\win32 -I. /DPowerStationFortran /MT
+
+.SUFFIXES: obj.c
+SRCLIB = netcdf.lib
+
+#
+.c.obj :
+	$(CC) $(COPTIONS) $<
+
+default all: $(SRCLIB)
+
+OBJS = attr.obj \
+	dim.obj \
+	error.obj \
+	libvers.obj \
+	nc.obj \
+	ncx.obj \
+	posixio.obj \
+	putget.obj \
+	string.obj \
+	v1hpg.obj \
+	v2i.obj \
+	var.obj 
+
+$(SRCLIB) : $(OBJS)
+	lib /out:$@ $(OBJS)
+ 
+#
+clean:
+	del $(SRCLIB)
+	del $(OBJS)

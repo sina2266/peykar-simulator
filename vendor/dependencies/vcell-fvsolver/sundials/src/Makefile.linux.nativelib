@@ -1,0 +1,17 @@
+all:
+	cd cvode; make -f Makefile.linux.nativelib
+	cd ida; make -f Makefile.linux.nativelib
+	cd nvec_ser; make -f Makefile.linux.nativelib
+	cd sundials; make -f Makefile.linux.nativelib
+
+clean:
+	cd cvode; make -f Makefile.linux.nativelib clean
+	cd ida; make -f Makefile.linux.nativelib clean
+	cd nvec_ser; make -f Makefile.linux.nativelib clean
+	cd sundials; make -f Makefile.linux.nativelib clean
+
+depend:
+	cd cvode; make -f Makefile.linux.nativelib depend
+	cd ida; make -f Makefile.linux.nativelib depend
+	cd nvec_ser; make -f Makefile.linux.nativelib depend
+	cd sundials; make -f Makefile.linux.nativelib depend

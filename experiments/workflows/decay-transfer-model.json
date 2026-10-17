@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "id": "workflow.decay",
+  "version": "1.0.0",
+  "title": "Synthetic concentration transfer verification",
+  "engine": "reference.decay",
+  "engine_version": "0.1.0",
+  "license": "LicenseRef-Peykar-Noncommercial-1.1.0",
+  "source": "python:peykar_engines.reference",
+  "source_digest": "dfe98f78e48f83a7f98ea960f49beb3f86e1a3c2cb051dcda969f86dc38886d5",
+  "capabilities": [
+    "synthetic_verification"
+  ],
+  "context": {
+    "schema_version": "1.0.0",
+    "species": "synthetic",
+    "biological_system": "reference verification",
+    "conditions": []
+  },
+  "validity": {
+    "schema_version": "1.0.0",
+    "status": "unvalidated",
+    "context": {
+      "schema_version": "1.0.0",
+      "species": "synthetic",
+      "biological_system": "reference verification",
+      "conditions": []
+    },
+    "endpoints": [],
+    "evidence": [],
+    "limitations": [
+      "Synthetic only. No biological validation."
+    ]
+  },
+  "parameters": [
+    {
+      "schema_version": "1.0.0",
+      "name": "initial",
+      "default": {
+        "schema_version": "1.0.0",
+        "value": 1.0,
+        "unit": "mole / liter"
+      },
+      "minimum": 0.0,
+      "maximum": null
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "rate",
+      "default": {
+        "schema_version": "1.0.0",
+        "value": 0.1,
+        "unit": "1 / second"
+      },
+      "minimum": 0.0,
+      "maximum": 10.0
+    }
+  ],
+  "ports": [
+    {
+      "schema_version": "1.0.0",
+      "name": "concentration",
+      "direction": "output",
+      "unit": "mole/liter",
+      "semantic_id": "synthetic.concentration",
+      "scale": "molecular",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "initial_input",
+      "direction": "input",
+      "unit": "mole/liter",
+      "semantic_id": "synthetic.concentration",
+      "scale": "molecular",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    }
+  ],
+  "dependencies": []
+}

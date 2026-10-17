@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D07290EB-5755-453C-8CD6-5CDDED3400BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <Version>1.0.0</Version>
+    <Copyright></Copyright>
+    <Description>.NET interoperability on top of R.NET for the rSharp package</Description>
+    <Product>rSharp</Product>
+    <Company />
+    <Authors>Open-Systems-Pharmacology</Authors>
+    <Title>rSharpTests; embed .NET in R</Title>
+    <PackageLicenseUrl>https://github.com/Open-Systems-Pharmacology/rsharp/blob/master/License.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Open-Systems-Pharmacology/rsharp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Open-Systems-Pharmacology/rsharp</PackageProjectUrl>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="TestApp\**" />
+    <EmbeddedResource Remove="TestApp\**" />
+    <None Remove="TestApp\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0"></PackageReference>
+    <PackageReference Include="xunit" Version="2.8.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClrFacade\ClrFacade.csproj" />
+  </ItemGroup>
+</Project>

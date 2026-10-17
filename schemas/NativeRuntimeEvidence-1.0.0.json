@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:NativeRuntimeEvidence:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "An operator's retained execution evidence; never an executable API request.",
+  "properties": {
+    "artifact_digests": {
+      "additionalProperties": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "maxProperties": 2000,
+      "minProperties": 1,
+      "title": "Artifact Digests",
+      "type": "object"
+    },
+    "engine": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Engine",
+      "type": "string"
+    },
+    "execution_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Execution Digest",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "image_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Image Digest",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "managed_queue_supported": {
+      "const": false,
+      "default": false,
+      "title": "Managed Queue Supported",
+      "type": "boolean"
+    },
+    "profile": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Profile",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scientific_validity": {
+      "const": "not_established",
+      "default": "not_established",
+      "title": "Scientific Validity",
+      "type": "string"
+    },
+    "scope": {
+      "const": "operator_native_probe",
+      "default": "operator_native_probe",
+      "title": "Scope",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "title": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "engine",
+    "profile",
+    "sources",
+    "image_digest",
+    "execution_digest",
+    "artifact_digests",
+    "limitations"
+  ],
+  "title": "NativeRuntimeEvidence",
+  "type": "object"
+}

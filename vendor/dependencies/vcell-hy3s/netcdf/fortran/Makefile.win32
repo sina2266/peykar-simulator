@@ -1,0 +1,37 @@
+CC= cl
+
+# Compilation options
+COPTIONS = /c /O2 -I..\win32 -I..\libsrc /DPowerStationFortran /MT
+
+.SUFFIXES: obj.c
+FORLIB = netcdf_for.lib
+
+#
+.c.obj :
+	$(CC) $(COPTIONS) $<
+
+default all: $(FORLIB)
+
+OBJS = fort-attio.obj \
+	fort-control.obj \
+	fort-dim.obj \
+	fort-genatt.obj \
+	fort-geninq.obj \
+	fort-genvar.obj \
+	fort-lib.obj \
+	fort-misc.obj \
+	fort-nc4.obj \
+	fort-v2compat.obj \
+	fort-var1io.obj \
+	fort-varaio.obj \
+	fort-vario.obj \
+	fort-varmio.obj \
+	fort-varsio.obj
+
+$(FORLIB) : $(OBJS)
+	lib /out:$@ $(OBJS)
+ 
+#
+clean:
+	del $(FORLIB)
+	del $(OBJS)

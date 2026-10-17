@@ -1,0 +1,21 @@
+start_surface bulk
+action all all jump
+color both white 0.4
+thickness 0.5
+max_panels rect 4
+panel rect +0 0.5 0 0 0.5 0.5 r1
+panel rect -0 0 0 0 0.5 0.5 r2
+panel rect -2 0 0 0 0.5 0.5 r5
+panel rect +2 0 0 0.5 0.5 0.5 r6
+jump r1 back <-> r2 back
+jump r5 back <-> r6 back
+end_surface
+
+start_surface membrane
+action all all reflect
+color both red 0.4
+thickness 1
+max_panels rect 2
+panel rect -1 0 0.5 0 0.5 0.5 r3
+panel rect -1 0 0 0 0.5 0.5 r4
+end_surface

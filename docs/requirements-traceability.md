@@ -9,14 +9,14 @@ consolidated engineering map.
 
 | Requirement | Self-contained explanation | Current implementation/evidence |
 |---|---|---|
-| General-purpose biological platform, first corneal use case | master-blueprint.md sections 1-2 | Synthetic reference engines; real-domain integration designed |
+| General-purpose biological platform, first corneal use case | master-blueprint.md sections 1-2 | Synthetic engines, working vCornea operator profile, shared source/graph/workflow backends; broader scientific gates open |
 | Independent of HomBon; thin external adapter | architecture.md; master-blueprint.md 1,14 | ScientificInstrument facade and lifecycle integration test |
 | Five fundamental capabilities | master-blueprint.md 2 | Separate modules; status.md distinguishes partial/designed parts |
 | Hierarchy and interaction graph | master-blueprint.md 3 | Biology graph, hierarchy cycle/evidence checks |
 | Separate entity, computational model and runtime instance | Original v3.0 section 5; master-blueprint.md 3 | Explicit design; no bulk simulation state in the knowledge graph |
 | Stable ontology/species/context identities | scientific-contracts.md; master-blueprint.md 3 | Context contracts and exact applicability checks |
 | Explicit missing knowledge | master-blueprint.md 3; knowledge-gaps.md | Persistent immutable KnowledgeGap declarations, exact model references, API roles and CLI |
-| Source inspection and reuse/adapt/compose/build | master-blueprint.md 5 | Declarative inspector and offline digest-pinned inventory; executable remote import designed |
+| Source inspection and reuse/adapt/compose/build | master-blueprint.md 5 | Nine pinned source inspections, offline inventories and library discovery; executable HTTP remote import remains unsupported |
 | Four admission paths and publication reconstruction label | Original v3.0 section 9; master-blueprint.md 5 | Standard/repository/reconstruction/data-construction routes designed; no equivalent-author-code claim |
 | Scientific Model Package and engine separation | master-blueprint.md 4 | ModelPackage and EngineAdapter contracts |
 | Five model interfaces | Original v3.0 section 10.1; master-blueprint.md 5 | Input/output/state/intervention/observation target; current contracts implement a subset |

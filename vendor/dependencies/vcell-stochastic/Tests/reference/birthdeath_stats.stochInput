@@ -1,0 +1,42 @@
+<control>
+STARTING_TIME	0.0
+ENDING_TIME 	20.0
+TOLERANCE 	1.0E-9
+SAVE_PERIOD	1.0
+MAX_SAVE_POINTS	21.0
+NUM_TRIAL	2000
+SEED	2024
+BMULTIBUTNOTHISTO	1
+</control>
+
+<model>
+<discreteVariables>
+TotalVars	1
+X	0
+</discreteVariables>
+
+<jumpProcesses>
+TotalProcesses	2
+birth
+death
+</jumpProcesses>
+
+<processDesc>
+TotalDescriptions	2
+JumpProcess	birth
+	Propensity	10.0
+	Effect	1
+		X	inc	1.0
+
+	DependentProcesses	1
+		death
+
+JumpProcess	death
+	Propensity	(0.5 * X)
+	Effect	1
+		X	inc	-1.0
+
+	DependentProcesses	0
+
+</processDesc>
+</model>

@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:19 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for KINSOL module
+#
+# src/kinsol/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /GX /O2
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+INCLUDES = -I.. -I..\..\include
+
+KINSOL_LIB       = sundials_kinsol.lib
+KINSOL_OBJ_FILES = kinsol.obj kinsol_io.obj kinsol_dense.obj kinsol_band.obj kinsol_spils.obj kinsol_spgmr.obj kinsol_spbcgs.obj kinsol_sptfqmr.obj kinsol_bbdpre.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(KINSOL_LIB)
+
+$(KINSOL_LIB): $(KINSOL_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(KINSOL_OBJ_FILES)
+	copy $@ $(LIBDIR)
+
+clean:
+	del $(KINSOL_LIB)
+	del *.obj

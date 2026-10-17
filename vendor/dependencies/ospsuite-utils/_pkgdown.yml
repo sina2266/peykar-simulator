@@ -1,0 +1,91 @@
+url: https://www.open-systems-pharmacology.org/OSPSuite.RUtils/
+
+authors:
+  Open-Systems-Pharmacology Community:
+    href: "https://github.com/Open-Systems-Pharmacology"
+    html: "<img src='https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/figures/osps.png' height=24>"
+  Indrajeet Patil:
+    href: https://indrajeetpatil.github.io/
+
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+reference:
+
+  - title: Helpers
+
+  - subtitle: Enum helpers
+    desc: Utilities to work with enum objects
+    contents:
+      - contains("enum")
+
+  - subtitle: Validation helpers
+    desc: Check or validate a given assertion
+    contents:
+      - matches("^is|^has|^validate")
+
+  - subtitle: Validation spec constructors
+    desc: Create specification objects for option validation
+    contents:
+      - integerOption
+      - numericOption
+      - characterOption
+      - logicalOption
+
+  - subtitle: Conditional value assignment helpers
+    desc: Compute and assign value conditionally
+    contents:
+      - starts_with("^if")
+
+  - subtitle: Formatting helpers
+    desc: ~
+    contents:
+      - matches("^format")
+
+  - subtitle: Printing helpers
+    contents:
+      - has_concept("print functions")
+
+  - subtitle: Math helpers
+    contents:
+      - logSafe
+
+  - title: Package settings
+    contents:
+      - getOSPSuiteUtilsSetting
+      - ospsuiteUtilsSettingNames
+
+  - title: Deprecated Features
+    contents:
+      - Printable
+
+  - title: Logger
+    desc: Utilities for recording logs
+    contents:
+      - getLogFolder
+      - setLogFolder
+      - logDebug
+      - logInfo
+      - logWarning
+      - logError
+      - cliFormat
+      - logCatch
+      - setInfoMasking
+      - setWarningMasking
+      - setErrorMasking
+
+  - title: Miscellaneous
+    contents:
+      - matches("^to")
+      - messages
+      - objectCount
+      - flattenList
+      - logSafe
+      - foldSafe
+      - tic
+      - toc
+      - timeStamp
+

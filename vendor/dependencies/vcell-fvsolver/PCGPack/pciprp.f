@@ -1,0 +1,10 @@
+      SUBROUTINEPCIPRP(N,IC,X,Y)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN,IC(*)
+      DOUBLEPRECISIONX(*),Y(*)
+      INTEGERI
+      DO1I=1,N
+      Y(IC(I))=X(I)
+1     CONTINUE
+      RETURN
+      END

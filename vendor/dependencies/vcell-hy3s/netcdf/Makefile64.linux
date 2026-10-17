@@ -1,0 +1,17 @@
+default all:
+	cd libsrc; make -f Makefile64.linux
+	cd f90; make -f Makefile64.linux
+	cd fortran; make -f Makefile64.linux
+	cd cxx; make -f Makefile64.linux
+	
+clean:
+	cd libsrc; make -f Makefile64.linux clean
+	cd f90; make -f Makefile64.linux clean
+	cd fortran; make -f Makefile64.linux clean	
+	cd cxx; make -f Makefile64.linux clean
+
+depend:
+	cd f90; make -f Makefile64.linux depend
+	cd fortran; make -f Makefile64.linux depend
+	cd libsrc; make -f Makefile64.linux depend
+	cd cxx; make -f Makefile64.linux depend	

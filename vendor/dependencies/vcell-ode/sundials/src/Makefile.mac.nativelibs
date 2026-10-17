@@ -1,0 +1,11 @@
+all:
+	cd cvode; make -f Makefile.mac.nativelibs
+	cd ida; make -f Makefile.mac.nativelibs
+	cd nvec_ser; make -f Makefile.mac.nativelibs
+	cd sundials; make -f Makefile.mac.nativelibs
+
+clean:
+	cd cvode; make -f Makefile.mac.nativelibs clean
+	cd ida; make -f Makefile.mac.nativelibs clean
+	cd nvec_ser; make -f Makefile.mac.nativelibs clean
+	cd sundials; make -f Makefile.mac.nativelibs clean

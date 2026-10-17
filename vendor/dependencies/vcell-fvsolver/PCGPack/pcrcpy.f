@@ -1,0 +1,10 @@
+      SUBROUTINEPCRCPY(N,A,B)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN
+      DOUBLEPRECISIONA(*),B(*)
+      INTEGERI
+      DO1I=1,N
+      B(I)=A(I)
+1     CONTINUE
+      RETURN
+      END

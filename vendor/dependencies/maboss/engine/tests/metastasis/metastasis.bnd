@@ -1,0 +1,222 @@
+Node ECMicroenv {
+
+	logic = (ECMicroenv);
+	rate_up = @logic ? $u_ECMicroenv : 0;
+	rate_down = @logic ? 0 : $d_ECMicroenv;
+}
+Node DNAdamage {
+
+	logic = (DNAdamage);
+	rate_up = @logic ? $u_DNAdamage : 0;
+	rate_down = @logic ? 0 : $d_DNAdamage;
+}
+
+Node Metastasis {
+
+	logic = (Migration);
+	rate_up = @logic ? $u_Metastasis : 0;
+	rate_down = @logic ? 0 : $d_Metastasis;
+}
+
+Node Migration {
+
+	logic = (Invasion & EMT & VIM & !AKT1 & !p63 & !miR200 & AKT2 & ERK);
+	rate_up = @logic ? $u_Migration : 0;
+	rate_down = @logic ? 0 : $d_Migration;
+}
+
+Node Invasion {
+
+	logic = (!CDH2 & CTNNB1) | (CDH2 & !CTNNB1 & SMAD) | (CDH2 & CTNNB1);
+	rate_up = @logic ? $u_Invasion : 0;
+	rate_down = @logic ? 0 : $d_Invasion;
+}
+
+Node EMT {
+
+	logic = (!CDH1 & CDH2);
+	rate_up = @logic ? $u_EMT : 0;
+	rate_down = @logic ? 0 : $d_EMT;
+}
+
+Node Apoptosis {
+
+	logic = (!ZEB2 & !AKT1 & !p63 & !p53 & !p73 & !miR200 & miR34 & !ERK) | (!ZEB2 & !AKT1 & !p63 & !p53 & !p73 & miR200 & !ERK) | (!ZEB2 & !AKT1 & !p63 & !p53 & p73 & !ERK) | (!ZEB2 & !AKT1 & !p63 & p53 & !ERK) | (!ZEB2 & !AKT1 & p63 & !ERK);
+	rate_up = @logic ? $u_Apoptosis : 0;
+	rate_down = @logic ? 0 : $d_Apoptosis;
+}
+
+Node CellCycleArrest {
+
+	logic = (!p21 & !ZEB2 & !AKT1 & !miR200 & !miR203 & miR34) | (!p21 & !ZEB2 & !AKT1 & !miR200 & miR203) | (!p21 & !ZEB2 & !AKT1 & miR200) | (!p21 & ZEB2 & !AKT1) | (p21 & !AKT1);
+	rate_up = @logic ? $u_CellCycleArrest : 0;
+	rate_down = @logic ? 0 : $d_CellCycleArrest;
+}
+
+Node GF {
+
+	logic = (!GF & !CDH1 & CDH2) | (GF & !CDH1);
+	rate_up = @logic ? $u_GF : 0;
+	rate_down = @logic ? 0 : $d_GF;
+}
+
+Node TGFbeta {
+
+	logic = (!ECMicroenv & !CTNNB1 & NICD) | (ECMicroenv & !CTNNB1);
+	rate_up = @logic ? $u_TGFbeta : 0;
+	rate_down = @logic ? 0 : $d_TGFbeta;
+}
+
+Node p21 {
+
+	logic = (!AKT1 & !NICD & !p63 & !p53 & !p73 & AKT2 & !ERK) | (!AKT1 & !NICD & !p63 & !p53 & p73 & !ERK) | (!AKT1 & !NICD & !p63 & p53 & !ERK) | (!AKT1 & !NICD & p63 & !ERK) | (!AKT1 & NICD & !p63 & !p53 & !p73 & !AKT2 & !ERK & SMAD) | (!AKT1 & NICD & !p63 & !p53 & !p73 & AKT2 & !ERK) | (!AKT1 & NICD & !p63 & !p53 & p73 & !ERK) | (!AKT1 & NICD & !p63 & p53 & !ERK) | (!AKT1 & NICD & p63 & !ERK);
+	rate_up = @logic ? $u_p21 : 0;
+	rate_down = @logic ? 0 : $d_p21;
+}
+
+Node CDH1 {
+
+	logic = (!TWIST1 & !SNAI1 & !SNAI2 & !ZEB1 & !ZEB2 & !AKT2);
+	rate_up = @logic ? $u_CDH1 : 0;
+	rate_down = @logic ? 0 : $d_CDH1;
+}
+
+Node CDH2 {
+
+	logic = (TWIST1);
+	rate_up = @logic ? $u_CDH2 : 0;
+	rate_down = @logic ? 0 : $d_CDH2;
+}
+
+Node VIM {
+
+	logic = (!ZEB2 & CTNNB1) | (ZEB2);
+	rate_up = @logic ? $u_VIM : 0;
+	rate_down = @logic ? 0 : $d_VIM;
+}
+
+Node TWIST1 {
+
+	logic = (!SNAI1 & !CTNNB1 & NICD) | (!SNAI1 & CTNNB1) | (SNAI1);
+	rate_up = @logic ? $u_TWIST1 : 0;
+	rate_down = @logic ? 0 : $d_TWIST1;
+}
+
+Node SNAI1 {
+
+	logic = (!TWIST1 & !CTNNB1 & NICD & !p53 & !miR203 & !miR34) | (TWIST1 & !CTNNB1 & !p53 & !miR203 & !miR34);
+	rate_up = @logic ? $u_SNAI1 : 0;
+	rate_down = @logic ? 0 : $d_SNAI1;
+}
+
+Node SNAI2 {
+
+	logic = (!TWIST1 & !CTNNB1 & NICD & !p53 & !miR200 & !miR203) | (!TWIST1 & CTNNB1 & !p53 & !miR200 & !miR203) | (TWIST1 & !p53 & !miR200 & !miR203);
+	rate_up = @logic ? $u_SNAI2 : 0;
+	rate_down = @logic ? 0 : $d_SNAI2;
+}
+
+Node ZEB1 {
+
+	logic = (!TWIST1 & !SNAI2 & !CTNNB1 & NICD & !miR200) | (!TWIST1 & !SNAI2 & CTNNB1 & !miR200) | (!TWIST1 & SNAI2 & !miR200) | (TWIST1 & !SNAI1 & !SNAI2 & !CTNNB1 & NICD & !miR200) | (TWIST1 & !SNAI1 & !SNAI2 & CTNNB1 & !miR200) | (TWIST1 & !SNAI1 & SNAI2 & !miR200) | (TWIST1 & SNAI1 & !miR200);
+	rate_up = @logic ? $u_ZEB1 : 0;
+	rate_down = @logic ? 0 : $d_ZEB1;
+}
+
+Node ZEB2 {
+
+	logic = (!TWIST1 & !SNAI1 & NICD & !miR200 & !miR203) | (!TWIST1 & SNAI1 & !miR200 & !miR203) | (TWIST1 & !SNAI1 & !SNAI2 & NICD & !miR200 & !miR203) | (TWIST1 & !SNAI1 & SNAI2 & !miR200 & !miR203) | (TWIST1 & SNAI1 & !miR200 & !miR203);
+	rate_up = @logic ? $u_ZEB2 : 0;
+	rate_down = @logic ? 0 : $d_ZEB2;
+}
+
+Node AKT1 {
+
+	logic = (!GF & !TGFbeta & !CDH1 & !CDH2 & CTNNB1 & NICD & !p53 & !miR34) | (!GF & !TGFbeta & !CDH1 & CDH2 & CTNNB1 & !p53 & !miR34) | (!GF & TGFbeta & !CDH1 & CTNNB1 & !p53 & !miR34) | (GF & !CDH1 & CTNNB1 & !p53 & !miR34);
+	rate_up = @logic ? $u_AKT1 : 0;
+	rate_down = @logic ? 0 : $d_AKT1;
+}
+
+Node DKK1 {
+
+	logic = (!CTNNB1 & NICD) | (CTNNB1);
+	rate_up = @logic ? $u_DKK1 : 0;
+	rate_down = @logic ? 0 : $d_DKK1;
+}
+
+Node CTNNB1 {
+
+	logic = (!CDH1 & !CDH2 & !AKT1 & !DKK1 & !p63 & !p53 & !miR200 & !miR34);
+	rate_up = @logic ? $u_CTNNB1 : 0;
+	rate_down = @logic ? 0 : $d_CTNNB1;
+}
+
+Node NICD {
+
+	logic = (ECMicroenv & !p63 & !p53 & !p73 & !miR200 & !miR34);
+	rate_up = @logic ? $u_NICD : 0;
+	rate_down = @logic ? 0 : $d_NICD;
+}
+
+Node p63 {
+
+	logic = (DNAdamage & !AKT1 & !NICD & !p53 & !miR203 & !AKT2);
+	rate_up = @logic ? $u_p63 : 0;
+	rate_down = @logic ? 0 : $d_p63;
+}
+
+Node p53 {
+
+	logic = (!DNAdamage & !SNAI2 & !AKT1 & !CTNNB1 & !NICD & !p73 & miR34 & !AKT2) | (!DNAdamage & !SNAI2 & !AKT1 & !CTNNB1 & NICD & !p73 & !AKT2) | (!DNAdamage & !SNAI2 & !AKT1 & CTNNB1 & !p73 & !AKT2) | (DNAdamage & !SNAI2 & !AKT1 & !p73 & !AKT2);
+	rate_up = @logic ? $u_p53 : 0;
+	rate_down = @logic ? 0 : $d_p53;
+}
+
+Node p73 {
+
+	logic = (DNAdamage & !ZEB1 & !AKT1 & !p53 & !AKT2);
+	rate_up = @logic ? $u_p73 : 0;
+	rate_down = @logic ? 0 : $d_p73;
+}
+
+Node miR200 {
+
+	logic = (!SNAI1 & !SNAI2 & !ZEB1 & !ZEB2 & !p63 & !p53 & p73 & !AKT2) | (!SNAI1 & !SNAI2 & !ZEB1 & !ZEB2 & !p63 & p53 & !AKT2) | (!SNAI1 & !SNAI2 & !ZEB1 & !ZEB2 & p63 & !AKT2);
+	rate_up = @logic ? $u_miR200 : 0;
+	rate_down = @logic ? 0 : $d_miR200;
+}
+
+Node miR203 {
+
+	logic = (!SNAI1 & !ZEB1 & !ZEB2 & p53);
+	rate_up = @logic ? $u_miR203 : 0;
+	rate_down = @logic ? 0 : $d_miR203;
+}
+
+Node miR34 {
+
+	logic = (!SNAI1 & !ZEB1 & !ZEB2 & !AKT1 & !p63 & !p53 & p73 & AKT2) | (!SNAI1 & !ZEB1 & !ZEB2 & !AKT1 & !p63 & p53 & AKT2);
+	rate_up = @logic ? $u_miR34 : 0;
+	rate_down = @logic ? 0 : $d_miR34;
+}
+
+Node AKT2 {
+
+	logic = (!GF & !TGFbeta & !CDH2 & TWIST1 & NICD & !p53 & !miR203 & !miR34) | (!GF & !TGFbeta & CDH2 & TWIST1 & !p53 & !miR203 & !miR34) | (!GF & TGFbeta & TWIST1 & !p53 & !miR203 & !miR34) | (GF & TWIST1 & !p53 & !miR203 & !miR34);
+	rate_up = @logic ? $u_AKT2 : 0;
+	rate_down = @logic ? 0 : $d_AKT2;
+}
+
+Node ERK {
+
+	logic = (!GF & !CDH2 & !AKT1 & !NICD & SMAD) | (!GF & !CDH2 & !AKT1 & NICD) | (!GF & CDH2 & !AKT1) | (GF & !AKT1);
+	rate_up = @logic ? $u_ERK : 0;
+	rate_down = @logic ? 0 : $d_ERK;
+}
+
+Node SMAD {
+
+	logic = (TGFbeta & !miR200 & !miR203);
+	rate_up = @logic ? $u_SMAD : 0;
+	rate_down = @logic ? 0 : $d_SMAD;
+}

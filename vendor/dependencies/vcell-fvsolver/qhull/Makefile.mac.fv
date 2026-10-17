@@ -1,0 +1,50 @@
+
+CC     = g++
+CCOPTS1 = -c -O2 -fexceptions -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -I../VCell/include
+
+
+OBJS = user.o global.o stat.o io.o geom2.o poly2.o \
+       merge.o qhull.o geom.o poly.o qset.o mem.o \
+       qvoronoi.o
+
+CFILES= unix.c qhull.c geom.c geom2.c global.c io.c mem.c merge.c poly.c \
+        poly2.c qset.c stat.c user.c qconvex.c qhalf.c qvoronoi.c
+        
+HFILES= user.h qhull.h qhull_a.h geom.h io.h mem.h merge.h poly.h qset.h stat.h
+
+TARGET = libqhull.a
+LIBTOOL = ar cru
+
+.SUFFIXES:	.c.o
+
+    
+all: $(TARGET)
+
+$(OBJDIR)\qvoronoi.o:   qhull.h user.h mem.h ../VCell/include/VCELL/VoronoiRidge.h
+$(OBJDIR)\qhull.o:  $(HFILES)
+$(OBJDIR)\geom.o:   $(HFILES)
+$(OBJDIR)\geom2.o:  $(HFILES)
+$(OBJDIR)\global.o: $(HFILES)
+$(OBJDIR)\io.o:     $(HFILES)
+$(OBJDIR)\mem.o:    mem.h 
+$(OBJDIR)\merge.o:  $(HFILES)
+$(OBJDIR)\poly.o:   $(HFILES)
+$(OBJDIR)\poly2.o:  $(HFILES)
+$(OBJDIR)\qset.o:   qset.h mem.h 
+$(OBJDIR)\stat.o:   $(HFILES)
+$(OBJDIR)\user.o:   $(HFILES)
+
+.c.o:
+	$(CC) $(CCOPTS1) $<
+
+clean:
+	rm *.o ${TARGET}
+
+$(TARGET): $(OBJS)
+	$(LIBTOOL) $@ $(OBJS)
+	ranlib $@
+
+depend:
+	makedepend -Y -f Makefile.linux -- $(CCOPTS1) -- *.c *.cpp
+
+# end of Makefile

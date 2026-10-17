@@ -1,0 +1,25 @@
+CC= g++
+
+# Compilation options
+CPPOPTIONS = -c -O2 -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -I../linux -I../libsrc
+
+.SUFFIXES: o.cpp
+SRCLIB = libnetcdf_cxx.a
+
+#
+.cpp.o :
+	$(CC) $(CPPOPTIONS) $<
+
+default all: $(SRCLIB)
+
+OBJS = ncvalues.o netcdf.o
+
+
+$(SRCLIB) : $(OBJS)
+	ar cru $@ $(OBJS)
+	ranlib $@
+ 
+#
+clean:
+	rm $(SRCLIB)
+	rm $(OBJS)

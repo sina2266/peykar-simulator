@@ -1,0 +1,37 @@
+# vcell-chombo builds with Homebrew GCC on macOS, not Apple Clang.
+#
+# Chombo ships compiler definitions for GNU, Intel, IBM, PGI and others, but
+# none for Clang (chombo/lib/mk/compiler/). Under Clang it falls back to bare
+# defaults and loses the -C that Make.defs.GNU adds to the Fortran preprocessor
+# step -- without which the preprocessor eats Fortran's // concatenation
+# operator. The historical VCell macOS build used MacPorts GCC for the same
+# reason.
+#
+# Chombo derives its compiler name as
+#   cxxname = $(notdir $(firstword $(subst -, ,$(CXX))))
+# so Homebrew's /usr/local/bin/g++-13 correctly reduces to "g++" and matches its
+# GNU rules. Verified on the runners rather than assumed.
+#
+# Note that Conan Center publishes no macOS binaries for a GCC profile, so
+# every dependency is compiled from source here. That is the price of the above
+# and is why the CI job runs with messaging off, which avoids OpenSSL.
+#
+# Version pinned to 13 to match conan-profiles/CI-CD/Linux-AMD64_profile.txt;
+# the runners also carry 14, 15 and 16.
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.version=13
+compiler.libcxx=libstdc++11
+compiler.cppstd=20
+os=Macos
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators.
+tools.cmake.cmaketoolchain:generator=Ninja
+
+[options]
+fPIC=True
+shared=False

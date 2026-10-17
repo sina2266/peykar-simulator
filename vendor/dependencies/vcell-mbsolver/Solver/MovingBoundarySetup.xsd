@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MovingBoundarySetup" type="MovingBoundarySetupType">
+    <xs:annotation>
+      <xs:documentation>
+	  Virtual Cell Moving Boundary Solver input schema
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="specialFrontType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:any processContents="lax"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="xLimitsType">
+    <xs:all>
+      <xs:element type="xs:float" name="low"/>
+      <xs:element type="xs:float" name="high"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="yLimitsType">
+    <xs:all>
+      <xs:element type="xs:float" name="low"/>
+      <xs:element type="xs:float" name="high"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="problemType">
+    <xs:all>
+      <xs:element type="specialFrontType" name="specialFront" minOccurs="0"/>
+      <xs:element type="xLimitsType" name="xLimits"/>
+      <xs:element type="yLimitsType" name="yLimits"/>
+      <xs:element type="xs:short" name="numNodesX"/>
+      <xs:element type="xs:short" name="numNodesY"/>
+      <xs:element type="xs:byte" name="frontToNodeRatio"/>
+      <xs:element type="xs:float" name="maxTime"/>
+      <xs:element type="xs:float" name="timeStep"/>
+      <xs:element type="xs:float" name="diffusionConstant"/>
+      <xs:element type="xs:string" name="levelFunction"/>
+      <xs:element type="xs:string" name="advectVelocityFunctionX"/>
+      <xs:element type="xs:string" name="advectVelocityFunctionY"/>
+      <xs:element type="xs:string" name="frontVelocityFunctionX"/>
+      <xs:element type="xs:string" name="frontVelocityFunctionY"/>
+      <xs:element type="xs:string" name="concentrationFunction"/>
+      <xs:element type="xs:boolean" name="hardTime" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="annotationType">
+    <xs:all>
+      <xs:element type="xs:string" name="series"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="timeReportType">
+    <xs:all>
+      <xs:element type="xs:float" name="startTime"/>
+  <xs:complexType>
+	  <xs:choice>
+		  <xs:element type="xs:short" name="step"/>
+		  <xs:element type="xs:float" name="interval"/>
+		  <xs:element type="xs:float" name="quiet"/>
+	  </xs:choice>
+  </xs:complexType>
+	  <xs:choice>
+    <xs:all>
+  <xs:complexType>
+  </xs:complexType>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="reportType">
+    <xs:sequence>
+      <xs:element type="xs:byte" name="deleteExisting" minOccurs="0"/>
+      <xs:element type="xs:string" name="outputFilename"/>
+      <xs:element type="xs:short" name="datasetName" minOccurs="0"/>
+      <xs:element type="annotationType" name="annotation" minOccurs="0"/>
+      <xs:element type="xs:byte" name="numberReports" minOccurs="0"/>
+	  <xs:element type="timeReportType" name="timeReport"  maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="keysetType">
+    <xs:all>
+      <xs:element type="xs:string" name="key"/>
+      <xs:element type="xs:boolean" name="enabled"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="traceType">
+    <xs:sequence>
+      <xs:element name="level">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="fatal"/>
+            <xs:enumeration value="warn"/>
+            <xs:enumeration value="info"/>
+            <xs:enumeration value="debug"/>
+            <xs:enumeration value="trace"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="traceFilename"/>
+      <xs:element type="keysetType" name="keyset" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MovingBoundarySetupType">
+    <xs:all>
+      <xs:element type="problemType" name="problem"/>
+      <xs:element type="reportType" name="report"/>
+      <xs:element type="traceType" name="trace"/>
+    </xs:all>
+  </xs:complexType>
+</xs:schema>

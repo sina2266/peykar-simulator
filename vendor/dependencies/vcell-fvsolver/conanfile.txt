@@ -1,0 +1,16 @@
+[requires]
+hdf5/[~1.14.5]
+libaec/[~1.1.2]
+libzip/[~1.11.3]
+zlib/[~1.2.11]
+
+[options]
+hdf5/*:with_zlib=True
+
+[tool_requires]
+cmake/[~3.31.6]
+ninja/[~1.12.1]
+
+[generators]
+CMakeDeps
+CMakeToolchain

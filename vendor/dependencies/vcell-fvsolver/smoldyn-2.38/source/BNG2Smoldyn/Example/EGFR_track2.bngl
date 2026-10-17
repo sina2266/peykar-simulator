@@ -1,0 +1,81 @@
+begin model
+
+begin parameters
+	NA 			6.02e23 	# Avogadro’s number (molecues/mol)
+	f 			1			# Fraction of the cell to simulate
+	Vo 			f*1.0e-10 	# Extracellular volume=1/cell_density (L)
+
+	EGFR_tot	116
+	EGF_tot		50
+	
+	kp0			0.01
+	km0			0.09	
+	kp1			9.0e7/(NA*Vo) 	# ligand-monomer binding
+	km1			0.0			# ligand-monomer dissociation
+	kp2			0.00542			# 0:2 dimer on
+	km2			1.24				# 0:2 dimer off
+	kp3			0.00291			# 1:2 dimer on
+	km3			0.738				# 1:2 dimer off
+	kp4			0.00845			# 2:2 dimer on
+	km4			0.273				# 2:2 dimer off
+	
+	kp5			0.0733			#dimer phosphorylation
+	km5			0.13			#dimer dephosphorylation
+	kp6			0.0733	
+	km6			0.13	
+	km7			0.13
+
+end parameters
+
+begin molecule types
+	EGFR(ecto~t~e,L,Y1068~U~P,track~0~1~2)
+	EGF(R)
+end molecule types
+
+begin seed species
+	EGFR(ecto~t,L,Y1068~U,track~0)	EGFR_tot
+	EGFR(ecto~t,L,Y1068~U,track~1)	1
+	EGF(R!1).EGFR(ecto~e,L!1,Y1068~U,track~0)	EGF_tot
+	EGF(R!1).EGFR(ecto~e,L!1,Y1068~U,track~2)	EGF_tot
+end seed species
+
+begin reaction rules
+	# conformation change of EGFR
+	EGFR(ecto~t,Y1068~U) -> EGFR(ecto~e,Y1068~U)	kp0
+	EGFR(ecto~e,L,Y1068~U) -> EGFR(ecto~t,L,Y1068~U) km0
+	
+	# Ligand binding and unbinding
+#	EGFR(L) + EGF(R) <-> EGFR(L!1).EGF(R!1)	kp1, km1
+	
+	
+	# dimerazation of EGFR
+	EGFR(ecto~e,L) + EGFR(ecto~e,L) <-> EGFR(ecto~e!1,L).EGFR(ecto~e!1,L) kp2, km2
+	EGF(R!1).EGFR(ecto~e,L!1) + EGFR(ecto~e,L) <-> EGF(R!1).EGFR(ecto~e!2,L!1).EGFR(ecto~e!2,L) kp3, km3
+	EGF(R!1).EGFR(ecto~e,L!1) + EGF(R!2).EGFR(ecto~e,L!2) <-> EGF(R!1).EGFR(ecto~e!3,L!1).EGF(R!2).EGFR(ecto~e!3,L!2) kp4, km4
+	
+	# Phosphorylation and dephosphorylation
+	EGFR(ecto~e!1,Y1068~U).EGFR(ecto~e!1,Y1068~U) <-> EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~U) kp5, km5
+	EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~U) -> EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~P) kp6
+	EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~P) -> EGFR(ecto~e!1,Y1068~U).EGFR(ecto~e!1,Y1068~U) km6
+	EGFR(ecto~e,Y1068~P) -> EGFR(ecto~e,Y1068~U) km7
+	
+	# Phosphorylated dimeraztion
+#	EGFR(ecto~e,Y1068~P) + EGFR(ecto~e,Y1068~U) <-> EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~U) kp8, km8
+#	EGFR(ecto~e,Y1068~P) + EGFR(ecto~e,Y1068~P) <-> EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~P) kp9, km9
+	
+	
+end reaction rules
+
+begin observables
+	Molecules	RR	EGFR(ecto~e!1,Y1068~U).EGFR(ecto~e!1,Y1068~U)
+	Molecules	RRP	EGFR(ecto~e!1,Y1068~U).EGFR(ecto~e!1,Y1068~P)
+	Molecules	RPRP	EGFR(ecto~e!1,Y1068~P).EGFR(ecto~e!1,Y1068~P)
+	Molecules	EGFR_total	EGFR()	
+	Molecules track_1 EGFR(track~1)
+	Molecules track_2 EGFR(track~2)
+end observables
+
+end model
+
+#actions
+generate_network({overwrite=>1})

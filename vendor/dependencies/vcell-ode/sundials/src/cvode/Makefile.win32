@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:04 $
+# -----------------------------------------------------------------
+CC       = cl
+CFLAGS   = /EHsc /O2 /D_CRT_SECURE_NO_DEPRECATE
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+INCLUDES = -I.. -I..\..\include
+
+CVODE_LIB       = sundials_cvode.lib
+CVODE_OBJ_FILES = cvode.obj cvode_io.obj cvode_band.obj cvode_dense.obj cvode_diag.obj cvode_spils.obj cvode_spbcgs.obj cvode_spgmr.obj cvode_sptfqmr.obj cvode_bandpre.obj cvode_bbdpre.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(CVODE_LIB)
+
+$(CVODE_LIB): $(CVODE_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(CVODE_OBJ_FILES)
+	copy $@ $(LIBDIR)	
+
+clean:
+	del *.obj
+	del $(CVODE_LIB)

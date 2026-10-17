@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config
+    Name="Microsoft Visual C++ 2012"
+	ShortName = "MSVCPP110"
+    Manufacturer="Microsoft"
+    Version="11.0"
+    Language="C++"
+    Priority="B"
+    Location="$VSROOT" >
+    <Details
+        CompilerExecutable="$COMPILER"
+        CompilerDefines="$COMPDEFINES"
+        CompilerFlags="$COMPFLAGS"
+        OptimizationFlags="$OPTIMFLAGS"
+        DebugFlags="$DEBUGFLAGS"
+        IncludeFlags="$INCLUDE"
+        LinkerExecutable="$LINKER"
+        LinkerFlags="$LINKFLAGS"
+        LinkerLibraries="$LINKLIBS"
+        LinkerOptimizationFlags="$LINKOPTIMFLAGS"
+		LinkerDebugFlags="$LINKDEBUGFLAGS"
+        CommandLineShell="$VCVARSALLDIR\VCVARSALL.BAT "
+		CommandLineShellArg="amd64"
+        CompilerDefineFormatter="/D%s"
+        LinkerLibrarySwitchFormatter="lib%s.lib;%s.lib"
+        LinkerPathFormatter="/LIBPATH:%s"
+		LibrarySearchPath="$$LIB;$$LIBPATH;$$PATH;$$INCLUDE;$MATLABROOT\extern\lib\$ARCH\microsoft"
+    />
+    <!-- Switch guide: http://msdn.microsoft.com/en-us/library/fwkeyyhe(v=vs.71).aspx -->
+    <vars
+          CMDLINE100="$COMPILER /c $COMPFLAGS $OPTIM $SRC /Fo$OBJ"
+          CMDLINE200="$LINKER $LINKFLAGS $LINKTYPE $LINKOPTIM $LINKEXPORT $OBJS $LINKLIBS /out:$EXE"
+		  CMDLINE250="mt -outputresource:$EXE;2 -manifest $MANIFEST"
+          CMDLINE300="del $OBJ $EXP $LIB $MANIFEST $ILK"
+          
+          COMPILER="cl"
+          COMPFLAGS="/GR /W3 /EHs /nologo /MT $INCLUDE  $COMPDEFINES" 
+          COMPDEFINES="/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0  $MATLABMEX" 
+	  MATLABMEX=" /DMATLAB_MEX_FILE" 
+          OPTIMFLAGS="/O2 /Oy- /DNDEBUG"
+          INCLUDE="-I&quot;$MATLABROOT\extern\include&quot; -I&quot;$MATLABROOT\simulink\include&quot;"
+          DEBUGFLAGS="/Z7"
+          
+          LINKER="link"
+          LINKFLAGS=" /nologo  /manifest /incremental:NO"
+		  LINKTYPE="/DLL"
+          LINKEXPORT=" /EXPORT:mexFunction"
+          LINKLIBS="/LIBPATH:&quot;$MATLABROOT\extern\lib\$ARCH\microsoft&quot; libmx.lib libmex.lib libmat.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib"
+          LINKDEBUGFLAGS="/debug /PDB:&quot;$TEMPNAME$LDEXT.pdb&quot;"
+          LINKOPTIMFLAGS=""
+
+          OBJEXT=".obj"
+          LDEXT=".mexw64"
+		SETENV="set COMPILER=$COMPILER 
+				set COMPFLAGS=/c $COMPFLAGS $COMPDEFINES $MATLABMEX 
+				set OPTIMFLAGS=$OPTIMFLAGS 
+				set DEBUGFLAGS=$DEBUGFLAGS 
+				set LINKER=$LINKER 
+				set LINKFLAGS=$LINKFLAGS /export:%ENTRYPOINT% $LINKTYPE $LINKLIBS $LINKEXPORT 
+				set LINKDEBUGFLAGS=/debug /PDB:&quot;%OUTDIR%%MEX_NAME%$LDEXT.pdb&quot; 
+				set NAME_OUTPUT=/out:&quot;%OUTDIR%%MEX_NAME%%MEX_EXT%&quot;"
+    />
+    <client>
+		<engine
+		  CMDLINE250="mt -outputresource:$EXE;1 -manifest $MANIFEST"
+          LINKLIBS="$LINKLIBS libeng.lib"
+          LINKEXPORT=""
+          LDEXT=".exe" 
+		  LINKTYPE=""
+		  MATLABMEX=""
+		/>
+		<mbuild          
+          CMDLINE100="$COMPILER /c $COMPFLAGS $OPTIM $COMPDEFINES $INCLUDE $SRC /Fo$OBJ"
+          CMDLINE200="$LINKER $LINKFLAGS $LINKTYPE $LINKOPTIM $LINKEXPORT $OBJS $LINKLIBS /out:$EXE"
+          CMDLINE250="mt -outputresource:$EXE;1 -manifest $MANIFEST"
+          CMDLINE300="del $MANIFEST &quot;$TEMPNAME.map&quot; "
+          LINKFLAGS="/nologo /manifest"
+          LINKLIBS="/MACHINE:AMD64 /LIBPATH:&quot;$MATLABROOT\extern\lib\$ARCH\microsoft&quot; mclmcrrt.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib"
+          INCLUDE="-I&quot;$MATLABROOT\extern\include&quot; -I&quot;$MATLABROOT\extern\include\$ARCH&quot;"
+          COMPFLAGS="-MD -Zp8 -GR -W3 -EHsc- -Zc:wchar_t- -nologo"
+          COMPDEFINES="-DMSVC -DIBMPC /D_CRT_SECURE_NO_DEPRECATE"
+          OPTIMFLAGS="-O2 -DNDEBUG"
+          LINKEXPORT=""
+          LDEXT=".exe" 
+		  MATLABMEX=""
+		  LINKTYPE=""
+		  LINKDEBUGFLAGS="/debug /PDB:&quot;$TEMPNAME.pdb&quot;"
+		/>
+		<mbuild_com
+          CMDLINE000="copy &quot;$MATLABROOT\extern\include\$ARCH\mwcomutil.tlb&quot; ."
+          CMDLINE001="midl /nologo /$ARCH $COMPINCLUDE /D NDEBUG /out &quot;$OUTDIR&quot; mwcomtypes.idl"
+          CMDLINE002="midl /nologo /$ARCH $COMPINCLUDE /D NDEBUG /out &quot;$OUTDIR&quot; &quot;$COMIDL&quot;"
+          CMDLINE100="$COMPILER $COMPFLAGS $OPTIM $COMPDEFINES $INCLUDE $COMPINCLUDE $SRC /Fo$OBJ"
+          CMDLINE150="rc /fo &quot;$RESFILE&quot; &quot;$RCFILE&quot;"
+          CMDLINE250="mt -outputresource:$EXE;2 -manifest $MANIFEST"
+          CMDLINE275="&quot;$MATLABROOT\runtime\$ARCH\mwregsvr.exe&quot; $EXE"
+          CMDLINE300="del $MANIFEST mwcomutil.tlb &quot;$RESFILE&quot;"
+          
+		  OUTDIR="."
+          INCLUDE="$INCLUDE -I&quot;$OUTDIR&quot; -I&quot;$MATLABROOT\extern\include\$ARCH&quot;"
+          COMPFLAGS="/c /GR /W3 /EHsc- -Zc:wchar_t /nologo /MT"
+          COMPDEFINES="/DMSVC /DIBMPC /D_CRT_SECURE_NO_DEPRECATE /D_SECURE_SCL=0" 
+          COMPINCLUDE="-I&quot;$MATLABROOT\extern\include&quot;"
+
+          LINKEXPORT="/DLL /def:&quot;$DEFFILE&quot;"
+          LINKLIBS="/MACHINE:AMD64 $LINKLIBS mclmcrrt.lib &quot;$RESFILE&quot;"
+          LDEXT=".dll"
+          USERONLY=""
+		  LINKTYPE=""
+		  MATLABMEX=""
+          />
+    </client>
+    <locationFinder>
+		<VSROOT>
+            <and>
+                <or>
+                    <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                </or>
+                <fileExists name="$$\VC\bin\amd64\cl.exe" />
+                <dirExists name="$$\..\..\.." />
+            </and>
+		</VSROOT>
+		<SDKROOT>
+			<or>
+				<hklmExists path="SOFTWARE\Microsoft\Microsoft SDKs\Windows\v8.0" name="InstallationFolder" />
+				<hkcuExists path="SOFTWARE\Microsoft\Microsoft SDKs\Windows\v8.0" name="InstallationFolder" />
+				<hklmExists path="SOFTWARE\Wow6432Node\Microsoft\Microsoft SDKs\Windows\v8.0" name="InstallationFolder" />
+				<hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\Microsoft SDKs\Windows\v8.0" name="InstallationFolder" />
+			</or>
+		</SDKROOT>
+		<VSINSTALLDIR>
+			<or>
+				<hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+				<hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+				<hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+				<hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+			</or>
+		</VSINSTALLDIR>
+		<VCINSTALLDIR>
+			<or>
+				<hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VC7" name="11.0" />
+				<hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VC7" name="11.0" />
+				<hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VC7" name="11.0" />
+				<hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VC7" name="11.0" />
+			</or>
+		</VCINSTALLDIR>
+		<PROF_ENV>
+			<and>
+				<envVarExists name="VS110COMNTOOLS" />
+				<fileExists name="$$\..\IDE\devenv.exe" />
+			</and>
+		</PROF_ENV>
+		<VCVARSALLDIR>
+            <and>
+                <or>
+                    <hklmExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hkcuExists path="SOFTWARE\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hklmExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                    <hkcuExists path="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7" name="11.0" />
+                </or>
+                <fileExists name="$$\VC\vcvarsall.bat" />
+				<dirExists name="$$"/>
+            </and>
+    	</VCVARSALLDIR>
+    </locationFinder>
+    <env
+        PATH="$VSROOT\VC\Bin\amd64;$VSROOT\VC\Bin\VCPackages;$VSROOT\Common7\IDE;$VSROOT\Common7\Tools;$SDKROOT\Bin\x64;$SDKROOT\Bin;"
+        INCLUDE="$VSROOT\VC\INCLUDE;$SDKROOT\include\shared;$SDKROOT\include\um;$SDKROOT\include\winrt;;$MATLABROOT\extern\include"
+        LIB="$VSROOT\VC\Lib\amd64;$SDKROOT\Lib\X64;$SDKROOT\lib\win8\um\x64;$MATLABROOT\lib\$ARCH;$VSROOT\VC\ATLMFC\LIB\amd64"
+        LIBPATH="$VSROOT\VC\Lib\amd64;$VSROOT\VC\ATLMFC\LIB\amd64;$SDKROOT\lib\win8\um\x64;$MATLABROOT\extern\lib\win64;"
+    />
+</config>

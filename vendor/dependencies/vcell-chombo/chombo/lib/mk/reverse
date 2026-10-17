@@ -1,0 +1,19 @@
+#!/bin/sh
+
+###
+### Purpose: print the argument list in reverse order
+###
+### Was written for csh, which is not installed by default on modern Linux or
+### macOS; this is the same thing in POSIX sh.
+###
+
+result=
+for arg in "$@" ; do
+    if [ -z "$result" ] ; then
+        result=$arg
+    else
+        result="$arg $result"
+    fi
+done
+
+echo "$result"

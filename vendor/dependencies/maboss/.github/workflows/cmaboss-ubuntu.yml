@@ -1,0 +1,160 @@
+name: cMaBoSS Linux
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  cmaboss:
+    name: cMaBoSS
+    runs-on: ubuntu-22.04
+
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /usr/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/lib/x86_64-linux-gnu/libxml2.so
+      LIBXML_INCLUDEDIR: /usr/include/libxml2
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -yq python3-pip python3-setuptools
+        sudo pip3 install numpy pandas
+
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-gcc-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+        
+    - name: Build cMaBoSS
+      run: |
+        cd engine/src
+        make
+        cd ../python
+        cp -r ../src cmaboss
+        pip3 install .
+        cd ../..
+    
+    - name: Test cMaBoSS
+      run: bash scripts/run_cmaboss_tests.sh
+
+  build_wheels_linux:
+    name: Build linux wheels
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build: ["cp*-manylinux_x86_64", "pp*-manylinux_x86_64"]
+    needs: cmaboss
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' 
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel numpy twine
+
+      - name: Build wheels
+        env: 
+          CIBW_BUILD: ${{ matrix.build }}
+          CIBW_BEFORE_ALL: >
+            yum install wget libxml2-devel -y &&
+            CC=gcc CXX=g++ INSTALL_PATH=/usr/ BUILD_PATH=/tmp/ \
+              LIBXML_LIBDIR=/usr/lib64/libxml2.so \
+              LIBXML_INCLUDEDIR=/usr/include/libxml2 bash scripts/build_libsbml.sh &&
+            BUILD_PATH=/tmp/ bash scripts/install_libsbml.sh
+        run: |
+          cd engine/src
+          make grammars
+          cd ../../
+          cp -r engine/src engine/python/cmaboss/
+          python -m cibuildwheel --output-dir wheelhouse engine/python
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.build == 'cp*-manylinux_x86_64'
+        with:
+          name: wheels-cpython
+          path: wheelhouse/*.whl
+          
+      - uses: actions/upload-artifact@v4
+        if: matrix.build == 'pp*-manylinux_x86_64'
+        with:
+          name: wheels-pypy
+          path: wheelhouse/*.whl
+          
+      - name: Upload cMaBoSS to test Pypi
+        if: github.repository == 'vincent-noel/MaBoSS' && github.ref == 'refs/heads/master'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TEST_TOKEN }}
+        run: |
+          python -m twine upload --repository testpypi --skip-existing wheelhouse/cmaboss*
+          
+      - name: Upload cMaBoSS to Pypi
+        if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m twine upload --skip-existing wheelhouse/cmaboss*
+          
+  cmaboss_conda_defaults:
+    name: Build cMaBoSS Anaconda package
+    runs-on: ubuntu-22.04
+
+    needs: cmaboss
+
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/usr/share/miniconda"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/home/runner/miniconda3"}
+        ]
+        version: [{python: "3.8", numpy: "1.22"}, {python: "3.9", numpy: "1.22"}, {python: "3.10", numpy: "1.22"}, {python: "3.11", numpy: "1.23"}, {python: "3.12", numpy: "1.26"}]
+    
+    defaults:
+      run:
+        shell: bash -el {0}
+                
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+    
+    - name: Install conda-build
+      run: |
+        conda install conda-build anaconda-client conda-verify
+      
+    - name: Build cMaBoSS Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c colomoto --variants "{\"python\": [\"${{ matrix.version.python }}\"], \"numpy\": [\"${{ matrix.version.numpy }}\"]}" conda/cmaboss;
+     
+    - name: Upload cMaBoSS Ananconda package on vincent-noel
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/linux-64/*.tar.bz2 --force;
+
+    - name: Upload cMaBoSS Ananconda package on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/linux-64/*.tar.bz2 --force;

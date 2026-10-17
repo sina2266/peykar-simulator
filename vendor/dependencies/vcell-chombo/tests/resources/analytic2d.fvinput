@@ -1,0 +1,78 @@
+# 2D validation against a closed-form solution.
+#
+# The regression cases pin the solver against its own previous output, which
+# catches changes but cannot say the answers were ever right. This one checks
+# the solver against mathematics instead.
+#
+# On the unit square with u = 0 held on all four sides, pure diffusion with
+# D = 1 has the separable solution
+#
+#     u(x,y,t) = sin(pi x) sin(pi y) exp(-2 pi^2 t)
+#
+# since du/dt = -2 pi^2 u and D grad^2 u = -(pi^2 + pi^2) u. It is an
+# eigenfunction, so the profile decays in place without changing shape, and
+# 2 pi^2 = 19.739208802178716.
+#
+# A single subdomain covers the whole domain, so there is no embedded boundary
+# and no membrane condition to perturb the solution -- the analytic result then
+# holds exactly, and what remains is discretisation error.
+#
+# The time step is deliberately small. At a coarse dt the backward-Euler error
+# dominates, and it has the opposite sign to the error from an overstated
+# diffusion coefficient -- the two cancel, and a 5% error in D actually lowers
+# the measured deviation. Driving the time error down to the same order as the
+# spatial one removes that blind spot: a 2% error in D then shows up ten times
+# over.
+#
+# The solver evaluates the EXACT expression itself and records "max error" and
+# "relative L2 error" as HDF5 attributes; tests/CMakeLists.txt asserts on those.
+SIMULATION_PARAM_BEGIN
+SOLVER CHOMBO_SEMIIMPLICIT_SOLVER
+BASE_FILE_NAME SimID_analytic2d_0_
+TIME_INTERVALS 1
+0.01 0.0001 50
+STORE_ENABLE 1
+SIMULATION_PARAM_END
+
+MODEL_BEGIN
+FEATURE cyt 0 value value value value
+MODEL_END
+
+CHOMBO_SPEC_BEGIN
+DIMENSION 2
+MESH_SIZE 32 32
+DOMAIN_SIZE 1.0 1.0
+DOMAIN_ORIGIN 0.0 0.0
+SUBDOMAINS 1
+cyt 0
+IF -1.0;
+USER 1.0;
+REFINEMENTS 1 1
+MAX_BOX_SIZE 32
+BLOCK_FACTOR 8
+FILL_RATIO 0.9
+RELATIVE_TOLERANCE 1.0E-11
+VIEW_LEVEL 0
+SAVE_VCELL_OUTPUT true
+SAVE_CHOMBO_OUTPUT false
+CHOMBO_SPEC_END
+
+VARIABLE_BEGIN
+VOLUME_PDE U cyt false false false
+VARIABLE_END
+
+COMPARTMENT_BEGIN cyt
+BOUNDARY_CONDITIONS value value value value
+EQUATION_BEGIN U
+INITIAL (sin((3.141592653589793 * x)) * sin((3.141592653589793 * y)));
+EXACT (sin((3.141592653589793 * x)) * sin((3.141592653589793 * y)) * exp( - (19.739208802178716 * t)));
+RATE 0.0;
+DIFFUSION 1.0;
+VELOCITY_X 0.0;
+VELOCITY_Y 0.0;
+BOUNDARY_XM 0.0;
+BOUNDARY_XP 0.0;
+BOUNDARY_YM 0.0;
+BOUNDARY_YP 0.0;
+EQUATION_END
+COMPARTMENT_END

@@ -14,6 +14,7 @@ from peykar.data_fabric.service import DatasetService
 from peykar.examples import bootstrap, demo
 from peykar.knowledge_gap_cli import knowledge_gap_app
 from peykar.model_import.cli import external_artifact_app
+from peykar.platform_cli import experiment_app, graph_app, library_app, runtime_app
 from peykar.simulation.service import SimulationService
 from peykar.simulation.worker import Worker
 from peykar.validation.service import EvaluationService
@@ -32,6 +33,10 @@ app.add_typer(external_artifact_app, name="external-artifacts")
 app.add_typer(compucell_app, name="compucell")
 app.add_typer(knowledge_gap_app, name="knowledge-gaps")
 app.add_typer(vcornea_app, name="vcornea")
+app.add_typer(library_app, name="libraries")
+app.add_typer(graph_app, name="biology")
+app.add_typer(experiment_app, name="experiments")
+app.add_typer(runtime_app, name="runtimes")
 
 
 def local_service() -> SimulationService:

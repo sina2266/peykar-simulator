@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C456A2E-FBB5-44DA-B0D2-FE76C49FCD06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>1.8.1</Version>
+    <Copyright>(c) 2014-2019 Jean-Michel Perraud and others see https://github.com/jmp75/rdotnet/blob/master/License.txt</Copyright>
+    <Description>A .NET interoperability library to access the R statistical language runtime from .NET languages. The library is designed for fast data exchange, in process.</Description>
+    <!-- <Product>R.NET</Product> -->
+    <Company />
+    <Authors>Jean-Michel Perraud, Kosei, and contributors</Authors>
+    <!-- <PackageId>R.NET</PackageId>
+    <Title>R.NET: Access R from .NET in process</Title> -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/jmp75/rdotnet</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/jmp75/rdotnet</PackageProjectUrl>
+    <PackageReleaseNotes>Migration to .NET Standard 2.0, support for R 3.5.x, and moving to an MIT license</PackageReleaseNotes>
+    <PackageTags>interop R statistical language</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="xunit" Version="2.8.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\R.NET\RDotNet.csproj" />
+    <ProjectReference Include="..\RDotNet.TestBase\RDotNet.TestBase.csproj" />
+  </ItemGroup>
+</Project>

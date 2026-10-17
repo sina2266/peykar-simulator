@@ -1,0 +1,24 @@
+# vcell-hy3s is a Fortran project, so it is built with GCC. Clang has no
+# Fortran compiler, and gfortran's runtime is built against libstdc++, so the
+# libc++ toolchain the ODE solver repo uses is not an option here either.
+#
+# Only libcurl comes from Conan, and only when messaging is enabled. NetCDF is
+# vendored: Conan Center publishes the C library alone, with no Fortran module
+# and no netcdf-fortran recipe, and Hy3S does `USE netcdf`. See README.md.
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.version=13
+compiler.libcxx=libstdc++11
+compiler.cppstd=20
+os=Linux
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators.
+tools.cmake.cmaketoolchain:generator=Ninja
+
+[options]
+fPIC=True
+shared=False

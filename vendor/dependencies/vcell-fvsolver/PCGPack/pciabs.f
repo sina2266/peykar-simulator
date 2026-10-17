@@ -1,0 +1,9 @@
+      SUBROUTINEPCIABS(N,IV)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN,IV(*)
+      INTEGERI
+      DO1I=1,N
+      IV(I)=ABS(IV(I))
+1     CONTINUE
+      RETURN
+      END

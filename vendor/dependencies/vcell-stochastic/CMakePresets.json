@@ -1,0 +1,143 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "14",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "BUILD_SHARED_LIBS": "OFF",
+        "OPTION_TARGET_MESSAGING": "OFF",
+        "OPTION_BUILD_PYTHON_BINDINGS": "OFF"
+      }
+    },
+    {
+      "name": "linux-ninja",
+      "inherits": "ninja-base",
+      "displayName": "Linux / Ninja",
+      "description": "Build the core project on Linux with Ninja"
+    },
+    {
+      "name": "macos-ninja",
+      "inherits": "ninja-base",
+      "displayName": "macOS / Ninja",
+      "description": "Build the core project on macOS with Ninja"
+    },
+    {
+      "name": "windows-msvc",
+      "inherits": "ninja-base",
+      "displayName": "Windows / MSVC",
+      "description": "Build the core project on Windows using MSVC and Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "windows-msvc-hdf5",
+      "inherits": "windows-msvc",
+      "displayName": "Windows / MSVC / HDF5",
+      "description": "Windows build with explicit HDF5 environment variables",
+      "cacheVariables": {
+        "HDF5_ROOT": "$env{HDF5_ROOT}",
+        "HDF5_DIR": "$env{HDF5_DIR}"
+      }
+    },
+    {
+      "name": "windows-msvc-vcpkg-parquet",
+      "inherits": "windows-msvc",
+      "displayName": "Windows / MSVC / Parquet (vcpkg)",
+      "description": "Windows build with Apache Arrow and Parquet from vcpkg at c:\\vcpkg",
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "c:\\vcpkg\\installed\\x64-windows",
+        "OPTION_USE_PARQUET": "ON",
+        "OPTION_TARGET_MESSAGING": "OFF"
+      }
+    },
+    {
+      "name": "linux-ninja-vcpkg-parquet",
+      "inherits": "linux-ninja",
+      "displayName": "Linux / Ninja / Parquet (vcpkg)",
+      "description": "Linux build with Apache Arrow and Parquet from vcpkg",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/cmake/vcpkg.cmake",
+        "OPTION_USE_PARQUET": "ON"
+      }
+    },
+    {
+      "name": "macos-ninja-vcpkg-parquet",
+      "inherits": "macos-ninja",
+      "displayName": "macOS / Ninja / Parquet (vcpkg)",
+      "description": "macOS build with Apache Arrow and Parquet from vcpkg",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/cmake/vcpkg.cmake",
+        "OPTION_USE_PARQUET": "ON"
+      }
+    },
+    {
+      "name": "windows-msvc-pybind",
+      "inherits": "windows-msvc-hdf5",
+      "displayName": "Windows / MSVC / Python bindings",
+      "description": "Windows build with optional Python bindings enabled",
+      "cacheVariables": {
+        "OPTION_BUILD_PYTHON_BINDINGS": "ON"
+      }
+    },
+    {
+      "name": "linux-ninja-pybind",
+      "inherits": "linux-ninja",
+      "displayName": "Linux / Ninja / Python bindings",
+      "description": "Linux build with optional Python bindings enabled",
+      "cacheVariables": {
+        "OPTION_BUILD_PYTHON_BINDINGS": "ON"
+      }
+    },
+    {
+      "name": "macos-ninja-pybind",
+      "inherits": "macos-ninja",
+      "displayName": "macOS / Ninja / Python bindings",
+      "description": "macOS build with optional Python bindings enabled",
+      "cacheVariables": {
+        "OPTION_BUILD_PYTHON_BINDINGS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-ninja",
+      "configurePreset": "linux-ninja"
+    },
+    {
+      "name": "macos-ninja",
+      "configurePreset": "macos-ninja"
+    },
+    {
+      "name": "windows-msvc",
+      "configurePreset": "windows-msvc"
+    },
+    {
+      "name": "windows-msvc-hdf5",
+      "configurePreset": "windows-msvc-hdf5"
+    },
+    {
+      "name": "windows-msvc-pybind",
+      "configurePreset": "windows-msvc-pybind"
+    },
+    {
+      "name": "linux-ninja-pybind",
+      "configurePreset": "linux-ninja-pybind"
+    },
+    {
+      "name": "macos-ninja-pybind",
+      "configurePreset": "macos-ninja-pybind"
+    }
+  ]
+}

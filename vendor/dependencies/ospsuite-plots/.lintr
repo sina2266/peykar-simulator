@@ -1,0 +1,19 @@
+linters: linters = linters_with_defaults(
+    object_name_linter = NULL,
+    line_length_linter = NULL,
+    object_length_linter = NULL,
+    brace_linter = NULL,
+    paren_body_linter = NULL,
+    trailing_whitespace_linter = NULL,
+    trailing_blank_lines_linter = NULL,
+    spaces_left_parentheses_linter = NULL,
+    infix_spaces_linter = NULL,
+    vector_logic_linter = NULL,
+    indentation_linter = NULL,
+    unreachable_code_linter = unreachable_code_linter(),
+    return_linter = NULL,
+    object_name_linter(styles = c("camelCase", "symbols","dotted.case"))  # allow dotted case as it i very common in ggplot2
+  )
+exclusions: list(
+  "inst/doc")
+encoding: "UTF-8"

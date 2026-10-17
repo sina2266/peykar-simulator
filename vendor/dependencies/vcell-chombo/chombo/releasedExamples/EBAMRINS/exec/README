@@ -1,0 +1,34 @@
+This is an application to solve the incompressible Navier-Stokes
+equations in complex geometries.  
+In the input file you might want change 
+#number of steps
+max_step  	      = 1000
+#time
+max_time              = 100.0
+
+#viscosity  of the fluid
+viscosity             = 1.0
+#maximum amr level number
+max_level	      = 0
+
+
+#number of cells at the coarsest level
+n_cell                =  128 64 64
+
+#what the geometry is.  See src/AMRINSUtils.cpp for options.
+###geometry flag
+## 0 is all regular
+which_geom = 0
+
+## 5 is a sphere
+which_geom = 5
+## 15 is a half sphere
+#which_geom = 15
+
+sphere_radius = 0.25
+sphere_center = 1.0 0.5 0.5
+cutplane_normal = 1.0 0.0 0.0
+
+
+
+

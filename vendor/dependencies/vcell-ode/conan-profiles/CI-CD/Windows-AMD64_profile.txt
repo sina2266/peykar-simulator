@@ -1,0 +1,30 @@
+[settings]
+os=Windows
+arch=x86_64
+build_type=Release
+compiler=clang
+compiler.runtime=static
+compiler.cppstd=20
+compiler.version=21
+# This picks the Visual Studio install that VCVars looks for. For compiler=clang
+# Conan maps runtime_version -> VS IDE version itself (_vcvars_versions in
+# conan/tools/microsoft/visual.py): v143/v144 -> VS 17, v145 -> VS 18. The
+# `windows-latest` image is now windows-2025-vs2026, which ships only VS 18
+# (MSVC 14.51), so v143 failed with "VS non-existing installation: Visual
+# Studio 17". windows-11-arm has since moved to VS 18 as well, so the ARM64 profile
+# uses v145 too. Revisit both if the runner images change again.
+compiler.runtime_version=v145
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.cmake.cmaketoolchain:extra_variables={"CMAKE_FIND_PACKAGE_PREFER_CONFIG": "ON"}
+tools.env.virtualenv:powershell=pwsh
+# Inert for compiler=clang — vs_ide_version() only consults this when
+# compiler=msvc. Kept for the msvc path; it does NOT drive the lookup above.
+tools.microsoft.msbuild:vs_version=17
+tools.build:cflags=["-w"]
+tools.build:cxxflags=["-w"]
+
+[buildenv]
+CC=clang-cl
+CXX=clang-cl

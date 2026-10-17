@@ -1,0 +1,17 @@
+name: Weekly R CMD check (latest R)
+
+# Canary check against the latest released R, run weekly so that a new R
+# release breaking the shipped binaries is caught early rather than by users.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      build-binary: false

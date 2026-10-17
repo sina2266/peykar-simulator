@@ -1,0 +1,126 @@
+<SimulationTask xmlns="http://sourceforge.net/projects/vcell/vcml" TaskId="0" JobIndex="0" isPowerUser="false">
+  <MathDescription Name="stoch_generated">
+    <Constant Name="_F_">96485.3321</Constant>
+    <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+    <Constant Name="_K_GHK_">1.0E-9</Constant>
+    <Constant Name="_N_pmol_">6.02214179E11</Constant>
+    <Constant Name="_PI_">3.141592653589793</Constant>
+    <Constant Name="_R_">8314.46261815</Constant>
+    <Constant Name="_T_">300.0</Constant>
+    <Constant Name="A_diffusionRate">0.1</Constant>
+    <Constant Name="A_init_molecules_um_2">0.1</Constant>
+    <Constant Name="AreaPerUnitArea_CM">1.0</Constant>
+    <Constant Name="B_diffusionRate">0.1</Constant>
+    <Constant Name="B_init_molecules_um_2">0.0</Constant>
+    <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+    <Constant Name="Kf">1.0</Constant>
+    <Constant Name="KMOLE">0.001660538783162726</Constant>
+    <Constant Name="Kr">1.0</Constant>
+    <Constant Name="netValence">1.0</Constant>
+    <Constant Name="Size_CM">1414.0</Constant>
+    <Constant Name="Size_EC">50000.0</Constant>
+    <Constant Name="Size_IC">5000.0</Constant>
+    <Constant Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(1.0 * pow(KMOLE,-1.0))</Constant>
+    <Constant Name="Voltage_CM">0.0</Constant>
+    <Constant Name="VolumePerUnitVolume_EC">1.0</Constant>
+    <Constant Name="VolumePerUnitVolume_IC">1.0</Constant>
+    <MembraneParticleVariable Name="A" Domain="EC_IC_membrane" />
+    <MembraneParticleVariable Name="B" Domain="EC_IC_membrane" />
+    <CompartmentSubDomain Name="IC">
+      <BoundaryType Boundary="Xm" Type="Flux" />
+      <BoundaryType Boundary="Xp" Type="Flux" />
+      <BoundaryType Boundary="Ym" Type="Flux" />
+      <BoundaryType Boundary="Yp" Type="Flux" />
+      <BoundaryType Boundary="Zm" Type="Flux" />
+      <BoundaryType Boundary="Zp" Type="Flux" />
+    </CompartmentSubDomain>
+    <CompartmentSubDomain Name="EC">
+      <BoundaryType Boundary="Xm" Type="Flux" />
+      <BoundaryType Boundary="Xp" Type="Flux" />
+      <BoundaryType Boundary="Ym" Type="Flux" />
+      <BoundaryType Boundary="Yp" Type="Flux" />
+      <BoundaryType Boundary="Zm" Type="Flux" />
+      <BoundaryType Boundary="Zp" Type="Flux" />
+    </CompartmentSubDomain>
+    <MembraneSubDomain Name="EC_IC_membrane" InsideCompartment="IC" OutsideCompartment="EC">
+      <BoundaryType Boundary="Xm" Type="Value" />
+      <BoundaryType Boundary="Xp" Type="Value" />
+      <BoundaryType Boundary="Ym" Type="Value" />
+      <BoundaryType Boundary="Yp" Type="Value" />
+      <BoundaryType Boundary="Zm" Type="Value" />
+      <BoundaryType Boundary="Zp" Type="Value" />
+      <ParticleProperties Name="A">
+        <ParticleInitialConcentration>
+          <ParticleDistribution>A_init_molecules_um_2</ParticleDistribution>
+        </ParticleInitialConcentration>
+        <ParticleDiffusion>A_diffusionRate</ParticleDiffusion>
+      </ParticleProperties>
+      <ParticleProperties Name="B">
+        <ParticleInitialConcentration>
+          <ParticleDistribution>B_init_molecules_um_2</ParticleDistribution>
+        </ParticleInitialConcentration>
+        <ParticleDiffusion>B_diffusionRate</ParticleDiffusion>
+      </ParticleProperties>
+      <ParticleJumpProcess Name="r0">
+        <SelectedParticle Name="A" />
+        <MacroscopicRateConstant>Kf</MacroscopicRateConstant>
+        <Effect VarName="A" Operation="destroy" />
+        <Effect VarName="B" Operation="create" />
+      </ParticleJumpProcess>
+      <ParticleJumpProcess Name="r0_reverse">
+        <SelectedParticle Name="B" />
+        <MacroscopicRateConstant>Kr</MacroscopicRateConstant>
+        <Effect VarName="A" Operation="create" />
+        <Effect VarName="B" Operation="destroy" />
+      </ParticleJumpProcess>
+    </MembraneSubDomain>
+    <Version Name="stoch_generated" KeyValue="92705436" BranchId="92705437" Archived="0" Date="26-Nov-2014 17:41:37" FromVersionable="false">
+      <Owner Name="sayak66" Identifier="90737158" />
+      <GroupAccess Type="1" />
+    </Version>
+  </MathDescription>
+  <Simulation Name="Simulation0">
+    <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Smoldyn (Spatial Stochastic Simulator)">
+      <TimeBound StartTime="0.0" EndTime="10.0" />
+      <TimeStep DefaultTime="0.01" MinTime="1.0E-4" MaxTime="1.0E-4" />
+      <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+      <OutputOptions OutputTimeStep="0.05" />
+      <SmoldynSimulationOptions>
+        <Accuracy>10.0</Accuracy>
+        <HighResolutionSample>true</HighResolutionSample>
+        <saveParticleFiles>false</saveParticleFiles>
+        <gaussianTableSize>4096</gaussianTableSize>
+        <SmoldynStepMultiplier>1</SmoldynStepMultiplier>
+      </SmoldynSimulationOptions>
+      <NumberProcessors>1</NumberProcessors>
+    </SolverTaskDescription>
+    <MathOverrides />
+    <MeshSpecification>
+      <Size X="51" Y="51" Z="51" />
+    </MeshSpecification>
+    <Version Name="temp simulation" KeyValue="1371782956" BranchId="1" Archived="1" Date="28-Mar-2025 13:09:36" FromVersionable="false">
+      <Owner Name="temp" Identifier="123" />
+      <GroupAccess Type="1" />
+    </Version>
+  </Simulation>
+  <Geometry Name="3DLEGIStoch_Sayak" Dimension="3">
+    <Extent X="5.0" Y="5.0" Z="5.0" />
+    <Origin X="0.0" Y="0.0" Z="0.0" />
+    <SubVolume Name="IC" Handle="1" Type="Analytical" KeyValue="92705429">
+      <AnalyticExpression>(((( - 2.5 + x) * ( - 2.5 + x)) + (( - 2.5 + y) * ( - 2.5 + y)) + (( - 2.5 + z) * ( - 2.5 + z))) &lt; 2.0)</AnalyticExpression>
+    </SubVolume>
+    <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="92705430">
+      <AnalyticExpression>1.0</AnalyticExpression>
+    </SubVolume>
+    <SurfaceClass Name="EC_IC_membrane" SubVolume1Ref="EC" SubVolume2Ref="IC" KeyValue="92705431" />
+    <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+      <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="113.17887499999999" Unit="um3" />
+      <VolumeRegion Name="IC1" RegionID="1" SubVolume="IC" Size="11.821125" Unit="um3" />
+      <MembraneRegion Name="membrane_EC0_IC1" VolumeRegion1="IC1" VolumeRegion2="EC0" Size="25.03574790171551" Unit="um2" />
+    </SurfaceDescription>
+    <Version Name="3DLEGIStoch_Sayak" KeyValue="92705426" BranchId="90772362" Archived="0" Date="26-Nov-2014 17:41:37" FromVersionable="false">
+      <Owner Name="sayak66" Identifier="90737158" />
+      <GroupAccess Type="1" />
+    </Version>
+  </Geometry>
+</SimulationTask>

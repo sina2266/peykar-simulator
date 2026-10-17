@@ -1,0 +1,46 @@
+#
+#Fortran compiler
+FC= ifort
+
+# Compilation options  .... removed /names:lowercase
+FOPTIONS = -I../../netcdf-3.6.2/f90
+DEFMILSTEIN = -DMILSTEIN
+DEFADAPTIVE = -DADAPTIVE
+
+LIBS = ../../netcdf-3.6.2/f90/libnetcdf_f90.a ../../netcdf-3.6.2/fortran/libnetcdf_for.a ../../netcdf-3.6.2/libsrc/libnetcdf.a 
+
+.SUFFIXES: obj.f90
+
+#
+# Source File Names
+#
+SOURCE  =  f2kcli.f90 \
+		globalvariables.f90 \
+		ratelaws.f90 \
+		dataio.f90 \
+		randomgen.f90 \
+		priorityqueue.f90 \
+		specialevents.f90 \
+		SDEintegration.f90 \
+		propagators-HyJCMSS.f90 \
+		mainprogram-HyJCMSS.f90
+
+default all: Hybrid_EM Hybrid_MIL Hybrid_MIL_Adaptive
+
+Hybrid_EM: $(SOURCE) $(LIBS)
+	$(FC) -o $@ $(FOPTIONS) $(SOURCE) $(LIBS) 
+	
+Hybrid_MIL: $(SOURCE) $(LIBS)
+	$(FC) -o $@ $(FOPTIONS) $(DEFMILSTEIN) $(SOURCE) $(LIBS)
+
+Hybrid_MIL_Adaptive: $(SOURCE) $(LIBS)
+	$(FC) -o $@ $(FOPTIONS) $(DEFADAPTIVE) $(DEFMILSTEIN) $(SOURCE) $(LIBS)
+	
+clean:
+	rm Hybrid_EM Hybrid_MIL Hybrid_MIL_Adaptive
+	rm *.o *.mod
+	
+depend:
+	makedepend -f Makefile.linux -- $(FOPTIONS) -- *.c *.cpp
+	
+# 

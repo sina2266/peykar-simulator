@@ -1,0 +1,203 @@
+---
+title: "User guide"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(rSharp)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # The examples below call into .NET. When no runtime is available (for example
+  # on CRAN or R-universe build machines without .NET) the code is shown but not
+  # executed, so the vignette still builds.
+  eval = dotnetAvailable()
+)
+```
+
+The `{rSharp}` package is a low-level interoperability bridge between R and 
+the .NET runtime. It offers access to .NET libraries from R, allowing to create .NET objects, access their fields, and call their methods.
+
+`{rSharp}` uses R's native interface to C++ which then calls the .NET runtime. 
+To make working with .NET objects intuitive, `{rSharp}` utilizes the R6 
+object-oriented approach. This article will guide you through the basic usage of 
+the package, starting from loading an assembly to calling methods and accessing fields.
+
+## Data type conversion
+
+### Basic data types
+`{rSharp}` allows to call public and static methods implemented in .NET assemblies and 
+to pass data to these methods. In return, calls will often result in some data being returned.
+
+Where there is an obvious and natural conversion between R and .NET data types, 
+R values can be easily passed as is, and the return value can be interpreted as a 
+native R type. Most of the basic modes in R (`character`,`numeric`,`integer`, `logical`, and their vectors) 
+have equivalents in .NET.
+
+### Object pointers and the `NetObject` class
+
+It is common that .NET method returns another object that can not be directly
+converted to a native R type. In such cases, the method returns an external 
+pointer to the .NET object. The `NetObject` class is used to represent such
+pointers in R. The `NetObject` class is an R6 object that wraps the external
+pointer and provides methods to interact with the .NET object with semantics 
+familiar for the object-oriented programming. In most cases, the user would prefer 
+to interact with these objects through the `NetObject`. If, for any reason, 
+the user needs to access the raw pointer, it can be done by accessing the field 
+`$pointer` of the R6 object.
+
+`NetObject` instances can be passed to .NET methods as arguments. If a method expects an array of .NET objects, all objects within the R list must be instances of `NetObject`. Mixed lists of native R types and `NetObject` instances are not supported. Furthermore, the type of the array will be interpreted as `Object[]`.
+
+## Loading an assembly
+
+To start working with a .NET assembly, you need to load it into the R session. This is done using the `rSharp::loadAssembly` function. In this example, we will use the library `rSharp.Examples.dll` 
+provided with this package.
+
+```{r}
+library(rSharp)
+assembly <- loadAssembly(system.file("extdata", "rSharp.Examples.dll", package = "rSharp"))
+```
+
+We can get the list of all loaded assemblies using the `getLoadedAssemblies` function:
+
+```{r}
+getLoadedAssemblies()
+# Check if a specific assembly is loaded
+isAssemblyLoaded("rSharp.Examples")
+```
+
+## Working with static members
+
+Static members of a .NET class can be accessed without creating an instance of the class.
+
+The `rSharp.Examples` library implements a class `SampleStaticClass` with different static members.
+To get an overview of the available static members of a class, you can use the `getStaticMembers` function:
+
+```{r}
+getStaticMembers("rSharp.Examples.SampleStaticClass")
+```
+To explore the methods, fields, and properties of a class separately, you can use the `getStaticMethods`, `getStaticFields`, and `getStaticProperties` functions, respectively.
+
+To call static methods of a .NET class, you can use the `rSharp::callStatic` function.
+If you are not sure which arguments are expected by a certain method, you can use the `getStaticMemberSignature` function to get the method's signature:
+
+```{r}
+# Get the signature of the GetAString method
+getStaticMemberSignature("rSharp.Examples.SampleStaticClass", "GetAString")
+# Get the signature of the Add method
+getStaticMemberSignature("rSharp.Examples.SampleStaticClass", "Add")
+```
+The method `GetAString` returns a string and does not have any arguments, so we can call it using the `callStatic` function:
+
+```{r}
+rSharp::callStatic("rSharp.Examples.SampleStaticClass", "GetAString")
+```
+
+If the method has arguments, they can be passed as additional arguments to the `callStatic` function,
+as in this case of calling the static function `Add()` that requires two integers as arguments:
+
+```{r}
+rSharp::callStatic("rSharp.Examples.SampleStaticClass", "Add", as.integer(1), as.integer(2))
+```
+Mind that we had to explicitly cast the arguments to integer, as all numeric values in R are double by default.
+
+We can also access static fields of a class using the `getStatic` and `setStatic` functions:
+
+```{r}
+# Get the value of the static field
+getStatic("rSharp.Examples.SampleStaticClass", "StaticString")
+```
+This static string is returned by the method `GetAString` we called earlier. We can
+set the value of the static field and would expect it to be returned by the `GetAString` method:
+
+```{r}
+# Set the value of the static field
+setStatic("rSharp.Examples.SampleStaticClass", "StaticString", "New value")
+# Get the value of the static field
+getStatic("rSharp.Examples.SampleStaticClass", "StaticString")
+# Call the GetAString method
+callStatic("rSharp.Examples.SampleStaticClass", "GetAString")
+```
+## Working with objects
+
+So far, we were passing basic data types as arguments and receiving basic data types as return values. However, in many cases, we would need to work with .NET objects. For example,
+the method `GetInstanceObject` returns an instance of the `SampleInstanceClass` class. 
+`rSharp` wraps such objects in the `NetObject` class:
+
+```{r}
+# Call the SampleInstanceClass method
+instance <- callStatic("rSharp.Examples.SampleStaticClass", "GetInstanceObject")
+
+# Check the class of the returned object
+class(instance)
+
+# Get the type of the object
+instance$type
+```
+The R6 class `NetObject` holds the pointer to the .NET object and provides methods to interact with it. Thus, the constructor of `NetObject` requires an external pointer to a .NET object. The pointer can be
+created by calling the `newPointerFromName` function. Is the constructor of the
+.NET class requires arguments, they can be passed as additional arguments to the `newPointerFromName` function.
+We can examine the constructors of a class with the `getConstructors` function:
+
+```{r}
+getConstructors("rSharp.Examples.SampleInstanceClass")
+```
+The `SampleInstanceClass` has six different constructor signature. We can create
+a new pointer to an instance of the class by calling the constructor with two double arguments and
+create a `NetObject` using the pointer:
+
+```{r}
+# Create a pointer to a .NET object
+pointer <- newPointerFromName("rSharp.Examples.SampleInstanceClass", as.double(1), as.double(2))
+# Wrap the pointer in a new NetObject
+newInstance <- NetObject$new(pointer)
+```
+
+The more conventient way of creating a `NetObject` for a new object is by calling 
+the `newObjectFromName` function:
+
+```{r}
+# Create a new instance of the SampleInstanceClass
+newInstance2 <- newObjectFromName("rSharp.Examples.SampleInstanceClass", as.integer(1))
+```
+As with static classes, we can examine the methods, fields, and properties of an object using the `getMethods`, `getFields`, and `getProperties` methods called on the object, respectively.
+
+```{r}
+# Get the methods of the object
+newInstance$getMethods()
+# Get the fields of the object
+newInstance$getFields()
+# Get the properties of the object
+newInstance$getProperties()
+```
+A non-static class can also have static members, which can be listed using the `getStatic...` functions:
+
+```{r}
+newInstance$getStaticFields()
+```
+
+Setting and getting non-static fields and properties of an object 
+is done using the `set` and `get` methods, respectively:
+
+```{r}
+# Get the value of the static field:
+newInstance$get("FieldDoubleOne")
+# Change the value of the static field:
+newInstance$set("FieldDoubleOne", 23)
+# Get the value of the static field:
+newInstance$get("FieldDoubleOne")
+```
+
+To get or set static fields, use the functions `getStatic` and `setStatic`.
+
+Finally, we can call the methods of the object using the `call` method:
+
+```{r}
+# Call the Add method
+newInstance$call("GetAString")
+```

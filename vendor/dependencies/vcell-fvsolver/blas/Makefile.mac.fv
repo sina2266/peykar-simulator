@@ -1,0 +1,23 @@
+FCC = gfortran
+FOPT     = -O2 -static -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+
+FFLAGS   = ${FOPT} ${SFOPT}
+
+LIBRARY  = libblas.a
+
+# Source File Names
+
+FBLAS  =  dnrm2.o daxpy.o ddot.o  dcopy.o dscal.o idamax.o  dswap.o
+
+blas:    ${LIBRARY}
+
+${LIBRARY}: ${FBLAS}
+	ar rv ${LIBRARY} *.o
+	ranlib ${LIBRARY}
+
+${FBLAS}:
+	$(FCC) $(FFLAGS) -c $*.f
+
+clean :
+	rm *.o $(LIBRARY)
+

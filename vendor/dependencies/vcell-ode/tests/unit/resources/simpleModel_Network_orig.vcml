@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Rel_Version_7.6.0_build_27-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Rel_Version_7.6.0_build_27">
+  <BioModel Name="simpleModel_Network_orig">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Feature Name="c0" KeyValue="95705071" />
+      <LocalizedCompound Name="s0" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="95705073" />
+      <LocalizedCompound Name="s1" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="95705074" />
+      <LocalizedCompound Name="s2" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="95705075" />
+      <LocalizedCompound Name="s3" CompoundRef="s3" Structure="c0" OverrideName="true" KeyValue="95705076" />
+      <LocalizedCompound Name="s4" CompoundRef="s4" Structure="c0" OverrideName="true" KeyValue="95705077" />
+      <SimpleReaction Structure="c0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="95705078">
+        <Reactant LocalizedCompoundRef="s0" Stoichiometry="1" KeyValue="95705079" />
+        <Reactant LocalizedCompoundRef="s2" Stoichiometry="1" KeyValue="95705080" />
+        <Product LocalizedCompoundRef="s1" Stoichiometry="1" KeyValue="95705081" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * s0) * s2) - (Kr * s1))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="95705082">
+        <Reactant LocalizedCompoundRef="s3" Stoichiometry="1" KeyValue="95705083" />
+        <Product LocalizedCompoundRef="s4" Stoichiometry="1" KeyValue="95705084" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * s3) - (Kr * s4))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0" LocationX="79" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="201" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="206" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s4" LocationX="276" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s3" LocationX="137" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s1" LocationX="323" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s2" LocationX="89" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s0" LocationX="79" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="201" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="206" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s4" LocationX="276" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s3" LocationX="137" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s1" LocationX="323" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s2" LocationX="89" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s0" LocationX="79" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="201" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="206" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s4" LocationX="276" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s3" LocationX="137" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s1" LocationX="323" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s2" LocationX="89" LocationY="164" />
+      </Diagram>
+      <Version Name="model" KeyValue="95705063" BranchId="95705064" Archived="0" Date="06-Aug-2015 13:27:29" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="ode" Stochastic="false" UseConcentration="true" SpringSaLaD="false" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial420951543" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95705043" />
+        <Version Name="non-spatial420951543" KeyValue="95705039" BranchId="95705040" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="0.5">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s4" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r0">1.0</Constant>
+        <Constant Name="Kf_r1">0.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_r0">2.0</Constant>
+        <Constant Name="Kr_r1">0.0</Constant>
+        <Constant Name="s0_init_uM">2.0</Constant>
+        <Constant Name="s1_init_uM">3.0</Constant>
+        <Constant Name="s2_init_uM">4.0</Constant>
+        <Constant Name="s3_init_uM">0.0</Constant>
+        <Constant Name="s4_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">0.5</Constant>
+        <VolumeVariable Name="s2" Domain="Compartment" />
+        <VolumeVariable Name="s4" Domain="Compartment" />
+        <Function Name="J_r0" Domain="Compartment">(((Kf_r0 * s0) * s2) - (Kr_r0 * s1))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf_r1 * s3) - (Kr_r1 * s4))</Function>
+        <Function Name="K_s0_total" Domain="Compartment">((Size_c0 * s0_init_uM) - (Size_c0 * s2_init_uM))</Function>
+        <Function Name="K_s1_total" Domain="Compartment">((Size_c0 * s1_init_uM) + (Size_c0 * s2_init_uM))</Function>
+        <Function Name="K_s3_total" Domain="Compartment">((Size_c0 * s3_init_uM) + (Size_c0 * s4_init_uM))</Function>
+        <Function Name="s0" Domain="Compartment">((K_s0_total + (Size_c0 * s2)) / Size_c0)</Function>
+        <Function Name="s1" Domain="Compartment">((K_s1_total - (Size_c0 * s2)) / Size_c0)</Function>
+        <Function Name="s3" Domain="Compartment">((K_s3_total - (Size_c0 * s4)) / Size_c0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s2" SolutionType="Unknown">
+            <Rate>- J_r0</Rate>
+            <Initial>s2_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s4" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Initial>s4_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="95705054" BranchId="95705055" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimes="0.0,1.0E-5,1.0E-4,0.001,0.01,0.1,0.5,1.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="273319284" BranchId="95705120" Archived="0" Date="28-Jul-2024 22:26:56" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="ode" KeyValue="95705086" BranchId="95705087" Archived="0" Date="06-Aug-2015 13:27:29" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="ssa" Stochastic="true" UseConcentration="true" RandomizeInitCondition="false" SpringSaLaD="false" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial543061392" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95705048" />
+        <Version Name="non-spatial543061392" KeyValue="95705044" BranchId="95705045" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="0.5">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s4" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application1_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Kf_r0">1.0</Constant>
+        <Constant Name="Kf_r1">0.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_r0">2.0</Constant>
+        <Constant Name="Kr_r1">0.0</Constant>
+        <Constant Name="s0_Count_init_uM">2.0</Constant>
+        <Constant Name="s1_Count_init_uM">3.0</Constant>
+        <Constant Name="s2_Count_init_uM">4.0</Constant>
+        <Constant Name="s3_Count_init_uM">0.0</Constant>
+        <Constant Name="s4_Count_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">0.5</Constant>
+        <Constant Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(1.0 * pow(KMOLE, - 1.0))</Constant>
+        <Constant Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 * pow(KMOLE,1.0))</Constant>
+        <StochasticVolumeVariable Name="s0_Count" />
+        <StochasticVolumeVariable Name="s1_Count" />
+        <StochasticVolumeVariable Name="s2_Count" />
+        <StochasticVolumeVariable Name="s3_Count" />
+        <StochasticVolumeVariable Name="s4_Count" />
+        <Function Name="J_r0" Domain="Compartment">(((Kf_r0 * s0) * s2) - (Kr_r0 * s1))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf_r1 * s3) - (Kr_r1 * s4))</Function>
+        <Function Name="P_r0_probabilityRate" Domain="Compartment">(Kf_r0 * s0_Count * s2_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_r0_reverse_probabilityRate" Domain="Compartment">(Kr_r0 * s1_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_r1_probabilityRate" Domain="Compartment">(Kf_r1 * s3_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_r1_reverse_probabilityRate" Domain="Compartment">(Kr_r1 * s4_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="s0" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s0_Count) / Size_c0)</Function>
+        <Function Name="s0_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s0_Count_init_uM)</Function>
+        <Function Name="s1" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s1_Count) / Size_c0)</Function>
+        <Function Name="s1_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s1_Count_init_uM)</Function>
+        <Function Name="s2" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s2_Count) / Size_c0)</Function>
+        <Function Name="s2_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s2_Count_init_uM)</Function>
+        <Function Name="s3" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s3_Count) / Size_c0)</Function>
+        <Function Name="s3_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s3_Count_init_uM)</Function>
+        <Function Name="s4" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s4_Count) / Size_c0)</Function>
+        <Function Name="s4_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s4_Count_init_uM)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <VariableInitialCount Name="s0_Count">s0_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s1_Count">s1_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s2_Count">s2_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s3_Count">s3_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s4_Count">s4_Count_initCount</VariableInitialCount>
+          <JumpProcess Name="r0">
+            <ProbabilityRate>P_r0_probabilityRate</ProbabilityRate>
+            <Effect VarName="s0_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s2_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s1_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_reverse">
+            <ProbabilityRate>P_r0_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s0_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s2_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s1_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1">
+            <ProbabilityRate>P_r1_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_reverse">
+            <ProbabilityRate>P_r1_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+        </CompartmentSubDomain>
+        <Version Name="Application1_generated" KeyValue="273069631" BranchId="95705058" Archived="0" Date="24-Jul-2024 14:13:10" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="273069655" BranchId="95705123" Archived="0" Date="24-Jul-2024 14:13:11" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="ssa" KeyValue="273069635" BranchId="95705098" Archived="0" Date="24-Jul-2024 14:13:10" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="nfsim" Stochastic="false" UseConcentration="true" SpringSaLaD="false" RuleBased="true" RandomizeInitCondition="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial831033503" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95705053" />
+        <Version Name="non-spatial831033503" KeyValue="95705049" BranchId="95705050" Archived="0" Date="06-Aug-2015 13:27:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="0.5">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s4" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application2_generated">
+        <ParticleMolecularType Name="MT0" />
+        <ParticleMolecularType Name="MT1" />
+        <ParticleMolecularType Name="MT2" />
+        <ParticleMolecularType Name="MT3" />
+        <ParticleMolecularType Name="MT4" />
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Kf_r00">1.0</Constant>
+        <Constant Name="Kf_r10">0.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_r00">2.0</Constant>
+        <Constant Name="Kr_r10">0.0</Constant>
+        <Constant Name="s0_Count_init_uM">2.0</Constant>
+        <Constant Name="s1_Count_init_uM">3.0</Constant>
+        <Constant Name="s2_Count_init_uM">4.0</Constant>
+        <Constant Name="s3_Count_init_uM">0.0</Constant>
+        <Constant Name="s4_Count_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">0.5</Constant>
+        <Constant Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(1.0 * pow(KMOLE, - 1.0))</Constant>
+        <Constant Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 * pow(KMOLE,1.0))</Constant>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern0" Domain="Compartment">
+          <MolecularType Name="MT0" MatchLabel="*" />
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern1" Domain="Compartment">
+          <MolecularType Name="MT1" MatchLabel="*" />
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern2" Domain="Compartment">
+          <MolecularType Name="MT2" MatchLabel="*" />
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern3" Domain="Compartment">
+          <MolecularType Name="MT3" MatchLabel="*" />
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern4" Domain="Compartment">
+          <MolecularType Name="MT4" MatchLabel="*" />
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleObservable Name="O0_MT0_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_MT1_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_MT2_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern2" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_MT3_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern3" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_MT4_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern4" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="s0_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="s1_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="s2_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern2" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="s3_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern3" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="s4_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern4" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <Function Name="O0_MT0_tot" Domain="Compartment">((O0_MT0_tot_Count * UnitFactor_uM_um3_molecules_neg_1) / Size_c0)</Function>
+        <Function Name="O0_MT1_tot" Domain="Compartment">((O0_MT1_tot_Count * UnitFactor_uM_um3_molecules_neg_1) / Size_c0)</Function>
+        <Function Name="O0_MT2_tot" Domain="Compartment">((O0_MT2_tot_Count * UnitFactor_uM_um3_molecules_neg_1) / Size_c0)</Function>
+        <Function Name="O0_MT3_tot" Domain="Compartment">((O0_MT3_tot_Count * UnitFactor_uM_um3_molecules_neg_1) / Size_c0)</Function>
+        <Function Name="O0_MT4_tot" Domain="Compartment">((O0_MT4_tot_Count * UnitFactor_uM_um3_molecules_neg_1) / Size_c0)</Function>
+        <Function Name="P_r00_probabilityRate" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * Kf_r00) / Size_c0)</Function>
+        <Function Name="P_r00_reverse_probabilityRate" Domain="Compartment">Kr_r00</Function>
+        <Function Name="P_r10_probabilityRate" Domain="Compartment">Kf_r10</Function>
+        <Function Name="P_r10_reverse_probabilityRate" Domain="Compartment">Kr_r10</Function>
+        <Function Name="s0" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s0_Count) / Size_c0)</Function>
+        <Function Name="s0_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s0_Count_init_uM)</Function>
+        <Function Name="s1" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s1_Count) / Size_c0)</Function>
+        <Function Name="s1_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s1_Count_init_uM)</Function>
+        <Function Name="s2" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s2_Count) / Size_c0)</Function>
+        <Function Name="s2_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s2_Count_init_uM)</Function>
+        <Function Name="s3" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s3_Count) / Size_c0)</Function>
+        <Function Name="s3_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s3_Count_init_uM)</Function>
+        <Function Name="s4" Domain="Compartment">((UnitFactor_uM_um3_molecules_neg_1 * s4_Count) / Size_c0)</Function>
+        <Function Name="s4_Count_initCount" Domain="Compartment">(UnitFactor_molecules_uM_neg_1_um_neg_3 * Size_c0 * s4_Count_init_uM)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <ParticleJumpProcess Name="r00" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern0" />
+            <SelectedParticle Name="speciesPattern2" />
+            <MacroscopicRateConstant>P_r00_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern0" Operation="destroy" />
+            <Effect VarName="speciesPattern2" Operation="destroy" />
+            <Effect VarName="speciesPattern1" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r00_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern1" />
+            <MacroscopicRateConstant>P_r00_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern0" Operation="create" />
+            <Effect VarName="speciesPattern2" Operation="create" />
+            <Effect VarName="speciesPattern1" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r10" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern3" />
+            <MacroscopicRateConstant>P_r10_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="destroy" />
+            <Effect VarName="speciesPattern4" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r10_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern4" />
+            <MacroscopicRateConstant>P_r10_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="create" />
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleProperties Name="speciesPattern0">
+            <ParticleInitialCount>
+              <ParticleCount>s0_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern1">
+            <ParticleInitialCount>
+              <ParticleCount>s1_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern2">
+            <ParticleInitialCount>
+              <ParticleCount>s2_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern3">
+            <ParticleInitialCount>
+              <ParticleCount>s3_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern4">
+            <ParticleInitialCount>
+              <ParticleCount>s4_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+        </CompartmentSubDomain>
+        <Version Name="Application2_generated" KeyValue="273319272" BranchId="95705061" Archived="0" Date="28-Jul-2024 22:26:56" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="NFSim">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NFSimSimulationOptions>
+            <ObservableComputationOff>true</ObservableComputationOff>
+            <PreventIntraBonds>false</PreventIntraBonds>
+            <AggregateBookkeeping>true</AggregateBookkeeping>
+            <MatchComplexes>true</MatchComplexes>
+            <MoleculeDistance>1000</MoleculeDistance>
+            <NumOfTrials>1</NumOfTrials>
+          </NFSimSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="273069657" BranchId="95705126" Archived="0" Date="24-Jul-2024 14:13:11" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="nfsim" KeyValue="273319274" BranchId="95705109" Archived="0" Date="28-Jul-2024 22:26:56" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="simpleModel_Network_orig" KeyValue="273319286" BranchId="95705129" Archived="0" Date="28-Jul-2024 22:26:56" FromVersionable="false">
+      <Owner Name="schaff" Identifier="17" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

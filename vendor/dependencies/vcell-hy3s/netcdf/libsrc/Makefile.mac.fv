@@ -1,0 +1,36 @@
+CC= gcc
+
+# Compilation options
+COPTIONS = -c -O2 -fexceptions -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -I../linux -I. -DHAVE_CONFIG_H 
+
+SRCLIB = libnetcdf.a
+
+#
+%.o : %.c
+	$(CC) $(COPTIONS) $<
+
+default all: $(SRCLIB)
+
+OBJS = attr.o \
+	dim.o \
+	error.o \
+	libvers.o \
+	nc.o \
+	ncx.o \
+	posixio.o \
+	putget.o \
+	string.o \
+	v1hpg.o \
+	v2i.o \
+	var.o 
+
+$(SRCLIB) : $(OBJS)
+	ar cru $@ $(OBJS)
+	ranlib $@
+ 
+#
+clean:
+	rm $(SRCLIB) $(OBJS)
+
+depend:
+	makedepend -f Makefile.linux -- $(COPTIONS) -- *.c *.cpp

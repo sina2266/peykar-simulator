@@ -1,0 +1,29 @@
+# -*- Mode: Makefile; Modified: "Fri 29 Jul 2005 15:14:39 by dbs"; -*-
+
+CXX=CC
+FC=gfortran
+MPICXX=CC
+USE_64=TRUE
+
+CH_CPP=$(CXX) -E
+
+cxxoptflags += -O2 -w
+foptflags += -O3
+flibflags += -lgfortran 
+
+# IN some configuration, the pgf libs may be needed for linking parallel HDF5
+# -L/opt/pgi/default/linux86-64/default/lib 
+
+# The appropriate 'module' must be loaded for this to work.
+## dtg: relevant stuff from my .cshrc.ext
+## module swap PrgEnv-pgi PrgEnv-gnu
+## module load hdf5-parallel
+## setenv USE_EB TRUE
+
+#/opt/cray/hdf5-parallel/1.8.5.0
+HDF5_DIR = /opt/cray/hdf5-parallel/1.8.5.0/hdf5-parallel-gnu
+USE_HDF=TRUE
+HDFLIBFLAGS=   -L$(HDF5_DIR)/lib     $(HDF_POST_LINK_OPTS) -DH5_USE_16_API -lhdf5 -lz
+HDFMPILIBFLAGS=-L$(HDF5_DIR)/lib     $(HDF_POST_LINK_OPTS) -DH5_USE_16_API -lhdf5 -lz
+HDFINCFLAGS=   -I$(HDF5_DIR)/include $(HDF_INCLUDE_OPTS) -DH5_USE_16_API
+HDFMPIINCFLAGS=-I$(HDF5_DIR)/include $(HDF_INCLUDE_OPTS) -DH5_USE_16_API

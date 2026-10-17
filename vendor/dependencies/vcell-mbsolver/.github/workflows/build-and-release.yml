@@ -1,0 +1,541 @@
+name: Build and Release
+
+# Builds MovingBoundary_x64 for every platform VCell ships, packages it the way
+# VCell consumes it (SOLVER-RELEASE in README.md; VCell docs/plan-solver-repos.md §1),
+# smoke-tests every archive, the container image and the SIF against a committed
+# reference output, and — on a v* tag only — publishes:
+#
+#   GitHub release   linux64.tgz linux64arm.tgz mac64.tgz win64.zip SHA256SUMS
+#   image            ghcr.io/virtualcell/vcell-mbsolver:<X.Y.Z> and :latest (amd64 + arm64)
+#   SIF              oras://ghcr.io/virtualcell/vcell-mbsolver_singularity:<X.Y.Z> and :latest (amd64)
+#
+# Pull requests and pushes to main build and test everything; nothing is published.
+# Python wheels are a separate workflow (wheels.yml).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: build-and-release-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+permissions:
+  contents: read
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-mbsolver
+  SIF: ghcr.io/virtualcell/vcell-mbsolver_singularity
+  SMOKE_INPUT: SimID_254696951_0_mb.xml
+  SMOKE_OUTPUT: SimID_254696951_0_.h5
+  # Tolerance of the reference comparison (smoke/compare.py): max|diff| <= atol + rtol*max|ref|.
+  SMOKE_RTOL: '1e-6'
+  SMOKE_ATOL: '1e-12'
+
+jobs:
+  version:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          version="$(sed -n 's/^project(VCellMovingBoundary VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "CMake project version: ${version}"
+          if [[ "${GITHUB_REF}" == refs/tags/* && "${GITHUB_REF_NAME}" != "v${version}" ]]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match the CMake project version v${version}"
+            exit 1
+          fi
+
+  # ---------------------------------------------------------------------------
+  # Linux: manylinux_2_28 (glibc 2.28), HDF5 + libcurl static, messaging ON.
+  # ---------------------------------------------------------------------------
+  linux:
+    name: linux (${{ matrix.arch }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            runner: ubuntu-24.04
+            asset: linux64.tgz
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
+            asset: linux64arm.tgz
+    runs-on: ${{ matrix.runner }}
+    container: quay.io/pypa/manylinux_2_28_${{ matrix.arch }}
+    env:
+      PY: /opt/python/cp312-cp312/bin/python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0   # tags, for GIT_DESCRIBE (the version the solver reports)
+
+      - name: Tools
+        run: dnf install -y bzip2 xz binutils
+
+      - name: Cache static dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: deps-linux-${{ matrix.arch }}-${{ hashFiles('packaging/build-deps.sh') }}
+
+      - name: Build static dependencies (Boost headers, HDF5, libcurl)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: WITH_CURL=1 packaging/build-deps.sh deps
+
+      - name: Configure
+        run: |
+          deps="$PWD/deps"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON -DMB_BUILD_PYTHON=OFF \
+            -DMB_HDF5_CONFIG=ON -DCMAKE_PREFIX_PATH="$deps" \
+            -DBOOST_INCLUDEDIR="$deps/include" -DBoost_NO_SYSTEM_PATHS=ON \
+            -DCURL_NO_CURL_CMAKE=ON -DCURL_INCLUDE_DIR="$deps/include" -DCURL_LIBRARY="$deps/lib/libcurl.a"
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Unit tests
+        run: cd build && ctest --output-on-failure -j"$(nproc)"
+
+      - name: Package
+        run: packaging/package-unix.sh build/bin/MovingBoundarySolver "dist/${{ matrix.asset }}"
+
+      - name: Smoke — the archive reproduces the reference, with -tid and messaging
+        run: |
+          set -eux
+          "$PY" -m pip install --quiet h5py numpy
+          pkg="$RUNNER_TEMP/pkg"; mkdir -p "$pkg"; tar -xzf "dist/${{ matrix.asset }}" -C "$pkg"
+          "$pkg/MovingBoundary_x64" --help > /dev/null
+          # plain run, as the desktop client launches it
+          work="$RUNNER_TEMP/plain"
+          "$PY" smoke/prepare.py "$work" --output-dir "$work"
+          "$pkg/MovingBoundary_x64" --config "$work/$SMOKE_INPUT" > "$work/stdout.txt"
+          "$PY" smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          # HPC form: a <jms> block and -tid, reporting to a stand-in broker
+          work="$RUNNER_TEMP/messaging"
+          "$PY" smoke/fake_broker.py 18165 "$RUNNER_TEMP/broker.log" & broker=$!
+          "$PY" smoke/fake_broker.py --wait 18165
+          "$PY" smoke/prepare.py "$work" --output-dir "$work" --broker 127.0.0.1:18165
+          "$pkg/MovingBoundary_x64" --config "$work/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+          kill "$broker"
+          "$PY" smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          head -3 "$RUNNER_TEMP/broker.log"
+          grep -q 'WorkerEvent_Status=999' "$RUNNER_TEMP/broker.log"    # JOB_STARTING
+          grep -q 'WorkerEvent_Status=1003' "$RUNNER_TEMP/broker.log"   # JOB_COMPLETED
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: dist/${{ matrix.asset }}
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # macOS: one thin build per architecture, then lipo into a universal binary.
+  # HDF5 static; libcurl is the system one (/usr/lib/libcurl.4.dylib).
+  # ---------------------------------------------------------------------------
+  macos:
+    name: macos (${{ matrix.arch }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+          - arch: x86_64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '13.3'   # std::format of floating point (vcell-messaging) needs 13.3
+      CMAKE_OSX_ARCHITECTURES: ${{ matrix.arch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0   # tags, for GIT_DESCRIBE (the version the solver reports)
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache static dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: deps-macos-${{ matrix.arch }}-${{ env.MACOSX_DEPLOYMENT_TARGET }}-${{ hashFiles('packaging/build-deps.sh') }}
+
+      - name: Build static dependencies (Boost headers, HDF5)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: packaging/build-deps.sh deps
+
+      - name: Configure
+        run: |
+          deps="$PWD/deps"; sdk="$(xcrun --show-sdk-path)"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} \
+            -DOPTION_TARGET_MESSAGING=ON -DMB_BUILD_PYTHON=OFF \
+            -DMB_HDF5_CONFIG=ON -DCMAKE_PREFIX_PATH="$deps" \
+            -DBOOST_INCLUDEDIR="$deps/include" -DBoost_NO_SYSTEM_PATHS=ON \
+            -DCURL_NO_CURL_CMAKE=ON -DCURL_INCLUDE_DIR="$sdk/usr/include" -DCURL_LIBRARY="$sdk/usr/lib/libcurl.tbd"
+
+      - name: Build
+        run: cmake --build build --parallel "$(sysctl -n hw.ncpu)"
+
+      - name: Unit tests
+        run: cd build && ctest --output-on-failure -j"$(sysctl -n hw.ncpu)"
+
+      - name: Check portability
+        run: packaging/check-portable.sh build/bin/MovingBoundarySolver
+
+      - name: Smoke — the thin binary reproduces the reference, with -tid and messaging
+        run: |
+          set -eux
+          python -m pip install --quiet h5py numpy
+          exe="$PWD/build/bin/MovingBoundarySolver"
+          work="$RUNNER_TEMP/plain"
+          python smoke/prepare.py "$work" --output-dir "$work"
+          "$exe" --config "$work/$SMOKE_INPUT" > "$work/stdout.txt"
+          python smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          work="$RUNNER_TEMP/messaging"
+          python smoke/fake_broker.py 18165 "$RUNNER_TEMP/broker.log" & broker=$!
+          python smoke/fake_broker.py --wait 18165
+          python smoke/prepare.py "$work" --output-dir "$work" --broker 127.0.0.1:18165
+          "$exe" --config "$work/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+          kill "$broker"
+          python smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          grep -q 'WorkerEvent_Status=999' "$RUNNER_TEMP/broker.log"
+          grep -q 'WorkerEvent_Status=1003' "$RUNNER_TEMP/broker.log"
+
+      - name: Stage the thin binary
+        run: mkdir -p thin && cp build/bin/MovingBoundarySolver thin/MovingBoundarySolver-${{ matrix.arch }} && tar -cf thin-${{ matrix.arch }}.tar thin
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-thin-${{ matrix.arch }}
+          path: thin-${{ matrix.arch }}.tar
+          if-no-files-found: error
+          retention-days: 3
+
+  macos-universal:
+    name: macos (universal)
+    needs: macos
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: macos-thin-*
+          merge-multiple: true
+
+      - name: lipo, ad-hoc sign, package
+        run: |
+          set -eux
+          for a in arm64 x86_64; do tar -xf "thin-$a.tar"; done
+          lipo -create thin/MovingBoundarySolver-arm64 thin/MovingBoundarySolver-x86_64 -output MovingBoundarySolver
+          codesign --force --sign - MovingBoundarySolver
+          codesign --verify --verbose MovingBoundarySolver
+          test "$(lipo -archs MovingBoundarySolver | tr ' ' '\n' | sort | tr '\n' ' ')" = "arm64 x86_64 "
+          packaging/package-unix.sh MovingBoundarySolver dist/mac64.tgz
+
+      - name: Smoke — both slices of the universal binary
+        run: |
+          set -eux
+          python -m pip install --quiet h5py numpy
+          pkg="$RUNNER_TEMP/pkg"; mkdir -p "$pkg"; tar -xzf dist/mac64.tgz -C "$pkg"
+          slices="arm64"
+          if arch -x86_64 /usr/bin/true 2>/dev/null; then slices="arm64 x86_64"; else echo "::notice::no Rosetta on this runner; the x86_64 slice was smoke-tested in its own job"; fi
+          for a in $slices; do
+            work="$RUNNER_TEMP/$a"
+            python smoke/prepare.py "$work" --output-dir "$work"
+            arch "-$a" "$pkg/MovingBoundary_x64" --config "$work/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+            python smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac64.tgz
+          path: dist/mac64.tgz
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # Windows: MSVC + vcpkg (x64-windows), the vcpkg DLLs and the MSVC runtime
+  # bundled next to the exe. Messaging OFF (the desktop client never passes -tid).
+  # ---------------------------------------------------------------------------
+  windows:
+    needs: version
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0   # tags, for GIT_DESCRIBE (the version the solver reports)
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache vcpkg artifacts
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_installed
+          key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: vcpkg-${{ runner.os }}-
+
+      - name: Install Windows system prerequisites
+        shell: pwsh
+        run: choco install strawberryperl -y
+
+      - name: Install vcpkg dependencies
+        shell: pwsh
+        run: |
+          $vcpkgRoot = if ($env:VCPKG_INSTALLATION_ROOT -and (Test-Path (Join-Path $env:VCPKG_INSTALLATION_ROOT 'vcpkg.exe'))) {
+            $env:VCPKG_INSTALLATION_ROOT
+          } elseif (Test-Path 'C:\vcpkg\vcpkg.exe') {
+            'C:\vcpkg'
+          } else {
+            throw 'vcpkg.exe not found on the runner'
+          }
+          Set-Location "$env:GITHUB_WORKSPACE"
+          & (Join-Path $vcpkgRoot 'vcpkg.exe') install --triplet x64-windows
+
+      - name: Configure, build, and test
+        shell: pwsh
+        run: .\build-windows.ps1 -SkipVcpkg -Test -Config Release
+
+      - name: Package
+        shell: bash
+        run: |
+          python -m pip install --quiet pefile h5py numpy
+          python packaging/bundle-windows.py build/bin/Release/MovingBoundarySolver.exe dist/win64.zip vcpkg_installed/x64-windows/bin
+
+      - name: Smoke — the archive reproduces the reference
+        shell: bash
+        run: |
+          set -eux
+          pkg="$RUNNER_TEMP/pkg"; mkdir -p "$pkg"
+          python -c "import zipfile,sys; zipfile.ZipFile('dist/win64.zip').extractall(sys.argv[1])" "$pkg"
+          work="$(cygpath -m "$RUNNER_TEMP")/plain"
+          python smoke/prepare.py "$work" --output-dir "$work"
+          # a clean PATH: only Windows itself, so a missing DLL in the archive fails here
+          PATH="/c/Windows/system32:/c/Windows" "$pkg/MovingBoundary_x64.exe" --config "$work/$SMOKE_INPUT" > "$work/stdout.txt"
+          python smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: win64.zip
+          path: dist/win64.zip
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # Container image + SIF, from the Linux archives (no compilation in Docker).
+  # ---------------------------------------------------------------------------
+  image:
+    needs: [version, linux]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: linux64*.tgz
+          path: dist
+          merge-multiple: true
+
+      - name: Unpack the Linux archives into the build context
+        run: |
+          mkdir -p dist/linux-amd64 dist/linux-arm64
+          tar -xzf dist/linux64.tgz -C dist/linux-amd64
+          tar -xzf dist/linux64arm.tgz -C dist/linux-arm64
+          ls -l dist/linux-*
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build (amd64, loaded)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          load: true
+          tags: vcell-mbsolver:ci
+
+      - name: Build (arm64, loaded)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/arm64
+          load: true
+          tags: vcell-mbsolver:ci-arm64
+
+      - name: Smoke — entrypoint contract
+        run: |
+          set -eux
+          docker run --rm vcell-mbsolver:ci | tee help.txt
+          grep -q "vcell-mbsolver ${{ needs.version.outputs.version }}" help.txt
+          grep -q MovingBoundary_x64 help.txt
+          docker run --rm vcell-mbsolver:ci --help > /dev/null
+          rc=0; docker run --rm vcell-mbsolver:ci not-a-solver || rc=$?
+          test "$rc" = 2
+          # the solver's own exit code passes through (4: neither --config nor --restore)
+          rc=0; docker run --rm vcell-mbsolver:ci MovingBoundary_x64 || rc=$?
+          test "$rc" = 4
+          docker run --rm --platform linux/arm64 vcell-mbsolver:ci-arm64 --help
+
+      - name: Smoke — Docker, any uid, read-only root, SlurmProxy argv
+        run: |
+          set -eux
+          python3 -m pip install --quiet h5py numpy
+          for tag in ci ci-arm64; do
+            work="$RUNNER_TEMP/docker-$tag"
+            python3 smoke/prepare.py "$work"; chmod 777 "$work"
+            docker run --rm --user 4321:4321 --read-only --tmpfs /tmp -v "$work:/simdata" "vcell-mbsolver:$tag" \
+              MovingBoundary_x64 --config "/simdata/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+            python3 smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          done
+
+      - name: Install Apptainer
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke — the SIF under --containall (non-root, messaging to a stand-in broker)
+        run: |
+          set -eux
+          sif="$RUNNER_TEMP/vcell-mbsolver.sif"
+          apptainer build "$sif" docker-daemon://vcell-mbsolver:ci
+          apptainer run --containall "$sif" --help
+          apptainer run --containall "$sif"
+          test "$(id -u)" != 0
+          work="$RUNNER_TEMP/sif"
+          python3 smoke/prepare.py "$work"
+          apptainer run --containall --bind "$work:/simdata" "$sif" \
+            MovingBoundary_x64 --config "/simdata/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+          python3 smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          work="$RUNNER_TEMP/sif-messaging"
+          python3 smoke/fake_broker.py 18165 "$RUNNER_TEMP/broker.log" & broker=$!
+          python3 smoke/fake_broker.py --wait 18165
+          python3 smoke/prepare.py "$work" --broker 127.0.0.1:18165
+          apptainer run --containall --bind "$work:/simdata" --env TMPDIR=/tmp "$sif" \
+            MovingBoundary_x64 --config "/simdata/$SMOKE_INPUT" -tid 0 > "$work/stdout.txt"
+          kill "$broker"
+          python3 smoke/compare.py smoke/reference.h5 "$work/$SMOKE_OUTPUT" --rtol "$SMOKE_RTOL" --atol "$SMOKE_ATOL"
+          grep -q 'WorkerEvent_Status=999' "$RUNNER_TEMP/broker.log"
+          grep -q 'WorkerEvent_Status=1003' "$RUNNER_TEMP/broker.log"
+          ls -lh "$sif"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcell-mbsolver-sif
+          path: ${{ runner.temp }}/vcell-mbsolver.sif
+          if-no-files-found: error
+          retention-days: 3
+
+  # ---------------------------------------------------------------------------
+  # Publish (v* tags only): release assets + SHA256SUMS, image, SIF.
+  # ---------------------------------------------------------------------------
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, linux, macos-universal, windows, image]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: assets
+          pattern: '*.[tz][gi][zp]'
+          merge-multiple: true
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: vcell-mbsolver-sif
+          path: sif
+
+      - name: Checksums
+        working-directory: assets
+        run: |
+          ls -l
+          for f in linux64.tgz linux64arm.tgz mac64.tgz win64.zip; do test -f "$f"; done
+          sha256sum linux64.tgz linux64arm.tgz mac64.tgz win64.zip > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            assets/linux64.tgz
+            assets/linux64arm.tgz
+            assets/mac64.tgz
+            assets/win64.zip
+            assets/SHA256SUMS
+          generate_release_notes: true
+          body: |
+            VCell moving-boundary solver ${{ env.VERSION }}.
+
+            | asset | contents |
+            |---|---|
+            | `linux64.tgz` | `MovingBoundary_x64` for x86_64 Linux (glibc ≥ 2.28; HDF5 and libcurl linked statically; messaging ON) |
+            | `linux64arm.tgz` | the same for aarch64 Linux |
+            | `mac64.tgz` | `MovingBoundary_x64`, universal (arm64 + x86_64), macOS ≥ 13.3, HDF5 static, ad-hoc signed |
+            | `win64.zip` | `MovingBoundary_x64.exe` with its HDF5 and MSVC runtime DLLs |
+            | `SHA256SUMS` | checksums of the four archives |
+
+            Each archive also holds `LICENSE` and `VERSION`.
+
+            Image: `ghcr.io/virtualcell/vcell-mbsolver:${{ env.VERSION }}` (amd64, arm64).
+            SIF: `oras://ghcr.io/virtualcell/vcell-mbsolver_singularity:${{ env.VERSION }}`.
+
+      - name: Unpack the Linux archives into the build context
+        run: |
+          mkdir -p dist/linux-amd64 dist/linux-arm64
+          tar -xzf assets/linux64.tgz -C dist/linux-amd64
+          tar -xzf assets/linux64arm.tgz -C dist/linux-arm64
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push the image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ env.VERSION }}
+            ${{ env.IMAGE }}:latest
+
+      - name: Install Apptainer
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Push the SIF (oras)
+        run: |
+          set -eux
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          apptainer push sif/vcell-mbsolver.sif "oras://${SIF}:${VERSION}"
+          apptainer push sif/vcell-mbsolver.sif "oras://${SIF}:latest"

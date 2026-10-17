@@ -1,0 +1,10 @@
+      SUBROUTINEPCVMUL(N,Y,V,W)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN
+      DOUBLEPRECISIONY(*),V(*),W(*)
+      INTEGERI
+      DO1I=1,N
+      Y(I)=V(I)*W(I)
+1     CONTINUE
+      RETURN
+      END

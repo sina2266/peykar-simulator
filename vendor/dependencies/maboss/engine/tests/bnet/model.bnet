@@ -1,0 +1,23 @@
+# model in BoolNet format
+# the header targets, factors is mandatory to be importable in the R package BoolNet
+
+targets, factors
+EGFR,  !ERK&EGFR
+RAS,  EGFR
+BRAF,  RAS&!ERK
+MEK,  BRAF
+ERK,  MEK&!p38
+p38,  (ATM_ATR|BRAF)
+CHEK1,  ATM_ATR|p38
+MK2,  p38&ATM_ATR
+CDC25B_C,  (!CHEK1&!MK2&!CASP3)&CDK1
+CDC25A,  (ERK|CDC25A|CDK1) & (!CHEK1&!MK2&!CHEK2&!TP53&!CASP3)
+CDK1,  (CDC25A|CDC25B_C)
+DSB_SSB, DSB_SSB&!DNArepair
+DNArepair, ATM_ATR&!CASP3
+ATM_ATR,  DSB_SSB
+CHEK2,  ATM_ATR
+TP53,  !ERK & (CHEK2|ATM_ATR)
+Mitosis,  (!TP53 & CDK1 & !CASP3) | Mitosis
+CASP3,  (DSB_SSB&Mitosis) | CASP3
+Proliferation, Mitosis&!CASP3&!DSB_SSB

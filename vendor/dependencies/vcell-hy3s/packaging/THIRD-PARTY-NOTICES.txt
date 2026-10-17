@@ -1,0 +1,114 @@
+
+
+================================================================================
+THIRD-PARTY NOTICES
+================================================================================
+
+The vcell-hy3s release archives and container image contain, besides the Hy3S
+solvers themselves (MIT, above), the following third-party software. Which of
+these a given archive carries depends on the platform; each is listed with the
+terms under which it is redistributed.
+
+--------------------------------------------------------------------------------
+NetCDF 3.6.2 (vendored in netcdf/, compiled into every executable)
+--------------------------------------------------------------------------------
+
+Copyright 1993-2004 University Corporation for Atmospheric Research/Unidata
+
+Portions of this software were developed by the Unidata Program at the 
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations
+and understandings on the user. The user is granted the right, without
+any fee or cost, to use, copy, modify, alter, enhance and distribute
+this software, and any derivative works thereof, and its supporting
+documentation for any purpose whatsoever, provided that this entire
+notice appears in all copies of the software, derivative works and
+supporting documentation.  Further, UCAR requests that the user credit
+UCAR/Unidata in any publications that result from the use of this
+software or in any product that includes this software, although this
+is not an obligation. The names UCAR and/or Unidata, however, may not
+be used in any advertising or publicity to endorse or promote any
+products or commercial entity unless specific written permission is
+obtained from UCAR/Unidata. The user also understands that
+UCAR/Unidata is not obligated to provide the user with any support,
+consulting, training or assistance of any kind with regard to the use,
+operation and performance of this software nor to provide the user
+with any updates, revisions, new versions or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY UCAR/UNIDATA "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL UCAR/UNIDATA BE LIABLE FOR ANY SPECIAL,
+INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING
+FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+WITH THE ACCESS, USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+
+
+
+--------------------------------------------------------------------------------
+vcell-messaging (Linux executables and the container image only)
+--------------------------------------------------------------------------------
+
+MIT License, Copyright (c) 2026 Virtual Cell -- the same terms as above.
+https://github.com/virtualcell/vcell-messaging
+
+--------------------------------------------------------------------------------
+libcurl (statically linked; Linux executables and the container image only)
+--------------------------------------------------------------------------------
+
+COPYRIGHT AND PERMISSION NOTICE
+
+Copyright (c) 1996 - 2025, Daniel Stenberg, <daniel@haxx.se>, and many
+contributors, see the THANKS file.
+
+All rights reserved.
+
+Permission to use, copy, modify, and distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright
+notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not
+be used in advertising or otherwise to promote the sale, use or other dealings
+in this Software without prior written authorization of the copyright holder.
+
+--------------------------------------------------------------------------------
+GCC runtime libraries (Linux and macOS: bundled as unmodified shared libraries)
+--------------------------------------------------------------------------------
+
+libgfortran, libstdc++ and libgcc_s are part of GCC and are distributed under
+the GNU General Public License, version 3, with the GCC Runtime Library
+Exception, version 3.1, which permits their redistribution with programs
+compiled by GCC under terms of the program's choosing. On Linux, libgfortran
+is linked statically and libstdc++ is shipped as a shared library; on macOS,
+libgfortran and libgcc_s are shipped as shared libraries.
+https://www.gnu.org/licenses/gcc-exception-3.1.html
+
+libquadmath is part of GCC and is distributed under the GNU Lesser General
+Public License, version 2.1. On macOS it is shipped as the unmodified shared
+library, which may be replaced by any compatible build. On Linux x86_64 the
+parts libgfortran uses are linked statically; the complete source of these
+programs and the scripts that build them are at
+https://github.com/virtualcell/vcell-hy3s, so they can be relinked against a
+modified libquadmath. libquadmath's source code is part of GCC:
+https://gcc.gnu.org/
+
+--------------------------------------------------------------------------------
+Intel Fortran runtime (Windows executables, statically linked)
+--------------------------------------------------------------------------------
+
+The Windows executables are compiled with the Intel Fortran Compiler (ifx) and
+contain portions of the Intel Fortran runtime libraries, redistributed under
+the Intel End User License Agreement for Developer Tools, which permits their
+redistribution as part of an application.

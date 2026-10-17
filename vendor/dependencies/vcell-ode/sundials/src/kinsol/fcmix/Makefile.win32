@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:21 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for FKINSOL module
+#
+# src/kinsol/fcmix/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /GX /O2
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\..\lib
+
+INCLUDES = -I.. -I..\.. -I..\..\..\include
+
+FKINSOL_LIB       = sundials_fkinsol.lib
+FKINSOL_OBJ_FILES = fkinsol.obj fkinpreco.obj fkinjtimes.obj fkinbbd.obj fkindense.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+	
+all: $(FKINSOL_LIB)
+
+$(FKINSOL_LIB): $(FKINSOL_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(FKINSOL_OBJ_FILES)
+	copy $@ $(LIBDIR)
+
+clean:
+	del $(FKINSOL_LIB)
+	del *.obj

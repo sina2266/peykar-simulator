@@ -1,0 +1,249 @@
+name: CI
+
+# Builds the 2D and 3D Chombo solvers and runs the ctest suite on Linux and
+# macOS, everywhere with GCC -- see the header of
+# conan-profiles/CI-CD/MacOS-ARM64_profile.txt for why Apple Clang is not an
+# option here.
+#
+# Windows is not on the table as things stand: conanfile.py rejects it outright,
+# because Chombo's build system needs GNU make, perl and a Unix shell.
+#
+# Conan Center has no macOS binaries for a GCC profile, so the macOS jobs compile
+# their whole dependency tree from source. That is the cost of needing GCC; see
+# the profile header for why Apple Clang is not an option.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+# A build is roughly ten minutes with a warm Conan cache and longer without, so
+# don't leave superseded runs burning runners.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux x86_64 (GCC 13)
+    # Pinned rather than ubuntu-latest deliberately: the Conan profile hardcodes
+    # compiler.version=13, and 24.04 is the image shipping GCC 13. If the default
+    # runner image moved to a newer compiler, Conan's ABI hash would stop matching
+    # the packages it built and the failure would surface somewhere far less
+    # obvious than this line.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out repository and submodules
+        uses: actions/checkout@v4
+        with:
+          # vcell-expressionparser and vcell-messaging are needed at configure
+          # time -- CMakeLists.txt stops with a FATAL_ERROR if either is empty.
+          submodules: recursive
+
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          # Chombo is roughly half Fortran. GNU make and perl (which ChomboFortran
+          # drives) are already on the runner image; gfortran may not be.
+          sudo apt-get install -y --no-install-recommends gfortran
+
+      - name: Verify the toolchain matches the Conan profile
+        run: |
+          # Conan hashes the compiler version into its package IDs. A mismatch
+          # here means it would resolve packages built for a different ABI, so
+          # fail loudly and early rather than at link time.
+          expected=$(sed -n 's/^compiler\.version=//p' conan-profiles/CI-CD/Linux-AMD64_profile.txt)
+          for tool in gcc g++ gfortran; do
+            actual=$("$tool" -dumpversion | cut -d. -f1)
+            echo "$tool: $actual (profile expects $expected)"
+            if [ "$actual" != "$expected" ]; then
+              echo "::error::$tool is version $actual but conan-profiles/CI-CD/Linux-AMD64_profile.txt pins compiler.version=$expected"
+              exit 1
+            fi
+          done
+
+      - name: Install Conan
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install 'conan>=2.0'
+          conan --version
+
+      # Nothing is cached here, which is deliberate and measured rather than an
+      # omission. From the first green run (32573099036, 9m43s end to end):
+      #
+      #   Build                            532s
+      #   Install build prerequisites       11s
+      #   Configure                          8s
+      #   Install Conan                      6s
+      #   Install dependencies with Conan    5s
+      #   everything else                   <5s
+      #
+      # A Conan cache was tried and removed: all 18 packages resolve as prebuilt
+      # downloads from Conan Center, so `conan install` costs 5 seconds from cold
+      # and the cache saved less than it spent saving itself.
+      #
+      # That leaves the build step, which is 91% of the run and almost entirely
+      # Chombo. Caching build/chombo alone does NOT help -- ninja reruns any
+      # command it has no .ninja_log entry for, and that log lives in build/,
+      # which a fresh checkout does not have. Caching the whole of build/ would
+      # work, keyed on the chombo/ tree hash so a Chombo change still forces a
+      # rebuild. That is the option worth taking if ten minutes ever becomes
+      # annoying; it was left out for now to keep a new pipeline simple.
+
+      - name: Install dependencies with Conan
+        run: |
+          # -pr:a rather than copying the profile over ~/.conan2/profiles/default:
+          # it names the profile at the call site, keeps no hidden state, and is
+          # exactly the command the README documents. Getting this wrong is not
+          # subtle -- with a libc++ profile, Conan hands GCC `-stdlib=libc++` and
+          # the dependency builds fail outright.
+          CC=gcc CXX=g++ FC=gfortran conan install . --build=missing \
+            -pr:a=conan-profiles/CI-CD/Linux-AMD64_profile.txt
+
+      - name: Configure
+        run: |
+          # conanbuild.sh puts Conan's cmake and ninja on PATH. The ninja>=1.12.1
+          # floor in conanfile.py is above what Ubuntu 24.04 packages, so the
+          # system one will not do. Each `run:` is a fresh shell, hence the
+          # repeated source below.
+          source build/generators/conanbuild.sh
+          CC=gcc CXX=g++ FC=gfortran cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: Test
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Upload solver binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcell-chombo-linux-x86_64
+          path: |
+            build/bin/VCellChombo2D_x64
+            build/bin/VCellChombo3D_x64
+          if-no-files-found: error
+          retention-days: 14
+
+  macos:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    # Measured green with messaging on: 18m14s on arm64, 18m58s on x86_64. Most
+    # of the difference from Linux is Conan, around 10 minutes, since the whole
+    # dependency tree including openssl and libcurl compiles from source here.
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS arm64 (GCC 13)
+            os: macos-15
+            profile: MacOS-ARM64_profile.txt
+          - name: macOS x86_64 (GCC 13)
+            os: macos-15-intel
+            profile: MacOS-AMD64_profile.txt
+
+    steps:
+      - name: Check out repository and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build prerequisites
+        run: |
+          # The runner images already ship Homebrew GCC 13 through 16 with
+          # matching gfortran, so this is normally a no-op. Guard rather than
+          # install unconditionally: `brew install gcc` is slow when it decides
+          # to upgrade.
+          if ! command -v g++-13 >/dev/null || ! command -v gfortran-13 >/dev/null; then
+            brew install gcc@13
+          fi
+          # Chombo's build system wants a current GNU make; /usr/bin/make on
+          # macOS is 3.81, frozen in 2006 over the GPLv3 change.
+          # cmake/BuildChomboLibs.cmake requires 4.0 or newer and looks for gmake
+          # ahead of make, which is what Homebrew's make installs as.
+          brew install make
+          brew install conan
+          gmake --version | head -1
+          conan --version
+
+      - name: Verify the toolchain matches the Conan profile
+        run: |
+          expected=$(sed -n 's/^compiler\.version=//p' conan-profiles/CI-CD/${{ matrix.profile }})
+          for tool in gcc-13 g++-13 gfortran-13; do
+            actual=$("$tool" -dumpversion | cut -d. -f1)
+            echo "$tool: $actual  ($(command -v $tool))"
+            if [ "$actual" != "$expected" ]; then
+              echo "::error::$tool is version $actual but ${{ matrix.profile }} pins compiler.version=$expected"
+              exit 1
+            fi
+          done
+          # Chombo reduces $(CXX) to a compiler name it matches its GNU rules
+          # against. If this stops resolving to plain g++, Chombo silently falls
+          # back to defaults and drops the -C that protects Fortran's // operator.
+          {
+            printf 'CXX := %s\n' "$(command -v g++-13)"
+            printf 'cxxname = $(notdir $(firstword $(subst -, ,$(CXX))))\n'
+            printf 'check:\n'
+            printf '\t@test "$(cxxname)" = "g++" || { echo "cxxname=$(cxxname), expected g++"; exit 1; }\n'
+            printf '\t@echo "  Chombo resolves $(CXX) to cxxname=$(cxxname)"\n'
+          } > /tmp/cxxname.mk
+          make -f /tmp/cxxname.mk check
+
+      - name: Install dependencies with Conan
+        env:
+          CC: gcc-13
+          CXX: g++-13
+          FC: gfortran-13
+        run: |
+          # Messaging is on, matching Linux. Conan Center has no macOS binaries
+          # for a GCC profile, so this compiles the whole dependency tree from
+          # source -- libcurl and openssl included, which are the longest of them.
+          conan install . --build=missing \
+            -pr:a=conan-profiles/CI-CD/${{ matrix.profile }}
+
+      - name: Configure
+        env:
+          CC: gcc-13
+          CXX: g++-13
+          FC: gfortran-13
+        run: |
+          source build/generators/conanbuild.sh
+          cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        env:
+          CC: gcc-13
+          CXX: g++-13
+          FC: gfortran-13
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: Test
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Upload solver binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcell-chombo-${{ matrix.os }}
+          path: |
+            build/bin/VCellChombo2D_x64
+            build/bin/VCellChombo3D_x64
+          if-no-files-found: error
+          retention-days: 14

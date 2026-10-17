@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+find_package(@LIBZIP_PKGNAME@ QUIET)
+if(NOT @LIBZIP_PKGNAME@_FOUND)
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+    include(CMakeFindDependencyMacro)
+    find_dependency(@LIBZIP_PKGNAME@ REQUIRED)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+check_required_components("@PROJECT_NAME@")

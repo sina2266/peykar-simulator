@@ -21,6 +21,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.middleware import BodyLimitMiddleware
+from peykar.api.platform_routes import install_platform_routes
 from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
 from peykar.data_fabric.csv_import import import_csv
 from peykar.data_fabric.service import DatasetService
@@ -389,6 +390,7 @@ def create_app(
     ) -> tuple[ValidationRecord, ...]:
         return EvaluationService(svc).evaluate_set(body.run_id, body.evaluation_set)
 
+    install_platform_routes(read, write, service)
     app.include_router(read)
     app.include_router(write)
     return app

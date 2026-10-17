@@ -7,3 +7,8 @@ claimed implemented by these directory names.
 
 A library admission requires units, applicable scales, state ownership, assumptions,
 source/license, numerical invariants, parameter bounds and independent tests.
+
+`examples/human-egfr-graph.json` is a sourced evidence graph, not an executable
+kinetic library. Its source hashes and limitations are recorded alongside it.
+Persistent graph/API behavior is documented in docs/biological-graph.md; source
+library inspection and native solver readiness are separate platform states.

@@ -1,0 +1,13 @@
+name: Check if all required files are UTF-8
+
+on: 
+  [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  utf8check:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/UTF8Check.yml@main
+    with:
+      file-extensions: 'R\|Rmd\|md'  #File extension(s) to check separated by \| 

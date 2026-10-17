@@ -1,0 +1,65 @@
+url: http://www.open-systems-pharmacology.org/rSharp/
+template:
+  bootstrap: 5
+authors:
+  esqLABS GmbH:
+    href: https://esqlabs.com/
+    html: <img src='https://esqlabs.github.io/esqlabsR/reference/figures/esqlabs.png'
+      style='max-width:33px'>esqLABS
+  Open-Systems-Pharmacology Community:
+    href: https://www.open-systems-pharmacology.org/
+    html: <img src='https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png'
+      style='max-width:33px'>Open Systems Pharmacology
+  Pavel Balazki:
+    href: https://github.com/PavelBal
+  Robert McIntosh:
+    href: https://github.com/rwmcintosh
+  Ian Peter Du:
+    href: https://github.com/Ian-Du
+development:
+  mode: auto
+reference:
+- title: Loading and managing assemblies
+  contents:
+  - loadAssembly
+  - getLoadedAssemblies
+  - getTypesInAssembly
+  - isAssemblyLoaded
+- title: Creating objects
+  contents:
+  - NetObject
+  - newObjectFromName
+  - newPointerFromName
+  - getConstructors
+  - castToRObject
+- title: Working with static members
+  contents: contains("Static")
+- title: Working with enums
+  contents: getEnumNames
+- title: Diagnostics
+  contents:
+  - dotnetAvailable
+  - toStringNET
+  - getSexpType
+  - getType
+  - rToDotNetType
+  - inspectArgs
+  - printTraceback
+- title: Miscelaneous
+  contents:
+  - setConvertAdvancedTypes
+  - getRSharpSetting
+  - rSharpSettingNames
+- title: Internal functions
+  contents:
+  - .clrTypeNameExtPtr
+  - .getCurrentConvertedObject
+  - .mkClrObjRef
+
+articles:
+  - title: Introduction to rSharp
+    desc: rSharp user guide
+    contents: user-guide
+  - title: Knowledge base
+    desc: rSharp knowledge base
+    contents: knowledge-base

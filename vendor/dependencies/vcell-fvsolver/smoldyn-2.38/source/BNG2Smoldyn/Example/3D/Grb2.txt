@@ -1,0 +1,19 @@
+dim 3
+
+species s1
+species s2
+species t1
+species s3
+species t2
+
+read_file domain.txt
+read_file mol.txt
+read_file para_spe.txt
+read_file para_time.txt
+
+reaction rxn1 s1(front) + s2(fsoln) -> s3(front) 0.6
+reaction rxn2 s1(front) + t1(fsoln) -> t2(front) 0.6
+reaction rxn3 s3(front) -> s1(front) + s2(fsoln) 10.4
+reaction rxn4 t2(front) -> s1(front) + t1(fsoln) 10.4
+
+end_file

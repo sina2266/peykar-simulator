@@ -1,0 +1,219 @@
+# Linux release build: the archives, the solver image and the SIF (SOLVER-RELEASE.md).
+#
+# One Dockerfile build per architecture, natively (ubuntu-24.04 / ubuntu-24.04-arm), gives
+#   linux64.tgz / linux64arm.tgz                          the Linux release archives (`--target archive`)
+#   ghcr.io/virtualcell/vcell-fvsolver:<X.Y.Z>, :latest    one multi-arch image (amd64 + arm64)
+#   oras://ghcr.io/virtualcell/vcell-fvsolver_singularity:<X.Y.Z>, :latest   the amd64 SIF
+# and smoke-tests all three the way VCell runs them (docker/smoke/run-smoke.sh): the image as a
+# non-root uid, the SIF under `apptainer run --containall` as a non-root uid, the archive on a bare
+# AlmaLinux 8 (glibc 2.28) -- each with `-tid`, a bind mount at /simdata and 0.9.7's reference output.
+#
+# Called by cd.yml on pull requests (build + smoke only) and on published releases (publish: true).
+name: container
+
+on:
+  workflow_call:
+    inputs:
+      publish:
+        description: "Push the image and SIF (release builds only)"
+        type: boolean
+        default: false
+      version:
+        description: "Version stamped into the build (VERSION file, image tags)"
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Push the image and SIF"
+        type: boolean
+        default: false
+      version:
+        description: "Version stamped into the build (X.Y.Z)"
+        type: string
+        required: true
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-fvsolver
+  SIF: ghcr.io/virtualcell/vcell-fvsolver_singularity
+
+jobs:
+  linux:
+    name: linux (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: amd64, runner: ubuntu-24.04, archive: linux64.tgz }
+          - { arch: arm64, runner: ubuntu-24.04-arm, archive: linux64arm.tgz }
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build the release archive
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: archive
+          platforms: linux/${{ matrix.arch }}
+          build-args: VERSION=${{ inputs.version }}
+          outputs: type=local,dest=dist
+          # no provenance.json in the archive root
+          provenance: false
+          sbom: false
+          cache-from: type=gha,scope=linux-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=linux-${{ matrix.arch }}
+
+      - name: Pack ${{ matrix.archive }}
+        run: |
+          set -euxo pipefail
+          ls -l dist
+          test -x dist/FiniteVolume_x64 && test -x dist/smoldyn_x64 && test -f dist/LICENSE
+          test "$(cat dist/VERSION)" = "${{ inputs.version }}"
+          if ls dist | grep -E '^(libc|libm|libpthread|libdl|librt)\.so|^ld-linux'; then
+            echo "::error::glibc bundled in the archive"; exit 1
+          fi
+          test ! -e dist/provenance.json
+          chmod 0755 dist
+          mkdir -p upload
+          tar -C dist --owner=0 --group=0 --numeric-owner -czf "upload/${{ matrix.archive }}" .
+          tar -tzvf "upload/${{ matrix.archive }}"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.archive }}
+          path: upload/${{ matrix.archive }}
+          if-no-files-found: error
+
+      - name: Build the runtime image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          build-args: VERSION=${{ inputs.version }}
+          load: true
+          tags: vcell-fvsolver:ci
+          cache-from: type=gha,scope=linux-${{ matrix.arch }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Smoke-test tools
+        run: python3 -m pip install numpy
+
+      - name: Smoke — the image, as a non-root uid
+        run: |
+          set -euxo pipefail
+          docker image inspect vcell-fvsolver:ci --format 'size={{.Size}} entrypoint={{.Config.Entrypoint}} cmd={{.Config.Cmd}}'
+          work="$RUNNER_TEMP/docker"; mkdir -p "$work"
+          docker/smoke/run-smoke.sh "$work" \
+            docker run --rm --network host --read-only --tmpfs /tmp --user "$(id -u):$(id -g)" -v "$work:/simdata" vcell-fvsolver:ci
+
+      - name: Smoke — the archive on AlmaLinux 8 (glibc 2.28), nothing else installed
+        run: |
+          set -euxo pipefail
+          work="$RUNNER_TEMP/archive"; mkdir -p "$work" "$RUNNER_TEMP/unpacked"
+          tar -C "$RUNNER_TEMP/unpacked" -xzf "upload/${{ matrix.archive }}"
+          # the archive unpacked on a bare glibc-2.28 distro, driven through the same entrypoint script
+          docker/smoke/run-smoke.sh "$work" \
+            docker run --rm --network host --user "$(id -u):$(id -g)" \
+              -v "$RUNNER_TEMP/unpacked:/opt/vcell-fvsolver:ro" -v "$PWD/docker/entrypoint.sh:/entrypoint.sh:ro" \
+              -v "$work:/simdata" --entrypoint /bin/sh almalinux:8 /entrypoint.sh
+
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke — the SIF under apptainer run --containall, as a non-root uid
+        if: matrix.arch == 'amd64'
+        run: |
+          set -euxo pipefail
+          apptainer build "$RUNNER_TEMP/vcell-fvsolver.sif" docker-daemon://vcell-fvsolver:ci
+          ls -l "$RUNNER_TEMP/vcell-fvsolver.sif"
+          id
+          test "$(id -u)" != 0
+          work="$RUNNER_TEMP/sif"; mkdir -p "$work"
+          docker/smoke/run-smoke.sh "$work" \
+            apptainer run --containall --bind "$work:/simdata" "$RUNNER_TEMP/vcell-fvsolver.sif"
+
+      # --- publishing (published releases only) -----------------------------------------------
+      - name: Log in to GHCR
+        if: inputs.publish
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push by digest
+        if: inputs.publish
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          build-args: VERSION=${{ inputs.version }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=linux-${{ matrix.arch }}
+
+      - name: Record the digest
+        if: inputs.publish
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v7
+        if: inputs.publish
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: inputs.publish && matrix.arch == 'amd64'
+        run: |
+          set -euxo pipefail
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          for tag in "${{ inputs.version }}" latest; do
+            apptainer push "$RUNNER_TEMP/vcell-fvsolver.sif" "oras://${SIF}:${tag}"
+          done
+
+  manifest:
+    name: multi-arch manifest
+    if: inputs.publish
+    needs: linux
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          set -euxo pipefail
+          # shellcheck disable=SC2046  # one ref per digest
+          docker buildx imagetools create \
+            -t "${IMAGE}:${{ inputs.version }}" -t "${IMAGE}:latest" \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${{ inputs.version }}"

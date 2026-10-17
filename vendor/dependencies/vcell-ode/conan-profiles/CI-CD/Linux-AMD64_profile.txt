@@ -1,0 +1,23 @@
+[settings]
+arch=x86_64
+build_type=Release
+compiler=clang
+compiler.version=19
+compiler.libcxx=libc++
+compiler.cppstd=20
+compiler.runtime=dynamic
+os=Linux
+
+[conf]
+# Required: conanfile.py's layout() only flattens the tree to build/generators
+# when this is set. Without it, cmake_layout() emits build/Release/generators
+# and the workflow's `source build/generators/conanbuild.sh` fails.
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:exelinkflags=['-fuse-ld=mold']
+tools.build:sharedlinkflags=['-fuse-ld=mold']
+
+[options]
+fPIC=True
+shared=False
+
+

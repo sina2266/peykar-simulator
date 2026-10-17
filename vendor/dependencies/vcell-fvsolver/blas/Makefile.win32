@@ -1,0 +1,35 @@
+#####################################################
+# Makefile for the blas library for Windows 
+#
+# Date: July 17, 2001
+#####################################################
+#
+#Fortran compiler
+FC= DF
+# Compilation options
+FOPTIONS = /Gm /O3 /Qipo /Qprec-div- /QxN /compile_only /thread
+LIBTOOL = xilib
+
+.SUFFIXES: obj.f
+#
+.f.obj :
+	$(FC) $(FOPTIONS) $<
+#
+# Source File Names
+#
+OBJECTS	=	daxpy.obj	\
+		dcopy.obj	\
+		ddot.obj	\
+		dnrm2.obj	\
+		dscal.obj	\
+		dswap.obj	\
+		idamax.obj
+#
+#
+default all:	blas.lib
+#
+blas.lib:	$(OBJECTS)
+		$(LIBTOOL) $(OBJECTS) /out:blas.lib
+
+clean: 
+	del $(OBJECTS) blas.lib

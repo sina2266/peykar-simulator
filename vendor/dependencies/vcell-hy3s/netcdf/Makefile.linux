@@ -1,0 +1,14 @@
+default all:
+	cd f90; make -f Makefile.linux
+	cd fortran; make -f Makefile.linux
+	cd libsrc; make -f Makefile.linux
+	
+clean:
+	cd f90; make -f Makefile.linux clean
+	cd fortran; make -f Makefile.linux clean
+	cd libsrc; make -f Makefile.linux clean
+
+depend:
+	cd f90; make -f Makefile.linux depend
+	cd fortran; make -f Makefile.linux depend
+	cd libsrc; make -f Makefile.linux depend	

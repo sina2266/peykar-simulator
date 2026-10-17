@@ -1,0 +1,63 @@
+# Simulation Parameters
+SIMULATION_PARAM_BEGIN
+SOLVER FV_SOLVER 1.0E-7
+BASE_FILE_NAME @BASE_FILE_NAME@
+ENDING_TIME 0.2
+TIME_STEP 0.01
+KEEP_EVERY 5
+SMOLDYN_STEP_MULTIPLIER 2
+SIMULATION_PARAM_END
+
+# Model description: FEATURE name handle boundary_conditions
+MODEL_BEGIN
+FEATURE cell 0 flux flux flux flux flux flux 
+MODEL_END
+
+# Mesh file
+MESH_BEGIN
+name hybrid_box
+dimension 3
+size 2.0 2.0 1.0
+origin 0.0 0.0 0.0
+volumeRegions 1
+cell0 4.0 0
+membraneRegions 0
+volumeSamples 9 9 5
+789C63601805A36014100600032A0001
+cells 0
+MESH_END
+
+# Variables : type name domain time_dependent_flag advection_flag grad_flag solve_whole_mesh_flag solve_regions
+VARIABLE_BEGIN
+VOLUME_PARTICLE A cell
+VOLUME_PDE B cell false false false false cell
+VARIABLE_END
+
+# Smoldyn Input
+SMOLDYN_BEGIN
+SMOLDYN_INPUT_FILE @SMOLDYN_INPUT_FILE@
+SMOLDYN_END
+
+POST_PROCESSING_BLOCK_BEGIN
+POST_PROCESSING_BLOCK_END
+
+COMPARTMENT_BEGIN cell
+
+EQUATION_BEGIN B
+INITIAL 0.0;
+RATE (0.001660538783162726 * A);
+DIFFUSION 1.0;
+VELOCITY_X 0.0;
+VELOCITY_Y 0.0;
+VELOCITY_Z 0.0;
+BOUNDARY_XM 0.0;
+BOUNDARY_XP 0.0;
+BOUNDARY_YM 0.0;
+BOUNDARY_YP 0.0;
+BOUNDARY_ZM 0.0;
+BOUNDARY_ZP 0.0;
+EQUATION_END
+
+COMPARTMENT_END
+
+

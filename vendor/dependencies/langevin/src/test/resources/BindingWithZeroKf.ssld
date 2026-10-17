@@ -1,0 +1,108 @@
+*** TIME INFORMATION ***
+Total time: 0.02
+dt: 1.0E-8
+dt_data: 1.0E-4
+dt_spring: 1.0E-9
+dt_image: 1.0E-4
+
+*** SYSTEM INFORMATION ***
+L_x: 0.1
+L_y: 0.1
+L_z_out: 0.010000000000000009
+L_z_in: 0.09
+Partition Nx: 10
+Partition Ny: 10
+Partition Nz: 10
+
+*** MOLECULES ***
+
+MOLECULE: "MT0" Intracellular Number 1 Site_Types 1 Total_Sites 1 Total_Links 0 is2D false
+{
+     TYPE: Name "Site0" Radius 1.00000 D 1.000 Color DARK_GRAY STATES "state0" "state1" 
+
+     SITE 0 : Intracellular : Initial State 'state0'
+          TYPE: Name "Site0" Radius 1.00000 D 1.000 Color DARK_GRAY STATES "state0" "state1" 
+          x 0.00000 y 4.00000 z 4.00000 
+
+
+     Initial_Positions: Random
+}
+
+MOLECULE: "MT1" Intracellular Number 5 Site_Types 2 Total_Sites 2 Total_Links 1 is2D false
+{
+     TYPE: Name "Site0" Radius 1.00000 D 1.000 Color DARK_GRAY STATES "state0" 
+     TYPE: Name "Site1" Radius 1.00000 D 1.000 Color BLUE STATES "state0" 
+
+     SITE 0 : Intracellular : Initial State 'state0'
+          TYPE: Name "Site0" Radius 1.00000 D 1.000 Color DARK_GRAY STATES "state0" 
+          x 0.00000 y 4.00000 z 4.00000 
+     SITE 1 : Intracellular : Initial State 'state0'
+          TYPE: Name "Site1" Radius 1.00000 D 1.000 Color BLUE STATES "state0" 
+          x 0.00000 y 4.00000 z 8.00000 
+
+     LINK: Site 0 ::: Site 1
+
+     Initial_Positions: Random
+}
+
+*** MOLECULE FILES ***
+
+MOLECULE: MT0 null
+MOLECULE: MT1 null
+
+*** CREATION/DECAY REACTIONS ***
+
+'MT0' : kcreate  0  kdecay  0
+'MT1' : kcreate  0  kdecay  0
+
+*** STATE TRANSITION REACTIONS ***
+
+'r1' ::     'MT0' : 'Site0' : 'state0' --> 'state1'  Rate 200.0  Condition Bound 'MT1' : 'Site0' : 'state0
+
+*** ALLOSTERIC REACTIONS ***
+
+
+*** BIMOLECULAR BINDING REACTIONS ***
+
+'r0'       'MT0' : 'Site0' : 'state0'  +  'MT1' : 'Site0' : 'state0'  kon  40.0  koff 0.0  Bond_Length 1.0
+'r2'       'MT0' : 'Site0' : 'state1'  +  'MT1' : 'Site0' : 'state0'  kon  0.0  koff 500.0  Bond_Length 1.0
+
+*** MOLECULE COUNTERS ***
+
+'MT0' : Measure Total Free Bound
+'MT1' : Measure Total Free Bound
+
+*** STATE COUNTERS ***
+
+'MT0' : 'Site0' : 'state0' : Measure Total Free Bound
+'MT0' : 'Site0' : 'state1' : Measure Total Free Bound
+'MT1' : 'Site0' : 'state0' : Measure Total Free Bound
+'MT1' : 'Site1' : 'state0' : Measure Total Free Bound
+
+*** BOND COUNTERS ***
+
+'r0' : Counted
+'r2' : Counted
+
+*** SITE PROPERTY COUNTERS ***
+
+'MT0' Site 0 : Track Properties true
+'MT1' Site 0 : Track Properties true
+'MT1' Site 1 : Track Properties true
+
+*** CLUSTER COUNTERS ***
+
+Track_Clusters: true
+
+*** SYSTEM ANNOTATIONS ***
+
+
+*** MOLECULE ANNOTATIONS ***
+
+
+*** REACTION ANNOTATIONS ***
+
+
+*** SIMULATION OPTIONS ***
+
+

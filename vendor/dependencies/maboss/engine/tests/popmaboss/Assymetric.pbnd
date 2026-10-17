@@ -1,0 +1,34 @@
+Node A
+{
+  logic = A;
+  rate_up = @logic ? 1.0 : 0.0;
+  rate_down = 0.0 ;
+}
+
+Node B
+{
+  logic = B;
+  rate_up = 0.0;
+  rate_down = 0.0;
+}
+
+Node C
+{
+  logic = C;
+  rate_up = 0.0;
+  rate_down = 0.0;
+}
+
+division
+{
+  rate = (1/#cell())/2;
+}
+
+division
+{
+  rate = (1/#cell())/2;
+  A.daughter1 = 0;
+  B.daughter1 = 1;
+  A.daughter2 = 0;
+  C.daughter2 = 1;
+}

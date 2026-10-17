@@ -3,6 +3,12 @@
 Status: accepted foundation, version 0.3.0. Implementation state is tracked in
 [status.md](status.md); the architecture below includes future capabilities.
 
+The whole-platform continuation adds [managed source libraries](library-ecosystem.md),
+[persistent biological snapshots](biological-graph.md) and
+[durable experiment workflows](experiment-workflows.md). The S0–S13 delivery map
+in [roadmap.md](roadmap.md) covers all domains; individual vCornea evidence gaps
+do not block unrelated shared-platform engineering.
+
 ## Product and ownership
 
 Peykar is the general-purpose biological simulation platform previously described
@@ -41,10 +47,10 @@ modules or explicitly planned extension points.
 | Domain | Responsibility | Current boundary |
 |---|---|---|
 | Core | Types, identifiers, units, contracts, hashes, errors | Independent distribution |
-| Biology | Entities, ontologies, anatomy, interactions and unknowns | Species-aware reference graph; persistent declared knowledge gaps |
+| Biology | Entities, ontologies, anatomy, interactions and unknowns | Versioned persistent graph snapshots, bounded neighborhoods and declared knowledge gaps |
 | Model registry | Packages, versions, capabilities and dependencies | Persistent exact-version registry |
 | Model import | Discovery, inspection, mapping and sandbox admission | Declarative JSON inspector and offline digest-checked file admission; no external execution |
-| Composition | Ports, semantics, ownership and numerical coupling | Compatibility/DAG checks and exchange primitive |
+| Composition | Ports, semantics, ownership and numerical coupling | Compatibility checks, exchange primitive and durable sequential endpoint-transfer experiments |
 | Simulation | Planning, time, events, state and execution | Durable queue, bounded Linux child lifecycle and two reference engines |
 | Interventions | Molecular through environmental changes | Parameter-set implementation; other classes planned |
 | Data fabric | Ingestion, quality, lineage and observation | CSV and explicitly mapped scalar exports; raw/normalized lineage and shared import identity |

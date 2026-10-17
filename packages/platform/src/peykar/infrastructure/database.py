@@ -128,32 +128,38 @@ class Database:
         )
 
     def submit(self, manifest: RunManifest, idempotency_key: str | None) -> RunRecord:
-        request_hash = digest(manifest.plan)
         with self.connection(immediate=True) as db:
-            if idempotency_key:
-                existing = db.execute(
-                    "SELECT * FROM runs WHERE idempotency_key=?", (idempotency_key,)
-                ).fetchone()
-                if existing:
-                    if existing["request_digest"] != request_hash:
-                        raise Conflict("Idempotency key already used for another plan")
-                    return self._record(existing)
-            db.execute(
-                "INSERT INTO runs(id,request_digest,idempotency_key,manifest,manifest_digest,"
-                "status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)",
-                (
-                    manifest.run_id,
-                    request_hash,
-                    idempotency_key,
-                    canonical_json(manifest),
-                    digest(manifest),
-                    "queued",
-                    manifest.created_at,
-                    manifest.created_at,
-                ),
-            )
-            self._event(db, manifest.run_id, "submitted")
-        return self.run(manifest.run_id)
+            run_id = self.enqueue(db, manifest, idempotency_key)
+        return self.run(run_id)
+
+    @staticmethod
+    def enqueue(db: sqlite3.Connection, manifest: RunManifest, idempotency_key: str | None) -> str:
+        """Enqueue within a caller-owned transaction, including dependent workflow dispatch."""
+        request_hash = digest(manifest.plan)
+        if idempotency_key:
+            existing = db.execute(
+                "SELECT id,request_digest FROM runs WHERE idempotency_key=?", (idempotency_key,)
+            ).fetchone()
+            if existing:
+                if existing["request_digest"] != request_hash:
+                    raise Conflict("Idempotency key already used for another plan")
+                return str(existing["id"])
+        db.execute(
+            "INSERT INTO runs(id,request_digest,idempotency_key,manifest,manifest_digest,"
+            "status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)",
+            (
+                manifest.run_id,
+                request_hash,
+                idempotency_key,
+                canonical_json(manifest),
+                digest(manifest),
+                "queued",
+                manifest.created_at,
+                manifest.created_at,
+            ),
+        )
+        Database._event(db, manifest.run_id, "submitted")
+        return manifest.run_id
 
     @staticmethod
     def _record(row: sqlite3.Row) -> RunRecord:

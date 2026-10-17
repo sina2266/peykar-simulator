@@ -20,6 +20,22 @@ acquisition, a locked native runtime, real CSV/Parquet ingestion and seeded nati
 regression. Six published reference files and bounded native runs were verified.
 Full published-scenario reproduction and biological validity remain separate gates.
 
+The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
+is one integration within it. Shared backends now include an immutable
+[source-library registry](docs/library-ecosystem.md),
+[persistent biological graphs](docs/biological-graph.md), and
+[durable multi-model experiment workflows](docs/experiment-workflows.md).
+The complete named source trees and recursive dependencies now live as ordinary
+project files in [vendor](vendor/README.md): 25 pinned distributions, 52,167 files,
+37 materialized Git dependencies, and preserved original notices. [Installed
+runtime profiles](runtime_profiles/README.md) execute real COPASI, NEURON,
+PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongside
+vCornea. Retained source/runtime evidence is discoverable through the API/CLI. The
+workflow worker actually transfers terminal scalar outputs into downstream initial
+parameters, with atomic dispatch, units/context checks, cancellation and provenance.
+General native-engine queue adapters, continuous feedback coupling and the full UI remain
+explicit system tasks, independent of the eye-model publication gate.
+
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·
 [Scientific contracts](docs/scientific-contracts.md) · [Blueprint coverage](docs/requirements-traceability.md) ·
@@ -143,6 +159,24 @@ Native counts retain four cell types and hours; Parquet heights retain lattice
 coordinates. See [integration](docs/vcornea-integration.md),
 [native import/API](docs/vcornea-native-output.md), and
 [dataset/tool assessment](docs/integration-candidates.md).
+
+## Work across reusable models and biological evidence
+
+```bash
+uv run peykar register-model experiments/workflows/decay-transfer-model.json
+uv run peykar experiments register experiments/workflows/decay-transfer.json
+uv run peykar experiments submit workflow.decay-transfer 1.0.0 --idempotency-key example-chain
+uv run peykar worker
+```
+
+Use `peykar experiments status EXPERIMENT_RUN_ID` and `results EXPERIMENT_RUN_ID`
+from another terminal. This fixture verifies two serial decay intervals, including
+the actual transferred concentration; it makes no biological coupling claim.
+The same lifecycle is available through `/v1/experiments` and `/v1/experiment-runs`.
+Use `/v1/libraries` for source readiness and `/v1/biology/graphs` for evidence-linked
+contextual relations. `/v1/runtimes` and `peykar runtimes list` expose actual native
+execution evidence. Source acquisition/inspection commands and original license
+scope are in [the library guide](docs/library-ecosystem.md).
 
 ## Repository boundaries
 

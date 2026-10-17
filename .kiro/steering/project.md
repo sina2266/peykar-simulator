@@ -4,6 +4,25 @@ No `.kiro` directory existed in the delivered checkout. Added on 2026-10-16 to
 retain the requested project context. Root `AGENTS.md`, `README.md`,
 `docs/status.md` and `docs/roadmap.md` remain the authoritative rules/inventory.
 
+- The user's objective is the whole platform, not an eye-model-only product.
+  Roadmap S0–S13 now covers all shared domains and specialist/biological gates;
+  do not make unrelated engineering work wait for a missing vCornea publication seed.
+- Nine additional specialist source trees are cloned at exact commits under
+  `.peykar/external/ecosystem/sources/` (36,291 entries, 1,308,090,422 bytes).
+  Immutable source receipts retain license hashes and 24 unresolved Git links.
+  Source availability, dependency completion, runtime, adapter and validity are
+  separate states. Preserve pristine upstream trees and version patch overlays.
+- Shared backends now include `model_import/libraries.py`,
+  `biology/persistent_graph.py` and `composition/experiments.py` with API/CLI access.
+  The workflow mode is sequential scalar terminal-to-initial transfer, not continuous
+  feedback coupling. Child enqueue and association share one SQLite transaction.
+  Additive `002_experiments.sql` preserves schema version 1 and existing rows.
+- Sourced human EGF/EGFR graph is evidence-linked metadata, not a kinetic/tissue bridge.
+  The six-workspace UI remains open on S12; build complete workflows on actual APIs.
+- Pre-system upgrade backup: `backups/pre-system-20261016T211636Z/`, copied locally.
+  Full final Linux regression: 259 tests, 88% observed coverage; live two-stage
+  experiment and cancellation pass. All old rows/license/source bytes are retained.
+
 - The checkout has no Git metadata. Preserve existing files, license notices and
   immutable schema/model versions; do not assume a clean Git reset is available.
 - Local Docker Compose API and worker share the `peykar3_peykar-data` volume.

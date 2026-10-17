@@ -1,0 +1,289 @@
+name: Windows
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  maboss_windows:
+    name: MaBoSS Windows
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /mingw64/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /mingw64/lib/libxml2.dll.a
+      LIBXML_INCLUDEDIR: /mingw64/include/libxml2/
+          
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: flex bison make 
+          mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-binutils 
+          mingw-w64-x86_64-gcc mingw-w64-x86_64-headers-git mingw-w64-x86_64-gcc-libs 
+          mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-bzip2 
+          mingw-w64-x86_64-lapack mingw-w64-x86_64-openblas
+          mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-numpy
+     
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+        pacman -U --noconfirm mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+       
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: D:/a/_temp/msys64/tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-namespace
+        
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: |
+        bash scripts/build_libsbml.sh
+    
+    - name: Install libSBML
+      run: |
+        bash scripts/install_libsbml.sh
+        
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make MAXNODES=128 SBML_COMPAT=1 maboss popmaboss
+        make SBML_COMPAT=1 maboss popmaboss
+
+    - name: Test MaBoSS
+      run: bash scripts/run_tests.sh
+
+  maboss_binary_windows:
+    runs-on: windows-latest
+    name: Building MaBoSS Windows 64bits binary
+    needs: maboss_windows
+    
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /mingw64/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /mingw64/lib/libxml2.dll.a
+      LIBXML_INCLUDEDIR: /mingw64/include/libxml2/
+          
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: flex bison make zip 
+          mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-binutils 
+          mingw-w64-x86_64-gcc mingw-w64-x86_64-headers-git mingw-w64-x86_64-gcc-libs 
+          mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-bzip2 
+          mingw-w64-x86_64-lapack mingw-w64-x86_64-openblas
+        
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+        pacman -U --noconfirm mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+       
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: D:/a/_temp/msys64/tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-namespace
+        
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: |
+        bash scripts/build_libsbml.sh
+    
+    - name: Install libSBML
+      run: |
+        bash scripts/install_libsbml.sh
+      
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_static SBML_COMPAT=1
+        make install_static MAXNODES=128 SBML_COMPAT=1
+        make install_static MAXNODES=256 SBML_COMPAT=1
+        make install_static MAXNODES=512 SBML_COMPAT=1
+        make install_static MAXNODES=1024 SBML_COMPAT=1
+        cd ../pub
+        zip MaBoSS-win64.zip *
+    
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: MaBoSS-win64
+        path: D:\a\MaBoSS/MaBoSS/engine/pub/MaBoSS-win64.zip
+      
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: MaBoSS-win64.zip
+        asset_path: D:\a\MaBoSS/MaBoSS/engine/pub/MaBoSS-win64.zip
+        asset_content_type: application/zip
+        
+  maboss_library_windows:
+    runs-on: windows-latest
+    name: Building MaBoSS Windows 64bits library
+    needs: maboss_windows
+
+    defaults:
+      run:
+        shell: msys2 {0}
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: flex bison make 
+          mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-binutils 
+          mingw-w64-x86_64-gcc mingw-w64-x86_64-headers-git mingw-w64-x86_64-gcc-libs 
+          mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-winpthreads-git
+            
+    - name: Build library
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib 
+        make install_lib MAXNODES=128
+        make install_lib MAXNODES=256
+        make install_lib MAXNODES=512
+        make install_lib MAXNODES=1024
+        make install_alib 
+        make install_alib MAXNODES=128
+        make install_alib MAXNODES=256
+        make install_alib MAXNODES=512
+        make install_alib MAXNODES=1024
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-win64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+      
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-win64
+        path: D:\a\MaBoSS/libMaBoSS-win64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-win64.tar.gz
+        asset_path: D:\a\MaBoSS/libMaBoSS-win64.tar.gz
+        asset_content_type: application/gzip
+      
+  maboss_sbml_library_windows:
+    runs-on: windows-latest
+    name: Building MaBoSS Windows 64bits library with libSBML
+    needs: maboss_windows
+
+    defaults:
+      run:
+        shell: msys2 {0}
+        
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /mingw64/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /mingw64/lib/libxml2.dll.a
+      LIBXML_INCLUDEDIR: /mingw64/include/libxml2/
+          
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: flex bison make 
+          mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-binutils 
+          mingw-w64-x86_64-gcc mingw-w64-x86_64-headers-git mingw-w64-x86_64-gcc-libs 
+          mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-winpthreads-git mingw-w64-x86_64-bzip2 
+          mingw-w64-x86_64-lapack mingw-w64-x86_64-openblas
+        
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+        pacman -U --noconfirm mingw-w64-x86_64-libxml2-2.11.6-1-any.pkg.tar.zst
+       
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: D:/a/_temp/msys64/tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-namespace
+        
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: |
+        bash scripts/build_libsbml.sh
+    
+    - name: Install libSBML
+      run: |
+        bash scripts/install_libsbml.sh
+      
+    - name: Build library
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib SBML_COMPAT=1
+        make install_lib MAXNODES=128 SBML_COMPAT=1
+        make install_lib MAXNODES=256 SBML_COMPAT=1
+        make install_lib MAXNODES=512 SBML_COMPAT=1
+        make install_lib MAXNODES=1024 SBML_COMPAT=1
+        make install_alib SBML_COMPAT=1
+        make install_alib MAXNODES=128 SBML_COMPAT=1
+        make install_alib MAXNODES=256 SBML_COMPAT=1
+        make install_alib MAXNODES=512 SBML_COMPAT=1
+        make install_alib MAXNODES=1024 SBML_COMPAT=1
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-sbml-win64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+      
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-sbml-win64
+        path: D:\a\MaBoSS/libMaBoSS-sbml-win64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-sbml-win64.tar.gz
+        asset_path: D:\a\MaBoSS/libMaBoSS-sbml-win64.tar.gz
+        asset_content_type: application/gzip
+  

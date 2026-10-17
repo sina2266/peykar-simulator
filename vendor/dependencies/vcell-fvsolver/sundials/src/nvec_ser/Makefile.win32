@@ -1,0 +1,45 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:25 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for serial NVECTOR module
+#
+# src/nvec_ser/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /EHsc /O2 /D_CRT_SECURE_NO_DEPRECATE
+LDFLAGS  = 
+LIBS     = -lm 
+
+INCLUDES = -I.. -I../../include
+
+LIB_REVISION = 0:1:0
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+NVECSER_LIB       = sundials_nvecserial.lib
+NVECSER_OBJ_FILES = nvector_serial.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(NVECSER_LIB)
+
+$(NVECSER_LIB): $(NVECSER_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(NVECSER_OBJ_FILES)
+	copy $@ $(LIBDIR)	
+
+clean:
+	del *.obj
+	del $(NVECSER_LIB)	

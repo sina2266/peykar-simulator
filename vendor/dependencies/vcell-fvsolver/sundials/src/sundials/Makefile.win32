@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.5 $
+# $Date: 2006/10/11 16:34:20 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for SHARED module
+#
+# src/sundials/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /EHsc /O2 /D_CRT_SECURE_NO_DEPRECATE
+LDFLAGS  = 
+LIBS     = -lm 
+
+INCLUDES = -I.. -I../../include
+
+LIBTOOL = lib
+LIBDIR = ..\..\lib
+
+SUNDIALS_LIB = sundials.lib
+SUNDIALS_OBJ_FILES = sundials_band.obj sundials_dense.obj sundials_iterative.obj sundials_math.obj sundials_nvector.obj sundials_smalldense.obj sundials_spgmr.obj sundials_spbcgs.obj sundials_sptfqmr.obj
+
+.SUFFIXES:		.c.obj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(SUNDIALS_LIB)
+
+$(SUNDIALS_LIB): $(SUNDIALS_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(SUNDIALS_OBJ_FILES)
+	copy $@ $(LIBDIR)	
+
+clean:
+	del *.obj
+	del $(SUNDIALS_LIB)

@@ -1,0 +1,10 @@
+      SUBROUTINEPCNEGV(N,X)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN
+      DOUBLEPRECISIONX(*)
+      INTEGERI
+      DO1I=1,N
+      X(I)=-X(I)
+1     CONTINUE
+      RETURN
+      END

@@ -1,0 +1,51 @@
+
+-------------------------------------------------- Run --------------------------------------------------
+MaBoSS version: 0.0.1 [networks up to 64 nodes]
+
+Run start time: Thu Apr  1 20:43:30 2021
+Run end time: Thu Apr  1 20:43:33 2021
+
+Core user runtime: 2.32 secs using 1 thread
+Core elapsed runtime: 2.433 secs using 1 thread
+
+Epilogue user runtime: 0.23 secs using 1 thread
+Epilogue elapsed runtime: 0.288 secs using 1 thread
+
+StatDist user runtime: 0 secs using 1 thread
+StatDist elapsed runtime: 0.064 secs using 1 thread
+
+Time Tick: 1
+Max Time: 10
+Sample Count: 100000
+StatDist Trajectory Count: 0
+StatDist Similarity Cache Maximum Size: 20000
+Discrete Time: FALSE
+Random Generator: rand48
+Seed Pseudo Random: 100
+Generated Number Count: 600000
+
+---------------------------------------------------------------------------------------------------------
+
+------------------------------------------------ Network ------------------------------------------------
+node A {
+  logic = A;
+  rate_up = @logic ? 1 : 0;
+  rate_down = 0;
+}
+
+node C {
+  logic = A AND NOT B;
+  rate_up = @logic ? 1 : 0;
+  rate_down = 0;
+}
+
+node B {
+  logic = A AND NOT C;
+  rate_up = @logic ? 1 : 0;
+  rate_down = 0;
+}
+---------------------------------------------------------------------------------------------------------
+
+----------------------------------------------- Variables -----------------------------------------------
+---------------------------------------------------------------------------------------------------------
+

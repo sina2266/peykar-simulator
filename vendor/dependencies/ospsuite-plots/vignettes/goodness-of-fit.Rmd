@@ -1,0 +1,584 @@
+---
+title: "Goodness of fit"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Goodness of fit}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  dpi = 300,
+  fig.show = "hold",
+  fig.align = "center",
+  fig.width = 7,
+  out.width = "80%",
+  comment = "#>"
+)
+```
+
+
+
+# 1. Introduction
+
+The `ospsuite.plots` library provides functions to compare predicted and observed data and resulting residuals:
+
+- `plotPredVsObs()` (see section 2): plot predicted values versus corresponding observed values.
+- `plotResVsCov()` (see section 3): plot residuals as points versus a covariate (e.g., Time, observed values, or Age).
+- `plotRatioVsCov()` (see section 4): plot ratios as points versus a covariate (e.g., Time, observed values, or Age).
+- `plotQQ()` (see section 5): Quantile-Quantile plot.
+
+For DDI comparison, the functions `plotPredVsObs()` and `plotResVsObs()` can be overlaid with lines indicating the limits of the Guest Criteria (<https://dmd.aspetjournals.org/content/39/2/170>) (see section 2.4 and 4.3).
+
+> **Note:** Residual calculation is not performed within `ospsuite.plots`. Residuals and ratios need to be pre-calculated before passing them to the plotting functions. If you are using the `{ospsuite}` package, you can use `ospsuite::addResidualColumn()` to add a residual column to your data.
+
+The functions `plotPredVsObs()`, `plotResVsCov()`, and `plotRatioVsCov()` are mainly wrappers around the function `plotYVsX()`, using different defaults for input variables. So, use `?plotYVsX` to get more details.
+
+## 1.1 Setup
+
+This vignette uses the `{ospsuite.plots}` and `{tidyr}` libraries. We will use the default settings of `{ospsuite.plots}` (see vignette("ospsuite.plots", package = "ospsuite.plots")).
+
+```{r setup, warning=FALSE, message=FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+library(ospsuite.plots)
+library(tidyr)
+```
+
+## 1.2 Example Data
+
+This vignette uses two randomly generated example datasets provided by the package.
+
+### 1.2.1 Dataset with Predicted and Observed Data
+
+```{r load-data-1, results='asis'}
+data <- exampleDataCovariates |>
+  dplyr::filter(SetID == "DataSet2") |>
+  dplyr::select(c("ID", "Age", "Obs", "gsd", "Pred", "Sex"))
+
+knitr::kable(head(data), digits = 3, caption = "First rows of example data.")
+
+metaData <- attr(exampleDataCovariates, "metaData")
+metaData <- metaData[intersect(names(data), names(metaData))]
+knitr::kable(metaData2DataFrame(metaData), digits = 2, caption = "List of meta data")
+```
+
+### 1.2.2 Dataset for Examples with DDI Prediction
+
+```{r load-data-2, results='asis'}
+dDIdata <- exampleDataCovariates |>
+  dplyr::filter(SetID == "DataSet3") |>
+  dplyr::select(c("ID", "Obs", "Pred")) |>
+  dplyr::mutate(Study = paste("Study", ID))
+
+dDIdata$Study <- factor(dDIdata$Study, levels = unique(dDIdata$Study))
+
+knitr::kable(head(dDIdata), digits = 2, caption = "First rows of dataset used for DDI example.")
+
+dDImetaData <- list(
+  Obs = list(dimension = "DDI AUC Ratio", unit = ""),
+  Pred = list(dimension = "DDI AUC Ratio", unit = "")
+)
+
+knitr::kable(metaData2DataFrame(dDImetaData), digits = 2, caption = "List of meta data")
+```
+
+### 1.2.3 Dataset for Ratio Comparison
+
+```{r load-data-3, results='asis'}
+pkRatioData <- exampleDataCovariates |>
+  dplyr::filter(SetID == "DataSet1") |>
+  dplyr::select(!c("SetID")) |>
+  dplyr::mutate(gsd = 1.1)
+
+pkRatiometaData <- attr(exampleDataCovariates, "metaData")
+pkRatiometaData <- pkRatiometaData[intersect(names(pkRatioData), names(pkRatiometaData))]
+
+knitr::kable(head(pkRatioData), digits = 3)
+knitr::kable(metaData2DataFrame(pkRatiometaData), digits = 3)
+```
+
+# 2. Predicted vs Observed (`plotPredVsObs()`)
+
+## 2.1 Basic Examples
+
+### 2.1.1 Default Settings
+
+Basic example using default settings. Predicted and observed data are mapped with `predicted` and `observed`. The aesthetic `groupby` can be used to group observations.
+
+```{r basic-examples, fig.alt="Scatter plot showing predicted versus observed values with log-log scale. Points are colored by sex groups, with a unity line indicating perfect prediction. Most points cluster around the unity line indicating good model performance."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    observed = Obs,
+    predicted = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+```
+
+### 2.1.2 Basic Example: Linear Scale
+
+The scale for the x and y axes is set to linear. It is not intended to use different scales for the x and y axes. Therefore, only one variable `xyScale` exists for both axes.
+
+Predicted and observed data are mapped with `x` and `y`.
+
+```{r basic-examples-linear, fig.alt="Scatter plot showing predicted versus observed values with linear scale on both axes. Points are colored by sex groups with a unity line for reference. The linear scale allows for easier interpretation of absolute differences between predictions and observations."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  xyScale = "linear"
+)
+```
+
+### 2.1.3 Error Bars for Observed Data
+
+Error bars for the observed data are plotted. In the example, this is done by mapping `error_relative`. Error bars could also be produced by mapping `error` to a column with an additive error or mapping `xmin` and `xmax` explicitly.
+
+```{r basic-examples-errorbar, fig.alt="Scatter plot showing predicted versus observed values with horizontal error bars representing relative error in observed data. Points are colored by sex groups, and error bars show the uncertainty in the observed measurements."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    error_relative = gsd,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+```
+
+### 2.1.4 Error Bars for Observed and Predicted Data
+
+To plot the prediction error, `ymin` and `ymax` must also be mapped explicitly.
+
+```{r basic-examples-error-y, fig.alt="Scatter plot showing predicted versus observed values with both horizontal error bars (for observed data uncertainty) and vertical error bars (for predicted data uncertainty). Points are colored by sex groups, demonstrating how to display uncertainty in both measurements."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    error_relative = gsd,
+    ymin = Pred * 0.9,
+    ymax = Pred * 1.1,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+```
+
+### 2.1.5 Example with LLOQ
+
+Below, a dataset is created where the LLOQ is set to the 0.1 quantile of the observed data. All values below are set to LLOQ/2. By mapping `lloq`, these data are displayed with a lighter alpha, and a horizontal line for the LLOQ is added.
+
+```{r basic-examples-lloq, fig.alt="Scatter plot showing predicted versus observed values with lower limit of quantification (LLOQ) handling. Values below the LLOQ are displayed with reduced transparency and marked with a horizontal LLOQ line. Data points below LLOQ are set to LLOQ/2 for visualization."}
+lloqData <- signif(quantile(data$Obs, probs = 0.1), 1)
+
+dataLLOQ <- data |>
+  dplyr::mutate(lloq = lloqData) |>
+  dplyr::mutate(Obs = ifelse(Obs <= lloq, lloq / 2, Obs))
+
+plotPredVsObs(
+  data = dataLLOQ,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    lloq = lloq,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+```
+
+By default (`lloqOnBothAxes = FALSE`), the LLOQ line is drawn only for the observed-data axis—i.e., horizontal when observations are on the y-axis and vertical when observations are on the x-axis. Setting `lloqOnBothAxes = TRUE` draws LLOQ lines on both the x and y axes. This is quite useful, as it makes it clear if the simulated results should be considered as "quantifiable" or not.
+
+```{r basic-examples-lloq-both, fig.alt="Scatter plot showing predicted versus observed values with LLOQ lines drawn on both axes. Vertical and horizontal LLOQ lines are displayed, and values below the LLOQ are shown with reduced transparency."}
+plotPredVsObs(
+  data = dataLLOQ,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    lloq = lloq,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  lloqOnBothAxes = TRUE
+)
+```
+
+## 2.2 Adjust Comparison Lines
+
+### 2.2.1 Adjust Fold Distance
+
+`plotPredVsObs()` adds lines to indicate fold distances. The lines are defined by the variable `comparisonLineVector`, which is a named list with default values `list(identity = 1, '1.5 fold' = c(1.5, 1/1.5), '2 fold' = c(2, 1/2))`.
+
+A fold distance list can be generated by the helper function `?getFoldDistanceList()`.
+
+Below, the 1.2 and 1.5 distances are displayed:
+
+```{r examples-changeOfFold, fig.alt="Scatter plot showing predicted versus observed values with custom fold distance lines. The plot includes 1.2-fold and 1.5-fold comparison lines around the unity line, helping to assess the degree of prediction accuracy. Points are colored by sex groups."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  comparisonLineVector = getFoldDistanceList(c(1.2, 1.5))
+)
+```
+
+### 2.2.2 Adjust Display of Lines
+
+The names of the list are displayed in the legend.
+
+If the list is unnamed, all lines are displayed with the same line type, and they are not included in the legend. The line type used is settable by the variable `geomComparisonLineAttributes`.
+
+If the variable `comparisonLineVector` is NULL, no lines will be displayed.
+
+```{r examples-adjustFoldlegend, fig.alt="Scatter plot showing predicted versus observed values with unnamed fold distance lines displayed as dotted lines. The fold lines are shown without legend entries and all use the same dotted line style for a cleaner appearance. Points are colored by sex groups."}
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  comparisonLineVector = unname(getFoldDistanceList(c(1.2, 1.5))),
+  geomComparisonLineAttributes = list(linetype = "dotted")
+)
+```
+
+## 2.3 Adding a Regression Line
+
+To add a regression line, set the input variable `addRegression` to `TRUE` (A). For regression lines, the package `{ggpubr}` has a function `stat_regline_equation` to add statistics of the regression as labels (B). To use other functions, e.g., local polynomial regression, use `ggplot2::geom_smooth` directly (C).
+
+```{r example-regression, fig.alt="Scatter plot showing predicted versus observed values with linear regression line overlay. Points are colored by sex groups, and a fitted regression line shows the overall trend with confidence intervals. The plot demonstrates the relationship between predicted and observed values beyond the unity line."}
+# A
+plotObject <- plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  addRegression = TRUE
+) +
+  labs(title = "Regression Line", tag = "A")
+
+plot(plotObject)
+```
+
+```{r example-regression-withRR, fig.alt="Scatter plot showing predicted versus observed values with linear regression line and R-squared statistics displayed. The plot includes the regression line with confidence intervals and an overlaid R-squared label showing the goodness of fit. Points are colored by sex groups."}
+# B
+plotObject + ggpubr::stat_regline_equation(aes(label = after_stat(rr.label))) + labs(title = "With RR as Label", tag = "B")
+```
+
+```{r example-regression-loess, fig.alt="Scatter plot showing predicted versus observed values with local polynomial regression (LOESS) smoothing. The curved fitted line with confidence intervals captures non-linear patterns in the data that a linear regression might miss. Points are colored by sex groups."}
+# C Local Polynomial Regression Fitting
+plotPredVsObs(
+  data = data,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  addRegression = FALSE
+) +
+  geom_smooth(method = "loess", formula = "y ~ x", na.rm = TRUE) +
+  labs(title = "Local Polynomial Regression Fitting", tag = "C")
+```
+
+## 2.4 Add Guest Criteria Lines
+
+To compare DDI ratios, set the variable `addGuestLimits` to TRUE and set the variable `deltaGuest`:
+
+```{r predVsObs_Guest, fig.width=6, fig.height=6, fig.alt="Square scatter plot showing predicted versus observed DDI ratios with Guest criteria lines for drug-drug interaction assessment. The plot includes Guest limit lines that define acceptable ranges for DDI predictions, with different studies shown in different colors. The square format ensures equal scaling for both axes."}
+plotPredVsObs(
+  data = dDIdata,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Study
+  ),
+  metaData = dDImetaData,
+  addGuestLimits = TRUE,
+  comparisonLineVector = list(identity = 1),
+  deltaGuest = 1
+)
+```
+
+## 2.5 Use Non-Square Format
+
+By default, `plotPredVsObs()` produces a square plot with an aspect ratio of 1 and the same limits for the x and y axes. In the example below, the Predicted values are set to 1/2 of the original values. A square plot does not make sense anymore; therefore, the variable `asSquarePlot` is set to `FALSE`.
+
+```{r example-nonsquare, fig.alt="Non-square scatter plot showing predicted versus observed values where predicted values have been scaled to half of observed values. The plot demonstrates how to handle cases where data ranges differ significantly between axes, using non-square format for better visualization. Points are colored by sex groups."}
+dataNonSquare <- data |>
+  dplyr::mutate(Pred = Pred / 2)
+
+plotPredVsObs(
+  data = dataNonSquare,
+  mapping = aes(
+    x = Obs,
+    y = Pred,
+    groupby = Sex
+  ),
+  metaData = metaData,
+  asSquarePlot = FALSE
+)
+```
+
+# 3. Residuals vs Covariate (`plotResVsCov()`)
+
+## 3.1 Basic Examples
+
+Residuals must be pre-calculated before passing them to `plotResVsCov()`. If you are using the `{ospsuite}` package, you can use `ospsuite::addResidualColumn()` to add a residual column to your data. Alternatively, calculate residuals directly in your data frame.
+
+### 3.1.1 Default Settings
+
+In the example below, log residuals are calculated as `log(Pred) - log(Obs)` and mapped to the `y` aesthetic. A horizontal comparison line with the value 0 is displayed. The aesthetic `groupby` can be used to group observations.
+
+```{r reVsObs-default, fig.alt="Scatter plot showing log residuals versus age with default settings. Residuals are calculated as log(predicted) - log(observed), displayed as points colored by sex groups. A horizontal reference line at zero indicates perfect prediction. Points scattered around zero suggest good model performance."}
+data <- data |>
+  dplyr::mutate(logResiduals = log(Pred) - log(Obs))
+
+plotResVsCov(
+  data = data,
+  mapping = aes(
+    x = Age,
+    y = logResiduals,
+    groupby = Sex
+  )
+) +
+  labs(y = "residuals\nlog(predicted) - log(observed)")
+```
+
+## 3.1.2 Linear Scale for Residuals
+
+For linear residuals, calculate `Pred - Obs` before plotting.
+
+Below, the line type of the comparison line is set to 'solid'.
+
+```{r resVsCov-basic-linear, fig.alt="Scatter plot showing linear residuals versus age with a solid horizontal reference line. Residuals are calculated as predicted - observed on a linear scale, with points colored by sex groups. The solid reference line at zero provides a clear visual reference for assessing prediction accuracy."}
+data <- data |>
+  dplyr::mutate(linearResiduals = Pred - Obs)
+
+plotResVsCov(
+  data = data,
+  mapping = aes(
+    x = Age,
+    y = linearResiduals,
+    groupby = Sex
+  ),
+  geomComparisonLineAttributes = list(linetype = "solid")
+) +
+  labs(y = "residuals\npredicted - observed")
+```
+
+
+## 3.2 Adjusting Comparison Lines
+
+```{r resVsCov-comparisonlines, fig.alt="Scatter plot showing residuals versus age with custom comparison lines. The plot includes a zero reference line and additional upper and lower limit lines at ±0.25, providing multiple reference points for evaluating prediction accuracy. Points are colored by sex groups."}
+plotResVsCov(
+  data = data,
+  mapping = aes(
+    x = Age,
+    y = logResiduals,
+    groupby = Sex
+  ),
+  comparisonLineVector = list(zero = 0, "lower limit" = -0.25, "upper limit" = 0.25)
+) +
+  labs(y = "residuals\nlog(predicted) - log(observed)")
+```
+
+## 3.3 Adding a Regression Line
+
+To add a regression line, set the input variable `addRegression` to `TRUE`. For regression lines, the package `{ggpubr}` has a nice function `stat_regline_equation` to add statistics of the regression as labels.
+
+```{r unnamed-chunk-2, warning=FALSE, fig.width=8, fig.alt="Scatter plot showing residuals versus age with linear regression line and equation overlay. The plot includes both a fitted regression line and the regression equation statistics, helping to identify any systematic bias in residuals with respect to age. Points are colored by sex groups."}
+plotResVsCov(
+  data = data,
+  mapping = aes(
+    x = Age,
+    y = logResiduals,
+    groupby = Sex
+  ),
+  addRegression = TRUE
+) +
+  labs(y = "residuals\nlog(predicted) - log(observed)") +
+  ggpubr::stat_regline_equation(aes(label = after_stat(eq.label)))
+```
+
+# 4. Ratio Plots (`plotRatioVsCov()`)
+
+## 4.1 Basic Examples
+
+### 4.1.1 Default Settings
+
+`plotRatioVsCov()` is used to evaluate ratios versus a covariate. By default, the identity and 1.5 and 2 point lines are added, and the default for `yScale` is 'log'. The aesthetic `groupby` can be used to group observations.
+
+```{r ratio-defaults, warning = FALSE, message = FALSE, fig.alt="Log-scale scatter plot showing ratio values versus age with default comparison lines. The plot displays ratios with identity line at 1 and fold-distance lines at 1.5 and 2. Points are colored by sex groups, with the log scale helping to visualize multiplicative relationships."}
+plotRatioVsCov(
+  data = pkRatioData,
+  mapping = aes(
+    x = Age,
+    y = Ratio,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+```
+
+### 4.1.2 Compare Residuals as Ratio
+
+The ratio of observed to predicted is calculated as $observed / predicted$. Pre-calculate this column before passing to `plotRatioVsCov()`. Below, the comparison line is set to a 1.2 fold distance.
+
+```{r ratio-residuals, fig.alt="Scatter plot showing residual ratios (observed/predicted) versus age with 1.2-fold comparison lines. The plot demonstrates ratio-based residual analysis, where ratios above or below the comparison lines indicate systematic over- or under-prediction. Points are colored by sex groups."}
+data <- data |>
+  dplyr::mutate(Ratio = Obs / Pred)
+
+plotRatioVsCov(
+  data = data,
+  mapping = aes(
+    x = Age,
+    y = Ratio,
+    groupby = Sex
+  ),
+  comparisonLineVector = getFoldDistanceList(c(1.2))
+)
+```
+
+### 4.1.3 Using `{ospsuite.plots}` Specific Aesthetics like MDV and `error_relative`
+
+If some of the data should be omitted, we can do this by mapping a logical column to the aesthetic `mdv`. Below, we exclude data with Age less than 20.
+
+Additional error bars are displayed by mapping the column "gsd" to the aesthetic `error_relative`.
+
+```{r ratio-error, fig.alt="Scatter plot showing ratio values versus age with error bars and missing data exclusion. Data points with age less than 20 are excluded (MDV flag), and relative error bars show uncertainty in the measurements. Points are colored by sex groups with horizontal legend layout."}
+plotRatioVsCov(
+  data = pkRatioData,
+  mapping = aes(
+    x = Age,
+    y = Ratio,
+    error_relative = gsd,
+    mdv = Age < 20,
+    groupby = Sex
+  )
+) + theme(legend.box = "horizontal", legend.title = element_blank())
+```
+
+## 4.2 Qualification of Ratios
+
+If the `{data.table}` package is installed and the variable `comparisonLineVector` is a named list, the `{ggplot}` object returned by `plotRatioVsCov` has an additional entry `countsWithin`, which contains a `data.frame` with the fractions within the specific ranges given by the variable `comparisonLineVector`.
+
+```{r qualification-plot, results='asis', fig.alt="Scatter plot showing ratio values versus age with qualification analysis. The plot generates both the visualization and a statistical summary table showing the fraction of data points within specified comparison ranges. Points are colored by sex groups."}
+plotObject <- plotRatioVsCov(
+  data = pkRatioData,
+  mapping = aes(
+    x = Age,
+    y = Ratio,
+    groupby = Sex
+  ),
+  metaData = metaData
+)
+
+plot(plotObject)
+
+knitr::kable(plotObject$countsWithin, caption = "Counts and fraction within ranges")
+```
+
+
+## 4.3 Add Guest Criteria Lines
+
+To compare DDI ratios, set the variable `addGuestLimits` to TRUE and set the variable `deltaGuest`.
+
+```{r ratio-Guest, fig.alt="Scatter plot showing predicted versus observed DDI ratios with Guest criteria lines indicating acceptable ranges for drug-drug interaction assessment. Different studies are represented in different colors, and the plot effectively visualizes the prediction accuracy against the Guest criteria."}
+dDIdata <- dDIdata |>
+  dplyr::mutate(Ratio = Obs / Pred)
+
+plotObject <- plotRatioVsCov(
+  data = dDIdata,
+  mapping = aes(
+    x = Obs,
+    y = Ratio,
+    groupby = Study
+  ),
+  metaData = dDImetaData,
+  addGuestLimits = TRUE,
+  comparisonLineVector = 1
+)
+
+print(plotObject)
+knitr::kable(plotObject$countsWithin)
+```
+
+# 5. Quantile Plot (`plotQQ()`)
+
+`plotQQ()` produces a Quantile-Quantile plot. Residuals must be pre-calculated and mapped to the `sample` aesthetic.
+
+> **Note:** If you are using the `{ospsuite}` package, you can use `ospsuite::addResidualColumn()` to add a residual column to your data.
+
+```{r qq-log, fig.alt="Quantile-quantile plot showing the distribution of log residuals compared to a normal distribution. Points follow the diagonal reference line if residuals are normally distributed. Deviations from the line indicate non-normal distribution patterns. Points are colored by sex groups."}
+data <- data |>
+  dplyr::mutate(logResiduals = log(Pred) - log(Obs))
+
+plotQQ(
+  data = data,
+  mapping = aes(
+    sample = logResiduals,
+    groupby = Sex
+  )
+) +
+  labs(y = "residuals\nlog(predicted) - log(observed)")
+```
+
+# 6 Residuals in Other Plot Functions
+
+Pre-calculated residuals can be used in `plotHistogram()` and `plotBoxWhisker()` by mapping the residual column to the appropriate aesthetic.
+
+## 6.1 Residuals as Histogram
+
+```{r histogram-residuals, fig.alt="Histogram showing the distribution of log residuals with normal distribution overlay curve. The frequency-based histogram includes a dashed vertical line at zero and a fitted normal distribution curve to assess whether residuals follow a normal distribution. Histograms are stratified by sex groups."}
+plotHistogram(
+  data = data,
+  metaData = metaData,
+  mapping = aes(
+    x = logResiduals,
+    groupby = Sex
+  ),
+  plotAsFrequency = TRUE,
+  distribution = "normal"
+) + geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(x = "residuals\nlog(predicted) - log(observed)")
+```
+
+## 6.2 Stratify Residuals with a Box-Whisker Plot
+
+```{r boxwhisker-residuals, fig.alt="Box plots showing the distribution of linear residuals stratified by sex. The box plots display quartiles and whiskers for residuals calculated as observed minus predicted, allowing comparison of residual distributions between male and female groups."}
+pkRatioData <- pkRatioData |>
+  dplyr::mutate(linearResiduals = Pred - Obs)
+
+plotBoxWhisker(
+  mapping = aes(
+    y = linearResiduals,
+    x = Sex
+  ),
+  data = pkRatioData,
+  metaData = metaData
+) +
+  labs(y = "residuals\nlog(predicted) - log(observed)")
+```

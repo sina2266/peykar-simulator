@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Minimal but numerically valid MovingBoundarySetup fixture.
+
+  Parameters match the C++ movingboundarysetuptest.cpp (which was designed to
+  work with these exact domain/resolution/front settings) with three additions:
+    - required redistribution elements
+    - frontTimeStep / solverTimeStep (replaces legacy numberTimeSteps)
+    - physiology/subdomain with per-species diffusion
+
+  Key choices:
+  - Domain [-1.5, 2.1] (asymmetric — avoids placing grid nodes on the unit
+    circle and prevents degenerate VoronoiMesh boundary elements)
+  - 19x19 nodes (spacing 0.2, matches the validated C++ test)
+  - specialFront/circle with velocityx=0.5 (non-zero velocity avoids
+    degenerate FT_Propagate with a static front)
+  - maxTime=0.1 with dt=0.01 → 10 time steps (fast, reproducible)
+  - EXPANSION_REDIST (mode=1) — simplest active redistribution
+-->
+<MovingBoundarySetup>
+  <problem>
+    <specialFront>
+      <circle>
+        <originx>0</originx>
+        <originy>0</originy>
+        <radius>1</radius>
+        <velocityx>0.5</velocityx>
+        <thetaIncrement>0.01</thetaIncrement>
+      </circle>
+    </specialFront>
+    <xLimits>
+      <low>-1.5</low>
+      <high>2.1</high>
+    </xLimits>
+    <yLimits>
+      <low>-1.5</low>
+      <high>2.1</high>
+    </yLimits>
+    <numNodesX>19</numNodesX>
+    <numNodesY>19</numNodesY>
+    <frontToNodeRatio>5</frontToNodeRatio>
+    <maxTime>0.1</maxTime>
+    <frontTimeStep>0.01</frontTimeStep>
+    <solverTimeStep>0.01</solverTimeStep>
+    <redistributionMode>1</redistributionMode>
+    <redistributionVersion>1</redistributionVersion>
+    <redistributionFrequency>1</redistributionFrequency>
+    <extrapolationMethod>1</extrapolationMethod>
+    <levelFunction>x^2 + y^2 - 1</levelFunction>
+    <frontVelocityFunctionX>0.5</frontVelocityFunctionX>
+    <frontVelocityFunctionY>0</frontVelocityFunctionY>
+    <physiology>
+      <subdomain type="volume" name="cytosol">
+        <species name="s" type="volume">
+          <initial>1</initial>
+          <diffusion>0.1</diffusion>
+          <source>0</source>
+        </species>
+      </subdomain>
+    </physiology>
+  </problem>
+</MovingBoundarySetup>

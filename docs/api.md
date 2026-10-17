@@ -3,6 +3,14 @@
 Version prefix: `/v1`. Machine-readable source: `schemas/openapi.json`.
 Authentication, local deployment and body limits: [operations.md](operations.md).
 
+Shared system routes now include source library discovery (`/v1/libraries`),
+persistent graphs/neighborhoods (`/v1/biology/graphs`), frozen experiments
+(`/v1/experiments`) and durable child-run workflows (`/v1/experiment-runs`).
+Exact routes/roles are in [libraries](library-ecosystem.md),
+[biology](biological-graph.md) and [experiments](experiment-workflows.md); generated
+OpenAPI includes them. Data reads require authentication; writes require admin.
+There is no HTTP Git/source-path import or remote code execution.
+
 | Method | Path | Purpose | Access |
 |---|---|---|---|
 | GET | /healthz | Process health | Public |

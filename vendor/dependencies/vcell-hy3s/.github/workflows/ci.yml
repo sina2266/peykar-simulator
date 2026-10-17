@@ -1,0 +1,321 @@
+name: CI
+
+# Builds the three Hy3S solvers and runs the ctest suite on Linux, macOS and
+# Windows.
+#
+# Linux and macOS use GCC: Hy3S is Fortran, Clang has no Fortran compiler, and
+# gfortran's runtime links against libstdc++, so the libc++ toolchain the ODE
+# repo uses is not an option either.
+#
+# Windows is a different pairing rather than a different shell. Intel Fortran
+# (ifx) compiles the Fortran and hands the link to MSVC's link.exe, which is how
+# this code was originally built -- the tree still carries -DPowerStationFortran
+# and Intel's /iface flags from that era. No MSYS2 and no MinGW is involved,
+# because unlike Chombo, Hy3S has no build system of its own: no GNU make, no
+# perl, no custom preprocessor, just CMake over plain Fortran.
+#
+# Conan carries very little here. libcurl is the only dependency and only when
+# messaging is on, so the Windows job -- where messaging is off, as everywhere
+# in VCell -- resolves nothing at all beyond a current cmake and ninja.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux x86_64 (GCC 13)
+    # Pinned rather than ubuntu-latest deliberately: the Conan profile hardcodes
+    # compiler.version=13, and 24.04 is the image shipping GCC 13. If the default
+    # runner image moved to a newer compiler, Conan's ABI hash would stop matching
+    # the packages it built and the failure would surface somewhere far less
+    # obvious than this line.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out repository and submodules
+        uses: actions/checkout@v4
+        with:
+          # vcell-messaging is needed at configure time when messaging is on --
+          # CMakeLists.txt stops with a FATAL_ERROR if the submodule is empty.
+          submodules: recursive
+
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          # Hy3S is almost entirely Fortran; gfortran is not on the image by default.
+          sudo apt-get install -y --no-install-recommends gfortran
+
+      - name: Verify the toolchain matches the Conan profile
+        run: |
+          # Conan hashes the compiler version into its package IDs. A mismatch
+          # here means it would resolve packages built for a different ABI, so
+          # fail loudly and early rather than at link time.
+          expected=$(sed -n 's/^compiler\.version=//p' conan-profiles/CI-CD/Linux-AMD64_profile.txt)
+          for tool in gcc g++ gfortran; do
+            actual=$("$tool" -dumpversion | cut -d. -f1)
+            echo "$tool: $actual (profile expects $expected)"
+            if [ "$actual" != "$expected" ]; then
+              echo "::error::$tool is version $actual but conan-profiles/CI-CD/Linux-AMD64_profile.txt pins compiler.version=$expected"
+              exit 1
+            fi
+          done
+
+      - name: Install Conan
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install 'conan>=2.0'
+          conan --version
+
+      - name: Install dependencies with Conan
+        run: |
+          # -pr:a rather than copying the profile over ~/.conan2/profiles/default:
+          # it names the profile at the call site and keeps no hidden state. With
+          # a libc++ profile Conan hands GCC `-stdlib=libc++` and the dependency
+          # builds fail outright.
+          CC=gcc CXX=g++ FC=gfortran conan install . --build=missing \
+            -pr:a=conan-profiles/CI-CD/Linux-AMD64_profile.txt
+
+      - name: Configure
+        run: |
+          # conanbuild.sh puts Conan's cmake and ninja on PATH. Each `run:` is a
+          # fresh shell, hence the repeated source below.
+          source build/generators/conanbuild.sh
+          CC=gcc CXX=g++ FC=gfortran cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: Test
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Upload solver binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcell-hy3s-linux-x86_64
+          path: |
+            build/bin/Hybrid_EM_x64
+            build/bin/Hybrid_MIL_x64
+            build/bin/Hybrid_MIL_Adaptive_x64
+          if-no-files-found: error
+          retention-days: 14
+
+  macos:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS arm64 (GCC 13)
+            os: macos-15
+            profile: MacOS-ARM64_profile.txt
+            artifact: vcell-hy3s-macos-arm64
+          - name: macOS x86_64 (GCC 13)
+            os: macos-15-intel
+            profile: MacOS-AMD64_profile.txt
+            artifact: vcell-hy3s-macos-x86_64
+
+    steps:
+      - name: Check out repository and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build prerequisites
+        run: |
+          # The runner images already ship Homebrew GCC 13 through 16 with
+          # matching gfortran, so this is normally a no-op. Guard rather than
+          # install unconditionally: `brew install gcc` is slow when it decides
+          # to upgrade.
+          if ! command -v gfortran-13 >/dev/null; then
+            brew install gcc@13
+          fi
+          brew install conan
+          conan --version
+
+      - name: Verify the toolchain matches the Conan profile
+        run: |
+          expected=$(sed -n 's/^compiler\.version=//p' conan-profiles/CI-CD/${{ matrix.profile }})
+          for tool in gcc-13 g++-13 gfortran-13; do
+            actual=$("$tool" -dumpversion | cut -d. -f1)
+            echo "$tool: $actual  ($(command -v $tool))"
+            if [ "$actual" != "$expected" ]; then
+              echo "::error::$tool is version $actual but ${{ matrix.profile }} pins compiler.version=$expected"
+              exit 1
+            fi
+          done
+
+      - name: Install dependencies with Conan
+        env:
+          CC: gcc-13
+          CXX: g++-13
+          FC: gfortran-13
+        run: |
+          # Messaging is on, matching Linux. Conan Center has no macOS binaries
+          # for a GCC profile, so libcurl and openssl compile from source.
+          conan install . --build=missing \
+            -pr:a=conan-profiles/CI-CD/${{ matrix.profile }}
+
+      - name: Configure
+        env:
+          CC: gcc-13
+          CXX: g++-13
+          FC: gfortran-13
+        run: |
+          source build/generators/conanbuild.sh
+          cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: Test
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Upload solver binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            build/bin/Hybrid_EM_x64
+            build/bin/Hybrid_MIL_x64
+            build/bin/Hybrid_MIL_Adaptive_x64
+          if-no-files-found: error
+          retention-days: 14
+
+  windows:
+    name: Windows x86_64 (Intel Fortran + MSVC)
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        # No submodules: messaging is off on Windows, so vcell-messaging is not
+        # needed at configure time.
+
+      # ifx does not link anything itself on Windows -- it drives MSVC's
+      # link.exe. Without the developer environment it fails with
+      # "error #10037: could not find 'link'", and CMake reports the Fortran
+      # compiler as "unknown" because compiler identification links a test
+      # program too. This step must come before anything that uses ifx.
+      - name: Activate the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install Intel Fortran
+        id: setup
+        uses: fortran-lang/setup-fortran@v1
+        with:
+          compiler: intel
+          version: '2025.0'
+
+      - name: Verify the toolchain matches the Conan profile
+        shell: pwsh
+        run: |
+          & "${{ steps.setup.outputs.fc }}" --version 2>&1 | Select-Object -First 2
+          Write-Host "  cl:   $((Get-Command cl).Source)"
+          Write-Host "  link: $((Get-Command link).Source)"
+
+          # Conan's CMakeToolchain turns compiler.version into a Visual Studio
+          # installation and fails if that installation is not present -- the
+          # first Windows run died with "VS non-existing installation: Visual
+          # Studio 17" because the profile said 194 while the image ships VS 18.
+          # Check it here, where the message can say so plainly.
+          $clOut = (& cl 2>&1 | Out-String)
+          if ($clOut -notmatch 'Version (\d+)\.(\d+)') {
+            Write-Host "::error::could not parse a version out of cl.exe"
+            exit 1
+          }
+          # 19.51 -> msvc 195. Floor rather than a rounding cast, which would
+          # turn 19.59 into 196.
+          $actual = "$($Matches[1])$([math]::Floor([int]$Matches[2] / 10))"
+          $expected = (Select-String -Path conan-profiles/CI-CD/Windows-AMD64_profile.txt `
+                        -Pattern '^compiler\.version=(.+)$').Matches[0].Groups[1].Value
+          Write-Host "  cl reports $($Matches[1]).$($Matches[2]) -> msvc $actual (profile expects $expected)"
+          if ($actual -ne $expected) {
+            Write-Host "::error::cl.exe is msvc $actual but Windows-AMD64_profile.txt pins compiler.version=$expected"
+            exit 1
+          }
+
+      - name: Install Conan
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'conan>=2.0'
+          conan --version
+
+      - name: Install dependencies with Conan
+        shell: pwsh
+        run: |
+          # With messaging off there is nothing external to resolve: NetCDF is
+          # vendored and libcurl is only needed for messaging. This is here for
+          # a current cmake and ninja, and to keep all three platforms on the
+          # same footing.
+          conan install . --build=missing `
+            -pr:a=conan-profiles/CI-CD/Windows-AMD64_profile.txt
+
+      # cmd rather than pwsh for the three steps that need Conan's environment:
+      # on Windows Conan generates conanbuild.bat, not a PowerShell script, so
+      # these steps `call` it the way it is meant to be used. Each `run:` is a
+      # fresh shell, hence the repeated call.
+      - name: Configure
+        shell: cmd
+        run: |
+          if not exist build\generators\conanbuild.bat (echo ::error::conanbuild.bat missing -- conan install did not generate it & exit /b 1)
+          call build\generators\conanbuild.bat
+          :: Ninja rather than the Visual Studio generator: the VS generator
+          :: needs oneAPI's IDE integration to see Fortran at all, which
+          :: setup-fortran does not install. Ninja simply runs the compilers.
+          cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE="%CD%\build\generators\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_Fortran_COMPILER="${{ steps.setup.outputs.fc }}" -DOPTION_TARGET_MESSAGING=OFF
+
+      - name: Build
+        shell: cmd
+        run: |
+          if not exist build\generators\conanbuild.bat (echo ::error::conanbuild.bat missing -- conan install did not generate it & exit /b 1)
+          call build\generators\conanbuild.bat
+          cmake --build build
+
+      # TEMPORARY: the Release binaries crash with "forrtl: severe (157):
+      # Program Exception - access violation" right after the version banner,
+      # and the traceback carries no symbols. This builds the same sources with
+      # traceback and full runtime checks to get a source line, then runs one
+      # solver. Delete once the crash is understood.
+      - name: Test
+        shell: cmd
+        run: |
+          if not exist build\generators\conanbuild.bat (echo ::error::conanbuild.bat missing -- conan install did not generate it & exit /b 1)
+          call build\generators\conanbuild.bat
+          ctest --test-dir build --output-on-failure
+
+      - name: Upload solver binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcell-hy3s-windows-x86_64
+          path: |
+            build/bin/Hybrid_EM_x64.exe
+            build/bin/Hybrid_MIL_x64.exe
+            build/bin/Hybrid_MIL_Adaptive_x64.exe
+          if-no-files-found: error
+          retention-days: 14

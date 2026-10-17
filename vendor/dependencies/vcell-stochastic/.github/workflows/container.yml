@@ -1,0 +1,240 @@
+# The vcell-stochastic solver image: build it, smoke-test it the way VCell's cluster runs it,
+# and publish it (VCell docs/plan-solver-repos.md §1.3-1.6; README "Solver release contract"):
+#
+#   ghcr.io/virtualcell/vcell-stochastic:<X.Y.Z>, :latest           multi-arch image (amd64, arm64)
+#   oras://ghcr.io/virtualcell/vcell-stochastic_singularity:<X.Y.Z>  Apptainer SIF (amd64)
+#
+# v* tags publish <X.Y.Z> and latest; pushes to main publish sha-<short> (for trying a build on
+# the dev cluster before it is released); pull requests build and smoke-test only.
+#
+# Smoke tests, on every run:
+#   - `<image> --help` exits 0, an unknown executable exits 2;
+#   - Docker, as a non-root uid with a bind mount, argv exactly as SlurmProxy writes it
+#     (bare VCellStoch_x64, paths under /simdata, trailing -tid): every Gibson reference case
+#     must reproduce the committed legacy vcell-solvers v0.0.44-dev4 output (compare.py --exact);
+#   - messaging: with a JMS_PARAM block and -tid 7 the solver must POST its JOB_COMPLETED event
+#     to a stand-in broker;
+#   - amd64: the same from the SIF under `apptainer run --containall`.
+name: container
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: container-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-stochastic
+  SIF: ghcr.io/virtualcell/vcell-stochastic_singularity
+  PUBLISH: ${{ github.event_name == 'push' }}
+
+jobs:
+  image:
+    name: image (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { platform: linux/amd64, runner: ubuntu-24.04, arch: amd64 }
+          - { platform: linux/arm64, runner: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = tag ]; then v="${GITHUB_REF_NAME}"; else v="$(git describe --tags --match 'v*' --always --dirty)"; fi
+          echo "VCELLSTOCH_VERSION=$v" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --no-cache-dir numpy h5py
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build and load
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          build-args: VCELLSTOCH_VERSION=${{ env.VCELLSTOCH_VERSION }}
+          load: true
+          tags: vcell-stochastic:ci
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}
+
+      - name: Smoke - entrypoint
+        run: |
+          set -eux
+          docker image ls vcell-stochastic:ci
+          docker run --rm vcell-stochastic:ci | tee help.txt
+          grep -q "vcell-stochastic ${VCELLSTOCH_VERSION}" help.txt
+          grep -q VCellStoch_x64 help.txt
+          docker run --rm vcell-stochastic:ci --help > /dev/null
+          rc=0; docker run --rm vcell-stochastic:ci no-such-solver || rc=$?
+          test "$rc" = 2
+
+      - name: Smoke - Gibson references, non-root, bind mount, -tid (Docker)
+        run: |
+          set -eux
+          work="$RUNNER_TEMP/docker"; mkdir -p "$work"; chmod 777 "$work"
+          python Tests/reference/compare.py \
+            "docker run --rm --user 12345:12345 -v $work:/simdata vcell-stochastic:ci VCellStoch_x64" \
+            --work "$work" --exe-dir /simdata --exact --extra-args -tid 0
+
+      - name: Smoke - messaging reaches the broker (Docker)
+        run: |
+          set -eux
+          work="$RUNNER_TEMP/msg-docker"; mkdir -p "$work"; chmod 777 "$work"
+          cat Tests/reference/jms_params.txt Tests/reference/birthdeath_single.stochInput > "$work/msg.stochInput"
+          python Tests/reference/fake_broker.py 18165 "$work/broker.log" & broker=$!
+          sleep 1
+          docker run --rm --network host --user 12345:12345 -v "$work:/simdata" vcell-stochastic:ci \
+            VCellStoch_x64 gibson /simdata/msg.stochInput /simdata/msg.ida -tid 7 | tee "$work/stdout.txt"
+          kill "$broker"
+          cat "$work/broker.log"
+          grep '/api/message/workerEvent' "$work/broker.log" | grep 'TaskID=7' | grep -q 'WorkerEvent_Status=1003'
+          cmp "$work/msg.ida" Tests/reference/legacy-v0.0.44-dev4-linux64/birthdeath_single.ida
+
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke - the SIF under --containall
+        if: matrix.arch == 'amd64'
+        run: |
+          set -eux
+          sif="$RUNNER_TEMP/vcell-stochastic.sif"
+          apptainer build "$sif" docker-daemon://vcell-stochastic:ci
+          ls -la "$sif"
+          apptainer run --containall "$sif" --help
+          apptainer run --containall "$sif" | grep -q VCellStoch_x64
+          rc=0; apptainer run --containall "$sif" no-such-solver || rc=$?
+          test "$rc" = 2
+          work="$RUNNER_TEMP/sif"; mkdir -p "$work"
+          id -u
+          python Tests/reference/compare.py \
+            "apptainer run --containall --bind $work:/simdata $sif VCellStoch_x64" \
+            --work "$work" --exe-dir /simdata --exact --extra-args -tid 0
+          # messaging, from the SIF
+          msg="$RUNNER_TEMP/msg-sif"; mkdir -p "$msg"
+          cat Tests/reference/jms_params.txt Tests/reference/birthdeath_single.stochInput > "$msg/msg.stochInput"
+          python Tests/reference/fake_broker.py 18165 "$msg/broker.log" & broker=$!
+          sleep 1
+          apptainer run --containall --bind "$msg:/simdata" "$sif" \
+            VCellStoch_x64 gibson /simdata/msg.stochInput /simdata/msg.ida -tid 7
+          kill "$broker"
+          grep '/api/message/workerEvent' "$msg/broker.log" | grep 'TaskID=7' | grep -q 'WorkerEvent_Status=1003'
+          cmp "$msg/msg.ida" Tests/reference/legacy-v0.0.44-dev4-linux64/birthdeath_single.ida
+
+      # --- publishing (pushes to main and v* tags) ---------------------------------------------------
+      - name: Tags
+        if: env.PUBLISH == 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          flavor: latest=false
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=sha,format=short,enable=${{ github.ref == 'refs/heads/main' }}
+
+      - name: Log in to GHCR
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push by digest
+        if: env.PUBLISH == 'true'
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          build-args: VCELLSTOCH_VERSION=${{ env.VCELLSTOCH_VERSION }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Record the digest
+        if: env.PUBLISH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v4
+        if: env.PUBLISH == 'true'
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: env.PUBLISH == 'true' && matrix.arch == 'amd64'
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          set -euxo pipefail
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          for ref in $TAGS; do
+            apptainer push "$RUNNER_TEMP/vcell-stochastic.sif" "oras://${SIF}:${ref##*:}"
+          done
+
+  manifest:
+    name: multi-arch manifest
+    if: github.event_name == 'push'
+    needs: image
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          flavor: latest=false
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=sha,format=short,enable=${{ github.ref == 'refs/heads/main' }}
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          set -euxo pipefail
+          # shellcheck disable=SC2046  # word splitting is the point: one -t per tag, one ref per digest
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${{ steps.meta.outputs.version }}"

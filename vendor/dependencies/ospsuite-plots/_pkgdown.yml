@@ -1,0 +1,101 @@
+url: https://www.open-systems-pharmacology.org/OSPSuite.Plots/
+
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+authors:
+  Open-Systems-Pharmacology Community:
+    href: https://www.open-systems-pharmacology.org/
+    html: <img src='https://avatars.githubusercontent.com/u/25098323?s=33' alt="Open System Pharmacology Logo">Open Systems Pharmacology
+  Katrin Coboeken:
+    href: https://github.com/KatrinCoboeken
+
+articles:
+  - title: Overview
+    navbar: Overview
+    desc: Overview
+    contents:
+      - ospsuite-plots
+  - title: Plotting functions
+    navbar: Plotting functions
+    desc: Details about plot functions
+    contents:
+      - plot-time-profile
+      - box-whisker-plots
+      - histogram
+      - goodness-of-fit
+      - forest-plots
+      - range-plot-visualization
+
+figures:
+  dev: ragg::agg_png
+  fig.ext: png
+  dev.args: []
+  fig.width: 10
+  fig.asp: 0.618
+  fig.retina: 1
+  bg: NA
+  other.parameters: []
+
+reference:
+  - title: "Plot Functions"
+    desc: "Functions for creating plots"
+    contents:
+      - has_concept("plot functions")
+  - title: "Update/initialize plots"
+    desc: "initialize plot or add to existing plots"
+    contents:
+      - matches("initializePlot")
+      - matches("addXScale")
+      - matches("addYScale")
+      - matches("addLLOQLayer")
+      - matches("addXYScale")
+  - title: "Watermark"
+    desc: "Functions to set watermark"
+    contents:
+      - has_concept("watermark")
+  - title: "Plot export"
+    desc: "Functions to export plot"
+    contents:
+      - matches("exportPlot")
+  - title: "Default settings"
+    desc: "Functions to set and reset Settings for plot layout"
+    contents:
+      - has_concept("setDefault functions")
+  - title: "DataMapping Classes"
+    desc: "Classes combining data and Mapping"
+    contents:
+      - starts_with("MappedData")
+  - title: "Layers"
+    desc: "Custom ggplot2 geoms and stats"
+    contents:
+      - has_concept("layers")
+  - title: "Shapes"
+    desc: "OSP shape system for custom point rendering"
+    contents:
+      - has_concept("shapes")
+  - title: "Scales"
+    desc: "Per-plot OSP color and fill scales"
+    contents:
+      - has_concept("scales")
+  - title: "Constants"
+    desc: "Enumeration constants for OSPSuite.plots options and scaling."
+    contents:
+      - matches("AxisScales")
+      - matches("OptionKeys")
+      - matches("BINNINGMODE")
+  - title: "Data"
+    desc: "Data used within the vignette examples"
+    contents:
+      - starts_with("exampleData")
+  - title: "auxiliary functions"
+    desc: "Helper functions and the combined plot/table class"
+    contents:
+      - matches("metaData2DataFrame")
+      - matches("CombinedPlot")
+      - matches("constructLabelWithUnit")
+      - matches("getFoldDistanceList")
+      - matches("updateScaleArgumentsForTimeUnit")

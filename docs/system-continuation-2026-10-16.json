@@ -1,0 +1,112 @@
+{
+  "observed_on": "2026-10-16",
+  "scope": "Whole-platform shared backend continuation; not project completion",
+  "live": {
+    "source_libraries": 9,
+    "source_entries": 36291,
+    "source_bytes": 1308090422,
+    "unresolved_gitlinks": 24,
+    "graph": {
+      "id": "biology.human-egfr",
+      "entities": 3,
+      "relationships": 2
+    },
+    "experiment": {
+      "schema_version": "1.0.0",
+      "id": "3f2b262a-f367-485e-b2d3-c34abcd1d076",
+      "experiment": {
+        "schema_version": "1.0.0",
+        "id": "workflow.decay-transfer",
+        "version": "1.0.0"
+      },
+      "experiment_digest": "d7de4fc5e802218cd06867f98ee79c024fe09352fe71923895c5a62fd38c6437",
+      "status": "succeeded",
+      "cancel_requested": false,
+      "error": null,
+      "created_at": "2026-10-16T21:18:11.572106+00:00",
+      "updated_at": "2026-10-16T21:18:13.039186+00:00",
+      "nodes": [
+        {
+          "schema_version": "1.0.0",
+          "node_id": "first",
+          "run_id": "2ec78ad7-c272-4acc-a563-3e4b04c7ed34",
+          "status": "succeeded"
+        },
+        {
+          "schema_version": "1.0.0",
+          "node_id": "second",
+          "run_id": "ac33758f-7d3e-43c5-b61f-2a933f671e71",
+          "status": "succeeded"
+        }
+      ]
+    },
+    "second_node_initial": 0.3678794411714421,
+    "expected_initial": 0.36787944117144233,
+    "second_node_final": 0.1353352832366125,
+    "expected_final": 0.1353352832366127,
+    "cancelled_experiment": {
+      "schema_version": "1.0.0",
+      "id": "3fa6fdfa-4ebf-43f1-9328-a60384a06291",
+      "experiment": {
+        "schema_version": "1.0.0",
+        "id": "workflow.decay-transfer",
+        "version": "1.0.0"
+      },
+      "experiment_digest": "d7de4fc5e802218cd06867f98ee79c024fe09352fe71923895c5a62fd38c6437",
+      "status": "cancelled",
+      "cancel_requested": true,
+      "error": null,
+      "created_at": "2026-10-16T21:18:13.271486+00:00",
+      "updated_at": "2026-10-16T21:18:13.281462+00:00",
+      "nodes": [
+        {
+          "schema_version": "1.0.0",
+          "node_id": "first",
+          "run_id": null,
+          "status": "skipped"
+        },
+        {
+          "schema_version": "1.0.0",
+          "node_id": "second",
+          "run_id": null,
+          "status": "skipped"
+        }
+      ]
+    },
+    "anonymous_read": 401,
+    "scientific_validity": "synthetic_engineering_verification_only"
+  },
+  "preservation": {
+    "integrity": "ok",
+    "foreign_keys": "ok",
+    "original_rows_preserved": {
+      "objects": 22,
+      "runs": 8,
+      "events": 24
+    },
+    "current_counts": {
+      "objects": 34,
+      "runs": 10,
+      "events": 30,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8
+    },
+    "workflow_statuses": {
+      "cancelled": 1,
+      "succeeded": 1
+    },
+    "verified_artifacts": 46,
+    "unassociated_workflow_children": 0
+  },
+  "unchanged_license_files": 24,
+  "unchanged_vcornea_files": 27,
+  "full_linux_tests": 259,
+  "statement_coverage_percent": 88,
+  "source_inventory_receipt": "../engine_adapters/ecosystem-source-receipts-2026-10-16.json",
+  "limitations": [
+    "24 top-level Git links still unresolved; additional native runtimes/adapters remain open.",
+    "Sequential scalar endpoint transfer is not simultaneous feedback or a validated biological coupling.",
+    "Full six-workspace UI, ontology synchronization, independent evaluation and distributed operations are not implemented by this continuation."
+  ]
+}

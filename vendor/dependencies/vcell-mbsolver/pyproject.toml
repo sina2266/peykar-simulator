@@ -1,0 +1,140 @@
+[build-system]
+requires = ["scikit-build-core>=0.8", "pybind11>=2.10"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pyvcell_mbsolver"
+description = "Python bindings for the VCell moving-boundary parabolic PDE solver"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dynamic = ["version"]
+classifiers = [
+    "Programming Language :: C++",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+]
+
+[project.urls]
+Homepage = "https://github.com/virtualcell/vcell-mbsolver"
+Repository = "https://github.com/virtualcell/vcell-mbsolver"
+
+# ---------------------------------------------------------------------------
+# scikit-build-core: drive the existing CMake build to produce the wheel.
+#
+# Only the `vcellmbsolver_py` extension and the pure-Python wrapper are placed
+# in the wheel (the "python" install component); the static C++ library, the
+# CLI binary, and the C++ headers are deliberately excluded. Tests and the
+# job-status messaging (CURL) are turned off for wheel builds.
+# ---------------------------------------------------------------------------
+[tool.scikit-build]
+cmake.version = ">=3.13"
+build.targets = ["_core"]
+install.components = ["python"]
+wheel.packages = []          # the pyvcell_mbsolver package is installed by CMake, not auto-copied
+wheel.license-files = ["LICENSE"]
+sdist.include = ["CMakeLists.txt"]
+
+[tool.scikit-build.cmake.define]
+BUILD_TESTING = "OFF"
+OPTION_TARGET_MESSAGING = "OFF"
+
+# importlib import-mode prevents the source tree from shadowing the built/
+# installed pyvcell_mbsolver package when running pytest directly.
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+testpaths = ["python/tests"]
+
+# Keep the wheel version in lock-step with the CMake project() version.
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+input = "CMakeLists.txt"
+regex = '''project\(VCellMovingBoundary VERSION (?P<value>[0-9]+\.[0-9]+\.[0-9]+)'''
+
+# ---------------------------------------------------------------------------
+# cibuildwheel: build redistributable, repaired wheels across platforms.
+# Native dependencies (HDF5, Boost) are installed per-platform in before-all.
+# Wheel repair (auditwheel/delocate/delvewheel) vendors the shared HDF5 libs
+# into the wheel so it is self-contained.
+# ---------------------------------------------------------------------------
+[tool.cibuildwheel]
+build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
+skip = "*-musllinux_* *_i686 *-win32"
+build-frontend = "build"
+test-command = "python -c \"import pyvcell_mbsolver; from pyvcell_mbsolver import _core; print('import OK')\""
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
+before-all = [
+    "dnf install -y epel-release",
+    "dnf install -y hdf5-devel boost-devel",
+]
+
+[tool.cibuildwheel.macos]
+before-all = "brew install hdf5 boost"
+# Homebrew bottles target the runner's macOS, so the vendored HDF5 libs require
+# a recent minimum; matching it here keeps delocate's wheel repair happy. (This
+# means the macOS wheels require macOS 15+, as with vcell-fvsolver.)
+environment = { MACOSX_DEPLOYMENT_TARGET = "15.0" }
+
+# Windows wheels: vcpkg provides HDF5/Boost/CURL via the x64-windows triplet.
+# The "Install Windows vcpkg dependencies" step in wheels.yml runs
+# `vcpkg install --triplet x64-windows` before cibuildwheel, and the
+# CMAKE_ARGS below wire the toolchain file and explicit library hints into the
+# scikit-build-core configure step. OPTION_TARGET_MESSAGING stays OFF via
+# [tool.scikit-build.cmake.define] above.
+#
+# VCPKG_ROOT_FWD / GITHUB_WORKSPACE_FWD (set via GITHUB_ENV in the "Install
+# Windows vcpkg dependencies" step) are forward-slash copies of
+# VCPKG_INSTALLATION_ROOT / GITHUB_WORKSPACE. Using the backslash originals
+# here would break the build: cibuildwheel expands $VAR references with a
+# bash-syntax evaluator, and scikit-build-core then parses CMAKE_ARGS with
+# Python's POSIX-mode shlex.split(), which silently strips backslashes out of
+# Windows paths (e.g. "D:\a\repo" becomes "D:arepo"), corrupting HDF5_ROOT and
+# friends so vcpkg/HDF5/Boost/CURL can no longer be found.
+#
+# Unlike Linux (auditwheel) and macOS (delocate), cibuildwheel's default
+# repair-wheel-command on Windows is empty, so the wheel is left unrepaired
+# by default: the built _core extension dynamically loads hdf5.dll /
+# hdf5_cpp.dll / z.dll from vcpkg_installed/x64-windows/bin, which is not
+# on PATH in the clean venv cibuildwheel uses to test the wheel, causing
+# "ImportError: DLL load failed while importing _core". Explicitly repair
+# with delvewheel, pointing --add-path at the vcpkg bin directory so it can
+# find and vendor those DLLs into the wheel.
+# %GITHUB_WORKSPACE_FWD% is set by the "Install Windows vcpkg dependencies"
+# step in wheels.yml (see note above); this repair command is GitHub
+# Actions-specific and assumes that step has already populated
+# vcpkg_installed/x64-windows/bin. Unlike the CMAKE_ARGS below (expanded by
+# cibuildwheel's own bash-syntax environment evaluator), repair-wheel-command
+# is run via `shell=True`, which on Windows invokes cmd.exe: it only expands
+# %VAR% references, not $VAR, so the cmd.exe syntax is required here.
+[tool.cibuildwheel.windows]
+before-build = "pip install delvewheel"
+repair-wheel-command = "delvewheel repair --add-path %GITHUB_WORKSPACE_FWD%/vcpkg_installed/x64-windows/bin -w {dest_dir} {wheel}"
+
+[tool.cibuildwheel.windows.environment]
+CMAKE_ARGS = """\
+    -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT_FWD/scripts/buildsystems/vcpkg.cmake \
+    -DVCPKG_TARGET_TRIPLET=x64-windows \
+    -DVCPKG_INSTALLED_DIR=$GITHUB_WORKSPACE_FWD/vcpkg_installed \
+    -DVCPKG_MANIFEST_INSTALL=OFF \
+    -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows \
+    -DBOOST_ROOT=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows \
+    -DBOOST_INCLUDEDIR=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/include \
+    -DHDF5_ROOT=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows \
+    -DHDF5_INCLUDE_DIR=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/include \
+    -DHDF5_CXX_INCLUDE_DIR=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/include \
+    -DHDF5_hdf5_cpp_LIBRARY=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/lib/hdf5_cpp.lib \
+    -DHDF5_hdf5_LIBRARY=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/lib/hdf5.lib \
+    -DCURL_ROOT=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows \
+    -DCURL_INCLUDE_DIR=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/include \
+    -DCURL_LIBRARY=$GITHUB_WORKSPACE_FWD/vcpkg_installed/x64-windows/lib/libcurl.lib"""

@@ -1,0 +1,68 @@
+Type: Package
+Package: ospsuite.utils
+Title: Utility Functions for Open Systems Pharmacology R Packages
+Version: 1.11.1
+Authors@R: c(
+    person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
+    person("Michael", "Sevestre", , "michael@design2code.ca", role = c("aut", "cre")),
+    person("Pavel", "Balazki", role = "aut"),
+    person("Juri", "Solodenko", role = "aut"),
+    person("Indrajeet", "Patil", , "patilindrajeet.science@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets"))
+  )
+Maintainer: Michael Sevestre <michael@design2code.ca>
+Description: A collection of utility functions for R packages in the Open
+    Systems Pharmacology ecosystem. Contains helper functions for working
+    with R6 objects, enumerated lists, and text formatting. Additionally,
+    it provides functions to validate argument inputs.
+License: GPL-2
+URL: https://github.com/open-systems-pharmacology/OSPSuite.RUtils,
+    https://www.open-systems-pharmacology.org/OSPSuite.RUtils/
+BugReports:
+    https://github.com/open-systems-pharmacology/OSPSuite.RUtils/issues
+Depends:
+    R (>= 4.4)
+Imports:
+    purrr,
+    R6,
+    stringi,
+    cli,
+    lifecycle,
+    logger,
+    crayon,
+    glue
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Collate:
+    'enum.R'
+    'formatNumerics.R'
+    'logger.R'
+    'messages.R'
+    'objectCount.R'
+    'osp_print.R'
+    'utilities.R'
+    'ospsuite.utils-env.R'
+    'printable.R'
+    'utilities-conditional.R'
+    'utilities-logger.R'
+    'utilities-validation.R'
+    'validation-emptiness.R'
+    'validation-enum.R'
+    'validation-expected-length.R'
+    'validation-file-extensions.R'
+    'validation-inclusion.R'
+    'validation-options.R'
+    'validation-paths.R'
+    'validation-same-length.R'
+    'validation-type.R'
+    'validation-uniqueness.R'
+    'validation-utf.R'
+    'validation-vector.R'
+VignetteBuilder: knitr

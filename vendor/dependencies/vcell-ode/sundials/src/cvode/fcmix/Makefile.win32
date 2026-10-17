@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:07 $
+# -----------------------------------------------------------------
+# Programmer(s): Radu Serban and Aaron Collier @ LLNL
+# -----------------------------------------------------------------
+# Copyright (c) 2002, The Regents of the University of California.
+# Produced at the Lawrence Livermore National Laboratory.
+# All rights reserved.
+# For details, see the LICENSE file.
+# -----------------------------------------------------------------
+# Makefile for FCVODE module
+#
+# src/cvode/fcmix/Makefile.  Generated from Makefile.in by configure.
+# -----------------------------------------------------------------
+
+CC       = cl
+CFLAGS   = /GX /O2
+LDFLAGS  = 
+LIBS     = -lm
+
+LIBTOOL = lib
+LIBDIR = ..\..\..\lib
+
+INCLUDES = -I.. -I..\.. -I..\..\..\include
+
+FCVODE_LIB       = sundials_fcvode.lib
+FCVODE_OBJ_FILES = fcvode.obj fcvband.obj fcvdense.obj fcvjtimes.obj fcvpreco.obj fcvbbd.obj fcvbp.obj fcvroot.obj fcvewt.obj
+
+.SUFFIXES:		.c.objbj
+
+.c.obj:	
+	$(CC) /c $(CFLAGS) $(INCLUDES) /Fo$@ $<
+
+all: $(FCVODE_LIB)
+
+$(FCVODE_LIB): $(FCVODE_OBJ_FILES)
+	$(LIBTOOL) /out:$@ $(FCVODE_OBJ_FILES)
+	copy $@ $(LIBDIR)
+
+clean:
+	del $(FCVODE_LIB)
+	del *.obj

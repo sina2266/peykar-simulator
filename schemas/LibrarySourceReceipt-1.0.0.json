@@ -1,0 +1,162 @@
+{
+  "$defs": {
+    "LibrarySourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilities": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "commit": {
+          "pattern": "^[a-f0-9]{40}$",
+          "title": "Commit",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "license_files": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "License Files",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "repository": {
+          "pattern": "^https://github.com/[\\w.-]+/[\\w.-]+$",
+          "title": "Repository",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "title",
+        "repository",
+        "commit",
+        "license",
+        "license_files",
+        "capabilities",
+        "limitations"
+      ],
+      "title": "LibrarySourceSpec",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:LibrarySourceReceipt:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "inventory_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Inventory Digest",
+      "type": "string"
+    },
+    "lfs_pointers": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Lfs Pointers",
+      "type": "array"
+    },
+    "license_digests": {
+      "additionalProperties": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "title": "License Digests",
+      "type": "object"
+    },
+    "runtime_status": {
+      "const": "not_assessed_by_source_inspection",
+      "default": "not_assessed_by_source_inspection",
+      "title": "Runtime Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "spec": {
+      "$ref": "#/$defs/LibrarySourceSpec"
+    },
+    "state": {
+      "const": "source_inspected",
+      "default": "source_inspected",
+      "title": "State",
+      "type": "string"
+    },
+    "tracked_bytes": {
+      "minimum": 0,
+      "title": "Tracked Bytes",
+      "type": "integer"
+    },
+    "tracked_files": {
+      "minimum": 1,
+      "title": "Tracked Files",
+      "type": "integer"
+    },
+    "unresolved_submodules": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Submodules",
+      "type": "array"
+    }
+  },
+  "required": [
+    "spec",
+    "inventory_digest",
+    "license_digests",
+    "tracked_files",
+    "tracked_bytes"
+  ],
+  "title": "LibrarySourceReceipt",
+  "type": "object"
+}

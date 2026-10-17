@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 2.8)
+include(FindMatlabGerardus.txt)
+
+if (MSVC)
+	option(BUILD_CLIPPERLINK "Build link library for Clipper" ON)
+endif (MSVC)
+option(BUILD_FRONTIERLINK "Build link library for FronTierr" ON)
+
+if (MSVC11) #This actually means Visual Studio 2012 
+	set(OPT_FILE "msvcpp110.xml")
+	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+		set(OPT_FILE "msvcpp110d.xml")
+		message(STATUS "Matlab build.m script will only work for Debug builds")
+	elseif (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+		message(STATUS "Matlab build.m script will only work for Release builds")
+	endif( )
+else (MSVC11)
+	message("not 12")
+	if (${CMAKE_CL_64})
+		set(OPT_FILE "build64.opts")
+	else (${CMAKE_CL_64})
+		set(OPT_FILE "build32.opts")
+	endif (${CMAKE_CL_64})
+endif (MSVC11)
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
+include_directories(${MATLAB_INCLUDE_DIR})
+
+add_subdirectory(util)
+if (BUILD_CLIPPERLINK)
+	add_subdirectory(clipperLink)
+endif (BUILD_CLIPPERLINK)
+if (BUILD_FRONTIERLINK)
+	add_subdirectory(fronTierLink)
+endif (BUILD_FRONTIERLINK)
+

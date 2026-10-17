@@ -11,3 +11,9 @@ needs a verified license, pinned source/container digest, capabilities, units,
 state/time mapping, native seed/checkpoint behavior, resource limits and a frozen
 reference benchmark. Do not turn optional imports into fake successful results.
 Heavy scientific dependencies remain in engine-specific environments.
+
+All eight specialist repositories named in the original architecture, plus
+CompuCell3D, now have pinned local source snapshots and immutable inspection
+receipts; see [source ecosystem](../docs/library-ecosystem.md). Source availability
+does not change execution-adapter readiness. Changes belong in separate versioned
+patches with measured regression, preserving pristine upstream copies.

@@ -344,6 +344,108 @@ class BiologicalRelationship(Contract):
     evidence: tuple[str, ...]
 
 
+class BiologicalGraphSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    context: ScientificContext
+    entities: Annotated[tuple[BiologicalEntity, ...], Field(min_length=1, max_length=5000)]
+    relationships: Annotated[tuple[BiologicalRelationship, ...], Field(max_length=20000)] = ()
+
+
+class LibrarySourceSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    repository: Annotated[str, Field(pattern=r"^https://github.com/[\w.-]+/[\w.-]+$")]
+    commit: Annotated[str, Field(pattern=r"^[a-f0-9]{40}$")]
+    license: Annotated[str, Field(min_length=1, max_length=200)]
+    license_files: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+    capabilities: Annotated[tuple[Identifier, ...], Field(min_length=1, max_length=50)]
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class LibrarySourceReceipt(Contract):
+    spec: LibrarySourceSpec
+    inventory_digest: Sha256
+    license_digests: dict[str, Sha256]
+    tracked_files: Annotated[StrictInt, Field(ge=1)]
+    tracked_bytes: Annotated[StrictInt, Field(ge=0)]
+    unresolved_submodules: tuple[str, ...] = ()
+    lfs_pointers: tuple[str, ...] = ()
+    state: Literal["source_inspected"] = "source_inspected"
+    runtime_status: Literal["not_assessed_by_source_inspection"] = (
+        "not_assessed_by_source_inspection"
+    )
+
+
+class NativeRuntimeEvidence(Contract):
+    """An operator's retained execution evidence; never an executable API request."""
+
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    engine: Identifier
+    profile: Identifier
+    sources: Annotated[tuple[Reference, ...], Field(min_length=1, max_length=20)]
+    image_digest: Sha256
+    execution_digest: Sha256
+    artifact_digests: Annotated[dict[str, Sha256], Field(min_length=1, max_length=2000)]
+    scope: Literal["operator_native_probe"] = "operator_native_probe"
+    managed_queue_supported: Literal[False] = False
+    scientific_validity: Literal["not_established"] = "not_established"
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class ExperimentNode(Contract):
+    id: Identifier
+    plan: SimulationPlan
+
+
+class EndpointBinding(Contract):
+    source_node: Identifier
+    source_port: Identifier
+    target_node: Identifier
+    target_port: Identifier
+    target_parameter: Identifier
+    mode: Literal["terminal_to_initial"] = "terminal_to_initial"
+    evidence: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class ExperimentSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    nodes: Annotated[tuple[ExperimentNode, ...], Field(min_length=1, max_length=32)]
+    bindings: Annotated[tuple[EndpointBinding, ...], Field(max_length=128)] = ()
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class FrozenExperiment(Contract):
+    spec: ExperimentSpec
+    models: tuple[ModelPackage, ...]
+    order: tuple[Identifier, ...]
+    execution_mode: Literal["sequential_endpoint_transfer"] = "sequential_endpoint_transfer"
+
+
+class ExperimentNodeRecord(Contract):
+    node_id: Identifier
+    run_id: str | None = None
+    status: Literal["pending", "queued", "running", "succeeded", "failed", "cancelled", "skipped"]
+
+
+class ExperimentRunRecord(Contract):
+    id: str
+    experiment: Reference
+    experiment_digest: Sha256
+    status: RunStatus
+    cancel_requested: bool
+    error: str | None = None
+    created_at: str
+    updated_at: str
+    nodes: tuple[ExperimentNodeRecord, ...]
+
+
 class KnowledgeGap(Contract):
     id: Identifier
     description: str

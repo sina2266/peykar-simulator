@@ -1,0 +1,509 @@
+name: release
+
+# Builds the VCell release artifacts for the three Hy3S solvers, proves they run,
+# and -- on a vX.Y.Z tag on main -- publishes them (SOLVER-RELEASE.md):
+#
+#   GitHub release   linux64.tgz  linux64arm.tgz  mac64.tgz (universal)  win64.zip  SHA256SUMS
+#   image            ghcr.io/virtualcell/vcell-hy3s:<X.Y.Z> and :latest   (amd64 + arm64)
+#   SIF              oras://ghcr.io/virtualcell/vcell-hy3s_singularity:<X.Y.Z> and :latest   (amd64)
+#
+# Pull requests and main build and test everything and publish nothing. The
+# developer CI (ci.yml: native builds + ctest on every platform) is separate.
+#
+# Every archive is tested the way it will be used, not just built:
+#   - the statistical reference (tests/statistical): every integrator against
+#     the exact birth-death moments, plus an SSA control and a negative control;
+#   - Linux: on the oldest glibc it claims (Rocky Linux 8, glibc 2.28), and
+#     through the image with a read-only root filesystem as an arbitrary uid;
+#   - the SIF: under `apptainer run --containall` as a non-root user, argv as
+#     SlurmProxy writes it, with -tid, reporting to a mock JMS REST bridge;
+#   - mac64: each slice on its own architecture, on the oldest runner macOS;
+#   - win64: with the compilers' directories removed from PATH.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-hy3s
+  SIF: ghcr.io/virtualcell/vcell-hy3s_singularity
+  PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+jobs:
+  version:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: v
+        run: |
+          set -eu
+          if [ "${PUBLISH}" = "true" ]; then
+            version="${GITHUB_REF_NAME#v}"
+            if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::tag ${GITHUB_REF_NAME} is not vX.Y.Z"; exit 1
+            fi
+            # Releases come from the default branch only (SOLVER-RELEASE.md, section 1).
+            git fetch origin main
+            if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+              echo "::error::${GITHUB_REF_NAME} is not on main"; exit 1
+            fi
+          else
+            version="0.0.0-dev.$(git rev-parse --short HEAD)"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "version: $version"
+
+  linux:
+    name: linux (${{ matrix.arch }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+            asset: linux64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            asset: linux64arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: docker/setup-buildx-action@v3
+
+      # One Dockerfile builds both: the archive directory is the build stage's
+      # output, and the runtime image is that same directory on PATH.
+      - name: Build the ${{ matrix.asset }} directory (manylinux_2_28; runs ctest)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: archive
+          platforms: linux/${{ matrix.arch }}
+          build-args: HY3S_VERSION=${{ env.VERSION }}
+          outputs: type=local,dest=dist
+          # No attestations: the local exporter would write them into the archive.
+          provenance: false
+          sbom: false
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}
+
+      - name: Build the runtime image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: runtime
+          platforms: linux/${{ matrix.arch }}
+          build-args: HY3S_VERSION=${{ env.VERSION }}
+          load: true
+          tags: vcell-hy3s:ci
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Package ${{ matrix.asset }}.tgz
+        run: |
+          set -eux
+          sudo chown -R "$(id -u):$(id -g)" dist
+          ls -l dist
+          test "$(cat dist/VERSION)" = "$VERSION"
+          # Exactly the contract's layout: the three solvers, libraries, LICENSE, VERSION.
+          extra=$(ls dist | grep -Ev '^(Hybrid_(EM|MIL|MIL_Adaptive)_x64|lib.*\.so\.[0-9.]+|LICENSE|VERSION)$' || true)
+          if [ -n "$extra" ]; then echo "::error::unexpected files in the archive: $extra"; exit 1; fi
+          tar -C dist -czf "${{ matrix.asset }}.tgz" $(ls dist)
+          tar -tzvf "${{ matrix.asset }}.tgz"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy scipy
+
+      - name: Archive on the oldest supported glibc (Rocky Linux 8, glibc 2.28)
+        run: |
+          set -eux
+          work="$RUNNER_TEMP/rocky8"; mkdir -p "$work"
+          docker run --rm rockylinux:8 ldd --version | head -1
+          python tests/statistical/check_birth_death.py \
+            --launcher "docker run --rm --user $(id -u):$(id -g) -v $PWD/dist:/opt/hy3s:ro -v $work:/work -e PATH=/opt/hy3s:/usr/bin:/bin rockylinux:8" \
+            --work "$work" --container-work /work
+
+      - name: Entrypoint contract
+        run: |
+          set -eux
+          docker run --rm vcell-hy3s:ci | tee help.txt
+          grep -q "vcell-hy3s ${VERSION}" help.txt
+          for exe in Hybrid_EM_x64 Hybrid_MIL_x64 Hybrid_MIL_Adaptive_x64; do grep -q "$exe" help.txt; done
+          docker run --rm vcell-hy3s:ci --help > /dev/null
+          rc=0; docker run --rm vcell-hy3s:ci bash || rc=$?
+          test "$rc" -eq 2
+          # A solver's own exit code passes through (a bad parameter is `error stop 2`).
+          rc=0; docker run --rm vcell-hy3s:ci Hybrid_EM_x64 /simdata/none.nc abc || rc=$?
+          test "$rc" -eq 2
+
+      - name: Image, read-only root filesystem, arbitrary uid
+        run: |
+          set -eux
+          work="$RUNNER_TEMP/image"; mkdir -p "$work"; chmod 0777 "$work"
+          run="docker run --rm --read-only --user 4242:4242 -v $work:/simdata vcell-hy3s:ci"
+          python tests/statistical/check_birth_death.py --launcher "$run" --work "$work" --container-work /simdata
+          cp tests/resources/enzyme.nc "$work/enzyme.nc"; chmod 0666 "$work/enzyme.nc"
+          $run Hybrid_EM_x64 /simdata/enzyme.nc 100000 1000000 0.01 1e-5 -R 12345 -OV
+          python tests/smoke/check_enzyme.py "$work/enzyme.nc" --baseline tests/resources/enzyme_baseline_gfortran.nc
+
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: SIF under --containall, as SlurmProxy runs it, with -tid messaging
+        if: matrix.arch == 'amd64'
+        run: |
+          set -eux
+          apptainer build "$RUNNER_TEMP/vcell-hy3s.sif" docker-daemon://vcell-hy3s:ci
+          sif="$RUNNER_TEMP/vcell-hy3s.sif"
+          id -u; test "$(id -u)" -ne 0
+          apptainer run --containall "$sif" --help
+          work="$RUNNER_TEMP/sif"; mkdir -p "$work"
+          run="apptainer run --containall --bind $work:/simdata $sif"
+
+          # Messaging: a mock JMS REST bridge on localhost, named in the model file.
+          python tests/smoke/mock_broker.py 8165 "$RUNNER_TEMP/broker.log" &
+          broker=$!
+          python tests/statistical/make_birth_death.py "$work/messaging.nc" --broker 127.0.0.1:8165
+          python tests/statistical/check_birth_death.py --launcher "$run" \
+            --model "$work/messaging.nc" --extra-args "-tid 0" --work "$work" --container-work /simdata
+          kill "$broker"
+          echo "$(wc -l < "$RUNNER_TEMP/broker.log") requests reached the broker; first and last:"
+          head -1 "$RUNNER_TEMP/broker.log"; tail -1 "$RUNNER_TEMP/broker.log"
+          grep -q 'WorkerEvent_Status=1001' "$RUNNER_TEMP/broker.log"      # JOB_PROGRESS
+          # JOB_COMPLETED: one per run, all five of them -- a solver that exits before the
+          # messaging thread drains its queue loses exactly this last event.
+          test "$(grep -c 'WorkerEvent_Status=1003' "$RUNNER_TEMP/broker.log")" -eq 5
+          grep -q 'SimKey=123456789' "$RUNNER_TEMP/broker.log"
+          grep -q 'TaskID=0' "$RUNNER_TEMP/broker.log"
+
+          # Exactly SlurmProxy's argv shape (bare name, /simdata path, -OV -tid last), on a
+          # model file without JMS variables: the run must still complete and match.
+          mkdir -p "$work/schaff"
+          cp tests/resources/enzyme.nc "$work/schaff/SimID_274641698_0_.nc"
+          timeout 300 $run Hybrid_EM_x64 /simdata/schaff/SimID_274641698_0_.nc 100000 1000000 0.01 1e-5 -R 12345 -OV -tid 0
+          python tests/smoke/check_enzyme.py "$work/schaff/SimID_274641698_0_.nc" \
+            --baseline tests/resources/enzyme_baseline_gfortran.nc
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: ${{ matrix.asset }}.tgz
+          if-no-files-found: error
+
+      # --- publishing (vX.Y.Z tags only) -------------------------------------------------------
+      - name: Log in to GHCR
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push the image by digest
+        if: env.PUBLISH == 'true'
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: runtime
+          platforms: linux/${{ matrix.arch }}
+          build-args: HY3S_VERSION=${{ env.VERSION }}
+          labels: org.opencontainers.image.version=${{ env.VERSION }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Record the digest
+        if: env.PUBLISH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v4
+        if: env.PUBLISH == 'true'
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: env.PUBLISH == 'true' && matrix.arch == 'amd64'
+        run: |
+          set -eux
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          apptainer push "$RUNNER_TEMP/vcell-hy3s.sif" "oras://${SIF}:${VERSION}"
+          apptainer push "$RUNNER_TEMP/vcell-hy3s.sif" "oras://${SIF}:latest"
+
+  manifest:
+    name: multi-arch manifest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, linux]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          set -eux
+          docker buildx imagetools create -t "${IMAGE}:${VERSION}" -t "${IMAGE}:latest" \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${VERSION}"
+
+  macos:
+    name: macos (${{ matrix.arch }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            os: macos-15
+            profile: MacOS-ARM64_profile.txt
+          - arch: x86_64
+            os: macos-15-intel
+            profile: MacOS-AMD64_profile.txt
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      CC: gcc-13
+      CXX: g++-13
+      FC: gfortran-13
+      # gcc reads this as -mmacosx-version-min; see SOLVER-RELEASE.md on the bundled GCC dylibs.
+      MACOSX_DEPLOYMENT_TARGET: '11.0'
+    steps:
+      # No submodules: the desktop archives are built without messaging, as on Windows.
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: |
+          if ! command -v gfortran-13 >/dev/null; then brew install gcc@13; fi
+          brew install conan
+      - name: Build and test
+        run: |
+          set -eux
+          conan install . --build=missing -pr:a=conan-profiles/CI-CD/${{ matrix.profile }} \
+            -o '&:include_messaging=False'
+          source build/generators/conanbuild.sh
+          cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOSX_DEPLOYMENT_TARGET" \
+            -DOPTION_TARGET_MESSAGING=OFF \
+            -DHY3S_VERSION_STAMP="${{ needs.version.outputs.version }}"
+          cmake --build build
+          ctest --test-dir build --output-on-failure
+      - name: Bundle the GCC runtime
+        run: |
+          python3 packaging/package_macos.py bundle build/bin "mac-${{ matrix.arch }}"
+          tar -C "mac-${{ matrix.arch }}" -cf "mac-${{ matrix.arch }}.tar" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-${{ matrix.arch }}
+          path: mac-${{ matrix.arch }}.tar
+          if-no-files-found: error
+          retention-days: 3
+
+  mac-universal:
+    needs: [version, macos]
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: mac-*
+          merge-multiple: true
+      - name: lipo, sign and package mac64.tgz
+        run: |
+          set -eux
+          mkdir arm x86
+          tar -C arm -xf mac-arm64.tar
+          tar -C x86 -xf mac-x86_64.tar
+          cat LICENSE packaging/THIRD-PARTY-NOTICES.txt > "$RUNNER_TEMP/LICENSE"
+          python3 packaging/package_macos.py universal arm x86 dist \
+            "${{ needs.version.outputs.version }}" "$RUNNER_TEMP/LICENSE"
+          tar -C dist -czf mac64.tgz $(ls dist)
+          tar -tzvf mac64.tgz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac64
+          path: mac64.tgz
+          if-no-files-found: error
+
+  mac-verify:
+    name: mac64 on ${{ matrix.os }} (${{ matrix.arch }} slice)
+    needs: mac-universal
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14          # the oldest macOS runner: arm64 slice
+            arch: arm64
+          - os: macos-15-intel    # x86_64 slice
+            arch: x86_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac64
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy scipy
+      - name: Statistical reference
+        run: |
+          set -eux
+          sw_vers; uname -m
+          mkdir mac64 && tar -C mac64 -xzf mac64.tgz
+          test "$(uname -m)" = "${{ matrix.arch }}"
+          python tests/statistical/check_birth_death.py --bin-dir mac64
+          cp tests/resources/enzyme.nc "$RUNNER_TEMP/enzyme.nc"
+          mac64/Hybrid_EM_x64 "$RUNNER_TEMP/enzyme.nc" 100000 1000000 0.01 1e-5 -R 12345 -OV
+          python tests/smoke/check_enzyme.py "$RUNNER_TEMP/enzyme.nc" --baseline tests/resources/enzyme_baseline_gfortran.nc
+
+  windows:
+    needs: version
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Install Intel Fortran
+        id: setup
+        uses: fortran-lang/setup-fortran@v1
+        with:
+          compiler: intel
+          version: '2025.0'
+      - name: Install Conan
+        run: python -m pip install 'conan>=2.0'
+      # compiler.runtime=static: the MSVC and Intel Fortran runtimes are linked into
+      # the executables, so win64.zip needs no redistributable on the user's machine.
+      - name: Build and test
+        shell: cmd
+        run: |
+          conan install . --build=missing -pr:a=conan-profiles/CI-CD/Windows-AMD64_profile.txt -s compiler.runtime=static || exit /b 1
+          call build\generators\conanbuild.bat
+          cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE="%CD%\build\generators\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_Fortran_COMPILER="${{ steps.setup.outputs.fc }}" -DOPTION_TARGET_MESSAGING=OFF -DHY3S_VERSION_STAMP=${{ needs.version.outputs.version }} || exit /b 1
+          cmake --build build || exit /b 1
+          ctest --test-dir build --output-on-failure || exit /b 1
+      - name: Package win64
+        shell: pwsh
+        run: |
+          pwsh packaging/package-windows.ps1 build\bin dist "${{ needs.version.outputs.version }}"
+          Compress-Archive -Path dist\* -DestinationPath win64.zip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy scipy
+      - name: Statistical reference, compilers off PATH
+        shell: pwsh
+        run: |
+          $python = Split-Path -Parent (Get-Command python).Source
+          $env:PATH = "$python;$env:WINDIR\System32;$env:WINDIR"
+          Expand-Archive win64.zip -DestinationPath win64
+          python tests/statistical/check_birth_death.py --bin-dir win64 --exe-suffix .exe
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          Copy-Item tests/resources/enzyme.nc "$env:RUNNER_TEMP/enzyme.nc"
+          & win64/Hybrid_EM_x64.exe "$env:RUNNER_TEMP/enzyme.nc" 100000 1000000 0.01 1e-5 -R 12345 -OV
+          python tests/smoke/check_enzyme.py "$env:RUNNER_TEMP/enzyme.nc" --baseline tests/resources/enzyme_baseline_intel.nc
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: win64
+          path: win64.zip
+          if-no-files-found: error
+
+  release:
+    name: GitHub release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, linux, manifest, mac-universal, mac-verify, windows]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux64
+          path: assets
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux64arm
+          path: assets
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac64
+          path: assets
+      - uses: actions/download-artifact@v4
+        with:
+          name: win64
+          path: assets
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          set -eux
+          cd assets
+          ls -l
+          test -f linux64.tgz && test -f linux64arm.tgz && test -f mac64.tgz && test -f win64.zip
+          sha256sum linux64.tgz linux64arm.tgz mac64.tgz win64.zip > SHA256SUMS
+          cat SHA256SUMS
+          cat > notes.md <<EOF
+          The Hy3S hybrid stochastic solvers \`Hybrid_EM_x64\`, \`Hybrid_MIL_x64\` and \`Hybrid_MIL_Adaptive_x64\`, packaged per [SOLVER-RELEASE.md](https://github.com/${GITHUB_REPOSITORY}/blob/${GITHUB_REF_NAME}/SOLVER-RELEASE.md).
+
+          | asset | contents |
+          | --- | --- |
+          | \`linux64.tgz\` | x86_64, glibc >= 2.28, messaging built in (\`-tid\`) |
+          | \`linux64arm.tgz\` | aarch64, glibc >= 2.28, messaging built in |
+          | \`mac64.tgz\` | universal (arm64 + x86_64), ad-hoc signed |
+          | \`win64.zip\` | x86_64, Intel Fortran, static runtimes |
+          | \`SHA256SUMS\` | checksums of the four archives |
+
+          Container image \`${IMAGE}:${VERSION}\` (amd64, arm64); Apptainer SIF \`oras://${SIF}:${VERSION}\`.
+          EOF
+          gh release create "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --verify-tag \
+            --title "vcell-hy3s ${VERSION}" --notes-file notes.md \
+            linux64.tgz linux64arm.tgz mac64.tgz win64.zip SHA256SUMS

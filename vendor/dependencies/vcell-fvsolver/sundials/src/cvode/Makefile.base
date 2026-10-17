@@ -1,0 +1,46 @@
+# -----------------------------------------------------------------
+# $Revision: 1.4 $
+# $Date: 2006/08/11 23:03:04 $
+# -----------------------------------------------------------------
+CC = gcc
+BASE_CFLAGS0 = -D$(PLATFORM) -O2 -fexceptions
+DEL = rm
+
+ifeq ($(PLATFORM), MACOSX)
+BASE_CFLAGS = $(BASE_CFLAGS0) -arch x86_64 -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+else 
+BASE_CFLAGS = $(BASE_CFLAGS0) 
+endif
+
+ifdef NATIVELIB
+CFLAGS = -fPIC $(BASE_CFLAGS)
+else
+CFLAGS = $(BASE_CFLAGS)
+endif
+
+LIBTOOL = ar cru
+LIBDIR = ../../lib
+
+INCLUDES = -I.. -I../../include
+
+CVODE_LIB  = libsundials_cvode.a
+CVODE_OBJ_FILES = cvode.o cvode_io.o cvode_band.o cvode_dense.o cvode_diag.o cvode_spils.o cvode_spbcgs.o cvode_spgmr.o cvode_sptfqmr.o cvode_bandpre.o cvode_bbdpre.o
+
+.SUFFIXES:	.c.o
+
+.c.o:	
+	$(CC) -c $(CFLAGS) $(INCLUDES) $<
+
+all: $(CVODE_LIB)
+
+$(CVODE_LIB): $(CVODE_OBJ_FILES)
+	$(LIBTOOL) $@ $(CVODE_OBJ_FILES)
+	cp $@ $(LIBDIR)
+	ranlib $(LIBDIR)/$@
+
+clean:
+	$(DEL) *.o $(CVODE_LIB)
+
+depend:
+	makedepend -Y -f Makefile.linux -- $(CFLAGS) $(INCLUDES) -- *.c *.cpp
+	

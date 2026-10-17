@@ -1,0 +1,469 @@
+name: Linux
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  maboss:
+    name: MaBoSS (gcc)
+    runs-on: ubuntu-22.04
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /usr/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/lib/x86_64-linux-gnu/libxml2.so
+      LIBXML_INCLUDEDIR: /usr/include/libxml2/
+      
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison
+        pip install numpy
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-gcc-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make clean
+        make install SBML_COMPAT=1
+        make MAXNODES=128 install SBML_COMPAT=1
+    
+    - name: Test MaBoSS
+      run: bash scripts/run_tests.sh        
+        
+  maboss_llvm:
+    name: MaBoSS (clang)
+    runs-on: ubuntu-22.04
+    env:
+      CC: clang
+      CXX: clang++
+      INSTALL_PATH: /usr/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/lib/x86_64-linux-gnu/libxml2.so
+      LIBXML_INCLUDEDIR: /usr/include/libxml2/
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        sudo apt-get update
+        sudo apt-get install flex bison clang
+        pip install numpy
+        
+    - name: Cache compiled libSBML
+      id: cache-libsbml-clang
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-clang-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-clang.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+        
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make clean
+        make CC=clang CXX=clang++ install SBML_COMPAT=1
+        make CC=clang CXX=clang++ MAXNODES=128 install SBML_COMPAT=1
+    
+    - name: Test MaBoSS
+      run: bash scripts/run_tests.sh
+  
+  maboss_mpi:
+    name: MaBoSS MPI
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison libopenmpi-dev
+        pip install numpy
+    
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make clean
+        make install CC=mpicc CXX=mpic++ MPI_COMPAT=1
+        make install CC=mpicc CXX=mpic++ MPI_COMPAT=1 MAXNODES=128
+       
+    - name: Test MaBoSS
+      run: bash scripts/run_mpi_tests.sh
+
+  maboss_binary:
+    name: Building MaBoSS linux64 binary
+    runs-on: ubuntu-22.04
+    needs: [maboss, maboss_llvm, maboss_mpi]
+    env:  
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /usr/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/lib/x86_64-linux-gnu/libxml2.so
+      LIBXML_INCLUDEDIR: /usr/include/libxml2
+    # if: github.event.workflow_run.conclusion == 'success' && (github.ref == 'refs/heads/master' || github.event_name == 'release')
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison
+        pip install numpy
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-gcc-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: |
+        bash scripts/build_libsbml.sh
+
+    - name: Install libSBML
+      run: |
+        sudo env BUILD_PATH=/tmp/ bash scripts/install_libsbml.sh
+          
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_static SBML_COMPAT=1
+        make install_static MAXNODES=128 SBML_COMPAT=1
+        make install_static MAXNODES=256 SBML_COMPAT=1
+        make install_static MAXNODES=512 SBML_COMPAT=1
+        make install_static MAXNODES=1024 SBML_COMPAT=1
+        cd ../pub
+        zip MaBoSS-linux64.zip *
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: MaBoSS-linux64
+        path: /home/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-linux64.zip
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: MaBoSS-linux64.zip
+        asset_path: /home/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-linux64.zip
+        asset_content_type: application/zip
+  
+  
+  maboss_library:
+    name: Building MaBoSS linux64 library
+    runs-on: ubuntu-22.04
+    needs: [maboss, maboss_llvm, maboss_mpi]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison
+          
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib 
+        make install_lib MAXNODES=128
+        make install_lib MAXNODES=256
+        make install_lib MAXNODES=512
+        make install_lib MAXNODES=1024
+        make install_alib 
+        make install_alib MAXNODES=128
+        make install_alib MAXNODES=256
+        make install_alib MAXNODES=512
+        make install_alib MAXNODES=1024
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-linux64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-linux64
+        path: /home/runner/work/MaBoSS/libMaBoSS-linux64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-linux64.tar.gz
+        asset_path: /home/runner/work/MaBoSS/libMaBoSS-linux64.tar.gz
+        asset_content_type: application/gzip
+  
+  maboss_library_sbml:
+    name: Building MaBoSS linux64 library with libSBML
+    runs-on: ubuntu-22.04
+    needs: [maboss, maboss_llvm, maboss_mpi]
+    env:
+      CC: gcc
+      CXX: g++
+      INSTALL_PATH: /usr/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/lib/x86_64-linux-gnu/libxml2.so
+      LIBXML_INCLUDEDIR: /usr/include/libxml2
+    # if: github.event.workflow_run.conclusion == 'success' && (github.ref == 'refs/heads/master' || github.event_name == 'release')
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-libSBML-5.20.2-gcc-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+
+    - name: Install libSBML
+      run: sudo env BUILD_PATH=/tmp/ bash scripts/install_libsbml.sh  
+              
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib SBML_COMPAT=1
+        make install_lib SBML_COMPAT=1 MAXNODES=128
+        make install_lib SBML_COMPAT=1 MAXNODES=256
+        make install_lib SBML_COMPAT=1 MAXNODES=512
+        make install_lib SBML_COMPAT=1 MAXNODES=1024
+        make install_alib SBML_COMPAT=1 
+        make install_alib SBML_COMPAT=1 MAXNODES=128
+        make install_alib SBML_COMPAT=1 MAXNODES=256
+        make install_alib SBML_COMPAT=1 MAXNODES=512
+        make install_alib SBML_COMPAT=1 MAXNODES=1024
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-sbml-linux64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-sbml-linux64
+        path: /home/runner/work/MaBoSS/libMaBoSS-sbml-linux64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-sbml-linux64.tar.gz
+        asset_path: /home/runner/work/MaBoSS/libMaBoSS-sbml-linux64.tar.gz
+        asset_content_type: application/gzip
+        
+  test_docker:
+    name: Test Docker MaBoSS Server
+    runs-on: ubuntu-22.04
+    needs: [maboss, maboss_llvm, maboss_mpi]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install flex bison
+        pip install numpy
+    - name: Cache Docker images.
+      uses: ScribeMD/docker-cache@0.3.7
+      with:
+        key: docker-${{ runner.os }}-${{ github.run_id }}  
+        
+    - name: Start MaBoSS docker server
+      run: |
+        docker-compose up -d maboss-server
+        bash -c "cd engine/src; make client"
+        
+    - name: Test MaBoSS docker server
+      run: |
+        bash -c "cd engine/tests; bash ./test-container.sh"
+        
+  publish_docker_hub:
+    name: Docker MaBoSS Server
+    runs-on: ubuntu-22.04
+    needs: [test_docker]
+    if: github.event_name == 'release' && github.event.action == 'created' && github.repository == 'sysbio-curie/MaBoSS'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Cache Docker images.
+      uses: ScribeMD/docker-cache@0.3.7
+      with:
+        key: docker-${{ runner.os }}-${{ github.run_id }}
+
+    - name: Connect Docker Hub
+      run: |
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        
+    - name: Upload Docker Hub
+      run: | 
+          docker tag maboss:latest maboss:${{ github.event.release.tag_name }}
+          docker tag maboss:latest vnoel/maboss:latest
+          docker tag maboss:${{ github.event.release.tag_name }} vnoel/maboss:${{ github.event.release.tag_name }}
+          docker push vnoel/maboss:latest
+          docker push vnoel/maboss:${{ github.event.release.tag_name }}
+          docker tag maboss:latest sysbiocurie/maboss:latest
+          docker tag maboss:${{ github.event.release.tag_name }} sysbiocurie/maboss:${{ github.event.release.tag_name }}
+          docker push sysbiocurie/maboss:latest
+          docker push sysbiocurie/maboss:${{ github.event.release.tag_name }}
+            
+  publish_docker_github:
+    name: Publishing MaBoSS docker container to GitHub
+    runs-on: ubuntu-22.04
+    needs: [test_docker]
+    if: github.event_name == 'release' && github.event.action == 'created' && github.repository == 'sysbio-curie/MaBoSS'
+    
+    env:
+        REGISTRY: ghcr.io
+        IMAGE_NAME: maboss
+
+    permissions:
+        contents: read
+        packages: write
+    steps:
+    - uses: actions/checkout@v4
+          
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: containers/docker/Dockerfile
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }},${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+        labels: ${{ steps.meta.outputs.labels }}
+      
+
+  test_apptainer:
+    name: Apptainer MaBoSS
+    runs-on: ubuntu-22.04
+    needs: [maboss, maboss_llvm, maboss_mpi]
+   
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        wget https://github.com/apptainer/apptainer/releases/download/v1.2.5/apptainer_1.2.5_amd64.deb
+        sudo apt-get update
+        sudo apt install -y ./apptainer_1.2.5_amd64.deb
+        sudo apt-get install flex bison debootstrap
+        pip install numpy
+        
+    - name: Start MaBoSS Apptainer
+      run: |
+        sudo apptainer build maboss.sif containers/apptainer/maboss.def
+        singularity run maboss.sif &
+        bash -c "cd engine/src; make client"
+        
+    - name: Test MaBoSS
+      run: |
+        bash -c "cd engine/tests; bash ./test-container.sh"
+    
+  maboss_conda_defaults:
+    name: Build MaBoSS Anaconda package
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/usr/share/miniconda"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/home/runner/miniconda3"}
+        ]
+        
+    runs-on: ubuntu-22.04
+
+    needs: [maboss, maboss_llvm, maboss_mpi]
+    
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+        
+    - name: Install conda-build
+      run: |
+        conda install conda-build anaconda-client conda-verify
+      
+    - name: Build Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c ${{ matrix.repo.name }} -c colomoto conda/maboss
+
+    - name: Upload MaBoSS Ananconda package on vincent-noel
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/linux-64/*.tar.bz2 --force;
+    
+    - name: Upload MaBoSS Ananconda package on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/linux-64/*.tar.bz2 --force;

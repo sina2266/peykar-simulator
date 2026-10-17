@@ -1,0 +1,362 @@
+---
+title: "Histogram Plots"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Histogram Plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  dpi = 300,
+  fig.show = "hold",
+  fig.align = "center",
+  fig.width = 7,
+  out.width = "80%",
+  comment = "#>"
+)
+```
+
+
+# 1. Introduction
+
+This vignette documents and illustrates workflows for producing histograms using the function `plotHistogram` from the `ospsuite.plots` package.
+
+## 1.1 Setup
+
+This vignette uses the `{ospsuite.plots}` and `{tidyr}` libraries. The `{ospsuite.plots}` plot functions apply their layout per plot (see `vignette("ospsuite.plots", package = "ospsuite.plots")`), so no global setup is required.
+
+```{r setup}
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+library(ospsuite.plots)
+library(tidyr)
+```
+
+## 1.2 Example Data
+
+This vignette uses the following datasets:
+
+- **Data Set 1**:
+
+```{r load-data-1, results='asis'}
+histData <- exampleDataCovariates |>
+  dplyr::filter(SetID == "DataSet1") |>
+  dplyr::select(c("ID", "Sex", "Age", "AgeBin", "Ratio"))
+
+# Metadata
+metaData <- attr(exampleDataCovariates, "metaData")
+metaData <- metaData[intersect(names(histData), names(metaData))]
+
+knitr::kable(head(histData), digits = 2, caption = "First rows of example data.")
+knitr::kable(metaData2DataFrame(metaData), digits = 2, caption = "List of meta data")
+```
+
+- **Data Set 2**:
+
+```{r load-data-2, results='asis'}
+histDataDistr <- exampleDataCovariates |>
+  dplyr::filter(SetID == "DataSet2") |>
+  dplyr::select(c("ID", "AgeBin", "Sex", "Obs"))
+
+# Metadata for Distribution Data
+metaDataDistr <- attr(exampleDataCovariates, "metaData")
+metaDataDistr <- metaDataDistr[intersect(names(histDataDistr), names(metaDataDistr))]
+
+knitr::kable(head(histDataDistr), digits = 2, caption = "First rows of distribution data.")
+knitr::kable(metaData2DataFrame(metaDataDistr), digits = 2, caption = "List of meta data for distribution data")
+```
+
+# 2. Examples
+
+## 2.1 Illustration of Basic Histograms
+
+### 2.1.1 Basic Example
+
+Histogram of the "Ratio" column mapped to `x`, stratified by the "Sex" column mapped to `fill`.
+
+```{r minimal-example-default, fig.alt="Histogram showing the distribution of ratio values stratified by sex. The overlapping histograms use different fill colors for male and female groups, with semi-transparent bars allowing visualization of overlapping distributions."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex),
+  metaData = metaData
+)
+```
+
+### 2.1.2 Basic Example: Change of Defaults
+
+The variable `geomHistAttributes` is set by default to `getDefaultGeomAttributes("Hist")`, which is a list with entries `bins = 10`, `position = ggplot2::position_nudge()`, `color = "black"` and `alpha = 0.5`.
+
+In the example below, the variable `geomHistAttributes` is set to a list with entry `position = "dodge"`. This changes the position, but note that the default value of `geomHistAttributes` contains the entry `bins = 10`, which is now overwritten, and the default `{ggplot}` number of 30 is used.
+
+```{r minimal-example-position, warning=FALSE, message=FALSE, fig.alt="Histogram showing ratio distribution with dodge positioning. The histograms for male and female groups are positioned side-by-side rather than overlapping, making it easier to compare the distributions. Note the increased number of bins (30) due to ggplot defaults."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, groupby = Sex),
+  metaData = metaData,
+  geomHistAttributes = list(position = "dodge")
+)
+```
+
+### 2.1.3 Basic Example: Change of Position but Keep Number of Bins
+
+To preserve the default settings, we modified the variable with `utils::modifyList(getDefaultGeomAttributes("Hist"), list(position = "stack"))`. This changes the position but preserves the number of bins.
+
+```{r minimal-example-stack, fig.alt="Histogram showing ratio distribution with stacked positioning. The histograms for male and female groups are stacked on top of each other, preserving the default bin count (10) while showing the contribution of each sex to the total distribution in each bin."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, groupby = Sex),
+  metaData = metaData,
+  geomHistAttributes = utils::modifyList(
+    getDefaultGeomAttributes("Hist"),
+    list(position = "stack")
+  )
+)
+```
+
+### 2.1.4 Basic Example: Overlay of Histograms
+
+By setting the position to `identity` and setting `alpha` to a value below 1, an overlay of histograms is produced.
+
+```{r minimal-example-overlay, fig.alt="Histogram showing ratio distribution with overlapping semi-transparent bars. Male and female distributions are overlaid with 50% transparency (alpha=0.5) and fixed bin width, allowing direct comparison of distribution shapes while showing overlap regions."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex),
+  metaData = metaData,
+  geomHistAttributes = utils::modifyList(
+    getDefaultGeomAttributes("Hist"),
+    list(position = "identity", binwidth = 1, alpha = 0.5)
+  )
+)
+```
+
+### 2.1.5 Omit Data Points Flagged as Missing Dependent Variable (MDV)
+
+If some of the data should be omitted, we can do this by mapping a boolean to the aesthetic `mdv`. Below, we exclude data above the value of 4:
+
+```{r minimal-example-mdv, fig.alt="Histogram showing ratio distribution with missing dependent variable (MDV) exclusion. Data points with ratio values greater than 4 are excluded from the analysis, demonstrating how to filter out extreme values or outliers during visualization."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex, mdv = Ratio > 4),
+  metaData = metaData
+)
+```
+
+### 2.1.6 Stratified by a Combination of Columns
+
+To stratify by a combination of columns, use the function `interaction` for the mapping to `groupby`:
+
+```{r minimal-example-interaction, fig.alt="Histogram showing ratio distribution stratified by the interaction of sex and age bin. Each combination of sex and age group is shown as a separate histogram with dodge positioning, creating multiple side-by-side distributions for detailed demographic analysis."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, groupby = interaction(Sex, AgeBin, sep = "-")),
+  geomHistAttributes = utils::modifyList(
+    getDefaultGeomAttributes("Hist"),
+    list(position = "dodge")
+  ),
+  metaData = metaData
+)
+```
+
+### 2.1.7 Customization of Binning
+
+Use the input variable `geomHistAttributes` to change the binning. The entries of this list are passed to `ggplot2::geom_histogram`, which provides many possibilities to customize the binning. Below, we define the bin boundaries by adding the entry `breaks` to `geomHistAttributes`.
+
+```{r minimal-example-binboundaries, fig.alt="Histogram showing ratio distribution with custom bin boundaries. Bins are defined at 0.5-unit intervals from 0 to 5, providing fine-grained resolution for the distribution analysis. Histograms are stratified by sex with overlapping semi-transparent bars."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex),
+  geomHistAttributes = list(position = position_nudge(), breaks = seq(0, 5, 0.5)),
+  metaData = metaData
+)
+```
+
+You could also map a binning function to the aesthetic `x`. Below, `ggplot2::cut_number` is used to create 3 bins with equal numbers of observations. The data is now displayed as categorical data.
+
+```{r minimal-example-binfunction, fig.alt="Histogram showing ratio distribution using quantile-based binning. Data is divided into three equal-frequency bins labeled as 'low', 'mean', and 'high', transforming continuous data into categorical representation. Bars are stratified by sex."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = cut_number(Ratio, n = 3, labels = c("low", "mean", "high")), fill = Sex),
+  geomHistAttributes = list(position = position_nudge()),
+  metaData = metaData
+) + labs(x = "Ratio")
+```
+
+## 2.2 Frequency
+
+If the variable `plotAsFrequency` is set to TRUE and:
+
+- `position` is `stack`: frequency is calculated as count per bin / total (A)
+- `position` is NOT `stack`: frequency is calculated as count per bin / per group (B)
+
+```{r examples-frequency, fig.alt="Two histograms (A and B) showing frequency calculations with different positioning. Plot A shows stacked histograms where frequency is calculated as count per bin divided by total sample size. Plot B shows side-by-side histograms where frequency is calculated as count per bin divided by group size."}
+# A
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, groupby = Sex),
+  metaData = metaData,
+  plotAsFrequency = TRUE,
+  geomHistAttributes = list(bins = 10, position = "stack")
+) + labs(tag = "A", caption = "Frequency is calculated as count per bin / total")
+
+# B
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, groupby = Sex),
+  metaData = metaData,
+  plotAsFrequency = TRUE
+) + labs(tag = "B", caption = "Frequency is calculated as count per bin / per group")
+```
+
+Both plots could also be calculated by directly setting `y` in the mapping:
+
+- `position` is `stack`: frequency is calculated as count per bin / total (C)
+- `position` is NOT `stack`: frequency is calculated as count per bin / per group (D)
+
+```{r examples-frequency-manual, fig.alt="Two histograms (C and D) demonstrating manual frequency calculations using ggplot2 after_stat functions. Plot C uses stacked positioning with manual count/sum calculation, while Plot D uses density calculation for group-wise normalization."}
+# C
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex, y = after_stat(count / sum(count))),
+  metaData = metaData,
+  plotAsFrequency = FALSE,
+  geomHistAttributes = list(bins = 10, position = "stack")
+) + labs(tag = "C", caption = "Frequency is calculated as count per bin / total")
+
+# D
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex, y = after_stat(density)),
+  metaData = metaData,
+  plotAsFrequency = FALSE
+) + labs(tag = "D", caption = "Frequency is calculated as count per bin / per group")
+```
+
+# 3. Distribution Fit
+
+The optional input variable `distribution` provides the possibility of fitting the data distribution. All distributions from the package `{stats}` are available (see `?stats::distributions`). Internally, `ggh4x::stat_theodensity` is used for the fit. Check the help for more details.
+
+For the most common distributions, the keys "normal" (instead of `norm`) and "lognormal" (instead of `lnorm`) are also accepted.
+
+The vertical line indicates the mean. The function to calculate the mean is determined by the input variable `meanFunction`. Available options are:
+
+- `none` (no line is plotted)
+- `mean` (arithmetic mean)
+- `geomean` (geometric mean)
+- `median`
+- `auto` (default, selects the mean function according to the selected distribution)
+
+Below are examples for:
+
+### 3.1 Fit of a Normal Distribution with Mean as Vertical Line
+
+```{r example-distribution, fig.alt="Histogram showing distribution fit with normal distribution overlay. The histogram displays observed values by sex with fitted normal distribution curves overlaid and a vertical line indicating the mean. This demonstrates automatic distribution fitting capabilities."}
+# Plot normal distribution
+plotHistogram(
+  data = histDataDistr,
+  mapping = aes(x = Obs, fill = Sex),
+  metaData = metaDataDistr,
+  distribution = "normal"
+)
+```
+
+### 3.2 Fit of a Chi-Squared Distribution without Vertical Line
+
+```{r example-distribution-chisq, fig.alt="Histogram showing chi-squared distribution fit without mean line. The histogram displays observed values grouped by sex with fitted chi-squared distribution curves overlaid, demonstrating how to disable the mean line indicator using meanFunction = 'none'."}
+plotHistogram(
+  data = histDataDistr,
+  mapping = aes(x = Obs, groupby = Sex),
+  metaData = metaDataDistr,
+  distribution = "chisq",
+  meanFunction = "none"
+)
+```
+
+### 3.3 Fit of Stacked Data
+
+With the option `stack`, it is also possible to get the distribution of the sum only.
+
+```{r example-stacked-distribution, fig.alt="Histogram showing stacked distribution fitting. The stacked histogram displays the sum distribution of both sex groups combined, with a single normal distribution curve fitted to the total data rather than individual group distributions."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex),
+  metaData = metaData,
+  geomHistAttributes = utils::modifyList(
+    getDefaultGeomAttributes("Hist"),
+    list(position = "stack")
+  ),
+  distribution = "normal"
+)
+```
+
+### 3.4 Fit with Frequency TRUE
+
+To fit a frequency, select a distribution (here "normal") and set the variable `plotAsFrequency` to TRUE.
+
+```{r example-frequency-fit, fig.alt="Frequency histogram with normal distribution fit. The histogram displays frequency values (normalized counts) on the y-axis with fitted normal distribution curves. The vertical line shows the mean, and the fit is applied to the frequency-scaled data."}
+plotHistogram(
+  data = histDataDistr,
+  mapping = aes(x = Obs, fill = Sex),
+  metaData = metaDataDistr,
+  distribution = "normal",
+  plotAsFrequency = TRUE
+)
+```
+
+### 3.5 Fit with Frequency TRUE and Stacked Data
+
+```{r example-frequency-stacked-fit, fig.alt="Frequency histogram with stacked positioning and normal distribution fit. The stacked frequency histogram combines both sex groups with frequency scaling, and a single normal distribution is fitted to the combined frequency data."}
+plotHistogram(
+  data = histData,
+  mapping = aes(x = Ratio, fill = Sex),
+  metaData = metaData,
+  geomHistAttributes = utils::modifyList(
+    getDefaultGeomAttributes("Hist"),
+    list(position = "stack")
+  ),
+  distribution = "normal",
+  plotAsFrequency = TRUE
+)
+```
+
+### 3.6 X-Axis on Log Scale for Distribution Fit
+
+As the fit is based on binning, and binning is dependent on scale, a log scale has to be set before the distribution fit. Please use the variable `xScale = 'log'` and do not add a `{ggplot}` like `scale_x_log10`.
+
+```{r example-logscale, fig.alt="Histogram with logarithmic x-axis scale and normal distribution fit. The log-scaled histogram shows observed values by sex with distribution fitting applied after log transformation. No mean line is displayed due to meanFunction = 'none' setting."}
+plotHistogram(
+  data = histDataDistr,
+  mapping = aes(x = Obs, fill = Sex),
+  metaData = metaDataDistr,
+  xScale = "log",
+  distribution = "norm",
+  meanFunction = "none"
+) + labs(tag = "A")
+```
+
+# 4. Histogram for Categorical Data
+
+The function `plotHistogram` can also be used to plot categorical data with a bar plot. Internally, the function switches from `geom_histogram` to `geom_bar`. With default inputs, the function switches automatically to a bar plot if the data is a factor or non-numeric. (See plot A). It can also be done manually by setting the variable `asBarPlot` to TRUE (see plot B).
+
+```{r example-categorical-data, fig.alt="Two bar plots (A and B) showing categorical data visualization. Plot A shows age bins as factor data with automatic bar plot detection. Plot B demonstrates manual bar plot creation by setting asBarPlot = TRUE and rounding age values to 10-year intervals. Both plots are stratified by sex."}
+# A Input is factor
+plotHistogram(
+  data = histData,
+  mapping = aes(x = AgeBin, fill = Sex),
+  metaData = metaData
+) + labs(tag = "A")
+
+# B Set asBarPlot = TRUE to convert input to factor
+plotHistogram(
+  data = histData,
+  mapping = aes(x = round(histData$Age / 10) * 10, fill = Sex),
+  asBarPlot = TRUE,
+  metaData = metaData
+) + labs(x = "Age rounded to 10 years", tag = "B")
+```
+
+```

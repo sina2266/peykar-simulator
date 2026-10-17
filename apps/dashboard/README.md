@@ -15,4 +15,8 @@ Use a graph library such as React Flow for editable composition and specialized
 scientific plots for results. A graph edge must not imply numerical or biological
 validity. Do not put credentials in frontend source. Do not turn population-only
 outputs into supposedly measured cell trajectories. Build against the generated
-OpenAPI schema after P1 contracts are verified on a real engine.
+OpenAPI and the whole-platform S12 roadmap. Shared Biology/Model/Experiment
+workspaces can use current persistent graph, source registry and durable experiment
+APIs without waiting for full published vCornea reproduction. Deliver complete
+workflow/error/responsive/accessibility/RTL states for each workspace; Swagger is
+not the product dashboard.

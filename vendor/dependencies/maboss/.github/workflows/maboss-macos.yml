@@ -1,0 +1,614 @@
+name: MacOS
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  maboss_macos:
+    name: MaBoSS
+    runs-on: macos-12
+    env:
+      CC: gcc-11
+      CXX: g++-11
+      INSTALL_PATH: /usr/local
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/local/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /usr/local/opt/libxml2/include/libxml2/
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison gcc cmake
+        pip install numpy
+        pwd
+
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+        
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV
+  
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-${{ env.CMAKE_VERSION }}.libSBML-5.20.2-g++11-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+        
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make clean
+        export CXXFLAGS="${CXXFLAGS} -I/usr/local/include -I/usr/local/include/libxml2"
+        export LDFLAGS="${LDFLAGS} -L/usr/local/lib -lxml2"
+        make CXX=g++-11 CC=gcc-11 install SBML_COMPAT=1
+        make CXX=g++-11 CC=gcc-11 MAXNODES=128 install SBML_COMPAT=1
+        
+    - name: Test MaBoSS
+      run: bash scripts/run_tests.sh
+        
+  maboss_llvm_macos:
+    name: MaBoSS (clang)
+    runs-on: macos-12
+    env:
+      CC: clang
+      CXX: clang++
+      INSTALL_PATH: /usr/local
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/local/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /usr/local/opt/libxml2/include/libxml2/
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison cmake
+        pip install numpy
+
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+        
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-clang
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-${{ env.CMAKE_VERSION }}-libSBML-5.20.2-clang++-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-clang.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+    
+    - name: Install libSBML
+      run: |
+        sudo bash scripts/install_libsbml.sh
+
+    - name: Build MaBoSS
+      run: |
+        cd engine/src
+        make clean
+        make CXX=g++ install SBML_COMPAT=1
+        make CXX=g++ MAXNODES=128 install SBML_COMPAT=1
+        
+    - name: Test MaBoSS
+      run: bash scripts/run_tests.sh
+   
+  maboss_binary_macos:
+    name: MaBoSS MacOSX x86_64 binary
+    runs-on: macos-12
+    needs: [maboss_macos, maboss_llvm_macos]
+    env:
+      CC: clang
+      CXX: clang++
+      INSTALL_PATH: /usr/local
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/local/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /usr/local/opt/libxml2/include/libxml2/
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison cmake
+        
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-clang
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-${{ env.CMAKE_VERSION }}-libSBML-5.20.2-clang++-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-clang.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+          
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_static CC=clang CXX=clang++ SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=128 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=256 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=512 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=1024 SBML_COMPAT=1
+        cd ../pub
+        zip MaBoSS-osx64.zip *
+      
+    - name: Caching produced project binaries
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ github.workspace }}/engine/pub/MaBoSS-osx64.zip
+        key: ${{ runner.os }}-macos-MaBoSS-${{ github.run_id }}
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: MaBoSS-osx64
+        path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx64.zip
+            
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: MaBoSS-osx64.zip
+        asset_path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx64.zip
+        asset_content_type: application/zip
+        
+  maboss_binary_macos_m1:
+    name: MaBoSS MacOSX arm64 binary
+    needs: [maboss_macos, maboss_llvm_macos]
+    runs-on: macos-14
+    env:
+      CC: clang
+      CXX: clang++
+      INSTALL_PATH: /usr/local
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /opt/homebrew/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /opt/homebrew/opt/libxml2/include/
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison cmake
+
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+      
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV
+    
+    - name: Cache compiled libSBML
+      id: cache-libsbml-clang
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-m1-${{ env.CMAKE_VERSION }}-libSBML-5.20.2-clang++-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-clang.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+          
+    - name: Build binary
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_static CC=clang CXX=clang++ SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=128 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=256 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=512 SBML_COMPAT=1
+        make install_static CC=clang CXX=clang++ MAXNODES=1024 SBML_COMPAT=1
+        cd ../pub
+        zip MaBoSS-osx-arm64.zip *
+    
+    - name: Caching produced project binaries
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ github.workspace }}/engine/pub/MaBoSS-osx-arm64.zip
+        key: ${{ runner.os }}-macosarm64-MaBoSS-${{ github.run_id }}
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: MaBoSS-osx-arm64
+        path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx-arm64.zip
+            
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: MaBoSS-osx-arm64.zip
+        asset_path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx-arm64.zip
+        asset_content_type: application/zip
+        
+  maboss_binary_macos_universal:
+    name: MaBoSS MacOSX universal binary
+    needs: [maboss_binary_macos, maboss_binary_macos_m1]
+    runs-on: macos-12
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install unzip
+
+    - name: Caching produced project binaries
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ github.workspace }}/engine/pub/MaBoSS-osx-arm64.zip
+        key: ${{ runner.os }}-macosarm64-MaBoSS-${{ github.run_id }}
+        
+    - name: Caching produced project binaries
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ github.workspace }}/engine/pub/MaBoSS-osx64.zip
+        key: ${{ runner.os }}-macos-MaBoSS-${{ github.run_id }}  
+    
+    - name: Create universal binaries
+      run : |
+        cd engine/pub
+        unzip MaBoSS-osx64.zip -d MaBoSS-osx64
+        unzip MaBoSS-osx-arm64.zip -d MaBoSS-osx-arm64
+        lipo -create -output MaBoSS MaBoSS-osx64/MaBoSS MaBoSS-osx-arm64/MaBoSS
+        lipo -create -output MaBoSS_128n MaBoSS-osx64/MaBoSS_128n MaBoSS-osx-arm64/MaBoSS_128n
+        lipo -create -output MaBoSS_256n MaBoSS-osx64/MaBoSS_256n MaBoSS-osx-arm64/MaBoSS_256n
+        lipo -create -output MaBoSS_512n MaBoSS-osx64/MaBoSS_512n MaBoSS-osx-arm64/MaBoSS_512n
+        lipo -create -output MaBoSS_1024n MaBoSS-osx64/MaBoSS_1024n MaBoSS-osx-arm64/MaBoSS_1024n
+        lipo -create -output PopMaBoSS MaBoSS-osx64/PopMaBoSS MaBoSS-osx-arm64/PopMaBoSS
+        lipo -create -output PopMaBoSS_128n MaBoSS-osx64/PopMaBoSS_128n MaBoSS-osx-arm64/PopMaBoSS_128n
+        lipo -create -output PopMaBoSS_256n MaBoSS-osx64/PopMaBoSS_256n MaBoSS-osx-arm64/PopMaBoSS_256n
+        lipo -create -output PopMaBoSS_512n MaBoSS-osx64/PopMaBoSS_512n MaBoSS-osx-arm64/PopMaBoSS_512n
+        lipo -create -output PopMaBoSS_1024n MaBoSS-osx64/PopMaBoSS_1024n MaBoSS-osx-arm64/PopMaBoSS_1024n
+        zip MaBoSS-osx-universal.zip MaBoSS MaBoSS_128n MaBoSS_256n MaBoSS_512n MaBoSS_1024n PopMaBoSS PopMaBoSS_128n PopMaBoSS_256n PopMaBoSS_512n PopMaBoSS_1024n
+    
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: MaBoSS-osx-universal
+        path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx-universal.zip
+            
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: MaBoSS-osx-universal.zip
+        asset_path: /Users/runner/work/MaBoSS/MaBoSS/engine/pub/MaBoSS-osx-universal.zip
+        asset_content_type: application/zip
+        
+  maboss_library_macos:
+    name: Building MaBoSS osx library
+    runs-on: macos-12
+    needs: [maboss_macos, maboss_llvm_macos]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison gcc@11
+              
+    - name: Build library
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib CC=gcc-11 CXX=g++-11
+        make install_lib MAXNODES=128 CC=gcc-11 CXX=g++-11
+        make install_lib MAXNODES=256 CC=gcc-11 CXX=g++-11
+        make install_lib MAXNODES=512 CC=gcc-11 CXX=g++-11
+        make install_lib MAXNODES=1024 CC=gcc-11 CXX=g++-11
+        make install_alib CC=gcc-11 CXX=g++-11
+        make install_alib MAXNODES=128 CC=gcc-11 CXX=g++-11
+        make install_alib MAXNODES=256 CC=gcc-11 CXX=g++-11
+        make install_alib MAXNODES=512 CC=gcc-11 CXX=g++-11
+        make install_alib MAXNODES=1024 CC=gcc-11 CXX=g++-11
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-osx64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-osx64
+        path: /Users/runner/work/MaBoSS/libMaBoSS-osx64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-osx64.tar.gz
+        asset_path: /Users/runner/work/MaBoSS/libMaBoSS-osx64.tar.gz
+        asset_content_type: application/gzip     
+        
+  maboss_library_macos_m1:
+    name: Building MaBoSS osx library for arm64 
+    runs-on: macos-14
+    needs: [maboss_macos, maboss_llvm_macos]
+
+    steps:
+    - uses: actions/checkout@v4
+  
+    - name: Downgrade XCODE to 14.3.1
+      run: sudo xcode-select -switch /Applications/Xcode_14.3.1.app
+  
+    - name: Install dependencies
+      run : |
+        brew install flex bison gcc@13
+              
+    - name: Build library
+      run: |
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install_lib CC=gcc-13 CXX=g++-13
+        make install_lib MAXNODES=128 CC=gcc-13 CXX=g++-13
+        make install_lib MAXNODES=256 CC=gcc-13 CXX=g++-13
+        make install_lib MAXNODES=512 CC=gcc-13 CXX=g++-13
+        make install_lib MAXNODES=1024 CC=gcc-13 CXX=g++-13
+        make install_alib CC=gcc-13 CXX=g++-13
+        make install_alib MAXNODES=128 CC=gcc-13 CXX=g++-13
+        make install_alib MAXNODES=256 CC=gcc-13 CXX=g++-13
+        make install_alib MAXNODES=512 CC=gcc-13 CXX=g++-13
+        make install_alib MAXNODES=1024 CC=gcc-13 CXX=g++-13
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-macos-arm64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-macos-arm64
+        path: /Users/runner/work/MaBoSS/libMaBoSS-macos-arm64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-macos-arm64.tar.gz
+        asset_path: /Users/runner/work/MaBoSS/libMaBoSS-macos-arm64.tar.gz
+        asset_content_type: application/gzip     
+        
+  maboss_library_sbml_macos:
+    name: Building MaBoSS osx library with libSBML
+    runs-on: macos-12
+    needs: [maboss_macos, maboss_llvm_macos]
+    env:  
+      CC: gcc-11
+      CXX: g++-11
+      INSTALL_PATH: /usr/local/
+      BUILD_PATH: /tmp/
+      LIBXML_LIBDIR: /usr/local/opt/libxml2/lib/libxml2.dylib
+      LIBXML_INCLUDEDIR: /usr/local/opt/libxml2/include/libxml2
+      MACOSX_DEPLOYMENT_TARGET: 12.0
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run : |
+        brew install flex bison gcc@11 cmake
+        
+    - name: Manually install libxml2 2.11
+      run: |
+        wget https://github.com/Homebrew/homebrew-core/raw/38ba35404e3cdb398694419850179e0023158887/Formula/lib/libxml2.rb
+        brew install -s libxml2.rb
+    
+    - name: Set cmake version variable
+      run: |
+        echo "CMAKE_VERSION=$(cmake --version | head -n 1)" >> $GITHUB_ENV  
+         
+    - name: Cache compiled libSBML
+      id: cache-libsbml-gcc11
+      uses: actions/cache@v4
+      with:
+        path: /tmp/libsbml-5.20.2
+        key: ${{ runner.os }}-${{ env.CMAKE_VERSION }}-libSBML-5.20.2-g++11-namespace
+
+    - name: Compiling libSBML
+      if: steps.cache-libsbml-gcc11.outputs.cache-hit != 'true'
+      run: bash scripts/build_libsbml.sh
+        
+    - name: Install libSBML
+      run: sudo bash scripts/install_libsbml.sh
+              
+    - name: Build library
+      run: |
+        export CXXFLAGS="${CXXFLAGS} -I/usr/local/include -I/usr/local/include/libxml2"
+        export LDFLAGS="${LDFLAGS} -L/usr/local/lib -lxml2"
+        rm -fr engine/pub/*
+        cd engine/src
+        make clean
+        make install CC=gcc-11 CXX=g++-11
+        make install_lib SBML_COMPAT=1 CC=gcc-11 CXX=g++-11
+        make install_lib SBML_COMPAT=1 CC=gcc-11 MAXNODES=128 CXX=g++-11
+        make install_lib SBML_COMPAT=1 CC=gcc-11 MAXNODES=256 CXX=g++-11
+        make install_lib SBML_COMPAT=1 CC=gcc-11 MAXNODES=512 CXX=g++-11
+        make install_lib SBML_COMPAT=1 CC=gcc-11 MAXNODES=1024 CXX=g++-11
+        make install_alib SBML_COMPAT=1 CC=gcc-11 CXX=g++-11
+        make install_alib SBML_COMPAT=1 CC=gcc-11 MAXNODES=128 CXX=g++-11
+        make install_alib SBML_COMPAT=1 CC=gcc-11 MAXNODES=256 CXX=g++-11
+        make install_alib SBML_COMPAT=1 CC=gcc-11 MAXNODES=512 CXX=g++-11
+        make install_alib SBML_COMPAT=1 CC=gcc-11 MAXNODES=1024 CXX=g++-11
+        make clean
+        cd ../../../
+        tar -zcvf libMaBoSS-sbml-osx64.tar.gz MaBoSS/README.md MaBoSS/LICENSE MaBoSS/engine/src MaBoSS/engine/include MaBoSS/engine/lib
+        
+    - uses: actions/upload-artifact@v4
+      if: github.event_name != 'release'
+      with:
+        name: libMaBoSS-sbml-osx64
+        path: /Users/runner/work/MaBoSS/libMaBoSS-sbml-osx64.tar.gz
+        
+    - uses: actions/upload-release-asset@v1
+      if: github.event_name == 'release'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_name: libMaBoSS-sbml-osx64.tar.gz
+        asset_path: /Users/runner/work/MaBoSS/libMaBoSS-sbml-osx64.tar.gz
+        asset_content_type: application/gzip
+        
+ 
+      
+  conda_maboss_macosx:
+    name: Build Conda MaBoSS package
+    needs: [maboss_macos, maboss_llvm_macos]
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/usr/local/miniconda"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/Users/runner/miniconda3"}
+        ]
+        # os: [{version: macos-12, name: osx-64, sdk: MacOSX10.10.sdk}, {version: macos-14, name: osx-arm64, sdk: MacOSX11.0.sdk}]
+    runs-on: macos-12
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+              
+    - name: Installing conda-build      
+      run: |
+        conda install conda-build conda-verify anaconda-client
+    
+    - name: Installing MacOSX SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.13.sdk.tar.xz
+        sudo tar xf MacOSX10.13.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX10.13.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
+    - name: Build MaBoSS Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c ${{ matrix.repo.name }} -c colomoto conda/maboss
+    
+    - name: Upload MaBoSS to Anaconda cloud on vincent-noel
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/osx-64/*.tar.bz2 --force;
+ 
+    
+    - name: Upload MaBoSS to Anaconda cloud on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/osx-64/*.tar.bz2 --force;
+
+  conda_maboss_macosx_m1:
+    name: Build Conda MaBoSS package for arm64
+    needs: [maboss_macos, maboss_llvm_macos]
+    strategy:
+      matrix:
+        repo: [
+          {id: 0, name: "defaults", miniforge-variant: "", path: "/Users/runner/miniconda3"}, 
+          {id: 1, name: "conda-forge", miniforge-variant: "Mambaforge", path: "/Users/runner/miniconda3"}
+        ]
+        # os: [{version: macos-12, name: osx-64, sdk: MacOSX10.10.sdk}, {version: macos-14, name: osx-arm64, sdk: MacOSX11.0.sdk}]
+    runs-on: macos-14
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: ${{ matrix.repo.name }}
+        python-version: 3.12
+        miniforge-variant: ${{ matrix.repo.miniforge-variant }}
+        use-mamba: true
+              
+    - name: Installing conda-build      
+      run: |
+        conda install conda-build conda-verify anaconda-client
+    
+    - name: Installing MacOSX SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
+        sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
+    - name: Build MaBoSS Anaconda package
+      run: |
+        CUSTOM_BUILD_NUMBER=${{ matrix.repo.id }} conda build -c ${{ matrix.repo.name }} -c colomoto conda/maboss
+    
+    - name: Upload MaBoSS to Anaconda cloud on vincent-noel
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel ${{ matrix.repo.path }}/envs/test/conda-bld/osx-arm64/*.tar.bz2 --force;
+  
+    
+    - name: Upload MaBoSS to Anaconda cloud on colomoto
+      if: github.repository == 'sysbio-curie/MaBoSS' && github.event_name == 'release'
+      run: |   
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u colomoto ${{ matrix.repo.path }}/envs/test/conda-bld/osx-arm64/*.tar.bz2 --force;
+      

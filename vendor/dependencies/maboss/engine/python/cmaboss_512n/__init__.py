@@ -1,0 +1,1 @@
+from .cmaboss_512n import *

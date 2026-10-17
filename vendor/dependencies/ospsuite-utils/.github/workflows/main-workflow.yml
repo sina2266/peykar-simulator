@@ -1,0 +1,100 @@
+name: Main-Workflow
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions: write-all
+
+jobs:
+  bump-dev-version: # only do that when actually merging in main/develop branch
+    if: github.event_name != 'pull_request'
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
+    with:
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
+
+  R-CMD-Check:
+    if: ${{ !cancelled() }}
+    needs: [bump-dev-version]
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'oldrel-1'}
+
+          - {os: windows-latest, r: 'release'}
+          - {os: windows-latest, r: 'oldrel-1'}
+
+          # Use older ubuntu to maximise backward compatibility
+          - {os: ubuntu-22.04,   r: 'release'}
+          - {os: ubuntu-22.04,   r: 'oldrel-1'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            any::devtools
+            any::desc
+            any::pkgload
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+
+      - name: Build package
+        if: ${{ success() }}
+        run: |
+          output_dir <- file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "built_package")
+          dir.create(output_dir)
+          # first run build() to get a bundle package (that includes rendered vignettes), then create binary.
+          devtools::build(devtools::build(), binary = TRUE, path = output_dir, args=c("--preclean", "--install-tests"))
+        shell: Rscript {0}
+
+      - name: Get package name, version and R versions and store in environment
+        run: |
+          echo "PKG_NAME=$(Rscript -e 'cat(pkgload::pkg_name())')" >>  $GITHUB_ENV
+          echo "PKG_VERSION=$(Rscript -e 'cat(as.character(desc::desc_get_version()))')" >> $GITHUB_ENV
+          echo "R_VERSION=$(Rscript -e 'cat(R.version$major, R.version$minor, sep = ".")')" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Upload built package
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG_NAME }}-v${{ env.PKG_VERSION }}-${{runner.os}}-r_${{ env.R_VERSION }}
+          path: ${{ runner.temp }}/built_package/*
+
+
+  test-coverage:
+    if: ${{ !cancelled() }}
+    needs: [R-CMD-Check]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  pkgdown:
+    if: ${{ !cancelled() }}
+    needs: [R-CMD-Check]
+    uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main

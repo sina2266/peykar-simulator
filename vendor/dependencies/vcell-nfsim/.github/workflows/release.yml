@@ -1,0 +1,461 @@
+# VCell solver release (SOLVER-RELEASE.md): the NFsim_x64 executable archives, the solver image and
+# its Apptainer SIF, and — on a vX.Y.Z tag — the GitHub release that carries them next to the Python
+# wheels.
+#
+#   pull request   build everything, smoke-test, compare with the legacy binary; publish nothing
+#   push to main   the same, then publish the image and SIF as :latest and :sha-<short>
+#   tag vX.Y.Z     the same, publish :X.Y.Z, and create the GitHub release:
+#                    linux64.tgz linux64arm.tgz mac64.tgz win64.zip, the wheels + sdist, SHA256SUMS
+#
+#   ghcr.io/virtualcell/vcell-nfsim:<tag>                      multi-arch (amd64, arm64)
+#   oras://ghcr.io/virtualcell/vcell-nfsim_singularity:<tag>   amd64 SIF for VCell's Slurm cluster
+name: release
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-nfsim
+  SIF: ghcr.io/virtualcell/vcell-nfsim_singularity
+  PUBLISH: ${{ github.event_name == 'push' }}
+  # The legacy desktop binaries VCell ships today (the equivalence baseline).
+  LEGACY_RELEASE: https://github.com/virtualcell/vcell-solvers/releases/download/v0.0.44-dev4
+
+jobs:
+  version:
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          set -euo pipefail
+          project=$(sed -nE 's/^version = "([^"]+)"/\1/p' pyproject.toml | head -1)
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            version=${GITHUB_REF#refs/tags/v}
+            if [ "${version}" != "${project}" ]; then
+              echo "::error::tag v${version} does not match pyproject.toml version ${project}"; exit 1
+            fi
+          else
+            version="${project}-dev+${GITHUB_SHA::7}"
+          fi
+          echo "version=${version}" | tee -a "$GITHUB_OUTPUT"
+
+  linux:
+    name: linux (${{ matrix.arch }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: amd64, platform: linux/amd64, runner: ubuntu-24.04, archive: linux64.tgz }
+          - { arch: arm64, platform: linux/arm64, runner: ubuntu-24.04-arm, archive: linux64arm.tgz }
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build the release archive
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          target: archive
+          build-args: VERSION=${{ env.VERSION }}
+          outputs: type=local,dest=dist
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}
+
+      - name: Build the image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          target: runtime
+          build-args: VERSION=${{ env.VERSION }}
+          load: true
+          tags: vcell-nfsim:ci
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Inspect the archive
+        run: |
+          set -euxo pipefail
+          tar -tzvf "dist/${{ matrix.archive }}"
+          mkdir -p "$RUNNER_TEMP/archive" && tar -xzf "dist/${{ matrix.archive }}" -C "$RUNNER_TEMP/archive"
+          test "$(cat "$RUNNER_TEMP/archive/VERSION")" = "${VERSION}"
+          file "$RUNNER_TEMP/archive/NFsim_x64"
+          ldd "$RUNNER_TEMP/archive/NFsim_x64"
+          objdump -T "$RUNNER_TEMP/archive/NFsim_x64" | grep -oE 'GLIBC_[0-9.]+' | sort -uV | tail -1
+
+      # The archive's executable, run directly on the runner (no -tid: console messaging).
+      - name: Archive — reference model
+        run: |
+          set -euxo pipefail
+          work="$RUNNER_TEMP/direct"; mkdir -p "$work"; ref=tests/smoke; sim=SimID_273069657_0_
+          "$RUNNER_TEMP/archive/NFsim_x64" -seed 505790288 -vcell -xml "$ref/$sim.nfsimInput" \
+            -o "$work/$sim.gdat" -sim 1.0 -ss "$work/$sim.species" -oStep 20 -notf -utl 1000 -cb -pcmatch \
+            | tee "$work/stdout.txt"
+          grep -q '\[\[\[progress:100%\]\]\]' "$work/stdout.txt"
+          cmp "$work/$sim.gdat" "$ref/$sim.gdat.expected"
+          cmp "$work/$sim.species" "$ref/$sim.species.expected"
+
+      - name: Archive — runs on an older glibc (AlmaLinux 8, glibc 2.28)
+        run: |
+          set -euxo pipefail
+          # (NFsim exits 255 after -help, so check what it printed, not the status)
+          out=$(docker run --rm --platform ${{ matrix.platform }} -v "$RUNNER_TEMP/archive:/a:ro" \
+            almalinux:8-minimal /a/NFsim_x64 -help || true)
+          grep -q 'starting NFsim' <<< "${out}"
+
+      - name: Equivalence with the legacy vcell-solvers v0.0.44-dev4 NFsim_x64
+        if: matrix.arch == 'amd64'
+        run: |
+          set -euxo pipefail
+          mkdir -p "$RUNNER_TEMP/legacy"
+          curl -fsSL --retry 5 "$LEGACY_RELEASE/linux64.tgz" | tar -xz -C "$RUNNER_TEMP/legacy"
+          tests/equivalence/compare_legacy.sh "$RUNNER_TEMP/legacy/NFsim_x64" "$RUNNER_TEMP/archive/NFsim_x64" \
+            "$RUNNER_TEMP/equivalence" | tee "$RUNNER_TEMP/equivalence-linux64.txt"
+
+      - name: Smoke — Docker, non-root, bind mount, -tid
+        run: |
+          set -euxo pipefail
+          work="$RUNNER_TEMP/docker"
+          tests/container/smoke.sh "$work" \
+            docker run --rm --network host --user 12345:12345 -v "$work:/simdata" vcell-nfsim:ci
+
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke — the SIF under --containall, -tid
+        if: matrix.arch == 'amd64'
+        run: |
+          set -euxo pipefail
+          apptainer build "$RUNNER_TEMP/vcell-nfsim.sif" docker-daemon://vcell-nfsim:ci
+          test "$(id -u)" -ne 0
+          work="$RUNNER_TEMP/sif"
+          tests/container/smoke.sh "$work" \
+            apptainer run --containall --bind "$work:/simdata" "$RUNNER_TEMP/vcell-nfsim.sif"
+          ls -la "$work"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-${{ matrix.arch }}
+          path: dist/${{ matrix.archive }}
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.arch == 'amd64'
+        with:
+          name: equivalence-linux64
+          path: ${{ runner.temp }}/equivalence-linux64.txt
+
+      # --- publishing (main and tags) ------------------------------------------------------------
+      - name: Tags
+        if: env.PUBLISH == 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Log in to GHCR
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push by digest
+        if: env.PUBLISH == 'true'
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          target: runtime
+          build-args: VERSION=${{ env.VERSION }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Record the digest
+        if: env.PUBLISH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v4
+        if: env.PUBLISH == 'true'
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: env.PUBLISH == 'true' && matrix.arch == 'amd64'
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          set -euxo pipefail
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          for ref in $TAGS; do
+            apptainer push "$RUNNER_TEMP/vcell-nfsim.sif" "oras://${SIF}:${ref##*:}"
+          done
+
+  manifest:
+    name: multi-arch manifest
+    if: github.event_name == 'push'
+    needs: linux
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          set -euxo pipefail
+          # shellcheck disable=SC2046  # one -t per tag, one ref per digest
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${{ steps.meta.outputs.version }}"
+
+  mac:
+    name: mac (universal)
+    needs: version
+    runs-on: macos-14
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (arm64 + x86_64)
+        run: |
+          set -euxo pipefail
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 \
+            -DVCELL_NFSIM_VERSION="${VERSION}"
+          cmake --build build --target NFsim_x64 -j"$(sysctl -n hw.ncpu)"
+      - name: Package
+        run: |
+          set -euxo pipefail
+          pkg="$RUNNER_TEMP/mac64"; mkdir -p "$pkg"
+          cp build/bin/NFsim_x64 "$pkg/NFsim_x64"
+          strip -x "$pkg/NFsim_x64"
+          codesign --force --sign - "$pkg/NFsim_x64"
+          codesign --verify --verbose "$pkg/NFsim_x64"
+          lipo "$pkg/NFsim_x64" -verify_arch arm64 x86_64
+          otool -L "$pkg/NFsim_x64"
+          if otool -L "$pkg/NFsim_x64" | grep -E '^[[:space:]]' | grep -vE '^\s*(/usr/lib/|/System/|@rpath/|@loader_path/|@executable_path/)'; then
+            echo "::error::NFsim_x64 links a library outside the system / its own directory"; exit 1
+          fi
+          cp LICENSE "$pkg/LICENSE"; cp LICENSE.txt "$pkg/LICENSE-GPL-3.0.txt"
+          printf '%s\n' "${VERSION}" > "$pkg/VERSION"
+          mkdir -p dist && tar -C "$pkg" -czf dist/mac64.tgz . && tar -tzvf dist/mac64.tgz
+      - name: Reference model and legacy equivalence, both slices
+        run: |
+          set -euxo pipefail
+          exe="$RUNNER_TEMP/mac64/NFsim_x64"; ref=tests/smoke; sim=SimID_273069657_0_
+          mkdir -p "$RUNNER_TEMP/legacy"
+          curl -fsSL --retry 5 "$LEGACY_RELEASE/mac64.tgz" | tar -xz -C "$RUNNER_TEMP/legacy"
+          for arch in arm64 x86_64; do
+            work="$RUNNER_TEMP/ref-$arch"; mkdir -p "$work"
+            arch "-$arch" "$exe" -seed 505790288 -vcell -xml "$ref/$sim.nfsimInput" -o "$work/$sim.gdat" \
+              -sim 1.0 -ss "$work/$sim.species" -oStep 20 -notf -utl 1000 -cb -pcmatch -tid 0 | tee "$work/stdout.txt"
+            grep -q '\[\[\[progress:100%\]\]\]' "$work/stdout.txt"
+            cmp "$work/$sim.gdat" "$ref/$sim.gdat.expected"
+            cmp "$work/$sim.species" "$ref/$sim.species.expected"
+            tests/equivalence/compare_legacy.sh "arch -x86_64 $RUNNER_TEMP/legacy/NFsim_x64" "arch -$arch $exe" \
+              "$RUNNER_TEMP/eq-$arch" | tee -a "$RUNNER_TEMP/equivalence-mac64.txt"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-mac
+          path: dist/mac64.tgz
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: equivalence-mac64
+          path: ${{ runner.temp }}/equivalence-mac64.txt
+
+  windows:
+    name: windows (x64)
+    needs: version
+    runs-on: windows-2022
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      # MinGW-w64 gcc (preinstalled on the runner), fully static, as the legacy vcell-solvers Windows
+      # build was MinGW. (MSVC leaves NFsimMain unresolved when linking NFsim_x64.)
+      - name: Build (MinGW-w64, static)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          export PATH="/c/mingw64/bin:$PATH"
+          gcc --version
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ \
+            -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++" \
+            -DVCELL_NFSIM_VERSION="${VERSION}"
+          cmake --build build --target NFsim_x64
+          find build -name 'NFsim_x64.exe'
+      - name: Package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          pkg="$RUNNER_TEMP/win64"; mkdir -p "$pkg"
+          cp "$(find build -name NFsim_x64.exe | head -1)" "$pkg/NFsim_x64.exe"
+          /c/mingw64/bin/strip "$pkg/NFsim_x64.exe"
+          cp LICENSE "$pkg/LICENSE"; cp LICENSE.txt "$pkg/LICENSE-GPL-3.0.txt"
+          printf '%s\n' "${VERSION}" > "$pkg/VERSION"
+          mkdir -p dist
+          (cd "$pkg" && 7z a -tzip "$GITHUB_WORKSPACE/dist/win64.zip" .)
+          7z l dist/win64.zip
+      - name: Only system DLLs
+        shell: pwsh
+        run: |
+          $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
+          $dumpbin = Get-ChildItem -Recurse "$vs\VC\Tools\MSVC" -Filter dumpbin.exe | Where-Object { $_.FullName -match 'Hostx64\\x64' } | Select-Object -First 1
+          $deps = & $dumpbin.FullName /dependents "$env:RUNNER_TEMP\win64\NFsim_x64.exe"
+          $deps
+          $bad = $deps | Select-String -Pattern '\.dll' | Where-Object { $_ -notmatch '(?i)(KERNEL32|USER32|ADVAPI32|WS2_32|SHELL32|OLE32|GDI32|bcrypt|msvcrt|api-ms-win-)' }
+          if ($bad) { Write-Error "unexpected DLL dependencies: $bad"; exit 1 }
+      - name: Reference model
+        shell: bash
+        run: |
+          set -euxo pipefail
+          exe="$RUNNER_TEMP/win64/NFsim_x64.exe"; ref=tests/smoke; sim=SimID_273069657_0_
+          work="$RUNNER_TEMP/ref"; mkdir -p "$work"
+          "$exe" -seed 505790288 -vcell -xml "$ref/$sim.nfsimInput" -o "$work/$sim.gdat" \
+            -sim 1.0 -ss "$work/$sim.species" -oStep 20 -notf -utl 1000 -cb -pcmatch -tid 0 | tee "$work/stdout.txt"
+          grep -q '\[\[\[progress:100%\]\]\]' "$work/stdout.txt"
+          diff --strip-trailing-cr "$work/$sim.gdat" "$ref/$sim.gdat.expected"
+          diff --strip-trailing-cr "$work/$sim.species" "$ref/$sim.species.expected"
+      # VCell's desktop still ships the older v0.0.40 Windows binaries; record the comparison.
+      - name: Equivalence with the legacy vcell-solvers v0.0.40 NFsim_x64.exe
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p "$RUNNER_TEMP/legacy"
+          curl -fsSL --retry 5 https://github.com/virtualcell/vcell-solvers/releases/download/v0.0.40/win64.zip -o "$RUNNER_TEMP/legacy.zip"
+          7z x -o"$RUNNER_TEMP/legacy" "$RUNNER_TEMP/legacy.zip" > /dev/null
+          tests/equivalence/compare_legacy.sh "$RUNNER_TEMP/legacy/NFsim_x64.exe" "$RUNNER_TEMP/win64/NFsim_x64.exe" \
+            "$RUNNER_TEMP/equivalence" | tee "$RUNNER_TEMP/equivalence-win64.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: equivalence-win64
+          path: ${{ runner.temp }}/equivalence-win64.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-win
+          path: dist/win64.zip
+          if-no-files-found: error
+
+  wheels:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: version
+    uses: ./.github/workflows/publish-python-package.yml
+    permissions:
+      contents: write
+      id-token: write
+
+  github-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, linux, manifest, mac, windows, wheels]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: assets
+          pattern: archive-*
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: assets
+          pattern: wheels-*
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: assets
+          name: sdist
+      - uses: actions/download-artifact@v4
+        with:
+          path: equivalence
+          pattern: equivalence-*
+          merge-multiple: true
+      - name: Checksums
+        working-directory: assets
+        run: |
+          set -euxo pipefail
+          for a in linux64.tgz linux64arm.tgz mac64.tgz win64.zip; do test -f "$a"; done
+          sha256sum -- * > SHA256SUMS
+          cat SHA256SUMS
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          set -euxo pipefail
+          {
+            echo "NFsim for the Virtual Cell, v${VERSION}."
+            echo
+            echo "- Executable archives (\`NFsim_x64\`, see SOLVER-RELEASE.md): \`linux64.tgz\`, \`linux64arm.tgz\`, \`mac64.tgz\` (universal), \`win64.zip\`; checksums in \`SHA256SUMS\`."
+            echo "- Image: \`${IMAGE}:${VERSION}\` (linux/amd64, linux/arm64)"
+            echo "- SIF: \`oras://${SIF}:${VERSION}\`"
+            echo "- Python wheels \`pyvcell_nfsim-${VERSION}-*\` and the sdist."
+            echo
+            echo "Equivalence with the legacy vcell-solvers v0.0.44-dev4 \`NFsim_x64\` (same seeds, byte-for-byte):"
+            echo
+            echo '```'
+            cat equivalence/*.txt
+            echo '```'
+          } > notes.md
+          gh release create "${GITHUB_REF_NAME}" --title "Release ${GITHUB_REF_NAME}" --notes-file notes.md assets/*

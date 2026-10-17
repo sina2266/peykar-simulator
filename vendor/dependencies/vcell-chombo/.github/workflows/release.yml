@@ -1,0 +1,494 @@
+name: release
+
+# The release contract (SOLVER-RELEASE.md). Builds the portable release
+# archives, the runtime image and the Apptainer SIF, and checks each of them the
+# way VCell runs it. On a v* tag it also publishes:
+#
+#   GitHub release  linux64.tgz  linux64arm.tgz  mac64.tgz (universal)  SHA256SUMS
+#   ghcr.io/virtualcell/vcell-chombo:<X.Y.Z>, :latest          (amd64 + arm64)
+#   oras://ghcr.io/virtualcell/vcell-chombo_singularity:<X.Y.Z>, :latest   (amd64)
+#
+# Pull requests and manual runs build and check everything and publish nothing.
+# There is no win64.zip: Chombo's build system needs GNU make, perl and a Unix
+# shell, and the MinGW port on the windows-ci branch does not build yet.
+#
+# ci.yml stays the everyday build-and-ctest workflow; this one is the release
+# path, so it repeats the build on the release toolchains rather than reusing
+# ci.yml's artifacts.
+
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  IMAGE: ghcr.io/virtualcell/vcell-chombo
+  SIF: ghcr.io/virtualcell/vcell-chombo_singularity
+  PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Linux: manylinux_2_28 (glibc 2.28), GCC 13 from gcc-toolset-13
+  # --------------------------------------------------------------------------
+  linux:
+    name: linux ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 150
+    container: quay.io/pypa/manylinux_2_28_${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: x86_64,  runner: ubuntu-24.04,     asset: linux64,    conan_arch: x86_64 }
+          - { arch: aarch64, runner: ubuntu-24.04-arm, asset: linux64arm, conan_arch: armv8 }
+    defaults:
+      run:
+        shell: bash
+    env:
+      CC: /opt/rh/gcc-toolset-13/root/usr/bin/gcc
+      CXX: /opt/rh/gcc-toolset-13/root/usr/bin/g++
+      FC: /opt/rh/gcc-toolset-13/root/usr/bin/gfortran
+    steps:
+      - name: Install the toolchain
+        run: |
+          # The image's default toolset is newer; the Conan profiles and every
+          # other build of this repo use GCC 13, so stay on it.
+          dnf install -y gcc-toolset-13-gcc gcc-toolset-13-gcc-c++ gcc-toolset-13-gcc-gfortran perl-core make which patchelf git
+          echo /opt/rh/gcc-toolset-13/root/usr/bin >> "$GITHUB_PATH"
+          echo /opt/python/cp312-cp312/bin >> "$GITHUB_PATH"
+          # The image points LD_LIBRARY_PATH at its default toolset; the bundling
+          # step must see what the executables resolve on a plain system.
+          echo LD_LIBRARY_PATH= >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0   # git describe -> the version the solvers print
+
+      - name: Tools
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          $CXX --version | head -1; $FC --version | head -1
+          python -m pip install --upgrade pip
+          # ninja and cmake on PATH for the dependency builds: the profile selects
+          # the Ninja generator for every package, and only this recipe itself
+          # tool_requires ninja.
+          python -m pip install 'conan>=2.0' numpy h5py ninja cmake
+          conan --version
+
+      - name: Install dependencies with Conan
+        run: |
+          # --build="*": Conan Center's Linux binaries are built on a newer glibc
+          # than this baseline. Its prebuilt m4 does not even run here, and a
+          # prebuilt static library could carry GLIBC_2.3x symbol references into
+          # the solvers. So the whole tree, tools included, is compiled on glibc 2.28.
+          conan install . --build="*" \
+            -pr:a=conan-profiles/CI-CD/Linux-AMD64_profile.txt -s:a arch=${{ matrix.conan_arch }}
+
+      - name: Configure
+        run: |
+          source build/generators/conanbuild.sh
+          cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: ctest
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Package
+        run: |
+          version=$(git describe --tags --always)
+          case "$GITHUB_REF" in refs/tags/v*) version=${GITHUB_REF_NAME#v} ;; esac
+          packaging/stage.sh build "stage/${{ matrix.asset }}" "$version"
+          packaging/bundle-linux.sh "stage/${{ matrix.asset }}" 2.28
+          mkdir -p dist
+          (cd "stage/${{ matrix.asset }}" && tar -czf "$GITHUB_WORKSPACE/dist/${{ matrix.asset }}.tgz" *)
+          tar -tzvf "dist/${{ matrix.asset }}.tgz"
+
+      - name: Check the archive (unpacked fresh, with messaging)
+        run: |
+          mkdir -p /tmp/unpacked && tar -xzf "dist/${{ matrix.asset }}.tgz" -C /tmp/unpacked
+          # Run as an unprivileged user from a directory it owns, as a desktop does.
+          useradd -m checker
+          chown -R checker /tmp/unpacked
+          su checker -c "/opt/python/cp312-cp312/bin/python tests/release/check_release.py --bin-dir /tmp/unpacked --work /tmp/check --messaging"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: check-${{ matrix.asset }}
+          path: /tmp/check
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: dist/${{ matrix.asset }}.tgz
+          if-no-files-found: error
+
+  # --------------------------------------------------------------------------
+  # macOS: Homebrew GCC 13 per architecture, then one universal archive
+  # --------------------------------------------------------------------------
+  mac:
+    name: mac ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: arm64,  os: macos-15,       profile: MacOS-ARM64_profile.txt }
+          - { arch: x86_64, os: macos-15-intel, profile: MacOS-AMD64_profile.txt }
+    env:
+      CC: gcc-13
+      CXX: g++-13
+      FC: gfortran-13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Tools
+        run: |
+          if ! command -v g++-13 >/dev/null || ! command -v gfortran-13 >/dev/null; then
+            brew install gcc@13
+          fi
+          brew install make conan
+          g++-13 --version | head -1
+
+      - name: Install dependencies with Conan
+        run: conan install . --build=missing -pr:a=conan-profiles/CI-CD/${{ matrix.profile }}
+
+      - name: Configure
+        run: |
+          source build/generators/conanbuild.sh
+          cmake -B build -S . -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$PWD/build/generators/conan_toolchain.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_TARGET_MESSAGING=ON
+
+      - name: Build
+        run: |
+          source build/generators/conanbuild.sh
+          cmake --build build
+
+      - name: ctest
+        run: |
+          source build/generators/conanbuild.sh
+          ctest --test-dir build --output-on-failure
+
+      - name: Stage and bundle
+        run: |
+          version=$(git describe --tags --always)
+          case "$GITHUB_REF" in refs/tags/v*) version=${GITHUB_REF_NAME#v} ;; esac
+          packaging/stage.sh build stage/mac-${{ matrix.arch }} "$version"
+          python3 packaging/bundle_macos.py stage/mac-${{ matrix.arch }}
+          tar -czf mac-${{ matrix.arch }}.tgz -C stage mac-${{ matrix.arch }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-${{ matrix.arch }}
+          path: mac-${{ matrix.arch }}.tgz
+          if-no-files-found: error
+          retention-days: 3
+
+  mac-universal:
+    name: mac universal
+    needs: mac
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: mac-*
+          merge-multiple: true
+      - name: lipo
+        run: |
+          mkdir -p stage
+          tar -xzf mac-arm64.tgz -C stage
+          tar -xzf mac-x86_64.tgz -C stage
+          packaging/make-universal.sh stage/mac-arm64 stage/mac-x86_64 stage/mac64
+          mkdir -p dist
+          (cd stage/mac64 && tar -czf "$GITHUB_WORKSPACE/dist/mac64.tgz" *)
+          tar -tzvf dist/mac64.tgz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac64
+          path: dist/mac64.tgz
+          if-no-files-found: error
+
+  mac-verify:
+    name: mac64 on ${{ matrix.os }}
+    needs: mac-universal
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-15-intel]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac64
+      - name: Check the universal archive on this architecture
+        run: |
+          mkdir -p "$RUNNER_TEMP/unpacked"
+          tar -xzf mac64.tgz -C "$RUNNER_TEMP/unpacked"
+          uname -m; lipo -archs "$RUNNER_TEMP/unpacked/VCellChombo2D_x64"
+          for f in "$RUNNER_TEMP"/unpacked/*; do
+            if file -b "$f" | grep -q Mach-O; then
+              codesign --verify "$f"
+              # Every dependency line of every slice; the per-slice "(architecture ...):" headers end in ':'.
+              if otool -arch all -L "$f" | grep -v ':$' | grep -Ev '^\s+(/usr/lib/|/System/|@rpath/)'; then
+                echo "::error::$(basename "$f") refers outside the archive"; exit 1
+              fi
+            fi
+          done
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q numpy h5py
+          "$RUNNER_TEMP/venv/bin/python" tests/release/check_release.py \
+            --bin-dir "$RUNNER_TEMP/unpacked" --work "$RUNNER_TEMP/check" --messaging
+
+  # --------------------------------------------------------------------------
+  # Image and SIF, from the Linux archives
+  # --------------------------------------------------------------------------
+  image:
+    name: image ${{ matrix.arch }}
+    needs: linux
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: amd64, runner: ubuntu-24.04,     platform: linux/amd64, asset: linux64 }
+          - { arch: arm64, runner: ubuntu-24.04-arm, platform: linux/arm64, asset: linux64arm }
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+
+      - name: Unpack the archive as the build context
+        run: mkdir -p dist && tar -xzf ${{ matrix.asset }}.tgz -C dist && ls -l dist
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build and load
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          load: true
+          tags: vcell-chombo:ci
+
+      - name: Python for the checks
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q numpy h5py
+
+      - name: Smoke — entry point
+        run: |
+          set -x
+          docker run --rm vcell-chombo:ci
+          docker run --rm --user 12345:12345 vcell-chombo:ci --help | grep -q VCellChombo3D_x64
+          set +e
+          docker run --rm vcell-chombo:ci no-such-solver; code=$?
+          set -e
+          test "$code" -eq 2
+          # The solver's own exit status passes through (no input file: non-zero).
+          if docker run --rm vcell-chombo:ci VCellChombo2D_x64; then exit 1; fi
+
+      - name: Smoke — the image, as the caller's uid, with -tid and a broker
+        run: |
+          work="$RUNNER_TEMP/docker-check"; mkdir -p "$work"
+          "$RUNNER_TEMP/venv/bin/python" tests/release/check_release.py --work "$work" --mount /simdata --messaging \
+            --runner "docker run --rm --network host --user $(id -u):$(id -g) -v $work:/simdata vcell-chombo:ci"
+
+      - name: Install Apptainer
+        if: matrix.arch == 'amd64'
+        uses: eWaterCycle/setup-apptainer@v2
+
+      - name: Smoke — the SIF under --containall, as SlurmProxy runs it
+        if: matrix.arch == 'amd64'
+        run: |
+          set -x
+          apptainer build "$RUNNER_TEMP/vcell-chombo.sif" docker-daemon://vcell-chombo:ci
+          ls -lh "$RUNNER_TEMP/vcell-chombo.sif"
+          apptainer run --containall "$RUNNER_TEMP/vcell-chombo.sif" --help
+          apptainer run --containall "$RUNNER_TEMP/vcell-chombo.sif" | grep -q VCellChombo2D_x64
+          work="$RUNNER_TEMP/sif-check"; mkdir -p "$work"
+          id -u
+          "$RUNNER_TEMP/venv/bin/python" tests/release/check_release.py --work "$work" --mount /simdata --messaging \
+            --runner "apptainer run --containall --bind $work:/simdata $RUNNER_TEMP/vcell-chombo.sif"
+
+      # --- publishing (v* tags only) ------------------------------------------
+      - name: Tags
+        if: env.PUBLISH == 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest
+
+      - name: Log in to GHCR
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push by digest
+        if: env.PUBLISH == 'true'
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: ${{ matrix.platform }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+
+      - name: Record the digest
+        if: env.PUBLISH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          digest="${{ steps.push.outputs.digest }}"
+          touch "$RUNNER_TEMP/digests/${digest#sha256:}"
+
+      - uses: actions/upload-artifact@v4
+        if: env.PUBLISH == 'true'
+        with:
+          name: digests-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Publish the SIF (oras)
+        if: env.PUBLISH == 'true' && matrix.arch == 'amd64'
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          set -euxo pipefail
+          apptainer registry login --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}" oras://ghcr.io
+          for ref in $TAGS; do
+            apptainer push "$RUNNER_TEMP/vcell-chombo.sif" "oras://${SIF}:${ref##*:}"
+          done
+
+  manifest:
+    name: multi-arch manifest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: image
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=latest
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the manifest list
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          set -euxo pipefail
+          # shellcheck disable=SC2046  # one -t per tag, one ref per digest
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf "${IMAGE}@sha256:%s " *)
+          docker buildx imagetools inspect "${IMAGE}:${{ steps.meta.outputs.version }}"
+
+  # --------------------------------------------------------------------------
+  # The GitHub release
+  # --------------------------------------------------------------------------
+  assets:
+    name: release assets
+    needs: [linux, mac-verify, image]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux64
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux64arm
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac64
+          path: dist
+      - name: SHA256SUMS
+        working-directory: dist
+        run: |
+          ls -l
+          test -f linux64.tgz && test -f linux64arm.tgz && test -f mac64.tgz
+          sha256sum linux64.tgz linux64arm.tgz mac64.tgz > SHA256SUMS
+          cat SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: dist/*
+      - name: Create the release
+        if: env.PUBLISH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=${TAG#v}
+          cat > notes.md <<EOF
+          VCellChombo2D_x64 and VCellChombo3D_x64 (serial, messaging on), packaged per SOLVER-RELEASE.md.
+
+          | asset | platform |
+          |---|---|
+          | \`linux64.tgz\` | Linux x86_64, glibc >= 2.28; GCC runtime bundled, RUNPATH=\$ORIGIN |
+          | \`linux64arm.tgz\` | Linux aarch64, glibc >= 2.28 |
+          | \`mac64.tgz\` | macOS universal (arm64 + x86_64), ad-hoc signed, GCC runtime bundled via @rpath |
+          | \`SHA256SUMS\` | checksums of the above |
+
+          No \`win64.zip\`: Chombo's build needs GNU make, perl and a Unix shell; see SOLVER-RELEASE.md.
+
+          Image: \`ghcr.io/virtualcell/vcell-chombo:${version}\` (amd64, arm64)
+          SIF: \`oras://ghcr.io/virtualcell/vcell-chombo_singularity:${version}\` (amd64)
+          EOF
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md \
+            dist/linux64.tgz dist/linux64arm.tgz dist/mac64.tgz dist/SHA256SUMS

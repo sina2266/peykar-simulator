@@ -174,8 +174,10 @@ than having the platform assume those capabilities.
 Test conservation, nonnegativity, step refinement, coupling error, convergence and
 stability separately from biological endpoint agreement. Individually valid models
 can produce an invalid composite. Validate the coupled system in its own context.
-The current code supplies compatibility/DAG checks and an analytical conservative
-exchange primitive; it does not implement generic multiscale execution.
+The current code supplies compatibility/DAG checks, an analytical conservative
+exchange primitive and durable sequential endpoint-transfer workflows. Those
+workflows retain child run provenance but do not implement simultaneous feedback
+or generic multiscale execution; see experiment-workflows.md and roadmap S4/S5.
 
 ## 8. Run state, scenarios, ensembles, and reproducibility
 

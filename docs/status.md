@@ -11,11 +11,14 @@ interfaces/acceptance criteria without an executable integration.
 | Versioned model registry and pinned dependencies | Implemented | Local persistent profile |
 | Declarative model import inspection | Partial | JSON only; no remote fetching or execution |
 | Offline external artifact admission | Partial | SHA-256 checks for every declared source/dependency/runtime-lock file; immutable local inventory; no installation, execution or undeclared dependency discovery |
+| Managed specialist source ecosystem | Implemented local source distribution | 25 permanent vendor distributions / 52,167 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
+| Native runtime evidence registry | Implemented locally | 11 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
 | Species/context checks and capability search | Implemented | Exact matching; no inferred transfer |
-| Biological graph | Partial | In-memory reference graph, selected relations |
+| Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example; no full ontology/claim reconciliation |
 | Persistent knowledge-gap declarations | Implemented locally | Immutable manual records; exact affected-model versions; filtered API/CLI reads; no automatic closure or execution blocking |
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
+| Durable multi-model experiments | Partial | Working sequential terminal-output to initial-parameter transfer; frozen models, atomic child dispatch, retries/cancellation/results/events; no simultaneous feedback or spatial coupling |
 | Conserved two-compartment exchange | Implemented | Analytical verification primitive |
 | Persistent runs and separate worker | Implemented | Single-host SQLite WAL queue |
 | Idempotency, token fencing, cancellation | Implemented | Parent checks child lifecycle; stale runs explicitly fail; cancellation/recovery ownership race handled |
@@ -42,7 +45,10 @@ interfaces/acceptance criteria without an executable integration.
 | vCornea / CompuCell3D execution | Partial | EPIC E1 operator profile works: licensed archive, locked 4.7.0 image, bounded seeded runs and injury crossing; no general queued adapter, full published replay or biological validation |
 | Published vCornea reference acquisition | Implemented locally | Six complete count/height files for three archived severities; selected ZIP member checks only; per-run seed/parameters unknown |
 | Small experimental scratch dataset | Implemented ingestion only | Attributed Rho et al. 2015 aggregate control means/SD; different assay and GM-CSF context; not vCornea validation |
-| PhysiCell, VCell, COPASI, Chaste, NEURON, PK-Sim | Designed | No adapters installed or code bundled |
+| PhysiCell, VCell, COPASI, Chaste, NEURON, GEARS | Native operator execution working | Locked/isolated builds or pinned native images; real native outputs, ODE/HH/OMEX/Boolean/gradient checks; general worker adapters and full published benchmark/validation gates remain open |
+| PK-Sim/MoBi headless computation | Implemented operator profile | OSPSuite-R 12.4.5/rSharp 1.2.3/.NET 8 runs original Aciclovir PKML: 491 samples, original concentration/time units; Windows graphical applications are separate and not installed |
+| Chaste Delta/Notch cell interaction | Original native example executed | Both vertex/node monolayers pass; original model/source and numerical warning retained; no independent coupled tissue validation |
+| Real perturbation AnnData | Operator reader/QC working | Complete provider ZIP/member checksums, 37,160-cell/19,264-gene Dixit K562 release, bounded backed matrix inspection; original GEARS split/training/accuracy and general API admission remain open |
 | GEO, CELLxGENE, HuBMAP, Hugging Face connectors | Designed | No automatic dataset import or clinical data handling |
 | PostgreSQL, S3, SLURM, distributed leases | Designed | Local migration interfaces and operational design only |
 | Six-workspace dashboard | Designed | No frontend implementation in this release |
@@ -66,3 +72,9 @@ The completed engineering acceptance and remaining P1 scientific gate are record
 in [EPIC E1](epics/E1-vcornea-native-runtime.md). Native execution is an explicit
 operator workflow outside the management API; archived simulation benchmarks remain
 distinct from experimental observations.
+
+The [whole-platform roadmap](roadmap.md) now separates shared S0–S13 delivery from
+individual biological-model gates. The source registry, persistent graphs and
+sequential experiment service are shared platform capabilities, documented in
+[libraries](library-ecosystem.md), [biology](biological-graph.md) and
+[workflows](experiment-workflows.md). The full system is not declared finished.

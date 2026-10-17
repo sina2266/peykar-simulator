@@ -1,0 +1,29 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "Cython",
+    "numpy==1.13.3; python_version<'3.5'",
+    "oldest-supported-numpy; python_version>='3.5'",
+]
+
+build-backend = "setuptools.build_meta"
+
+# Install libSBML with all packages
+[tool.cibuildwheel.linux]
+skip = [
+    "cp36-*","cp37-*", "pp37-*",
+]
+
+[tool.cibuildwheel.macos]
+skip = [
+    "cp36-*","cp37-*", "pp*"
+]
+
+[tool.cibuildwheel]
+test-requires = "pandas"
+test-command = [
+  "cd {project}/engine/tests",
+  "python -m unittest test",
+  "python -m unittest test_128n",
+]

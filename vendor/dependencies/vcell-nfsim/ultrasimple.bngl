@@ -1,0 +1,31 @@
+begin model
+
+begin parameters
+ruleParameter_MassActionForwardRate_cc15c_r0 1e-3
+unique_id_used_as_fake_parameter_s0 10.0
+unique_id_used_as_fake_parameter_s1 11.0
+end parameters
+
+begin molecule types
+M(AAA~c0~m0,AAB~0~1,s~X~Y)
+end molecule types
+
+begin seed species
+1 M(AAA~c0,AAB~0,s~X) unique_id_used_as_fake_parameter_s0
+2 M(AAA~m0,AAB~0,s~X) unique_id_used_as_fake_parameter_s1
+end seed species
+
+begin observables
+Molecules O0_M_cyt_unmarked M(AAA~c0,AAB~0) 
+Molecules O0_M_mem_unmarked M(AAA~m0,AAB~0) 
+Molecules O0_total_mem M(AAA~m0)
+Molecules O0_total_cyt M(AAA~c0)
+end observables
+
+begin reaction rules
+r0:	M(AAA~m0,AAB~0,s)%1 + M(AAA~c0,AAB~0,s)%2 -> M(AAA~m0,AAB~1,s!1)%1.M(AAA~m0,AAB~1,s!1)%2		ruleParameter_MassActionForwardRate_cc15c_r0
+end reaction rules
+
+end model
+
+writeXML();

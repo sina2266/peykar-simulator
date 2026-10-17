@@ -1,5 +1,88 @@
 # Verification record
 
+## Whole-platform shared backend: 2026-10-16 (unreleased, on 0.3.0)
+
+This continuation broadens delivery beyond the eye-model path. The
+[whole-platform roadmap](roadmap.md) covers S0–S13 while retaining original P0–P7
+scientific gates. [The observed receipt](system-continuation-2026-10-16.json)
+records source counts, live workflow results and preservation checks; it is not a
+claim that the entire platform or all native engine integrations are complete.
+
+- `scripts/acquire_ecosystem_sources.py --catalog engine_adapters/ecosystem-sources.json
+  --destination .peykar/external/ecosystem/sources --jobs 3` fetched all nine exact
+  top-level source snapshots: CompuCell3D, PhysiCell, VCell, COPASI, Chaste, NEURON,
+  PK-Sim, MoBi and GEARS. Hooks were disabled; no upstream code/build script was
+  executed. Existing vCornea Git and separately licensed archive identities were
+  preserved. These depth-one working trees are not complete Git histories.
+- Local `LibraryService.inspect` verified **36,291 tracked entries /
+  1,308,090,422 bytes**, source commits/modes, symlink targets and license bytes.
+  **24 unresolved Git links** and zero top-level LFS pointers were recorded.
+  MoBi's Git-declared CRLF checkout initially failed strict blob checking;
+  inspection now retains actual-byte SHA and canonical blob identity while allowing
+  only declared text line-ending transformations. It does not rewrite source.
+- The bundled OSP license PDFs were preserved; `pdftotext` read the MoBi copy's
+  GPLv2 plus Clarifying Addendum. License evidence remains component-scoped; no
+  third-party code was re-licensed. This is not a legal compatibility determination.
+- Reactome `R-HSA-177929` and UniProt `P01133`/`P00533` JSON were retrieved and
+  hashed. Their curated human EGF/EGFR graph was imported as evidence-linked
+  metadata, with precursor/ligand and tissue-kinetic limitations retained. This
+  does not create a calibrated EGF mechanism or a vCornea molecular coupling.
+- Targeted new-service checks passed: **17 tests** for graph bounds,
+  evidence/context/cycles, source tampering/license/bundle checks, declared CRLF,
+  workflow transfer, atomic rollback, concurrent dispatch/cancellation, incompatible
+  bindings, failure propagation, persistence and API roles/idempotency. An earlier
+  host batch included Linux-only legacy tests; its six bounded-child failures
+  were the macOS limitation, and the final Linux run below passed them.
+- Final **`make check-docker` passed**: Ruff lint/format (**200 files**), strict Mypy
+  (**64 source files**), **259 tests** in **13.90 seconds**, **88%** observed statement
+  coverage, current generated contracts/OpenAPI and all three wheel/sdist pairs.
+  Git was added only to the verification stage for local source-fixture inspection.
+  Test-time network and the live data volume remain absent. Host **`make build`
+  passed**; wheel inspection verified new modules, additive SQL migration and
+  byte-identical LICENSE text. No application code changed afterward.
+- Before recreation, no queued/running user jobs existed. SQLite backup API plus
+  a separate artifact tar preserved `backups/pre-system-20261016T211636Z/`, also
+  copied under local ignored `.peykar/backups/`. An optional attempt to tag the old
+  container image ID failed because Docker's image store did not expose that ID;
+  no new rollback tag is claimed. The data backup and earlier recovery tags remain.
+  `docker compose build` and `docker compose up -d --wait` succeeded; API healthy.
+- Nine offline inspection bundles were imported with the deployed
+  `peykar libraries import-receipt` CLI into the existing volume. Live authenticated
+  library listing returned nine entries; `capability=pbpk` returned PK-Sim/MoBi;
+  anonymous reads returned 401. No Git/scientific runtime dependency was added to
+  the API image, and no HTTP source filesystem-import route was exposed.
+- Live graph POST/GET and depth-two neighborhood succeeded for
+  `biology.human-egfr@1.0.0`, returning three entities/two evidence-linked edges.
+- Live HTTP model registration, experiment freezing, idempotent submission,
+  separate Worker execution, result/manifest retrieval and events all passed.
+  Experiment `3f2b262a-f367-485e-b2d3-c34abcd1d076` succeeded with children
+  `2ec78ad7-c272-4acc-a563-3e4b04c7ed34` and
+  `ac33758f-7d3e-43c5-b61f-2a933f671e71`. The second initial concentration was
+  **0.3678794411714421**, and final was **0.1353352832366125 mole/liter**, matching
+  `exp(-1)`/`exp(-2)` within 1e-12. Its runtime lock was nonempty and two child
+  dispatch events were retained. This is synthetic engineering verification.
+- Live cancellation of experiment `3fa6fdfa-4ebf-43f1-9328-a60384a06291` reached
+  `cancelled` with both unsubmitted nodes skipped. Atomic dispatch left
+  **zero unassociated workflow child jobs**.
+- Final integrity/foreign-key checks were `ok`: **34 objects, 10 succeeded ordinary
+  runs, 30 ordinary events**, two experiment runs (one succeeded, one cancelled),
+  four node records and eight experiment events. Every pre-upgrade
+  object/run/event row remained unchanged; all **46** live artifact hashes passed.
+  All **24** original license files and **27** pinned vCornea files remained
+  unchanged. New contracts/routes and additive experiment tables were introduced
+  without changing existing schema/model versions or SQLite user_version 1.
+
+Detailed ignored logs are under `.peykar/external/ecosystem/`: `inspection.log`,
+`final-check.log`, `live-platform.log`, `preservation.json` and source/research
+receipts. General feedback/spatial coupling, new native runtime builds, remaining
+source dependencies, independent evaluator/UQ, full UI and distributed/tenant
+deployment remain open in the comprehensive roadmap.
+
+The final documentation/schema check also passed: local links across **45** current
+Markdown files resolve, generated contracts remain current, source descriptors and
+the portable receipt parse, all 55 source sections remain represented, and the
+original Persian blueprint checksum is unchanged.
+
 ## E1 native vCornea: 2026-10-16 (unreleased, on 0.3.0)
 
 Observed on this macOS checkout, Docker Desktop, and a separate emulated

@@ -1,0 +1,10 @@
+      SUBROUTINEPCVSMA(N,D,A,B,C)
+      IMPLICITDOUBLEPRECISION(A-H,O-Z)
+      INTEGERN
+      DOUBLEPRECISIOND,A(*),B(*),C(*)
+      INTEGERI
+      DO1I=1,N
+      C(I)=D*A(I)+B(I)
+1     CONTINUE
+      RETURN
+      END
