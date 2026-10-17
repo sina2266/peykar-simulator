@@ -1,0 +1,339 @@
+{
+  "$defs": {
+    "ExecutionBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_samples": {
+          "default": 10001,
+          "maximum": 100001,
+          "minimum": 2,
+          "title": "Max Samples",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 60.0,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ExecutionBudget",
+      "type": "object"
+    },
+    "Intervention": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "kind": {
+          "const": "parameter_set",
+          "default": "parameter_set",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameter": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Parameter",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "parameter",
+        "quantity"
+      ],
+      "title": "Intervention",
+      "type": "object"
+    },
+    "NativeRunSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "intervals": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intervals"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "profile": {
+          "$ref": "#/$defs/Reference"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 180.0,
+          "exclusiveMinimum": 0,
+          "maximum": 600,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "model",
+        "profile"
+      ],
+      "title": "NativeRunSpec",
+      "type": "object"
+    },
+    "ParameterValue": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "quantity"
+      ],
+      "title": "ParameterValue",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "SimulationPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "$ref": "#/$defs/ExecutionBudget",
+          "default": {
+            "max_samples": 10001,
+            "schema_version": "1.0.0",
+            "wall_seconds": 60.0
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "duration": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "interventions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Intervention"
+          },
+          "title": "Interventions",
+          "type": "array"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "parameters": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ParameterValue"
+          },
+          "title": "Parameters",
+          "type": "array"
+        },
+        "purpose": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Purpose",
+          "type": "string"
+        },
+        "sample_interval": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "default": 42,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model",
+        "context",
+        "duration",
+        "sample_interval",
+        "purpose"
+      ],
+      "title": "SimulationPlan",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:BatchCase:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "plan": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SimulationPlan"
+        },
+        {
+          "$ref": "#/$defs/NativeRunSpec"
+        }
+      ],
+      "title": "Plan"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "plan"
+  ],
+  "title": "BatchCase",
+  "type": "object"
+}

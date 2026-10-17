@@ -19,7 +19,7 @@ combines them into a misleading overall completion score.
 | S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
 | S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
 | S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet and declarative SBML/PKML working; CellML/omics/image admission open |
-| S4 | General experiment orchestration | S0,S3 | Durable scalar DAG workflows plus external native agent for COPASI/OSP; ensembles and other native adapters open |
+| S4 | General experiment orchestration | S0,S3 | Durable scalar DAG workflows, COPASI/OSP native agent and bounded mixed cohorts/sweeps; other native adapters and bindings open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
 | S7 | Controlled model optimization and improvement | S1,S4,S6 | Limited decay calibration only; challenger/promotion workflow open |
@@ -103,7 +103,7 @@ units/context/transformations testable and no automatic execution from data impo
 - [x] S4.2 Dispatch eligible child runs through the existing bounded Worker; map final scalar output to a declared downstream initial parameter.
 - [x] S4.3 Enqueue child and attach it to its experiment atomically; test concurrency, retries, rollback, cancellation and failure propagation.
 - [x] S4.4 Expose register/submit/status/cancel/results/events through authenticated API/CLI; retain each child's manifest/result provenance.
-- [ ] S4.5 Add batch/ensemble/sweep plans with resource aggregation and deterministic seed allocation.
+- [x] S4.5 Add frozen batch/ensemble/sweep plans with aggregate budgets, deterministic reference seed allocation and capacity-bounded atomic dispatch across reference/native queues. E2 includes terminal statistics and explicit incomplete groups; native seed/parameter overrides are rejected.
 - [x] S4.6 Add a durable external-engine agent protocol consuming admitted runtime/source identities, with no API Docker socket or host credentials. Actual COPASI SBML and OSPSuite PKML jobs pass model admission → claim → solver → verified API output.
 - [ ] S4.6b Extend the reviewed agent to remaining native engines and explicitly bound native experiment nodes; runtime probes alone do not provide queue adapters.
 - [ ] S4.7 Add checkpoint/restart and engine capability negotiation; never claim unsupported state restoration.
@@ -133,7 +133,7 @@ partitioned explicitly before adding EGFR kinetics; a matching unit is insuffici
 - [x] S6.3 Persist missing mechanisms/evidence as queryable knowledge gaps.
 - [ ] S6.4 Implement versioned observation operators with sampling/noise assumptions and original-analysis comparison.
 - [ ] S6.5 Establish independent evaluator identity and prevent author/candidate-controlled holdout changes.
-- [ ] S6.6 Add ensemble statistics, sensitivity/identifiability and uncertainty by source; report unmeasured uncertainty explicitly.
+- [ ] S6.6 Extend delivered within-case terminal mean/sample SD with sensitivity/identifiability and uncertainty by source; no confidence interval or parameter uncertainty is inferred by E2.
 - [ ] S6.7 Expand trust into separate execution, numerical, biological, applicability and evidence axes.
 
 For vCornea, [E1](epics/E1-vcornea-native-runtime.md) closes native operator engineering.

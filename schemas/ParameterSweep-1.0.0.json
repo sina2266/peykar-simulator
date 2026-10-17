@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:ParameterSweep:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "parameter": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Parameter",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "values": {
+      "items": {
+        "$ref": "#/$defs/Quantity"
+      },
+      "maxItems": 16,
+      "minItems": 2,
+      "title": "Values",
+      "type": "array"
+    }
+  },
+  "required": [
+    "case_id",
+    "parameter",
+    "values"
+  ],
+  "title": "ParameterSweep",
+  "type": "object"
+}

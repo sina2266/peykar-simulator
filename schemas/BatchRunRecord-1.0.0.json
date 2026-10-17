@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "BatchMemberRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "member_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Member Id",
+          "type": "string"
+        },
+        "queue": {
+          "enum": [
+            "reference",
+            "native"
+          ],
+          "title": "Queue",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "skipped",
+            "queued",
+            "running",
+            "succeeded",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "member_id",
+        "queue",
+        "run_id",
+        "status"
+      ],
+      "title": "BatchMemberRecord",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "RunStatus": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    }
+  },
+  "$id": "urn:peykar:schema:BatchRunRecord:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "batch": {
+      "$ref": "#/$defs/Reference"
+    },
+    "batch_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Batch Digest",
+      "type": "string"
+    },
+    "cancel_requested": {
+      "title": "Cancel Requested",
+      "type": "boolean"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "members": {
+      "items": {
+        "$ref": "#/$defs/BatchMemberRecord"
+      },
+      "title": "Members",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "batch",
+    "batch_digest",
+    "status",
+    "cancel_requested",
+    "error",
+    "created_at",
+    "updated_at",
+    "members"
+  ],
+  "title": "BatchRunRecord",
+  "type": "object"
+}

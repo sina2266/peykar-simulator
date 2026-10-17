@@ -63,9 +63,7 @@ class NativeJobService:
         )
         return NativeRunRecord.model_validate({field: row[field] for field in fields})
 
-    def submit(self, plan: NativeRunSpec, key: str | None = None) -> NativeRunRecord:
-        if key is not None and not 1 <= len(key) <= 128:
-            raise InvalidRequest("Idempotency key requires 1..128 characters")
+    def prepare(self, plan: NativeRunSpec) -> NativeRunManifest:
         models = NativeModelService(self.db, self.artifacts)
         model, profile = models.get(plan.model), models.profile(plan.profile)
         expected = {"copasi_sbml": "sbml", "osp_pkml": "pkml"}[profile.kind]
@@ -81,7 +79,7 @@ class NativeJobService:
                 "PKML uses its original output schedule; overrides are unsupported"
             )
         runtime = NativeRuntimeService(self.db, self.artifacts).get(profile.runtime)
-        manifest = NativeRunManifest(
+        return NativeRunManifest(
             run_id=str(uuid.uuid4()),
             created_at=now(),
             plan=plan,
@@ -89,38 +87,48 @@ class NativeJobService:
             profile_snapshot=profile,
             runtime_snapshot=runtime,
         )
+
+    def submit(self, plan: NativeRunSpec, key: str | None = None) -> NativeRunRecord:
+        if key is not None and not 1 <= len(key) <= 128:
+            raise InvalidRequest("Idempotency key requires 1..128 characters")
+        manifest = self.prepare(plan)
         with self.db.connection(immediate=True) as db:
-            existing = (
-                db.execute(
-                    "SELECT id,request_digest FROM native_runs WHERE idempotency_key=?", (key,)
-                ).fetchone()
-                if key
-                else None
-            )
-            if existing:
-                if existing["request_digest"] != digest(plan):
-                    raise Conflict("Idempotency key already identifies another native plan")
-                id = str(existing["id"])
-            else:
-                id = manifest.run_id
-                db.execute(
-                    "INSERT INTO native_runs(id,request_digest,idempotency_key,profile_id,"
-                    "profile_version,manifest,manifest_digest,status,created_at,updated_at) "
-                    "VALUES(?,?,?,?,?,?,?,'queued',?,?)",
-                    (
-                        id,
-                        digest(plan),
-                        key,
-                        profile.id,
-                        profile.version,
-                        canonical_json(manifest),
-                        digest(manifest),
-                        manifest.created_at,
-                        manifest.created_at,
-                    ),
-                )
-                self._event(db, id, "submitted")
+            id = self.enqueue(db, manifest, key)
         return self.run(id)
+
+    @staticmethod
+    def enqueue(db: sqlite3.Connection, manifest: NativeRunManifest, key: str | None) -> str:
+        """Enqueue in the caller's transaction, including atomic batch association."""
+        existing = (
+            db.execute(
+                "SELECT id,request_digest FROM native_runs WHERE idempotency_key=?", (key,)
+            ).fetchone()
+            if key
+            else None
+        )
+        if existing:
+            if existing["request_digest"] != digest(manifest.plan):
+                raise Conflict("Idempotency key already identifies another native plan")
+            return str(existing["id"])
+        id, profile = manifest.run_id, manifest.profile_snapshot
+        db.execute(
+            "INSERT INTO native_runs(id,request_digest,idempotency_key,profile_id,"
+            "profile_version,manifest,manifest_digest,status,created_at,updated_at) "
+            "VALUES(?,?,?,?,?,?,?,'queued',?,?)",
+            (
+                id,
+                digest(manifest.plan),
+                key,
+                profile.id,
+                profile.version,
+                canonical_json(manifest),
+                digest(manifest),
+                manifest.created_at,
+                manifest.created_at,
+            ),
+        )
+        NativeJobService._event(db, id, "submitted")
+        return id
 
     def run(self, id: str) -> NativeRunRecord:
         with self.db.connection() as db:

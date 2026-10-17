@@ -1,6 +1,485 @@
 {
   "components": {
     "schemas": {
+      "BatchBudget": {
+        "additionalProperties": false,
+        "properties": {
+          "max_in_flight": {
+            "default": 4,
+            "maximum": 16.0,
+            "minimum": 1.0,
+            "title": "Max In Flight",
+            "type": "integer"
+          },
+          "max_jobs": {
+            "default": 64,
+            "maximum": 256.0,
+            "minimum": 1.0,
+            "title": "Max Jobs",
+            "type": "integer"
+          },
+          "max_total_samples": {
+            "default": 1000000,
+            "maximum": 2000000.0,
+            "minimum": 2.0,
+            "title": "Max Total Samples",
+            "type": "integer"
+          },
+          "max_total_wall_seconds": {
+            "default": 14400.0,
+            "exclusiveMinimum": 0.0,
+            "maximum": 86400.0,
+            "title": "Max Total Wall Seconds",
+            "type": "number"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "title": "BatchBudget",
+        "type": "object"
+      },
+      "BatchCase": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimulationPlan"
+              },
+              {
+                "$ref": "#/components/schemas/NativeRunSpec"
+              }
+            ],
+            "title": "Plan"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "plan"
+        ],
+        "title": "BatchCase",
+        "type": "object"
+      },
+      "BatchGroupSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Case Id",
+            "type": "string"
+          },
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "endpoints": {
+            "items": {
+              "$ref": "#/components/schemas/EndpointStatistics"
+            },
+            "title": "Endpoints",
+            "type": "array"
+          },
+          "excluded_member_ids": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "title": "Excluded Member Ids",
+            "type": "array"
+          },
+          "expected_replicates": {
+            "title": "Expected Replicates",
+            "type": "integer"
+          },
+          "grid_index": {
+            "title": "Grid Index",
+            "type": "integer"
+          },
+          "parameters": {
+            "items": {
+              "$ref": "#/components/schemas/ParameterValue"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "successful_replicates": {
+            "title": "Successful Replicates",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "case_id",
+          "grid_index",
+          "parameters",
+          "expected_replicates",
+          "successful_replicates",
+          "excluded_member_ids",
+          "complete",
+          "endpoints"
+        ],
+        "title": "BatchGroupSummary",
+        "type": "object"
+      },
+      "BatchMemberEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "manifest_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manifest Digest"
+          },
+          "member_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Member Id",
+            "type": "string"
+          },
+          "queue": {
+            "enum": [
+              "reference",
+              "native"
+            ],
+            "title": "Queue",
+            "type": "string"
+          },
+          "result_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Digest"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "member_id",
+          "queue",
+          "run_id",
+          "status",
+          "manifest_digest",
+          "result_digest"
+        ],
+        "title": "BatchMemberEvidence",
+        "type": "object"
+      },
+      "BatchMemberRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "member_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Member Id",
+            "type": "string"
+          },
+          "queue": {
+            "enum": [
+              "reference",
+              "native"
+            ],
+            "title": "Queue",
+            "type": "string"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "skipped",
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "member_id",
+          "queue",
+          "run_id",
+          "status"
+        ],
+        "title": "BatchMemberRecord",
+        "type": "object"
+      },
+      "BatchReport": {
+        "additionalProperties": false,
+        "properties": {
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/BatchGroupSummary"
+            },
+            "title": "Groups",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/BatchMemberEvidence"
+            },
+            "title": "Members",
+            "type": "array"
+          },
+          "run": {
+            "$ref": "#/components/schemas/BatchRunRecord"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "scientific_validity": {
+            "const": "not_established",
+            "default": "not_established",
+            "title": "Scientific Validity",
+            "type": "string"
+          },
+          "uncertainty_scope": {
+            "const": "within_case_terminal_sample_variability",
+            "default": "within_case_terminal_sample_variability",
+            "title": "Uncertainty Scope",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run",
+          "groups",
+          "members",
+          "limitations"
+        ],
+        "title": "BatchReport",
+        "type": "object"
+      },
+      "BatchRunRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "batch": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "batch_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Batch Digest",
+            "type": "string"
+          },
+          "cancel_requested": {
+            "title": "Cancel Requested",
+            "type": "boolean"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/BatchMemberRecord"
+            },
+            "title": "Members",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "batch",
+          "batch_digest",
+          "status",
+          "cancel_requested",
+          "error",
+          "created_at",
+          "updated_at",
+          "members"
+        ],
+        "title": "BatchRunRecord",
+        "type": "object"
+      },
+      "BatchSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "base_seed": {
+            "default": 42,
+            "maximum": 4294967295.0,
+            "minimum": 0.0,
+            "title": "Base Seed",
+            "type": "integer"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/BatchBudget",
+            "default": {
+              "max_in_flight": 4,
+              "max_jobs": 64,
+              "max_total_samples": 1000000,
+              "max_total_wall_seconds": 14400.0,
+              "schema_version": "1.0.0"
+            }
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/BatchCase"
+            },
+            "maxItems": 32,
+            "minItems": 1,
+            "title": "Cases",
+            "type": "array"
+          },
+          "failure_policy": {
+            "default": "continue",
+            "enum": [
+              "continue",
+              "fail_fast"
+            ],
+            "title": "Failure Policy",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "replicates": {
+            "default": 1,
+            "maximum": 32.0,
+            "minimum": 1.0,
+            "title": "Replicates",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sweeps": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ParameterSweep"
+            },
+            "maxItems": 6,
+            "title": "Sweeps",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "cases"
+        ],
+        "title": "BatchSpec",
+        "type": "object"
+      },
       "BiologicalEntity": {
         "additionalProperties": false,
         "properties": {
@@ -532,6 +1011,65 @@
         "title": "EndpointBinding",
         "type": "object"
       },
+      "EndpointStatistics": {
+        "additionalProperties": false,
+        "properties": {
+          "maximum": {
+            "title": "Maximum",
+            "type": "number"
+          },
+          "mean": {
+            "title": "Mean",
+            "type": "number"
+          },
+          "minimum": {
+            "title": "Minimum",
+            "type": "number"
+          },
+          "output": {
+            "title": "Output",
+            "type": "string"
+          },
+          "sample_standard_deviation": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Standard Deviation"
+          },
+          "samples": {
+            "minimum": 1.0,
+            "title": "Samples",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "output",
+          "unit",
+          "samples",
+          "mean",
+          "minimum",
+          "maximum",
+          "sample_standard_deviation"
+        ],
+        "title": "EndpointStatistics",
+        "type": "object"
+      },
       "EvaluationRequest": {
         "additionalProperties": false,
         "properties": {
@@ -854,6 +1392,112 @@
           "limitations"
         ],
         "title": "ExperimentSpec",
+        "type": "object"
+      },
+      "FrozenBatch": {
+        "additionalProperties": false,
+        "properties": {
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/FrozenBatchMember"
+            },
+            "maxItems": 256,
+            "minItems": 1,
+            "title": "Members",
+            "type": "array"
+          },
+          "sample_upper_bound": {
+            "title": "Sample Upper Bound",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/BatchSpec"
+          },
+          "total_wall_seconds_limit": {
+            "minimum": 0.0,
+            "title": "Total Wall Seconds Limit",
+            "type": "number"
+          }
+        },
+        "required": [
+          "spec",
+          "members",
+          "sample_upper_bound",
+          "total_wall_seconds_limit"
+        ],
+        "title": "FrozenBatch",
+        "type": "object"
+      },
+      "FrozenBatchMember": {
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Case Id",
+            "type": "string"
+          },
+          "grid_index": {
+            "title": "Grid Index",
+            "type": "integer"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunManifest"
+              },
+              {
+                "$ref": "#/components/schemas/NativeRunManifest"
+              }
+            ],
+            "title": "Manifest"
+          },
+          "parameters": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ParameterValue"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "replicate": {
+            "title": "Replicate",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "seed_policy": {
+            "enum": [
+              "unique_reference_seed",
+              "unsupported_by_native_driver"
+            ],
+            "title": "Seed Policy",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "case_id",
+          "grid_index",
+          "replicate",
+          "seed_policy",
+          "manifest"
+        ],
+        "title": "FrozenBatchMember",
         "type": "object"
       },
       "FrozenEvaluationSet": {
@@ -2068,6 +2712,43 @@
           "default"
         ],
         "title": "ParameterSpec",
+        "type": "object"
+      },
+      "ParameterSweep": {
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Case Id",
+            "type": "string"
+          },
+          "parameter": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Parameter",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "values": {
+            "items": {
+              "$ref": "#/components/schemas/Quantity"
+            },
+            "maxItems": 16,
+            "minItems": 2,
+            "title": "Values",
+            "type": "array"
+          }
+        },
+        "required": [
+          "case_id",
+          "parameter",
+          "values"
+        ],
+        "title": "ParameterSweep",
         "type": "object"
       },
       "ParameterValue": {
@@ -3348,6 +4029,494 @@
         "summary": "Health",
         "tags": [
           "operations"
+        ]
+      }
+    },
+    "/v1/batch-runs": {
+      "get": {
+        "operationId": "runs_v1_batch_runs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BatchRunRecord"
+                  },
+                  "title": "Response Runs V1 Batch Runs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Runs",
+        "tags": [
+          "batches"
+        ]
+      },
+      "post": {
+        "operationId": "submit_v1_batch_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "idempotency-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reference"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batch-runs/{id}": {
+      "get": {
+        "operationId": "status_v1_batch_runs__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Status",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batch-runs/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_v1_batch_runs__id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchRunRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batch-runs/{id}/events": {
+      "get": {
+        "operationId": "events_v1_batch_runs__id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "title": "Response Events V1 Batch Runs  Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Events",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batch-runs/{id}/results": {
+      "get": {
+        "operationId": "results_v1_batch_runs__id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Results",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batches": {
+      "get": {
+        "operationId": "discover_v1_batches_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FrozenBatch"
+                  },
+                  "title": "Response Discover V1 Batches Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discover",
+        "tags": [
+          "batches"
+        ]
+      },
+      "post": {
+        "operationId": "freeze_v1_batches_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenBatch"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Freeze",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/v1/batches/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_v1_batches__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrozenBatch"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get",
+        "tags": [
+          "batches"
         ]
       }
     },

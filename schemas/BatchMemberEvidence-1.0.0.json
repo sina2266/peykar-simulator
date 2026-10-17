@@ -1,0 +1,75 @@
+{
+  "$id": "urn:peykar:schema:BatchMemberEvidence:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "manifest_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Manifest Digest"
+    },
+    "member_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Member Id",
+      "type": "string"
+    },
+    "queue": {
+      "enum": [
+        "reference",
+        "native"
+      ],
+      "title": "Queue",
+      "type": "string"
+    },
+    "result_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Result Digest"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Run Id"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id",
+    "queue",
+    "run_id",
+    "status",
+    "manifest_digest",
+    "result_digest"
+  ],
+  "title": "BatchMemberEvidence",
+  "type": "object"
+}

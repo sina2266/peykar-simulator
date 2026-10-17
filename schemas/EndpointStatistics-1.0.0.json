@@ -1,0 +1,61 @@
+{
+  "$id": "urn:peykar:schema:EndpointStatistics:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "maximum": {
+      "title": "Maximum",
+      "type": "number"
+    },
+    "mean": {
+      "title": "Mean",
+      "type": "number"
+    },
+    "minimum": {
+      "title": "Minimum",
+      "type": "number"
+    },
+    "output": {
+      "title": "Output",
+      "type": "string"
+    },
+    "sample_standard_deviation": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Sample Standard Deviation"
+    },
+    "samples": {
+      "minimum": 1,
+      "title": "Samples",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unit": {
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "required": [
+    "output",
+    "unit",
+    "samples",
+    "mean",
+    "minimum",
+    "maximum",
+    "sample_standard_deviation"
+  ],
+  "title": "EndpointStatistics",
+  "type": "object"
+}

@@ -20,6 +20,7 @@ interfaces/acceptance criteria without an executable integration.
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
 | Durable multi-model experiments | Partial | Working sequential terminal-output to initial-parameter transfer; frozen models, atomic child dispatch, retries/cancellation/results/events; no simultaneous feedback or spatial coupling |
+| Batch/ensemble execution and parameter grids | Implemented for current queues | Immutable bounded cohorts, reference Cartesian sweeps/unique seeds, mixed COPASI/OSP/reference dispatch, capacity/cancel/failure policy and terminal mean/sample SD with explicit missing members; native seed/parameter overrides unsupported |
 | Conserved two-compartment exchange | Implemented | Analytical verification primitive |
 | Persistent runs and separate worker | Implemented | Single-host SQLite WAL queue |
 | Idempotency, token fencing, cancellation | Implemented | Parent checks child lifecycle; stale runs explicitly fail; cancellation/recovery ownership race handled |

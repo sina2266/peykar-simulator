@@ -122,7 +122,10 @@ The reference scheduler uses seconds internally, regular output grids and explic
 parameter interventions aligned to grid boundaries. An event at time t applies to
 the interval starting at t, after the state at t is reached. Changing an initial
 state parameter during a run is rejected. General spatial state, adaptive solvers,
-native checkpoints and ensemble execution are later engine capabilities.
+native checkpoints and coupled adaptive stepping remain later engine capabilities.
+Frozen cohorts now schedule independent reference/native jobs, reference parameter
+grids and seeded reference replicas with aggregate budgets and terminal statistics.
+They do not introduce a continuous shared-time solver; see the E2 cohort guide.
 
 ## Data, learning and validation
 

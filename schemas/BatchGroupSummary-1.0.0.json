@@ -1,0 +1,181 @@
+{
+  "$defs": {
+    "EndpointStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum": {
+          "title": "Maximum",
+          "type": "number"
+        },
+        "mean": {
+          "title": "Mean",
+          "type": "number"
+        },
+        "minimum": {
+          "title": "Minimum",
+          "type": "number"
+        },
+        "output": {
+          "title": "Output",
+          "type": "string"
+        },
+        "sample_standard_deviation": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sample Standard Deviation"
+        },
+        "samples": {
+          "minimum": 1,
+          "title": "Samples",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "output",
+        "unit",
+        "samples",
+        "mean",
+        "minimum",
+        "maximum",
+        "sample_standard_deviation"
+      ],
+      "title": "EndpointStatistics",
+      "type": "object"
+    },
+    "ParameterValue": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Quantity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "quantity"
+      ],
+      "title": "ParameterValue",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:BatchGroupSummary:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "complete": {
+      "title": "Complete",
+      "type": "boolean"
+    },
+    "endpoints": {
+      "items": {
+        "$ref": "#/$defs/EndpointStatistics"
+      },
+      "title": "Endpoints",
+      "type": "array"
+    },
+    "excluded_member_ids": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+        "type": "string"
+      },
+      "title": "Excluded Member Ids",
+      "type": "array"
+    },
+    "expected_replicates": {
+      "title": "Expected Replicates",
+      "type": "integer"
+    },
+    "grid_index": {
+      "title": "Grid Index",
+      "type": "integer"
+    },
+    "parameters": {
+      "items": {
+        "$ref": "#/$defs/ParameterValue"
+      },
+      "title": "Parameters",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "successful_replicates": {
+      "title": "Successful Replicates",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "case_id",
+    "grid_index",
+    "parameters",
+    "expected_replicates",
+    "successful_replicates",
+    "excluded_member_ids",
+    "complete",
+    "endpoints"
+  ],
+  "title": "BatchGroupSummary",
+  "type": "object"
+}

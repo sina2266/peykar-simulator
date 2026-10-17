@@ -89,14 +89,20 @@ Cancellation of a queued run immediately prevents a claim. Running cancellation
 stops the native container; the final transaction checks cancellation and lease
 again, so a stale or cancelled success cannot publish results. HTTP errors,
 timeouts and unavailable local profiles produce a failed run, never simulated
-success. The CLI exits on execution/transport failure; a supervisor may restart
-the agent, but that does not retry the failed run.
+success. Single-job CLI mode exits on failure. With `--loop`, the agent reports a redacted
+error category, waits the configured poll interval and continues to other queued
+jobs. Cancelled/failed jobs remain terminal; this is not an automatic scientific
+retry. Host restart supervision is still required.
 
 Each fresh private directory retains the model, reviewed driver, controls,
 manifest, engine log and actual outputs. The Docker container has no network,
 read-only root/input mounts, a non-root UID, no extra capabilities, no API token or
 Docker socket, two CPUs, 3 GiB memory, 128 PIDs and a 128 MiB temporary filesystem.
-The parent enforces wall/log/output limits and removes the named container on
+The parent acknowledges `docker create` before a separately supervised
+`docker start --attach`. Cancellation is checked before creation and again before
+start, preventing a late create from racing an earlier removal. Creation has its
+own 15-second RPC bound; the solver wall budget starts after creation. The parent
+enforces wall/log/output limits and removes the named container on
 success, cancellation or failure. If the Docker daemon is unreachable, a retained
 cleanup warning identifies the container for operator inspection. This is a local
 single-workspace execution profile, not a multi-tenant hostile-code guarantee.

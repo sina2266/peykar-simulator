@@ -1,0 +1,58 @@
+{
+  "$id": "urn:peykar:schema:BatchMemberRecord:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "member_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Member Id",
+      "type": "string"
+    },
+    "queue": {
+      "enum": [
+        "reference",
+        "native"
+      ],
+      "title": "Queue",
+      "type": "string"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Run Id"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "skipped",
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id",
+    "queue",
+    "run_id",
+    "status"
+  ],
+  "title": "BatchMemberRecord",
+  "type": "object"
+}

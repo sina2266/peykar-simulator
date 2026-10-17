@@ -219,7 +219,7 @@ class NativeAgent:
         entrypoint = "/opt/runtime/.venv/bin/python" if profile.kind == "copasi_sbml" else "Rscript"
         command = [
             "docker",
-            "run",
+            "create",
             "--rm",
             "--pull",
             "never",
@@ -256,13 +256,43 @@ class NativeAgent:
         for filename in ("model.xml", "driver" + extension, "controls.json", "manifest.json"):
             command += ["--mount", f"type=bind,src={job / filename},dst=/work/{filename},readonly"]
         command += ["--entrypoint", entrypoint, image, "/work/driver" + extension]
-        started = time.monotonic()
         heartbeat = 0.0
         process = None
+        created = False
+        creation_attempted = False
         try:
             with (job / "engine.log").open("xb") as log:
+
+                def check_cancel() -> None:
+                    response = self.client.request(
+                        "/v1/native-runs/" + manifest.run_id + "/heartbeat",
+                        {},
+                        claim_token=claim.token,
+                    )
+                    if response["cancel_requested"]:
+                        raise Cancelled("Native run cancellation requested")
+
+                check_cancel()
+                # Acknowledge creation before starting/supervising the container.
+                # Killing `docker run` during creation can otherwise race cleanup
+                # and leave a late-created container after `docker rm` returned.
+                creation_attempted = True
+                subprocess.run(
+                    command,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    env=environment,
+                    timeout=15,
+                    check=True,
+                )
+                created = True
+                check_cancel()
+                started = time.monotonic()
                 process = subprocess.Popen(
-                    command, stdout=log, stderr=subprocess.STDOUT, env=environment
+                    ["docker", "start", "--attach", name],
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    env=environment,
                 )
                 while process.poll() is None:
                     elapsed = time.monotonic() - started
@@ -292,19 +322,36 @@ class NativeAgent:
                 raise InvalidRequest("Native output paths/size violate the result contract")
             return blobs
         finally:
+            # Stop the attached client before the final removal, so it cannot
+            # submit another start after the cleanup command has finished.
+            if process is not None and process.poll() is None:
+                try:
+                    with suppress(ProcessLookupError):
+                        process.terminate()
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait(timeout=5)
+                except (OSError, subprocess.TimeoutExpired):
+                    (job / "client-stop-warning.txt").write_text(
+                        "Attached client stop was not confirmed; container cleanup follows.\n"
+                    )
             try:
-                subprocess.run(
+                cleanup = subprocess.run(
                     ["docker", "rm", "-f", name],
                     env=environment,
                     capture_output=True,
                     timeout=15,
                     check=False,
                 )
+                if (creation_attempted and not created) or (
+                    cleanup.returncode and b"No such container" not in (cleanup.stderr or b"")
+                ):
+                    (job / "cleanup-warning.txt").write_text(
+                        "Creation/cleanup could not be confirmed; inspect container " + name + "\n"
+                    )
             except (OSError, subprocess.TimeoutExpired):
                 (job / "cleanup-warning.txt").write_text(
                     "Docker daemon unreachable; inspect container " + name + "\n"
                 )
-            finally:
-                if process is not None and process.poll() is None:
-                    process.terminate()
-                    process.wait(timeout=10)

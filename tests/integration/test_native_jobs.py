@@ -387,7 +387,9 @@ def test_pkml_output_columns_match_reported_native_units(native_fixture, metadat
             validate_native_outputs(manifest, blobs)
 
 
-@pytest.mark.parametrize("mode", ["succeeded", "cancelled", "timeout", "allowlist"])
+@pytest.mark.parametrize(
+    "mode", ["succeeded", "cancelled", "cancel_after_create", "timeout", "allowlist"]
+)
 def test_native_agent_protocol_supervision_and_local_admission(
     native_fixture, tmp_path, monkeypatch, mode
 ):
@@ -447,11 +449,12 @@ def test_native_agent_protocol_supervision_and_local_admission(
         returncode = None
 
         def __init__(self, command, **kwargs):
+            assert mode != "cancel_after_create", (
+                "Cancelled created container must never be started"
+            )
             calls.append(command)
-            assert command[command.index("--network") + 1] == "none"
-            assert command[command.index("--pull") + 1] == "never"
-            assert "--read-only" in command and "--user" in command
-            assert sum(arg.endswith(",readonly") for arg in command) == 4
+            assert command[1:3] == ["start", "--attach"]
+            assert any(call[1] == "create" for call in calls)
             assert "PEYKAR_API_TOKEN" not in kwargs["env"]
             if mode == "succeeded":
                 directory = tmp_path / "runs" / run.id
@@ -475,11 +478,20 @@ def test_native_agent_protocol_supervision_and_local_admission(
         native_agent.subprocess, "check_output", lambda *a, **k: "sha256:" + "b" * 64
     )
     monkeypatch.setattr(native_agent.subprocess, "Popen", Process)
-    monkeypatch.setattr(
-        native_agent.subprocess,
-        "run",
-        lambda command, **kwargs: calls.append(command) or subprocess.CompletedProcess(command, 0),
-    )
+
+    def docker_command(command, **kwargs):
+        calls.append(command)
+        if command[1] == "create":
+            assert command[command.index("--network") + 1] == "none"
+            assert command[command.index("--pull") + 1] == "never"
+            assert "--read-only" in command and "--user" in command
+            assert sum(arg.endswith(",readonly") for arg in command) == 4
+            assert "PEYKAR_API_TOKEN" not in kwargs["env"]
+            if mode == "cancel_after_create":
+                jobs.cancel(run.id)
+        return subprocess.CompletedProcess(command, 0, stderr=b"")
+
+    monkeypatch.setattr(native_agent.subprocess, "run", docker_command)
     with TestClient(app) as http:
         agent = NativeAgent(Proxy(http), catalog, tmp_path / "runs")
         if mode == "succeeded":
@@ -487,11 +499,54 @@ def test_native_agent_protocol_supervision_and_local_admission(
             assert jobs.result(run.id).run_id == run.id
             assert agent.run_once() is None
         else:
-            expected = {"cancelled": Cancelled, "timeout": TimeoutError, "allowlist": Conflict}
+            expected = {
+                "cancelled": Cancelled,
+                "cancel_after_create": Cancelled,
+                "timeout": TimeoutError,
+                "allowlist": Conflict,
+            }
             with pytest.raises(expected[mode]):
                 agent.run_once()
-    assert jobs.run(run.id).status == ("failed" if mode in ("allowlist", "timeout") else mode)
+    assert jobs.run(run.id).status == (
+        "failed"
+        if mode in ("allowlist", "timeout")
+        else "cancelled"
+        if mode.startswith("cancel")
+        else mode
+    )
     if mode == "allowlist":
         assert calls == []
     else:
         assert calls[-1][1:3] == ["rm", "-f"]
+
+
+def test_native_loop_continues_after_cancel_and_failure_without_retrying_jobs(
+    monkeypatch, tmp_path, capsys
+):
+    from peykar import native_cli
+
+    attempts = []
+
+    class Agent:
+        def run_once(self):
+            attempts.append(len(attempts))
+            outcomes = [
+                Cancelled("private model content"),
+                ValueError("private token content"),
+                None,
+                KeyboardInterrupt(),
+            ]
+            value = outcomes[len(attempts) - 1]
+            if isinstance(value, BaseException):
+                raise value
+            return value
+
+    monkeypatch.setattr(native_cli, "NativeAgentClient", lambda *a: None)
+    monkeypatch.setattr(native_cli, "NativeAgent", lambda *a: Agent())
+    monkeypatch.setattr(native_cli.time, "sleep", lambda _: None)
+    with pytest.raises(KeyboardInterrupt):
+        native_cli.agent(tmp_path / "catalog.json", tmp_path / "runs", loop=True, poll_seconds=0.2)
+    assert len(attempts) == 4
+    stderr = capsys.readouterr().err
+    assert "Cancelled" in stderr and "ValueError" in stderr
+    assert "private" not in stderr

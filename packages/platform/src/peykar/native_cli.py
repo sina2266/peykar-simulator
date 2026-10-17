@@ -99,7 +99,16 @@ def agent(
     client = NativeAgentClient(base_url, os.getenv("PEYKAR_API_TOKEN", ""))
     worker = NativeAgent(client, catalog, output)
     while True:
-        id = worker.run_once()
+        try:
+            id = worker.run_once()
+        except Exception as error:
+            if not loop:
+                raise
+            # Failed jobs are already terminal/fenced; continue with other jobs.
+            # Print no exception text that might contain credentials or model data.
+            typer.echo({"native_agent_error": type(error).__name__}, err=True)
+            time.sleep(poll_seconds)
+            continue
         if id:
             typer.echo({"run_id": id})
         if not loop:

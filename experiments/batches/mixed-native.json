@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "id": "batch.mixed-native",
+  "version": "1.0.0",
+  "title": "Actual reference, SBML and original PKML cohort",
+  "cases": [
+    {
+      "schema_version": "1.0.0",
+      "id": "decay",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "reference.decay",
+          "version": "0.3.0"
+        },
+        "context": {
+          "schema_version": "1.0.0",
+          "species": "synthetic",
+          "biological_system": "reference verification",
+          "conditions": []
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "sample_interval": {
+          "schema_version": "1.0.0",
+          "value": 1.0,
+          "unit": "second"
+        },
+        "parameters": [],
+        "interventions": [],
+        "seed": 42,
+        "budget": {
+          "schema_version": "1.0.0",
+          "max_samples": 10001,
+          "wall_seconds": 60.0
+        },
+        "purpose": "Synthetic infrastructure verification"
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "sbml",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.transfer",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "copasi.sbml",
+          "version": "1.0.0"
+        },
+        "duration": {
+          "schema_version": "1.0.0",
+          "value": 10.0,
+          "unit": "second"
+        },
+        "intervals": 10,
+        "wall_seconds": 120.0
+      }
+    },
+    {
+      "schema_version": "1.0.0",
+      "id": "aciclovir",
+      "plan": {
+        "schema_version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "native.aciclovir",
+          "version": "1.0.0"
+        },
+        "profile": {
+          "schema_version": "1.0.0",
+          "id": "osp.pkml",
+          "version": "1.0.0"
+        },
+        "duration": null,
+        "intervals": null,
+        "wall_seconds": 180.0
+      }
+    }
+  ],
+  "sweeps": [],
+  "replicates": 1,
+  "base_seed": 42,
+  "budget": {
+    "schema_version": "1.0.0",
+    "max_jobs": 64,
+    "max_total_samples": 1000000,
+    "max_total_wall_seconds": 14400.0,
+    "max_in_flight": 2
+  },
+  "failure_policy": "continue"
+}

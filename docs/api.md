@@ -1,6 +1,10 @@
 # HTTP API
 
 Version prefix: `/v1`. Machine-readable source: `schemas/openapi.json`.
+
+Frozen cohort `/v1/batches` and execution `/v1/batch-runs` now expose parameter
+sweeps, mixed queues, status/cancel/events and complete/partial terminal reports.
+Exact contracts, roles, budgets and commands: [E2](epics/E2-reproducible-cohorts.md).
 Authentication, local deployment and body limits: [operations.md](operations.md).
 
 Shared system routes now include source library discovery (`/v1/libraries`),

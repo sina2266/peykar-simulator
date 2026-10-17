@@ -1,5 +1,62 @@
 # Verification record
 
+## E2 cohorts, parameter sweeps and terminal statistics: 2026-10-17 local
+
+[Actual cohort evidence](cohort-verification-2026-10-17.json) retains exact member,
+manifest/result hashes, sample statistics and preservation counts.
+
+- Targeted cohort/native/workflow checks passed **70 tests** before the final
+  cleanup fix. After adding creation/cancellation and persistent-loop regressions,
+  targeted cohort/native checks passed **60 tests**.
+- Final **`make check-docker` passed: 340 tests in 22.04 seconds, 88% coverage**,
+  strict Mypy **75** source files, Ruff lint/format, current schemas/OpenAPI and all
+  three package wheel/sdist pairs. Final host **`make build` passed**. The platform
+  wheel includes batch modules and `004_batches.sql`. Earlier versioned schema
+  JSON and `uv.lock` are unchanged; new batch contracts have their own schemas.
+- Added admission tests cover Cartesian grids, physically equivalent duplicate
+  values, parameter units/ranges, deterministic seed allocation/overflow, job/sample/
+  wall/snapshot-size limits and unsupported native seeds/parameter overrides.
+  Lifecycle tests cover concurrent capacity, atomic rollback in both queues,
+  restart, cancel/late-success fencing, continue/fail-fast, role enforcement,
+  idempotency and immutable versions. Reports check stochastic replay, n-1 sample
+  SD, missing units, tampered lineage and explicit incomplete/excluded members.
+- SQLite backup API and artifact copy made
+  `backups/pre-cohorts-20261017T091920Z/`, also copied locally. All existing queue
+  families were idle. `docker compose build` and `docker compose up -d --no-build`
+  deployed API/ordinary Worker on the original volume; no Docker socket was added.
+- Live command `uv run python scripts/verify_batches.py --output
+  .peykar/cohort-live-final-verification` passed with the real ordinary Worker and
+  installed native host agent. Cohort `13402df3-3a2e-41e0-b373-42397bb252fc` ran
+  **12** actual seeded parameter-grid jobs. Report statistics matched downloaded
+  child values. Cohort `bfc913b8-0903-4b90-87f3-dcc13b6066e1` completed reference
+  decay, actual COPASI SBML and original Aciclovir PKML with native unit metadata.
+- Cancelling cohort `ea6fc927-5ded-4a4f-9aca-b69e23afbb26` during its first native
+  member cancelled that member and skipped both unstarted members. Terminal report
+  groups remained explicitly incomplete, with no invented measurements.
+- The initial cancellation exercise exposed a real Docker create/removal race:
+  cancelled native job `6543f3bb-9144-4655-a975-d33137e39832` left a container in
+  `Created`. Its mounts identified the cancelled job; it was inspected and removed.
+  The corrected agent acknowledges bounded creation before a separately supervised
+  start, checks cancellation around creation and stops the attach client before
+  final removal. The repeated actual cohort checks above left **no native container**.
+- Loop mode now continues after redacted failed/cancelled attempts without retrying
+  terminal jobs. Following the real cancellation, the same loop consumed native
+  job `e7c4e79d-ed31-4f28-b607-0588532095cd` successfully. Creation uses a separate
+  15-second RPC bound; the solver wall budget starts after creation. An unreachable
+  daemon/uncertain cleanup remains an explicit retained operator warning.
+- An additional actual deadline test created cohort
+  `3d3224e0-456c-4f46-b30a-83e5229d79d2`: its first child failed under a 0.001-second
+  budget, its independent next child succeeded, and overall status was failed.
+  The failed group had no endpoint statistic; the successful group stayed complete.
+- Final preservation comparisons retained all previous **61 objects, 12 ordinary
+  runs/36 events, 2 experiments/4 nodes/8 events, 8 native runs/24 events**. All
+  **349** earlier artifact byte sequences and **24** original license hashes match.
+  SQLite `user_version` remains **1**. All queues were idle after verification.
+
+This closes the bounded E2/S4.5 engineering workflow. Native parameter/seed control,
+native DAG bindings, other engine adapters, sensitivity/identifiability, uncertainty
+by source, full UI and independent biological evidence remain separate open tasks.
+
 ## Declarative SBML/PKML and native agent: 2026-10-17 local
 
 [Actual retained outcomes](native-agent-verification-2026-10-17.json) include exact

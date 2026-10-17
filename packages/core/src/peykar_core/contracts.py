@@ -759,3 +759,110 @@ class ExternalArtifactSpec(Contract):
         if not self.source.strip() or not self.license.strip():
             raise ValueError("Source and license declarations must not be blank")
         return self
+
+
+class BatchCase(Contract):
+    id: Identifier
+    plan: SimulationPlan | NativeRunSpec
+
+
+class ParameterSweep(Contract):
+    case_id: Identifier
+    parameter: Identifier
+    values: Annotated[tuple[Quantity, ...], Field(min_length=2, max_length=16)]
+
+
+class BatchBudget(Contract):
+    max_jobs: Annotated[StrictInt, Field(ge=1, le=256)] = 64
+    max_total_samples: Annotated[StrictInt, Field(ge=2, le=2_000_000)] = 1_000_000
+    max_total_wall_seconds: Annotated[Positive, Field(le=86400)] = 14400.0
+    max_in_flight: Annotated[StrictInt, Field(ge=1, le=16)] = 4
+
+
+class BatchSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    cases: Annotated[tuple[BatchCase, ...], Field(min_length=1, max_length=32)]
+    sweeps: Annotated[tuple[ParameterSweep, ...], Field(max_length=6)] = ()
+    replicates: Annotated[StrictInt, Field(ge=1, le=32)] = 1
+    base_seed: Annotated[StrictInt, Field(ge=0, le=2**32 - 1)] = 42
+    budget: BatchBudget = BatchBudget()
+    failure_policy: Literal["continue", "fail_fast"] = "continue"
+
+
+class FrozenBatchMember(Contract):
+    id: Identifier
+    case_id: Identifier
+    grid_index: StrictInt
+    replicate: StrictInt
+    parameters: tuple[ParameterValue, ...] = ()
+    seed_policy: Literal["unique_reference_seed", "unsupported_by_native_driver"]
+    manifest: RunManifest | NativeRunManifest
+
+
+class FrozenBatch(Contract):
+    spec: BatchSpec
+    members: Annotated[tuple[FrozenBatchMember, ...], Field(min_length=1, max_length=256)]
+    sample_upper_bound: StrictInt
+    total_wall_seconds_limit: NonNegative
+
+
+class BatchMemberRecord(Contract):
+    member_id: Identifier
+    queue: Literal["reference", "native"]
+    run_id: str | None
+    status: Literal["pending", "skipped", "queued", "running", "succeeded", "failed", "cancelled"]
+
+
+class BatchRunRecord(Contract):
+    id: str
+    batch: Reference
+    batch_digest: Sha256
+    status: RunStatus
+    cancel_requested: bool
+    error: str | None
+    created_at: str
+    updated_at: str
+    members: tuple[BatchMemberRecord, ...]
+
+
+class EndpointStatistics(Contract):
+    output: str
+    unit: str
+    samples: Annotated[StrictInt, Field(ge=1)]
+    mean: Number
+    minimum: Number
+    maximum: Number
+    sample_standard_deviation: NonNegative | None
+
+
+class BatchGroupSummary(Contract):
+    case_id: Identifier
+    grid_index: StrictInt
+    parameters: tuple[ParameterValue, ...]
+    expected_replicates: StrictInt
+    successful_replicates: StrictInt
+    excluded_member_ids: tuple[Identifier, ...]
+    complete: bool
+    endpoints: tuple[EndpointStatistics, ...]
+
+
+class BatchMemberEvidence(Contract):
+    member_id: Identifier
+    queue: Literal["reference", "native"]
+    run_id: str | None
+    status: str
+    manifest_digest: Sha256 | None
+    result_digest: Sha256 | None
+
+
+class BatchReport(Contract):
+    run: BatchRunRecord
+    groups: tuple[BatchGroupSummary, ...]
+    members: tuple[BatchMemberEvidence, ...]
+    uncertainty_scope: Literal["within_case_terminal_sample_variability"] = (
+        "within_case_terminal_sample_variability"
+    )
+    scientific_validity: Literal["not_established"] = "not_established"
+    limitations: tuple[str, ...]

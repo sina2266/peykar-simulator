@@ -12,3 +12,7 @@ local immutable image/driver allowlist; the API/ordinary Worker has no Docker
 access. Implemented kinds are COPASI SBML and OSPSuite PKML. See docs/native-agent.md.
 
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.
+
+Worker ticks also reconcile bounded job cohorts across ordinary/native queues.
+Native `prepare`/`enqueue` separates validation from caller-owned atomic dispatch;
+no Docker capability is added to this Worker. See the E2 cohort guide.

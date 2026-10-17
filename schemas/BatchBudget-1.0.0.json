@@ -1,0 +1,43 @@
+{
+  "$id": "urn:peykar:schema:BatchBudget:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "max_in_flight": {
+      "default": 4,
+      "maximum": 16,
+      "minimum": 1,
+      "title": "Max In Flight",
+      "type": "integer"
+    },
+    "max_jobs": {
+      "default": 64,
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Max Jobs",
+      "type": "integer"
+    },
+    "max_total_samples": {
+      "default": 1000000,
+      "maximum": 2000000,
+      "minimum": 2,
+      "title": "Max Total Samples",
+      "type": "integer"
+    },
+    "max_total_wall_seconds": {
+      "default": 14400.0,
+      "exclusiveMinimum": 0,
+      "maximum": 86400,
+      "title": "Max Total Wall Seconds",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "BatchBudget",
+  "type": "object"
+}

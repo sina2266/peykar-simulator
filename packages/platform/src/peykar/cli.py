@@ -8,6 +8,7 @@ from typing import Annotated, Any
 
 import typer
 
+from peykar.batch_cli import batch_app
 from peykar.compucell_cli import compucell_app
 from peykar.data_fabric.csv_import import MAX_CSV_BYTES, import_csv
 from peykar.data_fabric.service import DatasetService
@@ -39,6 +40,7 @@ app.add_typer(graph_app, name="biology")
 app.add_typer(experiment_app, name="experiments")
 app.add_typer(runtime_app, name="runtimes")
 app.add_typer(native_app, name="native")
+app.add_typer(batch_app, name="batches")
 
 
 def local_service() -> SimulationService:

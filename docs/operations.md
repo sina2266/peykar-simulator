@@ -110,6 +110,15 @@ immediately, so a timeout can be investigated without resubmitting. A timeout do
 not cancel or remove the run. Credentials are read only from the environment and
 are never forwarded through HTTP redirects.
 
+## Cohorts and aggregate budgets
+
+The ordinary Worker reconciles job cohorts before claiming its next ordinary run.
+A native-only cohort still needs this scheduler and the separate native host agent.
+Capacity counts queued/running members across both queues; it is local per cohort,
+not a workspace-wide quota. `peykar batches advance` reconciles explicitly when the
+ordinary Worker is stopped. Cancellation propagates to both queues; failed cohorts
+retain partial child results with excluded members disclosed. See [E2](epics/E2-reproducible-cohorts.md).
+
 ## Multi-host migration
 
 SQLite WAL is a single-host profile. Do not mount it across a distributed worker

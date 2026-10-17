@@ -131,3 +131,38 @@ commands/outcomes in `docs/verification.md`.
 - Git milestone d5b7f25a successfully pushed complete upstream source distribution
   to main. Continue committing/pushing only completed, verified meaningful steps;
   serialize index mutations with the app and never remove a live index lock.
+
+## E2 reproducible cohorts, 2026-10-17
+
+- Previous native-agent milestone 9781dde0 was committed/pushed to main and verified
+  against the remote SHA. New work implements S4.5 in composition/batches.py and
+  batch_results.py, with separate API/CLI routes and additive 004_batches.sql.
+- Freeze exact plans/models/dependencies/runtime identities, Cartesian reference
+  parameter grids and seed=base_seed+expanded ordinal. Enforce job/sample/wall/
+  snapshot-size budgets before admission and per-cohort queued/running capacity
+  during atomic dispatch into either reference or native queue.
+- Native drivers still lack parameter override/stochastic seed support; reject
+  sweeps/replicas for native cases rather than inventing capabilities. PKML's
+  original schedule uses a conservative 100001 returned-sample bound for admission.
+- Terminal reports keep each case/grid separate, disclose failures/cancellations/
+  skips and preserve child hashes. Sample SD uses n-1, absent for n<2; this is model
+  sample variability, not a confidence interval or biological uncertainty claim.
+- Ordinary Worker reconciles cohorts every tick, including native-only cohorts.
+  Native host agent remains separate. No Docker socket is added to API/Worker.
+- Targeted checks passed 70 tests. Final make check-docker passed 338 tests in
+  20.95 seconds, 88% coverage, strict mypy 75 source files, schemas and all builds;
+  host make build passed. Existing versioned schema JSON and uv.lock are unchanged.
+- Pre-upgrade backup backups/pre-cohorts-20261017T091920Z/ is copied locally. It
+  retains 61 objects, 12 runs/36 events, two experiments/four nodes/eight events,
+  eight native runs/24 events and 349 artifact byte sequences. Never reset volume.
+- Final actual replay passed 12 seeded grid jobs and a mixed reference/COPASI/OSP
+  cohort. Running cohort cancellation skipped unstarted children; an actual tiny
+  child deadline demonstrated partial failure with continuation and explicit gaps.
+- Cancellation exposed an original Docker run/create cleanup race (a Created
+  container survived). The agent now acknowledges create before start, checks
+  cancellation around creation and removes after stopping its attach client.
+  Uncertain daemon cleanup stays explicit. Loop mode continues to later jobs after
+  redacted errors/cancellation, without retrying failed scientific work.
+- Final regression after this fix: 340 tests in 22.04 seconds, 88% coverage, strict
+  mypy 75 files, schemas and builds pass. All pre-cohort rows, 349 artifact byte sequences
+  and 24 original license hashes are preserved. See docs/cohort-verification-2026-10-17.json.

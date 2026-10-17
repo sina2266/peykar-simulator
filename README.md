@@ -37,6 +37,9 @@ A separate [native execution agent](docs/native-agent.md) now runs admitted SBML
 through COPASI and original PKML through OSPSuite from durable API jobs, with
 frozen identities, cancellation and checksum-verified outputs. Other native queue
 adapters, continuous feedback coupling and the full UI remain explicit system tasks.
+[E2 job cohorts](docs/epics/E2-reproducible-cohorts.md) now add bounded parameter
+sweeps, deterministic reference seed allocation, mixed native/reference batches
+and lineage-checked terminal statistics with explicit excluded members.
 
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·
