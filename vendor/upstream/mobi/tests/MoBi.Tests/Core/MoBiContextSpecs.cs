@@ -1,0 +1,420 @@
+using FakeItEasy;
+using MoBi.Core.Commands;
+using MoBi.Core.Domain.Model;
+using MoBi.Core.Domain.Services;
+using MoBi.Core.Domain.UnitSystem;
+using MoBi.Core.Serialization.Xml.Services;
+using MoBi.Core.Services;
+using OSPSuite.BDDHelper;
+using OSPSuite.BDDHelper.Extensions;
+using OSPSuite.Core.Domain;
+using OSPSuite.Core.Domain.Builder;
+using OSPSuite.Core.Domain.Formulas;
+using OSPSuite.Core.Domain.Services;
+using OSPSuite.Core.Services;
+using OSPSuite.Infrastructure.Serialization.Journal;
+using OSPSuite.Infrastructure.Serialization.ORM.History;
+using OSPSuite.Utility.Events;
+using OSPSuite.Utility.FileLocker;
+using IContainer = OSPSuite.Utility.Container.IContainer;
+
+namespace MoBi.Core
+{
+   public abstract class concern_for_MoBiContext : ContextSpecification<MoBiContext>
+   {
+      protected IMoBiDimensionFactory _dimensionFactory;
+      protected IEventPublisher _eventPublisher;
+      protected IObjectBaseFactory _objectBaseFactory;
+      private IXmlSerializationService _serializationService;
+      private IObjectPathFactory _objectPathFactory;
+      protected IWithIdRepository _objectBaseRepository;
+      private IHistoryManagerFactory _moBiHistoryManagerFactory;
+      private IRegisterTask _registerTask;
+      protected IUnregisterTask _unregisterTask;
+      private IClipboardManager _clipboardManager;
+      private IContainer _container;
+      protected IObjectTypeResolver _objectTypeResolver;
+      private ICloneManagerForBuildingBlock _cloneManager;
+      private IJournalSession _journalSession;
+      private IFileLocker _fileLocker;
+      private ILazyLoadTask _lazyLoadTask;
+      protected IDialogCreator _dialogCreator;
+
+      protected override void Context()
+      {
+         _dimensionFactory = A.Fake<IMoBiDimensionFactory>();
+         _eventPublisher = A.Fake<IEventPublisher>();
+         _objectBaseFactory = A.Fake<IObjectBaseFactory>();
+         _registerTask = A.Fake<IRegisterTask>();
+         _objectBaseRepository = A.Fake<IWithIdRepository>();
+         _moBiHistoryManagerFactory = A.Fake<IHistoryManagerFactory>();
+         _serializationService = A.Fake<IXmlSerializationService>();
+         _objectPathFactory = A.Fake<IObjectPathFactory>();
+         _unregisterTask = A.Fake<IUnregisterTask>();
+         _clipboardManager = A.Fake<IClipboardManager>();
+         _container = A.Fake<IContainer>();
+         _objectTypeResolver = A.Fake<IObjectTypeResolver>();
+         _cloneManager = A.Fake<ICloneManagerForBuildingBlock>();
+         _journalSession = A.Fake<IJournalSession>();
+         _fileLocker = A.Fake<IFileLocker>();
+         _lazyLoadTask = A.Fake<ILazyLoadTask>();
+         _dialogCreator = A.Fake<IDialogCreator>();
+
+         sut = new MoBiContext(_objectBaseFactory, _dimensionFactory, _eventPublisher,
+            _serializationService, _objectPathFactory, _objectBaseRepository,
+            _moBiHistoryManagerFactory, _registerTask, _unregisterTask,
+            _clipboardManager, _container,
+            _objectTypeResolver, _cloneManager,
+            _journalSession, _fileLocker, _lazyLoadTask, _dialogCreator);
+
+         A.CallTo(() => _moBiHistoryManagerFactory.Create()).Returns(A.Fake<MoBiHistoryManager>());
+      }
+   }
+
+   public class When_told_to_clear : concern_for_MoBiContext
+   {
+      private MoBiProject _project;
+
+      protected override void Context()
+      {
+         base.Context();
+         _project = A.Fake<MoBiProject>();
+         _project.Name = "Neu";
+         sut.LoadFrom(_project);
+      }
+
+      protected override void Because()
+      {
+         sut.Clear();
+      }
+
+      [Observation]
+      public void should_set_the_reference_to_current_project_and_history_manager_to_null()
+      {
+         sut.CurrentProject.ShouldBeNull();
+         sut.HistoryManager.ShouldBeNull();
+      }
+
+      [Observation]
+      public void should_clear_the_object_base_repository()
+      {
+         A.CallTo(() => _objectBaseRepository.Clear()).MustHaveHappened();
+      }
+   }
+
+   public class When_asked_to_get_an_object_base : concern_for_MoBiContext
+   {
+      private readonly string _id = "ID";
+
+      protected override void Context()
+      {
+         base.Context();
+         var project = A.Fake<MoBiProject>();
+         project.Name = "Neu";
+         A.CallTo(() => _objectBaseFactory.Create<MoBiProject>()).Returns(project);
+         sut.NewProject();
+      }
+
+      protected override void Because()
+      {
+         sut.Get<IObjectBase>(_id);
+      }
+
+      [Observation]
+      public void should_ask_objectbaserepository_for_the_object()
+      {
+         A.CallTo(() => _objectBaseRepository.Get(_id)).MustHaveHappened();
+      }
+   }
+
+   public class When_told_to_create_a_new_ObjectBase : concern_for_MoBiContext
+   {
+      private IObjectBase _newObjectBase;
+      private MoBiProject _project;
+
+      protected override void Context()
+      {
+         base.Context();
+         _project = A.Fake<MoBiProject>();
+         _project.Name = "Neu";
+         sut.LoadFrom(_project);
+         _newObjectBase = A.Fake<IObjectBase>();
+         A.CallTo(() => _objectBaseFactory.Create<IObjectBase>()).Returns(_newObjectBase);
+      }
+
+      protected override void Because()
+      {
+         sut.Create<IObjectBase>(null);
+      }
+
+      [Observation]
+      public void should_ask_objectBase_Factory_for_the_new_objectBase()
+      {
+         A.CallTo(() => _objectBaseFactory.Create<IObjectBase>()).MustHaveHappened();
+      }
+
+      [Observation]
+      public void should_not_register_the_new_object_in_the_objectBaseRepository()
+      {
+         A.CallTo(() => _objectBaseRepository.Register(_newObjectBase)).MustNotHaveHappened();
+      }
+   }
+
+   public class When_told_to_create_a_new_ObjectBase_with_a_given_id : concern_for_MoBiContext
+   {
+      private IObjectBase _newObjectBase;
+      private MoBiProject _project;
+      private string id;
+
+      protected override void Context()
+      {
+         base.Context();
+         _project = A.Fake<MoBiProject>();
+         _project.Name = "Neu";
+         _newObjectBase = A.Fake<IObjectBase>();
+         id = "ID";
+         _newObjectBase.Id = id;
+         A.CallTo(() => _objectBaseFactory.Create<IObjectBase>(id)).Returns(_newObjectBase);
+         sut.LoadFrom(_project);
+      }
+
+      protected override void Because()
+      {
+         sut.Create<IObjectBase>(id);
+      }
+
+      [Observation]
+      public void should_ask_objectBase_Factory_for_the_new_objectBase()
+      {
+         A.CallTo(() => _objectBaseFactory.Create<IObjectBase>(id)).MustHaveHappened();
+      }
+
+      [Observation]
+      public void should_not_register_the_new_object_in_the_objectBaseRepository()
+      {
+         A.CallTo(() => _objectBaseRepository.Register(_newObjectBase)).MustNotHaveHappened();
+      }
+   }
+
+   public class When_creating_a_new_project : concern_for_MoBiContext
+   {
+      private MoBiProject _newProject;
+
+      protected override void Context()
+      {
+         base.Context();
+         _newProject = A.Fake<MoBiProject>();
+         _newProject.Name = "Neu";
+         A.CallTo(() => _objectBaseFactory.Create<MoBiProject>()).Returns(_newProject);
+      }
+
+      protected override void Because()
+      {
+         sut.NewProject();
+      }
+
+      [Observation]
+      public void should_set_current_project_to_the_new_project()
+      {
+         sut.CurrentProject.ShouldBeEqualTo(_newProject);
+      }
+   }
+
+   public class When_unregistering_a_simulation_from_context : concern_for_MoBiContext
+   {
+      private IMoBiSimulation _simulation;
+      private IFormula _explicitFormula;
+      private IFormula _explicitFormulaInNeighborhood;
+
+      protected override void Context()
+      {
+         base.Context();
+         _simulation = A.Fake<IMoBiSimulation>();
+         _simulation.Model = A.Fake<IModel>();
+         _explicitFormula = new ExplicitFormula("1+2");
+         _explicitFormulaInNeighborhood = new ExplicitFormula("1+2");
+         _simulation.Model.Root = new Container {new Parameter().WithFormula(_explicitFormula)};
+         _simulation.Model.Neighborhoods = new Container {new Parameter().WithFormula(_explicitFormulaInNeighborhood)};
+      }
+
+      protected override void Because()
+      {
+         sut.UnregisterSimulation(_simulation);
+      }
+
+      [Observation]
+      public void should_unregister_the_simulation()
+      {
+         A.CallTo(() => _unregisterTask.UnregisterAllIn(_simulation)).MustHaveHappened();
+      }
+
+      [Observation]
+      public void should_also_unregister_all_cachable_formula()
+      {
+         A.CallTo(() => _unregisterTask.UnregisterAllIn(_explicitFormula)).MustHaveHappened();
+         A.CallTo(() => _unregisterTask.UnregisterAllIn(_explicitFormulaInNeighborhood)).MustHaveHappened();
+      }
+   }
+
+   public class When_running_module_commands_that_convert_pk_sim_modules : concern_for_MoBiContext
+   {
+      private MoBiMacroCommand _command;
+      private ParameterValue _parameterValue;
+      private ParameterValuesBuildingBlock _buildingBlock;
+      private Module _module;
+
+      protected override void Context()
+      {
+         base.Context();
+         sut.CurrentProject = new MoBiProject();
+         _command = new MoBiMacroCommand();
+         _parameterValue = new ParameterValue();
+         _buildingBlock = new ParameterValuesBuildingBlock();
+         _module = new Module
+         {
+            IsPKSimModule = true
+         };
+         _module.Add(_buildingBlock);
+         sut.CurrentProject.AddModule(_module);
+         _command.Add(new AddParameterValueToBuildingBlockCommand(_buildingBlock, _parameterValue));
+         _command.Add(new AddParameterValueToBuildingBlockCommand(_buildingBlock, _parameterValue));
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).Returns(ViewResult.Yes);
+      }
+
+      protected override void Because()
+      {
+         sut.PromptForCancellation(_command);
+      }
+
+      [Observation]
+      public void the_user_should_be_prompted()
+      {
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).MustHaveHappenedOnceExactly();
+      }
+   }
+
+   public class When_running_module_commands_that_uses_rename_object_base_without_building_block : concern_for_MoBiContext
+   {
+      private RenameObjectBaseCommand _command;
+      private MoBiSimulation _simulation;
+
+      protected override void Context()
+      {
+         base.Context();
+         _simulation = new MoBiSimulation().WithName("oldname");
+         _command = new RenameObjectBaseCommand(_simulation, "newname", null);
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).Returns(ViewResult.Yes);
+      }
+
+      protected override void Because()
+      {
+         sut.PromptForCancellation(_command);
+      }
+
+      [Observation]
+      public void the_user_should_be_prompted()
+      {
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).MustNotHaveHappened();
+      }
+   }
+
+   public class When_canceling_the_conversion : concern_for_MoBiContext
+   {
+      private MoBiMacroCommand _command;
+      private ParameterValue _parameterValue;
+      private ParameterValuesBuildingBlock _buildingBlock;
+      private Module _module;
+
+      protected override void Context()
+      {
+         base.Context();
+         _command = new MoBiMacroCommand();
+         sut.CurrentProject = new MoBiProject();
+         _parameterValue = new ParameterValue();
+         _buildingBlock = new ParameterValuesBuildingBlock();
+         _module = new Module
+         {
+            IsPKSimModule = true
+         };
+         sut.CurrentProject.AddModule(_module);
+         _module.Add(_buildingBlock);
+         _command.Add(new AddParameterValueToBuildingBlockCommand(_buildingBlock, _parameterValue));
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).Returns(ViewResult.No);
+      }
+
+      [Observation]
+      public void the_user_should_not_be_prompted()
+      {
+         The.Action(() => sut.PromptForCancellation(_command)).ShouldThrowAn<CancelCommandRunException>();
+      }
+   }
+
+   public class When_running_module_commands_that_doesnt_convert_pksim_module : concern_for_MoBiContext
+   {
+      private MoBiMacroCommand _command;
+      private ParameterValue _parameterValue;
+      private ParameterValuesBuildingBlock _buildingBlock;
+      private Module _module;
+
+      protected override void Context()
+      {
+         base.Context();
+         _command = new MoBiMacroCommand();
+         _parameterValue = new ParameterValue();
+         _buildingBlock = new ParameterValuesBuildingBlock();
+         _module = new Module
+         {
+            IsPKSimModule = false
+         };
+         _module.Add(_buildingBlock);
+         _command.Add(new AddParameterValueToBuildingBlockCommand(_buildingBlock, _parameterValue));
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).Returns(ViewResult.Yes);
+      }
+
+      protected override void Because()
+      {
+         sut.PromptForCancellation(_command);
+      }
+
+      [Observation]
+      public void the_user_should_not_be_prompted()
+      {
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).MustNotHaveHappened();
+      }
+   }
+
+   public class When_running_module_commands_that_converts_a_module_not_in_the_project : concern_for_MoBiContext
+   {
+      private MoBiMacroCommand _command;
+      private ParameterValue _parameterValue;
+      private ParameterValuesBuildingBlock _buildingBlock;
+      private Module _module;
+
+      protected override void Context()
+      {
+         base.Context();
+         _command = new MoBiMacroCommand();
+         sut.CurrentProject = new MoBiProject();
+         _parameterValue = new ParameterValue();
+         _buildingBlock = new ParameterValuesBuildingBlock();
+         _module = new Module
+         {
+            IsPKSimModule = true
+         };
+         _module.Add(_buildingBlock);
+         _command.Add(new AddParameterValueToBuildingBlockCommand(_buildingBlock, _parameterValue));
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).Returns(ViewResult.Yes);
+      }
+
+      protected override void Because()
+      {
+         sut.PromptForCancellation(_command);
+      }
+
+      [Observation]
+      public void the_user_should_not_be_prompted()
+      {
+         A.CallTo(() => _dialogCreator.MessageBoxYesNo(A<string>._, A<ViewResult>._)).MustNotHaveHappened();
+      }
+   }
+}

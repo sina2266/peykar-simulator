@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2019 - 2023 by Pedro Mendes, Rector and Visitors of the -->
+<!-- University of Virginia, University of Heidelberg, and University -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and University of -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2011 - 2016 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and The University -->
+<!-- of Manchester. -->
+<!-- All rights reserved. -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.copasi.org/static/schema" xmlns:x="http://www.w3.org/2001/XMLSchema-instance" xmlns:schema="http://www.copasi.org/static/schema">
+  <xs:import namespace="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="x.xsd"/>
+  <xs:element name="COPASI">
+    <xs:annotation>
+      <xs:documentation> This is the only top element of a CopasiML file. It contains the models as
+        well as the task information. </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="schema:ListOfFunctions"/>
+        <xs:element minOccurs="0" ref="schema:Model"/>
+        <xs:element minOccurs="0" ref="schema:ListOfTasks"/>
+        <xs:element minOccurs="0" ref="schema:ListOfReports"/>
+        <xs:element minOccurs="0" ref="schema:ListOfPlots"/>
+        <xs:element minOccurs="0" ref="schema:GUI"/>
+        <xs:element minOccurs="0" ref="schema:ListOfLayouts"/>
+        <xs:element minOccurs="0" ref="schema:SBMLReference"/>
+        <xs:element minOccurs="0" ref="schema:ListOfUnitDefinitions"/>
+        <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="skip">
+          <xs:annotation>
+            <xs:documentation> We explicitedly allow the addition of elements which are not in the
+            CopasiML name space so that this may be expandend by other user to suit their needs. </xs:documentation>
+          </xs:annotation>
+        </xs:any>
+      </xs:sequence>
+      <xs:attribute name="versionMajor" use="required" type="xs:integer"/>
+      <xs:attribute name="versionMinor" use="required" type="xs:integer"/>
+      <xs:attribute name="versionDevel" use="required" type="xs:integer"/>
+      <xs:attribute name="copasiSourcesModified" use="required" type="xs:boolean"/>
+      <xs:anyAttribute namespace="##other" processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfFunctions" type="schema:listOfFunctions.datatype"/>
+  <xs:element name="Model" type="schema:model.datatype"/>
+  <xs:element name="ListOfTasks" type="schema:listOfTasks.datatype"/>
+  <xs:element name="ListOfReports" type="schema:listOfReportSpecifications.datatype"/>
+  <xs:element name="ListOfPlots" type="schema:listOfPlotSpecifications.datatype"/>
+  <xs:element name="GUI" type="schema:gui.datatype"/>
+  <xs:element name="ListOfLayouts" type="schema:listOfLayouts.datatype"/>
+  <xs:element name="SBMLReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:SBMLMap"/>
+      </xs:sequence>
+      <xs:attribute name="file" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SBMLMap">
+    <xs:complexType>
+      <xs:attribute name="COPASIkey" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:IDREF">
+            <xs:pattern value="[_a-zA-Z]+_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="SBMLid" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[_a-zA-Z][_a-zA-Z0-9]*"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfUnitDefinitions" type="schema:listOfUnitDefinitions.datatype"/>
+  <xs:attributeGroup name="reactionParticipant.datatype">
+    <xs:attribute name="stoichiometry" use="required" type="xs:double"/>
+    <xs:attribute name="metabolite" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="Metabolite_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:element name="MiriamAnnotation" type="schema:rdf.datatype"/>
+  <xs:attributeGroup name="parameter.datatype">
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="float"/>
+          <xs:enumeration value="unsignedFloat"/>
+          <xs:enumeration value="integer"/>
+          <xs:enumeration value="unsignedInteger"/>
+          <xs:enumeration value="bool"/>
+          <xs:enumeration value="string"/>
+          <xs:enumeration value="cn"/>
+          <xs:enumeration value="key"/>
+          <xs:enumeration value="file"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="value" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="parameterText.datatype">
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="expression"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:complexType name="parameterList.datatype">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="schema:ParameterGroup"/>
+      <xs:element ref="schema:Parameter"/>
+      <xs:element ref="schema:ParameterText"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="ParameterGroup">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:parameterList.datatype">
+          <xs:attributeGroup ref="schema:name.attribute"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Parameter">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:parameter.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParameterText">
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="schema:parameterText.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Comment">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" ref="schema:xhtml.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="name.attribute">
+    <xs:attribute name="name" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\S ]+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:simpleType name="expression.simpletype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="UnsupportedAnnotation.datatype" mixed="true">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listOfUnsupportedAnnotations.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:UnsupportedAnnotation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnsupportedAnnotation">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:UnsupportedAnnotation.datatype">
+          <xs:attribute name="name" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="annotation.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:MiriamAnnotation"/>
+      <xs:element minOccurs="0" ref="schema:Comment"/>
+      <xs:element minOccurs="0" ref="schema:ListOfUnsupportedAnnotations"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="ListOfUnsupportedAnnotations" type="schema:listOfUnsupportedAnnotations.datatype"/>
+  <xs:group name="other.datatype">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="xhtml.datatype">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/1999/xhtml" processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <!--
+    <define name="rdf.datatype">
+      <grammar>
+        <include href="http://www.copasi.org/static/schema/rdfxml.rng" ns="http://relaxng.org/ns/structure/1.0"/>
+      </grammar>
+    </define>
+  -->
+  <xs:complexType name="rdf.datatype">
+    <xs:sequence>
+      <xs:any namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="rdfContent.datatype">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="reportSection.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Object"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listOfUnitDefinitions.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:UnitDefinition"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnitDefinition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="schema:annotation.datatype"/>
+        <xs:element ref="schema:Expression"/>
+      </xs:sequence>
+      <xs:attribute name="key" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:ID">
+            <xs:pattern value="Unit_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attributeGroup ref="schema:name.attribute"/>
+      <xs:attribute name="symbol" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Expression" type="schema:expression.simpletype"/>
+  <xs:complexType name="listOfFunctions.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Function"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Function">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="schema:annotation.datatype"/>
+        <xs:element ref="schema:Expression"/>
+        <xs:element minOccurs="0" ref="schema:ListOfParameterDescriptions"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="schema:name.attribute"/>
+      <xs:attribute name="key" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:ID">
+            <xs:pattern value="Function_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="MassAction"/>
+            <xs:enumeration value="PreDefined"/>
+            <xs:enumeration value="UserDefined"/>
+            <xs:enumeration value="Function"/>
+            <xs:enumeration value="Expression"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="reversible" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="unspecified"/>
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfParameterDescriptions" type="schema:listOfParameterDescriptions.datatype"/>
+  <xs:complexType name="listOfParameterDescriptions.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:ParameterDescription"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ParameterDescription">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:parameterDescription.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="parameterDescription.datatype">
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="FunctionParameter_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="order" use="required" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="role" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="product"/>
+          <xs:enumeration value="volume"/>
+          <xs:enumeration value="time"/>
+          <xs:enumeration value="modifier"/>
+          <xs:enumeration value="variable"/>
+          <xs:enumeration value="substrate"/>
+          <xs:enumeration value="constant"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:complexType name="model.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element minOccurs="0" ref="schema:InitialExpression"/>
+      <xs:element minOccurs="0" ref="schema:ListOfCompartments"/>
+      <xs:element minOccurs="0" ref="schema:ListOfMetabolites"/>
+      <xs:element minOccurs="0" ref="schema:ListOfModelValues"/>
+      <xs:element minOccurs="0" ref="schema:ListOfReactions"/>
+      <xs:element minOccurs="0" ref="schema:ListOfEvents"/>
+      <xs:element minOccurs="0" ref="schema:ListOfModelParameterSets"/>
+      <xs:element minOccurs="0" ref="schema:StateTemplate"/>
+      <xs:element minOccurs="0" ref="schema:InitialState"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Model_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="simulationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="time"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="timeUnit" use="required" type="xs:string"/>
+    <xs:attribute name="volumeUnit" use="required" type="xs:string"/>
+    <xs:attribute name="areaUnit" use="required" type="xs:string"/>
+    <xs:attribute name="lengthUnit" use="required" type="xs:string"/>
+    <xs:attribute name="quantityUnit" use="required" type="xs:string"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="stochastic"/>
+          <xs:enumeration value="deterministic"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="avogadroConstant" use="required" type="xs:double"/>
+  </xs:complexType>
+  <xs:element name="ListOfCompartments" type="schema:listOfCompartments.datatype"/>
+  <xs:element name="ListOfMetabolites" type="schema:listOfMetabolites.datatype"/>
+  <xs:element name="ListOfModelValues" type="schema:listOfModelValues.datatype"/>
+  <xs:element name="ListOfReactions" type="schema:listOfReactions.datatype"/>
+  <xs:element name="ListOfEvents" type="schema:listOfEvents.datatype"/>
+  <xs:element name="ListOfModelParameterSets" type="schema:listOfModelParameterSets.datatype"/>
+  <xs:element name="StateTemplate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:StateTemplateVariable"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StateTemplateVariable">
+    <xs:complexType>
+      <xs:attribute name="objectReference" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:IDREF">
+            <xs:pattern value="(Model|Metabolite|Compartment|ModelValue)_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InitialState">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:restriction base="xs:anyType">
+          <xs:simpleType>
+            <xs:list itemType="xs:double"/>
+          </xs:simpleType>
+          <xs:attribute name="type" use="required" type="xs:string"/>
+        </xs:restriction>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="listOfCompartments.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Compartment"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Compartment" type="schema:compartment.datatype"/>
+  <xs:complexType name="compartment.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element minOccurs="0" ref="schema:Expression"/>
+      <xs:element minOccurs="0" ref="schema:InitialExpression"/>
+      <xs:element minOccurs="0" ref="schema:NoiseExpression"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Compartment_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="simulationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ode"/>
+          <xs:enumeration value="assignment"/>
+          <xs:enumeration value="fixed"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="dimensionality" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="0"/>
+          <xs:maxInclusive value="3"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="addNoise" use="required" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="listOfMetabolites.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Metabolite"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Metabolite" type="schema:metabolite.datatype"/>
+  <xs:complexType name="metabolite.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element minOccurs="0" ref="schema:Expression"/>
+      <xs:element minOccurs="0" ref="schema:InitialExpression"/>
+      <xs:element minOccurs="0" ref="schema:NoiseExpression"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Metabolite_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="compartment" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="Compartment_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="simulationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ode"/>
+          <xs:enumeration value="assignment"/>
+          <xs:enumeration value="reactions"/>
+          <xs:enumeration value="fixed"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="addNoise" use="required" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="listOfModelValues.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:ModelValue"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ModelValue" type="schema:modelValue.datatype"/>
+  <xs:complexType name="modelValue.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element minOccurs="0" ref="schema:Expression"/>
+      <xs:element minOccurs="0" ref="schema:InitialExpression"/>
+      <xs:element minOccurs="0" ref="schema:NoiseExpression"/>
+      <xs:element minOccurs="0" ref="schema:Unit"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="ModelValue_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="simulationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ode"/>
+          <xs:enumeration value="assignment"/>
+          <xs:enumeration value="fixed"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="addNoise" use="required" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="listOfModelParameterSets.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:ModelParameterSet"/>
+    </xs:sequence>
+    <xs:attribute name="activeSet" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="ModelParameterSet_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="ModelParameterSet" type="schema:modelParameterSet.datatype"/>
+  <xs:complexType name="modelParameterSet.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:group ref="schema:modelParameterGroup.datatype"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="ModelParameterSet_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:group name="modelParameterGroup.datatype">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="schema:ModelParameterGroup"/>
+        <xs:element ref="schema:ModelParameter"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="ModelParameterGroup">
+    <xs:complexType>
+      <xs:group ref="schema:modelParameterGroup.datatype"/>
+      <xs:attribute name="cn" use="required" type="xs:string"/>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Reaction"/>
+            <xs:enumeration value="Group"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ModelParameter" type="schema:modelParameter.datatype"/>
+  <xs:complexType name="modelParameter.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:InitialExpression"/>
+    </xs:sequence>
+    <xs:attribute name="cn" use="required" type="xs:string"/>
+    <xs:attribute name="value" use="required" type="xs:double"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Model"/>
+          <xs:enumeration value="Compartment"/>
+          <xs:enumeration value="Species"/>
+          <xs:enumeration value="ModelValue"/>
+          <xs:enumeration value="ReactionParameter"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="simulationType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="time"/>
+          <xs:enumeration value="ode"/>
+          <xs:enumeration value="assignment"/>
+          <xs:enumeration value="reactions"/>
+          <xs:enumeration value="fixed"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="listOfReactions.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Reaction"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Reaction" type="schema:reaction.datatype"/>
+  <xs:complexType name="reaction.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element minOccurs="0" ref="schema:ListOfSubstrates"/>
+      <xs:element minOccurs="0" ref="schema:ListOfProducts"/>
+      <xs:element minOccurs="0" ref="schema:ListOfModifiers"/>
+      <xs:element minOccurs="0" ref="schema:ListOfConstants"/>
+      <xs:element minOccurs="0" ref="schema:KineticLaw"/>
+      <xs:element minOccurs="0" ref="schema:NoiseExpression"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Reaction_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="reversible" use="required" type="xs:boolean"/>
+    <xs:attribute name="fast" use="required" type="xs:boolean"/>
+    <xs:attribute name="addNoise" use="required" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:element name="ListOfSubstrates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:Substrate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Substrate">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:reactionParticipant.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:Product"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Product">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:reactionParticipant.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfModifiers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:Modifier"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Modifier">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:reactionParticipant.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfConstants" type="schema:listOfConstants.datatype"/>
+  <xs:element name="KineticLaw" type="schema:kineticLaw.datatype"/>
+  <xs:complexType name="listOfConstants.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Constant"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Constant">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:constant.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="constant.datatype">
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Parameter_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="value" use="required" type="xs:double"/>
+  </xs:attributeGroup>
+  <xs:complexType name="kineticLaw.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:ListOfCallParameters"/>
+    </xs:sequence>
+    <xs:attribute name="unitType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Default"/>
+          <xs:enumeration value="AmountPerTime"/>
+          <xs:enumeration value="ConcentrationPerTime"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="scalingCompartment">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="CN=Root,Model=([^\\\[\]=,&gt;]|\\.)*,Vector=Compartments\[([^\\\[\]=,&gt;]|\\.)*\]"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="function" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="Function_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="ListOfCallParameters" type="schema:listOfCallParameters.datatype"/>
+  <xs:complexType name="listOfCallParameters.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:CallParameter"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CallParameter" type="schema:callParameter.datatype"/>
+  <xs:complexType name="callParameter.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:SourceParameter"/>
+    </xs:sequence>
+    <xs:attribute name="functionParameter" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="FunctionParameter_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="SourceParameter">
+    <xs:complexType>
+      <xs:attribute name="reference" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:IDREF">
+            <xs:pattern value="[_a-zA-Z]+_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="listOfEvents.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Event"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Event" type="schema:event.datatype"/>
+  <xs:complexType name="event.datatype">
+    <xs:sequence>
+      <xs:group ref="schema:annotation.datatype"/>
+      <xs:element ref="schema:TriggerExpression"/>
+      <xs:element minOccurs="0" ref="schema:DelayExpression"/>
+      <xs:element minOccurs="0" ref="schema:PriorityExpression"/>
+      <xs:element minOccurs="0" ref="schema:ListOfAssignments"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Event_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="fireAtInitialTime" use="required" type="xs:boolean"/>
+    <xs:attribute name="persistentTrigger" use="required" type="xs:boolean"/>
+    <xs:attribute name="delayAssignment" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:element name="TriggerExpression" type="schema:expression.simpletype"/>
+  <xs:element name="DelayExpression" type="schema:expression.simpletype"/>
+  <xs:element name="PriorityExpression" type="schema:expression.simpletype"/>
+  <xs:element name="ListOfAssignments" type="schema:listOfEventAssignments.datatype"/>
+  <xs:complexType name="listOfEventAssignments.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Assignment"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Assignment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="schema:Expression"/>
+      </xs:sequence>
+      <xs:attribute name="target" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="listOfTasks.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Task"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Task" type="schema:task.datatype"/>
+  <xs:complexType name="task.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Report">
+        <xs:complexType>
+          <xs:attributeGroup ref="schema:report.datatype"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="schema:Problem"/>
+      <xs:element ref="schema:Method"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Task_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="updateModel" use="required" type="xs:boolean"/>
+    <xs:attribute name="scheduled" use="required" type="xs:boolean"/>
+    <xs:attribute name="type" use="required" type="schema:taskTypeEnumeration.datatype"/>
+  </xs:complexType>
+  <xs:element name="Problem" type="schema:parameterList.datatype"/>
+  <xs:element name="Method">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:parameterList.datatype">
+          <xs:attributeGroup ref="schema:name.attribute"/>
+          <xs:attribute name="type" use="required" type="xs:string"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="report.datatype">
+    <xs:attribute name="reference" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="Report_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="target" use="required" type="xs:string"/>
+    <xs:attribute name="append" use="required" type="xs:boolean"/>
+    <xs:attribute name="confirmOverwrite" use="required" type="xs:boolean"/>
+  </xs:attributeGroup>
+  <xs:complexType name="listOfReportSpecifications.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Report" type="schema:reportSpecification.datatype"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="taskTypeEnumeration.datatype">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="lyapunovExponents"/>
+      <xs:enumeration value="parameterFitting"/>
+      <xs:enumeration value="timeCourse"/>
+      <xs:enumeration value="moieties"/>
+      <xs:enumeration value="sensitivities"/>
+      <xs:enumeration value="optimization"/>
+      <xs:enumeration value="metabolicControlAnalysis"/>
+      <xs:enumeration value="timeScaleSeparationAnalysis"/>
+      <xs:enumeration value="scan"/>
+      <xs:enumeration value="steadyState"/>
+      <xs:enumeration value="fluxMode"/>
+      <xs:enumeration value="timeScaleSeparation"/>
+      <xs:enumeration value="crosssection"/>
+      <xs:enumeration value="linearNoiseApproximation"/>
+      <xs:enumeration value="unset"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="reportSpecification.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:Comment"/>
+      <xs:choice>
+        <xs:element ref="schema:Table"/>
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="schema:Header"/>
+          <xs:element minOccurs="0" ref="schema:Body"/>
+          <xs:element minOccurs="0" ref="schema:Footer"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Report_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="schema:name.attribute"/>
+    <xs:attribute name="taskType" use="required" type="schema:taskTypeEnumeration.datatype"/>
+    <xs:attribute name="precision" use="required" type="xs:unsignedInt"/>
+    <xs:attribute name="separator" use="required" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="Table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:Object"/>
+      </xs:sequence>
+      <xs:attribute name="printTitle" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Header" type="schema:reportSection.datatype"/>
+  <xs:element name="Body" type="schema:reportSection.datatype"/>
+  <xs:element name="Footer" type="schema:reportSection.datatype"/>
+  <xs:complexType name="listOfPlotSpecifications.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:PlotSpecification"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlotSpecification" type="schema:plotSpecification.datatype"/>
+  <xs:complexType name="plotSpecification.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:parameterList.datatype">
+        <xs:sequence>
+          <xs:element ref="schema:ListOfPlotItems"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="schema:name.attribute"/>
+        <xs:attribute name="type" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Plot2D"/>
+              <xs:enumeration value="SimWiz"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="active" use="required" type="xs:boolean"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ListOfPlotItems" type="schema:listOfPlotItems.datatype"/>
+  <xs:complexType name="listOfPlotItems.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:PlotItem"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlotItem" type="schema:plotItem.datatype"/>
+  <xs:complexType name="plotItem.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:parameterList.datatype">
+        <xs:sequence>
+          <xs:element ref="schema:ListOfChannels"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="schema:name.attribute"/>
+        <xs:attribute name="type" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Unset"/>
+              <xs:enumeration value="Histogram1DItem"/>
+              <xs:enumeration value="Curve2D"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ListOfChannels" type="schema:listOfChannels.datatype"/>
+  <xs:complexType name="listOfChannels.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:ChannelSpec"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChannelSpec">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:channelSpec.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="channelSpec.datatype">
+    <xs:attribute name="cn" use="required" type="xs:string"/>
+    <xs:attribute name="min" type="xs:double"/>
+    <xs:attribute name="max" type="xs:double"/>
+  </xs:attributeGroup>
+  <xs:complexType name="gui.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:ListOfSliders"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ListOfSliders" type="schema:listOfSliders.datatype"/>
+  <xs:complexType name="listOfSliders.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Slider"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Slider">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:slider.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="slider.datatype">
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Slider_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="associatedEntityKey" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="[_a-zA-Z]+_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="objectCN" use="required" type="xs:string"/>
+    <xs:attribute name="objectType" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="unsignedInteger"/>
+          <xs:enumeration value="unsignedFloat"/>
+          <xs:enumeration value="integer"/>
+          <xs:enumeration value="float"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="objectValue" use="required" type="xs:double"/>
+    <xs:attribute name="maxValue" use="required" type="xs:double"/>
+    <xs:attribute name="minValue" use="required" type="xs:double"/>
+    <xs:attribute name="tickFactor" use="required" type="xs:positiveInteger"/>
+    <xs:attribute name="tickNumber" use="required" type="xs:positiveInteger"/>
+    <xs:attribute name="scaling" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="logarithmic"/>
+          <xs:enumeration value="linear"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:element name="InitialExpression" type="schema:expression.simpletype"/>
+  <xs:element name="NoiseExpression" type="schema:expression.simpletype"/>
+  <xs:element name="Unit" type="schema:expression.simpletype"/>
+  <xs:element name="Object">
+    <xs:complexType>
+      <xs:attribute name="cn" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- I need two simple data types for the render extension that -->
+  <!-- look like SBML ids, but that are not derived from ID. -->
+  <xs:simpleType name="layoutId.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[_a-zA-Z][_a-zA-Z0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="layoutIdRef.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[_a-zA-Z][_a-zA-Z0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="boundingBox.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:Position"/>
+      <xs:element name="Dimensions">
+        <xs:complexType>
+          <xs:attribute name="width" use="required" type="xs:double"/>
+          <xs:attribute name="height" use="required" type="xs:double"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Position">
+    <xs:complexType>
+      <xs:attribute name="x" use="required" type="xs:double"/>
+      <xs:attribute name="y" use="required" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="layoutPoint.datatype">
+    <xs:attribute name="x" use="required" type="xs:double"/>
+    <xs:attribute name="y" use="required" type="xs:double"/>
+  </xs:attributeGroup>
+  <xs:complexType name="lineSegment.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:Start"/>
+      <xs:element ref="schema:End"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Start">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:layoutPoint.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="End">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:layoutPoint.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="cubicBezier.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:lineSegment.datatype">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="schema:BasePoint1"/>
+          <xs:element minOccurs="0" ref="schema:BasePoint2"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BasePoint1">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:layoutPoint.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BasePoint2">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:layoutPoint.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="curveSegment.element">
+    <xs:choice>
+      <xs:element ref="schema:LineSegment"/>
+      <xs:element name="CurveSegment">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="schema:lineSegment.datatype">
+              <xs:attributeGroup ref="x:type"/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="schema:CubicBezier"/>
+      <xs:element name="CurveSegment">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="schema:cubicBezier.datatype">
+              <xs:attributeGroup ref="x:type1"/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="LineSegment" type="schema:lineSegment.datatype"/>
+  <xs:element name="CubicBezier" type="schema:cubicBezier.datatype"/>
+  <xs:complexType name="layoutCurve.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:ListOfCurveSegments"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ListOfCurveSegments">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="schema:curveSegment.element"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="transformation.datatype">
+    <xs:attribute name="transform">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="((\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*,){5}|(\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*,){11})(\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*)"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- data type for key, role and type lists -->
+  <xs:simpleType name="wsSeparatedStringList.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="^(\s*\S+\s+)*(\s*\S+\s*)?$"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="commaSeparatedStringList.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="^(\s*\S+\s*,)*(\s*\S+\s*)?$"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="graphicalPrimitive1D.datatype">
+    <xs:attributeGroup ref="schema:transformation.datatype"/>
+    <xs:attribute name="stroke" type="schema:colorValueOrId.datatype"/>
+    <xs:attribute name="stroke-width" type="xs:double"/>
+    <xs:attribute name="stroke-dasharray">
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:simpleType>
+            <xs:list itemType="xs:integer"/>
+          </xs:simpleType>
+          <xs:length value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="graphicalPrimitive2D.datatype">
+    <xs:attributeGroup ref="schema:graphicalPrimitive1D.datatype"/>
+    <xs:attribute name="fill" type="schema:colorValueOrId.datatype"/>
+    <xs:attribute name="fill-rule">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="nonzero"/>
+          <xs:enumeration value="evenodd"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:simpleType name="relAbsValue.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\s*((([+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?)([+\-][0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?%))|([+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?%?))\s*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fontStyle.datatype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="italic"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fontWeight.datatype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="bold"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="textAnchor.datatype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="start"/>
+      <xs:enumeration value="middle"/>
+      <xs:enumeration value="end"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="vtextAnchor.datatype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="top"/>
+      <xs:enumeration value="middle"/>
+      <xs:enumeration value="bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="image.dataype">
+    <xs:attributeGroup ref="schema:transformation.datatype"/>
+    <xs:attribute name="x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="y" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="width" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="height" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="href" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="text.datatype">
+    <xs:attributeGroup ref="schema:graphicalPrimitive1D.datatype"/>
+    <xs:attribute name="x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="y" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="font-family" type="xs:string"/>
+    <xs:attribute name="font-size" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="font-style" type="schema:fontStyle.datatype"/>
+    <xs:attribute name="font-weight" type="schema:fontWeight.datatype"/>
+    <xs:attribute name="text-anchor" type="schema:textAnchor.datatype"/>
+    <xs:attribute name="vtext-anchor" type="schema:vtextAnchor.datatype"/>
+  </xs:attributeGroup>
+  <xs:group name="groupElements.datatype">
+    <xs:choice>
+      <xs:element ref="schema:Group"/>
+      <xs:element ref="schema:Text"/>
+      <xs:element ref="schema:Rectangle"/>
+      <xs:element ref="schema:Ellipse"/>
+      <xs:element ref="schema:Polygon"/>
+      <xs:element ref="schema:Image"/>
+      <xs:element name="Curve" type="schema:renderCurve.datatype"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="Group" type="schema:group.datatype"/>
+  <xs:element name="Text">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:text.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Rectangle">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:rectangle.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Ellipse">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:ellipse.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Polygon" type="schema:polygon.datatype"/>
+  <xs:element name="Image">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:image.dataype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="group.datatype">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="schema:groupElements.datatype"/>
+    <xs:attributeGroup ref="schema:graphicalPrimitive2D.datatype"/>
+    <xs:attribute name="font-family" type="xs:string"/>
+    <xs:attribute name="font-size" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="font-style" type="schema:fontStyle.datatype"/>
+    <xs:attribute name="font-weight" type="schema:fontWeight.datatype"/>
+    <xs:attribute name="text-anchor" type="schema:textAnchor.datatype"/>
+    <xs:attribute name="vtext-anchor" type="schema:vtextAnchor.datatype"/>
+    <xs:attribute name="startHead" type="schema:layoutIdRef.datatype"/>
+    <xs:attribute name="endHead" type="schema:layoutIdRef.datatype"/>
+  </xs:complexType>
+  <xs:attributeGroup name="rectangle.datatype">
+    <xs:attributeGroup ref="schema:graphicalPrimitive2D.datatype"/>
+    <xs:attribute name="x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="y" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="width" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="height" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="rx" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="ry" type="schema:relAbsValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="ellipse.datatype">
+    <xs:attributeGroup ref="schema:graphicalPrimitive2D.datatype"/>
+    <xs:attribute name="cx" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="cy" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="rx" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="ry" use="required" type="schema:relAbsValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:complexType name="renderCurve.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:ListOfElements"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="schema:graphicalPrimitive1D.datatype"/>
+    <xs:attribute name="startHead" type="schema:layoutIdRef.datatype"/>
+    <xs:attribute name="endHead" type="schema:layoutIdRef.datatype"/>
+  </xs:complexType>
+  <xs:element name="ListOfElements" type="schema:renderCurveElements.datatype"/>
+  <xs:complexType name="polygon.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:ListOfElements"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="schema:graphicalPrimitive2D.datatype"/>
+  </xs:complexType>
+  <xs:simpleType name="colorValue.datatype">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="#([0-9a-f]|[0-9A-F]){8}|#([0-9a-f]|[0-9A-F]){6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="colorValueOrId.datatype">
+    <xs:union memberTypes="schema:layoutIdRef.datatype schema:colorValue.datatype"/>
+  </xs:simpleType>
+  <xs:attributeGroup name="gradientStop.datatype">
+    <xs:attribute name="offset" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="stop-color" use="required" type="schema:colorValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:complexType name="gradientBase.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:Stop"/>
+    </xs:sequence>
+    <xs:attribute name="id" use="required" type="schema:layoutId.datatype"/>
+  </xs:complexType>
+  <xs:element name="Stop">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:gradientStop.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="radialGradient.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:gradientBase.datatype">
+        <xs:attribute name="cx" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="cy" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="r" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="fx" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="fy" type="schema:relAbsValue.datatype"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="linearGradient.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:gradientBase.datatype">
+        <xs:attribute name="x1" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="y1" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="z1" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="x2" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="y2" use="required" type="schema:relAbsValue.datatype"/>
+        <xs:attribute name="z2" use="required" type="schema:relAbsValue.datatype"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="gradientGroup.datatype" abstract="true"/>
+  <xs:element name="RadialGradient" substitutionGroup="schema:gradientGroup.datatype" type="schema:radialGradient.datatype"/>
+  <xs:element name="LinearGradient" substitutionGroup="schema:gradientGroup.datatype" type="schema:linearGradient.datatype"/>
+  <xs:attributeGroup name="colorDefinition.datatype">
+    <xs:attribute name="id" use="required" type="schema:layoutId.datatype"/>
+    <xs:attribute name="value" use="required" type="schema:colorValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:complexType name="lineEnding.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:BoundingBox"/>
+      <xs:element ref="schema:Group"/>
+    </xs:sequence>
+    <xs:attribute name="id" use="required" type="schema:layoutId.datatype"/>
+  </xs:complexType>
+  <xs:element name="BoundingBox" type="schema:boundingBox.datatype"/>
+  <xs:complexType name="renderInformationBase.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:ListOfColorDefinitions"/>
+      <xs:element minOccurs="0" ref="schema:ListOfGradientDefinitions"/>
+      <xs:element minOccurs="0" ref="schema:ListOfLineEndings"/>
+    </xs:sequence>
+    <xs:attribute name="backgroundColor" default="#FFFFFFFF" type="schema:colorValue.datatype"/>
+    <xs:attribute name="referenceRenderInformation">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="[_a-zA-Z]+_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="ListOfColorDefinitions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:ColorDefinition"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ColorDefinition">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:colorDefinition.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfGradientDefinitions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:gradientGroup.datatype"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfLineEndings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:LineEnding"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LineEnding" type="schema:lineEnding.datatype"/>
+  <xs:complexType name="style.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:Group"/>
+    </xs:sequence>
+    <xs:attribute name="roleList" type="schema:wsSeparatedStringList.datatype"/>
+    <xs:attribute name="typeList" type="schema:wsSeparatedStringList.datatype"/>
+  </xs:complexType>
+  <xs:complexType name="globalStyle.dataType">
+    <xs:complexContent>
+      <xs:extension base="schema:style.datatype">
+        <xs:attribute name="key">
+          <xs:simpleType>
+            <xs:restriction base="xs:ID">
+              <xs:pattern value="GlobalStyle_\d+"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="localStyle.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:style.datatype">
+        <xs:attribute name="keyList" type="schema:wsSeparatedStringList.datatype"/>
+        <xs:attribute name="key">
+          <xs:simpleType>
+            <xs:restriction base="xs:ID">
+              <xs:pattern value="LocalStyle_\d+"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="localRenderInformation.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:renderInformationBase.datatype">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ListOfStyles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Style" type="schema:localStyle.datatype"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="key" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:ID">
+              <xs:pattern value="LocalRenderInformation_\d+"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="globalRenderInformation.datatype">
+    <xs:complexContent>
+      <xs:extension base="schema:renderInformationBase.datatype">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ListOfStyles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Style" type="schema:globalStyle.dataType"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="key" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:ID">
+              <xs:pattern value="GlobalRenderInformation_\d+"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="listOfGlobalRenderInformation.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="RenderInformation" type="schema:globalRenderInformation.datatype"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listOfLocalRenderInformation.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="RenderInformation" type="schema:localRenderInformation.datatype"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="renderPoint.datatytpe">
+    <xs:attribute name="x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="y" use="required" type="schema:relAbsValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="renderCubicBezier.datatype">
+    <xs:attributeGroup ref="schema:renderPoint.datatytpe"/>
+    <xs:attribute name="basePoint1_x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="basePoint1_y" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="basePoint2_x" use="required" type="schema:relAbsValue.datatype"/>
+    <xs:attribute name="basePoint2_y" use="required" type="schema:relAbsValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:element name="renderCurve.element" abstract="true"/>
+  <xs:element name="RenderPoint" substitutionGroup="schema:renderCurve.element">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:renderPoint.datatytpe"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RenderCubicBezier" substitutionGroup="schema:renderCurve.element">
+    <xs:complexType>
+      <xs:attributeGroup ref="schema:renderCubicBezier.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="renderCurveElements.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:renderCurve.element"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="dimension.datatype">
+    <xs:attribute name="width" use="required" type="xs:double"/>
+    <xs:attribute name="height" use="required" type="xs:double"/>
+  </xs:attributeGroup>
+  <xs:complexType name="glyph.datatype">
+    <xs:sequence>
+      <xs:element ref="schema:BoundingBox"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Layout_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="listOfCompartmentGlyphs.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:CompartmentGlyph"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompartmentGlyph">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:glyph.datatype">
+          <xs:attribute name="compartment">
+            <xs:simpleType>
+              <xs:restriction base="xs:IDREF">
+                <xs:pattern value="Compartment_\d+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="listOfMetabGlyphs.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:MetaboliteGlyph"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MetaboliteGlyph">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:glyph.datatype">
+          <xs:attribute name="metabolite">
+            <xs:simpleType>
+              <xs:restriction base="xs:IDREF">
+                <xs:pattern value="Metabolite_\d+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="metaboliteReferenceGlyp.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="schema:BoundingBox"/>
+      <xs:element minOccurs="0" name="Curve" type="schema:layoutCurve.datatype"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Layout_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="metaboliteGlyph">
+      <xs:simpleType>
+        <xs:restriction base="xs:IDREF">
+          <xs:pattern value="Layout_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="role" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="listOfReactionGlyphs.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:ReactionGlyph"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReactionGlyph">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="schema:BoundingBox"/>
+        <xs:element minOccurs="0" name="Curve" type="schema:layoutCurve.datatype"/>
+        <xs:element minOccurs="0" ref="schema:ListOfMetaboliteReferenceGlyphs"/>
+      </xs:sequence>
+      <xs:attribute name="key" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:ID">
+            <xs:pattern value="Layout_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="reaction">
+        <xs:simpleType>
+          <xs:restriction base="xs:IDREF">
+            <xs:pattern value="Reaction_\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfMetaboliteReferenceGlyphs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="schema:MetaboliteReferenceGlyph"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MetaboliteReferenceGlyph" type="schema:metaboliteReferenceGlyp.datatype"/>
+  <xs:complexType name="listOfTextGlyphs.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:TextGlyph"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TextGlyph">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="schema:glyph.datatype">
+          <xs:attribute name="graphicalObject">
+            <xs:simpleType>
+              <xs:restriction base="xs:IDREF">
+                <xs:pattern value="[_a-zA-Z]+_\d+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="originOfText">
+            <xs:simpleType>
+              <xs:restriction base="xs:IDREF">
+                <xs:pattern value="[_a-zA-Z]+_\d+"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="text" type="xs:string"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="listOfAdditionalGraphicalObjects.datatype">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" ref="schema:AdditionalGraphicalObject"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AdditionalGraphicalObject" type="schema:glyph.datatype"/>
+  <xs:complexType name="layout.datatype">
+    <xs:sequence>
+      <xs:element name="Dimensions">
+        <xs:complexType>
+          <xs:attributeGroup ref="schema:dimension.datatype"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="schema:ListOfCompartmentGlyphs"/>
+      <xs:element minOccurs="0" ref="schema:ListOfMetabGlyphs"/>
+      <xs:element minOccurs="0" ref="schema:ListOfReactionGlyphs"/>
+      <xs:element minOccurs="0" ref="schema:ListOfTextGlyphs"/>
+      <xs:element minOccurs="0" ref="schema:ListOfAdditionalGraphicalObjects"/>
+      <xs:element minOccurs="0" ref="schema:ListOfRenderInformation"/>
+    </xs:sequence>
+    <xs:attribute name="key" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:ID">
+          <xs:pattern value="Layout_\d+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="ListOfCompartmentGlyphs" type="schema:listOfCompartmentGlyphs.datatype"/>
+  <xs:element name="ListOfMetabGlyphs" type="schema:listOfMetabGlyphs.datatype"/>
+  <xs:element name="ListOfReactionGlyphs" type="schema:listOfReactionGlyphs.datatype"/>
+  <xs:element name="ListOfTextGlyphs" type="schema:listOfTextGlyphs.datatype"/>
+  <xs:element name="ListOfAdditionalGraphicalObjects" type="schema:listOfAdditionalGraphicalObjects.datatype"/>
+  <xs:element name="ListOfRenderInformation" type="schema:listOfLocalRenderInformation.datatype"/>
+  <xs:complexType name="listOfLayouts.datatype">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="schema:Layout"/>
+      <xs:element minOccurs="0" ref="schema:ListOfGlobalRenderInformation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Layout" type="schema:layout.datatype"/>
+  <xs:element name="ListOfGlobalRenderInformation" type="schema:listOfGlobalRenderInformation.datatype"/>
+</xs:schema>

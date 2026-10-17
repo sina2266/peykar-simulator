@@ -1,0 +1,25 @@
+<div class="container mt-5" *ngIf="auth.user$ | async as user">
+  <div
+    class="row align-items-center profile-header mb-5 text-center text-md-left"
+  >
+    <div class="col-md-2">
+      <img
+        [src]="user.picture"
+        class="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+      />
+    </div>
+    <div class="col-md">
+      <h2>{{ user.name }}</h2>
+      <p class="lead text-muted">{{ user.email }}</p>
+    </div>
+  </div>
+
+  <h5>VCell Usernames Explained</h5>
+  A <b>VCell Username</b> is used to identify a user within VCell, and is involved in features such as:
+  <ul>
+    <li>saving and sharing models</li>
+    <li>running remote simulations and saving/sharing simulation results</li>
+  </ul>
+
+  <app-vcell-identity></app-vcell-identity>
+</div>

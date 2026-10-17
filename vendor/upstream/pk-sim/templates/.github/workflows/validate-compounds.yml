@@ -1,0 +1,48 @@
+name: Validate Compound Templates
+# -------------------------------------------------------------------------------------
+# Overview
+# -------------------------------------------------------------------------------------
+# This workflow ensures the inclusion of ALL compounds defined in the referenced 
+# model snapshots of type "Compound".
+#
+# - Collects all referenced model snapshots with "Type": "Compound".
+# - For each such snapshot, extracts the names of all compounds.
+# - Ensures that templates.json contains an entry for each compound name found
+#   in any referenced snapshot 
+#    - User can define an exclusion list (compounds to be excluded from the check)
+# - Any missing {compound_name, referenced snapshot} combinations are printed,
+#   and the job fails.
+#
+# -------------------------------------------------------------------------------------
+
+on:
+  push:
+    paths:
+      - 'templates.json'
+    branches-ignore:
+      - main
+  pull_request:
+    paths:
+      - 'templates.json'
+  workflow_dispatch:
+
+jobs:
+  validate-compounds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Validate compound templates
+        #parameter passed to the python script: pipe-separated list of compound names to be ignored by the check
+        run: python .github/scripts/validate_compounds.py "Tefibazumab__Kd_Zhou2003"

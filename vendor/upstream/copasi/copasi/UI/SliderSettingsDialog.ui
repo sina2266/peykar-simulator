@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2021 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., EML Research, gGmbH, University of Heidelberg, </comment>
+<comment> and The University of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2004 - 2007 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc. and EML Research, gGmbH. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>SliderSettingsDialog</class>
+ <widget class="QDialog" name="SliderSettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>429</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Slider Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="mpObjectLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Object:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mpObjectNameLineEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="mpObjectBrowseButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>select</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="mpMinValueLabel">
+       <property name="toolTip">
+        <string>Lowest value the slider can have</string>
+       </property>
+       <property name="whatsThis">
+        <string>Here the user can enter the lowest value the slider will take.
+For logarithmic sliders this has to be a positive value greater
+than 0.0.</string>
+       </property>
+       <property name="text">
+        <string>Minimum Value:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mpMinValueEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>0.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="mpSpacer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="mpMaxValueLabel">
+       <property name="toolTip">
+        <string>Maximum value the slider will take.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Here the user can enter the maximal value that
+the slider will take.</string>
+       </property>
+       <property name="text">
+        <string>Maximum Value:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mpMaxValueEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="whatsThis">
+        <string/>
+       </property>
+       <property name="text">
+        <string>100.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QCheckBox" name="mpLogCheckBox">
+       <property name="toolTip">
+        <string>Wether slider has logarithmic scale.</string>
+       </property>
+       <property name="whatsThis">
+        <string>If checked, the slider will have a 
+logarithmic scale. Minimum
+and maximum value must be 
+greater than 0.0.</string>
+       </property>
+       <property name="text">
+        <string>logarithmic</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="mpExtendedOptionsButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Displays or hides an extended set of options.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Clicking this button either displays or hides
+some more less often needed options.</string>
+       </property>
+       <property name="text">
+        <string>Advanced &gt;&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>423</width>
+         <height>22</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="mpOptionsGridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="mpNumMinorTicksLabel">
+       <property name="toolTip">
+        <string>Number of steps for the slider.</string>
+       </property>
+       <property name="whatsThis">
+        <string>This value determines how many steps
+the slider makes from minimum to 
+maximum value.</string>
+       </property>
+       <property name="text">
+        <string>Number of Minor Ticks:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mpNumMinorTicksEdit">
+       <property name="text">
+        <string>10.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <spacer name="mpSpacer1_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="mpMinorTickSizeLabel">
+       <property name="toolTip">
+        <string>Value change corresponding to a minor step</string>
+       </property>
+       <property name="whatsThis">
+        <string>This value signifies the value change that
+corresponds to one minor step on the slider.
+The user can either set this directly or indirectly
+when setting the &quot;Number of Minor Ticks&quot;.</string>
+       </property>
+       <property name="text">
+        <string>Minor Ticksize:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLineEdit" name="mpMinorTickSizeEdit">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>1.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="mpMinorMajorFactorLabel">
+       <property name="toolTip">
+        <string>how many minor ticks make a major tick</string>
+       </property>
+       <property name="whatsThis">
+        <string>This value determines how many minor 
+ticks make up a major tick. Minor ticks
+are small steps on the slider whereas major
+ticks are larger steps.
+The user can make a minor step via the cursor
+keys and a major step via the page up/down keys.</string>
+       </property>
+       <property name="text">
+        <string>Ticksize factor:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="mpMinorMajorFactorEdit">
+       <property name="text">
+        <string>10.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <spacer name="mpSpacer1_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="mpOriginalValueLabel">
+       <property name="toolTip">
+        <string>Value change corresponding to a minor step</string>
+       </property>
+       <property name="whatsThis">
+        <string>This value signifies the value change that
+corresponds to one minor step on the slider.
+The user can either set this directly or indirectly
+when setting the &quot;Number of Minor Ticks&quot;.</string>
+       </property>
+       <property name="text">
+        <string>Original Value:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLineEdit" name="mpOriginalValueEdit">
+       <property name="text">
+        <string>1.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="mpObjectValueLabel">
+       <property name="toolTip">
+        <string>The value of the underlying object.</string>
+       </property>
+       <property name="whatsThis">
+        <string>Here the user can change the actual value of the object
+when editing or creating a slider.</string>
+       </property>
+       <property name="text">
+        <string>Object Value:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="mpObjectValueEdit">
+       <property name="text">
+        <string>50.0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>1</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>mpObjectNameLineEdit</tabstop>
+  <tabstop>mpMinValueEdit</tabstop>
+  <tabstop>mpMaxValueEdit</tabstop>
+  <tabstop>mpLogCheckBox</tabstop>
+  <tabstop>mpExtendedOptionsButton</tabstop>
+ </tabstops>
+ <includes>
+  <include location="global">vector</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>cancelButtonPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>okButtonPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinValueEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>minValueChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinValueEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>minValueTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMaxValueEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>maxValueChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMaxValueEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>maxValueTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpLogCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>logCheckBoxToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinValueEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>minValueChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpExtendedOptionsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>extendedOptionsClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpObjectBrowseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>browseButtonPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinorTickSizeEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>tickSizeTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinorTickSizeEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>minorTickSizeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpMinorMajorFactorEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>minorMajorFactorChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpOriginalValueEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>origValueTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpOriginalValueEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>originalValueChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpObjectValueEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>valueTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpObjectValueEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SliderSettingsDialog</receiver>
+   <slot>objectValueChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>okButtonPressed()</slot>
+  <slot>cancelButtonPressed()</slot>
+  <slot>minorTickSizeChanged()</slot>
+  <slot>numMinorTicksChanged()</slot>
+  <slot>maxValueChanged()</slot>
+  <slot>objectValueChanged()</slot>
+  <slot>minorMajorFactorChanged()</slot>
+  <slot>browseButtonPressed()</slot>
+  <slot>extendedOptionsClicked()</slot>
+  <slot>logCheckBoxToggled(bool)</slot>
+  <slot>globalCheckBoxToggled()</slot>
+  <slot>originalValueChanged()</slot>
+  <slot>minValueChanged()</slot>
+  <slot>minValueTextChanged()</slot>
+  <slot>maxValueTextChanged()</slot>
+  <slot>numTicksTextChanged()</slot>
+  <slot>tickSizeTextChanged()</slot>
+  <slot>tickFactorTextChanged()</slot>
+  <slot>origValueTextChanged()</slot>
+  <slot>valueTextChanged()</slot>
+ </slots>
+</ui>

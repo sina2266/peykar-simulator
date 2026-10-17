@@ -1,0 +1,1228 @@
+<chapter id="NamingConventions" xreflabel="Naming Conventions">
+<!-- Begin CVS Header -->
+<!--   $Source: /Volumes/Home/Users/shoops/cvs/copasi_dev/admin/documentation/CodeGuidelines_main.xml,v $ -->
+<!--   $Revision: 1.12 $ -->
+<!--   $Name:  $ -->
+<!--   $Author: shoops $ -->
+<!--   $Date: 2007/09/21 18:19:30 $ -->
+<!-- End CVS Header -->
+
+<!-- Copyright (C) 2007 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc. and EML Research, gGmbH. -->
+<!-- All rights reserved. -->
+
+<title>Naming Conventions</title>
+<para>
+The intent of naming conventions is to allow programmers, which are
+not familiar with the code to easily grasp the meaning and scope of
+symbols in the source code. Each programmer of COPASI should adhere
+for its own benefit and to the advantage of the project to the
+following conventions.
+</para>
+
+<sect1 id="ClassNames" xreflabel="Class Names">
+<title>Class Names</title>
+<para>
+Class names must all start with a capital letter <literal>C</literal>. This is
+followed by a descriptive name. This name might be composed by
+different words. These words must all start with capital letters and
+are concatenated without underscores. Good examples for class names
+include: 
+  <literal>CCopasiXMLParser</literal> , <literal>CExpatTemplate</literal>, and <literal>CMathModel</literal>.
+</para>
+</sect1>
+
+<sect1 id="VariableNames" xreflabel="Variable Names">
+<title>Variable Names</title>
+<para>
+In general a variable name should be descriptive. This name might be
+composed by different words. These words must all start with capital
+letters and are concatenated without underscores. In addition the
+following standards should be followed:  
+</para>
+
+<simplelist type="horiz" columns="2">
+<member><command>Counters</command></member>
+<member>might be used such as <literal>i</literal>, <literal>k</literal>,
+and <literal>l</literal>, which may be used in loops.
+</member>
+<member><command>Iterators</command></member><member> might be used such as <literal>it</literal> and <literal>end</literal>, which may be used in loops. 
+</member>
+<member><command>Pointers</command></member><member> are prepended with a lower case letter <literal>p</literal>. 
+</member>
+<member><command>Method Parameters</command></member><member> must start with a lower case letter.
+</member>
+<member><command>Class Member Variables</command></member><member> are prepended with a lower case
+  letter <literal>m</literal>.
+</member>
+<member><command>Class Member Pointers</command></member><member> must have the
+  prefix <literal>mp</literal>.
+</member>
+</simplelist>
+
+</sect1>
+
+<sect1 id="MethodName" xreflabel="Method Name">
+<title>Method Name</title>
+<para>
+Method names should have a descriptive name starting with a lower case
+letter. This name might be composed by different words. These words
+beginning with the second must start with capital letters and
+are concatenated without underscores. Good examples for method names
+include: 
+   <literal>createMetabolite</literal>, <literal>compileIfNecessary</literal>, and <literal>buildMoieties</literal>
+</para>
+
+<para>
+In addition the following standards should be followed:  
+</para>
+
+<simplelist type="horiz" columns="2">
+
+<member><command>Retrieval Methods</command></member><member> must start with <literal>get</literal> followed by
+  the member variable name without the prefix.
+</member>
+
+<member><command>Set Methods</command></member><member> must start with <literal>set</literal> followed by
+  the member variable name without the prefix.
+</member>
+
+<member><command>Boolean Query Functions</command></member><member> should start if applicable with
+  <literal>is</literal>.
+</member>
+</simplelist>
+</sect1>
+</chapter>
+
+<chapter id="ProgramCodeGuidelines" xreflabel="Program Code Guidelines">
+<title>Program Code Guidelines</title>
+
+<sect1 id="include" xreflabel="include">
+<title>Use of #include </title>
+<para>
+To minimize compilation problems on the different platforms and with
+the libraries COPASI depends on it is necessary to define some rules,
+which need to be followed when specifying include files in the COPASI
+code.  
+</para>
+<para> The #include statement distinguishes between two different type
+of include files. 
+</para>
+
+<itemizedlist>
+<listitem><para><command>Global Includes: </command>Global include files are
+indicated by surrounding the filename with &lt; and &gt;, i.e. the
+statements looks like: <literal>#include &lt;filename&gt;</literal>. 
+All files not located in the COPASI source tree are considered global includes.
+</para></listitem>
+
+<listitem><para><command>Local Includes: </command>Local include files are
+indicated by surrounding the filename with double quotes, i.e. the
+statements looks like: <literal>#include "filename"</literal>. 
+All files located in the COPASI source tree are considered local includes.
+</para></listitem>
+</itemizedlist>
+
+<sect2 id="includeHeader" xreflabel="include Header">
+<title>Order of #include in Header Files</title>
+<para>
+The number of include statements in header files should be kept to the
+minimum necessary to compile the header file, i.e., a COPASI code file
+just containing the following two lines of code must compile successfully:
+</para>
+<programlisting>
+#include "copasi.h"
+#include "filename"
+</programlisting>
+<para>
+To achieve the minimal list of includes one should replace all not
+needed includes with forward declarations as often as possible. Please
+note that it should never be necessary to include <literal>copasi.h
+</literal> in a header file.
+</para>
+<orderedlist>
+<listitem><para><command>Qt Header Files: </command>Qt header
+files must appear first. Please note that the Qt header file names are
+all lowercase.</para></listitem>
+<listitem><para><command>Global Header Files: </command>Other
+global header files must appear next.</para></listitem>
+<listitem><para><command>COPASI Header Files: </command>All COPASI
+header files must be included with the full filename starting with the
+<literal>copasi </literal> directory, i.e., the include statement
+looks like <literal>#include "copasi/.." </literal></para></listitem>
+</orderedlist>
+
+</sect2>
+<sect2 id="includeCode" xreflabel="include Code">
+<title>Order of #include in Code Files</title>
+<orderedlist>
+<listitem><para><command>Qt Header Files: </command>Qt header
+files must appear first. Please note that the Qt header file names are
+all lowercase.</para></listitem>
+<listitem><para><command>Global Header Files: </command>Other
+global header files must appear next.</para></listitem>
+<listitem><para><command>copasi.h: </command>This file must precede
+all other local includes since they depend on the defines
+of <literal>copasi.h </literal> to be present. </para></listitem>
+<listitem><para><command>COPASI Header Files: </command>COPASI
+header files must be included after
+<literal>copasi.h</literal>. </para></listitem> 
+<listitem><para><command>blaswrap.h or clapackwrap.h: </command>These two
+wrapper files must appear last as their defines often conflict with
+other includes.</para></listitem>
+</orderedlist>
+<para>
+
+</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="Loops" xreflabel="Loops">
+<title>Loops</title>
+<para>
+Counter or iterators used in loops must not be declared in the
+<literal>for</literal> statement as the scope of the variables
+declared within is not well defined in C and C++ standard and thus
+leads to compile problems. The solution is to define those variables
+prior to the <literal>for</literal> statement. 
+</para>
+</sect1>
+</chapter>
+
+<chapter id="CodeDocumentation" xreflabel="Code Documentation">
+<title>Code Documentation</title>
+<sect1 id="ClassDocumentation" xreflabel="Class Documentation">
+<title>Class Documentation</title>
+<para>
+The COPASI team uses doxygen to generate API documentation. It is
+therefore necessary that the classes, methods, and variables or
+documented completely.
+</para>
+</sect1>
+
+<sect1 id="VariableDocumentation" xreflabel="Variable Documentation">
+<title>Variable Documentation</title>
+<para></para>
+</sect1>
+
+<sect1 id="MethodDocumentation" xreflabel="Method Documentation">
+<title>Method Documentation</title>
+<para></para>
+</sect1>
+
+<sect1 id="InclineCodeDocumentation" xreflabel="Incline Code Documentation">
+<title>Incline Code Documentation</title>
+<para></para>
+</sect1>
+</chapter>
+
+<chapter id="COPASIObjectStructure" xreflabel="COPASI Object Structure">
+<title>COPASI Object Structure</title>
+<para>
+COPASI has an object structure which is used to access all objects
+which can be calculated, plotted, or printed. Objects can be grouped to
+larger objects called containers. COPASI itself functions as a root
+container, i.e., it contains all objects which might be of interest
+for calculation or output. The access to any object is provided with
+an LDAP like common name (CN) which can be resolved starting from any
+container.
+</para>
+
+<sect1 id="Object" xreflabel="Object">
+<title>Object</title>
+<para>
+The object (<literal>class CCopasiObject</literal>) is the main
+building block of the object structure. Each object has the following
+main attributes: 
+
+<variablelist><title>Attribute List</title>
+
+<varlistentry><term><literal>std::string mObjectName</literal></term>
+<listitem><para>The name of the object.
+</para></listitem></varlistentry>
+
+<varlistentry>
+<term><literal>std::string mObjectType</literal></term>
+<listitem><para>The type of the object, e.g. Compartment.
+</para></listitem></varlistentry>
+
+<varlistentry>
+<term><literal>CCopasiContainer * mpObjectParent</literal></term>
+<listitem><para>A pointer to the objects parent container.
+</para></listitem></varlistentry>
+
+<varlistentry>
+<term><literal>unsigned int mObjectFlag</literal></term>
+<listitem><para>A flag indicating object properties.
+</para></listitem></varlistentry>
+</variablelist>
+
+</para>
+
+<para>
+In addition to the expected <literal>get</literal> and
+<literal>set</literal> methods the objects provides the following
+methods: 
+
+<variablelist><title>Method List</title>
+<varlistentry>
+<term><literal>CCopasiContainer * getObjectAncestor(const std::string
+&amp;type) const</literal></term>
+<listitem><para>This method retrieves the closest ancestor of the object of
+the specified type. 
+</para></listitem></varlistentry>
+
+<varlistentry>
+<term><literal>virtual CCopasiObjectName getCN() const</literal></term>
+<listitem><para>This method retrieve the common name (CN) of the object.
+</para></listitem></varlistentry>
+
+<varlistentry>
+<term><literal>
+
+</literal></term>
+<listitem><para>
+
+</para></listitem></varlistentry>
+
+</variablelist>
+
+</para>
+</sect1>
+
+<sect1 id="Container" xreflabel="Container">
+<title>Container</title>
+<para></para>
+</sect1>
+
+<sect1 id="COPASIVector" xreflabel="COPASI Vector">
+<title>COPASI Vector</title>
+<para></para>
+</sect1>
+
+<sect1 id="Parameter" xreflabel="Parameter">
+<title>Parameter</title>
+<para></para>
+</sect1>
+
+<sect1 id="ParameterGroup" xreflabel="Parameter Group">
+<title>Parameter Group</title>
+<para></para>
+</sect1>
+
+<sect1 id="Dependencies" xreflabel="Dependencies">
+<title>Dependencies</title>
+<para></para>
+</sect1>
+</chapter>
+
+<chapter id="TheModelState" xreflabel="The Model State">
+<title>The Model State</title>
+<sect1 id="StateTemplateOrder" xreflabel="State Template Order">
+<title>State Template Order</title>
+<para>
+This section describes whether and in which order the above calculated
+simulation objects appear in the initial and current state of the
+model. The order is described by the class CStateTemplate. Please note
+that all objects with the type "Fixed" are marked "Unused" as there is
+no need to calculate them during simulation.
+</para>
+<table frame="all"><title>State Template Order</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="2*" />
+<colspec colwidth="2*" />
+<thead>
+ <row>
+   <entry>Object</entry>
+   <entry>Type</entry>
+   <entry>Status</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Model</entry>
+   <entry>Time</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Model Value</entry>
+   <entry>ODE</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Compartment</entry>
+   <entry>ODE</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Metabolite</entry>
+   <entry>ODE</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Metabolite</entry>
+   <entry>Reaction</entry>
+   <entry>Independent</entry>
+ </row>
+ <row>
+   <entry>Metabolite</entry>
+   <entry>Reaction</entry>
+   <entry>Dependent</entry>
+ </row>
+ <row>
+   <entry>Metabolite</entry>
+   <entry>Assignment</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Compartment</entry>
+   <entry>Assignment</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Model Value</entry>
+   <entry>Assignment</entry>
+   <entry>Used</entry>
+ </row>
+ <row>
+   <entry>Any</entry>
+   <entry>Any</entry>
+   <entry>Unused</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect1>
+
+<sect1 id="SettingTheInitialState" xreflabel="Setting the Initial State">
+<title>Setting the Initial State</title>
+<para>
+The initial state of a COPASI model is due to the introduction of
+assignments for all model entities no longer determined through fixed
+values. To calculate the current initial values those assignments have
+to be evaluated at <inlineequation><mml:math>
+<mml:mi>t</mml:mi>
+<mml:mo>=</mml:mo>
+<mml:msub>
+ <mml:mi>T</mml:mi>
+ <mml:mn>0</mml:mn>
+</mml:msub>
+</mml:math></inlineequation>. These evaluation will effect in many cases
+other initial values. For example the initial particle numbers of
+metabolites will change when a compartment's initial volume
+changes. To detemine the initial values, which need to be recalculated
+as well as the functions used for their calculation COPASI uses a
+dependecy system. In this system each initial value stores the
+information on which values it depends and which method to call to
+recalculated its value. 
+</para>
+<para>
+Since the change of one initial value may now result in a complicated
+chain of updates for other initial values it no longer suffices to
+use its update method to set its value. We need to add an additional
+step which will update all values effected by the change. To retrive
+the list of needed refreshes in the proper order the class CModel
+provides the following method.
+</para>
+<variablelist>
+<varlistentry>
+<term><literal>vector&lt;Refresh *&gt;
+buildInitialRefreshSequence(set&lt;const CCopasiObject *&gt; &amp;changedObjects);</literal></term>
+<listitem><para>
+This method retrieves a vector of refresh methods, which must be called
+to update all other initial values given a set of changed objects. If
+the set of changed objects is empty the method will return a vector
+of refresh method, which suffices to synchronize all initial values.
+</para></listitem></varlistentry>
+e
+</variablelist>
+</sect1>
+
+<sect1 id="SettingTheState" xreflabel="Setting the State">
+<title>Setting the State</title>
+<para></para>
+</sect1>
+
+<sect1 id="ApplyingAssignemets" xreflabel="Applying Assignemets">
+<title>Applying Assignments</title>
+<para></para>
+</sect1>
+
+<sect1 id="CalculatingCurrentValues" xreflabel="Calculating Current Values">
+<title>Calculating Current Values</title>
+<para></para>
+</sect1>
+
+<sect1 id="DependencySpecifications" xreflabel="Dependency Specifications">
+<title>Dependency Specifications</title>
+
+<sect2 id="InitialValues" xreflabel="Initial Values">
+<title>Initial Values</title>
+<sect3 id="MetaboliteWithAssignment" 
+ xreflabel="Metabolite with Assignment">
+<title>Metabolite with Assignment</title>
+
+<table frame="all"><title>Metabolite with Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Initial Particle Number</entry>
+   <entry>Initial Concentration, parent compartment Volume</entry>
+   <entry>refreshInititalValue</entry>
+ </row>
+ <row>
+   <entry>Initial Concentration</entry>
+   <entry>all objects in implicit expression</entry>
+   <entry>refreshInitialConcentration</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="MetaboliteWithoutAssignment" 
+ xreflabel="Metabolite without Assignment">
+<title>Metabolite without Assignment</title>
+
+<table frame="all"><title>Metabolite without Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Initial Particle Number</entry>
+   <entry>initial concentration, parent compartment volume</entry>
+   <entry>refreshInitialValue</entry>
+ </row>
+ <row>
+   <entry>Initial Concentration</entry>
+   <entry>parent compartment Volume</entry>
+   <entry>refreshInititalConcentration</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+<para>
+The initial concentration is of course dependent on the initial
+particle number. This must be taken into account manually to avoid
+circular depencies. However, this is straight forward as the initial
+particle number may only be set directly, in which case no further
+dependencies are encountered or calculated from the initial
+concentration in the case the concentration is given the normal 
+dependecies take care of the problem.
+</para>
+</sect3>
+
+<sect3 id="CompartmentGlobalQuantityWithAssignment" 
+ xreflabel="Compartment, Global Quantity with Assignment">
+<title>Compartment, Global Quantity with Assignment</title>
+
+<table frame="all">
+<title>Compartment, Global Quantity with Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Initial Value</entry>
+   <entry>all objects in implicit expression</entry>
+   <entry>refreshInitialValue</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="CompartmentGlobalQuantityWithoutAssignment" 
+ xreflabel="Compartment, Global Quantity without Assignment">
+<title>Compartment, Global Quantity without Assignment</title>
+
+<table frame="all">
+<title>Compartment, Global Quantity without Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Initial Value</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="MoietyInitial" xreflabel="MoietyInitial">
+<title>Moiety</title>
+
+<table frame="all">
+<title>Moiety</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Initial Number</entry>
+   <entry>Particle numbers of all involved metabolites</entry>
+   <entry>refreshInitialValue</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+</sect2>
+
+<sect2 id="TransientValues" xreflabel="Transient Values">
+<title>Transient Values</title>
+
+<sect3 id="MetaboliteReaction" xreflabel="Metabolite Reaction">
+<title>Metabolite Reaction (Independent)</title>
+<table frame="all"><title>Metabolite Reaction (Independent)</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Particle Number</entry>
+   <entry>Self (state controlled)</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Concentration</entry>
+   <entry>Particle Number, parent compartment Volume</entry>
+   <entry>refreshConcentration</entry>
+ </row>
+ <row>
+   <entry>Particle Rate</entry>
+   <entry>All particle fluxes of reactions the metabolites participates in</entry>
+   <entry>refreshRate</entry>
+ </row>
+ <row>
+   <entry>Concentration Rate</entry>
+   <entry>Particle Rate, Concentration, parent compartment Volume and Rate</entry>
+   <entry>refreshConcentrationRate</entry>
+ </row>
+ <row>
+   <entry>Transition Time</entry>
+   <entry>All particle fluxes of reactions the metabolites participates in</entry>
+   <entry>refreshTransitionTime</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="MetaboliteDependent" xreflabel="Metabolite Dependent">
+<title>Metabolite Reaction (Dependent)</title>
+<table frame="all"><title>Metabolite Reaction (Dependent)</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Particle Number</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Concentration</entry>
+   <entry>Particle Number, parent compartment Volume</entry>
+   <entry>refreshConcentration</entry>
+ </row>
+ <row>
+   <entry>Particle Rate</entry>
+   <entry>All particle fluxes of reactions the metabolites participates in</entry>
+   <entry>refreshRate</entry>
+ </row>
+ <row>
+   <entry>Concentration Rate</entry>
+   <entry>Particle Rate, Concentration, parent compartment Volume and Rate</entry>
+   <entry>refreshConcentrationRate</entry>
+ </row>
+ <row>
+   <entry>Transition Time</entry>
+   <entry>All particle fluxes of reactions the metabolites participates in</entry>
+   <entry>refreshTransitionTime</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="MetaboliteAssignmentConcentration" xreflabel="Metabolite Assignment (Concentration)">
+<title>Metabolite Assignment (Concentration)</title>
+<table frame="all"><title>Metabolite Assignment (Concentration)</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Particle Number</entry>
+   <entry>Concentration, parent compartment Volume</entry>
+   <entry>refreshNumber</entry>
+ </row>
+ <row>
+   <entry>Concentration</entry>
+   <entry>all objects in expression</entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>Particle Rate (NA)</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Concentration Rate (NA)</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Transition Time (NA)</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+<para>This will be implemented later</para>
+</sect3>
+
+<sect3 id="MetaboliteODEConcentration" xreflabel="Metabolite ODE (Concentration)">
+<title>Metabolite ODE (Concentration)</title>
+<table frame="all"><title>Metabolite ODE (Concentration)</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Particle Number</entry>
+   <entry>Self (state controlled)</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Concentration</entry>
+   <entry>Particle Number, parent compartment Volume</entry>
+   <entry>refreshConcentration</entry>
+ </row>
+ <row>
+   <entry>Particle Rate</entry>
+   <entry>all objects in expression, parent compartment Volume</entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>Concentration Rate</entry>
+   <entry>Particle Rate, Concentration, parent compartment Volume and Rate</entry>
+   <entry>refreshConcentrationRate</entry>
+ </row>
+ <row>
+   <entry>Transition Time</entry>
+   <entry>Particle Number, Particle Rate</entry>
+   <entry>refreshTransitionTime</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+<para>This will be implemented later</para>
+</sect3>
+
+<sect3 id="Moiety" xreflabel="Moiety">
+<title>Moiety</title>
+<table frame="all"><title>Moiety</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>Particle number of participating independent metabolites</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Dependent Number</entry>
+   <entry>Self</entry>
+   <entry>none</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="Reaction" xreflabel="Reaction">
+<title>Reaction</title>
+<table frame="all"><title>Reaction</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>
+    all variables of the kinetic function,
+    associated compartment Volume, kinetic function, 
+    all metabolites involved
+   </entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>ParticleFlux</entry>
+   <entry>all variables of the kinetic function,
+    associated compartment Volume</entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>Flux</entry>
+   <entry>all variables of the kinetic function,
+    associated compartment Volume</entry>
+   <entry>calculate</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="ModelValueAssignment" xreflabel="Model Value Assignment">
+<title>Model Value Assignment</title>
+<table frame="all"><title>Model Value Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Value</entry>
+   <entry>all objects in expression</entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>Rate (not available)</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="ModelValueODE" xreflabel="Model Value ODE">
+<title>Model Value ODE</title>
+<table frame="all"><title>Model Value ODE</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Value</entry>
+   <entry>Self (state controlled)</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Rate</entry>
+   <entry>all objects in expression</entry>
+   <entry>calculate</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+</sect3>
+
+<sect3 id="CompartmentAssignment" xreflabel="Compartment Assignment">
+<title>Compartment Assignment</title>
+<table frame="all"><title>Compartment Assignment</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Volume</entry>
+   <entry>all objects in expression</entry>
+   <entry>calculate</entry>
+ </row>
+ <row>
+   <entry>Rate (not available)</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+<para>This will be implemented later</para>
+</sect3>
+
+<sect3 id="CompartmentODE" xreflabel="Compartment ODE">
+<title>Compartment ODE</title>
+<table frame="all"><title>Compartment ODE</title>
+<tgroup cols="3" align="left" colsep="1" rowsep="1">
+<colspec colwidth="2*" />
+<colspec colwidth="6*" />
+<colspec colwidth="3*" />
+<thead>
+ <row>
+   <entry>Attribute</entry>
+   <entry>Dependencies</entry>
+   <entry>Refresh Method</entry>
+ </row>
+</thead>
+<tbody>
+ <row>
+   <entry>Self</entry>
+   <entry>none</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Volume</entry>
+   <entry>Self (state controlled)</entry>
+   <entry>none</entry>
+ </row>
+ <row>
+   <entry>Rate</entry>
+   <entry>all objects in expression</entry>
+   <entry>calculate</entry>
+ </row>
+</tbody>
+</tgroup>
+</table>
+<para>This will be implemented later</para>
+</sect3>
+</sect2>
+</sect1>
+
+</chapter>
+
+<chapter id="InstallationStructure" xreflabel="Installation Structure">
+<title>Installation Structure</title>
+<para>
+This section defines the installation structure for COPASI on
+different platforms. Each platform will adhere to the platform
+specific requirements. 
+</para>
+
+<sect1 id="Unix" xreflabel="Unix">
+<title>Unix</title>
+<para>
+The installation location needs to be available to COPASI at runtime
+and therefore the environment variable <literal>COPASIDIR</literal> pointing to this
+location must be set by the user. 
+</para>
+<programlisting>
+  $COPASIDIR 
+   +- bin 
+   |  +- CopasiSE 
+   |  +- CopasiUI 
+   +- share 
+   |  +- copasi 
+   |     +- doc 
+   |     |  +- html 
+   |     |     +- figures 
+   |     |     |  +- DefaultPlotAdded.jpg 
+   |     |     |  +- ModelSettingsDialog.jpg 
+   |     |     |  +- ObjectBrowserSelection.jpg 
+   |     |     |  +- ObjectBrowserTree.jpg 
+   |     |     |  +- PlotDefinition.jpg 
+   |     |     |  +- PlotWindow.jpg 
+   |     |     |  +- ReactionDialog.jpg 
+   |     |     |  +- ReactionOverview.jpg 
+   |     |     |  +- ReactionOverviewEmpty.jpg 
+   |     |     |  +- ReportDefinitionDialog.jpg 
+   |     |     |  +- TimeCourseDialog.jpg 
+   |     |     |  +- ... 
+   |     |     +- TutWiz-Step1.html 
+   |     |     +- TutWiz-Step2.html 
+   |     |     +- TutWiz-Step3.html 
+   |     |     +- TutWiz-Step4.html 
+   |     |     +- TutWiz-Step5.html 
+   |     |     +- TutWiz-Step6.html 
+   |     |     +- ... 
+   |     +- examples 
+   |     |  +- CircadianClock.cps 
+   |     |  +- Metabolism-2000Poo.xml 
+   |     |  +- YeastGlycolysis.gps 
+   |     |  +- brusselator.cps 
+   |     |  +- ... 
+   |     +- icons 
+   |        +- copasi icon small.png 
+   +- README 
+   +- ChangeLog 
+</programlisting>
+</sect1>
+
+<sect1 id="MacOSX" xreflabel="MacOS X">
+<title>MacOS X</title>
+<para>
+The installation location must be available to COPASI at
+runtime. However it is possible to determine the location through MacOS
+X.
+</para>
+<programlisting>
+  $COPASIDIR 
+   +- CopasiSE.app 
+   |  +- Contents 
+   |  |  +- MacOS 
+   |  |     +- CopasiSE 
+   +- CopasiUI.app 
+   |  +- Contents 
+   |  |  +- MacOS 
+   |  |  |  +- CopasiUI 
+   |  |  +- Resources 
+   |  |  |  +- doc 
+   |  |  |     +- html 
+   |  |  |        +- figures 
+   |  |  |        |  +- DefaultPlotAdded.jpg 
+   |  |  |        |  +- ModelSettingsDialog.jpg 
+   |  |  |        |  +- ObjectBrowserSelection.jpg 
+   |  |  |        |  +- ObjectBrowserTree.jpg 
+   |  |  |        |  +- PlotDefinition.jpg 
+   |  |  |        |  +- PlotWindow.jpg 
+   |  |  |        |  +- ReactionDialog.jpg 
+   |  |  |        |  +- ReactionOverview.jpg 
+   |  |  |        |  +- ReactionOverviewEmpty.jpg 
+   |  |  |        |  +- ReportDefinitionDialog.jpg 
+   |  |  |        |  +- TimeCourseDialog.jpg 
+   |  |  |        |  +- ... 
+   |  |  |        +- TutWiz-Step1.html 
+   |  |  |        +- TutWiz-Step2.html 
+   |  |  |        +- TutWiz-Step3.html 
+   |  |  |        +- TutWiz-Step4.html 
+   |  |  |        +- TutWiz-Step5.html 
+   |  |  |        +- TutWiz-Step6.html 
+   |  |  |        +- ... 
+   |  |  +- Info.plist 
+   +- examples 
+   |  +- CircadianClock.cps 
+   |  +- Metabolism-2000Poo.xml 
+   |  +- YeastGlycolysis.gps 
+   |  +- brusselator.cps 
+   |  +- ... 
+   +- COPASI-README.rtf 
+</programlisting>
+</sect1>
+
+<sect1 id="Windows" xreflabel="Windows">
+<title>Windows</title>
+<para>
+The installation location must be available to COPASI at
+runtime. However it is possible to determine the location through
+Windows specific means.
+</para>
+<programlisting>
+  $COPASIDIR 
+   +- bin 
+   |  +- CopasiSE 
+   |  +- CopasiUI 
+   +- share 
+   |  +- copasi 
+   |     +- doc 
+   |     |  +- html 
+   |     |     +- figures 
+   |     |     |  +- DefaultPlotAdded.jpg 
+   |     |     |  +- ModelSettingsDialog.jpg 
+   |     |     |  +- ObjectBrowserSelection.jpg 
+   |     |     |  +- ObjectBrowserTree.jpg 
+   |     |     |  +- PlotDefinition.jpg 
+   |     |     |  +- PlotWindow.jpg 
+   |     |     |  +- ReactionDialog.jpg 
+   |     |     |  +- ReactionOverview.jpg 
+   |     |     |  +- ReactionOverviewEmpty.jpg 
+   |     |     |  +- ReportDefinitionDialog.jpg 
+   |     |     |  +- TimeCourseDialog.jpg 
+   |     |     |  +- ... 
+   |     |     +- TutWiz-Step1.html 
+   |     |     +- TutWiz-Step2.html 
+   |     |     +- TutWiz-Step3.html 
+   |     |     +- TutWiz-Step4.html 
+   |     |     +- TutWiz-Step5.html 
+   |     |     +- TutWiz-Step6.html 
+   |     |     +- ... 
+   |     +- examples 
+   |     |  +- CircadianClock.cps 
+   |     |  +- Metabolism-2000Poo.xml 
+   |     |  +- YeastGlycolysis.gps 
+   |     |  +- brusselator.cps 
+   |     |  +- ... 
+   |     +- icons
+   |        +- Copasi.ico
+   |        +- CopasiDoc.ico
+   +- LICENSE.txt 
+   +- README.txt
+   +- ChangeLog 
+</programlisting>
+</sect1>
+
+<sect1 id="HandlingInstallationDifferences" xreflabel="Handling Installation Differences">
+<title>Handling Installation Differences</title>
+<para>
+The handling of differences in the installation structure must be
+dealt with in one place within the COPASI code. The place for this is
+the class <literal>COptions</literal>. In this class the method:
+<literallayout>
+   template&lt;class CType&gt; static void getValue(const std::string &amp;name, CType &amp;value)
+</literallayout>
+provides access to common options within COPASI. The following values
+will deal with installation dependent settings:
+<literal>CopasiDir</literal>, <literal>TempDir</literal>, <literal>ExampleDir</literal>, and <literal>WizardDir</literal>. The following code
+shows how to retrieve the location of the examples files for COPASI: 
+<literallayout>
+   std::string ExampleDir;
+   COptions::getValue(``ExampleDir'', ExampleDir); 
+</literallayout>
+To assure that the values are correctly set any main program must
+call: 
+<literallayout>
+   COptions::init(argc, argv);
+</literallayout>
+</para>
+
+
+</sect1>
+</chapter>

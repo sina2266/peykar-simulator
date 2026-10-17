@@ -1,0 +1,76 @@
+name: Check OSP-PBPK-Model-Library Coverage in Templates
+# -------------------------------------------------------------------------------------
+# Overview
+# -------------------------------------------------------------------------------------
+# This workflow validates the coverage of compounds from the OSP-PBPK-Model-Library.
+#
+# Specifically, it performs the following checks:
+# - Reads all top-level folders in the OSP-PBPK-Model-Library repository 
+#   (develop branch) that do not start with a dot.
+# - Ensures that for each such folder, templates.json contains at least one entry 
+#   with "Type": "Compound" and a "Url" containing the folder name.
+# - Lists any folder names for which no such template object is found, 
+#   and fails the workflow if at least one is missing.
+#
+# -------------------------------------------------------------------------------------
+
+on:
+  push:
+    paths:
+      - 'templates.json'
+    branches-ignore:
+      - main
+  pull_request:
+    paths:
+      - 'templates.json'
+  workflow_dispatch:
+
+jobs:
+  check-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout OSP-PBPK-Model-Library
+        uses: actions/checkout@v4
+        with:
+          repository: Open-Systems-Pharmacology/OSP-PBPK-Model-Library
+          ref: develop
+          path: model-library
+
+      - name: Checkout OSPSuite.BuildingBlockTemplates
+        uses: actions/checkout@v4
+        with:
+          path: templates
+
+      - name: Check all model folders are covered in templates.json
+        run: |
+          set -e
+
+          # Get all top-level folders in OSP-PBPK-Model-Library (not starting with .)
+          FOLDERS=$(find model-library -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | grep -v '^\.')
+
+          # Parse templates.json and extract all Compound URLs
+          COMPOUND_URLS=$(jq -r '.Templates[] | select(.Type=="Compound") | .Url' templates/templates.json)
+
+          NOT_FOUND=()
+          for folder in $FOLDERS; do
+            FOUND=0
+            while IFS= read -r url; do
+              if [[ "$url" == *"$folder"* ]]; then
+                FOUND=1
+                break
+              fi
+            done <<< "$COMPOUND_URLS"
+            if [ $FOUND -eq 0 ]; then
+              NOT_FOUND+=("$folder")
+            fi
+          done
+
+          if [ ${#NOT_FOUND[@]} -ne 0 ]; then
+            echo "The following folders are missing a corresponding 'Compound' entry in templates.json:"
+            for folder in "${NOT_FOUND[@]}"; do
+              echo "  - $folder"
+            done
+            exit 1
+          else
+            echo "All model folders are covered in templates.json."
+          fi

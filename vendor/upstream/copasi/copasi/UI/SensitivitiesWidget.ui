@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2017 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2009 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., EML Research, gGmbH, University of Heidelberg, </comment>
+<comment> and The University of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>SensitivitiesWidget</class>
+ <widget class="TaskWidget" name="SensitivitiesWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>646</width>
+    <height>397</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="TextLabel1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Subtask</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="SubTaskChooser"/>
+     </item>
+     <item row="1" column="0" colspan="3">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="TextLabel2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Function</string>
+       </property>
+       <property name="text">
+        <string>Effect</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="SensWidgetComboBox" name="FunctionChooser">
+       <property name="toolTip">
+        <string>This specifies the set of target values for which&lt;br&gt;the sensitivities are to be calculated.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="FunctionLineEdit">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>[Please Choose Object.] ---&gt;</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QToolButton" name="SingleFunctionChooser">
+       <property name="toolTip">
+        <string>If the target value of the sensitivities calculation is a single object &lt;br&gt;the object can be selected by clicking this button.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="TextLabel3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Variable</string>
+       </property>
+       <property name="text">
+        <string>Cause</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="SensWidgetComboBox" name="VariableChooser">
+       <property name="toolTip">
+        <string>This specifies a set of parameters. The sensitivities are calculated with respect to these parameters.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="VariableLineEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>[Please Choose Object.] ---&gt;</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QToolButton" name="SingleVariableChooser"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="TextLabel4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Second Variable</string>
+       </property>
+       <property name="text">
+        <string>Secondary Cause</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="SensWidgetComboBox" name="Variable2Chooser">
+       <property name="toolTip">
+        <string>This specifies a second set of parameters. If this is set, second order sensitivities will be calculated.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="Variable2LineEdit">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>[Please Choose Object.] ---&gt;</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QToolButton" name="SingleVariable2Chooser"/>
+     </item>
+     <item row="8" column="0" colspan="3">
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TaskWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/TaskWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SensWidgetComboBox</class>
+   <extends>QComboBox</extends>
+   <header>copasi/UI/SensWidgetComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>SubTaskChooser</sender>
+   <signal>activated(int)</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseSubTask(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FunctionChooser</sender>
+   <signal>activated(int)</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseFunction(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>VariableChooser</sender>
+   <signal>activated(int)</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseVariable(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>208</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Variable2Chooser</sender>
+   <signal>activated(int)</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseVariable2(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SingleFunctionChooser</sender>
+   <signal>clicked()</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseSingleFunction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SingleVariableChooser</sender>
+   <signal>clicked()</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseSingleVariable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>676</x>
+     <y>284</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SingleVariable2Chooser</sender>
+   <signal>clicked()</signal>
+   <receiver>SensitivitiesWidget</receiver>
+   <slot>slotChooseSingleVariable2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>390</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotChooseSingleFunction()</slot>
+  <slot>slotChooseSingleVariable()</slot>
+  <slot>slotChooseSingleVariable2()</slot>
+  <slot>slotChooseSubTask(int)</slot>
+  <slot>slotChooseFunction(int)</slot>
+  <slot>slotChooseVariable(int)</slot>
+  <slot>slotChooseVariable2(int)</slot>
+ </slots>
+</ui>

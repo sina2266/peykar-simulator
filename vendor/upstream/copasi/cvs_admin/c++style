@@ -1,0 +1,87 @@
+#!/bin/bash
+
+ASTYLE=`dirname $0`/./astyle
+GAWK=gawk
+MV=mv
+
+if [ x$1 = x--unix ]; then
+  shift
+  function ConvertToUnix () {
+    dos2unix 1>/dev/null 2>&1 $1
+  }
+else
+  function ConvertToUnix () {
+    echo -n
+  }
+fi
+
+$ASTYLE --mode=c \
+        --style=gnu \
+        --keep-one-line-statements \
+        --keep-one-line-blocks \
+        --break-blocks \
+        --unpad-paren \
+        --pad-oper \
+        --convert-tabs \
+        --indent-switches \
+        --min-conditional-indent=0 \
+        --indent-preprocessor \
+        --suffix=none \
+        --quiet \
+        $1
+$GAWK -- '
+BEGIN {
+  lastEmpty = 0
+  lastOpenBracket = 0
+  lastClosingBracket = 0
+}
+
+END {
+  if (lastClosingBracket == 1) {
+    printf "\n"
+  }
+}
+
+$0 ~ "^ *$" {
+  lastEmpty = 1
+}
+
+$0 !~ "^ *$" {
+  if (lastEmpty == 1) {
+    if ($0 !~ "^ *}.*$") printf "\n"
+    lastEmpty = 0
+  }
+
+  if (lastClosingBracket == 1) {
+    if ($0 !~ "^ *;")  printf "\n"
+    lastClosingBracket = 0
+  }
+
+  gsub(/ +$/, "")
+  gsub(/\( +/, "(")
+  gsub(/\{ +/, "{")
+  gsub(/^\*/, " *")
+  gsub(/^ +#/, "#")
+
+  $0 = gensub(/([^ ]) +\)$/, "\\1)", "g")
+  $0 = gensub(/([^ ]) +;$/, "\\1;", "g")
+  $0 = gensub(/([^ ]) +}$/, "\\1}", "g")
+  
+  if ($0 ~ ".*}$") {
+    lastClosingBracket = 1
+    printf "%s", $0
+  }
+  else {
+    lastClosingBracket = 0
+    printf "%s\n", $0
+  }
+
+  if ($0 ~ "{$") {
+    lastOpenBracket = 1
+  } else {
+    lastOpenBracket = 0
+  }
+}
+' $1 > $1.tmp && \
+ConvertToUnix $1.tmp && \
+$MV -f $1.tmp $1 

@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "vcell-cli-utils"
+version = "0.7.2"
+description = "Python utility package for VCell CLI Java App"
+authors = ["Virtual Cell"]
+license = "MIT"
+repository = "https://github.com/virtualcell/vcell"
+keywords = ["HDF5", "Visualization", "YAML", "Fire"]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: MIT License',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+# This package imports biosimulators_utils and the standard library, nothing else. Everything
+# biosimulators_utils declares for itself is left to it rather than pinned again here: matplotlib,
+# pandas, pyyaml and python-libcombine were all listed twice, and our python-libcombine pin held it
+# a release behind (0.2.19 against a published 0.2.20) for no reason anyone recorded.
+#
+# python-libsbml-experimental stays, and is NOT redundant. biosimulators_utils imports libsbml in
+# model_lang/sbml/validation.py without declaring it, and validate_omex runs with
+# VALIDATE_SEDML_MODELS=True, so removing this would break SBML validation at run time with nothing
+# in the dependency graph to explain why.
+#
+# biosimulators_utils 0.2.3 is the newest release (2024-10-10); there is no upgrade to take.
+[tool.poetry.dependencies]
+python = "^3.10"
+biosimulators_utils = "^0.2.3"
+python-libsbml-experimental = "^5.20.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.0"
+mypy = "^1.4.1"
+
+[tool.poetry.group.dev.dependencies]
+types-deprecated = "1.2.9.2"
+types-PyYAML = "6.0.12.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

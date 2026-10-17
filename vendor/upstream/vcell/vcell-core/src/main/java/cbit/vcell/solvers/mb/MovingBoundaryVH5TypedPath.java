@@ -1,0 +1,121 @@
+package cbit.vcell.solvers.mb;
+
+import java.util.Objects;
+
+import org.vcell.util.CastingUtils;
+import org.vcell.util.VCAssert;
+
+import io.jhdf.api.Dataset;
+import io.jhdf.api.Group;
+
+/**
+ * extends MovingBoundardyVH5Path to include type checking and data conversion. Throws exception if data not found, or
+ * not of correct type, and no implemented conversion works.
+ * <p>
+ * Single value primitives should be retrieved by requesting array and verifying it's a single element
+ *
+ * @param <T> type of returned data. primitives not supported, autoboxing not supported
+ * @author GWeatherby
+ */
+public class MovingBoundaryVH5TypedPath<T> extends MovingBoundaryVH5Path {
+
+    public MovingBoundaryVH5TypedPath(Group g, Class<T> clzz, String... names){
+        super(g, names);
+        Objects.requireNonNull(clzz);
+        if(clzz.isPrimitive()){
+            throw new UnsupportedOperationException("Primitive type " + className(clzz) + " not supported");
+        }
+        if(exc == null){
+            if(target == null){
+                throw new RuntimeException("path " + concat(names) + " not found");
+            }
+            Objects.requireNonNull(target);
+            Class<? extends Object> tclass = target.getClass();
+            if(!clzz.isAssignableFrom(tclass)){
+                Dataset sds = CastingUtils.downcast(Dataset.class, target);
+                if(sds != null){
+                    convert(sds, clzz, names);
+                    return;
+                }
+                if(tclass.isArray()){
+                    if(convert(tclass, clzz)){
+                        return;
+                    }
+                }
+
+                throw new UnsupportedOperationException(concat(names) +
+                        " returns " + className(tclass) + " not "
+                        + className(clzz));
+            }
+        }
+    }
+
+    /**
+     * @return data cast to appropriate type
+     */
+    @SuppressWarnings("unchecked")
+    public T get(){
+        return (T) super.getData();
+    }
+
+    /**
+     * if target is single element array of type clzz, convert it from array to object
+     *
+     * @param tclass target type
+     * @param clzz   desired type
+     * @return true if conversion occurs
+     */
+    private boolean convert(Class<? extends Object> tclass, Class<T> clzz){
+        VCAssert.assertTrue(tclass == target.getClass());
+        VCAssert.assertTrue(tclass.isArray());
+        if(clzz.isAssignableFrom(tclass.getComponentType())){
+            Object[] o = (Object[]) target;
+            if(o.length == 1){
+                target = o[0];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * convert a single-element dataset -- which reads as a one element array
+     *
+     * @param sds   non null
+     * @param clzz  target type
+     * @param names current path, used for error / exception message
+     */
+    private void convert(Dataset sds, Class<T> clzz, String[] names){
+        Object read = null;
+        try {
+            read = sds.getData();
+        } catch(Exception e){
+            throw new UnsupportedOperationException(concat(names) + " read exception ", e);
+        }
+        int[] dims = sds.getDimensions();
+        if(dims.length != 1){
+            throw new UnsupportedOperationException(concat(names) +
+                    " rank " + dims.length + " !=1 ");
+        }
+        Class<?> readClass = read.getClass();
+        VCAssert.assertTrue(readClass.isArray(), "isArray");
+        Class<?> returnedType = readClass.getComponentType();
+
+        if(clzz.isArray()){
+            Class<?> desiredType = clzz.getComponentType();
+            if(!desiredType.isAssignableFrom(returnedType)){
+                throw new UnsupportedOperationException(concat(names) + " is array of " + className(returnedType) + " not " + className(desiredType));
+            }
+            target = read;
+            return;
+        }
+        if(dims[0] > 1){
+            throw new UnsupportedOperationException(concat(names) + " is array of length " + dims[0] + ", not single value");
+        }
+        if(!clzz.isAssignableFrom(returnedType)){
+            throw new UnsupportedOperationException(concat(names) + " is array of " + className(returnedType) + " not " + className(clzz));
+        }
+        target = java.lang.reflect.Array.get(read, 0);
+    }
+
+}

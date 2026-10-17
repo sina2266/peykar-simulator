@@ -182,3 +182,11 @@ The [complete original proposal](blueprints/README.md) and its
 requirements. [The master blueprint](master-blueprint.md) includes the restored
 ten intervention categories, five model interfaces, distinct entity/model/instance
 identities, trust axes, claim/conflict registries and L0-L3 authority levels.
+
+## Retained native execution evidence
+
+Permanent `vendor/` sources and isolated `runtime_profiles/` builds keep heavy
+scientific runtimes outside core/API. The offline native-evidence registry verifies
+source references and image/output hashes, and exposes authenticated read-only
+discovery. It never invokes Docker or installs code in API/Worker. A separate
+external-engine agent/queue protocol remains S4.6. See runtime_profiles/README.md.

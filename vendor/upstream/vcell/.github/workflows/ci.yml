@@ -1,0 +1,398 @@
+name: CI
+
+# Fast lane: runs on every push and in the merge queue. Compile check + Docker
+# image build + Python package tests, plus the Fast unit tests and Quarkus
+# tests. The heavy regression suites live in regression.yml; the release image
+# build lives in cd.yml.
+#
+# Triggers are disjoint from regression.yml/cd.yml so the checks list stays
+# readable - a push shows exactly these three jobs, with nothing skipped.
+#
+# Each job compiles independently (mvn install ...) rather than sharing a
+# prebuilt workspace: reusing compiled output across jobs proved unreliable for
+# inter-module test-runtime classpaths, and this matches the long-proven build.
+
+on:
+  push:
+    branches:
+      - '**'
+  merge_group:
+
+# Supersede in-flight runs for the same ref instead of piling them up.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  python-version: "3.10"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Decides whether the rest of the lane has anything to test.
+  #
+  # Two cases where it does not, both measured rather than assumed:
+  #
+  #   * A merge commit on master whose tree equals the merged branch's tree. The branch
+  #     already passed this exact tree; re-running tests the same bits again. 12 of the last
+  #     15 merges were identical this way, and master pushes were 37% of all CI runs. When
+  #     master HAS advanced the trees differ and the lane runs -- that is the case where
+  #     post-merge CI earns its keep, by catching semantic conflicts.
+  #
+  #   * A change that touches only documentation. A release-notes PR ran the full lane twice,
+  #     once on its branch and once on master, to validate a CHANGELOG edit.
+  #
+  # Fails open: anything it cannot determine runs the lane.
+  should-run:
+    name: should-run
+    runs-on: ubuntu-22.04
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+      reason: ${{ steps.decide.outputs.reason }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Needed to resolve HEAD^2 and github.event.before.
+          fetch-depth: 0
+
+      - id: decide
+        shell: bash
+        run: |
+          set -uo pipefail
+          decide() {
+            echo "run=$1" >> "$GITHUB_OUTPUT"
+            echo "reason=$2" >> "$GITHUB_OUTPUT"
+            echo "::notice::CI $( [ "$1" = true ] && echo runs || echo skipped ): $2"
+            # A skip is otherwise indistinguishable from a pass on the PR, so say it plainly
+            # somewhere a reader will look (issue #2034).
+            {
+              if [ "$1" = true ]; then
+                echo "### CI lane: **running**"
+              else
+                echo "### CI lane: **SKIPPED** - nothing was compiled or tested"
+              fi
+              echo ""
+              echo "Reason: $2"
+              echo ""
+              echo "Base for the comparison: \`${base:-<none>}\`"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          }
+
+          # A merge commit whose tree matches the branch it merged.
+          if [ "${GITHUB_REF}" = "refs/heads/master" ] && git rev-parse -q --verify "HEAD^2" >/dev/null 2>&1; then
+            if [ "$(git rev-parse "HEAD^{tree}")" = "$(git rev-parse "HEAD^2^{tree}")" ]; then
+              decide false "merge commit tree is identical to the branch that already passed CI"
+            fi
+          fi
+
+          # Documentation-only. What matters is picking a base that spans everything this ref
+          # has that the default branch does not - judging a whole branch by its final commit
+          # silently skipped the lane for branches whose last commit happened to be docs
+          # (issue #2034).
+          base=""
+          before="${GITHUB_EVENT_BEFORE:-}"
+          if [ -n "${before}" ] && [ -n "${before//0/}" ] \
+             && git rev-parse -q --verify "${before}^{commit}" >/dev/null 2>&1; then
+            # Push to an existing ref: the previous tip is the most precise base there is.
+            # An all-zeros "before" means the ref did NOT exist before, so it is not one.
+            base="${before}"
+          elif git rev-parse -q --verify "HEAD^2" >/dev/null 2>&1; then
+            # A merge commit (pull_request, merge_group): the first parent IS the base, and
+            # the diff against it is exactly the PR's contents.
+            base="HEAD^1"
+          elif git rev-parse -q --verify "origin/${DEFAULT_BRANCH}^{commit}" >/dev/null 2>&1; then
+            # A new branch: "before" is all-zeros and HEAD^1 is only the previous COMMIT, which
+            # is what made this skip whole branches. The merge base spans the branch however
+            # many commits it has, and reduces to HEAD^1 for a single-commit branch.
+            base="$(git merge-base "origin/${DEFAULT_BRANCH}" HEAD || true)"
+          fi
+          if [ -n "${base}" ]; then
+            changed="$(git diff --name-only "${base}" HEAD)"
+            if [ -n "${changed}" ] && ! printf '%s\n' "${changed}" | grep -qvE '(^docs/|^release-notes/|\.md$)'; then
+              decide false "only documentation changed ($(printf '%s\n' "${changed}" | tr '\n' ' '))"
+            fi
+          fi
+
+          decide true "changes may affect the build or the tests"
+        env:
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch || 'master' }}
+
+  # ---------------------------------------------------------------------------
+  # BUILD: compile the monorepo (no tests), run the Python package tests, and
+  # verify the Docker image builds.
+  # ---------------------------------------------------------------------------
+  build:
+    name: build
+    runs-on: ubuntu-22.04
+    needs: should-run
+    if: ${{ needs.should-run.outputs.run == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      # Cache the poetry virtualenvs so the per-package `poetry install` calls
+      # below are near-instant no-ops on a hit (keyed on the lockfiles).
+      - name: Cache poetry virtualenvs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: poetry-venvs-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: build vcell-cli-utils package
+        run: |
+          cd vcell-cli-utils
+          poetry install
+          poetry run python -m pytest
+
+      - name: build vcell-admin package
+        run: |
+          cd docker/swarm/vcell-admin
+          poetry install
+          poetry run python -m pytest
+
+      - name: build pythonCopasiOpt package
+        run: |
+          cd pythonCopasiOpt/vcell-opt
+          poetry install
+          poetry run python -m pytest
+
+      - name: build pythonVtk package
+        run: |
+          cd pythonVtk
+          poetry install
+          poetry run python -m pytest
+
+      - name: build vcutils package
+        run: |
+          cd python-utils
+          poetry install
+          poetry run python -m pytest
+
+      - name: build python-restclient package
+        run: |
+          cd python-restclient
+          poetry install
+          poetry run python -m pytest
+
+      - name: build vcelldata package
+        run: |
+          cd pythonData
+          poetry install
+          poetry run python -m pytest
+
+      - name: setup java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Not setup-java's `cache: maven`. That saves only on a cache MISS, so the first cache
+      # ever written -- which was incomplete -- was restored unchanged by every later run and
+      # never updated, because the key only changes when a pom does. One build measured 1200
+      # artifacts (811 poms, 409 jars) re-downloaded on a cache HIT, in every job of every run.
+      #
+      # A key that always differs means the cache is always saved, and restore-keys falls back
+      # to the newest previous one, so it converges on complete instead of freezing incomplete.
+      - name: maven repository cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}
+          restore-keys: |
+            maven-${{ hashFiles('**/pom.xml') }}-
+            maven-
+
+      - name: Maven build (compile, no tests)
+        shell: bash
+        run: |
+          mvn -version
+          java -version
+          mvn --batch-mode clean install dependency:copy-dependencies -DskipTests=true
+
+      - name: Test building of docker image
+        run: |
+          docker build \
+            --file Dockerfile \
+            .
+
+  # ---------------------------------------------------------------------------
+  # Fast unit tests, split across two runners (vcell-core, which dominates, on
+  # its own; every other module on the second) and run with JUnit class-level
+  # parallelism. Some Fast tests shell out to the poetry Python envs (OMEX/VTK/
+  # CoPaSi) and the HDF5 CLI, so those are set up here.
+  #
+  # The split uses a TWO-STEP Maven invocation to avoid the earlier trap where
+  # `-pl <modules> -am` re-ran the dependency modules' tests: first compile the
+  # whole reactor once (install -DskipTests), then run ONLY this shard's
+  # modules' tests (test -pl <modules>, no -am). The fast-gate job aggregates
+  # both shards under the stable required check name "CI-Test-group-Fast".
+  # ---------------------------------------------------------------------------
+  fast-tests:
+    name: CI-Test-group-Fast-${{ matrix.name }}
+    runs-on: ubuntu-22.04
+    needs: should-run
+    if: ${{ needs.should-run.outputs.run == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: core
+            modules: vcell-core
+          - name: other
+            modules: vcell-util,vcell-math,vcell-server,vcell-cli,vcell-client,vcell-admin,vcell-apiclient,vcell-restclient
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Docker API version workaround
+        run: echo "api.version=1.44" >> ~/.docker-java.properties
+
+      # No `apt update` - the runner's package lists are fresh enough for this,
+      # and the update refresh is the slow part.
+      - name: Install hdf5 tools needed for testing
+        run: sudo apt-get -y install hdf5-tools
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Cache poetry virtualenvs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: poetry-venvs-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      # poetry envs invoked by Fast tests at runtime (via `poetry run ...`).
+      - name: Install python package envs
+        run: |
+          (cd vcell-cli-utils && poetry install)
+          (cd pythonCopasiOpt/vcell-opt && poetry install)
+          (cd pythonVtk && poetry install)
+          (cd python-utils && poetry install)
+          (cd python-restclient && poetry install)
+          (cd pythonData && poetry install)
+          (cd docker/swarm/vcell-admin && poetry install)
+
+      - name: setup java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Restore only: the build job saves the shared cache for the run. See the note there.
+      - name: maven repository cache (restore only)
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}
+          restore-keys: |
+            maven-${{ hashFiles('**/pom.xml') }}-
+            maven-
+
+      # Step 1: compile the whole reactor once (no tests). Step 2: run ONLY this
+      # shard's modules' Fast tests, with JUnit class-level parallelism (enabled
+      # via -D so it applies to the Fast run only; regression stays sequential).
+      # Tests that mutate global config carry @ResourceLock("vcellGlobalConfig")
+      # so they serialize among themselves while everything else parallelizes.
+      - name: Maven build and run Fast tests (${{ matrix.name }})
+        shell: bash
+        run: |
+          mvn -version
+          java -version
+          mvn --batch-mode clean install -DskipTests dependency:copy-dependencies
+          mvn --batch-mode test -pl ${{ matrix.modules }} -Dgroups="Fast" \
+            -Djunit.jupiter.execution.parallel.enabled=true \
+            -Djunit.jupiter.execution.parallel.mode.default=same_thread \
+            -Djunit.jupiter.execution.parallel.mode.classes.default=concurrent \
+            -Djunit.jupiter.execution.parallel.config.strategy=dynamic
+
+      # Record per-test timing so the slowest Fast tests can be identified if a
+      # further speedup is wanted. Uploaded even on failure.
+      - name: Upload surefire timing reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-fast-${{ matrix.name }}
+          path: '**/target/surefire-reports/*.xml'
+          retention-days: 14
+          if-no-files-found: warn
+
+  # Aggregate gate: one stable required check ("CI-Test-group-Fast") that passes
+  # only if both Fast shards passed, so the split can change without touching
+  # branch-protection rules.
+  fast-gate:
+    name: CI-Test-group-Fast
+    runs-on: ubuntu-22.04
+    needs: [should-run, fast-tests]
+    if: ${{ always() }}
+    steps:
+      - name: Verify all Fast shards passed
+        shell: bash
+        run: |
+          result="${{ needs.fast-tests.result }}"
+          echo "fast-tests result: $result"
+          # This job is a required status check, so it must report even when the shards were
+          # deliberately not run -- otherwise skipping the lane would leave the check missing
+          # rather than satisfied.
+          if [ "${{ needs.should-run.outputs.run }}" != "true" ] && [ "$result" = "skipped" ]; then
+            echo "Fast shards skipped: ${{ needs.should-run.outputs.reason }}"
+            exit 0
+          fi
+          if [ "$result" != "success" ]; then
+            echo "One or more Fast shards did not succeed."
+            exit 1
+          fi
+          echo "All Fast shards passed."
+
+  # ---------------------------------------------------------------------------
+  # Quarkus / vcell-rest tests + OpenAPI spec validation (self-compiling).
+  # ---------------------------------------------------------------------------
+  quarkus-tests:
+    name: CI-Test-group-Quarkus
+    runs-on: ubuntu-22.04
+    needs: should-run
+    if: ${{ needs.should-run.outputs.run == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Docker API version workaround
+        run: echo "api.version=1.44" >> ~/.docker-java.properties
+
+      - name: setup java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Restore only: the build job saves the shared cache for the run. See the note there.
+      - name: maven repository cache (restore only)
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}
+          restore-keys: |
+            maven-${{ hashFiles('**/pom.xml') }}-
+            maven-
+
+      - name: Maven build, validate OpenAPI spec, run Quarkus tests
+        shell: bash
+        run: |
+          mvn -version
+          java -version
+          mvn --batch-mode clean install dependency:copy-dependencies -DskipTests=true
+          ./tools/validate-openapi-spec.sh
+          cd vcell-rest
+          mvn test

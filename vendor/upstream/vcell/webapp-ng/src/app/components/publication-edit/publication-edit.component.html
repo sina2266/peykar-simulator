@@ -1,0 +1,107 @@
+<div class="publication-edit-container">
+  <form #publicationForm="ngForm">
+    <mat-form-field class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="publication.title" name="title" required>
+      <mat-error *ngIf="publicationForm.controls['title']?.invalid">Title is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Authors</mat-label>
+      <input matInput [ngModel]="publication.authors?.join(',')"
+             (ngModelChange)="publication.authors = $event.split(',')" name="authors" required>
+      <mat-error *ngIf="publicationForm.controls['authors']?.invalid">Authors are required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Year</mat-label>
+      <input matInput type="number" [(ngModel)]="publication.year" name="year" required>
+      <mat-error *ngIf="publicationForm.controls['year']?.invalid">Year is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Citation</mat-label>
+      <textarea matInput [(ngModel)]="publication.citation" name="citation" required></textarea>
+      <mat-error *ngIf="publicationForm.controls['citation']?.invalid">Citation is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Pubmed ID</mat-label>
+      <input matInput [(ngModel)]="publication.pubmedid" name="pubmedid">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>DOI</mat-label>
+      <input matInput [(ngModel)]="publication.doi" name="doi">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>URL</mat-label>
+      <input matInput [(ngModel)]="publication.url" name="url">
+    </mat-form-field>
+
+    <div class="sub-form">
+      <h4>Biomodel IDs</h4>
+      <div *ngFor="let biomodelRef of publication.biomodelRefs; let i = index" class="list-item">
+        <mat-card class="biomodel-card">
+          <mat-card-content>
+            <mat-checkbox *ngIf="showPublishControls" [checked]="selectedBiomodelKeys.has(biomodelRef.bmKey!)" (change)="toggleBiomodelSelection(biomodelRef.bmKey!)"></mat-checkbox>
+            <span>{{ "BioModel (" + biomodelRef.ownerName + " : " + biomodelRef.bmKey + " : " + biomodelRef.name + ")" }}</span>
+            <span class="version-badge" [ngClass]="getVersionFlagClass(biomodelRef.versionFlag)">{{ getVersionFlagLabel(biomodelRef.versionFlag) }}</span>
+            <span class="privacy-badge" [ngClass]="getPrivacyClass(biomodelRef.privacy)">{{ getPrivacyLabel(biomodelRef.privacy) }}</span>
+            <button mat-icon-button color="warn" (click)="removeBiomodelRef(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-form-field class="full-width">
+        <mat-label>Enter Biomodel Key</mat-label>
+        <input matInput type="number" [(ngModel)]="newBiomodelKey" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addBiomodelRef(newBiomodelKey)">Add Biomodel +</button>
+    </div>
+
+    <br>
+
+    <div class="sub-form">
+      <h4>Mathmodel IDs</h4>
+      <div *ngFor="let mathmodelRef of publication.mathmodelRefs; let i = index" class="list-item">
+        <mat-card class="mathmodel-card">
+          <mat-card-content>
+            <mat-checkbox *ngIf="showPublishControls" [checked]="selectedMathmodelKeys.has(mathmodelRef.mmKey!)" (change)="toggleMathmodelSelection(mathmodelRef.mmKey!)"></mat-checkbox>
+            <span>{{ "MathModel (" + mathmodelRef.ownerName + " : " + mathmodelRef.mmKey + " : " + mathmodelRef.name + ")" }}</span>
+            <span class="version-badge" [ngClass]="getVersionFlagClass(mathmodelRef.versionFlag)">{{ getVersionFlagLabel(mathmodelRef.versionFlag) }}</span>
+            <button mat-icon-button color="warn" (click)="removeMathmodelRef(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-form-field class="full-width">
+        <mat-label>Enter Mathmodel Key</mat-label>
+        <input matInput type="number" [(ngModel)]="newMathmodelKey" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addMathmodelRef(newMathmodelKey)">Add Mathmodel +</button>
+    </div>
+
+    <mat-form-field class="full-width">
+      <mat-label>Date</mat-label>
+      <input matInput type="date" [(ngModel)]="publication.date" name="date" required>
+      <mat-error *ngIf="publicationForm.controls['date']?.invalid">Date is required</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="showPublishControls" class="publish-row">
+      <button mat-raised-button color="accent" type="button" (click)="publishModels()" [disabled]="selectedBiomodelKeys.size === 0 && selectedMathmodelKeys.size === 0">
+        Publish Selected Models
+      </button>
+    </div>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="button" (click)="onSave()" [disabled]="publicationForm.invalid">
+        Save
+      </button>
+      <button mat-raised-button type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

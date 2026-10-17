@@ -1,0 +1,55 @@
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using MoBi.Core.Domain.Model;
+using MoBi.Presentation.DTO;
+using MoBi.Presentation.Mappers;
+using MoBi.Presentation.Tasks.Interaction;
+using MoBi.Presentation.Views;
+using OSPSuite.Core.Domain.Builder;
+using OSPSuite.Core.Domain.Services;
+using OSPSuite.Core.Domain.UnitSystem;
+using OSPSuite.Presentation.Core;
+using OSPSuite.Presentation.Presenters;
+using OSPSuite.Presentation.Presenters.ContextMenus;
+
+namespace MoBi.Presentation.Presenter
+{
+   public interface IInitialConditionsPresenter : IBuildingBlockWithInitialConditionsPresenter<InitialConditionsBuildingBlock>, IPresenterWithContextMenu<IViewItem>
+   {
+   }
+
+   public class InitialConditionsPresenter : BuildingBlockWithInitialConditionsPresenter<
+         IInitialConditionsView,
+         IBuildingBlockWithInitialConditionsPresenter,
+         InitialConditionsBuildingBlock>,
+      IInitialConditionsPresenter
+   {
+      private readonly IInitialConditionsBuildingBlockToInitialConditionsBuildingBlockDTOMapper _buildingBlockMapper;
+      private readonly IViewItemContextMenuFactory _viewItemContextMenuFactory;
+
+      public InitialConditionsPresenter(
+         IInitialConditionsView view,
+         IInitialConditionToInitialConditionDTOMapper dtoMapper,
+         IInitialConditionsTask<InitialConditionsBuildingBlock> initialConditionsTask,
+         IInitialConditionsCreator msvCreator,
+         IMoBiContext context,
+         IFormulaToValueFormulaDTOMapper formulaToValueFormulaDTOMapper,
+         IDimensionFactory dimensionFactory,
+         IInitialConditionsDistributedPathAndValueEntityPresenter distributedParameterPresenter,
+         IInitialConditionsBuildingBlockToInitialConditionsBuildingBlockDTOMapper buildingBlockMapper,
+         IViewItemContextMenuFactory viewItemContextMenuFactory)
+         : base(view, dtoMapper, initialConditionsTask, msvCreator, context, formulaToValueFormulaDTOMapper, dimensionFactory, distributedParameterPresenter)
+      {
+         _buildingBlockMapper = buildingBlockMapper;
+         _viewItemContextMenuFactory = viewItemContextMenuFactory;
+      }
+
+      protected override IReadOnlyList<InitialConditionDTO> ValueDTOsFor(InitialConditionsBuildingBlock buildingBlock) => _buildingBlockMapper.MapFrom(buildingBlock).ParameterDTOs;
+      protected override void SelectEntity(InitialConditionDTO dto) => _view.Select(dto);
+      protected override InitialConditionDTO DTOForBuilder(InitialCondition builder) => _startValueDTOs.FirstOrDefault(x => Equals(x.PathWithValueObject, builder));
+
+      public void ShowContextMenu(IViewItem objectRequestingPopup, Point popupLocation) =>
+         _viewItemContextMenuFactory.CreateFor(objectRequestingPopup, this).Show(_view, popupLocation);
+   }
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+. "$(git rev-parse --show-toplevel)/gitTools/functions"
+
+clean="cat"
+clean="$clean | ${GitTools}/header --clean $1" 
+
+debug clean: $clean
+eval $clean

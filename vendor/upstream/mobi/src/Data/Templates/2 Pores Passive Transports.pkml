@@ -1,0 +1,1631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PassiveTransportBuildingBlock id="1POysbQsXESdbKqZqW2XhQ" name="2 Pores Passive Transports" icon="PassiveTransport" bbVersion="0" version="16">
+  <Creation createdAt="5249782730529028813" createdBy="Michael" creationMode="New" origin="PKSim" version="11.1" internalVersion="79" />
+  <Builders>
+    <TransportBuilder id="xp5jCHh3TUyngv3fRLQF4A" name="DrugAbsorption_para" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="1" processRateParameterPersistable="0" formula="E8vtQDOmb0OCKiaJeNUyNg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="SmallIntestineSegment" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="Ej2XmJx5eEqHJJf3lusY0Q" name="DrugAbsorption_trans" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="1" processRateParameterPersistable="0" formula="zf4rl_92VU28pSS6BATX3g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Feces" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Intracellular" />
+          <MatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="48x6NrrUwUu5B-SgGmcVOw" name="EndosomalSpecificClearance_FirstOrder" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="Xefi_0Ym3kuW6X4EgTiV9g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="EndosomalClearance" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="otVq6Wvsk0GtIlZkAUHkww" name="IgG_SrcToPlasma" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="FPNUVlY92kaEYDQYdXu3mg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="IgG_Source" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="I1QdwBYpS02L-TzbNlWMSA" name="LumenDrugTransport_cae" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LowerIleum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Caecum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="4GvHHGBdS0-UxxsbwlJG-g" name="LumenDrugTransport_colasc" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Caecum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonAscendens" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="xsvWaCwOa0WEvW_I_ykqcw" name="LumenDrugTransport_coldesc" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonTransversum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonDescendens" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="nEwl0si8hkO8wpSSld_6uQ" name="LumenDrugTransport_colsigm" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonDescendens" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonSigmoid" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="x2AY8KHR9UOo6-8M1kX-sg" name="LumenDrugTransport_coltrans" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonAscendens" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonTransversum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="ud9ggq4eP0uRYAtccpIGvQ" name="LumenDrugTransport_duo" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="Stomach" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Duodenum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="3uxCoRpNC0G9-viyrNfRIw" name="LumenDrugTransport_fec" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="TGUYiJe3hE6YAT9nGuf3_Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="Rectum" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Feces" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="fScyRWsbDEyLQoOB6ck6tg" name="LumenDrugTransport_lil" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="UpperIleum" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LowerIleum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="NkgGpbPt3UqRan-jz8QQQg" name="LumenDrugTransport_lje" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="UpperJejunum" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LowerJejunum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="5bbbHdOAcUi2tn5FHjSboQ" name="LumenDrugTransport_rect" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ColonSigmoid" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="Rectum" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="yir8icBATEOHbzzpAMfaDA" name="LumenDrugTransport_uil" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LowerJejunum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="UpperIleum" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="sz9XiWCh_UyYfGzgP7hENg" name="LumenDrugTransport_uje" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="bC2zrlPTZkSyMJIlvIyDpQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Duodenum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <MatchTagCondition tag="UpperJejunum" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="sSgWbr0-bUWJqnxBfURBxg" name="MassTransferBloodPool2OrgPl" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="8hnyEzq9O0KpmnQfuk7rNQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ArterialBlood" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="ArterialBlood" />
+          <NotMatchTagCondition tag="Lung" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="x6ZgTK53ZkyM2KzAj8zVkQ" name="MassTransferBloodPool2OrgPl_liv" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="67ycOm6gw0Wc9r835HKlsA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="WlY_77UAa0mDfrM7kiTzDw" name="MassTransferBloodPool2OrgPl_lng" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="iaR9sMzteUS0y5Pi_IZ3Tw" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lung" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="XWb2M7ClNkW1eCErN2Gj2Q" name="MassTransferBloodPool2OrgRBC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="jk_NSnWHZEy27swr1FSVNQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ArterialBlood" />
+          <MatchTagCondition tag="BloodCells" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="ArterialBlood" />
+          <MatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Lung" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="qbYXq1RQC0ao4VsVoHRL7g" name="MassTransferBloodPool2OrgRBC_liv" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="-JTQ-mUcrkWtgFP4J0DmJQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="y0JlX9b77kiTQkJHS13AEA" name="MassTransferBloodPool2OrgRBC_lng" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="Qek8OC2MTES4mQp0uovbLw" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Lung" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="daf1byt5iUmxjpvOxmA9Tg" name="MassTransferLINToMucosaBC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="-N5SNPNRmkCMVtTnE6hdoQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="rpa9Z_cZGUGCpbSv5cVwrQ" name="MassTransferLINToMucosaPlasma" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="7PP6CxVEKUabLgfYneMW5Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="wwRjnDKhXk251qm3r0SBYg" name="MassTransferLinPlasma2BloodPool_Pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="fbdKYl417Ee2vev34Wg6Tg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="rbO3Y_reXkqqEkscJKq79A" name="MassTransferLinRBC2BloodPool_Pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="ubt01tZrxkquB2xtxhRY5A" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="h7MzeeLnQUCPb855MJZaXw" name="MassTransferLymphOrgInt2BloodPool" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="lqlqgkrnbk-wmP1qUCTbVg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="oUsKpQNdi0el-EDEfHe9yw" name="MassTransferLymphOrgInt2BloodPool_igg" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="ZPQjBqtFZUm26dbK04qFSA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="SPtOwHCZHk-EhCiYzCbMkA" name="MassTransferMucosaToPveBC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="vE1Ypvb9ikKWEBWpNigzJA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="6Rrl0yLTVkSQva-oHwyB4Q" name="MassTransferMucosaToPvePlasma" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="u8M-7a3xd0Ch-Q_0ukasHg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="Zsu9Jn5l2US9fLM_eWhZZA" name="MassTransferOrgPl2BloodPool" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="zPjt_g_0J0Ch4BBjtORk3w" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Lung" />
+          <MatchTagCondition tag="Plasma" />
+          <NotMatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="DZ2WlaTwnUeNWfNyWNdVZQ" name="MassTransferOrgPl2BloodPool_Liv" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="PGNYOcTEH0-fJLm5vvdx4Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Periportal" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="Hl8GGncPRE-tp9WeMnBu-Q" name="MassTransferOrgPl2BloodPool_Liv_Pericentral" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="26eHeie8dEy977yxyjdkSw" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Pericentral" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="nJ-e2OxEQkCl85WALawckA" name="MassTransferOrgPl2BloodPool_Lng" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="oqlJbzMQx0aQz1sr6TtfdA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lung" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ArterialBlood" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="dQ6wLrt5kECjn8SbKn-ElA" name="MassTransferOrgPl2BloodPool_pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="_N7xz0W5b02Osnr6Vwqosg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="Portal Vein Supplying Organ" />
+          <NotMatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="f_k8BiiruEq7fWGKZl24TA" name="MassTransferOrgRBC2BloodPool" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="QMWEGhGjIEe6UOa7QC7Q9g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Lung" />
+          <NotMatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="T-dWtTeSQUeNaJGEmEXpEQ" name="MassTransferOrgRBC2BloodPool_Liv" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="_PhQn66bpUuBKszYrVfrXA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Periportal" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="QOlPJ0k3m0K20_6eoDE_lA" name="MassTransferOrgRBC2BloodPool_Liv_Pericentral" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="btiWuIezf0ecnsNdtE2sog" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Pericentral" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="GsLzLAHhVkqXW3G6aOggwA" name="MassTransferOrgRBC2BloodPool_Lng" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="f3NTvoHun0SuOHnMWbO5nQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Lung" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="ArterialBlood" />
+          <MatchTagCondition tag="BloodCells" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="vIjKg9deyUG7ClXdjwpMAA" name="MassTransferOrgRBC2BloodPool_Pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="AxMnaG0Eak2exNC-RfZpxg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <NotMatchTagCondition tag="PortalVein" />
+          <NotMatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="JDMffH5jmUyeov6NyOwQeg" name="MassTransferSINToMucosaBC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="-N5SNPNRmkCMVtTnE6hdoQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Mucosa" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="XNg5ynmLXUKwMp-9Nhqn5A" name="MassTransferSINToMucosaPlasma" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="7PP6CxVEKUabLgfYneMW5Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="9VQ0uL_3eU-ZElFRoSqUPw" name="MassTransferSinPlasma2BloodPool_Pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="fbdKYl417Ee2vev34Wg6Tg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="9fVK058aYUSwSGe5Ob95Ig" name="MassTransferSinRBC2BloodPool_Pve" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="ubt01tZrxkquB2xtxhRY5A" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Mucosa" />
+          <MatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="PortalVein" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="ecVvwpDWp0uxkgcomf8kPw" name="MassTransfer_PeriportalToPericentral_BC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="oTtxAN2oZk-zCmZeGtLH6g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Periportal" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Pericentral" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="pyOPdv7Pt0iCUQ_7xGp4zQ" name="MassTransfer_PeriportalToPericentral_Plasma" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="9R5S9LY-X0C2zjjNJiFv0Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Periportal" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <MatchTagCondition tag="Pericentral" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="uP32bU1BO0qb6ZQCqo74kw" name="NetMassTransfer_EndosomalToInterstitial_FcRn_Complex" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="AlF98QAFUEWt-7EhSKcy3w" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo_Complex</MoleculeNamesChild>
+          <MoleculeNamesChild>Standard Molecule-FcRn_Complex</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="Mf3CO3KvzEKUK1D7yLd5Vg" name="NetMassTransfer_EndosomalToPlasma_FcRn_Complex" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="igJl9O-krk2vgBlk8XMmZA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo_Complex</MoleculeNamesChild>
+          <MoleculeNamesChild>Standard Molecule-FcRn_Complex</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="yLkDo4Mz0kS2cQ89g2ZTdA" name="NetMassTransfer_InterstitialToEndosomal" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="BmBryf4gN0KTlB4Yru0__Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="EndogenousIgG" />
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo_Complex</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="0zo3PVtZ-kCbGjRVRJSqFg" name="NetMassTransfer_InterstitialToEndosomal_FcRn" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="FEZXfnz_1ESNqG-dE-wMzQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>FcRn</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="rOLtGh6fUE64zA0-yX30Bg" name="NetMassTransfer_InterstitialToEndosomal_LigandEndo" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="ploI9sc_4ESsTpkNmFBh7Q" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="gOrYXhhATkKVFbDCmL5oXw" name="NetMassTransfer_PlasmaToEndosomal" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="2KHc1Tb65U6WyNFxteP8iw" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="EndogenousIgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo_Complex</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="16ZvNYIA_02a4dj4yMRZTQ" name="NetMassTransfer_PlasmaToEndosomal_FcRn" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="lMwMzPeRvE-vaXvcfOtjfw" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>FcRn</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="8b4RRtgcwEaKi2b5DbBHJQ" name="NetMassTransfer_PlasmaToEndosomal_LigandEndo" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="O2Ab76uKrEmMHkHQTZhhxg" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Endosome" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>LigandEndo</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="rbdv_I8fd0ys0AX1zx_e3g" name="PassiveDiffusionInt2Cell" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="_07I0qska0G5yOGKZPcduQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Intracellular" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="hfYKwfH9_k2ApivGYcGWDA" name="PassiveDiffusionPl2Int" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="nl_sg7uvSE68mQoQGbetTQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="ArterialBlood" />
+          <NotMatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+          <NotMatchTagCondition tag="PortalVein" />
+          <NotMatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo_Complex</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="-Via9ZSFDUG6YQGAKWAOuw" name="PassiveDiffusionPl2RBC" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="FXXloT4S0kySiUZAQ2xx5g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="J6GPT058UEes0G0zuDnzew" name="PassiveDiffusionPlsToSaliva" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="KaSoAwObNkO3zl1ZB3DHrA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Saliva" />
+          <MatchTagCondition tag="SalivaGland" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Saliva" />
+          <NotMatchTagCondition tag="SalivaGland" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+    <TransportBuilder id="K1Ze5RGuIUux9O_eUlHL6Q" name="TwoPoresTransportLink" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="hm5tHf_2L0-iOz-wsv8diQ" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="ArterialBlood" />
+          <NotMatchTagCondition tag="EndogenousIgG" />
+          <MatchTagCondition tag="Plasma" />
+          <NotMatchTagCondition tag="PortalVein" />
+          <NotMatchTagCondition tag="VenousBlood" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo_Complex</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>Standard Molecule-FcRn_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="QN2T-r_T7Uu8dRWeqcod_A" name="TwoPoresTransportLink_igg" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="8NoYmFcpGEWAnhKdKHnR_g" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Endogenous_IgG" />
+          <MatchTagCondition tag="Interstitial" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNamesToExclude>
+          <MoleculeNamesToExcludeChild>FcRn</MoleculeNamesToExcludeChild>
+          <MoleculeNamesToExcludeChild>LigandEndo_Complex</MoleculeNamesToExcludeChild>
+        </MoleculeNamesToExclude>
+      </MoleculeList>
+    </TransportBuilder>
+    <TransportBuilder id="l71ltaN5NEC0A0GvSykVcA" name="GallbladderEmptying" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="NeIz6Yp4tEqc2yHGehA1gA" transportType="0">
+      <SourceCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Gallbladder" />
+        </DescriptorConditions>
+      </SourceCriteria>
+      <TargetCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Duodenum" />
+          <MatchTagCondition tag="Lumen" />
+        </DescriptorConditions>
+      </TargetCriteria>
+      <MoleculeList forAll="1" />
+    </TransportBuilder>
+  </Builders>
+  <FormulaCache>
+    <Formulas>
+      <Formula id="E8vtQDOmb0OCKiaJeNUyNg" name="DrugAbsorption_para" dim="Amount per time" formula="DrugAbsorptionLumenToMucosaRate">
+        <Paths>
+          <Path path="0" as="1" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="zf4rl_92VU28pSS6BATX3g" name="DrugAbsorption_trans" dim="Amount per time" formula="DrugAbsorptionLumenToMucosaRate">
+        <Paths>
+          <Path path="0" as="1" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="Xefi_0Ym3kuW6X4EgTiV9g" name="EndosomaleSpecificClearance" dim="Amount per time" formula="CLspec*C_end*V_end">
+        <Paths>
+          <Path path="3" as="4" dim="5" />
+          <Path path="6" as="7" dim="8" />
+          <Path path="9" as="10" dim="11" />
+        </Paths>
+      </Formula>
+      <Formula id="FPNUVlY92kaEYDQYdXu3mg" name="IgG_SrcToPlasma" dim="Amount per time" formula="IgG_kin">
+        <Paths>
+          <Path path="12" as="13" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="bC2zrlPTZkSyMJIlvIyDpQ" name="LumenDrugTransport" dim="Amount per time" formula="(OralApplicationsEnabled AND IsFloatingInLumen) ? w*Drug*FillLevelFlagNext : 0">
+        <Paths>
+          <Path path="14" as="15" />
+          <Path path="16" as="17" dim="18" />
+          <Path path="19" as="20" />
+          <Path path="21" as="22" dim="11" />
+          <Path path="23" as="24" />
+        </Paths>
+      </Formula>
+      <Formula id="TGUYiJe3hE6YAT9nGuf3_Q" name="LumenDrugTransport_Feces" dim="Amount per time" formula="OralApplicationsEnabled ? w*Drug : 0">
+        <Paths>
+          <Path path="14" as="15" />
+          <Path path="16" as="17" dim="18" />
+          <Path path="21" as="22" dim="11" />
+        </Paths>
+      </Formula>
+      <Formula id="8hnyEzq9O0KpmnQfuk7rNQ" name="MassTransferBloodPool2OrgPl" dim="Amount per time" formula="Q*(1-HCT)*C_pls">
+        <Paths>
+          <Path path="25" as="26" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="67ycOm6gw0Wc9r835HKlsA" name="MassTransferBloodPool2OrgPl_liv" dim="Amount per time" formula="(Q*(1-HCT)-Q_lymph)*C_pls">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="iaR9sMzteUS0y5Pi_IZ3Tw" name="MassTransferBloodPool2OrgPl_lng" dim="Amount per time" formula="(Q*(1-HCT)+Q_lymph)*C_pls">
+        <Paths>
+          <Path path="25" as="26" dim="27" />
+          <Path path="34" as="33" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="jk_NSnWHZEy27swr1FSVNQ" name="MassTransferBloodPool2OrgRBC" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="25" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="-JTQ-mUcrkWtgFP4J0DmJQ" name="MassTransferBloodPool2OrgRBC_liv" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="Qek8OC2MTES4mQp0uovbLw" name="MassTransferBloodPool2OrgRBC_lng" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="25" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="-N5SNPNRmkCMVtTnE6hdoQ" name="MassTransferIntestineToMucosaBC" dim="Amount per time" formula="MassTransferIntestineToMucosaBCRate">
+        <Paths>
+          <Path path="36" as="37" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="7PP6CxVEKUabLgfYneMW5Q" name="MassTransferIntestineToMucosaPlasma" dim="Amount per time" formula="MassTransferIntestineToMucosaPlasmaRate">
+        <Paths>
+          <Path path="38" as="39" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="fbdKYl417Ee2vev34Wg6Tg" name="MassTransferSinLinPlasma2BloodPool_Pve" dim="Amount per time" formula="((1-fractQ)*Q*(1-HCT)-Q_lymph)*C">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="40" as="41" />
+          <Path path="3" as="42" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="ubt01tZrxkquB2xtxhRY5A" name="MassTransferSinLinRBC2BloodPool_Pve" dim="Amount per time" formula="(1-fractQ)*Q*HCT*C">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="40" as="41" />
+          <Path path="3" as="42" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="lqlqgkrnbk-wmP1qUCTbVg" name="MassTransferLymphOrgInt2BloodPool" dim="Amount per time" formula="Q_lymph*C_int">
+        <Paths>
+          <Path path="32" as="33" dim="27" />
+          <Path path="3" as="43" dim="5" />
+        </Paths>
+      </Formula>
+      <Formula id="ZPQjBqtFZUm26dbK04qFSA" name="MassTransferLymphOrgInt2BloodPool_igg" dim="Amount per time" formula="Q_lymph*C_int">
+        <Paths>
+          <Path path="32" as="33" dim="27" />
+          <Path path="3" as="43" dim="5" />
+        </Paths>
+      </Formula>
+      <Formula id="vE1Ypvb9ikKWEBWpNigzJA" name="MassTransferMucosaToPveBC" dim="Amount per time" formula="MassTransferMucosaToPveBCRate">
+        <Paths>
+          <Path path="44" as="45" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="u8M-7a3xd0Ch-Q_0ukasHg" name="MassTransferMucosaToPvePlasma" dim="Amount per time" formula="MassTransferMucosaToPvePlasmaRate">
+        <Paths>
+          <Path path="46" as="47" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="zPjt_g_0J0Ch4BBjtORk3w" name="MassTransferOrgPl2BloodPool" dim="Amount per time" formula="(Q*(1-HCT)-Q_lymph)*C_pls">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="PGNYOcTEH0-fJLm5vvdx4Q" name="MassTransferOrgPl2BloodPool_Liv" dim="Amount per time" formula="IsLiverZonated ? 0 : ((Q_liv+Q_pve)*(1-HCT)-Q_lymph_periportal-Q_lymph_pve)*C_pls">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+          <Path path="51" as="52" dim="27" />
+          <Path path="53" as="54" dim="27" />
+          <Path path="55" as="56" dim="27" />
+        </Paths>
+      </Formula>
+      <Formula id="26eHeie8dEy977yxyjdkSw" name="MassTransferOrgPl2BloodPool_Liv_Pericentral" dim="Amount per time" formula="IsLiverZonated ? ((Q_liv+Q_pve)*(1-HCT)-Q_lymph_periportal-Q_lymph_pericentral-Q_lymph_pve)*C_pls : 0">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+          <Path path="51" as="52" dim="27" />
+          <Path path="53" as="54" dim="27" />
+          <Path path="55" as="56" dim="27" />
+          <Path path="57" as="58" dim="27" />
+        </Paths>
+      </Formula>
+      <Formula id="oqlJbzMQx0aQz1sr6TtfdA" name="MassTransferOrgPl2BloodPool_Lng" dim="Amount per time" formula="Q*(1-HCT)*C_pls">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="_N7xz0W5b02Osnr6Vwqosg" name="MassTransferOrgPl2BloodPool_pve" dim="Amount per time" formula="(Q*(1-HCT)-Q_lymph)*C_pls">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="QMWEGhGjIEe6UOa7QC7Q9g" name="MassTransferOrgRBC2BloodPool" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="_PhQn66bpUuBKszYrVfrXA" name="MassTransferOrgRBC2BloodPool_Liv" dim="Amount per time" formula="IsLiverZonated ? 0 : (Q_liv +Q_pve)*HCT*C_bc">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+          <Path path="51" as="52" dim="27" />
+        </Paths>
+      </Formula>
+      <Formula id="btiWuIezf0ecnsNdtE2sog" name="MassTransferOrgRBC2BloodPool_Liv_Pericentral" dim="Amount per time" formula="IsLiverZonated ? (Q_liv +Q_pve)*HCT*C_bc : 0">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+          <Path path="51" as="52" dim="27" />
+        </Paths>
+      </Formula>
+      <Formula id="f3NTvoHun0SuOHnMWbO5nQ" name="MassTransferOrgRBC2BloodPool_Lng" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="AxMnaG0Eak2exNC-RfZpxg" name="MassTransferOrgRBC2BloodPool_Pve" dim="Amount per time" formula="Q*HCT*C_bc">
+        <Paths>
+          <Path path="31" as="26" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="29" as="30" />
+        </Paths>
+      </Formula>
+      <Formula id="oTtxAN2oZk-zCmZeGtLH6g" name="MassTransferPeriportal2PericentralBC_liv" dim="Amount per time" formula="IsLiverZonated ? (Q_liv +Q_pve)*HCT*C_bc : 0">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="35" dim="5" />
+          <Path path="51" as="52" dim="27" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+        </Paths>
+      </Formula>
+      <Formula id="9R5S9LY-X0C2zjjNJiFv0Q" name="MassTransferPeriportal2PericentralPl_liv" dim="Amount per time" formula="IsLiverZonated ? ((Q_liv +Q_pve)*(1-HCT)-Q_lymph_periportal-Q_lymph_pve)*C_pls : 0">
+        <Paths>
+          <Path path="31" as="48" dim="27" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="51" as="52" dim="27" />
+          <Path path="29" as="30" />
+          <Path path="49" as="50" />
+          <Path path="53" as="54" dim="27" />
+          <Path path="55" as="56" dim="27" />
+        </Paths>
+      </Formula>
+      <Formula id="AlF98QAFUEWt-7EhSKcy3w" name="NetMassTransfer_EndosomalToInterstitial_FcRn_Complex" dim="Amount per time" formula="(1-f_rec_vas)*K_rec*C_IgG_FcRn*V_end">
+        <Paths>
+          <Path path="59" as="60" dim="61" />
+          <Path path="62" as="63" dim="11" />
+          <Path path="3" as="64" dim="5" />
+          <Path path="6" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="igJl9O-krk2vgBlk8XMmZA" name="NetMassTransfer_EndosomalToPlasma_FcRn_Complex" dim="Amount per time" formula="f_rec_vas * K_rec * C_IgG_FcRn * V_end">
+        <Paths>
+          <Path path="59" as="60" dim="61" />
+          <Path path="62" as="63" dim="11" />
+          <Path path="3" as="64" dim="5" />
+          <Path path="6" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="BmBryf4gN0KTlB4Yru0__Q" name="NetMassTransfer_InterstitialToEndosomal" dim="Amount per time" formula="(1-f_uptake_vas)*(IsSmallMolecule ? 0 : K_uptake)*V_end*C_int">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="3" as="43" dim="5" />
+          <Path path="69" as="70" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="FEZXfnz_1ESNqG-dE-wMzQ" name="NetMassTransfer_InterstitialToEndosomal_FcRn" dim="Amount per time" formula="f_mem_int * (1-f_uptake_vas) * K_uptake * C_int * V_end">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="72" as="73" />
+          <Path path="3" as="43" dim="5" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="ploI9sc_4ESsTpkNmFBh7Q" name="NetMassTransfer_InterstitialToEndosomal_LigandEndo" dim="Amount per time" formula="(1-f_uptake_vas) * K_uptake * V_end * C_int">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="3" as="43" dim="5" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="2KHc1Tb65U6WyNFxteP8iw" name="NetMassTransfer_PlasmaToEndosomal" dim="Amount per time" formula="f_uptake_vas*(IsSmallMolecule ? 0 : K_uptake)*V_end*C_pls">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="69" as="70" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="lMwMzPeRvE-vaXvcfOtjfw" name="NetMassTransfer_PlasmaToEndosomal_FcRn" dim="Amount per time" formula="f_mem_pls * f_uptake_vas * K_uptake * C_pls * V_end">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="74" as="75" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="O2Ab76uKrEmMHkHQTZhhxg" name="NetMassTransfer_PlasmaToEndosomal_LigandEndo" dim="Amount per time" formula="f_uptake_vas * K_uptake * V_end * C_pls">
+        <Paths>
+          <Path path="65" as="66" dim="61" />
+          <Path path="67" as="68" dim="11" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="71" as="7" dim="8" />
+        </Paths>
+      </Formula>
+      <Formula id="_07I0qska0G5yOGKZPcduQ" name="PassiveDiffusionInt2Cell" dim="Amount per time" formula="K_water_int * PA_int_cell * C_int - K_water_cell * PA_cell_int * C_cell">
+        <Paths>
+          <Path path="76" as="77" dim="5" />
+          <Path path="3" as="43" dim="5" />
+          <Path path="78" as="79" dim="27" />
+          <Path path="80" as="81" dim="27" />
+          <Path path="82" as="83" />
+          <Path path="84" as="85" />
+        </Paths>
+      </Formula>
+      <Formula id="nl_sg7uvSE68mQoQGbetTQ" name="PassiveDiffusionPl2Int" dim="Amount per time" formula="fu * P_endothelial * SA * (C_pls - C_int / K_int_pls)">
+        <Paths>
+          <Path path="76" as="43" dim="5" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="86" as="87" dim="61" />
+          <Path path="88" as="89" dim="90" />
+          <Path path="91" as="92" />
+          <Path path="93" as="94" dim="95" />
+        </Paths>
+      </Formula>
+      <Formula id="FXXloT4S0kySiUZAQ2xx5g" name="PassiveDiffusionPl2RBC" dim="Amount per time" formula="SA_bc * fu * (P_pls_rbc * C_pls - P_rbc_pls * C_bc  /K_rbc)">
+        <Paths>
+          <Path path="76" as="35" dim="5" />
+          <Path path="3" as="28" dim="5" />
+          <Path path="86" as="87" dim="61" />
+          <Path path="96" as="97" dim="90" />
+          <Path path="98" as="99" dim="90" />
+          <Path path="100" as="101" />
+          <Path path="102" as="103" dim="95" />
+        </Paths>
+      </Formula>
+      <Formula id="KaSoAwObNkO3zl1ZB3DHrA" name="PassiveDiffusionPlsToSaliva" dim="Amount per time" formula="fu * (C_pls_art - C_slv / K_slv_pls) * Q_slv">
+        <Paths>
+          <Path path="104" as="105" dim="27" />
+          <Path path="106" as="107" dim="5" />
+          <Path path="76" as="108" dim="5" />
+          <Path path="86" as="87" dim="61" />
+          <Path path="109" as="110" />
+        </Paths>
+      </Formula>
+      <Formula id="hm5tHf_2L0-iOz-wsv8diQ" name="TwoPoresTransportLink" dim="Amount per time" formula="fu * ((J_iso+alpha_l*Q_lymph)*(1-sigma_l)*C_pl+(P_endothelial_l*SA_pls_int)*(C_pl-C_int/K_int_pls)*Pe_l/(exp(Pe_l)-1) + (-J_iso+(1-alpha_l)*Q_lymph)*(1-sigma_s)*C_pl+(P_endothelial_s*SA_pls_int)*(C_pl-C_int/K_int_pls)*Pe_s/(exp(Pe_s)-1))">
+        <Paths>
+          <Path path="111" as="112" />
+          <Path path="113" as="114" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="76" as="43" dim="5" />
+          <Path path="3" as="115" dim="5" />
+          <Path path="86" as="87" dim="61" />
+          <Path path="116" as="117" dim="90" />
+          <Path path="118" as="119" dim="90" />
+          <Path path="91" as="92" />
+          <Path path="120" as="121" />
+          <Path path="122" as="123" />
+          <Path path="124" as="125" />
+          <Path path="126" as="127" />
+          <Path path="93" as="128" dim="95" />
+        </Paths>
+      </Formula>
+      <Formula id="8NoYmFcpGEWAnhKdKHnR_g" name="TwoPoresTransportLink_igg" dim="Amount per time" formula="(J_iso+alpha_l*Q_lymph)*(1-sigma_l)*C_pl+(P_endothelial_l*SA_pls_int)*(C_pl-C_int)*Pe_l/(exp(Pe_l)-1) + (-J_iso+(1-alpha_l)*Q_lymph)*(1-sigma_s)*C_pl+(P_endothelial_s*SA_pls_int)*(C_pl-C_int)*Pe_s/(exp(Pe_s)-1)">
+        <Paths>
+          <Path path="111" as="112" />
+          <Path path="113" as="114" dim="27" />
+          <Path path="32" as="33" dim="27" />
+          <Path path="129" as="117" dim="90" />
+          <Path path="130" as="119" dim="90" />
+          <Path path="131" as="121" />
+          <Path path="132" as="123" />
+          <Path path="133" as="125" />
+          <Path path="134" as="127" />
+          <Path path="76" as="43" dim="5" />
+          <Path path="3" as="115" dim="5" />
+          <Path path="93" as="128" dim="95" />
+        </Paths>
+      </Formula>
+      <Formula id="NeIz6Yp4tEqc2yHGehA1gA" name="GallbladderEmptyingRate" dim="Amount per time" formula="EHC_Active ? ln(2) / EHC_Halftime * M * EHC_EjectionFraction : 0">
+        <Paths>
+          <Path path="135" as="136" dim="18" />
+          <Path path="137" as="138" dim="61" />
+          <Path path="139" as="140" dim="141" />
+          <Path path="142" as="143" />
+        </Paths>
+      </Formula>
+    </Formulas>
+    <StringMap>
+      <Map s="NEIGHBORHOOD|MOLECULE|Drug absorption rate (lumen to mucosa)" id="0" />
+      <Map s="DrugAbsorptionLumenToMucosaRate" id="1" />
+      <Map s="Amount per time" id="2" />
+      <Map s="SOURCE|MOLECULE|Concentration" id="3" />
+      <Map s="C_end" id="4" />
+      <Map s="Concentration (molar)" id="5" />
+      <Map s="SOURCE|Volume" id="6" />
+      <Map s="V_end" id="7" />
+      <Map s="Volume" id="8" />
+      <Map s="Organism|Specific clearance (endosome)" id="9" />
+      <Map s="CLspec" id="10" />
+      <Map s="Inversed time" id="11" />
+      <Map s="Organism|EndogenousIgG|IgG_kin" id="12" />
+      <Map s="IgG_kin" id="13" />
+      <Map s="SOURCE|..|OralApplicationsEnabled" id="14" />
+      <Map s="OralApplicationsEnabled" id="15" />
+      <Map s="SOURCE|MOLECULE" id="16" />
+      <Map s="Drug" id="17" />
+      <Map s="Amount" id="18" />
+      <Map s="MOLECULE|Is floating in lumen" id="19" />
+      <Map s="IsFloatingInLumen" id="20" />
+      <Map s="SOURCE|Intestinal transit rate (absolute)" id="21" />
+      <Map s="w" id="22" />
+      <Map s="TARGET|FillLevelFlag" id="23" />
+      <Map s="FillLevelFlagNext" id="24" />
+      <Map s="TARGET|..|Blood flow rate" id="25" />
+      <Map s="Q" id="26" />
+      <Map s="Flow" id="27" />
+      <Map s="C_pls" id="28" />
+      <Map s="Organism|Hematocrit" id="29" />
+      <Map s="HCT" id="30" />
+      <Map s="SOURCE|..|Blood flow rate" id="31" />
+      <Map s="SOURCE|..|Lymph flow rate" id="32" />
+      <Map s="Q_lymph" id="33" />
+      <Map s="TARGET|..|Lymph flow rate" id="34" />
+      <Map s="C_bc" id="35" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Mass transfer rate (intestine to mucosa blood cells)" id="36" />
+      <Map s="MassTransferIntestineToMucosaBCRate" id="37" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Mass transfer rate (intestine to mucosa plasma)" id="38" />
+      <Map s="MassTransferIntestineToMucosaPlasmaRate" id="39" />
+      <Map s="SOURCE|..|Mucosa blood flow fraction" id="40" />
+      <Map s="fractQ" id="41" />
+      <Map s="C" id="42" />
+      <Map s="C_int" id="43" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Mass transfer rate (mucosa to portal vein blood cells)" id="44" />
+      <Map s="MassTransferMucosaToPveBCRate" id="45" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Mass transfer rate (mucosa to portal vein plasma)" id="46" />
+      <Map s="MassTransferMucosaToPvePlasmaRate" id="47" />
+      <Map s="Q_liv" id="48" />
+      <Map s="Organism|Liver|Is liver zonated" id="49" />
+      <Map s="IsLiverZonated" id="50" />
+      <Map s="Organism|PortalVein|Blood flow rate" id="51" />
+      <Map s="Q_pve" id="52" />
+      <Map s="Organism|PortalVein|Lymph flow rate" id="53" />
+      <Map s="Q_lymph_pve" id="54" />
+      <Map s="Organism|Liver|Periportal|Lymph flow rate" id="55" />
+      <Map s="Q_lymph_periportal" id="56" />
+      <Map s="Organism|Liver|Pericentral|Lymph flow rate" id="57" />
+      <Map s="Q_lymph_pericentral" id="58" />
+      <Map s="SOURCE|..|Fraction recycled to plasma" id="59" />
+      <Map s="f_rec_vas" id="60" />
+      <Map s="Fraction" id="61" />
+      <Map s="SOURCE|..|Rate constant for recycling from endosomal space" id="62" />
+      <Map s="K_rec" id="63" />
+      <Map s="C_IgG_FcRn" id="64" />
+      <Map s="SOURCE|..|Fraction of endosomal uptake from plasma" id="65" />
+      <Map s="f_uptake_vas" id="66" />
+      <Map s="SOURCE|..|Rate constant for endosomal uptake" id="67" />
+      <Map s="K_uptake" id="68" />
+      <Map s="MOLECULE|Is small molecule" id="69" />
+      <Map s="IsSmallMolecule" id="70" />
+      <Map s="TARGET|Volume" id="71" />
+      <Map s="SOURCE|..|f_membrane_int" id="72" />
+      <Map s="f_mem_int" id="73" />
+      <Map s="SOURCE|..|f_membrane_pls" id="74" />
+      <Map s="f_mem_pls" id="75" />
+      <Map s="TARGET|MOLECULE|Concentration" id="76" />
+      <Map s="C_cell" id="77" />
+      <Map s="NEIGHBORHOOD|MOLECULE|P*SA interstitial -&gt; intracellular" id="78" />
+      <Map s="PA_int_cell" id="79" />
+      <Map s="NEIGHBORHOOD|MOLECULE|P*SA intracellular -&gt; interstitial" id="80" />
+      <Map s="PA_cell_int" id="81" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (interstitial/water)" id="82" />
+      <Map s="K_water_int" id="83" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (intracellular/water)" id="84" />
+      <Map s="K_water_cell" id="85" />
+      <Map s="MOLECULE|Fraction unbound (plasma)" id="86" />
+      <Map s="fu" id="87" />
+      <Map s="NEIGHBORHOOD|MOLECULE|P (plasma&lt;-&gt;interstitial)" id="88" />
+      <Map s="P_endothelial" id="89" />
+      <Map s="Velocity" id="90" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (interstitial/plasma)" id="91" />
+      <Map s="K_int_pls" id="92" />
+      <Map s="NEIGHBORHOOD|Surface area (plasma/interstitial)" id="93" />
+      <Map s="SA" id="94" />
+      <Map s="Area" id="95" />
+      <Map s="MOLECULE|P (blood cells-&gt;plasma)" id="96" />
+      <Map s="P_rbc_pls" id="97" />
+      <Map s="MOLECULE|P (plasma-&gt;blood cells)" id="98" />
+      <Map s="P_pls_rbc" id="99" />
+      <Map s="MOLECULE|Partition coefficient (blood cells/plasma)" id="100" />
+      <Map s="K_rbc" id="101" />
+      <Map s="NEIGHBORHOOD|Surface area (blood cells/plasma)" id="102" />
+      <Map s="SA_bc" id="103" />
+      <Map s="SOURCE|..|Saliva flow rate" id="104" />
+      <Map s="Q_slv" id="105" />
+      <Map s="SOURCE|..|..|ArterialBlood|Plasma|MOLECULE|Concentration" id="106" />
+      <Map s="C_pls_art" id="107" />
+      <Map s="C_slv" id="108" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (intracellular/plasma)" id="109" />
+      <Map s="K_slv_pls" id="110" />
+      <Map s="SOURCE|..|Flow fraction via large pores" id="111" />
+      <Map s="alpha_l" id="112" />
+      <Map s="SOURCE|..|Fluid recirculation flow rate" id="113" />
+      <Map s="J_iso" id="114" />
+      <Map s="C_pl" id="115" />
+      <Map s="NEIGHBORHOOD|MOLECULE|P (large endothelial pores)" id="116" />
+      <Map s="P_endothelial_l" id="117" />
+      <Map s="NEIGHBORHOOD|MOLECULE|P (small endothelial pores)" id="118" />
+      <Map s="P_endothelial_s" id="119" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Peclet number (large pores)" id="120" />
+      <Map s="Pe_l" id="121" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Peclet number (small pores)" id="122" />
+      <Map s="Pe_s" id="123" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Reflection coefficient (large pores)" id="124" />
+      <Map s="sigma_l" id="125" />
+      <Map s="NEIGHBORHOOD|MOLECULE|Reflection coefficient (small pores)" id="126" />
+      <Map s="sigma_s" id="127" />
+      <Map s="SA_pls_int" id="128" />
+      <Map s="SOURCE|..|P (large endothelial pores)" id="129" />
+      <Map s="SOURCE|..|P (small endothelial pores)" id="130" />
+      <Map s="SOURCE|..|Peclet number (large pores)" id="131" />
+      <Map s="SOURCE|..|Peclet number (small pores)" id="132" />
+      <Map s="SOURCE|..|Reflection coefficient (large pores)" id="133" />
+      <Map s="SOURCE|..|Reflection coefficient (small pores)" id="134" />
+      <Map s="Organism|Gallbladder|MOLECULE" id="135" />
+      <Map s="M" id="136" />
+      <Map s="Organism|Gallbladder|Gallbladder ejection fraction" id="137" />
+      <Map s="EHC_EjectionFraction" id="138" />
+      <Map s="Organism|Gallbladder|Gallbladder ejection half-time" id="139" />
+      <Map s="EHC_Halftime" id="140" />
+      <Map s="Time" id="141" />
+      <Map s="Organism|Gallbladder|Gallbladder emptying active" id="142" />
+      <Map s="EHC_Active" id="143" />
+    </StringMap>
+  </FormulaCache>
+</PassiveTransportBuildingBlock>

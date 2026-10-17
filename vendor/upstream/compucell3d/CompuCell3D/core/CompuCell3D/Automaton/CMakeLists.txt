@@ -1,0 +1,23 @@
+SET(SRCS
+  Automaton.cpp
+  CellType.cpp
+  Transition.cpp
+)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL Windows)
+   ADD_STATIC_LIBRARY(Automaton ${SRCS})
+else(${CMAKE_SYSTEM_NAME} STREQUAL Windows)
+   ADD_SHARED_LIBRARY(Automaton ${SRCS})
+endif(${CMAKE_SYSTEM_NAME} STREQUAL Windows)
+
+TARGET_INCLUDE_DIRECTORIES(${AutomatonLib} PUBLIC
+   $<BUILD_INTERFACE:${COMPUCELL3D_SOURCE_DIR}/core>
+   $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/${COMPUCELL3D_INSTALL_INCLUDE_DIR}>
+)
+
+INSTALL_FILES(/${COMPUCELL3D_INSTALL_INCLUDE_DIR}/CompuCell3D/Automaton .h
+  Automaton
+  CellType
+  Transition
+  CC3D_Automaton
+)

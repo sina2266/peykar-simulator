@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+ARCH=@host_cpu@
+MODSUBDIR=@modsubdir@
+
+if test "x${NRNHOME}" = x ; then
+	prefix=@prefix@
+	exec_prefix=@exec_prefix@
+	NRNBIN=@bindir@/
+else
+    prefix="$NRNHOME"
+    exec_prefix="${prefix}"
+	NRNBIN="${exec_prefix}/bin/"
+fi
+
+if test "${NRNHOME_EXEC}" != "" ; then
+	exec_prefix="${NRNHOME_EXEC}"
+	NRNBIN="${exec_prefix}/bin/"
+fi
+
+NRNIV="${NRNBIN}nrniv"
+NEURONHOME="${prefix}/share/nrn"
+export NEURONHOME
+
+if [ -x ${MODSUBDIR}/special ] ; then
+	program="./${MODSUBDIR}/special"
+else
+	program="${NRNIV}"
+fi
+
+exec "$program" "$NEURONHOME/lib/hoc/nrngui.hoc" "$@" -
+

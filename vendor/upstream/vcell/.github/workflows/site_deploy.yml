@@ -1,0 +1,388 @@
+# This workflow will deploy the VCell full application (server +- client) to alpha or release
+
+name: CD-sites
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      vcell_version:
+        description: 'version.major.minor' 
+        required: true
+        default: '7.6.0'
+      vcell_build:
+        description: 'build number'
+        required: true
+        default: '18'
+      vcell_site:
+        description: 'rel or alpha or test'
+        required: true
+        default: 'alpha'
+      server_only:
+        description: 'Deploy only the server components?'
+        required: true
+        default: 'false'
+jobs:
+  build:
+    name: Build client installers
+    runs-on: ubuntu-24.04
+    steps:
+    - name: checkout tag
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    - name: setup global environment variables
+      run: |
+        echo "VCELL_VERSION=${{ github.event.inputs.vcell_version }}" >> $GITHUB_ENV
+        echo "VCELL_BUILD=${{ github.event.inputs.vcell_build }}" >> $GITHUB_ENV
+        echo "VCELL_SITE=${{ github.event.inputs.vcell_site }}" >> $GITHUB_ENV
+        echo "VCELL_TAG=`git rev-parse --short HEAD`" >> $GITHUB_ENV
+        echo "VCELL_REPO_NAMESPACE=ghcr.io/virtualcell" >> $GITHUB_ENV
+        echo "VCELL_DEPLOY_REMOTE_DIR=/share/apps/vcell3/deployed_github" >> $GITHUB_ENV
+        if [ "${{ github.event.inputs.vcell_site }}" == "rel" ]; then\
+        	echo "VCELL_MANAGER_NODE=vcellapi.cam.uchc.edu" >> $GITHUB_ENV;\
+        	echo "VCELL_INSTALLER_REMOTE_DIR="/share/apps/vcell3/apache_webroot/htdocs/webstart/Rel"" >> $GITHUB_ENV;\
+        else if [ "${{ github.event.inputs.vcell_site }}" == "alpha" ]; then\
+         	echo "VCELL_MANAGER_NODE=vcellapi.cam.uchc.edu" >> $GITHUB_ENV;\
+        	echo "VCELL_INSTALLER_REMOTE_DIR="/share/apps/vcell3/apache_webroot/htdocs/webstart/Alpha"" >> $GITHUB_ENV;\
+        else if [ "${{ github.event.inputs.vcell_site }}" == "test" ]; then\
+         	echo "VCELL_MANAGER_NODE=vcellapi.cam.uchc.edu" >> $GITHUB_ENV;\
+        	echo "VCELL_INSTALLER_REMOTE_DIR="/share/apps/vcell3/apache_webroot/htdocs/webstart/Test"" >> $GITHUB_ENV;\
+        else echo "Unknown site name ${{ github.event.inputs.vcell_site }}"; exit 1; fi; fi; fi
+    - name: setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.VC_KEY }}
+    - name: get installer secrets
+      run: |
+        ssh-keyscan $VCELL_MANAGER_NODE >> ~/.ssh/known_hosts
+        sudo mkdir /usr/local/deploy
+        sudo chmod 777 /usr/local/deploy
+        cd /usr/local/deploy
+        scp ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/deploy_dir_2025_03_18.tar .
+        cd ..
+        sudo tar -xvf deploy/deploy_dir_2025_03_18.tar
+        sudo chmod 777 -R deploy
+    - name: setup config
+      run: |
+        cd docker/swarm
+        export VCELL_CONFIG_FILE_NAME="server_${VCELL_SITE}_${VCELL_VERSION}_${VCELL_BUILD}_${VCELL_TAG}.config"
+        echo "VCELL_CONFIG_FILE_NAME=$VCELL_CONFIG_FILE_NAME" >> $GITHUB_ENV
+        echo "| $VCELL_SITE | $VCELL_REPO_NAMESPACE | $VCELL_TAG | $VCELL_VERSION | $VCELL_BUILD | $VCELL_CONFIG_FILE_NAME |"
+        ./serverconfig-uch.sh $VCELL_SITE $VCELL_REPO_NAMESPACE $VCELL_TAG $VCELL_VERSION $VCELL_BUILD $VCELL_CONFIG_FILE_NAME
+        env | grep VCELL > variables
+    - name: send home config file and variables
+      run: |
+        scp docker/build/admin/vcell-su.sh ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/config
+        scp docker/swarm/$VCELL_CONFIG_FILE_NAME ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}
+        scp docker/swarm/variables ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/variables_$VCELL_TAG
+    - name: upload variables
+      uses: actions/upload-artifact@v4
+      with:
+        name: variables
+        path: docker/swarm/variables
+        retention-days: 1
+    - name: upload deploy config
+      if: ${{ github.event.inputs.server_only != 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: deploy-config
+        path: docker/swarm/${{ env.VCELL_CONFIG_FILE_NAME }}
+        retention-days: 1
+
+  # Build the five install4j media (Windows 64/32, Linux 64/32, macOS) in parallel — one per runner —
+  # instead of serially in a single clientgen container. Each job produces its installer plus a
+  # updates_<platform>.xml fragment; the combine job fans them back into one updates.xml.
+  build_installer_other:
+    name: Build installer (media ${{ matrix.build_id }})
+    runs-on: ubuntu-24.04
+    needs: build
+    if: ${{ github.event.inputs.server_only != 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # non-mac install4j build ids: 349=win64, 450=win32, 652=linux64, 547=linux32
+        # (mac 105 is its own job so notarize can start as soon as it finishes)
+        build_id: [349, 450, 652, 547]
+    steps:
+    - name: checkout tag
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    - name: setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.VC_KEY }}
+    - name: retrieve variables
+      uses: actions/download-artifact@v4
+      with:
+        name: variables
+        path: variables
+    - name: setenv
+      run: |
+        for line in $(cat variables/variables); do echo $line >> $GITHUB_ENV; done
+    - name: get installer secrets
+      run: |
+        ssh-keyscan $VCELL_MANAGER_NODE >> ~/.ssh/known_hosts
+        sudo mkdir /usr/local/deploy
+        sudo chmod 777 /usr/local/deploy
+        cd /usr/local/deploy
+        scp ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/deploy_dir_2025_03_18.tar .
+        cd ..
+        sudo tar -xvf deploy/deploy_dir_2025_03_18.tar
+        sudo chmod 777 -R deploy
+    - name: retrieve deploy config
+      uses: actions/download-artifact@v4
+      with:
+        name: deploy-config
+        path: docker/swarm
+    - name: build one installer media
+      run: |
+        cd docker/swarm
+        echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        # pull clientgen by the deterministic friendly version tag (version.build), not the git short
+        # SHA (VCELL_TAG) which can abbreviate differently on the build vs deploy runners
+        sudo docker pull $VCELL_REPO_NAMESPACE/vcell-clientgen:${VCELL_VERSION}.${VCELL_BUILD}
+        BUILD_IDS="${{ matrix.build_id }}" ./generate_installers.sh ./${VCELL_CONFIG_FILE_NAME}
+    - name: upload installer media
+      uses: actions/upload-artifact@v4
+      with:
+        name: installers-${{ matrix.build_id }}
+        path: docker/swarm/generated_installers
+        retention-days: 1
+
+  # The mac installer is built on its own so notarize can start on it immediately (in parallel with
+  # the win/linux builds) rather than waiting for the fan-in.
+  build_installer_mac:
+    name: Build installer (media 105 mac)
+    runs-on: ubuntu-24.04
+    needs: build
+    if: ${{ github.event.inputs.server_only != 'true' }}
+    steps:
+    - name: checkout tag
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    - name: setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.VC_KEY }}
+    - name: retrieve variables
+      uses: actions/download-artifact@v4
+      with:
+        name: variables
+        path: variables
+    - name: setenv
+      run: |
+        for line in $(cat variables/variables); do echo $line >> $GITHUB_ENV; done
+    - name: get installer secrets
+      run: |
+        ssh-keyscan $VCELL_MANAGER_NODE >> ~/.ssh/known_hosts
+        sudo mkdir /usr/local/deploy
+        sudo chmod 777 /usr/local/deploy
+        cd /usr/local/deploy
+        scp ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/deploy_dir_2025_03_18.tar .
+        cd ..
+        sudo tar -xvf deploy/deploy_dir_2025_03_18.tar
+        sudo chmod 777 -R deploy
+    - name: retrieve deploy config
+      uses: actions/download-artifact@v4
+      with:
+        name: deploy-config
+        path: docker/swarm
+    - name: build the mac installer
+      run: |
+        cd docker/swarm
+        echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        sudo docker pull $VCELL_REPO_NAMESPACE/vcell-clientgen:${VCELL_VERSION}.${VCELL_BUILD}
+        BUILD_IDS="105" ./generate_installers.sh ./${VCELL_CONFIG_FILE_NAME}
+    - name: upload mac installer (un-notarized)
+      uses: actions/upload-artifact@v4
+      with:
+        name: mac-raw
+        path: docker/swarm/generated_installers
+        retention-days: 1
+
+  # Fan-in: gather the win/linux installers + the NOTARIZED mac installer and reconstruct updates.xml.
+  combine:
+    name: Combine installers + updates.xml
+    runs-on: ubuntu-24.04
+    needs: [build_installer_other, notarize]
+    if: ${{ always() && needs.build_installer_other.result == 'success' && needs.notarize.result == 'success' }}
+    steps:
+    - name: checkout tag
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    - name: gather per-media installers
+      uses: actions/download-artifact@v4
+      with:
+        pattern: installers-*
+        path: generated_installers
+        merge-multiple: true
+    - name: reconstruct combined updates.xml
+      run: |
+        chmod +x docker/build/installers/combine_updates.sh
+        ./docker/build/installers/combine_updates.sh generated_installers
+    - name: upload combined installers
+      uses: actions/upload-artifact@v4
+      with:
+        name: installers
+        path: generated_installers
+        retention-days: 1
+
+  notarize:
+    name: Notarize the MacOS client
+    runs-on: macos-latest
+    # depends ONLY on the mac build, so it runs in parallel with the win/linux builds and combine.
+    # skipped for server_only (build_installer_mac is skipped) and if the mac build failed.
+    needs: build_installer_mac
+    if: ${{ always() && needs.build_installer_mac.result == 'success' }}
+    steps:
+    - name: download mac installer
+      uses: actions/download-artifact@v4
+      with:
+        name: mac-raw
+        path: mac
+    - name: notarize mac installer
+      run: |
+        set -x
+        set +e
+        cd mac
+        export MAC_INSTALLER=`ls *dmg`
+        xcrun notarytool submit --output-format normal --no-progress --no-wait --team-id "${{ secrets.MACTEAMID }}" --apple-id "${{ secrets.MACID }}" --password "${{ secrets.MACPW }}" $MAC_INSTALLER > submit_output
+        SUBMIT_EXIT=$?
+        echo "output returned by notarytool submit:"
+        cat submit_output
+        cat submit_output | grep "id:" | cut -d ':' -f2 | tr -d '[:space:]' > UUID
+        if [[ $SUBMIT_EXIT != 0 || ! -s UUID ]]; then
+          echo "notarytool submit failed (exit=$SUBMIT_EXIT), no submission UUID obtained - aborting"
+          exit 1
+        fi
+        echo "submission UUID: $(cat UUID)"
+        for minutes in {1..5}
+        do
+          sleep 60
+          xcrun notarytool info --output-format normal --no-progress --team-id "${{ secrets.MACTEAMID }}" --apple-id "${{ secrets.MACID }}" --password "${{ secrets.MACPW }}" `cat UUID` > info_output
+          echo "output returned by notarytool info:"
+          cat info_output
+          grep -q Accepted info_output
+          if [[ $? == 0 ]]; then
+            echo "notarized succesfully"
+            break
+          else
+            echo "wait another minute and check again"
+          fi
+        done
+        grep -q Accepted info_output
+        if [[ $? == 0 ]]; then
+          xcrun stapler staple $MAC_INSTALLER
+        else
+          echo "notarization did not succeed in 5 minutes, giving up - asking for notary log"
+          xcrun notarytool log --verbose --output-format normal --no-progress --team-id "${{ secrets.MACTEAMID }}" --apple-id "${{ secrets.MACID }}" --password "${{ secrets.MACPW }}" `cat UUID`
+          exit 1
+        fi
+    - name: upload notarized mac installer
+      uses: actions/upload-artifact@v4
+      with:
+        name: installers-mac
+        path: mac
+        retention-days: 1
+
+  deploy:
+    name: Deploy to site
+    runs-on: ubuntu-24.04
+    # deploy last. `combine` transitively depends on every installer job (mac -> notarize -> combine,
+    # and the win/linux matrix -> combine), so we only list `combine` for the full path. `build` stays
+    # because a server_only run skips `combine` (no installers) and only `build` can gate the config
+    # artifacts then. Full deploy => combine succeeded; server_only => combine skipped, build gates.
+    needs: [build, combine]
+    if: ${{ always() && needs.build.result == 'success' && (needs.combine.result == 'success' || github.event.inputs.server_only == 'true') }}
+    steps:
+    - name: checkout tag
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    - name: retrieve installers
+      if: ${{ github.event.inputs.server_only != 'true' }}
+      uses: actions/download-artifact@v4
+      with:
+          name: installers
+          path: installers
+    - name: retrieve variables
+      uses: actions/download-artifact@v4
+      with:
+        name: variables
+        path: variables
+    - name: setenv
+      run: |
+        for line in $(cat variables/variables); do echo $line >> $GITHUB_ENV; done
+    - name: stage installers
+      if: ${{ github.event.inputs.server_only != 'true' }}
+      run: |
+        cd installers
+        mkdir ../docker/swarm/generated_installers
+        mv * ../docker/swarm/generated_installers
+    - name: setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.VC_KEY }}
+    - name: retrieve config file
+      run: |
+        set -ux
+        ssh-keyscan $VCELL_MANAGER_NODE >> ~/.ssh/known_hosts
+        cd docker/swarm
+        scp ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE}:${VCELL_DEPLOY_REMOTE_DIR}/${VCELL_CONFIG_FILE_NAME} .
+    - name: deploy installers to vcell.org
+      run: |
+        set -ux
+        cd docker/swarm
+        ssh -t ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE} sudo docker login -u ${{ github.actor }} -p "${{ secrets.GITHUB_TOKEN }}" ghcr.io
+        if ${{ github.event.inputs.server_only != 'true' }}; then
+          # build and install the client installers (kubernetes cluster deployments are separate)
+          ./deploy-installers.sh \
+              --ssh-user ${{ secrets.CD_FULL_USER }} \
+              --installer-deploy-dir $VCELL_INSTALLER_REMOTE_DIR \
+              ${VCELL_MANAGER_NODE} \
+              ./${VCELL_CONFIG_FILE_NAME}
+          export VCELL_SITE_CAMEL=`cat $VCELL_CONFIG_FILE_NAME | grep VCELL_SITE_CAMEL | cut -d"=" -f2`
+          ssh ${{ secrets.CD_FULL_USER }}@${VCELL_MANAGER_NODE} \
+            installer_deploy_dir=$VCELL_INSTALLER_REMOTE_DIR vcell_siteCamel=$VCELL_SITE_CAMEL vcell_version=$VCELL_VERSION vcell_build=$VCELL_BUILD \
+            'bash -s' < link-installers.sh
+        fi
+    - name: Capitalize first character of site name
+      id: capitalize
+      run: |
+        SITE="${{ github.event.inputs.vcell_site }}"
+        SITE_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${SITE:0:1})${SITE:1}"
+        VCELL_SWVERSION="${SITE_CAPITALIZED}_Version_${{ github.event.inputs.vcell_version }}_build_${{ github.event.inputs.vcell_build}}"
+        KUSTOMIZE_OVERLAY='not-specified'
+        if [ "${{ github.event.inputs.vcell_site }}" == "rel" ]; then KUSTOMIZE_OVERLAY="prod"; fi
+        if [ "${{ github.event.inputs.vcell_site }}" == "alpha" ]; then KUSTOMIZE_OVERLAY="dev"; fi
+        if [ "${{ github.event.inputs.vcell_site }}" == "test" ]; then KUSTOMIZE_OVERLAY="stage"; fi
+        CONTAINER_IMAGE_TAG="${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build}}"
+        echo "VCELL_SWVERSION=${VCELL_SWVERSION}" >> $GITHUB_ENV
+        echo "KUSTOMIZE_OVERLAY=${KUSTOMIZE_OVERLAY}" >> $GITHUB_ENV
+        echo "CONTAINER_IMAGE_TAG=${CONTAINER_IMAGE_TAG}" >> $GITHUB_ENV
+    - name: Call webhook to deploy to kubernetes cluster (overlay 'prod', 'dev' or 'stage')
+      run: |
+        git_sha=$(git rev-parse --short "$GITHUB_SHA")
+        echo '{"ref": "main","inputs":{"overlay": "'${KUSTOMIZE_OVERLAY}'","tag":"'${CONTAINER_IMAGE_TAG}'","swversion": "'${VCELL_SWVERSION}'"}}' >body
+        curl -X POST 'https://api.github.com/repos/virtualcell/vcell-fluxcd/actions/workflows/deploy.yaml/dispatches' \
+          -H 'Authorization: Bearer ${{ secrets.ACTION_TOKEN }}' \
+          -H 'Content-Type: application/json' \
+          --data "@body"
+
+  # A release becomes citable when it is the one users are running, not when it is tagged.
+  # Archiving on every published release produced a DOI for ~15 consecutive patch builds
+  # between 2026-07-01 and 2026-08-13, none of which reached production. This runs only for
+  # the release site, and only if the deploy actually succeeded.
+  archive-to-zenodo:
+    name: Archive to Zenodo
+    needs: deploy
+    if: ${{ needs.deploy.result == 'success' && github.event.inputs.vcell_site == 'rel' }}
+    uses: ./.github/workflows/zenodo-archive.yml
+    with:
+      tag: ${{ github.event.inputs.vcell_version }}.${{ github.event.inputs.vcell_build }}
+    secrets:
+      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}

@@ -1,0 +1,705 @@
+package cbit.vcell.message.server.htc.slurm;
+import org.junit.jupiter.api.parallel.ResourceLock;
+
+import cbit.vcell.messaging.server.SimulationTask;
+import cbit.vcell.parser.ExpressionException;
+import cbit.vcell.resource.PropertyLoader;
+import cbit.vcell.simdata.PortableCommand;
+import cbit.vcell.solver.SolverDescription;
+import cbit.vcell.solver.SolverTaskDescription;
+import cbit.vcell.solvers.ExecutableCommand;
+import cbit.vcell.xml.XmlHelper;
+import cbit.vcell.xml.XmlParseException;
+import org.junit.jupiter.api.*;
+import org.vcell.solver.fenics.FenicsSolver;
+import org.vcell.util.document.KeyValue;
+import org.vcell.util.document.User;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static cbit.vcell.message.server.htc.HtcProxy.toUnixStyleText;
+
+
+@Tag("Fast")
+@ResourceLock("vcellGlobalConfig")
+public class SlurmProxyTest {
+
+	private final HashMap<String,String> originalProperties = new LinkedHashMap<>();
+
+	private void setProperty(String key, String value) {
+		originalProperties.putIfAbsent(key, System.getProperty(key));
+		System.setProperty(key, value);
+	}
+
+	private void restoreProperties() {
+		for (String key : originalProperties.keySet()) {
+			String originalPropertyValue = originalProperties.get(key);
+			if (originalPropertyValue == null) {
+				System.clearProperty(key);
+			} else {
+				System.setProperty(key, originalPropertyValue);
+			}
+		}
+		originalProperties.clear();
+	}
+
+    @BeforeEach
+    public void setup()
+    {
+		setProperty(PropertyLoader.vcellServerIDProperty,"REL");
+		setProperty(PropertyLoader.htcLogDirExternal,"/share/apps/vcell3/htclogs");
+		setProperty(PropertyLoader.slurm_partition,"vcell");
+		setProperty(PropertyLoader.slurm_reservation,"");
+		setProperty(PropertyLoader.slurm_qos,"vcell");
+		setProperty(PropertyLoader.primarySimDataDirExternalProperty,"/share/apps/vcell3/users");
+		setProperty(PropertyLoader.secondarySimDataDirExternalProperty,"/share/apps/vcell7/users");
+		setProperty(PropertyLoader.jmsSimHostExternal, "rke-wn-01.cam.uchc.edu");
+		setProperty(PropertyLoader.jmsSimPortExternal, "31618");
+		setProperty(PropertyLoader.jmsSimRestPortExternal, "30163");
+		setProperty(PropertyLoader.jmsUser, "clientUser");
+		setProperty(PropertyLoader.jmsPasswordValue, "dummy");
+		setProperty(PropertyLoader.mongodbHostExternal, "rke-wn-01.cam.uchc.edu");
+		setProperty(PropertyLoader.mongodbPortExternal, "30019");
+		setProperty(PropertyLoader.mongodbDatabase, "test");
+		setProperty(PropertyLoader.vcellSoftwareVersion, "Rel_Version_7.6.0_build_28");
+		setProperty(PropertyLoader.slurm_tmpdir, "/scratch/vcell");
+		setProperty(PropertyLoader.slurm_singularity_cachedir, "/share/apps/vcell3/singularity/cachdir");
+		setProperty(PropertyLoader.slurm_singularity_pullfolder, "/share/apps/vcell3/singularity/pullfolder");
+		setProperty(PropertyLoader.slurm_singularity_module_name, "singularity/vcell-3.10.0");
+		setProperty(PropertyLoader.simDataDirArchiveExternal, "/share/apps/vcell12/users");
+		setProperty(PropertyLoader.simDataDirArchiveInternal, "/share/apps/vcell12/users");
+		setProperty(PropertyLoader.nativeSolverDir_External, "/share/apps/vcell3/nativesolvers");
+		setProperty(PropertyLoader.jmsBlobMessageMinSize, "100000");
+		setProperty(PropertyLoader.simulationPostprocessor, "JavaPostprocessor64");
+		setProperty(PropertyLoader.simulationPreprocessor, "JavaPreprocessor64");
+
+		setProperty(PropertyLoader.primarySimDataDirInternalProperty, "/share/apps/vcell3/users");
+		setProperty(PropertyLoader.htc_vcellopt_apptainer_image, "oras://ghcr.io/virtualcell/vcell-opt_singularity:7.6.0.43");
+		setProperty(PropertyLoader.htc_singularity_imagedir, "/share/apps/vcell3/singularityImages");
+
+		setProperty(PropertyLoader.htc_vcellfvsolver_solver_list, "Smoldyn,SundialsPDE");
+		setProperty(PropertyLoader.htc_vcellfvsolver_apptainer_image, "oras://ghcr.io/virtualcell/vcell-fvsolver_singularity:v0.9.4");
+		setProperty(PropertyLoader.htc_vcellsolvers_solver_list, "HybridMilstein,StochGibson,Smoldyn,MovingBoundary,SundialsPDE,CombinedSundials,NFSim");
+		setProperty(PropertyLoader.htc_vcellsolvers_apptainer_image, "oras://ghcr.io/virtualcell/vcell-solvers_singularity:v0.8.1.2");
+		setProperty(PropertyLoader.htc_vcellbatch_solver_list, "RungeKuttaFehlberg,HybridMilstein,StochGibson,Langevin,AdamsMoulton,Smoldyn,MovingBoundary,SundialsPDE,CombinedSundials,NFSim");
+		setProperty(PropertyLoader.htc_vcellbatch_apptainer_image, "oras://ghcr.io/virtualcell/vcell-batch_singularity:7.6.0.43");
+
+		setProperty(PropertyLoader.htcPowerUserMemoryFloorMB, "51200");
+		setProperty(PropertyLoader.htcMinMemoryMB, "4096");
+		setProperty(PropertyLoader.htcMaxMemoryMB, "81920");
+
+		setProperty(PropertyLoader.slurm_langevin_timeoutPerTaskSeconds, "345600");
+		setProperty(PropertyLoader.slurm_langevin_batchMemoryLimitPerTaskMB, "1024");
+		setProperty(PropertyLoader.slurm_langevin_memoryBlockSizeMB, "256");
+	}
+
+	@AfterEach
+	public void teardown() {
+		restoreProperties();
+	}
+
+	public String createScriptForNativeSolvers(String simTaskResourcePath, String[] command, String JOB_NAME) throws IOException, XmlParseException, ExpressionException {
+		return createScriptForNativeSolversFromXml(readTextFileFromResource(simTaskResourcePath), command, JOB_NAME);
+	}
+
+	/** Like {@link #createScriptForNativeSolvers}, from a simtask's XML text (so a test can swap the solver in a fixture). */
+	public String createScriptForNativeSolversFromXml(String simTaskXml, String[] command, String JOB_NAME) throws IOException, XmlParseException, ExpressionException {
+
+		SimulationTask simTask = XmlHelper.XMLToSimTask(simTaskXml);
+		KeyValue simKey = simTask.getSimKey();
+
+		SlurmProxy slurmProxy = new SlurmProxy(null, "vcell");
+		File subFileExternal = new File("/share/apps/vcell3/htclogs/V_REL_"+simKey+"_0_0.slurm.sub");
+		String subFileExternalPath = SlurmProxy.toClusterPath(subFileExternal.getAbsolutePath());
+
+		User simOwner = simTask.getSimulation().getVersion().getOwner();
+		final int jobId = simTask.getSimulationJob().getJobIndex();
+
+		// preprocessor
+		String simTaskFilePathExternal = "/share/apps/vcell3/users/schaff/SimID_"+simKey+"_0__0.simtask.xml";
+		File primaryUserDirExternal = new File("/share/apps/vcell3/users/schaff");
+		String primaryUserDirExternalPath = SlurmProxy.toClusterPath(primaryUserDirExternal.getAbsolutePath());
+
+		List<String> args = new ArrayList<>( 4 );
+		args.add( PropertyLoader.getRequiredProperty(PropertyLoader.simulationPreprocessor) );
+		args.add( simTaskFilePathExternal );
+		args.add( primaryUserDirExternalPath );
+		ExecutableCommand preprocessorCmd = new ExecutableCommand(null, false, false,args);
+
+		ExecutableCommand.LibraryPath libraryPath = new ExecutableCommand.LibraryPath("/usr/local/app/localsolvers/linux64");
+		final ExecutableCommand solverCmd = new ExecutableCommand(libraryPath, command);
+
+		// postprocessor
+		final String SOLVER_EXIT_CODE_REPLACE_STRING = "SOLVER_EXIT_CODE_REPLACE_STRING";
+		ExecutableCommand postprocessorCmd = new ExecutableCommand(null,false, false,
+				PropertyLoader.getRequiredProperty(PropertyLoader.simulationPostprocessor),
+				simKey.toString(),
+				simOwner.getName(),
+				simOwner.getID().toString(),
+				Integer.toString(jobId),
+				Integer.toString(simTask.getTaskID()),
+				SOLVER_EXIT_CODE_REPLACE_STRING,
+				subFileExternalPath);
+		postprocessorCmd.setExitCodeToken(SOLVER_EXIT_CODE_REPLACE_STRING);
+
+		ExecutableCommand.Container commandSet = new ExecutableCommand.Container();
+		commandSet.add(preprocessorCmd);
+		commandSet.add(solverCmd);
+		commandSet.add(postprocessorCmd);
+
+		int NUM_CPUs = 1;
+		int MEM_SIZE_MB = 1000;
+		ArrayList<PortableCommand> postProcessingCommands = new ArrayList<>();
+
+		SolverTaskDescription std = simTask.getSimulationJob().getSimulation().getSolverTaskDescription();
+		String scriptText;
+		if(std.getSolverDescription().isLangevinSolver() && std.getLangevinSimulationOptions().getTotalNumberOfJobs() > 1) {
+			scriptText = slurmProxy.createBatchJobScriptText(JOB_NAME, commandSet, NUM_CPUs, MEM_SIZE_MB, postProcessingCommands, simTask);
+		} else {
+			scriptText = slurmProxy.createJobScriptText(JOB_NAME, commandSet, NUM_CPUs, MEM_SIZE_MB, postProcessingCommands, simTask);
+		}
+		return scriptText;
+	}
+
+
+
+	public String createScriptForJavaSolvers(String simTaskResourcePath, String JOB_NAME) throws IOException, XmlParseException, ExpressionException {
+
+		SimulationTask simTask = XmlHelper.XMLToSimTask(readTextFileFromResource(simTaskResourcePath));
+		KeyValue simKey = simTask.getSimKey();
+
+		SlurmProxy slurmProxy = new SlurmProxy(null, "vcell");
+		File subFileExternal = new File("/share/apps/vcell3/htclogs/V_REL_"+simKey+"_0_0.slurm.sub");
+
+		User simOwner = simTask.getSimulation().getVersion().getOwner();
+		final int jobId = simTask.getSimulationJob().getJobIndex();
+
+		final ExecutableCommand.LibraryPath libraryPath = null;
+		String command = "JavaSimExe64";
+		String userDir = "/share/apps/vcell3/users/schaff";
+		String simTaskRemoteFilename = "/share/apps/vcell3/users/schaff/SimID_"+simKey+"_0__0.simtask.xml";
+        final ExecutableCommand solverCmd = new ExecutableCommand(libraryPath, command, simTaskRemoteFilename, userDir);
+
+		// postprocessor
+		final String SOLVER_EXIT_CODE_REPLACE_STRING = "SOLVER_EXIT_CODE_REPLACE_STRING";
+		ExecutableCommand postprocessorCmd = new ExecutableCommand(null,false, false,
+				PropertyLoader.getRequiredProperty(PropertyLoader.simulationPostprocessor),
+				simKey.toString(),
+				simOwner.getName(),
+				simOwner.getID().toString(),
+				Integer.toString(jobId),
+				Integer.toString(simTask.getTaskID()),
+				SOLVER_EXIT_CODE_REPLACE_STRING,
+				SlurmProxy.toClusterPath(subFileExternal.getAbsolutePath()));
+		postprocessorCmd.setExitCodeToken(SOLVER_EXIT_CODE_REPLACE_STRING);
+
+		ExecutableCommand.Container commandSet = new ExecutableCommand.Container();
+		commandSet.add(solverCmd);
+		commandSet.add(postprocessorCmd);
+
+		int NUM_CPUs = 1;
+		int MEM_SIZE_MB = 1000;
+		ArrayList<PortableCommand> postProcessingCommands = new ArrayList<>();
+		return slurmProxy.createJobScriptText(JOB_NAME, commandSet, NUM_CPUs, MEM_SIZE_MB, postProcessingCommands, simTask);
+	}
+
+	public String createScriptForOptimizations(String JOB_NAME, int job_id) throws IOException, XmlParseException, ExpressionException {
+		SlurmProxy slurmProxy = new SlurmProxy(null, "vcell");
+		File optProblemInputFile = new File("/share/apps/vcell3/users/parest_data/CopasiParest_"+job_id+"_optProblem.json");
+		File optProblemOutputFile = new File("/share/apps/vcell3/users/parest_data/CopasiParest_"+job_id+"_optRun.json");
+		File optProblemReportFile = new File("/share/apps/vcell3/users/parest_data/CopasiParest_"+job_id+"_optReport.txt");
+		return slurmProxy.createOptJobScript(JOB_NAME, optProblemInputFile, optProblemOutputFile, optProblemReportFile);
+	}
+
+	@Test
+	public void testOptimization() throws IOException, XmlParseException, ExpressionException {
+		String JOB_NAME = "CopasiParest_152878";
+		int job_id = 152878;
+		String slurmScript = createScriptForOptimizations(JOB_NAME, job_id);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/opt/CopasiParest_152878.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptFiniteVolume() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/finite_volume/SimID_274514696_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274514696_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/FiniteVolume_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274514696_0_.fvinput";
+		String[] command = new String[] { executable, inputFilePath, "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/finite_volume/V_REL_274514696_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptSmoldyn() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/smoldyn/SimID_274630052_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274630052_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/smoldyn_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274630052_0_.smoldynInput";
+		String[] command = new String[] { executable, inputFilePath, "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/smoldyn/V_REL_274630052_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptCVODE() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/cvode/SimID_274630682_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274630682_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/SundialsSolverStandalone_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274630682_0_.cvodeInput";
+		String outputFilePath = "/share/apps/vcell3/users/schaff/SimID_274630682_0_.ida";
+		String[] command = new String[] { executable, inputFilePath, outputFilePath, "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/cvode/V_REL_274630682_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptLangevin() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/langevin/SimID_274672135_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274672135_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/langevin_x64";
+		String outputLog = "/share/apps/vcell3/users/schaff/SimID_274672135_0_.log";
+		String messagingConfig = "/share/apps/vcell3/users/schaff/SimID_274672135_0_.langevinMessagingConfig";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274672135_0_.langevinInput";
+		String[] command = new String[] { executable, "simulate", "--output-log="+outputLog,
+				"--vc-send-status-config="+messagingConfig, inputFilePath, "0", "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/langevin/V_REL_274672135_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptFEniCSx() throws Exception {
+		// the FEniCSx image is chosen by its own (optional) solver list; the command is FenicsSolver's own,
+		// with the "-tid" HtcSimulationWorker appends
+		setProperty(PropertyLoader.htc_vcellfenics_solver_list, "FEniCSx");
+		setProperty(PropertyLoader.htc_vcellfenics_apptainer_image, "oras://ghcr.io/virtualcell/vcell-fenics_singularity:sha-74e7386");
+		String simTaskResourcePath = "slurm_fixtures/fenicsx/SimID_274514696_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274514696_0_0";
+
+		SimulationTask simTask = XmlHelper.XMLToSimTask(readTextFileFromResource(simTaskResourcePath));
+		Assertions.assertSame(SolverDescription.FEniCSx, simTask.getSimulation().getSolverTaskDescription().getSolverDescription());
+		// the solver creates its directory, so build it in a temporary one and name the cluster's instead
+		File tempUserDir = java.nio.file.Files.createTempDirectory("fenicsx-slurm").toFile();
+		setProperty(PropertyLoader.installationRoot, tempUserDir.getAbsolutePath()); // getCommands() names the local-solvers dir
+		FenicsSolver solver = new FenicsSolver(simTask, tempUserDir, true);
+		List<String> command = new ArrayList<>();
+		String tempUserDirPath = tempUserDir.getAbsolutePath().replace('\\', '/');	// FenicsSolver writes '/' on Windows too
+		for (String token : solver.getCommands().iterator().next().getCommands()) {
+			command.add(token.replace('\\', '/').replace(tempUserDirPath, "/share/apps/vcell3/users/schaff"));
+		}
+		command.add("-tid");
+		command.add("0");
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command.toArray(new String[0]), JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/fenicsx/V_REL_274514696_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testFEniCSxNotConfigured() throws Exception {
+		// a site without the (optional) FEniCSx properties rejects the solver rather than running it in another image
+		String simTaskResourcePath = "slurm_fixtures/fenicsx/SimID_274514696_0__0.simtask.xml";
+		RuntimeException e = Assertions.assertThrows(RuntimeException.class, () ->
+				createScriptForNativeSolvers(simTaskResourcePath, new String[] { "vcell-fenics" }, "V_REL_274514696_0_0"));
+		Assertions.assertTrue(e.getMessage().contains("solverName=FEniCSx"), e.getMessage());
+	}
+
+	@Test
+	public void testSimJobScriptLangevinBatch() throws IOException, XmlParseException, ExpressionException {
+		/*
+		for instruction about server running manually for testing, see:
+		\vcell\vcell-server\src\test\resources\slurm_fixtures\langevin\slurm_array_poc\readme.md
+		 */
+		setProperty(PropertyLoader.htc_vcellopt_apptainer_image, "oras://ghcr.io/virtualcell/vcell-opt_singularity:8.0.5.01");
+		//setProperty(PropertyLoader.htcNodeList, "mantis-040");
+		setProperty(PropertyLoader.vcellSoftwareVersion, "Rel_Version_8.0.5_build_01");
+		setProperty(PropertyLoader.vcellServerIDProperty,"TEST2");
+		setProperty(PropertyLoader.jmsSimHostExternal, "k8s-wn-01.cam.uchc.edu");
+		setProperty(PropertyLoader.htc_vcellbatch_apptainer_image, "oras://ghcr.io/virtualcell/vcell-batch_singularity:8.0.5.01");
+		setProperty(PropertyLoader.slurm_langevin_maxNumConcurrentTasks, "4");	// max 3 sims + 1 watchdog
+
+		String simTaskResourcePath = "slurm_fixtures/langevin/SimID_999999999_0__0.simtask.xml";
+		String JOB_NAME = "V_TEST2_999999999_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/langevin_x64";
+		String outputLog = "/share/apps/vcell3/users/danv/SimID_999999999_0_.log";
+		String messagingConfig = "/share/apps/vcell3/users/danv/SimID_999999999_0_.langevinMessagingConfig";
+		String inputFilePath = "/share/apps/vcell3/users/danv/SimID_999999999_0_.langevinInput";
+		String[] command = new String[] { executable, "simulate", "--output-log="+outputLog,
+				"--vc-send-status-config="+messagingConfig, inputFilePath, "0", "-tid", "0" };
+
+		String actualSlurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		actualSlurmScript = toUnixStyleText(actualSlurmScript);
+
+		// this is the source of truth
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/langevin/V_TEST2_999999999_0_0.slurm.sub");
+		expectedSlurmScript = toUnixStyleText(expectedSlurmScript);
+
+		Assertions.assertEquals(expectedSlurmScript.trim(), actualSlurmScript.trim(), "Strings should be equal");
+	}
+
+	@Test
+	public void testSimJobScriptNFsim() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/nfsim/SimID_274642453_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274642453_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/NFsim_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274642453_0_.nfsimInput";
+		String gdatFilePath = "/share/apps/vcell3/users/schaff/SimID_274642453_0_.gdat";
+		String speciesFilePath = "/share/apps/vcell3/users/schaff/SimID_274642453_0_.species";
+		String[] command = new String[] { executable, "-seed", "716746135", "-vcell", "-xml", inputFilePath,
+				"-o", gdatFilePath, "-sim", "1.0", "-ss", speciesFilePath, "-oSteps", "20", "-notf", "-utl", "1000",
+				"-cb", "-pcmatch", "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/nfsim/V_REL_274642453_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptGibsonMilstein() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/gibson_milstein/SimID_274641698_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274641698_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/Hybrid_EM_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274641698_0_.nc";
+		String[] command = new String[] { executable, inputFilePath, "100.0", "10.0", "0.01", "0.1", "-OV", "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/gibson_milstein/V_REL_274641698_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptMovingBoundary() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/moving_boundary/SimID_274641196_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274641196_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/MovingBoundary_x64";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274641196_0_mb.xml";
+		String[] command = new String[] { executable, "--config", inputFilePath, "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/moving_boundary/V_REL_274641196_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptGibson() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/gibson/SimID_274635122_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274635122_0_0";
+
+		String executable = "/usr/local/app/localsolvers/linux64/VCellStoch_x64";
+		String subcommand = "gibson";
+		String inputFilePath = "/share/apps/vcell3/users/schaff/SimID_274635122_0_.stochInput";
+		String outputFilePath = "/share/apps/vcell3/users/schaff/SimID_274635122_0_.ida";
+		String[] command = new String[] { executable, subcommand, inputFilePath, outputFilePath, "-tid", "0" };
+
+		String slurmScript = createScriptForNativeSolvers(simTaskResourcePath, command, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/gibson/V_REL_274635122_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptRK45() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/runge_kutta_fehlberg/SimID_274631114_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274631114_0_0";
+		String slurmScript = createScriptForJavaSolvers(simTaskResourcePath, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/runge_kutta_fehlberg/V_REL_274631114_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	@Test
+	public void testSimJobScriptAdamsMoulton() throws IOException, XmlParseException, ExpressionException {
+		String simTaskResourcePath = "slurm_fixtures/adams_moulton/SimID_274633859_0__0.simtask.xml";
+		String JOB_NAME = "V_REL_274633859_0_0";
+		String slurmScript = createScriptForJavaSolvers(simTaskResourcePath, JOB_NAME);
+		String expectedSlurmScript = readTextFileFromResource("slurm_fixtures/adams_moulton/V_REL_274633859_0_0.slurm.sub");
+		Assertions.assertEquals(expectedSlurmScript.trim(), slurmScript.trim());
+	}
+
+	// ---- solver image families (docs/plan-solver-repos.md, PR B1) ----
+
+	/** A fixture's simtask XML with its solver swapped for another (by the solver's database name, as the XML stores it). */
+	private String simTaskXmlWithSolver(String simTaskResourcePath, SolverDescription from, SolverDescription to) throws IOException {
+		String xml = readTextFileFromResource(simTaskResourcePath);
+		String fromAttr = "Solver=\"" + from.getDatabaseName() + "\"";
+		Assertions.assertTrue(xml.contains(fromAttr), "fixture " + simTaskResourcePath + " does not use " + from);
+		return xml.replace(fromAttr, "Solver=\"" + to.getDatabaseName() + "\"");
+	}
+
+	private void assertScript(String expectedResourcePath, String actualScript) throws IOException {
+		Assertions.assertEquals(readTextFileFromResource(expectedResourcePath).trim(), actualScript.trim());
+	}
+
+	@Test
+	public void testFamilyOde() throws Exception {
+		setProperty(PropertyLoader.htc_vcellode_solver_list, "CVODE,IDA,CombinedSundials");
+		setProperty(PropertyLoader.htc_vcellode_apptainer_image, "oras://ghcr.io/virtualcell/vcell-ode_singularity:0.9.5");
+		String xml = simTaskXmlWithSolver("slurm_fixtures/cvode/SimID_274630682_0__0.simtask.xml", SolverDescription.CombinedSundials, SolverDescription.CVODE);
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/SundialsSolverStandalone_x64",
+				"/share/apps/vcell3/users/schaff/SimID_274630682_0_.cvodeInput", "/share/apps/vcell3/users/schaff/SimID_274630682_0_.ida", "-tid", "0" };
+		assertScript("slurm_fixtures/families/ode/V_REL_274630682_0_0.slurm.sub",
+				createScriptForNativeSolversFromXml(xml, command, "V_REL_274630682_0_0"));
+	}
+
+	@Test
+	public void testFamilyStochastic() throws Exception {
+		// StochGibson is also on the legacy solvers list (setup()): the stochastic family comes first, so it wins
+		setProperty(PropertyLoader.htc_vcellstochastic_solver_list, "StochGibson");
+		setProperty(PropertyLoader.htc_vcellstochastic_apptainer_image, "oras://ghcr.io/virtualcell/vcell-stochastic_singularity:1.0.0");
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/VCellStoch_x64", "gibson",
+				"/share/apps/vcell3/users/schaff/SimID_274635122_0_.stochInput", "/share/apps/vcell3/users/schaff/SimID_274635122_0_.ida", "-tid", "0" };
+		assertScript("slurm_fixtures/families/stochastic/V_REL_274635122_0_0.slurm.sub",
+				createScriptForNativeSolvers("slurm_fixtures/gibson/SimID_274635122_0__0.simtask.xml", command, "V_REL_274635122_0_0"));
+	}
+
+	@Test
+	public void testFamilyNfsim() throws Exception {
+		setProperty(PropertyLoader.htc_vcellnfsim_solver_list, "NFSim");
+		setProperty(PropertyLoader.htc_vcellnfsim_apptainer_image, "oras://ghcr.io/virtualcell/vcell-nfsim_singularity:1.0.0");
+		String dir = "/share/apps/vcell3/users/schaff/SimID_274642453_0_";
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/NFsim_x64", "-seed", "716746135", "-vcell", "-xml", dir + ".nfsimInput",
+				"-o", dir + ".gdat", "-sim", "1.0", "-ss", dir + ".species", "-oSteps", "20", "-notf", "-utl", "1000",
+				"-cb", "-pcmatch", "-tid", "0" };
+		assertScript("slurm_fixtures/families/nfsim/V_REL_274642453_0_0.slurm.sub",
+				createScriptForNativeSolvers("slurm_fixtures/nfsim/SimID_274642453_0__0.simtask.xml", command, "V_REL_274642453_0_0"));
+	}
+
+	@Test
+	public void testFamilyMbsolver() throws Exception {
+		setProperty(PropertyLoader.htc_vcellmbsolver_solver_list, "MovingBoundary");
+		setProperty(PropertyLoader.htc_vcellmbsolver_apptainer_image, "oras://ghcr.io/virtualcell/vcell-mbsolver_singularity:1.0.5");
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/MovingBoundary_x64", "--config",
+				"/share/apps/vcell3/users/schaff/SimID_274641196_0_mb.xml", "-tid", "0" };
+		assertScript("slurm_fixtures/families/mbsolver/V_REL_274641196_0_0.slurm.sub",
+				createScriptForNativeSolvers("slurm_fixtures/moving_boundary/SimID_274641196_0__0.simtask.xml", command, "V_REL_274641196_0_0"));
+	}
+
+	@Test
+	public void testFamilyHy3s() throws Exception {
+		setProperty(PropertyLoader.htc_vcellhy3s_solver_list, "HybridEuler,HybridMilstein,HybridMilAdaptive");
+		setProperty(PropertyLoader.htc_vcellhy3s_apptainer_image, "oras://ghcr.io/virtualcell/vcell-hy3s_singularity:1.0.0");
+		String xml = simTaskXmlWithSolver("slurm_fixtures/gibson_milstein/SimID_274641698_0__0.simtask.xml", SolverDescription.HybridMilstein, SolverDescription.HybridEuler);
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/Hybrid_EM_x64",
+				"/share/apps/vcell3/users/schaff/SimID_274641698_0_.nc", "100.0", "10.0", "0.01", "0.1", "-OV", "-tid", "0" };
+		assertScript("slurm_fixtures/families/hy3s/V_REL_274641698_0_0.slurm.sub",
+				createScriptForNativeSolversFromXml(xml, command, "V_REL_274641698_0_0"));
+	}
+
+	@Test
+	public void testFamilyChombo() throws Exception {
+		setProperty(PropertyLoader.htc_vcellchombo_solver_list, "Chombo");
+		setProperty(PropertyLoader.htc_vcellchombo_apptainer_image, "oras://ghcr.io/virtualcell/vcell-chombo_singularity:1.0.0");
+		String xml = simTaskXmlWithSolver("slurm_fixtures/finite_volume/SimID_274514696_0__0.simtask.xml", SolverDescription.SundialsPDE, SolverDescription.Chombo);
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/VCellChombo3D_x64",
+				"/share/apps/vcell3/users/schaff/SimID_274514696_0_.fvinput", "-tid", "0" };
+		assertScript("slurm_fixtures/families/chombo/V_REL_274514696_0_0.slurm.sub",
+				createScriptForNativeSolversFromXml(xml, command, "V_REL_274514696_0_0"));
+	}
+
+	@Test
+	public void testFamilyWithoutImageIsSkipped() throws Exception {
+		// the ode list names CombinedSundials, but the ode image is unset: skip the family, fall through to legacy solvers
+		setProperty(PropertyLoader.htc_vcellode_solver_list, "CVODE,IDA,CombinedSundials");
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-solvers_singularity:v0.8.1.2", SolverImageFamily.resolveImage("CombinedSundials"));
+		// ... and the generated script is the legacy one, unchanged
+		String[] command = new String[] { "/usr/local/app/localsolvers/linux64/SundialsSolverStandalone_x64",
+				"/share/apps/vcell3/users/schaff/SimID_274630682_0_.cvodeInput", "/share/apps/vcell3/users/schaff/SimID_274630682_0_.ida", "-tid", "0" };
+		assertScript("slurm_fixtures/cvode/V_REL_274630682_0_0.slurm.sub",
+				createScriptForNativeSolvers("slurm_fixtures/cvode/SimID_274630682_0__0.simtask.xml", command, "V_REL_274630682_0_0"));
+	}
+
+	@Test
+	public void testFamilyWithEmptyListIsSkipped() {
+		// an image with an empty (or blank) list claims no solver
+		setProperty(PropertyLoader.htc_vcellode_apptainer_image, "oras://ghcr.io/virtualcell/vcell-ode_singularity:0.9.5");
+		setProperty(PropertyLoader.htc_vcellode_solver_list, " ");
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-solvers_singularity:v0.8.1.2", SolverImageFamily.resolveImage("CombinedSundials"));
+	}
+
+	@Test
+	public void testFallbackToLegacySolvers() {
+		// ode is configured, but only for CVODE and IDA: CombinedSundials stays on the legacy image until it is moved
+		setProperty(PropertyLoader.htc_vcellode_solver_list, "CVODE, IDA");
+		setProperty(PropertyLoader.htc_vcellode_apptainer_image, "oras://ghcr.io/virtualcell/vcell-ode_singularity:0.9.5");
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-ode_singularity:0.9.5", SolverImageFamily.resolveImage("CVODE"));
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-ode_singularity:0.9.5", SolverImageFamily.resolveImage("IDA"));
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-solvers_singularity:v0.8.1.2", SolverImageFamily.resolveImage("CombinedSundials"));
+		// solvers on no per-repo list still resolve as before: fvsolver first, then legacy solvers, then batch
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-fvsolver_singularity:v0.9.4", SolverImageFamily.resolveImage("Smoldyn"));
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-solvers_singularity:v0.8.1.2", SolverImageFamily.resolveImage("NFSim"));
+		Assertions.assertEquals("oras://ghcr.io/virtualcell/vcell-batch_singularity:7.6.0.43", SolverImageFamily.resolveImage("RungeKuttaFehlberg"));
+	}
+
+	@Test
+	public void testSolverNotInAnyFamily() {
+		RuntimeException e = Assertions.assertThrows(RuntimeException.class, () -> SolverImageFamily.resolveImage("Comsol"));
+		Assertions.assertEquals("solverName=Comsol not in vcellfenics_solverList=[]"
+				+ " or vcellfvsolver_solverList=[Smoldyn, SundialsPDE]"
+				+ " or vcellode_solverList=[] or vcellstochastic_solverList=[] or vcellnfsim_solverList=[]"
+				+ " or vcellmbsolver_solverList=[] or vcellhy3s_solverList=[] or vcellchombo_solverList=[]"
+				+ " or vcellsolvers_solverList=[HybridMilstein, StochGibson, Smoldyn, MovingBoundary, SundialsPDE, CombinedSundials, NFSim]"
+				+ " or vcellbatch_solverList=[RungeKuttaFehlberg, HybridMilstein, StochGibson, Langevin, AdamsMoulton, Smoldyn, MovingBoundary, SundialsPDE, CombinedSundials, NFSim]",
+				e.getMessage());
+	}
+
+	@Test
+	public void testFamilyOrderMatchesPlan() {
+		Assertions.assertEquals(List.of("fenics", "fvsolver", "ode", "stochastic", "nfsim", "mbsolver", "hy3s", "chombo", "solvers", "batch"),
+				SolverImageFamily.FAMILIES.stream().map(f -> f.name).collect(Collectors.toList()));
+	}
+
+	private String readTextFileFromResource(String filename) throws IOException {
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
+		if (inputStream == null) {
+			throw new IOException("Resource not found: " + filename);
+		}
+		String xmlString;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+			xmlString = reader.lines().collect(Collectors.joining("\n"));	// scripts are Unix text on every OS
+		}
+		return xmlString;
+	}
+
+//	@Disabled // this test is disabled because it requires a running slurm server
+//	@Test
+//	public void testSingularitySupport() {
+//		CommandServiceSshNative cmd = null;
+//		try {
+//			Random r = new Random();
+//			System.setProperty("log4j2.trace","true");
+//			PropertyLoader.setProperty(PropertyLoader.vcellServerIDProperty, "Test2");
+//			PropertyLoader.setProperty(PropertyLoader.htcLogDirExternal, "/Volumes/vcell/htclogs");
+//			VCMongoMessage.enabled=false;
+//			String partitions[] = new String[] { "vcell", "vcell2" };
+//			PropertyLoader.setProperty(PropertyLoader.slurm_partition, partitions[1]);
+//
+//
+//			cmd = new CommandServiceSshNative(new String[] {"vcell-service.cam.uchc.edu"}, "vcell", new File("/Users/schaff/.ssh/schaff_rsa"));
+//			SlurmProxy slurmProxy = new SlurmProxy(cmd, "vcell");
+//
+//			String jobName = "V_TEST2_999999999_0_"+r.nextInt(10000);
+//			System.out.println("job name is "+jobName);
+//			File sub_file_localpath = new File("/Volumes/vcell/htclogs/"+jobName+".slurm.sub");
+//			File sub_file_remotepath = new File("/share/apps/vcell3/htclogs/"+jobName+".slurm.sub");
+//
+//			StringBuilder subfileContent = new StringBuilder();
+//			subfileContent.append("#!/usr/bin/bash\n");
+//			String partition = PropertyLoader.getRequiredProperty(PropertyLoader.slurm_partition);
+//			subfileContent.append("#SBATCH --partition="+partition+"\n");
+//			subfileContent.append("#SBATCH -J "+jobName+"\n");
+//			subfileContent.append("#SBATCH -o /share/apps/vcell3/htclogs/"+jobName+".slurm.log\n");
+//			subfileContent.append("#SBATCH -e /share/apps/vcell3/htclogs/"+jobName+".slurm.log\n");
+//			subfileContent.append("#SBATCH --mem=1000M\n");
+//			subfileContent.append("#SBATCH --no-kill\n");
+//			subfileContent.append("#SBATCH --no-requeue\n");
+//			subfileContent.append("env\n");
+//			subfileContent.append("echo `hostname`\n");
+//			subfileContent.append("python -c \"some_str = ' ' * 51200000\"\n");
+//			subfileContent.append("retcode=$?\n");
+//			subfileContent.append("echo \"return code was $retcode\"\n");
+//			subfileContent.append("if [[ $retcode == 137 ]]; then\n");
+//			subfileContent.append("   echo \"job was killed via kill -9 (probably out of memory)\"\n");
+//			subfileContent.append("fi\n");
+//			subfileContent.append("sleep 20\n");
+//			subfileContent.append("exit $retcode\n");
+//			//subfileContent.append("export MODULEPATH=/isg/shared/modulefiles:/tgcapps/modulefiles\n");
+//			//subfileContent.append("source /usr/share/Modules/init/bash\n");
+////			subfileContent.append("module load singularity\n");
+////			subfileContent.append("if command -v singularity >/dev/null 2>&1; then\n");
+////			subfileContent.append("   echo 'singularity command exists'\n");
+////			subfileContent.append("   exit 0\n");
+////			subfileContent.append("else\n");
+////			subfileContent.append("   echo 'singularity command not found'\n");
+////			subfileContent.append("   exit 1\n");
+////			subfileContent.append("fi\n");
+//
+//			FileUtils.writeStringToFile(sub_file_localpath, subfileContent.toString());
+//			HtcJobID htcJobId = slurmProxy.submitJobFile(sub_file_remotepath);
+//			System.out.println("running job "+htcJobId);
+//			HtcJobInfo htcJobInfo = new HtcJobInfo(htcJobId, jobName);
+//
+//			ArrayList<HtcJobInfo> jobInfos = new ArrayList<HtcJobInfo>();
+//			jobInfos.add(htcJobInfo);
+//
+//			Map<HtcJobInfo, HtcJobStatus> jobStatusMap = slurmProxy.getJobStatus(jobInfos);
+//
+//			int attempts = 0;
+//			while (attempts<80 && (jobStatusMap.get(htcJobInfo)==null || !jobStatusMap.get(htcJobInfo).isDone())){
+//				try { Thread.sleep(1000); } catch (InterruptedException e){}
+//				jobStatusMap = slurmProxy.getJobStatus(jobInfos);
+//				System.out.println(jobStatusMap.get(htcJobInfo));
+//				if (attempts==5) {
+//					slurmProxy.killJobs(jobName);
+//				}
+//				attempts++;
+//			}
+//			System.out.println(jobStatusMap.get(htcJobInfo));
+//
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//            Assertions.fail(e.getMessage());
+//		}finally {
+//			if (cmd != null) {
+//				cmd.close();
+//			}
+//		}
+//	}
+//
+//
+//	@Disabled // this test is disabled because it requires a running slurm server
+//	@Test
+//	public void testSLURM() throws IOException, ExecutableException {
+//		System.setProperty("log4j2.trace","true");
+//		PropertyLoader.setProperty(PropertyLoader.vcellServerIDProperty, "Test2");
+//		VCMongoMessage.enabled=false;
+//		String partitions[] = new String[] { "vcell", "vcell2" };
+//		PropertyLoader.setProperty(PropertyLoader.slurm_partition, partitions[0]);
+//
+//		CommandServiceSshNative cmd = null;
+//		try {
+//			cmd = new CommandServiceSshNative(new String[] {"vcell-service.cam.uchc.edu"}, "vcell", new File("/Users/schaff/.ssh/schaff_rsa"));
+//			SlurmProxy slurmProxy = new SlurmProxy(cmd, "vcell");
+//			Map<HtcJobInfo, HtcJobStatus> runningJobs = slurmProxy.getRunningJobs();
+//			for (HtcJobInfo jobInfo : runningJobs.keySet()) {
+//				HtcJobStatus jobStatus = runningJobs.get(jobInfo);
+//				System.out.println("job "+jobInfo.getHtcJobID()+" "+jobInfo.getJobName()+", status="+jobStatus.toString());
+//			}
+//			for (String partition : partitions) {
+//				PropertyLoader.setProperty(PropertyLoader.slurm_partition, partition);
+//				PartitionStatistics partitionStatistics = slurmProxy.getPartitionStatistics();
+//				System.out.println("partition statistics for partition "+partition+": "+partitionStatistics);
+//				System.out.println("number of cpus allocated = "+partitionStatistics.numCpusAllocated);
+//				System.out.println("load = "+partitionStatistics.load);
+//				System.out.println("number of cpus total = "+partitionStatistics.numCpusTotal);
+//			}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//            Assertions.fail(e.getMessage());
+//		}finally {
+//			if (cmd != null) {
+//				cmd.close();
+//			}
+//		}
+//	}
+
+}

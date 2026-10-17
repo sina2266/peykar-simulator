@@ -1,0 +1,17 @@
+# This file is the template of a CMake script executed by the pre-commit utility
+# whenever the hook named `courtesy-msg` is enabled
+# (see "Pre-commit utility" section in cpp/README.md)
+#
+# To execute your own script (with another message for instance), write a CMake template
+# in ${PROJECT_SOURCE_DIR}/.git-push-message.cmake.in
+
+message(STATUS "\n\
+This is a courtesy message to remind you to properly test and format your changes\n\
+before opening a Pull Request.\n\
+To format your changes:\n\
+  pushd /path/to/build/dir\n\
+  cmake -D@CODING_CONV_PREFIX@_FORMATTING=ON -D@CODING_CONV_PREFIX@_TEST_FORMATTING=ON .\n\
+  make clang_format cmake_format\n\
+To run the tests and check the formatting:\n\
+  make test\n\
+You should also read the contributing guidelines this project may provide")

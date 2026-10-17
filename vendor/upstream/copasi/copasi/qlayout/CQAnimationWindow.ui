@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2021 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2013 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+
+ <class>CQAnimationWindow</class>
+ <widget class="QMainWindow" name="CQAnimationWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>COPASI Visualization</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <property name="spacing">
+     <number>5</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="CQLayoutView" name="graphicsView">
+      <property name="minimumSize">
+       <size>
+        <width>320</width>
+        <height>240</height>
+       </size>
+      </property>
+      <property name="renderHints">
+       <set>QPainter::Antialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
+      </property>
+      <property name="dragMode">
+       <enum>QGraphicsView::ScrollHandDrag</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="CQAnimationControls" name="mpControls" native="true"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionView_Time_Course"/>
+    <addaction name="actionView_Elementary_Modes"/>
+    <addaction name="actionView_Conserved_Species"/>
+    <addaction name="actionView_Custom_Time_Course"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionRandomize_Layout"/>
+    <addaction name="actionAuto_Layout"/>
+    <addaction name="separator"/>
+    <addaction name="action_Settings"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Edit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="action_Settings">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionView_Conserved_Species">
+   <property name="text">
+    <string>View Conserved Species</string>
+   </property>
+  </action>
+  <action name="actionView_Elementary_Modes">
+   <property name="text">
+    <string>View Elementary Modes</string>
+   </property>
+  </action>
+  <action name="actionView_Time_Course">
+   <property name="text">
+    <string>View Time Course</string>
+   </property>
+  </action>
+  <action name="actionView_Custom_Time_Course">
+    <property name="text">
+     <string>View Custom Time Course</string>
+    </property>
+   </action>
+  <action name="actionRandomize_Layout">
+   <property name="text">
+    <string>Randomize Layout</string>
+   </property>
+  </action>
+  <action name="actionAuto_Layout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Layout</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CQLayoutView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">copasi/qlayout/CQLayoutView.h</header>
+   <slots>
+    <slot>slotSaveToFile(QString)</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>CQAnimationControls</class>
+   <extends>QWidget</extends>
+   <header location="global">copasi/qlayout/CQAnimationControls.h</header>
+   <container>1</container>
+   <slots>
+    <signal>showStep(int)</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mpControls</sender>
+   <signal>showStep(int)</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotShowStep(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>319</x>
+     <y>449</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotExportImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Settings</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotEditSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionView_Conserved_Species</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotSwitchAnimation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+    <sender>actionView_Custom_Time_Course</sender>
+    <signal>triggered()</signal>
+    <receiver>CQAnimationWindow</receiver>
+    <slot>slotSwitchAnimation()</slot>
+    <hints>
+     <hint type="sourcelabel">
+      <x>-1</x>
+      <y>-1</y>
+     </hint>
+     <hint type="destinationlabel">
+      <x>319</x>
+      <y>239</y>
+     </hint>
+    </hints>
+   </connection>
+   <connection>
+   <sender>actionView_Elementary_Modes</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotSwitchAnimation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionView_Time_Course</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotSwitchAnimation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAuto_Layout</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotAutoLayout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRandomize_Layout</sender>
+   <signal>triggered()</signal>
+   <receiver>CQAnimationWindow</receiver>
+   <slot>slotRandomizeLayout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotShowStep(int)</slot>
+  <slot>slotExportImage()</slot>
+  <slot>slotEditSettings()</slot>
+  <slot>slotSwitchAnimation()</slot>
+  <slot>slotRandomizeLayout()</slot>
+  <slot>slotAutoLayout()</slot>
+ </slots>
+</ui>

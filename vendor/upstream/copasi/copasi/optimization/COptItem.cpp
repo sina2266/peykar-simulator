@@ -1,0 +1,667 @@
+// Copyright (C) 2019 - 2026 by Pedro Mendes, Rector and Visitors of the
+// University of Virginia, University of Heidelberg, and University
+// of Connecticut School of Medicine.
+// All rights reserved.
+
+// Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., University of Heidelberg, and University of
+// of Connecticut School of Medicine.
+// All rights reserved.
+
+// Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., University of Heidelberg, and The University
+// of Manchester.
+// All rights reserved.
+
+// Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., EML Research, gGmbH, University of Heidelberg,
+// and The University of Manchester.
+// All rights reserved.
+
+// Copyright (C) 2005 - 2007 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc. and EML Research, gGmbH.
+// All rights reserved.
+
+#include <algorithm>
+#include <limits>
+#include <cmath>
+#include <sstream>
+#include <stdlib.h>
+
+#include "copasi/copasi.h"
+
+#include "COptItem.h"
+
+#include "copasi/math/CMathObject.h"
+#include "copasi/randomGenerator/CRandom.h"
+#include "copasi/core/CDataContainer.h"
+#include "copasi/CopasiDataModel/CDataModel.h"
+#include "copasi/core/CRegisteredCommonName.h"
+#include "copasi/utilities/CCopasiParameter.h"
+#include "copasi/utilities/CCopasiMessage.h"
+#include "copasi/utilities/CBrent.h"
+#include "copasi/utilities/utility.h"
+
+C_FLOAT64 NaN = std::numeric_limits< C_FLOAT64 >::quiet_NaN();
+
+COptItem::COptItem(const CDataContainer * pParent,
+                   const std::string & name)
+  : CCopasiParameterGroup(name, pParent, "Optimization Item")
+  , mpParmObjectCN(NULL)
+  , mpParmLowerBound(NULL)
+  , mpParmUpperBound(NULL)
+  , mpParmStartValue(NULL)
+  , mpObject(NULL)
+  , mpObjectValue(NULL)
+  , mpLowerObject(NULL)
+  , mpLowerBound(NULL)
+  , mLowerBound(0.0)
+  , mpUpperObject(NULL)
+  , mpUpperBound(NULL)
+  , mUpperBound(0.0)
+  , mLastStartValue(std::numeric_limits< C_FLOAT64 >::quiet_NaN())
+  , mDependentItems()
+  , mUpdateInterval(nullptr)
+  , mInterval(mpLowerBound, mpUpperBound)
+{
+  initializeParameter();
+}
+
+COptItem::COptItem(const COptItem & src,
+                   const CDataContainer * pParent)
+  : CCopasiParameterGroup(src, (pParent != NULL) ? pParent : static_cast< const CDataContainer * >(src.getObjectDataModel()), src.getObjectType())
+  , mpParmObjectCN(NULL)
+  , mpParmLowerBound(NULL)
+  , mpParmUpperBound(NULL)
+  , mpParmStartValue(NULL)
+  , mpObject(NULL)
+  , mpObjectValue(NULL)
+  , mpLowerObject(NULL)
+  , mpLowerBound(NULL)
+  , mLowerBound(0.0)
+  , mpUpperObject(NULL)
+  , mpUpperBound(NULL)
+  , mUpperBound(0.0)
+  , mLastStartValue(src.mLastStartValue)
+  , mDependentItems(src.mDependentItems)
+  , mUpdateInterval(src.mUpdateInterval, nullptr)
+  , mInterval(mpLowerBound, mpUpperBound)
+{
+  initializeParameter();
+}
+
+COptItem::COptItem(const CCopasiParameterGroup & group,
+                   const CDataContainer * pParent)
+  : CCopasiParameterGroup(group, (pParent != NULL) ? pParent : static_cast< const CDataContainer * >(group.getObjectDataModel()), "Optimization Item")
+  , mpParmObjectCN(NULL)
+  , mpParmLowerBound(NULL)
+  , mpParmUpperBound(NULL)
+  , mpParmStartValue(NULL)
+  , mpObject(NULL)
+  , mpObjectValue(NULL)
+  , mpLowerObject(NULL)
+  , mpLowerBound(NULL)
+  , mLowerBound(0.0)
+  , mpUpperObject(NULL)
+  , mpUpperBound(NULL)
+  , mUpperBound(0.0)
+  , mLastStartValue(std::numeric_limits< C_FLOAT64 >::quiet_NaN())
+  , mDependentItems()
+  , mUpdateInterval(nullptr)
+  , mInterval(mpLowerBound, mpUpperBound)
+{
+  initializeParameter();
+}
+
+COptItem::~COptItem()
+{}
+
+// virtual
+void COptItem::calculateValue()
+{
+  // The size of the interval.
+  mInterval.compile();
+  // std::cout << getObjectDisplayName() << ": " << mInterval << std::endl;
+}
+
+// virtual
+void * COptItem::getValuePointer() const
+{
+  return const_cast< C_FLOAT64 * >(&mInterval.getSize());
+}
+
+void COptItem::initializeParameter()
+{
+  mpParmObjectCN = assertParameter("ObjectCN", CCopasiParameter::Type::CN, CRegisteredCommonName());
+  mpParmLowerBound = assertParameter("LowerBound", CCopasiParameter::Type::CN, CRegisteredCommonName(CCommonName("1e-06")));
+  mpParmUpperBound = assertParameter("UpperBound", CCopasiParameter::Type::CN, CRegisteredCommonName(CCommonName("1e+06")));
+  mpParmStartValue = assertParameter("StartValue", CCopasiParameter::Type::DOUBLE, NaN);
+}
+
+bool COptItem::setObjectCN(const CRegisteredCommonName & objectCN)
+{
+  const CDataObject * pObject = CObjectInterface::DataObject(getObjectFromCN(objectCN));
+
+  if (pObject == NULL || !pObject->hasFlag(CDataObject::ValueDbl))
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 1, objectCN.c_str());
+      return false;
+    }
+
+  *mpParmObjectCN = objectCN;
+  return true;
+}
+
+const CObjectInterface * COptItem::getItemObject() const
+{return mpObject;}
+
+const CRegisteredCommonName & COptItem::getObjectCN() const
+{return *mpParmObjectCN;}
+
+std::string COptItem::getObjectDisplayName() const
+{
+  if (mpObject == NULL)
+    {
+      const CDataObject * pObject = CObjectInterface::DataObject(getObjectFromCN(*mpParmObjectCN));
+
+      if (pObject != NULL &&
+          pObject->getValuePointer() != NULL)
+        return pObject->getObjectDisplayName();
+
+      return "Invalid Optimization Item";
+    }
+
+  return mpObject->getObjectDisplayName();
+}
+
+bool COptItem::setLowerBound(const CRegisteredCommonName & lowerBound)
+{
+  std::string LowerBound = lowerBound;
+
+  if (LowerBound[0] == '-' &&
+      LowerBound[LowerBound.length() - 1] == '%' &&
+      isNumber(LowerBound.substr(1, LowerBound.length() - 2)))
+    {
+      std::stringstream ssLowerBound;
+      C_FLOAT64 StartValue = getStartValue();
+
+      ssLowerBound << StartValue + fabs(StartValue) * strToDouble(LowerBound.c_str(), NULL) / 100.0;
+      *mpParmLowerBound =  CCommonName(ssLowerBound.str());
+
+      return true;
+    }
+  else
+    {
+      *mpParmLowerBound = lowerBound;
+    }
+
+  return compileLowerBound(CDataContainer::EmptyList);
+}
+
+bool COptItem::setLowerBound(const C_FLOAT64 & lowerBound)
+{
+  std::stringstream LowerBound;
+  LowerBound << lowerBound;
+
+  return setLowerBound(CCommonName(LowerBound.str()));
+}
+
+const CRegisteredCommonName & COptItem::getLowerBound() const
+{return *mpParmLowerBound;}
+
+bool COptItem::setUpperBound(const CRegisteredCommonName & upperBound)
+{
+  std::string UpperBound = upperBound;
+
+  if (UpperBound[0] == '+' &&
+      UpperBound[UpperBound.length() - 1] == '%' &&
+      isNumber(UpperBound.substr(1, UpperBound.length() - 2)))
+    {
+      std::stringstream ssUpperBound;
+      C_FLOAT64 StartValue = getStartValue();
+
+      ssUpperBound << StartValue + fabs(StartValue) * strToDouble(UpperBound.c_str(), NULL) / 100.0;
+      *mpParmUpperBound = CCommonName(ssUpperBound.str());
+
+      return true;
+    }
+  else
+    {
+      *mpParmUpperBound = upperBound;
+    }
+
+  return compileUpperBound(CDataContainer::EmptyList);
+}
+
+bool COptItem::setUpperBound(const C_FLOAT64 & upperBound)
+{
+  std::stringstream UpperBound;
+  UpperBound << upperBound;
+
+  return setUpperBound(CCommonName(UpperBound.str()));
+}
+
+const CRegisteredCommonName & COptItem::getUpperBound() const
+{return *mpParmUpperBound;}
+
+bool COptItem::setStartValue(const C_FLOAT64 & value)
+{
+  *mpParmStartValue = value;
+
+  return true;
+}
+
+const C_FLOAT64 & COptItem::getStartValue() const
+{
+  if (!std::isnan(*mpParmStartValue))
+    return *mpParmStartValue;
+
+  if (mpObjectValue == NULL)
+    {
+      const CDataObject * pObject = CObjectInterface::DataObject(getObjectFromCN(*mpParmObjectCN));
+
+      if (pObject != NULL &&
+          pObject->getValuePointer() != NULL)
+        return *(C_FLOAT64 *) pObject->getValuePointer();
+
+      return NaN;
+    }
+
+  return *mpObjectValue;
+}
+
+const C_FLOAT64 & COptItem::getLastStartValue() const
+{
+  return mLastStartValue;
+}
+
+void COptItem::rememberStartValue()
+{
+  mLastStartValue = getStartValue();
+}
+
+C_FLOAT64 COptItem::getRandomValue(CRandom * pRandom) const
+{
+  C_FLOAT64 RandomValue;
+
+  if (mpLowerBound == NULL ||
+      mpUpperBound == NULL)
+    {
+      const_cast< COptItem * >(this)->compile(CObjectInterface::ContainerList());
+    }
+
+  if (mpLowerBound == NULL ||
+      mpUpperBound == NULL)
+    {
+      RandomValue = NaN;
+      return RandomValue;
+    }
+
+  return mInterval.randomValue(pRandom);
+}
+
+bool COptItem::isValid() const
+{
+  COptItem *pTmp = const_cast<COptItem *>(this);
+
+  if (!pTmp->setObjectCN(*mpParmObjectCN)) return false;
+
+  if (!pTmp->setLowerBound(getLowerBound())) return false;
+
+  if (!pTmp->setUpperBound(getUpperBound())) return false;
+
+  return true;
+}
+
+bool COptItem::isValid(CCopasiParameterGroup & group)
+{
+  COptItem tmp(group, NO_PARENT);
+
+  return tmp.isValid();
+}
+
+bool COptItem::compile(CObjectInterface::ContainerList listOfContainer)
+{
+  bool success = true;
+  mPrerequisits.clear();
+  mDependentItems.clear();
+
+  std::string Bound;
+
+  mpObjectValue = &NaN;
+  const CDataObject * pDataObject;
+
+  listOfContainer.push_back(getObjectDataModel());
+
+  if ((mpObject = CObjectInterface::GetObjectFromCN(listOfContainer, *mpParmObjectCN)) != NULL &&
+      (pDataObject = CObjectInterface::DataObject(mpObject)) != NULL &&
+      pDataObject->hasFlag(CDataObject::ValueDbl))
+    mpObjectValue = (C_FLOAT64 *) mpObject->getValuePointer();
+
+  if (mpObjectValue == &NaN)
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 1, mpParmObjectCN->c_str());
+      success = false;
+    }
+
+  if (compileLowerBound(listOfContainer))
+    {
+      if (mpLowerObject != NULL)
+        {
+          mPrerequisits.insert(mpLowerObject);
+        }
+    }
+  else
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 2, mpParmLowerBound->c_str());
+      success = false;
+    }
+
+  if (compileUpperBound(listOfContainer))
+    {
+      if (mpUpperObject != NULL)
+        {
+          mPrerequisits.insert(mpUpperObject);
+        }
+    }
+  else
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 2, mpParmUpperBound->c_str());
+      success = false;
+    }
+
+  calculateValue();
+
+  // We can only access the lower and upper numbers if the compile succeeded so far.
+  if (success && !mpUpperObject && !mpLowerObject && *mpUpperBound < *mpLowerBound)
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 4, *mpLowerBound, *mpUpperBound, mpObject->getObjectDisplayName().c_str());
+      success = false;
+    }
+
+  if (std::isnan(*mpParmStartValue))
+    *mpParmStartValue = *mpObjectValue;
+
+  return success;
+}
+
+C_INT32 COptItem::checkConstraint() const
+{
+  if (*mpLowerBound > *mpObjectValue) return - 1;
+
+  if (*mpObjectValue > *mpUpperBound) return 1;
+
+  return 0;
+}
+
+C_FLOAT64 COptItem::getConstraintViolation() const
+{
+  switch (checkConstraint())
+    {
+      case - 1:
+        return *mpLowerBound - *mpObjectValue;
+        break;
+
+      case 1:
+        return *mpObjectValue - *mpUpperBound;
+        break;
+    }
+
+  return 0.0;
+}
+
+C_INT32 COptItem::checkConstraint(const C_FLOAT64 & value) const
+{
+  if (*mpLowerBound > value) return - 1;
+
+  if (value > *mpUpperBound) return 1;
+
+  return 0;
+}
+
+bool COptItem::checkLowerBound(const C_FLOAT64 & value) const
+{
+  return *mpLowerBound <= value;
+}
+
+bool COptItem::checkUpperBound(const C_FLOAT64 & value) const
+{
+  return value <= *mpUpperBound;
+}
+
+bool COptItem::isValidInterval() const
+{
+  return *mpLowerBound <= *mpUpperBound;
+}
+
+const CIntervalValue & COptItem::getInterval() const
+{
+  return mInterval;
+}
+
+bool COptItem::isInitialValue() const
+{
+  if (dynamic_cast< const CMathObject * >(mpObject)
+      && !static_cast< const CMathObject * >(mpObject)->isInitialValue())
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 10, mpObject->getObjectDisplayName().c_str());
+      return false;
+    }
+
+  if (dynamic_cast< const CMathObject * >(mpLowerObject)
+      && !static_cast< const CMathObject * >(mpLowerObject)->isInitialValue())
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 11, mpObject->getObjectDisplayName().c_str(), mpLowerObject->getObjectDisplayName().c_str());
+      return false;
+    }
+
+  if (dynamic_cast< const CMathObject * >(mpUpperObject)
+      && !static_cast< const CMathObject * >(mpUpperObject)->isInitialValue())
+    {
+      CCopasiMessage(CCopasiMessage::ERROR, MCOptimization + 12, mpObject->getObjectDisplayName().c_str(), mpUpperObject->getObjectDisplayName().c_str());
+      return false;
+    }
+
+  return true;
+}
+
+void COptItem::updatePrerequisites(const std::vector< COptItem * > & influencingIntervals)
+{
+  ObjectSet Original = mPrerequisits;
+  mPrerequisits.clear();
+
+  for (COptItem * pOptItem : influencingIntervals)
+    if (Original.find(pOptItem->getItemObject()) != Original.end())
+      {
+        mPrerequisits.insert(pOptItem);
+      }
+}
+
+bool COptItem::setItemValue(C_FLOAT64 & value, const CheckPolicyFlag & policy)
+{
+  bool success = true;
+
+  if (*const_cast< C_FLOAT64 * >(mpObjectValue) == value)
+    return success;
+
+  if (policy & CheckPolicy::Bounds)
+    {
+      if (!isValidInterval())
+        return false;
+
+      if (value < *mpLowerBound)
+        value = *mpLowerBound;
+      else if (*mpUpperBound < value)
+        value = *mpUpperBound;
+    }
+
+  *const_cast< C_FLOAT64 * >(mpObjectValue) = value;
+
+  if (!mDependentItems.empty())
+    success &= mUpdateInterval.apply();
+
+  if ((policy & CheckPolicy::Intervals))
+    {
+      if (success)
+        for (COptItem * pItem : mDependentItems)
+          success &= pItem->isValidInterval();
+
+      if (!success)
+        success = adjust();
+
+      // We fall back to the old behavior, i.e., just set the value
+      if (!success)
+        {
+          *const_cast< C_FLOAT64 * >(mpObjectValue) = value;
+          success &= mUpdateInterval.apply();
+        }
+    }
+
+  return success;
+}
+
+bool COptItem::adjust()
+{
+  CBrent::Eval eval(std::bind(&COptItem::evalMinimizeIntervals, this, std::placeholders::_1));
+  C_FLOAT64 Min = std::numeric_limits< C_FLOAT64 >::quiet_NaN();
+  C_FLOAT64 MinValue = std::numeric_limits< C_FLOAT64 >::quiet_NaN();
+
+  if (!CBrent::findMinimum(*mpLowerBound, *mpUpperBound, eval, &Min, &MinValue, 1e-12, 100))
+    return false;
+
+  *const_cast< C_FLOAT64 * >(mpObjectValue) = Min;
+  bool success = mUpdateInterval.apply();
+
+  for (COptItem * pItem : mDependentItems)
+    success &= pItem->isValidInterval();
+
+  return success;
+}
+
+C_FLOAT64 COptItem::evalMinimizeIntervals(const C_FLOAT64 & value)
+{
+  static const double SQRT_EPSILON = sqrt(std::numeric_limits< double >::epsilon());
+
+  *const_cast< C_FLOAT64 * >(mpObjectValue) = value;
+  mUpdateInterval.apply();
+  C_FLOAT64 Result = 0.0;
+
+  for (COptItem * pOptItem : mDependentItems)
+    {
+      C_FLOAT64 IntervalMid = fabs(*pOptItem->getLowerBoundValue() + *pOptItem->getUpperBoundValue()) / 2;
+      C_FLOAT64 Interval = *static_cast< const C_FLOAT64 * >(pOptItem->getValuePointer());
+      Interval -= SQRT_EPSILON * IntervalMid; // We force the resulting interval to be slightly larger
+      Interval /=IntervalMid; // Scale the interval so that different items contribute similarly
+      Result += Interval * Interval;
+    }
+
+  return sqrt(Result);
+}
+
+const C_FLOAT64 & COptItem::getItemValue() const
+{
+  return *mpObjectValue;
+  }
+
+bool COptItem::compileLowerBound(const CObjectInterface::ContainerList & listOfContainer)
+{
+  const CDataObject * pDataObject;
+
+  mpLowerObject = NULL;
+  mpLowerBound = NULL;
+
+  if (*mpParmLowerBound == "-inf")
+    {
+      mLowerBound = - std::numeric_limits< C_FLOAT64 >::max();
+      mpLowerBound = &mLowerBound;
+    }
+  else if (isNumber(*mpParmLowerBound))
+    {
+      mLowerBound = strToDouble(mpParmLowerBound->c_str(), NULL);
+      mpLowerBound = &mLowerBound;
+    }
+  else if ((mpLowerObject = CObjectInterface::GetObjectFromCN(listOfContainer, *mpParmLowerBound)) != NULL &&
+           (pDataObject = CObjectInterface::DataObject(mpLowerObject)) != NULL &&
+           pDataObject->hasFlag(CDataObject::ValueDbl))
+    {
+      mpLowerBound = (C_FLOAT64 *) mpLowerObject->getValuePointer();
+    }
+
+  return mpLowerBound != NULL;
+}
+
+bool COptItem::compileUpperBound(const CObjectInterface::ContainerList & listOfContainer)
+{
+  const CDataObject * pDataObject;
+
+  mpUpperObject = NULL;
+  mpUpperBound = NULL;
+
+  if (*mpParmUpperBound == "inf")
+    {
+      mUpperBound = std::numeric_limits< C_FLOAT64 >::max();
+      mpUpperBound = &mUpperBound;
+    }
+  else if (isNumber(*mpParmUpperBound))
+    {
+      mUpperBound = strToDouble(mpParmUpperBound->c_str(), NULL);
+      mpUpperBound = &mUpperBound;
+    }
+  else if ((mpUpperObject = CObjectInterface::GetObjectFromCN(listOfContainer, *mpParmUpperBound)) != NULL &&
+           (pDataObject = CObjectInterface::DataObject(mpUpperObject)) != NULL &&
+           pDataObject->hasFlag(CDataObject::ValueDbl))
+    {
+      mpUpperBound = (C_FLOAT64 *) mpUpperObject->getValuePointer();
+    }
+
+  return mpUpperBound != NULL;
+}
+
+std::ostream &operator<<(std::ostream &os, const COptItem & o)
+{
+  if (o.mpObject == NULL && !const_cast<COptItem *>(&o)->compile(CObjectInterface::ContainerList()))
+    return os << "Invalid Optimization Item";
+
+  if (o.mpLowerObject)
+    os << o.mpLowerObject->getObjectDisplayName();
+  else
+    os << o.getLowerBound();
+
+  os << " <= ";
+  os << o.mpObject->getObjectDisplayName();
+  os << " <= ";
+
+  if (o.mpUpperObject)
+    os << o.mpUpperObject->getObjectDisplayName();
+  else
+    os << o.getUpperBound();
+
+  os << "; Start Value = " << o.getStartValue();
+
+  return os;
+}
+
+bool COptItem::influencesIntervals() const
+{
+  return mDependentItems.size() > 0;
+}
+
+const CCore::CUpdateSequence & COptItem::getIntervalUpdateSequence() const
+{
+  return mUpdateInterval;
+}
+
+CCore::CUpdateSequence & COptItem::getIntervalUpdateSequence()
+{
+  return mUpdateInterval;
+}
+
+void COptItem::addDependentItem(COptItem * pDependentItem)
+{
+  mDependentItems.insert(pDependentItem);
+}
+
+const std::set< COptItem * > & COptItem::getDependentItems() const
+{
+  return mDependentItems;
+}

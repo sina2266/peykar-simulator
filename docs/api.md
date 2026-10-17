@@ -79,3 +79,10 @@ Knowledge gaps preserve declared missing evidence/mechanisms. Registration resol
 all affected model references exactly; a general gap may name none. IDs are
 immutable and reader tokens cannot register them. See [knowledge gaps](knowledge-gaps.md)
 for filters, limits and the lack of automatic job blocking/closure.
+
+Native operator evidence is available through authenticated reader/admin calls:
+`GET /v1/runtimes?engine=copasi` and `GET /v1/runtimes/{id}/versions/{version}`.
+`NativeRuntimeEvidence` includes source references, image/output digests,
+`managed_queue_supported=false` and limitations. Offline CLI admission verifies
+the retained bundle; there is no HTTP native installation/execution endpoint.
+See [runtime profiles](../runtime_profiles/README.md).

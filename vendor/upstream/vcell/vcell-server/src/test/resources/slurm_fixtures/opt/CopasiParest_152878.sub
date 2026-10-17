@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+#SBATCH --partition=vcell
+#SBATCH --reservation=
+#SBATCH --qos=vcell
+#SBATCH -J CopasiParest_152878
+#SBATCH -o /share/apps/vcell3/htclogs/CopasiParest_152878.slurm.log
+#SBATCH -e /share/apps/vcell3/htclogs/CopasiParest_152878.slurm.log
+#SBATCH --mem=256M
+#SBATCH --no-kill
+#SBATCH --no-requeue
+# VCell SlurmProxy memory limit source='Optimization Default'
+TMPDIR=/scratch/vcell
+if [ ! -e $TMPDIR ]; then mkdir -p $TMPDIR ; fi
+echo `hostname`
+export MODULEPATH=/isg/shared/modulefiles:/tgcapps/modulefiles
+source /usr/share/Modules/init/bash
+module load singularity/vcell-3.10.0
+export SINGULARITY_CACHEDIR=/share/apps/vcell3/singularity/cachdir
+export SINGULARITY_PULLFOLDER=/share/apps/vcell3/singularity/pullfolder
+echo "job running on host `hostname -f`"
+echo "id is `id`"
+echo ENVIRONMENT
+env
+
+container_bindings="--bind /share/apps/vcell3/users/parest_data:/simdata "
+container_bindings+="--bind /scratch/vcell:/solvertmp "
+container_bindings+="--bind /share/apps/vcell3/htclogs:/htclogs "
+container_bindings+="--bind /share/apps/vcell12/users:/share/apps/vcell12/users "
+container_env="--env datadir_external=/share/apps/vcell3/users "
+solver_sif=/share/apps/vcell3/singularityImages/ghcr.io_virtualcell_vcell-opt_singularity_7.6.0.43.img
+if [ ! -f "$solver_sif" ]; then
+    echo "ERROR: missing SIF $solver_sif" >&2
+    exit 1
+fi
+solver_container_prefix="singularity run --containall ${container_bindings} ${container_env} $solver_sif"
+
+cmd_prefix="$solver_container_prefix"
+echo "cmd_prefix is '${cmd_prefix}'"
+echo command = ${cmd_prefix}
+${cmd_prefix} /simdata/CopasiParest_152878_optProblem.json /simdata/CopasiParest_152878_optRun.json /simdata/CopasiParest_152878_optReport.txt

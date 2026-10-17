@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3" xmlns:celldesigner="http://www.sbml.org/2001/ns/celldesigner">
+  <model id="untitled" metaid="untitled">
+    <annotation />
+    <listOfUnitDefinitions>
+      <unitDefinition id="substance" metaid="substance" name="substance">
+        <listOfUnits>
+          <unit kind="mole" metaid="CDMT00003" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume" metaid="volume" name="volume">
+        <listOfUnits>
+          <unit kind="litre" metaid="CDMT00004" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area" metaid="area" name="area">
+        <listOfUnits>
+          <unit exponent="2" kind="metre" metaid="CDMT00005" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="length" metaid="length" name="length">
+        <listOfUnits>
+          <unit kind="metre" metaid="CDMT00006" />
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="time" metaid="time" name="time">
+        <listOfUnits>
+          <unit kind="second" metaid="CDMT00007" />
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="default" metaid="default" size="1" units="volume" />
+      <compartment id="c1" metaid="c1" name="c1" outside="default" size="1" units="volume">
+        <annotation />
+      </compartment>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species compartment="default" id="s1" initialAmount="0" metaid="s1" name="b_cat">
+        <annotation />
+      </species>
+      <species compartment="c1" id="s2" initialAmount="0" metaid="s2" name="b_cat">
+        <annotation />
+      </species>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction fast="false" id="re1" metaid="re1" reversible="false">
+        <annotation />
+        <listOfReactants>
+          <speciesReference metaid="CDMT00001" species="s1">
+            <annotation />
+          </speciesReference>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference metaid="CDMT00002" species="s2">
+            <annotation />
+          </speciesReference>
+        </listOfProducts>
+        <kineticLaw metaid="CDMT00008">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times />
+              <cn type="integer">2</cn>
+              <ci>lp1</ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="lp1" metaid="lp1" name="lp1" units="substance" value="0" />
+          </listOfParameters>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

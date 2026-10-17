@@ -1,0 +1,143 @@
+/* scanner for kinetic functions */
+
+%option outfile="CUnitParser_lex.cpp"
+%option prefix="CUnitParser"
+%option never-interactive
+%option c++
+%option noline
+
+%s sNUMBER sANY
+
+%{
+#include <vector>
+
+#define YYSTYPE CUnitParserBase::Data
+
+#include "copasi/copasi.h"
+#include "copasi/utilities/CUnitParser.h"
+#include "copasi/utilities/CUnitParser_yacc.hpp"
+
+#include "copasi/utilities/CCopasiMessage.h"
+#include "copasi/utilities/utility.h"
+
+#ifndef YYERRCODE
+#define YYERRCODE 256
+#endif
+
+#define YY_USER_INIT \
+    pdelete(mpUnit); \
+    mPosition = 0; \
+    mSymbols.clear(); \
+    mReplacedExpression = "";
+
+#define COMMON_ACTION \
+    CUnitParserlval.pUnit = NULL; \
+    CUnitParserlval.text = yytext; \
+    mPosition += yyleng; \
+    if (mOldSymbol != mNewSymbol) {mReplacedExpression += (CUnitParserlval.token == USER_DEFINED_UNIT && mOldSymbol == yytext) ? mNewSymbol : yytext;}  
+    
+%}
+
+SCALE    ([yzafpnumcdhkMGTPEZY]|\xc2\xb5)
+KIND     ([mgsAK#1\?]|cd|Avogadro)
+SI_UNIT  (Hz|N|Pa|J|W|C|V|F|\xCE\xA9|S|Wb|T|H|lm|lx|Bq|Gy|Sv|kat|l|mol|min|h|d)
+QUOTED   \"([^\\\"]|\\.)*\"
+ID       [a-z_A-Z][a-z_A-Z0-9]*
+DIGIT    [0-9]
+
+%%
+<INITIAL,sANY>"*"   %{
+  CUnitParserlval.token = MULTIPLY;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"/"   %{
+  CUnitParserlval.token = DIVIDE;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"("   %{
+  CUnitParserlval.token = START_PARENS;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>")"   %{
+  CUnitParserlval.token = END_PARENS;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"^"   %{
+  BEGIN(sNUMBER);
+  CUnitParserlval.token = EXPONENT;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"\xc2\xb2"   %{
+  CUnitParserlval.token = SUPERSCRIPT_2;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"\xc2\xb3"   %{
+  CUnitParserlval.token = SUPERSCRIPT_3;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>{KIND}   %{
+  CUnitParserlval.token = KIND;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>{SI_UNIT} %{
+  CUnitParserlval.token = SI_UNIT;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>{SCALE}/{KIND}|{SI_UNIT}|{QUOTED} %{
+  CUnitParserlval.token = SCALE;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>({QUOTED}|{ID}) %{
+  CUnitParserlval.token = USER_DEFINED_UNIT;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY,sNUMBER>"-"?{DIGIT}+("."?{DIGIT}*(((e|E)"+"?|(e|E)"-"){DIGIT}+)?)? %{
+  BEGIN(sANY);
+  CUnitParserlval.token = NUMBER;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+<INITIAL,sANY>"-"?10/^  %{
+  CUnitParserlval.token = POWER_OF_TEN;
+  COMMON_ACTION;
+  return CUnitParserlval.token;
+%}
+
+
+<INITIAL,sANY,sNUMBER>[ \t\r\n]+ %{
+  COMMON_ACTION;
+%} 
+
+<<EOF>>  %{
+  return 0;
+%}
+
+.     %{
+  CCopasiMessage(CCopasiMessage::ERROR, MCUnit + 2, mPosition);
+  return YYERRCODE;
+%}
+     
+%%

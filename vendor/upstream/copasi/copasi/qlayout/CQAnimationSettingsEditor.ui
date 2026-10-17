@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2020 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2013 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>CQAnimationSettingsEditor</class>
+ <widget class="QDialog" name="CQAnimationSettingsEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Effects Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QGroupBox" name="grpScaleMode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string> Scale Mode: </string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QRadioButton" name="radGlobal">
+        <property name="text">
+         <string>Global</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radIndividual">
+        <property name="text">
+         <string>Individual</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>304</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QListWidget" name="listWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ExtendedSelection</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QToolButton" name="cmdAddEffect">
+           <property name="text">
+            <string>&amp;Add Effect</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="cmdRemoveEffect">
+           <property name="text">
+            <string>&amp;Remove Effect</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="CQEffectDescriptionEdit" name="widget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>150</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CQEffectDescriptionEdit</class>
+   <extends>QWidget</extends>
+   <header location="global">copasi/qlayout/CQEffectDescriptionEdit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>radGlobal</tabstop>
+  <tabstop>radIndividual</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>cmdAddEffect</tabstop>
+  <tabstop>cmdRemoveEffect</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radGlobal</sender>
+   <signal>clicked()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>slotScaleModeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>62</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radIndividual</sender>
+   <signal>clicked()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>slotScaleModeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdAddEffect</sender>
+   <signal>clicked()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>slotEffectAdded()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdRemoveEffect</sender>
+   <signal>clicked()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>slotEffectRemoved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>CQAnimationSettingsEditor</receiver>
+   <slot>slotSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotScaleModeChanged()</slot>
+  <slot>slotSelectionChanged()</slot>
+  <slot>slotEffectAdded()</slot>
+  <slot>slotEffectRemoved()</slot>
+ </slots>
+</ui>

@@ -14,4 +14,10 @@ readiness separately from runtime/adapter/validity status. Explicit network sour
 acquisition is confined to the operator script, not this service or the API.
 See docs/library-ecosystem.md and the whole-platform roadmap.
 
+`native_runtimes.py` imports trusted offline native-execution evidence, validating
+source references, image identity, successful status and artifact hashes before
+immutable registration. API reads expose this independently of queue capability.
+It never starts processes, installs dependencies, fetches images or executes
+upstream code. See runtime_profiles/README.md.
+
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

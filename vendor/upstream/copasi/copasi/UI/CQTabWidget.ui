@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2021 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2012 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>CQTabWidget</class>
+ <widget class="CopasiWidget" name="CQTabWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>449</width>
+    <height>180</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="mpLayoutName">
+     <item>
+      <widget class="QLabel" name="mpLblName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Name</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mpEditName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="mpTabWidget">
+     <property name="currentIndex">
+      <number>-1</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="mpLayoutBtn">
+     <property name="spacing">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="mpBtnCommit">
+       <property name="text">
+        <string>Commi&amp;t</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnRevert">
+       <property name="text">
+        <string>&amp;Revert</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="mpBtnSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnNew">
+       <property name="text">
+        <string>&amp;New</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnCopy">
+       <property name="text">
+        <string>&amp;Copy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnDelete">
+       <property name="text">
+        <string>&amp;Delete</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CopasiWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/copasiWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>mpEditName</tabstop>
+  <tabstop>mpTabWidget</tabstop>
+  <tabstop>mpBtnCommit</tabstop>
+  <tabstop>mpBtnRevert</tabstop>
+  <tabstop>mpBtnNew</tabstop>
+  <tabstop>mpBtnCopy</tabstop>
+  <tabstop>mpBtnDelete</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mpBtnCommit</sender>
+   <signal>clicked()</signal>
+   <receiver>CQTabWidget</receiver>
+   <slot>slotBtnCommit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnRevert</sender>
+   <signal>clicked()</signal>
+   <receiver>CQTabWidget</receiver>
+   <slot>slotBtnRevert()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>CQTabWidget</receiver>
+   <slot>slotBtnDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnNew</sender>
+   <signal>clicked()</signal>
+   <receiver>CQTabWidget</receiver>
+   <slot>slotBtnNew()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>CQTabWidget</receiver>
+   <slot>slotBtnCopy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>copyClicked()</signal>
+  <signal>newClicked()</signal>
+  <signal>deleteClicked()</signal>
+  <slot>slotBtnCommit()</slot>
+  <slot>slotBtnRevert()</slot>
+  <slot>slotBtnDelete()</slot>
+  <slot>slotBtnNew()</slot>
+  <slot>slotBtnCopy()</slot>
+ </slots>
+</ui>

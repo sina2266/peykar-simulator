@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2022 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., EML Research, gGmbH, University of Heidelberg, </comment>
+<comment> and The University of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2006 - 2007 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc. and EML Research, gGmbH. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>CQFittingResult</class>
+ <widget class="CopasiWidget" name="CQFittingResult">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>482</width>
+    <height>234</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Parameter Estimation Result Window</string>
+  </property>
+  <property name="caption" stdset="0">
+   <string>Fitting Result</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="mpLblResult">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>&lt;h2&gt;Parameter Estimation Result&lt;/h2&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnUpdateModel">
+       <property name="text">
+        <string>Update Model</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnSave">
+       <property name="text">
+        <string>Save to File</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="mpTabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>210</width>
+       <height>180</height>
+      </size>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="CQFittingResultTab1" name="mpMain">
+      <attribute name="title">
+       <string>Main</string>
+      </attribute>
+     </widget>
+     <widget class="QTableView" name="mpParameters">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Parameters</string>
+      </attribute>
+     </widget>
+     <widget class="QTreeWidget" name="mpExperiments">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Experiments</string>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Experiment</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Data Points</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Objective Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Root Mean Square</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean Std. Deviation</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QTableWidget" name="mpValues">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Fitted Values</string>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Fitted Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Data Points</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Objective Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Root Mean Square</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean Std. Deviation</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="CQArrayAnnotationsWidget" name="mpCorrelations">
+      <attribute name="title">
+       <string>Correlation</string>
+      </attribute>
+     </widget>
+     <widget class="QTabWidget" name="mpFisherInformation">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <attribute name="title">
+       <string>Fisher Information</string>
+      </attribute>
+      <widget class="QScrollArea" name="mpFisherInformationUnscaled">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>unscaled</string>
+       </attribute>
+       <widget class="QWidget" name="mpFisherInformationUnscaledLayout">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>429</width>
+          <height>108</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="mpLblFIM">
+           <property name="text">
+            <string>Fisher Information Matrix</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationMatrix" native="true"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="mpLblFIMEigenval">
+           <property name="text">
+            <string>FIM Eigenvalues</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationEigenvalues" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="mpLblFIMEigenvec">
+           <property name="text">
+            <string>FIM Eigenvectors</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationEigenvectors" native="true"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QScrollArea" name="mpFisherInformationScaled">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>scaled</string>
+       </attribute>
+       <widget class="QWidget" name="mpFisherInformationScaledLayout">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1009</width>
+          <height>108</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="mpLblFIMScaled">
+           <property name="text">
+            <string>Fisher Information Matrix</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationScaledMatrix" native="true"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="mpLblFIMScaledEigenval">
+           <property name="text">
+            <string>FIM Eigenvalues</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationScaledEigenvalues" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="mpLblFIMScaledEigenvec">
+           <property name="text">
+            <string>FIM Eigenvectors</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="margin">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CQArrayAnnotationsWidget" name="mpFisherInformationScaledEigenvectors" native="true"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QTreeWidget" name="mpCrossValidations">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Validation Experiments</string>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Validation Experiment</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Objective Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Root Mean Square</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean Std. Deviation</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QTableWidget" name="mpCrossValidationValues">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Validation Fitted Values</string>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Validation Fitted Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Objective Value</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Root Mean Square</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Error Mean Std. Deviation</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QWidget" name="mpLogPage">
+      <attribute name="title">
+       <string>Log</string>
+      </attribute>
+      <layout class="QGridLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QTreeWidget" name="mpLogTree">
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CopasiWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/copasiWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CQArrayAnnotationsWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/CQArrayAnnotationsWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CQFittingResultTab1</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/CQFittingResultTab1.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mpBtnSave</sender>
+   <signal>clicked()</signal>
+   <receiver>CQFittingResult</receiver>
+   <slot>slotSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnUpdateModel</sender>
+   <signal>clicked()</signal>
+   <receiver>CQFittingResult</receiver>
+   <slot>slotUpdateModel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>490</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpTabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>CQFittingResult</receiver>
+   <slot>loadTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>270</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>loadTab(int)</slot>
+  <slot>slotSave()</slot>
+  <slot>slotUpdateModel()</slot>
+ </slots>
+</ui>

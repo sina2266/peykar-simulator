@@ -1,0 +1,6 @@
+add_test(
+  NAME external_nrntest
+  COMMAND
+    ${CMAKE_COMMAND} -E env ${NRN_RUN_FROM_BUILD_DIR_ENV} ${NRN_SANITIZER_ENABLE_ENVIRONMENT}
+    MPIEXEC_OVERSUBSCRIBE=${MPIEXEC_OVERSUBSCRIBE}
+    ${PROJECT_SOURCE_DIR}/external/tests/nrntest/runtests)

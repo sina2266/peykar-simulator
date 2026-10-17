@@ -1,0 +1,22 @@
+name: Debug test
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'version'     
+        required: true
+        default: '7.4.0.24'
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: insert version
+      run: |
+        set -ux
+        sed -i 's/_VC_VERSION_TAG_/${{ github.event.inputs.tag_name }}/g' biosimulators.json
+        cat biosimulators.json | head
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      

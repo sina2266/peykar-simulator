@@ -1,0 +1,88 @@
+FROM eclipse-temurin:17 as jre-build
+
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+# Define base image and copy in jlink created minimal Java 17 environment
+FROM debian:bookworm-slim
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /javaruntime $JAVA_HOME
+
+RUN mkdir -p /usr/local/app && \
+	apt -y update && \
+    apt -y install wget apt-utils libfreetype6 fontconfig fonts-dejavu
+
+RUN mkdir /installer && cd /installer && \
+    wget --quiet -O install4j_unix_10_0_5.tar.gz \
+        https://download.ej-technologies.com/install4j/install4j_unix_10_0_5.tar.gz && \
+    tar xzf install4j_unix_10_0_5.tar.gz
+
+COPY ./license.txt \
+    ./vcell-client/src/main/resources/thirdpartylicenses.txt \
+    ./vcell-client/src/main/resources/vcellSplash.png \
+    /vcellclient/
+
+COPY ./bionetgen      /vcellclient/bionetgen
+COPY ./exampleModels  /vcellclient/exampleModels
+COPY ./localsolvers   /vcellclient/localsolvers
+COPY ./nativelibs     /vcellclient/nativelibs
+
+COPY ./vcell-client/target/vcell-client-0.0.1-SNAPSHOT.jar \
+    ./vcell-client/target/maven-jars/*.jar \
+    /vcellclient/vcell-client/target/maven-jars/
+
+#
+# The 3D field viewer's web content, served by the client's own loopback field server from
+# <installDir>/webviewer. webapp-viewer has no build step — the source directory is the deployable —
+# so only what the browser actually loads is copied; the fetch script and package.json stay behind.
+#
+# assets/ holds the vtk.wasm bundle, which is gitignored and downloaded by CI before this image is
+# built. If that step did not run, this COPY fails and the image build stops — which is the point:
+# an installer that shipped the page without the bundle would 404 at the moment a user clicks
+# "View in 3D".
+#
+COPY ./webapp-viewer/index.html ./webapp-viewer/viewer.js /vcellclient/webviewer/
+COPY ./webapp-viewer/vendor    /vcellclient/webviewer/vendor
+COPY ./webapp-viewer/assets    /vcellclient/webviewer/assets
+
+COPY ./docker/build/installers /config/
+
+WORKDIR /config
+
+VOLUME /outputdir
+VOLUME /buildsecrets
+
+#
+# Install4j code signing certificates and Install4J product key (using docker-compose 'secrets' facility)
+#
+ENV winCodeSignKeystore_pfx=Expecting_this_to_be_defined_runtime_for_winCodeSignKeystore_pfx \
+    macCodeSignKeystore_p12=Expecting_this_to_be_defined_runtime_for_macCodeSignKeystore_p12 \
+    winCodeSignKeystore_pswdfile=Expecting_this_to_be_defined_runtime_for_winCodeSignKeystore_pswdfile \
+    macCodeSignKeystore_pswdfile=Expecting_this_to_be_defined_runtime_for_macCodeSignKeystore_pswdfile \
+    Install4J_product_key_file=Expecting_this_to_be_defined_runtime_for_Install4J_product_key_file
+
+#
+# these are to be overridden for a particular context
+#
+ENV compiler_updateSiteBaseUrl="update-site-not-set" \
+    compiler_vcellIcnsFile=/install/icons/vcell.icns \
+    compiler_mavenRootDir=/vcellclient \
+    compiler_softwareVersionString="SOFTWARE-VERSION-NOT-SET" \
+    compiler_Site=SITE-NOT-SET \
+    compiler_vcellVersion=VCELL-VERSION-NOT-SET \
+    compiler_vcellBuild=VCELL-BUILD-NOT-SET \
+    compiler_rmiHosts="apihost-not-set:api-port-not-set" \
+    compiler_serverPrefixV0="server-prefix-v0-not-set" \
+    compiler_serverPrefixV1="server-prefix-v1-not-set" \
+    compiler_bioformatsJarFile=vcell-bioformats-0.0.9-jar-with-dependencies.jar \
+    compiler_bioformatsJarDownloadURL=http://vcell.org/webstart/vcell-bioformats-0.0.9-jar-with-dependencies.jar \
+    compiler_applicationId="client-applicationId-not-set"
+
+ENTRYPOINT [ "/config/build_installers.sh" ]

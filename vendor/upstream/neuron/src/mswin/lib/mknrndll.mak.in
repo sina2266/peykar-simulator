@@ -1,0 +1,75 @@
+# for x86_64-w64-mingw64 need the full name of the compiler.
+@BUILD_MINGW_TRUE@CXX = @CXX@
+@BUILD_MINGW_FALSE@CXX = g++
+
+EXTRA_FLAGS = @MINGW_CFLAG@
+
+CXXFLAGS = \
+-std=c++17 \
+-DDLL_EXPORT -DPIC \
+-I$N/include -I$N/src/scopmath -I$N/src/nrnoc -I$N/src/oc \
+$(EXTRA_FLAGS)
+
+TARGET=nrnmech.dll
+
+bin = bin@binsuffix@
+
+# to handle variations of filename extensions
+.SUFFIXES: .o .mod .moD .mOd .mOD .Mod .MoD .MOd .MOD
+.PRECIOUS: %.cpp
+
+%.o : %.mod
+
+%.cpp : %.mod
+	nocmodl $*
+
+%.o : %.cpp
+	$(CXX) $(CXXFLAGS) -c $*.cpp
+
+# additional rules to handle variations of filename extensions
+%.cpp : %.moD
+	nocmodl $*
+
+%.cpp : %.mOd
+	nocmodl $*
+
+%.cpp : %.mOD
+	nocmodl $*
+
+%.cpp : %.Mod
+	nocmodl $*
+
+%.cpp : %.MoD
+	nocmodl $*
+
+%.cpp : %.MOd
+	nocmodl $*
+
+%.cpp : %.MOD
+	nocmodl $*
+
+%.o : %.moD
+
+%.o : %.mOd
+
+%.o : %.mOD
+
+%.o : %.Mod
+
+%.o : %.MoD
+
+%.o : %.MOd
+
+%.o : %.MOD
+
+mod_func.o: mod_func.cpp
+	$(CXX) $(CXXFLAGS) -c $*.cpp
+
+nrnmech.dll: mod_func.o $(MODOBJFILES)
+	$(CXX) $(EXTRA_FLAGS) -shared mod_func.o $(MODOBJFILES) \
+  -L$N/$(bin) -lnrniv -lpthread -o $(TARGET)
+	@nrnskip_rebase@rebase -b 0x64000000 -v nrnmech.dll
+
+mod_func.o $(MODOBJFILES): $(N)/$(bin)/nrniv.exe
+
+

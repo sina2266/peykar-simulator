@@ -1,0 +1,33 @@
+#include "ChasteBuildRoot.hpp"
+
+const char* ChasteBuildRootDir()
+{
+    return "${Chaste_BINARY_DIR}/";
+}
+
+const char* ChasteSourceRootDir()
+{
+    return "${Chaste_SOURCE_DIR}/";
+}
+
+std::string ChasteComponentBuildDir(const std::string& rComponent)
+{
+    return std::string(ChasteBuildRootDir()) + rComponent + "/${Chaste_BUILD_DIR_NAME}/" ;
+}
+
+std::string ChasteBuildDirName()
+{
+    return "${Chaste_BUILD_DIR_NAME}";
+}
+
+std::string DefaultChasteTestOutput()
+{
+    return "${Chaste_DEFAULT_TEST_OUTPUT}";
+}
+
+std::string ChasteBuildType()
+{
+    return "${Chaste_BUILD_TYPE}";
+}
+
+${additional}

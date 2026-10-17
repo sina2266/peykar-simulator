@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+. "$(git rev-parse --show-toplevel)/gitTools/functions"
+
+debug post_merge:
+
+if [ -e ${GitTools}/UpdateCopasiVersion ]; then
+  ${GitTools}/UpdateCopasiVersion
+fi

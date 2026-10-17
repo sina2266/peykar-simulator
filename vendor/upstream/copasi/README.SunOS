@@ -1,0 +1,43 @@
+This is the Solaris build of a COPASI stable version.
+
+INSTALLATION:
+
+You can unpack the package anywhere. The binary should work immediately.
+However for the tutorial wizard to work you need to set an environment
+variable:
+
+
+If you use bash type (while replacing <copasi-path> with the directory where 
+you installed COPASI):
+
+export COPASIDIR=<copasi-path>
+
+If you want to use that permanently you can add that command to your .bashrc
+file.
+
+
+If you use tcsh type (while replacing <copasi-path> with the directory where 
+you installed COPASI):
+
+setenv COPASIDIR=<copasi-path>
+
+If you wish to associate an icons with COPASI you may find icons in the
+directory <copasi-path>/share/copasi/icons.
+
+KNOWN PROBLEMS
+
+We built this as a statically linked binary. It should therefore run on most
+Solaris SPARC computers. 
+
+If you get the error:
+  fatal: libgcc_s.so.1: version `GCC_3.3' not found.
+
+You are missing libgcc_s.so.1 or have a version stemming from gcc
+prior to version 3.3. You have to install the new version of
+libgcc_s.so.1. Note, that it is possible to have multiple versions of
+gcc installed in parallel.
+
+FURTHER HELP
+
+Documentation and a user forum can be found on www.copasi.org. Bug reports can also be sent to bugs@copasi.org.
+

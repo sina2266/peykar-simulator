@@ -1,0 +1,63 @@
+name: IV CI
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+env:
+  BUILD_TYPE: RelWithDebInfo
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} - ${{ matrix.config.CONFIG_CMD }} 
+    strategy:
+      matrix:
+        os: [ macOS-latest, ubuntu-latest]
+        config:
+          - { CONFIG_CMD : "cmake  $GITHUB_WORKSPACE -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DIV_ENABLE_SHARED=OFF -DIV_ENABLE_X11_DYNAMIC=ON" }
+          - { CONFIG_CMD : "cmake  $GITHUB_WORKSPACE -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DIV_ENABLE_SHARED=ON" }
+      fail-fast: false
+      
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install homebrew packages
+      if: startsWith(matrix.os, 'macOS')
+      run: |
+        brew install libxcomposite
+      shell: bash
+
+    - name: Install apt packages
+      if: startsWith(matrix.os, 'ubuntu')
+      run: |
+        sudo apt-get install libx11-dev libxcomposite-dev
+      shell: bash
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: |
+        eval ${CONFIG_CMD}
+      env:
+        CONFIG_CMD: ${{ matrix.config.CONFIG_CMD }}
+        INSTALL_DIR : ${{ runner.workspace }}/install
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --parallel --config $BUILD_TYPE
+
+    - name: Install
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --target install

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+current_directory=$(pwd)
+
+# necessary to enforce standard convention for numeric values specification on non-English OS
+export LC_NUMERIC="C.UTF-8"
+
+
+export PYTHONPATH=@SITE_PACKAGES_INSTALL@
+
+export PYTHON_EXEC=@PYTHON_EXEC_FILE@
+
+export exit_code=0
+${PYTHON_EXEC} ${PYTHONPATH}/cc3d/player5/compucell3d.pyw $* --currentDir=${current_directory}
+exit_code=$?
+
+cd ${current_directory}
+exit ${exit_code}

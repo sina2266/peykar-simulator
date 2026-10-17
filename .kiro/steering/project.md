@@ -7,9 +7,11 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
 - The user's objective is the whole platform, not an eye-model-only product.
   Roadmap S0–S13 now covers all shared domains and specialist/biological gates;
   do not make unrelated engineering work wait for a missing vCornea publication seed.
-- Nine additional specialist source trees are cloned at exact commits under
-  `.peykar/external/ecosystem/sources/` (36,291 entries, 1,308,090,422 bytes).
-  Immutable source receipts retain license hashes and 24 unresolved Git links.
+- All named specialist source trees are now permanent ordinary files under `vendor/`,
+  not only ignored acquisition caches: 25 source identities, 52,167 files,
+  1,799,838,581 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
+  The separately pinned VCell solvers, MaBoSS and OSP R packages are included.
+  Historical source receipts 1.0.0 remain; 12 complete inventories use version 2.0.0.
   Source availability, dependency completion, runtime, adapter and validity are
   separate states. Preserve pristine upstream trees and version patch overlays.
 - Shared backends now include `model_import/libraries.py`,
@@ -23,8 +25,12 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
   Full final Linux regression: 259 tests, 88% observed coverage; live two-stage
   experiment and cancellation pass. All old rows/license/source bytes are retained.
 
-- The checkout has no Git metadata. Preserve existing files, license notices and
-  immutable schema/model versions; do not assume a clean Git reset is available.
+- Git metadata now exists in this checkout. Preserve all existing local/index work,
+  license notices and immutable schema/model versions; never reset to a presumed baseline.
+- The user authorized committing and pushing `main` after meaningful completed,
+  verified milestones, with useful history; do not create a commit for every small edit.
+  Serialize Git index mutations with app Git operations. Never delete an active
+  index lock; first establish that its owning Git process has ended.
 - Local Docker Compose API and worker share the `peykar3_peykar-data` volume.
   Never reset it to test or upgrade; check active jobs before recreating workers.
 - Back up active SQLite with its backup API, and preserve referenced artifacts.
@@ -63,3 +69,29 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
 
 Update this context when these operational facts change; record only observed
 commands/outcomes in `docs/verification.md`.
+
+## Native ecosystem continuation, 2026-10-17 local
+
+- Reviewed sources and native dependencies were explicitly authorized for installation
+  and execution. Native CPU/headless profiles now actually run COPASI, NEURON,
+  PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and OSP PK-Sim/MoBi, alongside CC3D/vCornea.
+  Read `runtime_profiles/README.md`; do not mistake the installed PKML computation
+  profile for installed Windows graphical authoring applications.
+- Compatibility overlays preserve pristine scientific source. COPASI SWIG flags,
+  portable ARM64 C++ compiler flags and Chaste non-root directory traversal are fixed.
+  Exact overlay/source/image hashes and actual outputs are retained.
+- Real Chaste Delta/Notch vertex/node monolayers pass. Original timestep warning
+  remains recorded; independent validation/refinement is still open. PhysiBoSS's
+  tested six-cell-line Boolean fixture is an engineering example, not corneal biology.
+- Actual Dixit/scFoundation H5AD is checksum-verified and read: 37,160 K562 cells,
+  19,264 genes, 21 conditions. Only bounded matrix QC ran; no GEARS original split,
+  trained predictor score, donor independence or cross-cell-type validity is claimed.
+- `NativeRuntimeService` admits offline operator evidence with source/image/artifact
+  checks; `/v1/runtimes` and `peykar runtimes` expose 11 immutable records. API/Worker
+  have no Docker socket. General external-engine queue execution remains S4.6.
+- Final full regression passed: 280 tests, 88% coverage, strict mypy 65 files and all
+  package builds. Deployed API/Worker share the original volume; real submit/result
+  smoke passed. All 34 old objects, 10 old runs, all related events/workflows and 46
+  old artifact byte sequences survived. All 24 original project license hashes match.
+- Pre-runtime backup `backups/pre-runtimes-20261016T220136Z/` is also copied locally.
+  Keep older backups, model/schema versions, raw datasets and partial downloads.

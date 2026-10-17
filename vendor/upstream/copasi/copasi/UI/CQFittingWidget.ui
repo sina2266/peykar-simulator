@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2021 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., EML Research, gGmbH, University of Heidelberg, </comment>
+<comment> and The University of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2005 - 2007 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc. and EML Research, gGmbH. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>CQFittingWidget</class>
+ <widget class="TaskWidget" name="CQFittingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>527</width>
+    <height>207</height>
+   </rect>
+  </property>
+  <property name="caption" stdset="0">
+   <string>Fitting</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="mpSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>13</width>
+         <height>17</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnExperiment">
+       <property name="text">
+        <string>Experimental Data</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpBtnCrossValidation">
+       <property name="text">
+        <string>Validation Data</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="mpCheckRandomize">
+       <property name="text">
+        <string>Randomize Start Values</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="mpCreateParameterSets">
+       <property name="text">
+        <string>Create Parameter Sets</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="mpCheckStatistics">
+       <property name="text">
+        <string>Calculate Statistics</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="mpUseTimeSens">
+       <property name="text">
+        <string>Use Time Sens</string>
+       </property>
+       <property name="visible">
+        <bool>false</bool>
+       </property>  
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="mpCheckDisplayPopulation">
+       <property name="text">
+        <string>Display Population</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="mpTabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>10</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="CQFittingItemWidget" name="mpParameters">
+      <attribute name="title">
+       <string>Parameters (0)</string>
+      </attribute>
+     </widget>
+     <widget class="CQFittingItemWidget" name="mpConstraints">
+      <attribute name="title">
+       <string>Constraints (0)</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>TaskWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/TaskWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CQFittingItemWidget</class>
+   <extends>QWidget</extends>
+   <header>copasi/UI/CQFittingItemWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>mpBtnExperiment</tabstop>
+  <tabstop>mpBtnCrossValidation</tabstop>
+  <tabstop>mpTabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mpBtnExperiment</sender>
+   <signal>clicked()</signal>
+   <receiver>CQFittingWidget</receiver>
+   <slot>slotExperimentData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpTabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>CQFittingWidget</receiver>
+   <slot>slotPageIndexChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mpBtnCrossValidation</sender>
+   <signal>clicked()</signal>
+   <receiver>CQFittingWidget</receiver>
+   <slot>slotCrossValidationData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+  <slots>
+    <slot>slotExperimentData()</slot>
+    <slot>slotPageChange(QWidget *)</slot>
+    <slot>slotPageIndexChange(int)</slot>
+    <slot>slotCrossValidationData()</slot>
+  </slots>
+</ui>

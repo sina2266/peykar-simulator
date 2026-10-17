@@ -1,5 +1,67 @@
 # Verification record
 
+## Permanent sources and installed runtimes: 2026-10-17 local
+
+The [observed summary](native-runtime-verification-2026-10-17.json) and
+[source/runtime evidence records](../engine_adapters/runtime-evidence-2026-10-17.json)
+retain this continuation independently of earlier observations below.
+
+- Explicit acquisition resolved all original recursive Git links plus nested
+  nanobind/robin-map, separate VCell solvers and OSP helper dependencies. Reviewed
+  relative HTTPS Git origins are supported. `scripts/vendor_sources.py` materialized
+  sources as ordinary project files, preserving notices and validating Git blobs.
+  `scripts/verify_vendor.py` passed: **25 source identities, 52,167 files,
+  1,799,838,581 bytes, 37 materialized Git links**, zero missing dependencies/LFS.
+- The separately pinned native runtime builds/pulls and explicit
+  `scripts/probe_native_runtimes.py PROFILE --output NEW_DIRECTORY` executions
+  passed for COPASI, NEURON, PhysiCell, Chaste, VCell, GEARS, PhysiBoSS and OSP.
+  Original Chaste Delta/Notch vertex/node monolayers both passed. Existing real
+  vCornea injury-crossing evidence was retained without rewriting its record.
+  Exact image/artifact identities and model limitations are in the linked receipts.
+- COPASI initially exposed an actual SWIG output-mask type error; its version/layout
+  guarded compatibility bridge passed a real SBML integration (max error 6.09e-8,
+  conservation error 2.22e-16). PhysiCell's initial ARM64 build failed on x86-only
+  flags; portable C++/OpenMP builds then passed. Chaste's official 0750 home blocked
+  the caller UID; a traversal-only wrapper passed original executables unchanged.
+- OSP's exact release supports rSharp 1.2.3/.NET 8. The real Aciclovir PKML solver
+  produced **491** times and original **µmol/l** metadata; the metadata field was
+  corrected to the original API's `metaData` name and the final native run passed.
+  Windows graphical applications were not executed in Linux.
+- Figshare article 24049200 v3/file 44498681 was downloaded: **253,158,197 ZIP bytes**,
+  provider MD5 checked, one complete H5AD member with CRC/SHA checks. The isolated
+  AnnData reader reported **37,160 K562 cells / 19,264 genes / 21 conditions** and
+  finite values in its bounded 256×512 sample. This was not GEARS training or its
+  original published benchmark. The Harvard Dataverse metadata requests returned
+  HTTP 403; that failure remains explicit in the connector guide.
+- Targeted source/evidence checks passed: **21 tests**, including modified source,
+  ignored dependencies, unsafe paths, LFS pointers, partial OMEX failure, timeout
+  cleanup, immutable evidence, artifact corruption and API authentication.
+- Final **`make check-docker` passed**: Ruff lint/format (**199 copied files**),
+  strict Mypy (**65** source files), **280 tests in 15.13 seconds**, **88%** coverage,
+  current schemas/OpenAPI and all three wheel/sdist pairs. **`make build` passed**
+  on the host. An earlier final-check attempt stopped at two long-line lint errors
+  before testing; the corrected final command above completed successfully.
+- `package_native_evidence.py` retained **12 complete source receipts**, **11 native
+  execution/QC receipts**, **310 artifact blobs**. Identical reimport passed; earlier
+  source 1.0.0 receipts remain unchanged and complete inventories use 2.0.0.
+  The first operational importer printed a summary-method error after registration;
+  database and authenticated API rereads verified all 11 admitted records.
+- SQLite backup API and artifact copy made
+  `backups/pre-runtimes-20261016T220136Z/`, also copied locally. No jobs were active.
+  `docker compose build api worker` and `docker compose up -d api worker` passed
+  against the same volume. Every earlier row survived: **34 objects, 10 runs,
+  30 run events, 2 experiments, 4 nodes, 8 experiment events**. All **46** earlier
+  artifact byte sequences and all **24** original license file hashes match.
+- Live authenticated `/v1/runtimes` returned **11** records; the OSP filter returned
+  one, anonymous access returned **401**, and both historical and complete NEURON
+  source receipts remained readable. Real submit→worker→result passed again with
+  idempotency, exact manifest/result hashes and **11 samples**, run
+  `f0944977-87c8-4b46-96f3-adac9ad42ae8`.
+
+These observations establish local source/runtime/engineering behavior. Original
+paper reproduction, independent biological validity, general native-engine queue
+adapters, Windows graphical applications and the complete UI remain open.
+
 ## Whole-platform shared backend: 2026-10-16 (unreleased, on 0.3.0)
 
 This continuation broadens delivery beyond the eye-model path. The

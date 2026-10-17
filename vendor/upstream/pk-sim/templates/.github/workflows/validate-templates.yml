@@ -1,0 +1,41 @@
+name: Validate Templates
+# -------------------------------------------------------------------------------------
+# Overview
+# -------------------------------------------------------------------------------------
+# This workflow ensures the integrity of the building block templates 
+# defined in templates.json and their referenced model snapshots.
+#
+# - For each entry in templates.json, the referenced model snapshot (at "Url") must
+#   exist and contain a building block given by the combination of {"Type", "Name"}.
+# - Any templates that fail this check are listed, and the job fails.
+#
+# -------------------------------------------------------------------------------------
+
+on:
+  push:
+    paths:
+      - 'templates.json'
+    branches-ignore:
+      - main
+  pull_request:
+    paths:
+      - 'templates.json'
+  workflow_dispatch:
+
+jobs:
+  validate-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Validate templates.json links and names
+        run: python .github/scripts/validate_templates.py

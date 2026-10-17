@@ -1,0 +1,35 @@
+#!/bin/sh
+
+current_directory=$(pwd)
+
+# necessary to enforce standard convention for numeric values specification on non-English OS
+export LC_NUMERIC="C.UTF-8" 
+
+#export PREFIX_CC3D=@COMPUCELL_INSTALL_DIR@
+export PREFIX_CC3D="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $PREFIX_CC3D
+#export @LIBRARY_PATH_SYNTAX@=@xercesc_ld_path@:$@LIBRARY_PATH_SYNTAX@
+export @LIBRARY_PATH_SYNTAX@=${PREFIX_CC3D}/lib/:$@LIBRARY_PATH_SYNTAX@
+
+export COMPUCELL3D_PLUGIN_PATH=${PREFIX_CC3D}/lib/CompuCell3DPlugins
+export COMPUCELL3D_STEPPABLE_PATH=${PREFIX_CC3D}/lib/CompuCell3DSteppables
+export @LIBRARY_PATH_SYNTAX@=${PREFIX_CC3D}/lib/python:$@LIBRARY_PATH_SYNTAX@
+export @LIBRARY_PATH_SYNTAX@=${COMPUCELL3D_PLUGIN_PATH}:$@LIBRARY_PATH_SYNTAX@
+export @LIBRARY_PATH_SYNTAX@=${COMPUCELL3D_STEPPABLE_PATH}:$@LIBRARY_PATH_SYNTAX@
+export @LIBRARY_PATH_SYNTAX@=@VTK_LIBRARY_DIRECTORIES@:$@LIBRARY_PATH_SYNTAX@
+export @LIBRARY_PATH_SYNTAX@=@QT_LIBRARY_DIR@:$@LIBRARY_PATH_SYNTAX@
+export SWIG_LIB_INSTALL_DIR=${PREFIX_CC3D}/lib/python
+export PYTHON_MODULE_PATH=${PREFIX_CC3D}/pythonSetupScripts
+
+export SOSLIB_PATH=${PREFIX_CC3D}/examplesSoslib
+
+${PREFIX_CC3D}/bin/CompuCell3DCML $* 
+
+
+cd ${current_directory}
+
+
+
+
+

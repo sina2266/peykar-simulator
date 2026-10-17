@@ -1,0 +1,17 @@
+name: check-code-formatting
+on: [pull_request, push]
+
+jobs:
+  build:
+    name: check-code-formatting
+    runs-on: ubuntu-24.04
+    # Run on external PRs, but not internal PRs as they'll be run by the push
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+
+    steps:
+        - name: Fetch repository
+          uses: actions/checkout@v3
+        - name: Install packages
+          run: sudo apt-get update && sudo apt-get install python3-venv
+        - name: Check code formatting documentation
+          run: .ci/check_code_formatting.sh

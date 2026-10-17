@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# echo " "
+# echo " dollar-zero AKA the first argument to this .command script is: "
+# echo $0
+# echo " "
+export PYTHON_MINOR_VERSION=
+cd "${0%/*}"
+
+
+# language settings
+export LANG=en_EN
+export __CF_USER_TEXT_ENCODING=""
+
+export PYTHONPATH=@SITE_PACKAGES_INSTALL@
+
+export PYTHON_EXEC=@PYTHON_EXEC_FILE@
+
+export ENV_PREFIX=@PYTHON_ENV_PREFIX@
+
+export APP_PREFIX=@APP_INSTALL_PREFIX@
+
+export QT_QPA_PLATFORM_PLUGIN_PATH=${ENV_PREFIX}/plugins
+
+export CC3D_PYTHON_APP=${APP_PREFIX}/compucell3d.app/Contents/MacOS/python
+
+if [ -e ${CC3D_PYTHON_APP} ]
+then
+    echo "Using app"
+    export PYTHON_EXEC_FILE=${CC3D_PYTHON_APP}
+    export PYTHON_EXEC=${CC3D_PYTHON_APP}
+else
+    echo "Using script"
+    ln -s ${PYTHON_EXEC_FILE} ${APP_PREFIX}/CompuCell3D
+    export PYTHON_EXEC=${APP_PREFIX}/CompuCell3D
+fi
+
+
+
+echo ${osx_major}-${osx_minor}
+
+
+${PYTHON_EXEC} --version
+
+current_directory=$(pwd)
+
+export exit_code=0
+${PYTHON_EXEC} ${PYTHONPATH}/cc3d/player5/compucell3d.pyw $*
+exit_code=$?
+
+cd ${current_directory}
+exit ${exit_code}

@@ -1,0 +1,209 @@
+// The bison parser together with CEvaluationFlexLexer builds
+// the evaluation tree.
+
+%{
+#define YYSTYPE CUnitParserBase::Data
+
+#ifdef yyerror
+# undef yyerror
+#endif
+#define yyerror(__str) \
+  if (yychar != YYERRCODE) correctErrorPosition(); \
+  CCopasiMessage(CCopasiMessage::EXCEPTION, MCUnit + 1, mPosition)
+
+#include <cmath>
+
+#include "copasi/copasi.h"
+#include "copasi/utilities/CUnitParser.h"
+
+#include "copasi/core/CRootContainer.h"
+#include "copasi/utilities/CCopasiMessage.h"
+#include "copasi/utilities/utility.h"
+
+#undef yyparse
+#define yyparse CUnitParserBase::yyparse
+%}
+
+%no-lines
+
+/* yacc Declarations */
+%token SCALE
+%token KIND
+%token SI_UNIT
+%token USER_DEFINED_UNIT
+%token NUMBER
+%token POWER_OF_TEN
+%token MULTIPLY
+%token DIVIDE
+%token START_PARENS
+%token END_PARENS
+%token EXPONENT
+%token SUPERSCRIPT_2
+%token SUPERSCRIPT_3
+
+// Precedence
+%left SCALE
+%left KIND
+%left SI_UNIT
+%left USER_DEFINED_UNIT
+%left NUMBER
+%left POWER_OF_TEN
+%left MULTIPLY
+%left DIVIDE
+%left START_PARENS
+%left END_PARENS
+%right EXPONENT
+%right SUPERSCRIPT_2
+%right SUPERSCRIPT_3
+
+
+/* Grammar follows */
+%%
+
+compound_unit: unit
+           {
+             $$.pUnit = $1.pUnit;
+             mpUnit = $$.pUnit;
+           }
+         | scaled_unit
+           {
+             $$.pUnit = $1.pUnit;
+             mpUnit = $$.pUnit;
+           }
+         | multiplier MULTIPLY compound_unit
+           { 
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * *$3.pUnit;
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit MULTIPLY compound_unit
+           {
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * *$3.pUnit;
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit MULTIPLY multiplier
+           {
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * *$3.pUnit;
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | multiplier DIVIDE compound_unit
+           {
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * $3.pUnit->exponentiate(-1);
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit DIVIDE compound_unit
+           {
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * $3.pUnit->exponentiate(-1);
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit DIVIDE multiplier
+           {
+             $$.pUnit = new CUnit();
+             *$$.pUnit = *$1.pUnit * $3.pUnit->exponentiate(-1);
+             pdelete($1.pUnit);
+             pdelete($3.pUnit);
+             mpUnit = $$.pUnit;
+           }
+         | START_PARENS compound_unit END_PARENS
+           {
+             $$ = $2;
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit EXPONENT NUMBER
+           {
+             *$1.pUnit = $1.pUnit->exponentiate(strToDouble($3.text.c_str(), NULL));
+             $$.pUnit = $1.pUnit; 
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit SUPERSCRIPT_2
+           {
+             *$1.pUnit = $1.pUnit->exponentiate(2.0);
+             $$.pUnit = $1.pUnit;
+             mpUnit = $$.pUnit;
+           }
+         | compound_unit SUPERSCRIPT_3
+           {
+             *$1.pUnit = $1.pUnit->exponentiate(3.0);
+             $$.pUnit = $1.pUnit;
+             mpUnit = $$.pUnit;
+           }
+unit:    KIND
+           {
+             mpCurrentUnitDef = CRootContainer::getUnitDefFromSymbol($1.text);
+             $$.pUnit = new CUnit(CBaseUnit::fromSymbol($1.text));
+             mSymbols.insert($1.text);
+           }
+         | SI_UNIT
+           {
+             mpCurrentUnitDef = CRootContainer::getUnitDefFromSymbol($1.text);
+             $$.pUnit = new CUnit(CUnitDefinition::getSIUnit($1.text));
+             mSymbols.insert($1.text);
+             mSymbols.insert($$.pUnit->getUsedSymbols().begin(), $$.pUnit->getUsedSymbols().end());
+           }
+         | USER_DEFINED_UNIT
+           {
+             mpCurrentUnitDef = CRootContainer::getUnitDefFromSymbol($1.text);
+             
+             if (mpCurrentUnitDef == NULL)
+               {
+                 yyerror($1.text);
+               }
+             else
+               {
+                 $$.pUnit = new CUnit(*mpCurrentUnitDef);
+                 mSymbols.insert(mpCurrentUnitDef->getSymbol());
+                 mSymbols.insert(mpCurrentUnitDef->getUsedSymbols().begin(), mpCurrentUnitDef->getUsedSymbols().end());
+               }
+           }
+
+scaled_unit:  SCALE unit
+           {
+             $$.pUnit = $2.pUnit;
+
+             if (!$$.pUnit->isUndefined())
+               {
+                 assert(mpCurrentUnitDef != NULL);
+                 
+                 CUnitComponent component(CBaseUnit::dimensionless, 1.0, CBaseUnit::scaleFromPrefix($1.text), 0.0);
+                 $$.pUnit->addComponent(component);
+
+                 if (mpCurrentUnitDef->isReadOnly())
+                   mSymbols.insert(CBaseUnit::prefixFromScale(component.getScale()) + mpCurrentUnitDef->getSymbol());
+                 else
+                   mSymbols.insert(CBaseUnit::prefixFromScale(component.getScale()) + "\"" + mpCurrentUnitDef->getSymbol() + "\"");
+                   
+                 mpCurrentUnitDef = NULL;
+               }
+           }
+
+multiplier:  NUMBER
+           {
+             CUnitComponent component(CBaseUnit::dimensionless, strToDouble($1.text.c_str(), NULL), 0.0, 0.0);
+             
+             $$.pUnit = new CUnit();
+             $$.pUnit->addComponent(component);
+           }
+         | POWER_OF_TEN EXPONENT NUMBER
+           {
+             CUnitComponent component(CBaseUnit::dimensionless, pow(10.0, strToDouble($3.text.c_str(), NULL)), 0.0, 0.0);
+             
+             $$.pUnit = new CUnit();
+             $$.pUnit->addComponent(component);
+           }
+                    
+%%
+

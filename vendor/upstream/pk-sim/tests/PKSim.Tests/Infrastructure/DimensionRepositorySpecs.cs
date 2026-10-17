@@ -1,0 +1,42 @@
+using FakeItEasy;
+using OSPSuite.BDDHelper;
+using OSPSuite.BDDHelper.Extensions;
+using OSPSuite.Core.Domain.UnitSystem;
+using OSPSuite.Core.Serialization.Xml;
+using OSPSuite.Utility.Container;
+using PKSim.Core.Repositories;
+using PKSim.Core.Services;
+using PKSim.Infrastructure.ORM.Repositories;
+
+namespace PKSim.Infrastructure
+{
+   public abstract class concern_for_DimensionRepository : ContextSpecification<IDimensionRepository>
+   {
+      protected override void Context()
+      {
+         var pkSimConfiguration = new PKSimConfiguration();
+         var serializerRepository = new UnitSystemXmlSerializerRepository();
+         serializerRepository.PerformMapping();
+         var container = A.Fake<IContainer>();
+         sut = new DimensionRepository( new PKSimDimensionFactory(), serializerRepository, pkSimConfiguration, container);
+      }
+   }
+
+   public class When_retrieving_the_age_dimension : concern_for_DimensionRepository
+   {
+      private IDimension _ageDimension;
+
+      protected override void Context()
+      {
+         base.Context();
+         _ageDimension = sut.AgeInYears;
+      }
+
+      [Observation]
+      public void should_be_able_to_convert_from_years_to_months()
+      {
+         var monthUnit = _ageDimension.Unit("month(s)");
+         _ageDimension.BaseUnitValueToUnitValue(monthUnit, 1).ShouldBeEqualTo(12);
+      }
+   }
+}

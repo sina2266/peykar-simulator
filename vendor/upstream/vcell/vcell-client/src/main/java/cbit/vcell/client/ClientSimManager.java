@@ -1,0 +1,1230 @@
+/*
+ * Copyright (C) 1999-2011 University of Connecticut Health Center
+ *
+ * Licensed under the MIT License (the "License").
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/mit-license.php
+ */
+
+package cbit.vcell.client;
+
+import cbit.vcell.client.ChildWindowManager.ChildWindow;
+import cbit.vcell.client.data.DataViewer;
+import cbit.vcell.client.data.DataViewerController;
+import cbit.vcell.client.data.SimResultsViewer;
+import cbit.vcell.client.data.SimulationWorkspaceModelInfo;
+import cbit.vcell.client.desktop.simulation.SimulationStatusDetails;
+import cbit.vcell.client.desktop.simulation.SimulationStatusDetailsPanel;
+import cbit.vcell.client.desktop.simulation.SimulationWindow;
+import cbit.vcell.client.desktop.simulation.SimulationWindow.LocalState;
+import cbit.vcell.client.desktop.simulation.SimulationWorkspace;
+import cbit.vcell.client.server.UserPreferences;
+import cbit.vcell.client.task.AsynchClientTask;
+import cbit.vcell.client.task.AsynchClientTaskFunction;
+import cbit.vcell.client.task.ClientTaskDispatcher;
+import cbit.vcell.biomodel.BioModel;
+import cbit.vcell.clientdb.DocumentManager;
+import cbit.vcell.export.server.ExportServiceImpl;
+import cbit.vcell.field.FieldDataIdentifierSpec;
+import cbit.vcell.mapping.SimulationContext;
+import cbit.vcell.xml.XMLSource;
+import cbit.vcell.xml.XmlHelper;
+import cbit.vcell.mapping.SimulationContext.NetworkGenerationRequirements;
+import cbit.vcell.message.server.bootstrap.client.RemoteProxyException;
+import cbit.vcell.messaging.server.SimulationTask;
+import cbit.vcell.parser.ExpressionException;
+import cbit.vcell.resource.ResourceUtil;
+import cbit.vcell.server.SimulationStatus;
+import cbit.vcell.simdata.*;
+import cbit.vcell.solver.*;
+import cbit.vcell.solver.ode.ODESimData;
+import cbit.vcell.solver.ode.ODESolverResultSet;
+import cbit.vcell.solver.server.*;
+import cbit.vcell.util.ColumnDescription;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.vcell.client.viz.FieldViewerServer;
+import org.vcell.solver.fenics.FenicsDocker;
+import org.vcell.solver.fenics.FenicsSolver;
+import org.vcell.solver.smoldyn.SmoldynFileWriter;
+import org.vcell.solver.smoldyn.SmoldynSolver;
+import org.vcell.util.*;
+import org.vcell.util.document.BioModelChildSummary;
+import org.vcell.util.document.BioModelInfo;
+import org.vcell.util.document.DocumentValidUtil;
+import org.vcell.util.document.KeyValue;
+import org.vcell.util.document.LocalVCDataIdentifier;
+import org.vcell.util.document.User;
+import org.vcell.util.gui.DialogUtils;
+import org.vcell.util.gui.GeneralGuiUtils;
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.*;
+
+/**
+ * Insert the type's description here.
+ * Creation date: (6/7/2004 10:31:36 AM)
+ * @author: Ion Moraru
+ */
+public class ClientSimManager implements java.beans.PropertyChangeListener {
+
+	private static final Logger lg = LogManager.getLogger(ClientRequestManager.class);
+
+
+	@SuppressWarnings("serial")
+public static class LocalVCSimulationDataIdentifier extends VCSimulationDataIdentifier implements LocalVCDataIdentifier {
+
+	private File localSimDir = null;
+	public LocalVCSimulationDataIdentifier(VCSimulationIdentifier vcSimID, int jobIndex, File localDir) {
+		super(vcSimID, jobIndex);
+		localSimDir = localDir;
+	}
+
+	public File getLocalDirectory() {
+		return localSimDir;
+	}
+}
+
+
+	private DocumentWindowManager documentWindowManager = null;
+	private SimulationWorkspace simWorkspace = null;
+	private SimulationStatusHash simHash = new SimulationStatusHash();
+	
+	// Hash Keys
+	private final static String H_DATA_VIEWER_CONTROLLERS = "dataViewerControllers";
+//	private final static String H_SIM_DATASET_REFS = "simDataSetRefs";
+	private final static String H_FAILURES = "failures";
+	private final static String H_LOCAL_SIM = "showingLocal";
+	private final static String H_VIEWER_TYPE = "viewerType";
+	// issue #1746: an immutable snapshot of the run's BioModel (XML), stashed at run-submit for
+	// local quick runs, and the pristine submit-time SimulationOwner resolved from it (or reloaded
+	// from the database for saved runs) that the results viewer's model-info is bound to.
+	private final static String H_STASHED_BIOMODEL_XML = "stashedBioModelXml";
+	private final static String H_PRISTINE_METADATA_OWNER = "pristineMetadataOwner";
+
+public ClientSimManager(DocumentWindowManager documentWindowManager, SimulationWorkspace simWorkspace) {
+	this.documentWindowManager = documentWindowManager;
+	this.simWorkspace = simWorkspace;
+	getSimWorkspace().addPropertyChangeListener(this);
+	initHash(getSimWorkspace().getSimulations());
+}
+
+public User getLoggedInUser() {
+	return getDocumentWindowManager().getUser();
+}
+
+DocumentWindowManager getDocumentWindowManager() {
+	return documentWindowManager;
+}
+
+public UserPreferences getUserPreferences() {
+	UserPreferences up = documentWindowManager.getUserPreferences();
+	return up;
+}
+
+public SimulationStatus getSimulationStatus(Simulation simulation) {
+	SimulationStatus cachedSimStatus = simHash.getSimulationStatus(simulation);
+	if (cachedSimStatus!=null){
+		if (simulation.getIsDirty()) {
+			return SimulationStatus.newNotSaved(simulation.getJobCount());
+		} else {
+			return cachedSimStatus;
+		}
+	} else {
+		// shouldn't really happen
+		try {
+			throw new RuntimeException("shouldn't really happen");
+		} catch (Throwable e) {
+			e.printStackTrace(System.out);
+		}
+		return null;
+	}
+}
+
+public SimulationWorkspace getSimWorkspace() {
+	return simWorkspace;
+}
+
+public void preloadSimulationStatus(Simulation[] simulations) {
+	initHash(simulations);
+}
+
+private void initHash(Simulation[] simulations) {
+	simHash.changeSimulationInstances(simulations);
+	if (simulations != null) {
+		for (int i = 0; i < simulations.length; i++){
+			SimulationStatus simStatus = simHash.getSimulationStatus(simulations[i]);
+			if (simStatus==null || simStatus.isUnknown()){
+				// try to get status from server
+				simStatus = getDocumentWindowManager().getRequestManager().getServerSimulationStatus(simulations[i].getSimulationInfo());
+				if (simStatus != null) {
+					simHash.setSimulationStatus(simulations[i], simStatus);
+				} else {
+					simHash.setSimulationStatus(simulations[i], SimulationStatus.newNeverRan(simulations[i].getJobCount()));
+				}
+			}
+		}
+	}
+}
+
+
+	/**
+	 * This method gets called when a bound property is changed.
+	 * @param evt A PropertyChangeEvent object describing the event source 
+	 *   	and the property that has changed.
+	 */
+public void propertyChange(java.beans.PropertyChangeEvent evt) {
+	if (evt.getPropertyName().equals("simulations")) {
+		simHash.changeSimulationInstances((Simulation[])evt.getNewValue());
+	}
+	if (evt.getPropertyName().equals("simulationOwner")) {
+		initHash(((SimulationOwner)evt.getNewValue()).getSimulations());
+	}
+}
+
+
+public void runSimulations(Simulation[] simulations) {
+	runSimulations(simulations, null);
+}
+public void runSimulations(Simulation[] simulations,AsynchClientTask[] endTasks) {
+	getDocumentWindowManager().getRequestManager().runSimulations(this, simulations,endTasks);
+}
+
+public void showSimulationResults(OutputContext outputContext, Simulation[] simulations, ViewerType viewerType) {
+	if (simulations == null) {
+		return;
+	}
+	
+	Vector<Simulation> v = new Vector<>();
+    for (Simulation simulation : simulations) {
+        if (simulation.getSimulationInfo() != null && getSimulationStatus(simulation).getHasData()) {
+            if (simulation.getSolverTaskDescription().getSolverDescription().isFenicsSolver()) {
+                // FEniCSx results are a results bundle, not a VCell dataset: they open in the field viewer
+                showFenicsServerResults(simulation);
+                continue;
+            }
+            v.add(simulation);
+        }
+    }
+    if (v.isEmpty()) {
+        return;
+    }
+	final Simulation[] simsToShow = v.toArray(Simulation[]::new);
+	Hashtable<String, Object> hashTable = new Hashtable<String, Object>();
+	hashTable.put("outputContext", outputContext);
+	hashTable.put("simsArray", simsToShow);
+	AsynchClientTask[] taskArray = showSimulationResults0(false, viewerType);
+	ClientTaskDispatcher.dispatch(getDocumentWindowManager().getComponent(), hashTable, taskArray, false, true, null);
+}
+/*
+		Deprecated: Langevin post-processing is now handled server-side
+ */
+@Deprecated
+public void postProcessLangevinResults(Simulation sim) {
+	SimulationOwner simOwner = getSimWorkspace().getSimulationOwner();
+	Hashtable<String, Object> hashTable = new Hashtable<> ();
+
+	hashTable.put(LangevinPostProcessor.FAILURE_KEY, false);
+	hashTable.put(LangevinPostProcessor.SIMULATION_KEY, sim);
+	hashTable.put(LangevinPostProcessor.SIMULATION_OWNER_KEY, simOwner);
+
+	SolverTaskDescription std = sim.getSolverTaskDescription();
+	int numTrials = std.getNumTrials();
+	VCSimulationIdentifier vcSimulationIdentifier = sim.getSimulationInfo().getAuthoritativeVCSimulationIdentifier();
+	MathOverrides mathOverrides = sim.getMathOverrides();
+	int sizeOverrides = mathOverrides.getSize();
+	int scanCount = mathOverrides.getScanCount();
+	System.out.println(" --- " + sim.getName() + ", numTrials = " + numTrials);
+	System.out.println(" --- " + sim.getName() + ", jobCount" + sim.getJobCount());
+	System.out.println(" --- " + sim.getName() + ", sizeOverrides = " + sizeOverrides);
+	System.out.println(" --- " + sim.getName() + ", scanCount = " + scanCount);
+
+	if(sizeOverrides > 0) {
+		System.out.println("ClientSimManager: parameter overrides not supported yet for SpringSaLaD applications");
+		hashTable.put(LangevinPostProcessor.FAILURE_KEY, true);
+	}
+	if(scanCount != 1) {
+		System.out.println("ClientSimManager: parameter scans not supported yet for SpringSaLaD applications");
+		hashTable.put(LangevinPostProcessor.FAILURE_KEY, true);
+	}
+	if(numTrials != sim.getJobCount()) {
+		System.out.println("ClientSimManager: numTrials must be the same as numTrials: " + numTrials + ", " + sim.getJobCount());
+		hashTable.put(LangevinPostProcessor.FAILURE_KEY, true);
+	}
+
+	ArrayList<AsynchClientTask> taskList = new ArrayList<AsynchClientTask>();
+	AsynchClientTask postProcessLangevinResultsTask = new AsynchClientTask("PostProcessLangevinResultsTask", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) {
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+
+			Map<Integer, ODESolverResultSet> odeSolverResultSetMap = new LinkedHashMap<>();
+			try {
+				for (int trialIndex = 0; trialIndex < numTrials; trialIndex++) {
+					VCSimulationDataIdentifier vcSimulationDataIdentifier = new VCSimulationDataIdentifier(vcSimulationIdentifier, trialIndex);
+					ODEDataManager dm = (ODEDataManager) getDocumentWindowManager().getRequestManager().getDataManager(null, vcSimulationDataIdentifier, false);
+					odeSolverResultSetMap.put(trialIndex, dm.getODESolverResultSet());
+				}
+			} catch(DataAccessException dae) {
+				System.out.println("ClientSimManager.postProcessLangevinResults() DataAccessException: " + dae.getMessage());
+				hashTable.put(LangevinPostProcessor.FAILURE_KEY, true);
+			}
+			if(odeSolverResultSetMap.isEmpty()) {
+				System.out.println("ClientSimManager: no data");
+				hashTable.put(LangevinPostProcessor.FAILURE_KEY, true);
+			}
+
+        	Simulation sim = (Simulation)hashTable.get(LangevinPostProcessor.SIMULATION_KEY);
+			SimulationOwner simOwner = (SimulationOwner)hashTable.get(LangevinPostProcessor.SIMULATION_OWNER_KEY);
+			LangevinPostProcessorInput lppInput = new LangevinPostProcessorInput(sim, simOwner);
+			lppInput.setFailed((boolean)hashTable.get(LangevinPostProcessor.FAILURE_KEY));
+			lppInput.setOdeSolverResultSetMap(odeSolverResultSetMap);
+
+			LangevinPostProcessor lpp = new LangevinPostProcessor();
+			LangevinPostProcessorOutput lppOutput = lpp.postProcessLangevinResults(lppInput);
+			hashTable.put(LangevinPostProcessor.LPP_OUTPUT_KEY, lppOutput);
+
+			// the LangevinPostProcessorOutput contains all we need, remove the rest
+			hashTable.remove(LangevinPostProcessor.FAILURE_KEY);
+			hashTable.remove(LangevinPostProcessor.LANGEVIN_MULTI_TRIAL_KEY);
+			hashTable.remove(LangevinPostProcessor.SIMULATION_KEY);
+			hashTable.remove(LangevinPostProcessor.SIMULATION_OWNER_KEY);
+		}
+	};
+	AsynchClientTask finishProcessLangevinResultsTask = new AsynchClientTask("FinishProcessLangevinResultsTask", AsynchClientTask.TASKTYPE_SWING_BLOCKING) {
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			LangevinPostProcessorOutput lppOutput = (LangevinPostProcessorOutput) hashTable.get(LangevinPostProcessor.LPP_OUTPUT_KEY);
+			boolean failure = lppOutput.isFailed();
+			if(failure) {	// just open some dialog for now; eventually we'll have some unobtrusive visual notification
+				PopupGenerator.showErrorDialog(ClientSimManager.this.getDocumentWindowManager(), "PostProcessing failed");
+			} else {
+//				PopupGenerator.showInfoDialog(ClientSimManager.this.getDocumentWindowManager(), "PostProcessing successful");
+			}
+		}
+	};
+
+	taskList.add(postProcessLangevinResultsTask);
+	taskList.add(finishProcessLangevinResultsTask);
+	AsynchClientTask[] taskArray = new AsynchClientTask[taskList.size()];
+	taskList.toArray(taskArray);
+	ClientTaskDispatcher.dispatch(getDocumentWindowManager().getComponent(), hashTable, taskArray, false, true, null);
+
+}
+
+public enum ViewerType {
+	NativeViewer_only
+}
+
+private static void saveFailure(Hashtable<String, Object>hashTable,Simulation sim,Throwable throwable){
+	Hashtable<Simulation,Throwable> failures = (Hashtable<Simulation,Throwable>)hashTable.get(H_FAILURES);
+	if (failures == null) {
+		failures = new Hashtable<Simulation, Throwable>();
+		hashTable.put(H_FAILURES, failures);
+	}
+	failures.put(sim, throwable);
+}
+
+public void getBatchSimulationsResults(OutputContext outputContext, Simulation simulation, Component requester) throws java.beans.PropertyVetoException {
+	final String SUCCESS_KEY = "SUCCESS_KEY";
+	final String FAILURE_KEY = "FAILURE_KEY";
+	final String BATCH_RESULTS_DIR_KEY = "BATCH_RESULTS_DIR";
+	// simulation should be a template simulation
+	if(simulation.getName().contains(SimulationWorkspace.ReservedBatchExtensionString)) {
+		throw new RuntimeException("Not a valid name for a batch template Simulation: '" + simulation.getName() + "'.");
+	}
+
+	SimulationOwner simOwner = getSimWorkspace().getSimulationOwner();
+	File batchResultsDir = ResourceUtil.getLocalBatchDir();
+
+	ArrayList<AsynchClientTask> taskList = new ArrayList<AsynchClientTask>();
+	AsynchClientTask retrieveResultsTask = new AsynchClientTask("Retrieving results", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING)  {
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			hashTable.put(SUCCESS_KEY, false);	// false <- initialization, true <- at least one success
+			hashTable.put(FAILURE_KEY, false);	// false <- initialization, true <- at least one failure
+
+			// recover the list of batch simulations that belong to this template
+			Simulation allSims[] = simOwner.getSimulations();
+			LinkedHashMap<String, String> importsMap = new LinkedHashMap<>();
+			LinkedHashMap <String, Boolean> successMap = new LinkedHashMap<>();
+			String namePrefix = simulation.getName() + SimulationWorkspace.ReservedBatchExtensionString;
+
+			if(allSims.length  == 1 && !allSims[0].getName().contains("_bat_")) {
+				PopupGenerator.showWarningDialog(ClientSimManager.this.getDocumentWindowManager().getComponent(), "No batch simulation results found");
+				return;
+			}
+
+			hashTable.put(BATCH_RESULTS_DIR_KEY, batchResultsDir);
+			for(Simulation simCandidate : allSims) {
+				if(simCandidate.getName().startsWith(namePrefix) && simCandidate.getName().contains("_bat_")) {
+					
+					int pos = simCandidate.getName().lastIndexOf("_");
+					String indexName = simCandidate.getName().substring(pos+1);
+					File currentSimulation = new File(batchResultsDir, indexName + ".txt");
+
+					ODESimData simData = null;
+					// note that simulation ID may be zero here, for example if the sim never ran
+					importsMap.put(simCandidate.getName(), simCandidate.getSimulationID());
+					successMap.put(simCandidate.getName(), true);	// on failure we'll change to false
+
+					try {
+						simData = importBatchSimulation(outputContext, simCandidate);
+					} catch(Exception e) {		// whatever fails, we keep going, this is a batch run
+						hashTable.put(FAILURE_KEY, true);
+						lg.error(simCandidate.getName() + ": failed to recover simulation results, ", e);
+						e.printStackTrace();
+						successMap.put(simCandidate.getName(), false);
+					}
+					if(simData != null) {		// write the file
+//						double[] res = osrs.extractColumn(4);
+
+						StringBuilder sb = new StringBuilder();
+						for(ColumnDescription cd : simData.getDataColumnDescriptions()) {
+							 sb.append(cd.getName() + " ");
+						}
+						sb.append("\r\n");
+						
+						for(double[] row : simData.getRows()) {
+							for(double entry : row) {
+								sb.append(entry);
+								sb.append(" ");
+							}
+							sb.append("\r\n");
+						}
+						PrintWriter out = new PrintWriter(currentSimulation);
+						out.print(sb.toString());
+						out.flush();
+						out.close();
+						hashTable.put(SUCCESS_KEY, true);
+					}
+				}
+			}
+			System.out.println("Done !!!");
+		}										// --- end run()
+	};
+	AsynchClientTask successCheckTask = new AsynchClientTask("Check Success", AsynchClientTask.TASKTYPE_SWING_NONBLOCKING) {
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			boolean success = (boolean)hashTable.get(SUCCESS_KEY);
+			boolean failure = (boolean)hashTable.get(FAILURE_KEY);
+			File batchResultsDir = (File)hashTable.get(BATCH_RESULTS_DIR_KEY);
+
+			if(success == false && failure == false) {
+				// didn't even try
+				throw new RuntimeException("Failed to complete exporting batch simulation results, error unknown");
+			} else if(success == true && failure == true) {
+				throw new RuntimeException("Some batch simulation results missing or failed to be exported");
+			} else if(success == false && failure == true) {
+				throw new RuntimeException("Failed to export any batch simulation results");
+			} else {	// success == true, failure == false
+				String msg = "Success exporting batch simulation results to files.\n";
+				msg += "Files located in '" + batchResultsDir.getPath() + "'";
+				PopupGenerator.showInfoDialog(requester, msg);
+			}
+		}
+	};
+
+	taskList.add(retrieveResultsTask);
+	taskList.add(successCheckTask);
+	AsynchClientTask[] taskArray = new AsynchClientTask[taskList.size()];
+	taskList.toArray(taskArray);
+	// knowProgress, cancelable, progressDialogListener
+	ClientTaskDispatcher.dispatch(documentWindowManager.getComponent(), new Hashtable<String, Object>(), taskArray, false, false, null);
+}
+
+private ODESimData importBatchSimulation(OutputContext outputContext, Simulation sim) throws DataAccessException, RemoteProxyException, ExpressionException {
+
+	if(sim.getVersion() == null) {
+		throw new RuntimeException("Missing Version.");
+	}
+	SimulationInfo simInfo = sim.getSimulationInfo();
+	if(simInfo == null) {
+		throw new RuntimeException("Missing Simulation Info.");
+	}
+	
+	VCSimulationIdentifier asi = simInfo.getAuthoritativeVCSimulationIdentifier();
+	VCSimulationDataIdentifier vcSimulationDataIdentifier = new VCSimulationDataIdentifier(asi, 0);
+
+	ODEDataManager dm = (ODEDataManager)getDocumentWindowManager().getRequestManager().getDataManager(outputContext, vcSimulationDataIdentifier, false);
+	ODESimData osd = (ODESimData)dm.getODESolverResultSet();
+	System.out.println(sim.getName() + ": simulation results recovered");
+	return osd;
+}
+
+/**
+ * issue #1746: resolve a pristine, submit-time {@link SimulationOwner} for the results viewer's
+ * metadata, so it stays consistent with the result columns even after the live model is edited
+ * (renamed/deleted species) or re-saved to a new version. Resolution order:
+ *   1. local quick runs: re-parse the immutable BioModel snapshot stashed at run-submit;
+ *   2. cross-version (Phase 2): find the accessible BioModel version whose child-summary simKeys
+ *      contain the viewed simulation's key and reload that pristine version - covers the case where
+ *      the live model has since been re-saved (so its current version no longer owns this run);
+ *   3. saved runs: reload a pristine BioModel copy by the live model's version key;
+ *   4. otherwise (unsaved model, no snapshot): {@code null} - caller falls back to the live owner.
+ * Never throws: any failure logs and returns {@code null} so the results view still opens.
+ */
+private SimulationOwner resolvePristineMetadataOwner(Hashtable<String, Object> hashTable, Simulation viewedSim) {
+	SimulationOwner liveOwner = getSimWorkspace().getSimulationOwner();
+	if (!(liveOwner instanceof SimulationContext)) {
+		return null;
+	}
+	String simContextName = ((SimulationContext)liveOwner).getName();
+	try {
+		String stashedXml = (String)hashTable.get(H_STASHED_BIOMODEL_XML);
+		if (stashedXml != null) {
+			BioModel pristine = XmlHelper.XMLToBioModel(new XMLSource(stashedXml));
+			return pristine.getSimulationContext(simContextName);
+		}
+		// issue #1746 Phase 2: authoritative cross-version resolution by the viewed simulation's key
+		SimulationOwner ownerBySimKey = resolveOwnerBySimKey(viewedSim);
+		if (ownerBySimKey != null) {
+			return ownerBySimKey;
+		}
+		BioModel liveBioModel = ((SimulationContext)liveOwner).getBioModel();
+		if (liveBioModel != null && liveBioModel.getVersion() != null && liveBioModel.getVersion().getVersionKey() != null) {
+			DocumentManager documentManager = getDocumentWindowManager().getRequestManager().getDocumentManager();
+			BioModel pristine = documentManager.getBioModel(liveBioModel.getVersion().getVersionKey());
+			return pristine.getSimulationContext(simContextName);
+		}
+	} catch (Exception e) {
+		// non-fatal: fall back to the live model (previous behavior) rather than failing the results view
+		System.out.println("issue #1746: could not resolve pristine metadata owner (" + e.getMessage() + "), using live model");
+	}
+	return null;
+}
+
+/**
+ * issue #1746 Phase 2: cross-version resolution. Given the viewed simulation's key, scan the cached
+ * accessible {@link BioModelInfo}s for the version whose child-summary {@code simKeys} (populated at
+ * read time from vc_biomodelsim) contain it, reload that pristine version, and return the
+ * {@link SimulationContext} that actually owns that key. This is authoritative across versions - it
+ * finds the model version the run belongs to rather than trusting the live (possibly re-saved) model.
+ * Returns {@code null} when the viewed simulation has no key (unsaved quick-run) or no accessible
+ * model claims it, so the caller continues with the remaining resolution steps.
+ */
+private SimulationOwner resolveOwnerBySimKey(Simulation viewedSim) throws DataAccessException {
+	if (viewedSim == null || viewedSim.getSimulationInfo() == null) {
+		return null;
+	}
+	KeyValue simKey = viewedSim.getSimulationInfo().getAuthoritativeVCSimulationIdentifier().getSimulationKey();
+	if (simKey == null) {
+		return null;
+	}
+	String simKeyStr = simKey.toString();
+	DocumentManager documentManager = getDocumentWindowManager().getRequestManager().getDocumentManager();
+	BioModelInfo[] bioModelInfos = documentManager.getBioModelInfos();
+	if (bioModelInfos == null) {
+		return null;
+	}
+	for (BioModelInfo bioModelInfo : bioModelInfos) {
+		if (bioModelInfo == null) {
+			continue;
+		}
+		BioModelChildSummary summary = bioModelInfo.getBioModelChildSummary();
+		if (summary == null || summary.getSimKeys() == null) {
+			continue;
+		}
+		boolean claimsKey = false;
+		for (String candidate : summary.getSimKeys()) {
+			if (simKeyStr.equals(candidate)) {
+				claimsKey = true;
+				break;
+			}
+		}
+		if (!claimsKey) {
+			continue;
+		}
+		// this version claims the viewed simulation - reload it pristine and locate the owning app by key
+		BioModel pristine = documentManager.getBioModel(bioModelInfo.getVersion().getVersionKey());
+		if (pristine == null) {
+			return null;
+		}
+		for (SimulationContext simContext : pristine.getSimulationContexts()) {
+			for (Simulation sim : simContext.getSimulations()) {
+				if (sim.getKey() != null && simKeyStr.equals(sim.getKey().toString())) {
+					return simContext;
+				}
+			}
+		}
+		return null;
+	}
+	return null;
+}
+
+private AsynchClientTask[] showSimulationResults0(final boolean isLocal, final ViewerType viewerType) {
+
+	// Create the AsynchClientTasks 
+	ArrayList<AsynchClientTask> taskList = new ArrayList<AsynchClientTask>();
+	
+	taskList.add(  new AsynchClientTaskFunction( h -> { h.put(H_LOCAL_SIM, isLocal); h.put(H_VIEWER_TYPE, viewerType); } , "setLocal", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) ); 
+
+	final DocumentWindowManager documentWindowManager = getDocumentWindowManager();
+	AsynchClientTask retrieveResultsTask = new AsynchClientTask("Retrieving results", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING)  {
+		@SuppressWarnings("unchecked")
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			Simulation[] simsToShow = (Simulation[])hashTable.get("simsArray");
+			// issue #1746: resolve the pristine, submit-time owner once (all sims share the owner);
+			// done on this non-swing task since it may re-parse XML or reload a BioModel from the DB.
+			// The representative sim carries the submit-time key used for the cross-version scan.
+			Simulation representativeSim = (simsToShow != null && simsToShow.length > 0) ? simsToShow[0] : null;
+			SimulationOwner pristineMetadataOwner = resolvePristineMetadataOwner(hashTable, representativeSim);
+			if (pristineMetadataOwner != null) {
+				hashTable.put(H_PRISTINE_METADATA_OWNER, pristineMetadataOwner);
+			}
+			for (int i = 0; i < simsToShow.length; i++){
+				final Simulation sim  = simsToShow[i];
+				final VCSimulationIdentifier vcSimulationIdentifier = sim.getSimulationInfo().getAuthoritativeVCSimulationIdentifier();
+				final SimulationWindow simWindow = documentWindowManager.haveSimulationWindow(vcSimulationIdentifier);
+				OutputContext outputContext = (OutputContext)hashTable.get("outputContext");
+				
+				if (simWindow == null && ( viewerType==ViewerType.NativeViewer_only)) {			
+					try {
+						// make the manager and wire it up
+						DataViewerController dataViewerController = null;
+						if (!isLocal) {
+							dataViewerController = documentWindowManager.getRequestManager().getDataViewerController(outputContext,sim, 0);
+							documentWindowManager.addDataListener(dataViewerController);//For changes in time or variable
+						} else {
+							// ---- preliminary : construct the localDatasetControllerProvider
+							File primaryDir = ResourceUtil.getLocalRootDir();
+							User usr = sim.getVersion().getOwner();
+							DataSetControllerImpl dataSetControllerImpl = new DataSetControllerImpl(null,primaryDir,null);
+							ExportServiceImpl localExportServiceImpl = new ExportServiceImpl();
+							LocalDataSetControllerProvider localDSCProvider = new LocalDataSetControllerProvider(usr, dataSetControllerImpl, localExportServiceImpl);
+							VCDataManager vcDataManager = new VCDataManager(localDSCProvider);
+							File localSimDir = ResourceUtil.getLocalSimDir(User.tempUser.getName());
+							LocalVCDataIdentifier vcDataId = new LocalVCSimulationDataIdentifier(vcSimulationIdentifier, 0, localSimDir);
+							DataManager dataManager = null;
+							if (!sim.getSolverTaskDescription().getSolverDescription().isLangevinSolver() && sim.isSpatial()) {
+								dataManager = new PDEDataManager(outputContext,vcDataManager, vcDataId);
+							} else {
+								dataManager = new ODEDataManager(outputContext,vcDataManager, vcDataId);
+							}	
+							dataViewerController = new SimResultsViewerController(dataManager, sim);
+							dataSetControllerImpl.addDataJobListener(documentWindowManager);
+						}
+						// make the viewer
+						Hashtable<VCSimulationIdentifier, DataViewerController> dataViewerControllers = (Hashtable<VCSimulationIdentifier, DataViewerController>)hashTable.get(H_DATA_VIEWER_CONTROLLERS);
+						if (dataViewerControllers == null) {
+							dataViewerControllers = new Hashtable<VCSimulationIdentifier, DataViewerController>();
+							hashTable.put(H_DATA_VIEWER_CONTROLLERS, dataViewerControllers);
+						}						
+						dataViewerControllers.put(vcSimulationIdentifier, dataViewerController);
+					} catch (Throwable exc) {
+						exc.printStackTrace(System.out);
+						saveFailure(hashTable,sim, exc);
+					}
+				}
+			}			
+		}	
+	};
+	taskList.add(retrieveResultsTask);
+	
+	AsynchClientTask displayResultsTask = new AsynchClientTask("Showing results", AsynchClientTask.TASKTYPE_SWING_BLOCKING) {
+		@SuppressWarnings("unchecked")
+		public void run(Hashtable<String, Object> hashTable) throws Exception {					
+			boolean isLocal = fetch(hashTable,H_LOCAL_SIM,Boolean.class,true);
+			SimulationWindow.LocalState localState = isLocal ? LocalState.LOCAL : LocalState.SERVER;
+			Hashtable<Simulation,Throwable> failures = (Hashtable<Simulation,Throwable>)hashTable.get(H_FAILURES);
+			Simulation[] simsToShow = (Simulation[])hashTable.get("simsArray");
+			for (int i = 0; i < simsToShow.length; i++){
+				final Simulation sim  = simsToShow[i];
+				if(failures != null && failures.containsKey(sim)){
+					continue;
+				}
+				final VCSimulationIdentifier vcSimulationIdentifier = simsToShow[i].getSimulationInfo().getAuthoritativeVCSimulationIdentifier();	
+				
+				final SimulationWindow simWindow = documentWindowManager.haveSimulationWindow(vcSimulationIdentifier);
+				if (simWindow != null) {
+					ChildWindowManager childWindowManager = ChildWindowManager.findChildWindowManager(documentWindowManager.getComponent());
+					ChildWindow childWindow = childWindowManager.getChildWindowFromContext(simWindow);
+					if (childWindow==null){
+						childWindow = childWindowManager.addChildWindow(simWindow.getDataViewer(), simWindow);
+						childWindow.pack();
+						childWindow.setIsCenteredOnParent();
+						childWindow.show();
+					}
+					setFinalWindow(hashTable, childWindow); 
+					simWindow.setLocalState(localState);
+				} else {					
+					// wire it up the viewer
+					Hashtable<VCSimulationIdentifier, DataViewerController> dataViewerControllers = (Hashtable<VCSimulationIdentifier, DataViewerController>)hashTable.get(H_DATA_VIEWER_CONTROLLERS);
+					DataViewerController viewerController = dataViewerControllers.get(vcSimulationIdentifier);
+					Throwable ex = (failures==null?null:failures.get(sim)); 
+					if (viewerController != null && ex == null) { // no failure
+						DataViewer viewer = viewerController.createViewer();
+						getSimWorkspace().getSimulationOwner().getOutputFunctionContext().addPropertyChangeListener(viewerController);
+						documentWindowManager.addExportListener(viewer);
+						documentWindowManager.addDataJobListener(viewer);//For data related activities such as calculating statistics
+						
+						// issue #1746: bind the results model-info to the pristine submit-time owner when
+						// available (falls back to the live owner). The output-function listener above and
+						// the SimulationWindow below stay on the live owner for interactive control.
+						SimulationOwner metadataOwner = (SimulationOwner)hashTable.get(H_PRISTINE_METADATA_OWNER);
+						if (metadataOwner == null) {
+							metadataOwner = getSimWorkspace().getSimulationOwner();
+						}
+						viewer.setSimulationModelInfo(new SimulationWorkspaceModelInfo(metadataOwner,sim.getName()));
+						viewer.setDataViewerManager(documentWindowManager);
+						
+						SimulationWindow newWindow = new SimulationWindow(vcSimulationIdentifier, sim, getSimWorkspace().getSimulationOwner(), viewer);						
+						GeneralGuiUtils.addCloseWindowKeyboardAction(newWindow.getDataViewer());
+						documentWindowManager.addResultsFrame(newWindow);
+						setFinalWindow(hashTable, viewer); 
+						newWindow.setLocalState(localState);
+					}
+				}
+			}
+			StringBuffer failMessage = new StringBuffer();
+			if (failures != null) {
+				if (!failures.isEmpty()) {
+					failMessage.append("Error, "+failures.size()+" of "+simsToShow.length+" sim results failed to display:\n");
+					Enumeration<Simulation> en = failures.keys();
+					while (en.hasMoreElements()) {
+						Simulation sim = en.nextElement();
+						Throwable exc = (Throwable)failures.get(sim);
+						failMessage.append("'"+sim.getName()+"' - "+exc.getMessage());
+					}
+				}
+			}
+			if(failMessage.length() > 0){
+				PopupGenerator.showErrorDialog(ClientSimManager.this.getDocumentWindowManager(), failMessage.toString());
+			}
+		}			
+	};
+	if ( viewerType==ViewerType.NativeViewer_only){
+		taskList.add(displayResultsTask);
+	}
+	
+	// Dispatch the tasks using the ClientTaskDispatcher.		
+	AsynchClientTask[] taskArray = new AsynchClientTask[taskList.size()];
+	taskList.toArray(taskArray);
+	return taskArray;
+}
+
+
+public void showSimulationStatusDetails(Simulation[] simulations) {
+	if (simulations == null) return;
+	for (Simulation simulation : simulations) {
+		SimulationStatusDetailsPanel ssdp = new SimulationStatusDetailsPanel();
+		ssdp.setPreferredSize(new Dimension(800, 350));
+		ssdp.setSimulationStatusDetails(new SimulationStatusDetails(getSimWorkspace(), simulation));
+		DialogUtils.showComponentCloseDialog(getDocumentWindowManager().getComponent(), ssdp, "Simulation Status Details");
+		ssdp.setSimulationStatusDetails(null);
+	}
+}
+
+public void stopSimulations(Simulation[] simulations) {
+	getDocumentWindowManager().getRequestManager().stopSimulations(this, simulations);
+}
+
+void updateStatusFromServer(Simulation simulation) {
+	// 
+	// get cached status
+	//
+	SimulationStatus oldStatus = getSimulationStatus(simulation);
+	SimulationStatus serverStatus = getDocumentWindowManager().getRequestManager().getServerSimulationStatus(simulation.getSimulationInfo());
+
+	SimulationStatus newStatus = null;
+	if (oldStatus.isStopRequested() && serverStatus.numberOfJobsDone() < simulation.getJobCount()) {
+		// if stop requested but still going, get updated server info but adjust status
+		newStatus = SimulationStatus.newStopRequest(serverStatus);
+	} else {
+		// otherwise accept server information
+		newStatus = serverStatus;
+	}
+
+	// update cache
+	simHash.setSimulationStatus(simulation,newStatus);
+	
+	System.out.println("---ClientSimManager.updateStatusFromServer[newStatus=" + newStatus + "], simulation="+simulation.toString());
+	if (oldStatus!=newStatus){
+		int simIndex = getSimWorkspace().getSimulationIndex(simulation);
+		getSimWorkspace().firePropertyChange(SimulationWorkspace.PROPERTY_NAME_SIMULATION_STATUS, -1, simIndex);
+	}
+}
+
+
+
+public void updateStatusFromStartRequest(final Simulation simulation, SimulationStatus newStatusFromServer) {
+	// asynchronous call - from start request worker thread
+	simHash.setSimulationStatus(simulation,newStatusFromServer);
+	int simIndex = getSimWorkspace().getSimulationIndex(simulation);
+	getSimWorkspace().firePropertyChange(SimulationWorkspace.PROPERTY_NAME_SIMULATION_STATUS, -1, simIndex);
+}
+
+public void updateStatusFromStopRequest(final Simulation simulation, SimulationStatus newStatusFromServer) {
+	// asynchronous call - from stop request worker thread
+	simHash.setSimulationStatus(simulation,newStatusFromServer);
+	int simIndex = getSimWorkspace().getSimulationIndex(simulation);
+	getSimWorkspace().firePropertyChange(SimulationWorkspace.PROPERTY_NAME_SIMULATION_STATUS, -1, simIndex);
+}
+
+public void runSmoldynParticleView(final Simulation originalSimulation) {
+	SimulationOwner simulationOwner = simWorkspace.getSimulationOwner();
+	Collection<AsynchClientTask> tasks;
+	if (simulationOwner instanceof SimulationContext) {
+		tasks = ClientRequestManager.updateMath(documentWindowManager.getComponent(), (SimulationContext)simulationOwner, false, NetworkGenerationRequirements.ComputeFullStandardTimeout);
+	} else {
+		tasks = new ArrayList<>(); 
+	}
+		
+	AsynchClientTask pv = new AsynchClientTask("starting particle view", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) {		
+		
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			File exes[] = SolverUtilities.getExes(SolverDescription.Smoldyn);
+			assert exes.length == 1 : "one and only one smoldyn solver expected";
+			File smoldynExe = exes[0];
+	
+			Simulation simulation = new TempSimulation(originalSimulation, false);
+			SimulationTask simTask = new SimulationTask(new SimulationJob(simulation, 0, null),0);
+			File inputFile = new File(ResourceUtil.getLocalSimDir(User.tempUser.getName()), simTask.getSimulationJobID() + SimDataConstants.SMOLDYN_INPUT_FILE_EXTENSION);
+			inputFile.deleteOnExit();
+			PrintWriter pw = new PrintWriter(inputFile);
+			SmoldynFileWriter smf = new SmoldynFileWriter(pw, true, null, simTask, false);
+			smf.write();
+			pw.close();	
+			String[] cmd = new String[] {smoldynExe.getAbsolutePath(), inputFile.getAbsolutePath()};
+			StringBuilder commandLine = new StringBuilder();
+			for (int i = 0; i < cmd.length; i ++) {
+				if (i > 0) {
+					commandLine.append(" ");
+				}		
+				commandLine.append(TokenMangler.getEscapedPathName(cmd[i]));
+			}
+			System.out.println(commandLine);
+			char charArrayOut[] = new char[10000];
+			char charArrayErr[] = new char[10000];
+			ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+			final Process process = processBuilder.start();
+			getClientTaskStatusSupport().addProgressDialogListener(new ProgressDialogListener() {
+
+				public void cancelButton_actionPerformed(EventObject newEvent) {
+					process.destroy();
+				}
+			});
+			InputStream errorStream = process.getErrorStream();
+			InputStreamReader errisr = new InputStreamReader(errorStream);
+			InputStream outputStream = process.getInputStream();
+			InputStreamReader outisr = new InputStreamReader(outputStream);
+			
+			StringBuilder sb = new StringBuilder();
+			
+			boolean running = true;
+			while(running)
+			{
+				try {
+					process.exitValue();
+					running = false;
+				} catch (IllegalThreadStateException e) {
+					// process didn't exit yet, do nothing
+				}
+				
+				if (outputStream.available() > 0) {
+					outisr.read(charArrayOut, 0, charArrayOut.length);
+				}
+				if (errorStream.available() > 0) {
+					errisr.read(charArrayErr, 0, charArrayErr.length);
+					sb.append(new String(charArrayErr));
+				}
+			}
+			if (sb.length() > 0)
+			{
+				throw new RuntimeException(sb.toString());
+			}
+		}
+	};
+	tasks.add(pv);
+	ClientTaskDispatcher.dispatchColl(documentWindowManager.getComponent(), new Hashtable<String, Object>(), tasks, false, true, null);
+}
+
+public void runQuickSimulation(final Simulation originalSimulation, ViewerType viewerType) {
+	Collection<AsynchClientTask> taskList = new ArrayList<AsynchClientTask>();
+	final SimulationOwner simulationOwner = simWorkspace.getSimulationOwner();
+	
+	// ----------- update math if it is from biomodel (simulationContext)
+	if (simulationOwner instanceof SimulationContext) {
+		Collection<AsynchClientTask> ut = ClientRequestManager.updateMath(documentWindowManager.getComponent(), ((SimulationContext)simulationOwner), false, NetworkGenerationRequirements.ComputeFullStandardTimeout);
+		taskList.addAll(ut);
+	}
+	//Let user tell how many simultaneous processes to run if this is local paramscan
+	final int[] simultaneousSimsSetting = new int[] {1};
+	if(originalSimulation.getJobCount() > 1) {
+		try {
+			String simultaneousSims = DialogUtils.showInputDialog0(getDocumentWindowManager().getComponent(), "Local multi-scan simulation, enter maximum simulataneous sims to run at once", "1");
+			simultaneousSimsSetting[0] = Integer.parseInt(simultaneousSims);
+		} catch (UtilCancelException e) {
+			return;
+		}
+	}
+	// ----------- run simulation(s)
+	final File localSimDataDir = ResourceUtil.getLocalSimDir(User.tempUser.getName());	
+	AsynchClientTask runSimTask = new AsynchClientTask("running simulation", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) {
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+						
+			Simulation simulation = new TempSimulation(originalSimulation, false);
+			simulation.setSimulationOwner(originalSimulation.getSimulationOwner());
+			
+			Vector<Issue> issueList = new Vector<Issue>();
+			IssueContext issueContext = new IssueContext();
+			simulation.gatherIssues(issueContext, issueList);
+			DocumentValidUtil.checkIssuesForErrors(issueList);
+
+			SimulationTask simTask = new SimulationTask(new SimulationJob(simulation, 0, null),0);
+			Solver solver = createQuickRunSolver(localSimDataDir, simTask);
+			if (solver == null) {
+				throw new RuntimeException("null solver");
+			}
+			if (solver instanceof FenicsSolver) {
+				hashTable.put(H_FENICS_BUNDLE, ((FenicsSolver) solver).getBundleDirectory());
+				hashTable.put(H_FENICS_SIMKEY, simTask.getSimKey().toString());
+			}
+			// check if spatial stochastic simulation (smoldyn solver) has data processing instructions with field data - need to access server for field data, so cannot do local simulation run. 
+			if (solver instanceof SmoldynSolver) {
+				DataProcessingInstructions dpi = simulation.getDataProcessingInstructions();
+				if (dpi != null) {
+					FieldDataIdentifierSpec fdis = dpi.getSampleImageFieldData(simulation.getVersion().getOwner());	
+					if (fdis != null) {
+						throw new RuntimeException("Spatial Stochastic simulation '" + simulation.getName() + "' (Smoldyn solver) with field data (in data processing instructions) cannot be run locally at this time since field data needs to be retrieved from the VCell server.");
+					}
+				}
+			}
+			solver.addSolverListener(new SolverListener() {
+				/** what a running solver last said it was doing: its phase ("solving 37%"), or the generic text */
+				private String runningMessage = "Running...";
+				public void solverStopped(SolverEvent event) {
+					getClientTaskStatusSupport().setMessage(event.getSimulationMessage().getDisplayMessage());
+				}
+				public void solverStarting(SolverEvent event) {
+					String displayMessage = event.getSimulationMessage().getDisplayMessage();
+					System.out.println(displayMessage);
+					getClientTaskStatusSupport().setMessage(displayMessage);
+					if(displayMessage.equals(SimulationMessage.MESSAGE_SOLVEREVENT_STARTING_INIT.getDisplayMessage())) {
+						getClientTaskStatusSupport().setProgress(75);
+					} else if(displayMessage.equals(SimulationMessage.MESSAGE_SOLVER_RUNNING_INPUT_FILE.getDisplayMessage())) {
+						getClientTaskStatusSupport().setProgress(90);
+					}
+				}
+				public void solverProgress(SolverEvent event) {
+					// a solver that names no phase (or no longer: its final 100%) keeps the text it had
+					runningMessage = SimulationMessage.describeSolverProgress(event.getSimulationMessage(), event.getProgress(), runningMessage);
+					getClientTaskStatusSupport().setMessage(runningMessage);
+					int progress = (int)(event.getProgress() * 100);
+					getClientTaskStatusSupport().setProgress(progress);
+				}
+				public void solverPrinted(SolverEvent event) {
+					getClientTaskStatusSupport().setMessage(runningMessage);
+				}
+				public void solverFinished(SolverEvent event) {
+					getClientTaskStatusSupport().setMessage(event.getSimulationMessage().getDisplayMessage());
+				}
+				public void solverAborted(SolverEvent event) {
+					getClientTaskStatusSupport().setMessage(event.getSimulationMessage().getDisplayMessage());
+				}
+			});
+			solver.startSolver();
+
+			int sleepInterval = 500;
+			while (true) {
+				try {
+					Thread.sleep(sleepInterval); 
+				} catch (InterruptedException e) {
+				}
+
+				if (getClientTaskStatusSupport().isInterrupted()) {
+					solver.stopSolver();
+					throw UserCancelException.CANCEL_GENERIC;
+				}
+				SolverStatus solverStatus = solver.getSolverStatus();
+				if (solverStatus != null) {
+					if (solverStatus.getStatus() == SolverStatus.SOLVER_ABORTED) {
+						String simulationMessage = solverStatus.getSimulationMessage().getDisplayMessage();
+						String translatedMessage = solver.translateSimulationMessage(simulationMessage);
+						// uncomment the next 3 lines below to avoid a NPE when the message is null
+//						if(translatedMessage == null) {
+//							break;
+//						}
+						if(translatedMessage.startsWith(BeanUtils.FD_EXP_MESSG)) {
+							throw new RuntimeException("Sims with FieldData can only be run remotely (cannot use QuickRun).\n"+translatedMessage);
+						}else {
+							throw new RuntimeException(translatedMessage);
+						}
+					}
+					if (solverStatus.getStatus() != SolverStatus.SOLVER_STARTING &&
+						solverStatus.getStatus() != SolverStatus.SOLVER_READY &&
+						solverStatus.getStatus() != SolverStatus.SOLVER_RUNNING){
+						break;
+					}
+					if(solverStatus.getStatus() == SolverStatus.SOLVER_RUNNING) {
+					}
+				}		
+			}
+			
+			ArrayList<AnnotatedFunction> outputFunctionsList = getSimWorkspace().getSimulationOwner().getOutputFunctionContext().getOutputFunctionsList();
+			OutputContext outputContext = new OutputContext(outputFunctionsList.toArray(new AnnotatedFunction[outputFunctionsList.size()]));
+			Simulation[] simsArray = new Simulation[] {simulation};
+			hashTable.put("outputContext", outputContext);
+			hashTable.put("simsArray", simsArray);
+		}
+	};
+	// issue #1746: snapshot the run's model to an immutable XML string on the EDT, atomically
+	// w.r.t. concurrent edits (quick run doesn't block input and the results window can lag before
+	// it appears). The results viewer resolves metadata against this pristine copy, not the
+	// since-edited live model, so renamed/deleted species can't corrupt or crash metadata.
+	AsynchClientTask stashBioModelTask = new AsynchClientTask("snapshotting model", AsynchClientTask.TASKTYPE_SWING_BLOCKING) {
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			if (simulationOwner instanceof SimulationContext) {
+				BioModel bioModel = ((SimulationContext)simulationOwner).getBioModel();
+				if (bioModel != null) {
+					hashTable.put(H_STASHED_BIOMODEL_XML, XmlHelper.bioModelToXML(bioModel));
+				}
+			}
+		}
+	};
+	if (originalSimulation.getSolverTaskDescription().getSolverDescription().isFenicsSolver()) {
+		// FEniCSx runs in Docker and writes a results bundle, not a VCell dataset: make sure the image is
+		// here, run, and say where the bundle is (the field viewer opens it in PR V3 of docs/plan-fenics.md)
+		taskList.add(prepareFenicsImageTask());
+		taskList.add(runSimTask);
+		taskList.add(reportFenicsBundleTask());
+		ClientTaskDispatcher.dispatch(documentWindowManager.getComponent(), new Hashtable<String, Object>(), taskList.toArray(new AsynchClientTask[0]), true, true, null);
+		return;
+	}
+	taskList.add(stashBioModelTask);
+	taskList.add(runSimTask);
+
+	// --------- add tasks from showSimResults : retrieve data, display results
+	AsynchClientTask[] showResultsTask = showSimulationResults0(true, viewerType);
+	for (AsynchClientTask task : showResultsTask) {
+		taskList.add(task);
+	}
+
+	AsynchClientTask runOthers = new AsynchClientTask("running scans/trials", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) {
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			if (getClientTaskStatusSupport().isInterrupted()) {
+				throw UserCancelException.CANCEL_GENERIC;
+			}			
+			Simulation[] sims = (Simulation[])hashTable.get("simsArray");
+			Simulation simulation = sims[0];
+			//Run param scans to generate data for scansnum > 0
+			if(simulation.getJobCount() > 1) {
+				//Start master thread so clientdispatcher modal dialog can end
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						//Flag (set by dataviewer being closed) so sim scan threads know if they should stop
+						final boolean[] bWinCloseHolder = new boolean[] {false};
+						//Add close listener to dataviewer to end all scans and exit
+						final SimulationWindow haveSimulationWindow = getDocumentWindowManager().haveSimulationWindow(simulation.getSimulationInfo().getAuthoritativeVCSimulationIdentifier());
+						final Window window = (Window)GeneralGuiUtils.findTypeParentOfComponent(haveSimulationWindow.getDataViewer(), Window.class);
+						window.addWindowListener(new WindowAdapter() {
+							@Override
+							public void windowClosing(WindowEvent e) {
+								// TODO Auto-generated method stub
+								super.windowClosing(e);
+								bWinCloseHolder[0] = true;
+							}});
+						//First sim scan (0) is done already before viewer is shown
+						((SimResultsViewer)haveSimulationWindow.getDataViewer()).setLocalJobProgress(1);
+						//Counter of how many simultaneous param scan threads are running (decremented when scan thread finishes)
+						final int[] currentlyRunningCountHolder = new int[] {0};
+						//Run other scans starting at 1 (scan 0 is already done if we got here)
+						for (int i = 1; i < simulation.getJobCount(); i++) {
+							//Check if we can start another new param scan thread
+							while(currentlyRunningCountHolder[0] >= simultaneousSimsSetting[0]) {
+								try {
+									Thread.sleep(50);
+									//Check if user closed the viewer window, no need to continue
+									if(bWinCloseHolder[0]) {
+										return;
+									}
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+							final int jobIndex = i;
+							//increment the concurrent running counter
+							currentlyRunningCountHolder[0]+= 1;
+							//Start new param scan thread
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										SimulationTask simTask = new SimulationTask(new SimulationJob(simulation, jobIndex, null), 0);
+										Solver solver = createQuickRunSolver(localSimDataDir, simTask);
+										solver.startSolver();
+										while(true) {
+											SolverStatus solverStatus = solver.getSolverStatus();
+//											System.out.println("ScanNum="+scanNum+" "+solverStatus);
+											try { 
+												Thread.sleep(100); 
+											} catch (InterruptedException e) {
+											}
+											//Stop if user closed the dataviewer window
+											if (bWinCloseHolder[0]) {
+												solver.stopSolver();
+												break;
+											}
+
+											if (solverStatus != null) {
+												if (solverStatus.getStatus() == SolverStatus.SOLVER_ABORTED) {
+													String simulationMessage = solverStatus.getSimulationMessage().getDisplayMessage();
+													String translatedMessage = solver.translateSimulationMessage(simulationMessage);
+													if(translatedMessage.startsWith(BeanUtils.FD_EXP_MESSG)) {
+														throw new RuntimeException("Sims with FieldData can only be run remotely (cannot use QuickRun).\n"+translatedMessage);
+													}else {
+														throw new RuntimeException(translatedMessage);
+													}
+												}
+												if (solverStatus.getStatus() != SolverStatus.SOLVER_STARTING &&
+													solverStatus.getStatus() != SolverStatus.SOLVER_READY &&
+													solverStatus.getStatus() != SolverStatus.SOLVER_RUNNING){
+													break;
+												}
+											}		
+
+										}
+//										SolverStatus solverStatus = solver.getSolverStatus();
+//										System.out.println("ScanNum="+scanNum+" "+"FinalStatus="+solverStatus);
+									} catch (Exception e) {
+										e.printStackTrace();
+									}finally {
+										//decrement the concurrent running counter
+										currentlyRunningCountHolder[0]-= 1;
+										//Set progress on dataviewer
+										if(((SimResultsViewer)haveSimulationWindow.getDataViewer()).getLocalJobProgress() < (jobIndex+1)) {
+											((SimResultsViewer)haveSimulationWindow.getDataViewer()).setLocalJobProgress(jobIndex+1);
+										}
+									}
+								}}).start();
+						}						
+					}}).start();
+			}		
+		}
+		
+	};
+	taskList.add(runOthers);
+	// ------- dispatch
+	AsynchClientTask[] taskArray = new AsynchClientTask[taskList.size()];
+	taskList.toArray(taskArray);
+	ClientTaskDispatcher.dispatch(documentWindowManager.getComponent(), new Hashtable<String, Object>(), taskArray, true, true, null);
+}
+
+
+/**
+ * Opens a cluster-run FEniCSx simulation's results bundle in the browser field viewer, reading it from
+ * the data server file by file (docs/plan-fenics.md, V5). Job 0; a parameter scan's other jobs are
+ * registered too, so the viewer's job parameter can reach them.
+ */
+private void showFenicsServerResults(Simulation simulation) {
+	try {
+		VCDataManager dataManager = ((ClientRequestManager) getDocumentWindowManager().getRequestManager())
+				.getClientServerManager().getVCDataManager();
+		VCSimulationIdentifier vcSimID = simulation.getSimulationInfo().getAuthoritativeVCSimulationIdentifier();
+		String simKey = vcSimID.getSimulationKey().toString();
+		for (int job = 0; job < simulation.getJobCount(); job++) {
+			VCSimulationDataIdentifier vcdID = new VCSimulationDataIdentifier(vcSimID, job);
+			FieldViewerServer.registerBundle(simKey, job,
+					org.vcell.solver.fenics.BundleStore.cached(new org.vcell.solver.fenics.DataServerBundleStore(dataManager, vcdID)),
+					simulation.getName(), simulation);
+		}
+		int port = FieldViewerServer.startForFenics();
+		if (port < 0) {
+			PopupGenerator.showErrorDialog(getDocumentWindowManager(), "Could not start the FEniCSx results viewer (see the log).");
+			return;
+		}
+		DialogUtils.browserLauncher(getDocumentWindowManager().getComponent(), FieldViewerServer.viewerUrl(port, simKey, 0),
+				"Failed to open the FEniCSx results viewer.");
+	} catch (Exception e) {
+		PopupGenerator.showErrorDialog(getDocumentWindowManager(), "Could not open the FEniCSx results: " + e.getMessage(), e);
+	}
+}
+
+private static final String H_FENICS_BUNDLE = "fenicsBundleDirectory";
+private static final String H_FENICS_SIMKEY = "fenicsSimKey";
+
+/**
+ * Checks that Docker is usable and the FEniCSx solver image is present, pulling it (about 1.3 GB, once)
+ * if not.
+ */
+private AsynchClientTask prepareFenicsImageTask() {
+	return new AsynchClientTask("preparing the FEniCSx solver image", AsynchClientTask.TASKTYPE_NONSWING_BLOCKING) {
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			FenicsDocker docker = FenicsDocker.find();
+			if (!docker.isDaemonRunning()) {
+				throw new RuntimeException("Docker is installed but not running. Start Docker Desktop and run the simulation again.");
+			}
+			String image = FenicsDocker.image();
+			if (docker.localImagePlatform(image).isEmpty()) {
+				getClientTaskStatusSupport().setMessage("Downloading the FEniCSx solver image (first run only)...");
+				docker.pull(image, line -> getClientTaskStatusSupport().setMessage("Downloading the FEniCSx solver image: " + line),
+						() -> getClientTaskStatusSupport().isInterrupted());
+			}
+		}
+	};
+}
+
+private AsynchClientTask reportFenicsBundleTask() {
+	return new AsynchClientTask("FEniCSx results", AsynchClientTask.TASKTYPE_SWING_BLOCKING) {
+		@Override
+		public void run(Hashtable<String, Object> hashTable) throws Exception {
+			File bundle = (File) hashTable.get(H_FENICS_BUNDLE);
+			if (bundle == null || !bundle.isDirectory()) {
+				throw new RuntimeException("The FEniCSx solver finished but wrote no results" + (bundle == null ? "" : " to '" + bundle + "'"));
+			}
+			// FEniCSx results are point data on body-fitted meshes, which only the browser field viewer
+			// draws (the Swing results viewer is Cartesian-only)
+			String simKey = (String) hashTable.get(H_FENICS_SIMKEY);
+			Simulation[] sims = (Simulation[]) hashTable.get("simsArray");
+			String simName = sims != null && sims.length > 0 ? sims[0].getName() : null;
+			FieldViewerServer.registerBundle(simKey, 0, org.vcell.solver.fenics.BundleStore.directory(bundle), simName,
+					sims != null && sims.length > 0 ? sims[0] : null);
+			int port = FieldViewerServer.startForFenics();
+			if (port < 0) {
+				PopupGenerator.showInfoDialog(getDocumentWindowManager(),
+						"FEniCSx simulation finished, but the results viewer could not be started (see the log).\n\n"
+						+ "Results bundle (VTU meshes + zarr fields):\n" + bundle.getAbsolutePath());
+				return;
+			}
+			DialogUtils.browserLauncher(getDocumentWindowManager().getComponent(), FieldViewerServer.viewerUrl(port, simKey, 0),
+					"Failed to open the FEniCSx results viewer. Results bundle: " + bundle.getAbsolutePath());
+		}
+	};
+}
+
+public static Solver createQuickRunSolver(File directory, SimulationTask simTask) throws SolverException, IOException {
+	SolverDescription solverDescription = simTask.getSimulation().getSolverTaskDescription().getSolverDescription();
+	if (solverDescription == null) {
+		throw new IllegalArgumentException("SolverDescription cannot be null");
+	}
+
+	// ----- FEniCSx runs in the local Docker image (pulled by prepareFenicsImageTask), not a native executable
+	if (solverDescription.isFenicsSolver()) {
+		FenicsSolver fenicsSolver = (FenicsSolver) SolverFactory.createSolver(directory, simTask, false);
+		FenicsDocker docker = FenicsDocker.find();
+		String image = FenicsDocker.image();
+		String platform = docker.localImagePlatform(image).orElseThrow(
+				() -> new SolverException("the FEniCSx solver image " + image + " has not been downloaded"));
+		fenicsSolver.configureDocker(docker, image, platform);
+		return fenicsSolver;
+	}
+	
+	// ----- 'FiniteVolume, Regular Grid' solver (semi-implicit) solver is not supported for quick run; throw exception.
+	if (solverDescription.equals(SolverDescription.FiniteVolume)) {
+		throw new IllegalArgumentException("Semi-Implicit Finite Volume Compiled, Regular Grid (Fixed Time Step) solver not allowed for quick run of simulations.");
+	}
+	
+	SolverUtilities.prepareSolverExecutable(solverDescription);	
+	// create solver from SolverFactory
+	Solver solver = SolverFactory.createSolver(directory, simTask, false);
+
+	return solver;
+}
+
+}

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# echo " "
+# echo " dollar-zero AKA the first argument to this .command script is: "
+# echo $0
+# echo " "
+
+cd "${0%/*}"
+
+
+
+
+
+
+export PYTHONPATH=@SITE_PACKAGES_INSTALL@
+
+export PYTHON_EXEC_FILE=@PYTHON_EXEC_FILE@
+
+export ENV_PREFIX=@PYTHON_ENV_PREFIX@
+
+export APP_PREFIX=@APP_INSTALL_PREFIX@
+
+export QT_QPA_PLATFORM_PLUGIN_PATH=${ENV_PREFIX}/plugins
+
+export TWEDIT_PYTHON_APP=${APP_PREFIX}/twedit++.app/Contents/MacOS/python
+
+if [ -e ${TWEDIT_PYTHON_APP} ]
+then
+    echo "Using app"
+    export PYTHON_EXEC_FILE=${TWEDIT_PYTHON_APP}
+    export PYTHON_EXEC=${TWEDIT_PYTHON_APP}
+else
+    echo "Using script"
+    ln -s ${PYTHON_EXEC_FILE} ${APP_PREFIX}/Twedit++
+    export PYTHON_EXEC=${APP_PREFIX}/Twedit++
+fi
+
+current_directory=$(pwd)
+
+echo "====> PYTHONPATH directory: $PYTHONPATH"
+
+${PYTHON_EXEC} ${PYTHONPATH}/cc3d/twedit5/twedit_plus_plus_cc3d.py $*
+
+cd ${current_directory}

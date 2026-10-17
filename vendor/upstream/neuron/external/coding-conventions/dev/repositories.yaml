@@ -1,0 +1,36 @@
+repositories:
+- url: git@github.com:BlueBrain/basalt.git
+  features:
+    formatting: true
+    precommit: true
+    static_analysis: true
+  cmake_project_name: Basalt
+  location: cmake/hpc-coding-conventions
+  spack_spec: py-basalt@develop+codechecks
+- url: ssh://bbpcode.epfl.ch/incubator/nocmodl
+  features:
+    formatting: true
+    precommit: true
+  location: cmake/hpc-coding-conventions
+  cmake_project_name: NMODL
+- url: ssh://bbpcode.epfl.ch/building/FLATIndex
+  features:
+    formatting: true
+  location: CMake/hpc-coding-conventions
+  cmake_project_name: FLATIndex
+- url: git@bbpgitlab.epfl.ch:hpc/circuit-building/touchdetector.git
+  features:
+    clang_format: true
+  location: deps/hpc-coding-conventions
+  cmake_project_name: TouchDetector
+  default_branch: main
+  spack_spec: touchdetector@5.6.1%gcc
+#  patch: add-extensions.patch
+- url: git@github.com:CNS-OIST/HBP_STEPS.git
+  features:
+    formatting: true
+    precommit: false
+    static_analysis: false
+  cmake_project_name: STEPS
+  location: CMake/hpc-coding-conventions
+  spack_spec: steps@develop+codechecks

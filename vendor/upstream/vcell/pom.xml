@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vcell</groupId>
+	<artifactId>vcell-pom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Virtual Cell Project</name>
+	<description>The Virtual Cell client and server</description>
+	<url>http://vcell.org/</url>
+	<inceptionYear>1997</inceptionYear>
+	<organization>
+		<name>VCell</name>
+		<url>http://vcell.org</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>MIT</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>jcschaff</id>
+			<name>Jim Schaff</name>
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>John Wagner</name>
+		</contributor>
+	</contributors>
+
+	<mailingLists>
+		<mailingList>
+			<name>VCell Open Discussion Forum</name>
+			<subscribe>https://groups.google.com/group/vcell-discuss</subscribe>
+			<unsubscribe>https://groups.google.com/group/vcell-discuss</unsubscribe>
+			<post>vcell-discuss@googlegroups.com</post>
+			<archive>https://groups.google.com/group/vcell-discuss</archive>
+		</mailingList>
+	</mailingLists>
+
+	<modules>
+		<module>vcell-admin</module>
+		<module>vcell-api-types</module>
+		<module>vcell-api</module>
+		<module>vcell-apiclient</module>
+		<module>vcell-client</module>
+		<module>vcell-core</module>
+		<module>vcell-math</module>
+		<module>vcell-server</module>
+		<module>vcell-util</module>
+		<module>vcell-vmicro</module>
+		<module>vcell-cli</module>
+		<module>vcell-rest</module>
+        <module>vcell-restclient</module>
+    </modules>
+
+	<scm>
+		<connection>scm:git:https://github.com/virtualcell/vcell</connection>
+		<developerConnection>scm:git:git@github.com:virtualcell/vcell</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/virtualcell/vcell</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/virtualcell/vcell/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>GitHub Actions</system>
+		<url>https://github.com/virtualcell/vcell/actions</url>
+	</ciManagement>
+
+	<properties>
+		<license.licenseName>MIT</license.licenseName>
+		<license.copyrightOwners>UConn Health</license.copyrightOwners>
+
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+
+		<!--
+		  Source encoding. Without this the compiler uses the PLATFORM default charset, which
+		  is UTF-8 on Linux and macOS but windows-1252 on Windows - so the same sources become
+		  different text depending on who builds them. See issue #2046.
+
+		  Five files then fail outright ("unmappable character (0x9D) for encoding
+		  windows-1252"), and - the part that is easy to miss - 109 more compile CLEANLY as
+		  windows-1252 and yield the wrong characters, including in user-visible strings:
+		  new JButton("\u25B6") becomes a button labelled "\u00E2\u2013\u00B6", with a green build.
+
+		  This declares what is already true rather than converting anything: every one of
+		  those 114 files decodes cleanly as UTF-8 today. Released artifacts were never
+		  affected, because release builds run on Linux; this is for anyone building on
+		  Windows, and for the Windows lane of the client E2E workflow.
+		-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- NB: Disable javadoc doclint -->
+		<doclint>none</doclint>
+
+		<activemq-broker.version>5.18.3</activemq-broker.version>
+		<activemq-client.version>5.18.3</activemq-client.version>
+		<axis.version>1.4</axis.version>
+		<bio-formats.version>6.1.1</bio-formats.version>
+		<biojava.version>6.0.4</biojava.version>
+		<colt.version>1.2.0</colt.version>
+		<combine-archive.version>1.4.1</combine-archive.version>
+		<commons-beanutils.version>1.9.4</commons-beanutils.version>
+		<commons-codec.version>1.11</commons-codec.version>
+		<commons-compress.version>1.21</commons-compress.version>
+		<commons-configuration2.version>2.9.0</commons-configuration2.version>
+		<commons-csv.version>1.10.0</commons-csv.version>
+		<commons-discovery.version>0.5</commons-discovery.version>
+		<commons-io.version>2.7</commons-io.version>
+		<commons-lang.version>2.6</commons-lang.version>
+		<commons-lang3.version>3.13.0</commons-lang3.version>
+		<commons-math3.version>3.6.1</commons-math3.version>
+		<commons-pool2.version>2.5.0</commons-pool2.version>
+		<commons-text.version>1.11.0</commons-text.version>
+		<gson.version>2.9.1</gson.version>
+		<guava.version>33.0.0-jre</guava.version>
+		<guice.version>7.0.0</guice.version>
+		<httpclient.version>4.5.11</httpclient.version>
+		<httpcore.version>4.4.13</httpcore.version>
+		<itext.version>2.1.7</itext.version>
+		<quarkus-itext.version>3.0.5</quarkus-itext.version>
+		<quarkus-logging-json.version>3.1.0</quarkus-logging-json.version>
+		<jackson-annotations.version>2.15.2</jackson-annotations.version>
+		<jackson-core.version>2.15.2</jackson-core.version>
+		<jackson-databind.version>2.15.2</jackson-databind.version>
+		<jackson-dataformat-yaml.version>2.15.2</jackson-dataformat-yaml.version>
+		<jackson-datatype.version>2.15.2</jackson-datatype.version>
+		<jakarta-annotation.version>1.3.5</jakarta-annotation.version>
+		<jama.version>1.0.3</jama.version>
+		<jaxb-api.version>2.3.0</jaxb-api.version>
+		<jaxb-core.version>2.3.0</jaxb-core.version>
+		<jaxb-impl.version>2.3.0</jaxb-impl.version>
+		<jaxrpc-api.version>1.1</jaxrpc-api.version>
+		<jaxen.version>1.2.0</jaxen.version>
+		<jcodec.version>0.2.5</jcodec.version>
+		<jdom2.version>2.0.6</jdom2.version>
+		<jetbrains-annotations.version>26.1.0</jetbrains-annotations.version>
+		<jetty.version>9.4.29.v20200521</jetty.version>
+		<jfreechart.version>1.5.0</jfreechart.version>
+		<jgrapht.version>1.3.0</jgrapht.version>
+		<!-- Pinned fork build carrying incremental and streaming chunk writing, contributed upstream as
+		     jamesmudd/jhdf#865 (issue jhdf#654). Same arrangement as the JSBML fork above: a tagged fork
+		     under the virtualcell org, built by JitPack. Revert to io.jhdf:jhdf once released upstream.
+		     See issue #1964. -->
+		<jhdf.version>0.13.0-VCELL-1</jhdf.version>
+		<jmatio.version>1.0</jmatio.version>
+		<joda-time.version>2.12.2</joda-time.version>
+		<jai-core.version>1.1.3</jai-core.version>
+		<javax-mail.version>1.4</javax-mail.version>
+		<jsbml.version>1.6.1-VCELL-4</jsbml.version>
+		<jose4j.version>0.9.6</jose4j.version>
+		<json-smart.version>2.4.11</json-smart.version>
+		<jung-api.version>2.1.1</jung-api.version>
+		<jung-algorithms.version>2.1.1</jung-algorithms.version>
+		<jung-graph-impl.version>2.1.1</jung-graph-impl.version>
+		<jung-samples.version>2.1.1</jung-samples.version>
+		<junit-jupiter.version>5.10.1</junit-jupiter.version>
+		<log4j-slf4j2-impl.version>2.24.0</log4j-slf4j2-impl.version>
+		<log4j-1.2-api.version>2.24.0</log4j-1.2-api.version>
+		<log4j-api.version>2.24.0</log4j-api.version>
+		<log4j-core.version>2.24.0</log4j-core.version>
+		<log4j-jul.version>2.24.0</log4j-jul.version>
+		<log4j2-jboss-logmanager.version>1.1.2.Final</log4j2-jboss-logmanager.version>
+		<log4j-layout-template-json.version>2.24.0</log4j-layout-template-json.version>
+		<lz4.version>1.8.0</lz4.version>
+		<microprofile-openapi.version>3.1</microprofile-openapi.version>
+		<mongodb-driver-sync.version>5.0.0</mongodb-driver-sync.version>
+		<n5.version>3.0.0</n5.version>
+		<netcdf.version>4.3.22</netcdf.version>
+		<nitrite.version>2.1.1</nitrite.version>
+		<ojdbc-bom.version>23.3.0.23.09</ojdbc-bom.version>
+		<ome-common.version>6.0.24</ome-common.version>
+		<opencsv.version>5.7.1</opencsv.version>
+		<picocli.version>4.6.3</picocli.version>
+		<postgresql.version>42.6.0</postgresql.version>
+		<restlet-version>2.4.3</restlet-version>
+		<scifio-bf-compat.version>4.1.0</scifio-bf-compat.version>
+		<sesame-model.version>2.9.0</sesame-model.version>
+		<sesame-rio-api.version>2.9.0</sesame-rio-api.version>
+		<sesame-rio-rdfxml.version>2.9.0</sesame-rio-rdfxml.version>
+		<sesame-rio-n3.version>2.9.0</sesame-rio-n3.version>
+		<slf4j-api.version>2.0.16</slf4j-api.version>
+		<sshj.version>0.35.0</sshj.version>
+		<thrift.version>0.18.0</thrift.version>
+		<xercesImpl.version>2.8.1</xercesImpl.version>
+		<xstream.version>1.4.20</xstream.version>
+		<xalan.version>2.7.3</xalan.version>
+		<xom.version>1.2.5</xom.version>
+
+		<!-- Native solvers for local (desktop) runs. Each comes from its own virtualcell/<repo>
+		     GitHub release, downloaded and unpacked into localsolvers/{linux64,mac64,win64}/ by
+		     vcell-core/pom.xml (execution per repo and platform). To bump a solver: set its tag here and
+		     copy the three sha256 values from that release's SHA256SUMS asset
+		     (gh release download <tag> -R virtualcell/<repo> -p SHA256SUMS -O -).
+		     A mismatched sha256 fails the build.
+		     HPC runs don't use these: SlurmProxy runs each solver family's own image, pinned in
+		     vcell-fluxcd's submit.env (see docs/plan-solver-repos.md). -->
+		<solvers-fvsolver.version>v0.10.8</solvers-fvsolver.version>	<!-- FiniteVolume_x64, smoldyn_x64 -->
+		<solvers-fvsolver.sha256.linux64>f12feacd42cf3db305e20c5bf5e832f8670492f554f18f876b89a6b75331bdf2</solvers-fvsolver.sha256.linux64>
+		<solvers-fvsolver.sha256.mac64>151bac683d88f600d47a28bea56c3381052214064ca5ef07e63f03ccdc3fd8cd</solvers-fvsolver.sha256.mac64>
+		<solvers-fvsolver.sha256.win64>85a4ba8cf47d21275941e82ba71ba36a00a75fa8312eb3399ebea8115c00aa1a</solvers-fvsolver.sha256.win64>
+		<solvers-ode.version>v0.9.6</solvers-ode.version>	<!-- SundialsSolverStandalone_x64 -->
+		<solvers-ode.sha256.linux64>a35474700888ba00632aa2b2f26f308428cf2ef9d59984e160f4a05ce11afb41</solvers-ode.sha256.linux64>
+		<solvers-ode.sha256.mac64>e6b08958b0ab4f3b372e74cdd1508cc752719dafabc00de8897956bbf0926233</solvers-ode.sha256.mac64>
+		<solvers-ode.sha256.win64>7cadf61babe4650ef12cbb1d0f0384da35456fb8a7ce5b9178e1aae68a5042aa</solvers-ode.sha256.win64>
+		<solvers-stochastic.version>v1.0.0</solvers-stochastic.version>	<!-- VCellStoch_x64 -->
+		<solvers-stochastic.sha256.linux64>b4867bb8f3abea152639bc8fe05f0aa6eb2a067720613308f480c86eefec4ca3</solvers-stochastic.sha256.linux64>
+		<solvers-stochastic.sha256.mac64>ff2da185d1b6f85bb5bfc670e9c9e6fe820cdb2b6a2d11880f2eb885a4d5a472</solvers-stochastic.sha256.mac64>
+		<solvers-stochastic.sha256.win64>9fbe1c99fe98952f17c6919e5d791f56339ced79ed34004741f6e041b923a2f3</solvers-stochastic.sha256.win64>
+		<solvers-nfsim.version>v0.2.1</solvers-nfsim.version>	<!-- NFsim_x64 -->
+		<solvers-nfsim.sha256.linux64>533141b278e63bf57dff047dd1c2eaacfc8c92515fb648c085f66b0884e85e9d</solvers-nfsim.sha256.linux64>
+		<solvers-nfsim.sha256.mac64>f9f0c82f4ebdbc3af7e9402489ced059a394d344122a420f06fa3ed4fe5b3c29</solvers-nfsim.sha256.mac64>
+		<solvers-nfsim.sha256.win64>3d760305c8a29695a8e562ea5b8ecad2d626d1833d8936ae8d18c0c60040c55f</solvers-nfsim.sha256.win64>
+		<solvers-hy3s.version>v1.0.0</solvers-hy3s.version>	<!-- Hybrid_EM_x64, Hybrid_MIL_x64, Hybrid_MIL_Adaptive_x64 -->
+		<solvers-hy3s.sha256.linux64>b3db1ce5667747543331dad015e068b7750e4127b7e49c28057cfb45afb1d0d3</solvers-hy3s.sha256.linux64>
+		<solvers-hy3s.sha256.mac64>aac4e9167493e247b43da37b6d547870cc427979cc17a4592dc8c7e5674ee015</solvers-hy3s.sha256.mac64>
+		<solvers-hy3s.sha256.win64>63602b4aeb75e746a5a392b40aa5d1c6f3830e54d309aba2646d9928f85533b4</solvers-hy3s.sha256.win64>
+		<solvers-chombo.version>v1.0.0</solvers-chombo.version>	<!-- VCellChombo2D_x64, VCellChombo3D_x64 (no Windows build) -->
+		<solvers-chombo.sha256.linux64>726249539cbd28f93fe6ed8d66778ebacbd630e65965be2b7e948c3c233eae61</solvers-chombo.sha256.linux64>
+		<solvers-chombo.sha256.mac64>68006d82a5452c95cf2628fb8d10014c56ca932d271b543d41b3877153da2856</solvers-chombo.sha256.mac64>
+		<solvers-mbsolver.version>v1.0.5</solvers-mbsolver.version>	<!-- MovingBoundary_x64 -->
+		<solvers-mbsolver.sha256.linux64>7c746a2b27b25e74fe1a8fae1790f6969cc4407dbac4bd5da7e13221067ba5a4</solvers-mbsolver.sha256.linux64>
+		<solvers-mbsolver.sha256.mac64>9f3eda2edda80e2f8a9d66ee82522c5471cd056122cc31e7c4bc821c1054affe</solvers-mbsolver.sha256.mac64>
+		<solvers-mbsolver.sha256.win64>f2fed5d1a2356a4b5c2993f4123462d76dc95642561199a863163b6c6a33b883</solvers-mbsolver.sha256.win64>
+		<!-- Langevin (SpringSaLaD) comes from cam-center/LangevinNoVis01 as bare executables with no
+		     SHA256SUMS; these checksums are of the downloaded assets (langevin-ubuntu-latest,
+		     langevin-macos-universal, langevin-windows-latest). -->
+		<solvers-langevin.version>1.4.15</solvers-langevin.version>
+		<solvers-langevin.sha256.linux64>aff46d7bfc0701f28b671818fe01be1d30a89be90024f0d29e73960247efecb7</solvers-langevin.sha256.linux64>
+		<solvers-langevin.sha256.mac64>48acffd11304749e17a77161038932b5b816b552a96f698c796019103df9f798</solvers-langevin.sha256.mac64>
+		<solvers-langevin.sha256.win64>eb7fa4b39deab3c72c7d75dd4f4e187e08fd94485c88884c93cebd1d8967a7b2</solvers-langevin.sha256.win64>
+	</properties>
+
+
+	<repositories>
+		<!-- Order matters: Maven asks repositories in the order below and stops at the first that
+		     has the artifact.
+
+		     Maven asks repositories in declaration order and stops at the first that has the
+		     artifact. Central is not declared here at all by default: it comes from the super-POM
+		     and is therefore consulted LAST, after every repository below. Nearly everything we
+		     depend on lives in Central, so each of those artifacts was looked up - and 404'd - in
+		     five other repositories first.
+
+		     Measured on one CI build with a warm dependency cache: 7028 "Downloading from" attempts
+		     produced 1222 artifacts. Central served 1205 of them, while alfresco, scijava, jitpack,
+		     terracotta and lib-maven-repo served zero between them and absorbed roughly 5800 failed
+		     round trips. The repositories below still matter for the handful of artifacts that are
+		     genuinely only there; they simply should not be asked first.
+
+		     The vendored file:// repository stays FIRST, ahead of Central. A miss there is a
+		     filesystem stat rather than a network round trip, so it costs the ~1200 Central
+		     artifacts almost nothing, while the artifacts that are only vendored resolve with no
+		     network at all. It also keeps vendoring meaning what it says: whatever is in
+		     lib/maven-repo wins. That is not hypothetical - edu.ucar:netcdf:4.3.22 is vendored
+		     AND present on Central. The two are byte-identical today (sha1
+		     a9b0be3ddf020c3aebf6498fcfc3ef007805cec0), so nothing turns on it right now, but with
+		     Central first the vendored copy would quietly stop being the one that is used, and
+		     that should not depend on a coincidence. jai_core, jai-codec and udunits are not on
+		     Central at all.
+
+		     So: vendored first, then Central, then the rest. Add new repositories after Central
+		     unless they are vendored artifacts. -->
+		<!-- Vendored artifacts: jai_core, jai-codec, netcdf, udunits, thredds-parent, n5.
+
+		     Vendored for RELIABILITY, not availability. The upstream servers that carried these
+		     were flaky enough that builds failed on them, so a copy lives in the tree and the
+		     build never depends on a third party being up to compile.
+
+		     The distinction matters when deciding whether one can be dropped. This comment used to
+		     say "not available on Maven Central", which is not true of all of them:
+		     edu.ucar:netcdf:4.3.22 is on Central and byte-identical to the vendored copy. It stays
+		     vendored anyway, because availability today was never the reason. jai_core, jai-codec
+		     and udunits do 404 from Central.
+
+		     org.janelia.saalfeldlab:n5:3.0.0 (used by cbit.vcell.export.server.N5Exporter) is a
+		     genuine 404 on Central - the whole groupId is absent there - and was the ONLY artifact
+		     in the entire reactor that maven.scijava.org served. Vendoring it is what let the
+		     scijava repository be removed below. Its parent, org.scijava:pom-scijava:34.0.0, and
+		     all of its runtime dependencies do come from Central, so only n5 itself is here. -->
+		<!-- Keep this repository FIRST; see the ordering note above. -->
+		<repository>
+			<id>lib-maven-repo</id>
+			<url>file://${maven.multiModuleProjectDirectory}/lib/maven-repo</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<!-- needed for com.mxgraph.jgraphx -->
+		<!-- Commented out 2026-08-14. Two cold-cache `mvn clean install -DskipTests` runs against
+	     an empty local repository, one with this repository and one without: both BUILD SUCCESS,
+	     and every artifact resolved from the same place either way (central 2465/2471,
+	     maven-restlet 15, jitpack 13, lib-maven-repo 9, scijava 6, ej-technologies 2,
+	     terracotta 1). This repository served ZERO. It has been here since the original
+	     single-maven-project reorganisation.
+
+	     Removing it saves little on its own - 4285 lookup attempts became 4253 - because with
+	     Central ordered ahead of it, it was already rarely reached. The ordering is what removed
+	     the waste; this removes a flaky third-party server from the critical path entirely.
+		     Left commented rather than deleted so it is one line to restore if something outside
+		     the default profile set turns out to need it.
+		<repository>
+			<id>com.alfresco.repository.public</id>
+			<name>Alfresco Public Repository</name>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+		</repository>
+		-->
+
+		<!-- Removed 2026-08-27. This repository served exactly ONE artifact in the whole reactor -
+		     org.janelia.saalfeldlab:n5:3.0.0 - measured on a cold local repository: central 1366,
+		     jitpack 15, lib-maven-repo 9, scijava 2 (the n5 pom and jar), ej-technologies 2,
+		     terracotta 1. n5 is now vendored in lib/maven-repo, so nothing needs this server.
+
+		     It was removed because it is actively harmful when it misbehaves, not merely useless.
+		     On 2026-08-27 maven.scijava.org served stored files normally (n5-3.0.0.pom and .jar both
+		     200) while returning 503 for every file Nexus GENERATES: maven-metadata.xml and every
+		     .sha1. Maven treats a 404 as "not here, ask the next repository" but a 503 as a hard
+		     transfer error, so a repository in this state converts two otherwise harmless situations
+		     into build failures:
+
+		       - org.jboss.narayana.jts:idlj-idl-openjdk:pom:7.0.0.Final, reached via
+		         quarkus-agroal -> quarkus-narayana-jta, does not exist in ANY repository. Central,
+		         jitpack and terracotta all 404 and Maven shrugs; scijava's 503 made it fatal.
+		       - com.nimbusds:oauth2-oidc-sdk:10.7 declares net.minidev:json-smart as a version
+		         RANGE, and a range makes Maven fetch maven-metadata.xml from every repository.
+
+		     Both surfaced only inside the enforcer's DependencyConvergence rule, which calls
+		     collectDependencies and turns those recorded exceptions into "Could not build dependency
+		     tree", which is why every other module compiled and only vcell-rest failed.
+		<repository>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
+		</repository>
+		-->
+
+		<!-- needed for biomodels.net web services -->
+<!--		<repository>-->
+<!--			<id>ebi-repo</id>-->
+<!--			<name>The EBI internal repository</name>-->
+<!--			<url>https://www.ebi.ac.uk/~maven/m2repo</url>-->
+<!--			<releases>-->
+<!--				<enabled>true</enabled>-->
+<!--			</releases>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--		</repository>-->
+
+		<!-- Needed for custom JSBML artifacts we create -->
+		<repository>
+			<id>jitpack.io</id>
+			<name>Custom JSBML artifact repository</name>
+			<url>https://jitpack.io</url>
+		</repository>
+
+		<repository>
+			<id>terracotta</id>
+			<name>Terracotta</name>
+			<url>https://repo.terracotta.org/maven2/</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--
+			  json-smart: pinned so nothing in the reactor resolves it through a version RANGE.
+
+			  com.nimbusds:oauth2-oidc-sdk:10.7 declares net.minidev:json-smart:[1.3.3,2.4.8]. A range
+			  is the only thing in this build that makes Maven fetch maven-metadata.xml, which it must
+			  then do from EVERY declared repository on every build; a repository answering with a
+			  transfer error rather than a 404 fails the whole collection. Managing the version
+			  replaces the range before it is resolved, so no metadata is requested at all - verified:
+			  a cold build requests maven-metadata.xml exactly once, for net.minidev:json-smart, and
+			  zero times with this block present.
+
+			  It also closes a real split: vcell-rest declared 2.4.11 directly, while every other
+			  module silently took 2.4.8, the top of that range.
+			-->
+			<dependency>
+				<groupId>net.minidev</groupId>
+				<artifactId>json-smart</artifactId>
+				<version>${json-smart.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit-jupiter.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--
+			  jose4j: forced to a single version across the reactor.
+
+			  vcell-server declares it directly, while vcell-rest also receives it transitively
+			  from quarkus-oidc -> smallrye-jwt, which pins 0.9.3 in Quarkus 3.5.2. Bumping only
+			  vcell-server therefore fails the enforcer's DependencyConvergence rule in vcell-rest.
+			  Managing it here is the single point that both paths resolve through.
+
+			  0.9.6 fixes two DoS advisories (compressed JWE content; crafted JWE). It is a patch
+			  bump within 0.9.x, so smallrye-jwt 4.3.1 keeps the API it was built against.
+			  Revisit when the Quarkus upgrade lands: a newer Quarkus pins a newer jose4j and
+			  this override should then be removed rather than raised.
+			-->
+			<dependency>
+				<groupId>org.bitbucket.b_c</groupId>
+				<artifactId>jose4j</artifactId>
+				<version>${jose4j.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+				<configuration>
+					<excludes>
+						<exclude/>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<configuration>
+							<rules>
+								<dependencyConvergence/>
+							</rules>
+						</configuration>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedPlugins>
+<!--									&lt;!&ndash; will only display a warning but does not fail the build. &ndash;&gt;-->
+<!--									<level>WARN</level>-->
+<!--									<excludes>-->
+<!--										<exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>-->
+<!--									</excludes>-->
+<!--									<message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>-->
+								</bannedPlugins>
+								<requireMavenVersion>
+									<version>3.8</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>17</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin><!-- mvn dependency:copy-dependencies -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>analyze</id>
+						<goals>
+							<goal>analyze-only</goal>
+						</goals>
+						<configuration>
+							<failOnWarning>true</failOnWarning>
+						</configuration>
+					</execution>
+				</executions>
+
+				<configuration>
+					<outputDirectory>${project.build.directory}/maven-jars</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

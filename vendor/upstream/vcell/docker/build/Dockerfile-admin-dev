@@ -1,0 +1,58 @@
+FROM eclipse-temurin:17 as jre-build
+
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+# Define base image and copy in jlink created minimal Java 17 environment
+FROM debian:bookworm-slim
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /javaruntime $JAVA_HOME
+
+# now we have Java 17
+RUN apt -y update && \
+    apt install -y curl dnsutils apt-utils libfreetype6 fontconfig fonts-dejavu openssh-client && \
+    mkdir -p /usr/local/app/lib 
+
+RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends tzdata
+RUN unlink /etc/localtime || true
+RUN ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+
+WORKDIR /usr/local/app
+
+COPY ./vcell-server/target/vcell-server-0.0.1-SNAPSHOT.jar \
+     ./vcell-server/target/maven-jars/*.jar \
+     ./vcell-api/target/vcell-api-0.0.1-SNAPSHOT.jar \
+     ./vcell-api/target/maven-jars/*.jar \
+     ./vcell-admin/target/vcell-admin-0.0.1-SNAPSHOT.jar \
+     ./vcell-admin/target/maven-jars/*.jar \
+     ./lib/
+
+COPY ./docker/build/vcell-admin.log4j.xml .
+COPY ./nativelibs/linux64 ./nativelibs/linux64
+
+COPY ./docker/build/admin/entrypoint.sh /vcellscripts/
+
+ENV VCELL_VERSION="vcell-version-not-set" \
+	VCELL_SITE="vcell-site-not-set" \
+	VCELL_DB_URL="vcell-db-url-not-set" \
+    VCELL_DB_DRIVER="vcell-db-driver-not-set" \
+    VCELL_DB_USER="vcell-db-user-not-set" \
+    VCELL_SIMDATADIR_SECONDARY_HOST="vcell-simdatadir-secondary-host-not-set" \
+    VCELL_SIMDATADIR_EXTERNAL="vcell-simdatadir-external-not-set"
+
+ENV dbpswdfile=/run/secrets/dbpswd.txt \
+    jmspswdfile=/run/secrets/jmspswd.txt \
+    batchuserkeyfile=/run/secrets/batchuserkeyfile
+
+VOLUME /run/secrets
+
+#EXPOSE 8000
+
+ENTRYPOINT [ "/vcellscripts/entrypoint.sh" ]

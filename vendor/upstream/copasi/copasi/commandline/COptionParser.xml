@@ -1,0 +1,527 @@
+<!--
+    This file demostrates how to specify options to clo++
+-->
+<!-- Copyright (C) 2019 - 2026 by Pedro Mendes, Rector and Visitors of the -->
+<!-- University of Virginia, University of Heidelberg, and University -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and University of -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and The University -->
+<!-- of Manchester. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., EML Research, gGmbH, University of Heidelberg, -->
+<!-- and The University of Manchester. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2002 - 2007 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc. and EML Research, gGmbH. -->
+<!-- All rights reserved. -->
+
+<cloxx>
+ <program>
+   <comment>Program comment</comment>
+   <description>Program description</description>
+ </program>
+ <config>
+   <autohelp/>
+   <variable name="cxx_namespace" value="copasi"></variable>
+   <variable name="cxx_header_file" value="COptionParser.h"></variable>
+   <variable name="cxx_header_def" value="COPASI_COptionParser"></variable>
+   <variable name="cxx_class" value="COptionParser"></variable>
+   <variable name="cxx_source_file" value="COptionParser.cpp"></variable>
+ </config>
+ <options>
+   <option id="ConfigDir"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="dir"
+           hidden="no">
+    <name>configdir</name>
+    <comment>
+     The configuration directory for copasi. The default is .copasi in the
+     home directory.
+    </comment>
+   </option>
+   <option id="ConfigFile"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>configfile</name>
+    <comment>
+     The configuration file for copasi. The default is copasi in the
+     ConfigDir.
+    </comment>
+   </option>
+   <option id="CopasiDir"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="dir"
+           hidden="no">
+    <name>copasidir</name>
+    <name>c</name>
+    <comment> 
+     The COPASI installation directory.
+    </comment>
+   </option>
+   <option id="Home"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="dir"
+           hidden="no">
+    <name>home</name>
+    <comment>
+     Your home directory.
+    </comment>
+   </option>
+   <option id="Tmp"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           argname="dir"
+           hidden="no">
+    <name>tmp</name>
+    <name>t</name>
+    <comment>
+     The temp directory used for autosave.
+    </comment>
+   </option>
+   <option id="Verbose"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="false"
+           hidden="no">
+    <name>verbose</name>
+    <comment>
+     Enable output of messages during runtime to std::error.
+    </comment>
+   </option>
+   <option id="NoLogo"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="false"
+           hidden="no">
+     <name>nologo</name>
+     <comment>
+       Surpresses the startup message.
+     </comment>
+   </option>
+   <option id="License"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           default="false"
+           hidden="no">
+    <name>license</name>
+    <comment>
+     Display the license.
+    </comment>
+   </option>
+<!--
+   <option id="SystemFunctionDB"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="FunctionDB.gps"
+           hidden="no">
+    <name>systemFunctionDB</name>
+    <comment>A write protected database of kinetic functions.</comment>
+   </option>
+   <option id="UserFunctionDB"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="~/FunctionDB.cps"
+           hidden="no">
+    <name>tmp</name>
+    <name>t</name>
+    <comment>
+     The user extensible database of kinetic functions.
+    </comment>
+   </option>
+   <option id="CopasiFile"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           hidden="no">
+    <name>copasiFile</name>
+    <name>f</name>
+    <comment>
+     The file which specifies the model and tasks.
+    </comment>
+   </option>
+-->
+   <option id="Validate"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="false"
+           hidden="no">
+     <name>validate</name>
+     <comment>
+      Only validate the given input file (COPASI, Gepasi, or SBML) without performing any calculations.
+     </comment>
+   </option>
+   <option id="Save"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           argname="file"
+           hidden="no">
+    <name>save</name>
+    <name>s</name>
+    <comment>
+      The file the model is saved to after work. 
+    </comment>
+   </option>
+   <option id="ImportSBML"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>importSBML</name>
+    <name>i</name>
+    <comment>A SBML file to import.</comment>
+   </option>
+   <option id="ExportSBML"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportSBML</name>
+    <name>e</name>
+    <comment>The SBML file to export.</comment>
+   </option>
+   <option id="SBMLSchema"
+           type="enum"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           hidden="no"
+           argname="schema"
+           default="L2V4">
+     <enum id="L1V1" name="L1V1" />
+     <enum id="L1V2" name="L1V2" />
+     <enum id="L2V1" name="L2V1" />
+     <enum id="L2V2" name="L2V2" />
+     <enum id="L2V3" name="L2V3" />
+     <enum id="L2V4" name="L2V4" />
+     <enum id="L2V5" name="L2V5" />
+     <enum id="L3V1" name="L3V1" />
+     <enum id="L3V2" name="L3V2" />
+     <name>SBMLSchema</name>
+     <comment>The Schema of the SBML file to export.</comment>
+   </option>
+   <option id="ImportCombineArchive"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>importCA</name>
+    <comment>A COMBINE archive file to import.</comment>
+   </option>
+   <option id="ExportCombineArchive"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportCA</name>
+    <comment>The COMBINE archive file to export.</comment>
+   </option>
+   <option id="ImportSEDML"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>importSEDML</name>
+    <comment>A SEDML file to import.</comment>
+   </option>
+   <option id="ExportSEDML"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportSEDML</name>
+    <comment>The SEDML file to export.</comment>
+   </option>
+   <option id="ExportBerkeleyMadonna"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportBerkeleyMadonna</name>
+    <comment>The Berkeley Madonna file to export.</comment>
+   </option>
+   <option id="ExportC"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportC</name>
+    <comment>The C code file to export.</comment>
+   </option>
+   <option id="ExportXPPAUT"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportXPPAUT</name>
+    <comment>
+      The XPPAUT file to export.</comment>
+   </option>
+<!--
+   <option id="Default"
+           type="string"
+           mandatory="no"
+           location="both"
+           modifier="map"
+           hidden="yes">
+    <name>default</name>
+    <name>d</name>
+    <comment>Default settings.</comment>
+   </option>
+-->
+   <option id="MaxTime"
+     type="int"
+     mandatory="no"
+     strict="yes"
+     location="commandline"
+     argname="seconds"
+     default="0"
+     hidden="no">
+     <name>maxTime</name>
+     <range min="0"/>
+     <comment>
+       The maximal time CopasiSE may run in seconds.
+     </comment>
+   </option>
+   <option id="ConvertToIrreversible"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="both"
+           default="false"
+           hidden="no">
+     <name>convert-to-irreversible</name>
+     <comment>
+       Converts reversible reactions to irreversible ones before running Task.
+     </comment>
+   </option>
+   <option id="ReportFile"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>report-file</name>
+    <comment>Override report file name to be used except for the one defined in
+             the scheduled task.</comment>
+   </option>
+   <option id="ScheduledTask"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="taskName"
+           hidden="no">
+    <name>scheduled-task</name>
+    <comment>Override the task marked as executable.</comment>
+   </option>
+   <option id="ReparameterizeModel"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>reparameterize</name>
+    <name>r</name>
+    <comment>
+      Before any task is run, the model is reparameterized with
+      the values specified in the provided INI file.
+    </comment>
+   </option>
+   <option id="ExportIni"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+    <name>exportIni</name>
+    <comment>
+      export the parameterization of the model as INI file for use with 
+      the --reparameterize option.
+    </comment>
+   </option>
+   <option id="SedmlTask"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="string"
+           hidden="no">
+    <name>sedmlTask</name>
+    <comment>
+      for specifying the task id to import (and execute) when importing 
+      SED-ML or importing a COMBINE archive. For a list of all SED-ML
+      tasks use --printSedMLTasks
+    </comment>
+   </option>
+   <option id="PrintSedMLTasks"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           default="false"
+           hidden="no">
+     <name>printSedMLTasks</name>
+     <comment>
+      Only print the SED-ML tasks when importing SED-ML or COMBINE archives.
+     </comment>
+   </option>
+   <option id="Version"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           default="false"
+           hidden="no">
+     <name>version</name>
+     <comment>
+      Only print COPASI version.
+     </comment>
+   </option>
+   <option id="PrintTasks"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           default="false"
+           hidden="no">
+     <name>print-tasks</name>
+     <comment>
+      Only print the tasks available in the COPASI file.
+     </comment>
+   </option>
+   <option id="PrintReports"
+           type="flag"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           default="false"
+           hidden="no">
+     <name>print-reports</name>
+     <comment>
+      Only print the report definitions available in the COPASI file.
+     </comment>
+   </option>
+   <option id="ExportTaskSpec"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+     <name>export-task</name>
+     <comment>
+      Exports the scheduled task settings as JSON file (use --scheduled-task to override).
+     </comment>
+   </option>
+   <option id="ImportTaskSpec"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+     <name>import-task</name>
+     <comment>
+      Imports the scheduled task settings as JSON file (use --scheduled-task to override).
+     </comment>
+   </option>
+   <option id="AssignReportDefinition"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="string"
+           hidden="no">
+     <name>report-name</name>
+     <comment>
+      Specifies the report definition to use. This can be used to change the report definition
+      of a task, or to specify the report definition to export or import. 
+     </comment>
+   </option>
+   <option id="ExportReportDefinition"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+     <name>export-report</name>
+     <comment>
+      Exports the report definition as JSON file (use --report-name to select the report to export)
+     </comment>
+   </option>
+   <option id="ImportReportDefinition"
+           type="string"
+           mandatory="no"
+           strict="yes"
+           location="commandline"
+           argname="file"
+           hidden="no">
+     <name>import-report</name>
+     <comment>
+      Imports the report definition from the specified JSON file.
+     </comment>
+   </option>
+ </options>
+</cloxx>

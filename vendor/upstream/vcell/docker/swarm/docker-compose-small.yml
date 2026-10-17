@@ -1,0 +1,271 @@
+version: '3.1'
+services:
+  api:
+    image: "${VCELL_REPO_NAMESPACE}/vcell-api:${VCELL_TAG}"
+    environment:
+      - softwareVersion=${VCELL_VERSION}
+      - serverid=${VCELL_SITE}
+
+      - simdataCacheSize=${VCELL_SIMDATA_CACHE_SIZE:-10000000}
+
+      - ssl_ignoreHostMismatch=${VCELL_SSL_IGNORE_HOST_MISMATCH}
+      - ssl_ignoreCertProblems=${VCELL_SSL_IGNORE_CERT_PROBLEMS}
+      
+      - dburl=${VCELL_DB_URL}
+      - dbdriver=${VCELL_DB_DRIVER}
+      - dbuser=${VCELL_DB_USER}
+
+      - jmsuser=clientUser
+      - jmshost_int_internal=activemqint
+      - jmsport_int_internal=61616
+      - mongodb_host_internal=mongodb
+      - mongodb_port_internal=27017
+      - mongodb_database=test
+
+      - smtp_hostname=${VCELL_SMTP_HOSTNAME}
+      - smtp_port=${VCELL_SMTP_PORT}
+      - smtp_emailaddress=${VCELL_SMTP_EMAILADDRESS}
+      - serverPrefixV0=/api/v0
+
+      - submit_service_host=${VCELL_SUBMIT_SERVICE_HOST}
+
+    ports:
+      - "127.0.0.1:${VCELL_API_PORT_EXTERNAL}:8080"
+      - "127.0.0.1:${VCELL_DEBUG_PORT_VCELL_API}:8000" # java remote debugging
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "--insecure", "https://localhost:8080/api/v0/health?check=login"]
+#      interval: 600s
+#      timeout: 30s
+#      retries: 2
+    volumes:
+      - "${VCELL_N5_DATADIR_HOST}:/n5DataDir"
+      - "${VCELL_SIMDATADIR_HOST}:/simdata"
+      - "${VCELL_SIMDATADIR_ARCHIVE_HOST}:${VCELL_SIMDATADIR_ARCHIVE_INTERNAL}"
+      - "${VCELL_SIMDATADIR_SECONDARY_HOST}:/simdata_secondary:z"
+      - "${VCELL_EXPORTDIR_HOST}:/exportdir"
+    secrets:
+      - keystorefile
+      - keystorepswd
+      - dbpswd
+      - jmspswd
+      - apiprivkey
+      - apipubkey
+    networks:
+      - vcellnet
+    depends_on:
+      - activemqint
+      - mongodb
+    deploy:
+      mode: replicated
+      replicas: 0
+      resources:
+        limits:
+          memory: 256M
+  db:
+    image: "${VCELL_REPO_NAMESPACE}/vcell-db:${VCELL_TAG}"
+    environment:
+      - softwareVersion=${VCELL_VERSION}
+      - serverid=${VCELL_SITE}
+
+      - dburl=${VCELL_DB_URL}
+      - dbdriver=${VCELL_DB_DRIVER}
+      - dbuser=${VCELL_DB_USER}
+
+      - jmsuser=clientUser
+      - jmshost_int_internal=activemqint
+      - jmsport_int_internal=61616
+
+      - mongodb_host_internal=mongodb
+      - mongodb_port_internal=27017
+      - mongodb_database=test
+    ports:
+      - "127.0.0.1:${VCELL_DEBUG_PORT_VCELL_DB}:8000" # java remote debugging
+    secrets:
+      - dbpswd
+      - jmspswd
+    networks:
+      - vcellnet
+    depends_on:
+      - activemqint
+      - mongodb
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 256M
+  data:
+    image: "${VCELL_REPO_NAMESPACE}/vcell-data:${VCELL_TAG}"
+    environment:
+      - softwareVersion=${VCELL_VERSION}
+      - serverid=${VCELL_SITE}
+      - export_baseurl=${VCELL_EXPORT_BASEURL}
+
+      - simdataCacheSize=${VCELL_SIMDATA_CACHE_SIZE:-50000000}
+
+      - dburl=${VCELL_DB_URL}
+      - dbdriver=${VCELL_DB_DRIVER}
+      - dbuser=${VCELL_DB_USER}
+
+      - jmsuser=clientUser
+      - jmshost_int_internal=activemqint
+      - jmsport_int_internal=61616
+      - mongodb_host_internal=mongodb
+      - mongodb_port_internal=27017
+      - mongodb_database=test
+      - s3export_baseURL=${VCELL_S3_EXPORT_BASEURL}
+
+      - servertype=CombinedData
+    ports:
+      - "127.0.0.1:${VCELL_DEBUG_PORT_VCELL_DATA}:8000" # java remote debugging
+    volumes:
+      - "${VCELL_SIMDATADIR_HOST}:/simdata"
+      - "${VCELL_N5_DATADIR_HOST}:/n5DataDir"
+      - "${VCELL_SIMDATADIR_ARCHIVE_HOST}:${VCELL_SIMDATADIR_ARCHIVE_INTERNAL}"
+      - "${VCELL_SIMDATADIR_SECONDARY_HOST}:/simdata_secondary:z"
+      - "${VCELL_EXPORTDIR_HOST}:/exportdir"
+    secrets:
+      - dbpswd
+      - jmspswd
+      - keystorefile
+      - keystorepswd
+    networks:
+      - vcellnet
+    depends_on:
+      - activemqint
+      - mongodb
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+      placement:
+        constraints:
+          - node.labels.zone == INTERNAL
+  activemqint:
+    image: webcenter/activemq:5.14.3
+    ports:
+      - "127.0.0.1:3270:61616"
+      - "8161"
+    environment:
+      - ACTIVEMQ_STATIC_QUEUES=simReq;dataReq;dbReq;simJob
+      - ACTIVEMQ_STATIC_TOPICS=clientStatus
+      - ACTIVEMQ_MIN_MEMORY=256
+      - ACTIVEMQ_MAX_MEMORY=256
+      - ACTIVEMQ_ENABLED_SCHEDULER=true
+      - ACTIVEMQ_USERS_clientUser=dummy
+      - ACTIVEMQ_GROUPS_reads=clientUser
+      - ACTIVEMQ_GROUPS_writes=clientUser
+      - ACTIVEMQ_CONFIG_AUTHENABLED=true
+    networks:
+      - vcellnet
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.zone == INTERNAL
+  mongodb:
+    image: "${VCELL_REPO_NAMESPACE}/vcell-mongo:${VCELL_TAG}"
+    ports:
+      - "127.0.0.1:${VCELL_MONGO_PORT_EXTERNAL}:27017"
+    networks:
+      - vcellnet
+    volumes:
+      - mongodata:/data/db
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+  s3Proxy:
+    image: andrewgaul/s3proxy:sha-10469f40c0b27a091fde70ee065bd6ee1c945bca
+    environment:
+      JCLOUDS_FILESYSTEM_BASEDIR: "/data"
+      JCLOUDS_PROVIDER: "filesystem"
+      JCLOUDS_REGIONS: "site2-low"
+      S3PROXY_AUTHORIZATION: "none"
+      S3PROXY_KEYSTORE_PATH: "/run/secrets/keystorefile"
+
+      LOG_LEVEL: info
+      S3PROXY_ENDPOINT: "http://0.0.0.0:80"
+      S3PROXY_VIRTUALHOST: ""
+      S3PROXY_SECURE_ENDPOINT: "https://0.0.0.0:443"
+#      S3PROXY_KEYSTORE_PASSWORD: $(cat /run/secrets/keystorepswd)
+      S3PROXY_CORS_ALLOW_ALL: "false"
+      S3PROXY_CORS_ALLOW_ORIGINS: ""
+      S3PROXY_CORS_ALLOW_METHODS: ""
+      S3PROXY_CORS_ALLOW_HEADERS: ""
+      S3PROXY_IGNORE_UNKNOWN_HEADERS: "false"
+      S3PROXY_ENCRYPTED_BLOBSTORE: ""
+      S3PROXY_ENCRYPTED_BLOBSTORE_PASSWORD: ""
+      S3PROXY_ENCRYPTED_BLOBSTORE_SALT: ""
+      S3PROXY_IDENTITY: "local-identity"
+      S3PROXY_CREDENTIAL: "local-credential"
+
+      JCLOUDS_ENDPOINT: ""
+      JCLOUDS_REGION: ""
+      JCLOUDS_IDENTITY: "remote-identity"
+      JCLOUDS_CREDENTIAL: "remote-credential"
+      JCLOUDS_KEYSTONE_VERSION: ""
+      JCLOUDS_KEYSTONE_SCOPE: ""
+      JCLOUDS_KEYSTONE_PROJECT_DOMAIN_NAME: ""
+    ports:
+      - "127.0.0.1:9091:443"
+    volumes:
+      - "${VCELL_N5_DATADIR_HOST}:/data:ro"
+    entrypoint: ['sh', '-c', 'export S3PROXY_KEYSTORE_PASSWORD=$$(cat /run/secrets/keystorepswd); /opt/s3proxy/run-docker-container.sh']
+    secrets:
+      - keystorefile
+      - keystorepswd
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 256M
+      placement:
+        constraints:
+          - node.labels.zone == INTERNAL
+  VCellDB:
+    image: postgres:14.2
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_PASSWORD: quarkus
+      POSTGRES_DB: postgres
+      POSTGRES_USER: quarkus
+    networks:
+      vcellnet:
+        aliases:
+          - postgresDB
+    volumes:
+      - "/media/zeke/SamsungDrive/Home/Work/CCAM/Repos/vcell/vcell-rest/src/main/resources/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql"
+
+
+networks:
+  vcellnet:
+volumes:
+  mongodata:
+secrets:
+  dbpswd:
+    file: ${VCELL_SECRETS_DIR}/dbpswd.txt
+  jmspswd:
+    file: ${VCELL_SECRETS_DIR}/jmspswd.txt
+  jmsrestpswd:
+    file: ${VCELL_SECRETS_DIR}/jmsrestpswd.txt
+  keystorepswd:
+    file: ${VCELL_SECRETS_DIR}/keystorepswd.txt
+  keystorefile:
+    file: ${VCELL_SECRETS_DIR}/keystore.jks
+  batchuserkeyfile:
+    file: ${VCELL_SECRETS_DIR}/id_rsa.pub
+  apipubkey:
+    file: ${VCELL_SECRETS_DIR}/apiKeys.pem
+  apiprivkey:
+    file: ${VCELL_SECRETS_DIR}/apiKeys

@@ -1,0 +1,88 @@
+# Copyright (C) 2020 - 2023 by Pedro Mendes, Rector and Visitors of the 
+# University of Virginia, University of Heidelberg, and University 
+# of Connecticut School of Medicine. 
+# All rights reserved. 
+
+set(LIBUUID_DEFINITIONS ${PKG_LIBUUID_CFLAGS_OTHER})
+set(LIBUUID_VERSION ${PKG_LIBUUID_VERSION})
+
+string(TOUPPER ${PROJECT_NAME} _UPPER_PROJECT_NAME)
+set(_PROJECT_DEPENDENCY_DIR ${_UPPER_PROJECT_NAME}_DEPENDENCY_DIR)
+
+# first check in dependencies only
+
+find_path(LIBUUID_INCLUDE_DIR
+	NAMES uuid/uuid.h
+	HINTS ${PKG_LIBUUID_INCLUDE_DIRS} ${PKG_LIBUUID_INCLUDE_DIRS}/..
+	${${_PROJECT_DEPENDENCY_DIR}}/${CMAKE_INSTALL_LIBDIR}
+	${${_PROJECT_DEPENDENCY_DIR}}/include
+	${${_PROJECT_DEPENDENCY_DIR}}
+	CMAKE_FIND_ROOT_PATH_BOTH
+	NO_DEFAULT_PATH
+)
+
+
+find_library(LIBUUID_LIBRARY
+	NAMES uuid
+	HINTS ${PKG_LIBUUID_LIBRARY_DIRS}
+	${${_PROJECT_DEPENDENCY_DIR}}/${CMAKE_INSTALL_LIBDIR}
+	${${_PROJECT_DEPENDENCY_DIR}}/lib
+	${${_PROJECT_DEPENDENCY_DIR}}
+	CMAKE_FIND_ROOT_PATH_BOTH
+	NO_DEFAULT_PATH
+)
+
+# then only use pkg-config if not found in dependencies
+if (NOT LIBUUID_INCLUDE_DIR OR NOT LIBUUID_LIBRARY)
+
+find_package(PkgConfig)
+
+pkg_check_modules(PKG_LIBUUID QUIET uuid)
+
+find_path(LIBUUID_INCLUDE_DIR
+	NAMES uuid/uuid.h
+	HINTS ${PKG_LIBUUID_INCLUDE_DIRS} ${PKG_LIBUUID_INCLUDE_DIRS}/..
+	${${_PROJECT_DEPENDENCY_DIR}}/${CMAKE_INSTALL_INCLUDEDIR}
+	${${_PROJECT_DEPENDENCY_DIR}}/include
+	${${_PROJECT_DEPENDENCY_DIR}}
+	CMAKE_FIND_ROOT_PATH_BOTH
+)
+
+find_library(LIBUUID_LIBRARY
+	NAMES uuid
+	HINTS ${PKG_LIBUUID_LIBRARY_DIRS}
+	${${_PROJECT_DEPENDENCY_DIR}}/${CMAKE_INSTALL_LIBDIR}
+	${${_PROJECT_DEPENDENCY_DIR}}/lib
+	${${_PROJECT_DEPENDENCY_DIR}}
+	CMAKE_FIND_ROOT_PATH_BOTH
+)
+
+endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(LIBUUID
+	FOUND_VAR
+		LIBUUID_FOUND
+	REQUIRED_VARS
+		LIBUUID_LIBRARY
+		LIBUUID_INCLUDE_DIR
+	VERSION_VAR
+		LIBUUID_VERSION
+)
+
+if(LIBUUID_FOUND AND NOT TARGET LibUUID::UUID)
+	add_library(LibUUID::UUID UNKNOWN IMPORTED)
+	set_target_properties(LibUUID::UUID PROPERTIES
+		IMPORTED_LOCATION "${LIBUUID_LIBRARY}"
+		INTERFACE_COMPILE_OPTIONS "${LIBUUID_DEFINITIONS}"
+		INTERFACE_INCLUDE_DIRECTORIES "${LIBUUID_INCLUDE_DIR}"
+	)
+endif()
+
+mark_as_advanced(LIBUUID_INCLUDE_DIR LIBUUID_LIBRARY)
+
+include(FeatureSummary)
+set_package_properties(LIBUUID PROPERTIES
+	URL "http://www.kernel.org/pub/linux/utils/util-linux/"
+	DESCRIPTION "uuid library in util-linux"
+)

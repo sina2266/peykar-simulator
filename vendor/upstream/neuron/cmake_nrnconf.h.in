@@ -1,0 +1,138 @@
+#pragma once
+
+/* Define to one if want to debug using sha1 hashes of data */
+#cmakedefine01 NRN_ENABLE_DIGEST
+
+/* Define to one if want to allow selection of architecture independent */
+/* 53 bit double precision of exp and pow from mpfr */
+#cmakedefine01 NRN_ENABLE_ARCH_INDEP_EXP_POW
+
+/* Define if building universal (internal helper macro) */
+#cmakedefine AC_APPLE_UNIVERSAL_BUILD @AC_APPLE_UNIVERSAL_BUILD@
+
+/* if mac os x */
+#cmakedefine DARWIN @DARWIN@
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#cmakedefine HAVE_DLFCN_H @HAVE_DLFCN_H@
+
+/* Define to 1 if you have the <execinfo.h> header file. */
+#cmakedefine HAVE_EXECINFO_H @HAVE_EXECINFO_H@
+
+/* Define to 1 if you have the `index' function. */
+#cmakedefine HAVE_INDEX @HAVE_INDEX@
+
+/* Define to 1 if you have the `isatty' function. */
+#cmakedefine HAVE_ISATTY @HAVE_ISATTY@
+
+/* define if using InterViews */
+#cmakedefine HAVE_IV @HAVE_IV@
+
+/* Define to 1 if you have the `mallinfo' function. */
+#cmakedefine HAVE_MALLINFO @HAVE_MALLINFO@
+
+/* Define to 1 if you have the `mallinfo2' function. */
+#cmakedefine HAVE_MALLINFO2 @HAVE_MALLINFO2@
+
+/* Define to 1 if you have the <malloc.h> header file. */
+#cmakedefine HAVE_MALLOC_H @HAVE_MALLOC_H@
+
+/* Define to 1 if you have the `mkstemp' function. */
+#cmakedefine HAVE_MKSTEMP @HAVE_MKSTEMP@
+
+/* Define to 1 if you have the `posix_memalign' function. */
+#cmakedefine HAVE_POSIX_MEMALIGN @HAVE_POSIX_MEMALIGN@
+
+/* Define to 1 if you have the `setenv' function. */
+#cmakedefine HAVE_SETENV @HAVE_SETENV@
+
+/* Define to 1 if you have the `setitimer' function. */
+#cmakedefine HAVE_SETITIMER @HAVE_SETITIMER@
+
+/* Define to 1 if you have the `sigaction' function. */
+#cmakedefine HAVE_SIGACTION @HAVE_SIGACTION@
+
+/* Define to 1 if you have the `sigprocmask' function. */
+#cmakedefine HAVE_SIGPROCMASK @HAVE_SIGPROCMASK@
+
+/* (Define if this signal exists) */
+#cmakedefine HAVE_SIGBUS @HAVE_SIGBUS@
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H @HAVE_SYS_TYPES_H@
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H @HAVE_UNISTD_H@
+
+/* define if using mingw */
+#cmakedefine MINGW @MINGW@
+
+/* where the lib hoc is */
+#cmakedefine NEURON_DATA_DIR @NEURON_DATA_DIR@
+
+/* host triplet */
+#cmakedefine NRNHOST @NRNHOST@
+
+/* if 1 then dlopen nrnmech instead of special */
+#cmakedefine NRNMECH_DLL_STYLE @NRNMECH_DLL_STYLE@
+
+/* if nrnoc can use X11 */
+#cmakedefine NRNOC_X11 @NRNOC_X11@
+
+/* location of NEURON libraries */
+#cmakedefine NRN_LIBDIR @NRN_LIBDIR@
+
+/* Name of package */
+#cmakedefine PACKAGE @PACKAGE@
+
+/* Define to the version of this package. */
+#cmakedefine PACKAGE_VERSION @PACKAGE_VERSION@
+
+/* Define SUNDIALS data type 'realtype' as 'long double' */
+#cmakedefine SUNDIALS_DOUBLE_PRECISION @SUNDIALS_DOUBLE_PRECISION@
+
+/* Use generic math functions */
+#cmakedefine SUNDIALS_USE_GENERIC_MATH @SUNDIALS_USE_GENERIC_MATH@
+
+/* Version number of package */
+#cmakedefine VERSION @VERSION@
+
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+#  cmakedefine WORDS_BIGENDIAN @WORDS_BIGENDIAN@
+# endif
+#endif
+
+/* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
+   `char[]'. */
+#cmakedefine YYTEXT_POINTER @YYTEXT_POINTER@
+
+/* Define to `int' if <sys/types.h> does not define. */
+#cmakedefine pid_t @pid_t@
+
+/* __cplusplus guard still needed because this header is included from C code in
+ * mesch (and maybe others)
+ */
+#if defined(__cplusplus)
+#include <array>
+#include <string_view>
+namespace neuron::config {
+#ifdef USE_PYTHON
+   constexpr std::string_view default_python_executable{R"(@NRN_DEFAULT_PYTHON_EXECUTABLE@)"};
+   constexpr std::array<std::string_view, @NRN_PYTHON_COUNT@> supported_python_versions{@NRN_DYNAMIC_PYTHON_LIST_OF_VERSION_STRINGS@};
+#endif
+   constexpr std::string_view shared_library_prefix{"@CMAKE_SHARED_LIBRARY_PREFIX@"};
+   constexpr std::string_view shared_library_suffix{"@CMAKE_SHARED_LIBRARY_SUFFIX@"};
+   constexpr std::string_view system_processor{"@CMAKE_SYSTEM_PROCESSOR@"};
+}
+#endif
+
+#ifdef MINGW
+#define WIN32 1
+#endif

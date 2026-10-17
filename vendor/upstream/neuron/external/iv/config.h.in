@@ -1,0 +1,109 @@
+#ifndef H_config_included
+#define H_config_included 1
+
+
+/* define if using cygwin */
+#cmakedefine CYGWIN 1
+
+/* use sigsetmask */
+#cmakedefine HAVE_BSD_SIGNALS 1
+
+/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
+   */
+#cmakedefine HAVE_DIRENT_H 1
+
+/* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
+#cmakedefine HAVE_NDIR_H 1
+
+/* Define to 1 if you have the <osfcn.h> header file. */
+#cmakedefine HAVE_OSFCN_H 1
+
+/* use sigprocmask */
+#cmakedefine HAVE_POSIX_SIGNALS 1
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine HAVE_STDLIB_H 1
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine HAVE_STRINGS_H 1
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine HAVE_STRING_H 1
+
+/* Define to 1 if you have the <stropts.h> header file. */
+#cmakedefine HAVE_STROPTS_H 1
+
+/* Define to 1 if you have the <sys/conf.h> header file. */
+#cmakedefine HAVE_SYS_CONF_H 1
+
+/* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
+   */
+#cmakedefine HAVE_SYS_DIR_H 1
+
+/* Define to 1 if you have the <sys/mman.h> header file. */
+#cmakedefine HAVE_SYS_MMAN_H 1
+
+/* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
+   */
+#cmakedefine HAVE_SYS_NDIR_H 1
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#cmakedefine HAVE_SYS_SELECT_H 1
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine HAVE_SYS_STAT_H 1
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H 1
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H 1
+
+/* undef or ::fabs or std::fabs */
+#cmakedefine IVOS_FABS
+
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
+#cmakedefine LT_OBJDIR
+
+/* define if using mingw */
+#cmakedefine MINGW
+
+/* do we need the prototype for gettimeofday */
+#cmakedefine NEED_GETTIMEOFDAY_PROTOTYPE
+
+/* define if stream.h is insufficient by itself */
+#cmakedefine NO_OUTPUT_OPENMODE
+
+/* Define to 1 if you have the ANSI C header files. */
+#define STDC_HEADERS 1
+
+/* Define to `int' if <sys/types.h> doesn't define. */
+#cmakedefine gid_t @gid_t@
+
+/* Define to `long int' if <sys/types.h> does not define. */
+#cmakedefine off_t @off_t@
+
+/* Define to `int' if <sys/types.h> does not define. */
+#cmakedefine pid_t @pid_t@
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#cmakedefine size_t @size_t@
+
+/* Define to `int' if <sys/types.h> doesn't define. */
+#cmakedefine uid_t @uid_t@
+
+
+#if defined(__cplusplus)
+#include <ivstream.h>
+#endif
+
+#if defined(CYGWIN) || defined(MINGW)
+#define WIN32 1
+#endif
+
+#if defined(carbon)
+#include <Carbon/Carbon.h>
+#endif
+
+#endif /* H_config_included */
+

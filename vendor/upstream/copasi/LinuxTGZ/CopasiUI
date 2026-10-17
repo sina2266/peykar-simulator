@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+#set -x o
+
+COPASIDIR="$(dirname "$(dirname "$(realpath "$0")")")"
+export COPASIDIR
+
+BINDIR="${COPASIDIR}/share/copasi/bin"
+LIBDIR="${COPASIDIR}/share/copasi/lib"
+CopasiUI="${BINDIR}/CopasiUI"
+LDD_OPTION="-r"
+
+IS_FREEBSD=$(uname 2>&1 | grep -q 'FreeBSD' && echo true)
+
+if [ _${IS_FREEBSD} = _true ]; then
+  LDD_OPTION=""
+fi
+
+QT_MISSING=$(ldd "${LDD_OPTION}" "${CopasiUI}" 2>&1 | grep -q '\(undefined symbol:\|libQt.*\.so.*not found\)' && echo true)
+
+if [ _${QT_MISSING} = _true ]; then
+  CopasiUI="${LIBDIR}/CopasiUI"
+fi
+
+"${CopasiUI}" "$@"

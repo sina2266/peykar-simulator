@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# echo " "
+# echo " dollar-zero AKA the first argument to this .command script is: "
+# echo $0
+# echo " "
+
+export PYTHON_MINOR_VERSION=@PYTHON_MINOR_VERSION@
+cd "${0%/*}"
+
+
+# the "PREFIX_CC3D" shell variable is used by CompuCell3D code, its name can NOT be modified:
+export PREFIX_CC3D=$(pwd)
+export CC3D_RUN_SCRIPT=${PREFIX_CC3D}/runScript.command
+export OPTIMIZATIION_PYTHON_SCRIPT=${PREFIX_CC3D}/optimization/optimization.py
+
+export MAX_NUMBER_OF_CONSECUTIVE_RUNS=50
+
+# current_directory=$(pwd)
+cd $PREFIX_CC3D
+echo " ====> CompuCell3D working directory: $PREFIX_CC3D"
+pwd
+
+osx_version=$(sw_vers -productVersion)
+osx_major=$(echo $osx_version | cut -d. -f1)
+osx_minor=$(echo $osx_version | cut -d. -f2)
+
+osx_minor=$((osx_minor+0))
+osx_major=$((osx_major+0))
+
+if [ $osx_minor -ge 11 ]
+then
+    echo 'GOT >11'
+
+fi
+echo ${osx_major}-${osx_minor}
+
+
+
+echo " ====> PYTHONLIB_SYSTEM: $PYTHONLIB_SYSTEM"
+
+
+export PATH=${PYTHONLIB_SYSTEM}/bin:$PATH
+
+export PYTHON_EXEC=@PYTHON_EXEC_FILE@
+# export PYTHON_EXEC=${PREFIX_CC3D}/python27/bin/python2.7
+${PYTHON_EXEC} --version
+
+
+
+
+export exit_code=0
+${PYTHON_EXEC} ${OPTIMIZATIION_PYTHON_SCRIPT} $* --cc3d-run-script=${CC3D_RUN_SCRIPT} --clean-workdirs
+exit_code=$?
+
+# cd ${current_directory}
+cd ${PREFIX_CC3D}
+exit ${exit_code}

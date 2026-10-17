@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+. "$(git rev-parse --show-toplevel)/gitTools/functions"
+
+smudge="cat"
+
+GitCommitDate=`git log -1 ${branch} --pretty=%at -- $1`
+
+if [ ${GitCommitDate:-0} -gt ${GitStart} ]; then
+  smudge="$smudge | ${GitTools}/header --smudge $1" 
+fi
+
+debug smudge: $smudge
+eval $smudge

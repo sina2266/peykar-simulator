@@ -1,0 +1,191 @@
+FROM eclipse-temurin:17 as jre-build
+
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+# One image for all five VCell server services: api, data, db, sched and submit.
+#
+# They were five Dockerfiles of 113-229 lines that differed in a main class, a log4j file, a
+# few literal -D flags, and 98 more -D flags whose only job was to rename a container
+# environment variable into a system property. EnvironmentConfigProvider does that renaming
+# now, so the five collapse into this one image plus a 150-line entrypoint where the genuine
+# differences are visible side by side instead of buried in five diverging files.
+#
+# The service is chosen by the first argument -- in Kubernetes, the Deployment's `args`:
+#
+#     docker run ghcr.io/virtualcell/vcell-service sched
+#
+# python:3.10-slim rather than debian-slim because api and data need Python (vcell_cli_utils
+# and pythonVtk); db, sched and submit carry it unused. openssh-client is here for sched and
+# submit, which reach the cluster over ssh. That is the cost of one image instead of five,
+# taken deliberately: the per-service drift this replaces is worth more than the layers.
+FROM python:3.10.15-slim
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /javaruntime $JAVA_HOME
+
+# Union of what the five installed: curl and dnsutils (api), openssh-client (data, sched,
+# submit), screen and the font packages (all). perl runs BioNetGen (below): the base image has
+# only perl-base, which lacks core modules BNG2.pl needs (FindBin, ...).
+RUN apt -y update && \
+    apt -y install --no-install-recommends \
+        curl dnsutils openssh-client screen apt-utils perl \
+        libfreetype6 fontconfig fonts-dejavu && \
+    DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends tzdata && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /usr/local/app/lib
+
+RUN unlink /etc/localtime || true
+RUN ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+
+RUN python3 -m pip install --no-cache-dir poetry && poetry config cache-dir "/poetry/.cache"
+ENV PATH="/root/.poetry/bin:/root/.local/bin:$PATH"
+
+# uid 10001 / gid 10000. sched and submit ran as this user for their ssh keys; the Kubernetes
+# manifests already pin runAsUser 10001 / fsGroup 10000 for all five, so this matches what the
+# cluster does regardless of which service the image is running.
+RUN groupadd -g 10000 vcellgroup && \
+    useradd -rm -d /home/vcell -s /bin/bash -u 10001 -g vcellgroup vcell && \
+    mkdir -p /home/vcell/.ssh && \
+    chmod 700 /home/vcell/.ssh && \
+    chown -R vcell:vcellgroup /home/vcell /usr/local/app
+
+WORKDIR /usr/local/app
+
+# Both jars: api runs from vcell-api, the other four from vcell-server.
+COPY ./vcell-api/target/vcell-api-0.0.1-SNAPSHOT.jar \
+     ./vcell-api/target/maven-jars/*.jar \
+     ./lib/
+COPY ./vcell-server/target/vcell-server-0.0.1-SNAPSHOT.jar \
+     ./vcell-server/target/maven-jars/*.jar \
+     ./lib/
+
+# api
+COPY ./vcell-cli-utils/ /usr/local/app/python/vcell_cli_utils/
+# --only main: pytest and mypy are dev dependencies and have no business in a runtime image.
+# They were being installed, and at different versions in each virtualenv (mypy 0.991
+# alongside 1.13.0), which is a fair sign nothing was reading them.
+#
+# The artifact cache is pruned in the SAME layer as the install: doing it in a later RUN
+# would leave the 256MB sitting in this layer and shrink nothing. virtualenvs/ is a sibling
+# directory and is untouched.
+RUN cd /usr/local/app/python/vcell_cli_utils/ && \
+    poetry config cache-dir "/poetry/.cache" --local && \
+    chmod 755 poetry.toml && \
+    poetry install --only main && \
+    rm -rf /poetry/.cache/artifacts /poetry/.cache/cache
+COPY ./vcell-api/docroot ./docroot
+COPY ./vcell-api/webapp ./webapp
+COPY ./vcell-api/keystore_macbook.jks .
+# BioNetGen, for rule-based models: network generation during math generation, and the
+# /biomodel/{id}/biomodel.bngl download. ResourceUtil.getBNGRoot() is <install>/bionetgen. No
+# server image had ever carried it (only clientgen, for the desktop installers), so those
+# requests failed with "Can't open perl script .../bionetgen/BNG2.pl".
+COPY ./bionetgen ./bionetgen
+
+# data
+COPY ./pythonVtk/ /usr/local/app/pythonVtk/
+RUN cd /usr/local/app/pythonVtk && \
+    poetry config cache-dir "/poetry/.cache" --local && \
+    poetry install --only main && \
+    rm -rf /poetry/.cache/artifacts /poetry/.cache/cache
+COPY ./nativelibs/linux64 ./nativelibs/linux64
+
+# One log4j configuration per service; the entrypoint selects by name.
+COPY ./docker/build/vcell-api.log4j.xml \
+     ./docker/build/vcell-data.log4j.xml \
+     ./docker/build/vcell-db.log4j.xml \
+     ./docker/build/vcell-sched.log4j.xml \
+     ./docker/build/vcell-submit.log4j.xml \
+     ./
+
+COPY ./docker/build/service/entrypoint.sh /vcellscripts/entrypoint.sh
+RUN chmod 755 /vcellscripts/entrypoint.sh
+
+# Defaults for the container environment. Every one is overridden by the deployment's
+# ConfigMap; the placeholders make a missing value obvious in a log rather than empty.
+#
+# VCell runs two ActiveMQ brokers on purpose: activemqint for internal daemon traffic and
+# activemqsim for simulation events arriving from HPC. They were split years ago so internal
+# messaging stays fast when external traffic overwhelms the sim broker, which is why there are
+# two host/port pairs rather than one.
+#
+# The isolation is by BROKER, not by port. activemqint and activemqsim are separate
+# Deployments, each listening on containerPort 61616 and reached by hostname -- ports may
+# overlap only because each pod has its own address, which is not true in docker compose or on
+# a developer's machine, where the brokers are reached through published host ports instead.
+#
+# Site-specific ports live elsewhere, in two places that are not this variable:
+#   * jmsport_sim_external / jmsrestport_sim_external, which is what submit hands to HPC jobs
+#     so they connect back to the right site;
+#   * a per-overlay NodePort Service, kustomize/overlays/<site>/activemqsim-svc.yaml, mapping
+#     61616 and 8161 to a port unique to that namespace -- dev 31617/30162, stage 31616/30161,
+#     prod 31618/30163.
+#
+# Merged from the five Dockerfiles. Only real defaults are set here -- values that are correct
+# for every deployment, so that a ConfigMap which omits them still runs correctly.
+#
+# What is deliberately NOT here: the 53 placeholder defaults the per-service images carried
+# ("db-url-not-set", "/path/to/external/simdata/", and so on). Per-service they were a reasonable
+# way to make a missing setting loud. In an image serving all five services they are actively
+# harmful, because every service inherits every other service's placeholders -- api gained 40 and
+# db 44 for properties they never read. A placeholder is worse than an absent value in two ways:
+# it beats the default the code would otherwise supply, and it satisfies the "is it set?" half of
+# validateSystemProperties, so a genuinely missing setting starts the service and fails later at
+# the point of use, with a message about a malformed value rather than a missing one. Absent, the
+# same omission is reported at startup as "required property X not set".
+#
+# Verified before removing: no required property of any of the five resolves to a placeholder --
+# every one is supplied by the ConfigMaps or as a literal -D from entrypoint.sh.
+#
+# Two placeholders are kept on purpose. servertype selects SimDataServer's role and is read by
+# entrypoint.sh as a shell variable, where an invalid value is exactly the intended loud failure
+# (SimDataServiceType.valueOf throws). softwareVersion is stamped by the deploy workflow.
+ENV     softwareVersion=SOFTWARE-VERSION-NOT-SET \
+    VCELL_SOFTWAREVERSION=SOFTWARE-VERSION-NOT-SET \
+    VCELL_SERVER_ID=SITE \
+    VCELL_JMS_INT_HOST_INTERNAL=activemqint \
+    VCELL_JMS_INT_PORT_INTERNAL=61616 \
+    VCELL_JMS_USER=clientUser \
+    VCELL_MONGODB_HOST_INTERNAL=mongodb \
+    VCELL_MONGODB_PORT_INTERNAL=27017 \
+    VCELL_MONGODB_DATABASE=test \
+    VCELL_JMS_BLOBMESSAGEMINSIZE=100000 \
+    VCELL_SSL_IGNOREHOSTMISMATCH=true \
+    VCELL_SSL_IGNORECERTPROBLEMS=false \
+    CLI_WORKINGDIR="/usr/local/app" \
+    VCELL_DB_PSWDFILE=/run/secrets/dbpswd \
+    VCELL_JMS_PSWDFILE=/run/secrets/jmspswd \
+    VCELLAPI_PRIVATEKEY_FILE=/run/secrets/apiprivkey \
+    VCELLAPI_PUBLICKEY_FILE=/run/secrets/apipubkey \
+    servertype="servertype-not-set" \
+    VCELL_JMS_SIM_HOST_INTERNAL=activemqsim \
+    VCELL_JMS_SIM_PORT_INTERNAL=61616 \
+    VCELL_HTC_USERKEYFILE=/run/secrets/batchuserkeyfile \
+    VCELL_SLURM_CMD_SBATCH=sbatch \
+    VCELL_SLURM_CMD_SACCT=sacct \
+    VCELL_SLURM_CMD_SCANCEL=scancel \
+    VCELL_SLURM_CMD_SQUEUE=squeue \
+    VCELL_JMS_ARTEMIS_HOST_INTERNAL=artemismq \
+    VCELL_JMS_ARTEMIS_PORT_INTERNAL=61616
+
+VOLUME /simdata
+VOLUME /simdata_secondary
+VOLUME /exportdir
+VOLUME /htclogs
+VOLUME /run/secrets
+
+# 8080 is api's HTTP port; 8000 is the optional JDWP port, off unless VCELL_DEBUG_OPTS is set.
+EXPOSE 8080
+EXPOSE 8000
+ENV VCELL_DEBUG_OPTS=""
+
+USER vcell
+
+ENTRYPOINT [ "/vcellscripts/entrypoint.sh" ]

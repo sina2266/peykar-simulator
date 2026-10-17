@@ -1,6 +1,6 @@
 # Peykar whole-platform delivery roadmap
 
-Updated 2026-10-16 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
+Updated 2026-10-17 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
 Peykar is a general biological simulation platform. vCornea is one admitted test
 case; completion of its operator workflow is not completion of this product.
 This roadmap supersedes the earlier eye-centered ordering, retained in
@@ -16,16 +16,16 @@ combines them into a misleading overall completion score.
 | EPIC | System outcome | Dependencies | Current delivery state |
 |---|---|---|---|
 | S0 | Preserve data, licenses and reliable local execution | None | Working local foundation; production deployment open |
-| S1 | Managed ecosystem of reusable source libraries | S0 | Nine additional pinned source trees inspected; source registry working; runtime coverage incomplete |
+| S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
 | S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
 | S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet working; SBML/CellML/omics/image adapters open |
 | S4 | General experiment orchestration | S0,S3 | Durable DAG workflows with terminal-to-initial scalar transfer working; ensembles and external-engine queue open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
 | S7 | Controlled model optimization and improvement | S1,S4,S6 | Limited decay calibration only; challenger/promotion workflow open |
-| S8 | Molecular and gene-response execution | S1,S3,S6 | COPASI/GEARS sources present; pinned runtimes, original benchmarks and context-specific bridges open |
-| S9 | Multicellular/tissue execution across engines | S1,S4,S6 | vCornea native operator path works; PhysiCell/VCell/Chaste adapters open |
-| S10 | Organ and multi-organ composition | S5,S6,S8,S9 | NEURON/PK-Sim/MoBi sources present; validated system models/bridges open |
+| S8 | Molecular and gene-response execution | S1,S3,S6 | COPASI and GEARS runtimes execute; real perturbation H5AD acquired/read; original learned benchmark and biological bridges open |
+| S9 | Multicellular/tissue execution across engines | S1,S4,S6 | vCornea, PhysiCell/PhysiBoSS, VCell and Chaste native operator paths execute; general queue adapters and validated bridges open |
+| S10 | Organ and multi-organ composition | S5,S6,S8,S9 | NEURON and OSP PK-Sim/MoBi headless models execute; validated organ/system bridges and Windows GUI profile open |
 | S11 | Governance and research-system integration | S0,S2,S6,S7 | Local roles/provenance/HomBon facade/gaps working; scientific approvals/claims/conflicts open |
 | S12 | Interactive six-workspace application | S2,S3,S4,S6,S11 | API foundations working; full frontend open |
 | S13 | Scalable operation and release | S0,S4,S11,S12 | Single-host Docker working; PostgreSQL/object storage/HPC/multi-host open |
@@ -52,15 +52,20 @@ Local single-user verification does not close S0.5.
 - [x] S1.1 Retrieve all eight named specialist repositories plus CompuCell3D at exact commits; preserve the existing vCornea Git/archive identities separately.
 - [x] S1.2 Hash every tracked file and preserve license evidence; explicitly inventory Git links/LFS pointers and declared CRLF checkout transformations.
 - [x] S1.3 Persist immutable source inspection receipts; expose discovery and offline operator bundle import without installing code in the API.
-- [ ] S1.4 Acquire/review recursive build dependencies: current top-level inspections identify 24 unresolved Git links across NEURON and OSP repositories.
-- [ ] S1.5 Build a locked, isolated runtime for each selected engine and execute its original benchmark; keep platform-specific requirements explicit.
-- [ ] S1.6 Add independently versioned Peykar patch overlays with upstream base, patch hash, motivation and measured benchmark results.
+- [x] S1.4 Acquire/review recursive source dependencies: 37 Git links materialized, including nested NEURON, OSP and separate VCell solver dependencies; no remaining links/LFS pointers in the verified distribution.
+- [ ] S1.5 Complete original benchmark coverage for every engine. Isolated native CPU/headless profiles are installed and executed for all named computational families; GEARS's full original screen/split/score and Windows graphical profiles remain separate unclosed requirements.
+- [x] S1.6 Version compatibility overlays with upstream bases, exact file hashes and actual native execution results; preserve original scientific source.
+- [x] S1.7 Materialize all named sources as permanent project files under `vendor/`, preserving both vCornea identities and all original notices.
+- [x] S1.8 Admit native execution evidence through an offline operator bundle, immutable source references and authenticated API/CLI discovery; preserve earlier receipts.
 
 Source catalogue: [engine_adapters/ecosystem-sources.json](../engine_adapters/ecosystem-sources.json).
 Actual receipts: [source inspection](../engine_adapters/ecosystem-source-receipts-2026-10-16.json).
-The nine checkouts contain 36,291 tracked entries / 1,308,090,422 bytes excluding
-Git metadata and unresolved submodule content. They are depth-one source snapshots,
-not complete upstream Git histories. No new scientific runtime is inferred from cloning.
+The permanent distribution now contains **25 source identities / 52,167 files /
+1,799,838,581 bytes**, excluding Git administrative data, with **37 materialized
+Git links**. See [vendor manifest](../vendor/manifest.json), [original notices](../THIRD_PARTY_NOTICES.md),
+[native runtime profiles](../runtime_profiles/README.md) and [actual new receipts](../engine_adapters/runtime-evidence-2026-10-17.json).
+Earlier 1.0.0 source inspections remain immutable historical observations; complete
+recursive inventories are admitted as 2.0.0. Runtime evidence does not establish validity.
 
 Exit per engine: exact source/dependencies/license inventory, reproducible runtime,
 native benchmark, adapter capabilities, failure/cancellation/artifact tests and an
@@ -150,14 +155,14 @@ Changing pristine upstream source solely to make it look “optimized” does no
 | Engine/model | Source state | Next execution task | Interaction gate |
 |---|---|---|---|
 | vCornea / CC3D 4.7.0 | Git and licensed archive preserved; native runtime executed | Full published scenario and original-analysis correspondence; general external agent | Existing EGF process ownership, lattice/time/observation mapping |
-| COPASI | Build-309 source pinned/inspected | Locked runtime + original small SBML kinetic benchmark | Compartment volumes, species units, reaction ownership |
-| VCell | 8.2.1.01 source pinned/inspected | Native solver repositories/binaries and portable original benchmark | Intracellular geometry and PDE/ODE boundaries |
-| PhysiCell / BioFVM | 1.14.2 source pinned/inspected | Locked C++/OpenMP build + original multicellular benchmark | Agent state, substrate flux and phenotype ownership |
-| Chaste | 2026.1 source pinned/inspected | Locked native dependency build + published tissue/cardiac benchmark | Mesh, mechanics/electrophysiology and conservation |
-| NEURON | 9.0.2 source pinned/inspected | Resolve submodules + original electrophysiology benchmark | Voltage/current/ion semantics and morphology |
-| PK-Sim | v12.3.173 source pinned/inspected | Resolve OSP dependencies; suitable Windows/.NET or supported headless profile | Exposure/PBPK compartments, populations and physiological context |
-| MoBi | v12.3.136 source pinned/inspected | Resolve OSP dependencies + original portable systems-pharmacology simulation | Building-block ownership and kinetic/physiological interfaces |
-| GEARS | exact current commit pinned/inspected | Isolated ML environment, licensed screen, original split/benchmark | Cell type/training context; transcript changes do not directly define tissue effects |
+| COPASI | Complete Build-309 source | Installed 4.47.309 runtime; real SBML numerical probe passes; general SBML admission/queue next | Compartment volumes, species units, reaction ownership |
+| VCell | Complete 8.2.1.01 plus eight native solver sources | Original BioModel1 OMEX runs with real HDF5; general model/queue adapter next | Intracellular geometry and PDE/ODE boundaries |
+| PhysiCell / BioFVM | Complete 1.14.2 and source-built MaBoSS | Native template and original 486-cell Boolean fixture execute; general agent/field exchange next | Agent state, substrate flux and phenotype ownership |
+| Chaste | Complete 2026.1 source; matching official native build | Original ODE and both Delta/Notch monolayers pass; refinement/context-specific tissue evidence next | Mesh, mechanics/electrophysiology and conservation |
+| NEURON | Complete 9.0.2 with recursive submodules | Actual native HH current clamp passes; general model/morphology admission next | Voltage/current/ion semantics and morphology |
+| PK-Sim | Complete v12.3.173 source/dependencies | OSPSuite headless PKML runs; Windows project-authoring GUI remains separate | Exposure/PBPK compartments, populations and physiological context |
+| MoBi | Complete v12.3.136 source/dependencies | Same headless computation profile runs original Aciclovir PKML; building-block admission next | Building-block ownership and kinetic/physiological interfaces |
+| GEARS | Complete pinned source, own CPU lock | Network forward/backward and real Dixit H5AD reader pass; full original screen/split/benchmark next | Cell type/training context; transcript changes do not directly define tissue effects |
 
 These workstreams can progress independently. No engine must be forced into an
 incompatible host environment, re-licensed under Peykar or marketed as a universal

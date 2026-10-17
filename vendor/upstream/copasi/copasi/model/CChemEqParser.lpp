@@ -1,0 +1,96 @@
+/* scanner for kinetic functions */
+
+%option outfile="CChemEqParser_lex.cpp"
+%option prefix="CChemEqParser"
+%option never-interactive
+%option c++
+%option noline
+
+%{
+#include <vector>
+
+#include "copasi/copasi.h"
+#include "copasi/model/CChemEqParser.h"
+#include "copasi/model/CChemEqParser_yacc.hpp"
+
+#include "copasi/utilities/CCopasiMessage.h"
+#include "copasi/utilities/utility.h"
+
+#ifndef YYERRCODE
+#define YYERRCODE 256
+#endif
+
+#define YY_USER_INIT \
+    mPosition = 0;
+
+
+#define COMMON_ACTION \
+    mpData = new Data; \
+    mpData->name = yytext; \
+    mPosition += yyleng;
+
+%}
+
+DIGIT    [0-9]
+ID       [a-z_A-Z][a-z_A-Z0-9]*
+   
+%%
+{DIGIT}+("."?{DIGIT}*(((e|E)"+"?|(e|E)"-"){DIGIT}+)?)?  %{
+  COMMON_ACTION;
+  return TOKEN_NUMBER;
+%}
+ 
+"+"   %{
+  COMMON_ACTION;
+  return TOKEN_PLUS;
+%}
+
+"*"   %{
+  COMMON_ACTION;
+  return TOKEN_MULTIPLY;
+%}
+
+"\{"   %{
+  COMMON_ACTION;
+  return TOKEN_BEGIN_COMPARTMENT;
+%}
+
+"\}"   %{
+  COMMON_ACTION;
+  return TOKEN_END_COMPARTMENT;
+%}
+
+";" %{
+  COMMON_ACTION;
+  return TOKEN_BEGIN_MODIFIERS;
+%}
+
+(->|=) %{
+  COMMON_ACTION;
+  return TOKEN_BEGIN_PRODUCTS;
+%}
+
+\"([^\\\"]|\\.)*\" %{
+  COMMON_ACTION;
+  mpData->name = unQuote(mpData->name);
+  return TOKEN_NAME;
+%}
+
+[^\"{} ]*[^\"{} ;] %{
+  COMMON_ACTION;
+  return TOKEN_NAME;
+%}
+
+[ \t\r\n]+ %{
+  mPosition += yyleng;
+  //COMMON_ACTION;
+%} 
+
+<<EOF>>  return 0;
+
+.     %{
+  CCopasiMessage(CCopasiMessage::ERROR, MCFunction + 2, mPosition);
+  return YYERRCODE;
+%}
+     
+%%

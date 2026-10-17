@@ -1,0 +1,74 @@
+# The batch image runs VCell's Java tools on the cluster: the pre- and post-processors, the Java ODE
+# solvers (JavaSimExe64), the Send*Msg status commands and Langevin. Every native solver runs from its
+# own repo's image (SlurmProxy's SolverImageFamily, docs/plan-solver-repos.md), so this image needs
+# only Java, bash, curl and langevin_x64 -- it no longer builds on vcell-solvers.
+FROM eclipse-temurin:17 AS jre-build
+
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+FROM debian:bookworm-slim
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /javaruntime $JAVA_HOME
+
+# fonts for headless Java rendering in the post-processor
+RUN apt -y update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+        curl ca-certificates libfreetype6 fontconfig fonts-dejavu-core tzdata && \
+    rm -rf /var/lib/apt/lists/*
+RUN unlink /etc/localtime || true
+RUN ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+
+RUN mkdir -p /vcellbin /usr/local/app/localsolvers && ln -s /vcellbin  /usr/local/app/localsolvers/linux64
+WORKDIR /usr/local/app
+
+COPY ./vcell-server/target/vcell-server-0.0.1-SNAPSHOT.jar \
+     ./vcell-server/target/maven-jars/*.jar \
+     ./lib/
+
+COPY ./nativelibs/linux64 ./nativelibs/linux64
+COPY --chmod=755 ./localsolvers/linux64/langevin/langevin_x64 /vcellbin/
+COPY ./docker/build/batch/JavaPreprocessor64 \
+     ./docker/build/batch/JavaPostprocessor64 \
+     ./docker/build/batch/JavaSimExe64 \
+     ./docker/build/batch/entrypoint.sh \
+     /vcellscripts/
+
+ENV PATH=/vcellscripts:$PATH \
+    CLASSPATH=/usr/local/app/lib/*
+
+ENV softwareVersion=SOFTWARE-VERSION-NOT-SET \
+	serverid=SITE \
+	installdir=/usr/local/app \
+	jmshost_sim_internal="jms-host-not-set" \
+	jmsport_sim_internal="jms-port-not-set" \
+	jmsrestport_sim_internal="jms-restport-not-set" \
+    jmsuser="jms-user-not-set" \
+    jmspswd="jms-pswd-not-set" \
+    blob_message_use_mongo=true \
+    primary_datadir_internal=/simdata \
+    primary_datadir_external=/path/to/external/simdata \
+    secondary_datadir_internal=/simdata_secondary \
+    secondary_datadir_external=/path/to/external/simdata \
+    htclogdir_internal=/htclogs \
+    htclogdir_external=/path/to/external/htclogs \
+    mongodbhost_internal="mongo-host-not-set" \
+    mongodbport_internal="mongo-port-not-set" \
+    mongodb_database=test \
+    TMPDIR=/solvertmp/ \
+    java_mem_Xmx=200M \
+    jmsblob_minsize=100000
+
+VOLUME /simdata
+VOLUME /simdata_secondary
+VOLUME /htclogs
+VOLUME /solvertmp
+
+ENTRYPOINT [ "/vcellscripts/entrypoint.sh" ]

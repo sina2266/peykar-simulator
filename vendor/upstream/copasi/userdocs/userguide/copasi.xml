@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Copyright (C) 2010 - 2013 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and The University -->
+<!-- of Manchester. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2008 - 2009 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., EML Research, gGmbH, University of Heidelberg, -->
+<!-- and The University of Manchester. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2004 - 2007 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc. and EML Research, gGmbH. -->
+<!-- All rights reserved. -->
+
+
+
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook EBNF Module V1.1CR1//EN"
+               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd"
+[
+ <!ENTITY gui SYSTEM "copasi_GUI.xml" >  
+ <!ENTITY commandLine SYSTEM "copasi_commandLine.xml" >
+ <!ENTITY copasiModel SYSTEM "copasi_model.xml" >
+ <!ENTITY copasi_methods SYSTEM "copasi_methods.xml" >  
+ <!ENTITY fileFormats SYSTEM "copasi_fileFormats.xml" >  
+ <!ENTITY bibliography SYSTEM "copasi_bibliography.xml" >  
+ <!ENTITY errors SYSTEM "copasi_errorMessages.xml" >  
+ <!ENTITY java_bindings SYSTEM "copasi_bindings_java.xml" >  
+ <!ENTITY cpp_bindings SYSTEM "copasi_bindings_cpp.xml" >  
+ <!ENTITY python_bindings SYSTEM "copasi_bindings_python.xml" >  
+ 
+ <!ENTITY copasi.version "Version 4.9 (Build 43)" >
+]> 
+
+<book id="book">
+  <bookinfo>
+    <title>COPASI Documentation</title>
+    <subtitle>&copasi.version;</subtitle>
+    <author>
+      <surname>COPASI Development Team</surname>
+    </author>
+    <releaseinfo>&copasi.version;</releaseinfo>
+  </bookinfo>
+  
+  &gui;
+  <!-- &commandLine; -->
+  &copasiModel;
+  &copasi_methods;
+  <!-- &fileFormats; -->
+  &errors;
+  &bibliography;
+  &cpp_bindings;
+  &java_bindings;
+  &python_bindings;
+
+</book>

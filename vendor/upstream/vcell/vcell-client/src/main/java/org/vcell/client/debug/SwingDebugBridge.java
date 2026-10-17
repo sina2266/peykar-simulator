@@ -1,0 +1,704 @@
+/*
+ * Copyright (C) 1999-2011 University of Connecticut Health Center
+ *
+ * Licensed under the MIT License (the "License").
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/mit-license.php
+ */
+
+package org.vcell.client.debug;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.vcell.util.logging.ConsoleCapture;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
+
+/**
+ * Loopback-only HTTP control surface over {@link SwingInspector} that lets a
+ * developer or an automated agent observe and drive the running Swing UI the
+ * way a browser's DevTools / Playwright drive a web page.
+ *
+ * <p><b>Opt-in only.</b> Started only when {@code -Dvcell.debugBridge=true}
+ * (or env {@code VCELL_DEBUG_BRIDGE=true}). In a normal production launch
+ * {@link #startIfEnabled()} is a no-op, so this has zero runtime footprint.
+ *
+ * <p>Binds exclusively to the loopback interface (127.0.0.1) so it is never
+ * reachable off the machine.
+ *
+ * <pre>
+ *   GET /health                 -&gt; "ok"
+ *   GET /windows                -&gt; JSON, showing top-level windows (depth 0)
+ *   GET /tree[?maxDepth=N]      -&gt; JSON, full component tree of every window
+ *   GET /screenshot[?window=N&amp;scale=&amp;name=&amp;dir=]  -&gt; JSON {"path": "...png", "bytes": N}
+ *   GET /click?path=0/3/2       -&gt; JSON {"clicked": true|false}
+ *   GET /setText?path=..&amp;text=..[&amp;enter=true]  -&gt; JSON {"set": true|false}
+ *   GET /setSlider?path=..&amp;value=..            -&gt; JSON {"set": true|false}
+ *   GET /selectTab?path=..&amp;index=N            -&gt; JSON {"selected": true|false}
+ *   GET /listeners?path=0/3/2   -&gt; JSON, registered listeners of the component
+ *   GET /log[?lines=N]          -&gt; text/plain tail of the client's real log
+ *   GET /find?type=&amp;name=&amp;text=&amp;textContains=&amp;limit=  -&gt; JSON, semantic component search
+ *   GET /waitFor?{find params}&amp;state=showing|enabled|gone&amp;timeoutMs=&amp;intervalMs=  -&gt; JSON, poll until state holds
+ *   GET /idle                   -&gt; JSON, waits for the EDT to drain
+ *   GET /menus                  -&gt; JSON, full menu-bar structure of every window (no popups needed)
+ *   GET /menu?path=Account&gt;Login[&amp;window=N]  -&gt; activate a menu item by its visible text
+ *   GET /props?path=            -&gt; JSON, extended properties of one component
+ *   GET /highlight?path=[&amp;ms=]  -&gt; flash an overlay over the component on screen
+ *   GET /glide?path=[&amp;ms=]      -&gt; move the real cursor to the component (watched replay)
+ *   GET /robotClick?path=[&amp;glideMs=]  -&gt; native press/release; visible to the recorder
+ *   GET /record?action=start|stop|status[&amp;file=]  -&gt; capture real input as a replayable script
+ * </pre>
+ *
+ * Example: {@code curl -s localhost:9123/tree?maxDepth=6 | jq}
+ */
+public final class SwingDebugBridge {
+
+	private static final Logger LG = LogManager.getLogger(SwingDebugBridge.class);
+
+	private static final String ENABLE_PROP = "vcell.debugBridge";
+	private static final String ENABLE_ENV = "VCELL_DEBUG_BRIDGE";
+	private static final String PORT_PROP = "vcell.debugBridge.port";
+	private static final String DIR_PROP = "vcell.debugBridge.dir";
+	private static final int DEFAULT_PORT = 9123;
+
+	private static HttpServer server;
+
+	private SwingDebugBridge() {
+	}
+
+	/** @return true if the bridge is switched on via system property or environment variable. */
+	public static boolean isEnabled() {
+		if (Boolean.parseBoolean(System.getProperty(ENABLE_PROP, "false"))) {
+			return true;
+		}
+		return Boolean.parseBoolean(System.getenv(ENABLE_ENV));
+	}
+
+	/** Screenshot output directory ({@code -Dvcell.debugBridge.dir}, else {@code <tmp>/vcell-debug}). */
+	public static File outputDir() {
+		String configured = System.getProperty(DIR_PROP);
+		if (configured != null && !configured.isEmpty()) {
+			return new File(configured);
+		}
+		return new File(System.getProperty("java.io.tmpdir"), "vcell-debug");
+	}
+
+	/**
+	 * Start the bridge if enabled. Safe to call more than once (subsequent calls
+	 * are no-ops). Never throws; failures are logged so a debug facility can
+	 * never take down the client.
+	 */
+	public static synchronized void startIfEnabled() {
+		if (!isEnabled()) {
+			return;
+		}
+		if (server != null) {
+			return;
+		}
+		int port = Integer.getInteger(PORT_PROP, DEFAULT_PORT);
+		try {
+			HttpServer s = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0);
+			s.createContext("/health", ex -> respond(ex, 200, "text/plain", "ok".getBytes(StandardCharsets.UTF_8)));
+			s.createContext("/windows", wrap(SwingDebugBridge::handleWindows));
+			s.createContext("/tree", wrap(SwingDebugBridge::handleTree));
+			s.createContext("/screenshot", wrap(SwingDebugBridge::handleScreenshot));
+			s.createContext("/click", wrap(SwingDebugBridge::handleClick));
+			s.createContext("/setText", wrap(SwingDebugBridge::handleSetText));
+			s.createContext("/selectTab", wrap(SwingDebugBridge::handleSelectTab));
+			s.createContext("/selectTreeRow", wrap(SwingDebugBridge::handleSelectTreeRow));
+			s.createContext("/rightClickTreeRow", wrap(SwingDebugBridge::handleRightClickTreeRow));
+			s.createContext("/selectTableRow", wrap(SwingDebugBridge::handleSelectTableRow));
+			s.createContext("/doubleClickTableRow", wrap(SwingDebugBridge::handleDoubleClickTableRow));
+			s.createContext("/rightClickTableRow", wrap(SwingDebugBridge::handleRightClickTableRow));
+			s.createContext("/expandTreeRow", wrap(SwingDebugBridge::handleExpandTreeRow));
+			s.createContext("/doubleClickTreeRow", wrap(SwingDebugBridge::handleDoubleClickTreeRow));
+			s.createContext("/rightClick", wrap(SwingDebugBridge::handleRightClick));
+			s.createContext("/listeners", wrap(SwingDebugBridge::handleListeners));
+			s.createContext("/find", wrap(SwingDebugBridge::handleFind));
+			s.createContext("/waitFor", wrap(SwingDebugBridge::handleWaitFor));
+			s.createContext("/idle", wrap(SwingDebugBridge::handleIdle));
+			s.createContext("/menus", wrap(SwingDebugBridge::handleMenus));
+			s.createContext("/menu", wrap(SwingDebugBridge::handleMenu));
+			s.createContext("/props", wrap(SwingDebugBridge::handleProps));
+			s.createContext("/highlight", wrap(SwingDebugBridge::handleHighlight));
+			s.createContext("/glide", wrap(SwingDebugBridge::handleGlide));
+			s.createContext("/robotClick", wrap(SwingDebugBridge::handleRobotClick));
+			s.createContext("/record", wrap(SwingDebugBridge::handleRecord));
+			s.createContext("/findRow", wrap(SwingDebugBridge::handleFindRow));
+			s.createContext("/findColumn", wrap(SwingDebugBridge::handleFindColumn));
+			s.createContext("/readCell", wrap(SwingDebugBridge::handleReadCell));
+			s.createContext("/setCell", wrap(SwingDebugBridge::handleSetCell));
+			s.createContext("/selectCombo", wrap(SwingDebugBridge::handleSelectCombo));
+			s.createContext("/setSlider", wrap(SwingDebugBridge::handleSetSlider));
+			s.createContext("/selectList", wrap(SwingDebugBridge::handleSelectList));
+			s.createContext("/chooseFile", wrap(SwingDebugBridge::handleChooseFile));
+			s.createContext("/selectPixelRange", wrap(SwingDebugBridge::handleSelectPixelRange));
+			s.createContext("/popupItem", wrap(SwingDebugBridge::handlePopupItem));
+			s.createContext("/selectTableRange", wrap(SwingDebugBridge::handleSelectTableRange));
+			s.createContext("/iconify", wrap(SwingDebugBridge::handleIconify));
+			s.createContext("/windowBounds", wrap(SwingDebugBridge::handleWindowBounds));
+			s.createContext("/log", ex -> {
+				try {
+					respond(ex, 200, "text/plain; charset=utf-8", handleLog(ex).getBytes(StandardCharsets.UTF_8));
+				} catch (Exception e) {
+					LG.error("debug bridge /log error", e);
+					respond(ex, 500, "text/plain", String.valueOf(e.getMessage()).getBytes(StandardCharsets.UTF_8));
+				}
+			});
+			// small pool: a request that blocks on a modal dialog must not wedge /health and /screenshot
+			s.setExecutor(java.util.concurrent.Executors.newFixedThreadPool(4, r -> {
+				Thread t = new Thread(r, "swing-debug-bridge");
+				t.setDaemon(true);
+				return t;
+			}));
+			s.start();
+			server = s;
+			LG.warn("Swing debug bridge listening on http://127.0.0.1:{} (screenshots -> {})", port, outputDir());
+		} catch (Exception e) {
+			LG.error("failed to start Swing debug bridge on port " + port, e);
+		}
+	}
+
+	/** Stop the bridge if running. */
+	public static synchronized void stop() {
+		if (server != null) {
+			server.stop(0);
+			server = null;
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// Handlers
+	// ---------------------------------------------------------------------
+
+	private interface ThrowingHandler {
+		String handle(HttpExchange ex) throws Exception;
+	}
+
+	private static com.sun.net.httpserver.HttpHandler wrap(ThrowingHandler h) {
+		return ex -> {
+			try {
+				String json = h.handle(ex);
+				respond(ex, 200, "application/json", json.getBytes(StandardCharsets.UTF_8));
+			} catch (Exception e) {
+				LG.error("debug bridge handler error for " + ex.getRequestURI(), e);
+				String msg = e.getClass().getSimpleName() + ": " + String.valueOf(e.getMessage());
+				respond(ex, 500, "application/json", ("{\"error\":\"" + jsonEscape(msg) + "\"}").getBytes(StandardCharsets.UTF_8));
+			}
+		};
+	}
+
+	private static String handleWindows(HttpExchange ex) {
+		return SwingInspector.dumpWindowsJson(0);
+	}
+
+	private static String handleTree(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		int maxDepth = q.containsKey("maxDepth") ? Integer.parseInt(q.get("maxDepth")) : Integer.MAX_VALUE;
+		return SwingInspector.dumpWindowsJson(maxDepth);
+	}
+
+	private static String handleScreenshot(HttpExchange ex) throws Exception {
+		Map<String, String> q = query(ex);
+		int windowIndex = q.containsKey("window") ? Integer.parseInt(q.get("window")) : -1;
+		double scale = Double.parseDouble(q.getOrDefault("scale", "1.0"));
+		String name = emptyToNull(q.get("name"));
+		String dir = emptyToNull(q.get("dir"));
+		File png = SwingInspector.screenshot(windowIndex, dir == null ? outputDir() : new File(dir), scale, name);
+		return "{\"path\":\"" + jsonEscape(png.getAbsolutePath()) + "\",\"bytes\":" + png.length() + '}';
+	}
+
+	private static String handleClick(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		boolean clicked = SwingInspector.click(path);
+		return "{\"clicked\":" + clicked + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleIconify(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		boolean want = Boolean.parseBoolean(q.getOrDefault("iconified", "true"));
+		Boolean actual = SwingInspector.iconify(path, want);
+		if (actual == null) {
+			return "{\"error\":\"no window at path\",\"path\":\"" + jsonEscape(path) + "\"}";
+		}
+		return "{\"requested\":" + want + ",\"iconified\":" + actual
+				+ ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleWindowBounds(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		try {
+			java.awt.Rectangle r = new java.awt.Rectangle(
+					Integer.parseInt(q.get("x")), Integer.parseInt(q.get("y")),
+					Integer.parseInt(q.get("w")), Integer.parseInt(q.get("h")));
+			java.awt.Rectangle after = SwingInspector.setWindowBounds(path, r);
+			if (after == null) {
+				return "{\"error\":\"no window at path\",\"path\":\"" + jsonEscape(path) + "\"}";
+			}
+			return "{\"bounds\":{\"x\":" + after.x + ",\"y\":" + after.y
+					+ ",\"w\":" + after.width + ",\"h\":" + after.height + "}}";
+		} catch (NumberFormatException | NullPointerException e) {
+			return "{\"error\":\"need integer x, y, w, h query parameters\"}";
+		}
+	}
+
+	private static String handleSetText(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		String text = q.getOrDefault("text", "");
+		boolean commit = Boolean.parseBoolean(q.getOrDefault("enter", "false"));
+		boolean ok = SwingInspector.setText(path, text, commit);
+		return "{\"set\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	/**
+	 * Tail of the client's real log. VCellClientMain redirects System.out/err
+	 * to {@code <vcellHome>/logs/vcellrun_<site>.log} via {@link ConsoleCapture},
+	 * so a launcher that captures the process's stdout only sees pre-redirect
+	 * lines — exceptions, login-flow progress, and UNCAUGHT EXCEPTION dumps all
+	 * land in the redirected file this endpoint serves.
+	 */
+	private static String handleLog(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		int lines = q.containsKey("lines") ? Integer.parseInt(q.get("lines")) : 200;
+		ConsoleCapture cc = ConsoleCapture.getInstance();
+		if (!cc.isRedirectedStandardOutErr()) {
+			return "(stdout/stderr not redirected; nothing captured)";
+		}
+		ConsoleCapture.CurrentContent content = cc.getLastLines(lines);
+		return content.isAvailable ? content.content : "(log content unavailable)";
+	}
+
+	/**
+	 * Shared selector parameters for /find and /waitFor: {@code type} (simple
+	 * class name, superclasses included), {@code name}, {@code text} (exact),
+	 * {@code textContains} (case-insensitive substring). At least one required.
+	 */
+	private static String handleFind(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String type = emptyToNull(q.get("type"));
+		String name = emptyToNull(q.get("name"));
+		String text = emptyToNull(q.get("text"));
+		String contains = emptyToNull(q.get("textContains"));
+		if (type == null && name == null && text == null && contains == null) {
+			return "{\"error\":\"require at least one of 'type', 'name', 'text', 'textContains'\"}";
+		}
+		int limit = Integer.parseInt(q.getOrDefault("limit", "25"));
+		return SwingInspector.findMatchesJson(type, name, text, contains, limit);
+	}
+
+	private static String handleWaitFor(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String type = emptyToNull(q.get("type"));
+		String name = emptyToNull(q.get("name"));
+		String text = emptyToNull(q.get("text"));
+		String contains = emptyToNull(q.get("textContains"));
+		if (type == null && name == null && text == null && contains == null) {
+			return "{\"error\":\"require at least one of 'type', 'name', 'text', 'textContains'\"}";
+		}
+		String state = q.getOrDefault("state", "showing");
+		if (!state.equals("showing") && !state.equals("enabled") && !state.equals("gone")) {
+			return "{\"error\":\"'state' must be one of showing, enabled, gone\"}";
+		}
+		// cap the wait so a stuck poller can't pin one of the bridge's few worker threads forever
+		long timeoutMs = Math.min(Long.parseLong(q.getOrDefault("timeoutMs", "10000")), 120_000L);
+		long intervalMs = Math.max(Long.parseLong(q.getOrDefault("intervalMs", "250")), 50L);
+		return SwingInspector.waitFor(type, name, text, contains, state, timeoutMs, intervalMs);
+	}
+
+	private static String handleIdle(HttpExchange ex) {
+		long waitedMs = SwingInspector.waitForIdle();
+		return "{\"idle\":true,\"waitedMs\":" + waitedMs + '}';
+	}
+
+	private static String emptyToNull(String s) {
+		return (s == null || s.isEmpty()) ? null : s;
+	}
+
+	private static String handleProps(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		return SwingInspector.propsJson(path);
+	}
+
+	private static String handleHighlight(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		int ms = Integer.parseInt(q.getOrDefault("ms", "2000"));
+		boolean ok = SwingInspector.highlight(path, ms);
+		return "{\"highlighted\":" + ok + ",\"ms\":" + ms + '}';
+	}
+
+	private static String handleFindRow(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String text = emptyToNull(q.get("text"));
+		String contains = emptyToNull(q.get("contains"));
+		String appType = emptyToNull(q.get("appType"));
+		if (path == null || path.isEmpty() || (text == null && contains == null && appType == null)) {
+			return "{\"error\":\"require 'path' and one of 'text', 'contains' or 'appType'\",\"row\":-1}";
+		}
+		// Optional: which column carries the identity being matched. Named, not indexed,
+		// for the usual reason - and resolved here so the caller says "Parameter", not 1.
+		String inColumn = emptyToNull(q.get("inColumn"));
+		int searchColumn = 0;
+		if (inColumn != null) {
+			String resolved = SwingInspector.findColumnJson(path, inColumn);
+			java.util.regex.Matcher m =
+					java.util.regex.Pattern.compile("\"column\":(-?\\d+)").matcher(resolved);
+			if (m.find()) {
+				searchColumn = Math.max(0, Integer.parseInt(m.group(1)));
+			}
+		}
+		return SwingInspector.findRowJson(path, text != null ? text : contains, text != null,
+				appType, searchColumn);
+	}
+
+	private static String handleSelectList(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String items = emptyToNull(q.get("items"));
+		if (path == null || path.isEmpty() || items == null) {
+			return "{\"error\":\"require 'path' and 'items'\"}";
+		}
+		boolean ok = SwingInspector.selectList(path, items);
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSelectCombo(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String item = emptyToNull(q.get("item"));
+		if (path == null || path.isEmpty() || item == null) {
+			return "{\"error\":\"require 'path' and 'item'\"}";
+		}
+		boolean ok = SwingInspector.selectCombo(path, item);
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSetSlider(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String value = emptyToNull(q.get("value"));
+		if (path == null || path.isEmpty() || value == null) {
+			return "{\"error\":\"require 'path' and 'value' (an integer, or min/max, or -1 for the end)\"}";
+		}
+		boolean ok = SwingInspector.setSlider(path, value);
+		return "{\"set\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSelectTableRange(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String range = emptyToNull(q.get("range"));
+		if (path == null || path.isEmpty() || range == null) {
+			return "{\"error\":\"require 'path' and 'range', e.g. 0-32 or 0-\"}";
+		}
+		boolean ok = SwingInspector.selectTableRange(path, range);
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handlePopupItem(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String item = emptyToNull(q.get("item"));
+		if (item == null) {
+			return "{\"error\":\"require 'item', e.g. Copy As>Spatial>Stochastic\"}";
+		}
+		return SwingInspector.clickPopupItem(item);
+	}
+
+	private static String handleSelectPixelRange(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("low") || !q.containsKey("high")) {
+			return "{\"error\":\"require 'path', 'low' and 'high'\"}";
+		}
+		boolean ok = SwingInspector.selectPixelRange(path,
+				Integer.parseInt(q.get("low")), Integer.parseInt(q.get("high")));
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleChooseFile(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String file = emptyToNull(q.get("file"));
+		if (path == null || path.isEmpty() || file == null) {
+			return "{\"error\":\"require 'path' and 'file'\"}";
+		}
+		boolean ok = SwingInspector.chooseFile(path, file);
+		return "{\"chosen\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSetCell(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String value = q.get("value");
+		if (path == null || path.isEmpty() || value == null
+				|| !q.containsKey("row") || !q.containsKey("column")) {
+			return "{\"error\":\"require 'path', 'row', 'column' and 'value'\"}";
+		}
+		boolean ok = SwingInspector.setCell(path, Integer.parseInt(q.get("row")),
+				Integer.parseInt(q.get("column")), value);
+		return "{\"set\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleReadCell(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' (and 'column' or 'columnName')\"}";
+		}
+		// Column by header where given, for the usual reason - an index names nothing.
+		int column = Integer.parseInt(q.getOrDefault("column", "0"));
+		String header = emptyToNull(q.get("columnName"));
+		if (header != null) {
+			java.util.regex.Matcher m = java.util.regex.Pattern.compile("\"column\":(-?\\d+)")
+					.matcher(SwingInspector.findColumnJson(path, header));
+			if (m.find()) {
+				column = Integer.parseInt(m.group(1));
+			}
+		}
+		return SwingInspector.readCellJson(path, Integer.parseInt(q.get("row")), column);
+	}
+
+	private static String handleFindColumn(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String header = emptyToNull(q.get("header"));
+		if (path == null || path.isEmpty() || header == null) {
+			return "{\"error\":\"require 'path' and 'header'\",\"column\":-1}";
+		}
+		return SwingInspector.findColumnJson(path, header);
+	}
+
+	private static String handleGlide(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		int ms = Integer.parseInt(q.getOrDefault("ms", "600"));
+		boolean ok = SwingInspector.glide(path, ms);
+		return "{\"glided\":" + ok + ",\"ms\":" + ms + '}';
+	}
+
+	private static String handleRobotClick(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		int glideMs = Integer.parseInt(q.getOrDefault("glideMs", "0"));
+		int row = Integer.parseInt(q.getOrDefault("row", "-1"));
+		boolean ok = SwingInspector.robotClick(path, glideMs, row);
+		return "{\"clicked\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	/**
+	 * Start/stop the UI recorder. The script is flushed to disk after every step, so
+	 * {@code file} on {@code start} fixes where that happens; on {@code stop} it names the
+	 * final destination. Either way the reply carries the path.
+	 */
+	private static String handleRecord(HttpExchange ex) throws Exception {
+		Map<String, String> q = query(ex);
+		String action = q.getOrDefault("action", "status");
+		String file = emptyToNull(q.get("file"));
+		switch (action) {
+			case "start":
+				boolean captureBridge = Boolean.parseBoolean(q.getOrDefault("captureBridgeActions", "true"));
+				return UiRecorder.start(file == null ? null : new File(file), captureBridge);
+			case "stop":
+				return UiRecorder.stop(file == null ? null : new File(file));
+			case "status":
+				return UiRecorder.status();
+			default:
+				return "{\"error\":\"'action' must be one of start, stop, status\"}";
+		}
+	}
+
+	private static String handleMenus(HttpExchange ex) {
+		return SwingInspector.menusJson();
+	}
+
+	private static String handleMenu(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter (e.g. path=Account>Login)\"}";
+		}
+		int window = Integer.parseInt(q.getOrDefault("window", "-1"));
+		return SwingInspector.clickMenu(path, window);
+	}
+
+	private static String handleListeners(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		return SwingInspector.dumpListenersJson(path);
+	}
+
+	private static String handleSelectTab(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		String title = emptyToNull(q.get("title"));
+		if (path == null || path.isEmpty() || (!q.containsKey("index") && title == null)) {
+			return "{\"error\":\"require 'path' and one of 'index' or 'title'\"}";
+		}
+		int index = q.containsKey("index") ? Integer.parseInt(q.get("index")) : -1;
+		boolean ok = SwingInspector.selectTab(path, index, title);
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSelectTreeRow(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' query parameters\"}";
+		}
+		boolean ok = SwingInspector.selectTreeRow(path, Integer.parseInt(q.get("row")));
+		return "{\"selected\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	/** Shared parsing for the table-row endpoints: require path + row, optional column. */
+	private interface TableRowAction {
+		boolean apply(String path, int row, int column);
+	}
+
+	private static String tableRowRequest(HttpExchange ex, String resultKey, TableRowAction action) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' query parameters\"}";
+		}
+		int column = Integer.parseInt(q.getOrDefault("column", "-1"));
+		boolean ok = action.apply(path, Integer.parseInt(q.get("row")), column);
+		return "{\"" + resultKey + "\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleSelectTableRow(HttpExchange ex) {
+		return tableRowRequest(ex, "selected", SwingInspector::selectTableRow);
+	}
+
+	private static String handleDoubleClickTableRow(HttpExchange ex) {
+		return tableRowRequest(ex, "doubleClicked", SwingInspector::doubleClickTableRow);
+	}
+
+	private static String handleRightClickTableRow(HttpExchange ex) {
+		return tableRowRequest(ex, "rightClicked", SwingInspector::rightClickTableRow);
+	}
+
+	private static String handleExpandTreeRow(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' query parameters\"}";
+		}
+		boolean expand = Boolean.parseBoolean(q.getOrDefault("expand", "true"));
+		boolean ok = SwingInspector.expandTreeRow(path, Integer.parseInt(q.get("row")), expand);
+		return "{\"expanded\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleDoubleClickTreeRow(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' query parameters\"}";
+		}
+		boolean ok = SwingInspector.doubleClickTreeRow(path, Integer.parseInt(q.get("row")));
+		return "{\"doubleClicked\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleRightClickTreeRow(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty() || !q.containsKey("row")) {
+			return "{\"error\":\"require 'path' and 'row' query parameters\"}";
+		}
+		boolean ok = SwingInspector.rightClickTreeRow(path, Integer.parseInt(q.get("row")));
+		return "{\"rightClicked\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	private static String handleRightClick(HttpExchange ex) {
+		Map<String, String> q = query(ex);
+		String path = q.get("path");
+		if (path == null || path.isEmpty()) {
+			return "{\"error\":\"missing 'path' query parameter\"}";
+		}
+		boolean ok = SwingInspector.rightClick(path);
+		return "{\"rightClicked\":" + ok + ",\"path\":\"" + jsonEscape(path) + "\"}";
+	}
+
+	// ---------------------------------------------------------------------
+	// HTTP helpers
+	// ---------------------------------------------------------------------
+
+	private static void respond(HttpExchange ex, int status, String contentType, byte[] body) throws IOException {
+		ex.getResponseHeaders().set("Content-Type", contentType);
+		ex.sendResponseHeaders(status, body.length);
+		try (OutputStream os = ex.getResponseBody()) {
+			os.write(body);
+		}
+	}
+
+	private static Map<String, String> query(HttpExchange ex) {
+		Map<String, String> map = new HashMap<>();
+		URI uri = ex.getRequestURI();
+		String raw = uri.getRawQuery();
+		if (raw == null || raw.isEmpty()) {
+			return map;
+		}
+		for (String pair : raw.split("&")) {
+			int eq = pair.indexOf('=');
+			if (eq < 0) {
+				map.put(urlDecode(pair), "");
+			} else {
+				map.put(urlDecode(pair.substring(0, eq)), urlDecode(pair.substring(eq + 1)));
+			}
+		}
+		return map;
+	}
+
+	private static String urlDecode(String s) {
+		return java.net.URLDecoder.decode(s, StandardCharsets.UTF_8);
+	}
+
+	private static String jsonEscape(String s) {
+		return s.replace("\\", "\\\\").replace("\"", "\\\"");
+	}
+}

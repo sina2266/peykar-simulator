@@ -1,0 +1,88 @@
+tools:
+
+  # a tool is implicitly enabled when specified here unless explicitely disabled
+
+  # not all sections are mandatory, not mentioning a tool means it is not enabled.
+
+  ClangFormat:
+    enable: False
+
+    # Any Python version specifiers as described in PEP 440
+    # https://peps.python.org/pep-0440/#compatible-release
+    # For instance:
+    #
+    # Exact match required: == 13.0.0
+    # At least 13.0.1, but less than 13.1: >= 13.0.1, == 13.0.*
+    # Same as above: ~= 13.0.1
+    version: ~=13.0
+
+    # appended to clang-format command line before the file to process. Can be:
+    # - None
+    # - a string
+    # - a list of string
+    option:
+
+    include:
+      match:
+      - .*\.[it]?cc?$
+      - .*\.hh?$
+      - .*\.[chit]((pp)|(xx))$
+
+  CMakeFormat:
+    enable: False
+    version: ~=0.6
+    include:
+      match:
+      - .*\.cmake$
+      - .*CMakeLists.txt$
+
+  ClangTidy:
+    # static analysis with ClangTidy is explicitely disabled
+    enable: False
+    version: ">=7"
+    option: -extra-arg=-Wno-unknown-warning-option
+    # can specify path to JSON Clang database here, or through CLI which takes precedence
+    compile_commands_file:
+    include:
+      match: .*\.c((c)|(pp)|(xx))$
+
+  Flake8:
+    enable: False
+    version: ">=4"
+
+    option:
+    - --import-order-style
+    - google
+
+    # Additional Python packages to install
+    requirements:
+    - flake8-import-order
+
+    include:
+      match:
+      - .*\.py$
+
+  Black:
+    enable: False
+    version: ~=22.3
+
+#  will come later
+#  PreCommit:
+#    enable: False
+#    version: ">=2.10"
+#    hooks:
+#      commit:
+#      - check-clang-format
+#      - check-cmake-format
+#      push:
+#      - clang-tidy
+#      - courtesy-msg
+
+  # Global settings to every tool, can be locally overriden within the
+  # section config of a tool
+
+  global:
+    exclude:
+      match:
+      - third[-_]party/.*
+      - third[-_]parties/.*

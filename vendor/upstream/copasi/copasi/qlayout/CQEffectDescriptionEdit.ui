@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+<comment> Copyright (C) 2019 - 2020 by Pedro Mendes, Rector and Visitors of the </comment>
+<comment> University of Virginia, University of Heidelberg, and University </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and University of </comment>
+<comment> of Connecticut School of Medicine. </comment>
+<comment> All rights reserved. </comment>
+
+<comment> Copyright (C) 2013 - 2016 by Pedro Mendes, Virginia Tech Intellectual </comment>
+<comment> Properties, Inc., University of Heidelberg, and The University </comment>
+<comment> of Manchester. </comment>
+<comment> All rights reserved. </comment>
+
+ <comment> All rights reserved. </comment>
+ <class>CQEffectDescriptionEdit</class>
+ <widget class="QWidget" name="CQEffectDescriptionEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>230</width>
+    <height>237</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>230</width>
+    <height>220</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Effect Description Edit</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="grpMode">
+     <property name="title">
+      <string> Mode: </string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QRadioButton" name="radScale">
+        <property name="text">
+         <string>Scale</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radShadow">
+        <property name="text">
+         <string>Shadow</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radColorize">
+        <property name="text">
+         <string>Colorize</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>63</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Scale Start: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>txtScaleStart</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="txtScaleStart">
+     <property name="text">
+      <string>0.0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Scale End: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>txtScaleEnd</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="txtScaleEnd">
+     <property name="text">
+      <string>0.0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Start Color: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="txtColorStart">
+       <property name="minimumSize">
+        <size>
+         <width>110</width>
+         <height>19</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cmdSelectColorStart">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>End Color: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="txtColorEnd">
+       <property name="minimumSize">
+        <size>
+         <width>110</width>
+         <height>19</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cmdSelectColorEnd">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Graphical: </string>
+     </property>
+     <property name="buddy">
+      <cstring>txtObjectName</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="txtObjectName">
+       <property name="toolTip">
+        <string>The model element onto which to map the data</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cmdSelectObject">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label1">
+     <property name="text">
+      <string>Data Object: </string>
+     </property>
+     <property name="buddy">
+      <cstring>txtDataObject</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLineEdit" name="txtDataObject">
+       <property name="toolTip">
+        <string>The data to be mapped</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cmdSelectDataObject">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>radScale</tabstop>
+  <tabstop>radShadow</tabstop>
+  <tabstop>radColorize</tabstop>
+  <tabstop>txtScaleStart</tabstop>
+  <tabstop>txtScaleEnd</tabstop>
+  <tabstop>cmdSelectColorStart</tabstop>
+  <tabstop>cmdSelectColorEnd</tabstop>
+  <tabstop>txtObjectName</tabstop>
+  <tabstop>cmdSelectObject</tabstop>
+  <tabstop>txtDataObject</tabstop>
+  <tabstop>cmdSelectDataObject</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cmdSelectColorStart</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotSelectColorStart()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>153</x>
+     <y>-15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdSelectColorEnd</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotSelectColorEnd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdSelectObject</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotSelectObject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdSelectDataObject</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotSelectDataObject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txtScaleStart</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotScaleStartChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txtScaleEnd</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotScaleEndChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>171</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radColorize</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotModeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>6</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radShadow</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotModeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>98</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radScale</sender>
+   <signal>clicked()</signal>
+   <receiver>CQEffectDescriptionEdit</receiver>
+   <slot>slotModeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>27</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>34</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotScaleStartChanged(QString)</slot>
+  <slot>slotScaleEndChanged(QString)</slot>
+  <slot>slotSelectColorStart()</slot>
+  <slot>slotSelectColorEnd()</slot>
+  <slot>slotSelectObject()</slot>
+  <slot>slotSelectDataObject()</slot>
+  <slot>slotModeChanged()</slot>
+ </slots>
+</ui>

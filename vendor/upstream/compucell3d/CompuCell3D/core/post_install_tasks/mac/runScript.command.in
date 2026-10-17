@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# echo " "
+# echo " dollar-zero AKA the first argument to this .command script is: "
+# echo $0
+# echo " "
+export PYTHON_MINOR_VERSION=
+cd "${0%/*}"
+
+
+# language settings
+export LANG=en_EN
+export __CF_USER_TEXT_ENCODING=""
+
+export PYTHONPATH=@SITE_PACKAGES_INSTALL@
+
+export PYTHON_EXEC=@PYTHON_EXEC_FILE@
+
+
+
+echo ${osx_major}-${osx_minor}
+
+
+${PYTHON_EXEC} --version
+
+current_directory=$(pwd)
+
+export exit_code=0
+${PYTHON_EXEC} ${PYTHONPATH}/cc3d/run_script.py $*
+exit_code=$?
+
+cd ${current_directory}
+exit ${exit_code}

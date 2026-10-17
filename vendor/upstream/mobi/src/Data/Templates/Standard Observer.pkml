@@ -1,0 +1,902 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ObserverBuildingBlock id="P3p5kU8130eiSrIsZz9hIg" name="Standard Observer" icon="Observer" bbVersion="0" version="16">
+  <Creation createdAt="5249782730476462300" createdBy="Michael" creationMode="New" origin="PKSim" version="11.1" internalVersion="79" />
+  <Builders>
+    <ContainerObserverBuilder id="hfgZYyrmSkeS2H871_gKGQ" name="Blood Cells" icon="Observer" dimension="Concentration (molar)" formula="GGwxymldxkyHs_K8IMtjcg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="PeripheralVenousBlood" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <AmountObserverBuilder id="Q9_1uhE3l0uFhyRPIiBRQw" name="Concentration in container" icon="Observer" dimension="Concentration (molar)" formula="igwjfPGiAUy0-YfesoetKA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Gallbladder" />
+          <NotMatchTagCondition tag="LumenSegment" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <ContainerObserverBuilder id="GfVs6b82K0uLj3s7WqMy6g" name="Concentration in container (Liver, BloodCells)" icon="Observer" dimension="Concentration (molar)" formula="Hj4yTp0KZE204H1VkK_EVw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="zQr9oSBdUEG7QnWi6JpzpA" name="Concentration in container (Liver, Interstitial)" icon="Observer" dimension="Concentration (molar)" formula="0cUiDMuz0kCXLAaIMfsznA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Interstitial" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="g_XiVabcbkqW0RxHorX3eg" name="Concentration in container (Liver, Intracellular)" icon="Observer" dimension="Concentration (molar)" formula="vKXexdOX-EWhIkLrjwyojA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Intracellular" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="iqisn7YpTUmPHpYpCEHZzg" name="Concentration in container (Liver, Plasma)" icon="Observer" dimension="Concentration (molar)" formula="U47iWS0B802XXY8JCPts6g">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <AmountObserverBuilder id="UHECJKBHf0K_J0P9cZ3eVw" name="Concentration in feces" icon="Observer" dimension="Concentration (molar)" formula="igwjfPGiAUy0-YfesoetKA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Feces" />
+          <MatchTagCondition tag="LumenSegment" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <AmountObserverBuilder id="Nnwnym7Yb06S3B9PtJiPAQ" name="Concentration in lumen" icon="Observer" dimension="Concentration (molar)" formula="5SPebC-XRESsq5l9Bpf1Kg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Feces" />
+          <MatchTagCondition tag="LumenSegment" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <ContainerObserverBuilder id="lswv-kX8BU6RxEqu-fh6Dg" name="Fraction dissolved" icon="Observer" dimension="Fraction" formula="mmSInAqRTUeNJkGiE3wXLQ">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <NotMatchTagCondition tag="LumenSegment" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="XlgLSuyxFUmE6VbTUhSYyA" name="Fraction of oral drug mass absorbed into mucosa" icon="Observer" dimension="Fraction" formula="BgMbS7xTBEGO5GwxpHedPg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Lumen" />
+          <NotMatchTagCondition tag="LumenSegment" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="rPJoxNyxl0CMs3TEYsUYdQ" name="Fraction of oral drug mass absorbed into mucosa segment" icon="Observer" dimension="Fraction" formula="4sPe5nOO60-Icyof3f0pbw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="Feces" />
+          <MatchTagCondition tag="LumenSegment" />
+          <NotMatchTagCondition tag="Stomach" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="v-DpiQHleEG4dKO6KERJbg" name="Interstitial Unbound" icon="Observer" dimension="Concentration (molar)" formula="eeTtwVtNpUK8jSLBlSkrjw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="TissueOrgan" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="k0bbcNRzu0-LjfNadqfTxw" name="Interstitial Unbound (Liver)" icon="Observer" dimension="Concentration (molar)" formula="QCeaTdo3FUCOwGzRlM6cbw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Endosome" />
+          <NotMatchTagCondition tag="Gallbladder" />
+          <NotMatchTagCondition tag="Interstitial" />
+          <NotMatchTagCondition tag="Intracellular" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+          <NotMatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="Hua4_VUwtEmonEoUanVNnw" name="Intracellular Unbound" icon="Observer" dimension="Concentration (molar)" formula="aHmsVlJHQE6BORx0Cu-4jg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="TissueOrgan" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="peocxQ5FE0mBTt7S0me5Qw" name="Intracellular Unbound (Liver)" icon="Observer" dimension="Concentration (molar)" formula="qGnI7BYKzE6M3gMu1IMBfA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Endosome" />
+          <NotMatchTagCondition tag="Gallbladder" />
+          <NotMatchTagCondition tag="Interstitial" />
+          <NotMatchTagCondition tag="Intracellular" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+          <NotMatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="SLdvrKkauU-IHSMb1vh-LQ" name="Plasma (Peripheral Venous Blood)" icon="Observer" dimension="Concentration (molar)" formula="CeKR8CDoyk2LviyPajBrDg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="PeripheralVenousBlood" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <AmountObserverBuilder id="TITjsRpzYEigBmK-t4TLVA" name="Plasma Unbound" icon="Observer" dimension="Concentration (molar)" formula="HU1ZezBJy0upPRJavFk65w">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="BloodOrgan" />
+          <MatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <ContainerObserverBuilder id="Vj7ncCW_6USDLfUOJHmeAw" name="Plasma Unbound (Peripheral Venous Blood)" icon="Observer" dimension="Concentration (molar)" formula="0NOqyPdnPk2Oxogt3bfspQ">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="PeripheralVenousBlood" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="RaZOFrTBeEGEKH0ndUE-hQ" name="Tissue" icon="Observer" dimension="Concentration (molar)" formula="K_Oa1n9hk0ODiNWJflzCsw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="LargeIntestine" />
+          <NotMatchTagCondition tag="SmallIntestine" />
+          <MatchTagCondition tag="TissueOrgan" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="EfAbjNoIC0CKWCj07x_8kQ" name="Tissue (Liver)" icon="Observer" dimension="Concentration (molar)" formula="pcy8vB34gk-wAlQYFwVMSA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="BloodCells" />
+          <NotMatchTagCondition tag="Endosome" />
+          <NotMatchTagCondition tag="Gallbladder" />
+          <NotMatchTagCondition tag="Interstitial" />
+          <NotMatchTagCondition tag="Intracellular" />
+          <NotMatchTagCondition tag="LargeIntestine" />
+          <MatchTagCondition tag="Liver" />
+          <NotMatchTagCondition tag="Pericentral" />
+          <NotMatchTagCondition tag="Periportal" />
+          <NotMatchTagCondition tag="Plasma" />
+          <NotMatchTagCondition tag="SmallIntestine" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="zVjQ_4qH5kqg_atbFAUcpQ" name="Total Tissue (Large Intestine)" icon="Observer" dimension="Concentration (molar)" formula="Q-HKdjIX70eStjy08phK-g">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="LargeIntestine" />
+          <MatchTagCondition tag="TissueOrgan" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="WyoUrQiQn0OUqD6ts0D9Wg" name="Total Tissue (Small Intestine)" icon="Observer" dimension="Concentration (molar)" formula="cFYc_D-b5k6IiVb8R2lrcg">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="SmallIntestine" />
+          <MatchTagCondition tag="TissueOrgan" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="u24TSIhPlEWfCjn_vnu8sQ" name="Whole Blood" icon="Observer" dimension="Concentration (molar)" formula="57NgMb3QWEWL2I4q9y-13Q">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <NotMatchTagCondition tag="BloodCells" />
+          <MatchTagCondition tag="BloodOrgan" />
+          <NotMatchTagCondition tag="Plasma" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <ContainerObserverBuilder id="r6-ZEv7yskSeaqfbeadwvg" name="Whole Blood (Peripheral Venous Blood)" icon="Observer" dimension="Concentration (molar)" formula="3pvbyy3JjEeehrBNJajQBw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="PeripheralVenousBlood" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </ContainerObserverBuilder>
+    <AmountObserverBuilder id="I9UPi3mEmUqaYqZ9oQWWvA" name="Fraction excreted to urine" icon="Observer" dimension="Fraction" formula="Oqearo8hHUSjUDMnRgFNoA">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Urine" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="1">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <AmountObserverBuilder id="FAC5TuQmFEqNLJUUetpxSg" name="Fraction excreted to bile" icon="Observer" dimension="Fraction" formula="AkiQ7n5lSU6Fi9EYmnECaQ">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Gallbladder" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+    <AmountObserverBuilder id="hFgIC_xyi0S8cZbHSl5LOA" name="Fraction excreted to feces" icon="Observer" dimension="Fraction" formula="aHUliIoIGUmGqq5ta6yVdw">
+      <ContainerCriteria operator="And">
+        <DescriptorConditions>
+          <MatchTagCondition tag="Feces" />
+        </DescriptorConditions>
+      </ContainerCriteria>
+      <MoleculeList forAll="0">
+        <MoleculeNames>
+          <MoleculeNamesChild>Standard Molecule</MoleculeNamesChild>
+        </MoleculeNames>
+      </MoleculeList>
+    </AmountObserverBuilder>
+  </Builders>
+  <FormulaCache>
+    <Formulas>
+      <Formula id="GGwxymldxkyHs_K8IMtjcg" name="OBS_BloodCells_PeripheralVenousBlood" dim="Concentration (molar)" formula="fQ_art*C_bc_art+fQ_bon*C_bc_bon+fQ_fat*C_bc_fat+fQ_mus*C_bc_mus+fQ_skn*C_bc_skn">
+        <Paths>
+          <Path path="0" as="1" dim="2" />
+          <Path path="3" as="4" dim="2" />
+          <Path path="5" as="6" dim="2" />
+          <Path path="7" as="8" dim="2" />
+          <Path path="9" as="10" dim="2" />
+          <Path path="11" as="12" dim="13" />
+          <Path path="14" as="15" dim="13" />
+          <Path path="16" as="17" dim="13" />
+          <Path path="18" as="19" dim="13" />
+          <Path path="20" as="21" dim="13" />
+        </Paths>
+      </Formula>
+      <Formula id="igwjfPGiAUy0-YfesoetKA" name="OBS_Concentration" dim="Concentration (molar)" formula="Concentration">
+        <Paths>
+          <Path path="22" as="23" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="Hj4yTp0KZE204H1VkK_EVw" name="OBS_Concentration_liv_bc" dim="Concentration (molar)" formula="(M_bc_prp + M_bc_prc)/(V_bc_prp+V_bc_prc)">
+        <Paths>
+          <Path path="24" as="25" dim="26" />
+          <Path path="27" as="28" dim="26" />
+          <Path path="29" as="30" dim="31" />
+          <Path path="32" as="33" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="0cUiDMuz0kCXLAaIMfsznA" name="OBS_Concentration_liv_int" dim="Concentration (molar)" formula="(M_int_prp + M_int_prc)/(V_int_prp+V_int_prc)">
+        <Paths>
+          <Path path="34" as="35" dim="26" />
+          <Path path="36" as="37" dim="26" />
+          <Path path="38" as="39" dim="31" />
+          <Path path="40" as="41" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="vKXexdOX-EWhIkLrjwyojA" name="OBS_Concentration_liv_cell" dim="Concentration (molar)" formula="(M_cell_prp + M_cell_prc)/(V_cell_prp+V_cell_prc)">
+        <Paths>
+          <Path path="42" as="43" dim="26" />
+          <Path path="44" as="45" dim="26" />
+          <Path path="46" as="47" dim="31" />
+          <Path path="48" as="49" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="U47iWS0B802XXY8JCPts6g" name="OBS_Concentration_liv_pls" dim="Concentration (molar)" formula="(M_pls_prp + M_pls_prc)/(V_pls_prp+V_pls_prc)">
+        <Paths>
+          <Path path="50" as="51" dim="26" />
+          <Path path="52" as="53" dim="26" />
+          <Path path="54" as="55" dim="31" />
+          <Path path="56" as="57" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="5SPebC-XRESsq5l9Bpf1Kg" name="OBS_LumenConcentration" dim="Concentration (molar)" formula="EffectiveLumenConcentration">
+        <Paths>
+          <Path path="58" as="59" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="mmSInAqRTUeNJkGiE3wXLQ" name="OBS_TotalFractionDissolved" dim="Fraction" formula="TotalOralDrugMass &gt; 0 ? (M_sto + M_duo + M_uje + M_lje + M_uil + M_lil + M_cae + M_colasc + M_coltrans + M_coldesc + M_colsigm + M_rect + M_fec + Mabs_Mucosa) / TotalOralDrugMass : 0">
+        <Paths>
+          <Path path="60" as="61" dim="31" />
+          <Path path="62" as="63" dim="31" />
+          <Path path="64" as="65" dim="31" />
+          <Path path="66" as="67" dim="31" />
+          <Path path="68" as="69" dim="31" />
+          <Path path="70" as="71" dim="31" />
+          <Path path="72" as="73" dim="31" />
+          <Path path="74" as="75" dim="31" />
+          <Path path="76" as="77" dim="31" />
+          <Path path="78" as="79" dim="31" />
+          <Path path="80" as="81" dim="31" />
+          <Path path="82" as="83" dim="31" />
+          <Path path="84" as="85" dim="31" />
+          <Path path="86" as="87" dim="31" />
+          <Path path="88" as="89" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="BgMbS7xTBEGO5GwxpHedPg" name="OBS_FractionAbsorbedToMucosa" dim="Fraction" formula="OralDrugMass&gt;0.0 ?  MassAbsorbed/OralDrugMass : 0">
+        <Paths>
+          <Path path="86" as="90" dim="31" />
+          <Path path="88" as="91" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="4sPe5nOO60-Icyof3f0pbw" name="OBS_FractionAbsorbedToMucosaSegment" dim="Fraction" formula="OralDrugMass&gt;0.0 ?  MassAbsorbed/OralDrugMass : 0">
+        <Paths>
+          <Path path="92" as="90" dim="31" />
+          <Path path="88" as="91" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="eeTtwVtNpUK8jSLBlSkrjw" name="OBS_InterstitialUnbound" dim="Concentration (molar)" formula="C_int * K_water_int">
+        <Paths>
+          <Path path="93" as="94" dim="2" />
+          <Path path="95" as="96" />
+        </Paths>
+      </Formula>
+      <Formula id="QCeaTdo3FUCOwGzRlM6cbw" name="OBS_InterstitialUnbound_liv" dim="Concentration (molar)" formula="(M_int_prp * K_water_int_prp + M_int_prc * K_water_int_prc)/(V_int_prp + V_int_prc)">
+        <Paths>
+          <Path path="34" as="35" dim="26" />
+          <Path path="36" as="37" dim="26" />
+          <Path path="38" as="39" dim="31" />
+          <Path path="40" as="41" dim="31" />
+          <Path path="97" as="98" />
+          <Path path="99" as="100" />
+        </Paths>
+      </Formula>
+      <Formula id="aHmsVlJHQE6BORx0Cu-4jg" name="OBS_IntracellularUnbound" dim="Concentration (molar)" formula="C_cell * K_water_cell">
+        <Paths>
+          <Path path="101" as="102" dim="2" />
+          <Path path="103" as="104" />
+        </Paths>
+      </Formula>
+      <Formula id="qGnI7BYKzE6M3gMu1IMBfA" name="OBS_IntracellularUnbound_liv" dim="Concentration (molar)" formula="(M_cell_prp * K_water_cell_prp + M_cell_prc * K_water_cell_prc)/(V_cell_prp + V_cell_prc)">
+        <Paths>
+          <Path path="42" as="43" dim="26" />
+          <Path path="44" as="45" dim="26" />
+          <Path path="46" as="47" dim="31" />
+          <Path path="48" as="49" dim="31" />
+          <Path path="105" as="106" />
+          <Path path="107" as="108" />
+        </Paths>
+      </Formula>
+      <Formula id="CeKR8CDoyk2LviyPajBrDg" name="OBS_Plasma_PeripheralVenousBlood" dim="Concentration (molar)" formula="fQ_art*C_pls_art+fQ_bon*C_pls_bon+fQ_fat*C_pls_fat+fQ_mus*C_pls_mus+fQ_skn*C_pls_skn">
+        <Paths>
+          <Path path="109" as="110" dim="2" />
+          <Path path="111" as="112" dim="2" />
+          <Path path="113" as="114" dim="2" />
+          <Path path="115" as="116" dim="2" />
+          <Path path="117" as="118" dim="2" />
+          <Path path="11" as="12" dim="13" />
+          <Path path="14" as="15" dim="13" />
+          <Path path="16" as="17" dim="13" />
+          <Path path="18" as="19" dim="13" />
+          <Path path="20" as="21" dim="13" />
+        </Paths>
+      </Formula>
+      <Formula id="HU1ZezBJy0upPRJavFk65w" name="OBS_PlasmaUnbound" dim="Concentration (molar)" formula="C_pls*fu">
+        <Paths>
+          <Path path="22" as="119" dim="2" />
+          <Path path="120" as="121" dim="13" />
+        </Paths>
+      </Formula>
+      <Formula id="0NOqyPdnPk2Oxogt3bfspQ" name="OBS_PlasmaUnbound_PeripheralVenousBlood" dim="Concentration (molar)" formula="(fQ_art*C_pls_art+fQ_bon*C_pls_bon+fQ_fat*C_pls_fat+fQ_mus*C_pls_mus+fQ_skn*C_pls_skn)*fu">
+        <Paths>
+          <Path path="109" as="110" dim="2" />
+          <Path path="111" as="112" dim="2" />
+          <Path path="113" as="114" dim="2" />
+          <Path path="115" as="116" dim="2" />
+          <Path path="117" as="118" dim="2" />
+          <Path path="120" as="121" dim="13" />
+          <Path path="11" as="12" dim="13" />
+          <Path path="14" as="15" dim="13" />
+          <Path path="16" as="17" dim="13" />
+          <Path path="18" as="19" dim="13" />
+          <Path path="20" as="21" dim="13" />
+        </Paths>
+      </Formula>
+      <Formula id="K_Oa1n9hk0ODiNWJflzCsw" name="OBS_Tissue" dim="Concentration (molar)" formula="(f_int*C_int+f_cell*C_cell)/(f_int+f_cell)">
+        <Paths>
+          <Path path="122" as="123" />
+          <Path path="124" as="125" />
+          <Path path="101" as="102" dim="2" />
+          <Path path="93" as="94" dim="2" />
+        </Paths>
+      </Formula>
+      <Formula id="pcy8vB34gk-wAlQYFwVMSA" name="OBS_Tissue_liv" dim="Concentration (molar)" formula="(M_int_prp + M_int_prc + M_cell_prp + M_cell_prc)/(V_int_prp + V_int_prc + V_cell_prp + V_cell_prc)">
+        <Paths>
+          <Path path="34" as="35" dim="26" />
+          <Path path="36" as="37" dim="26" />
+          <Path path="42" as="43" dim="26" />
+          <Path path="44" as="45" dim="26" />
+          <Path path="46" as="47" dim="31" />
+          <Path path="48" as="49" dim="31" />
+          <Path path="38" as="39" dim="31" />
+          <Path path="40" as="41" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="Q-HKdjIX70eStjy08phK-g" name="OBS_Tissue_LargeIntestine" dim="Concentration (molar)" formula="(M_int + M_cell + M_int_cae + M_cell_cae + M_int_colasc + M_cell_colasc + M_int_coltrans + M_cell_coltrans + M_int_coldesc + M_cell_coldesc + M_int_colsigm + M_cell_colsigm + M_int_rect + M_cell_rect)/(V_int + V_cell + V_int_cae + V_cell_cae + V_int_colasc + V_cell_colasc + V_int_coltrans + V_cell_coltrans + V_int_coldesc + V_cell_coldesc + V_int_colsigm + V_cell_colsigm + V_int_rect + V_cell_rect)">
+        <Paths>
+          <Path path="126" as="127" dim="26" />
+          <Path path="128" as="129" dim="26" />
+          <Path path="130" as="131" dim="26" />
+          <Path path="132" as="133" dim="26" />
+          <Path path="134" as="135" dim="26" />
+          <Path path="136" as="137" dim="26" />
+          <Path path="138" as="139" dim="26" />
+          <Path path="140" as="141" dim="26" />
+          <Path path="142" as="143" dim="26" />
+          <Path path="144" as="145" dim="26" />
+          <Path path="146" as="147" dim="26" />
+          <Path path="148" as="149" dim="26" />
+          <Path path="150" as="151" dim="26" />
+          <Path path="152" as="153" dim="26" />
+          <Path path="154" as="155" dim="31" />
+          <Path path="156" as="157" dim="31" />
+          <Path path="158" as="159" dim="31" />
+          <Path path="160" as="161" dim="31" />
+          <Path path="162" as="163" dim="31" />
+          <Path path="164" as="165" dim="31" />
+          <Path path="166" as="167" dim="31" />
+          <Path path="168" as="169" dim="31" />
+          <Path path="170" as="171" dim="31" />
+          <Path path="172" as="173" dim="31" />
+          <Path path="174" as="175" dim="31" />
+          <Path path="176" as="177" dim="31" />
+          <Path path="178" as="179" dim="31" />
+          <Path path="180" as="181" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="cFYc_D-b5k6IiVb8R2lrcg" name="OBS_Tissue_SmallIntestine" dim="Concentration (molar)" formula="(M_int + M_cell + M_int_duo + M_cell_duo + M_int_uje + M_cell_uje + M_int_lje + M_cell_lje + M_int_uil + M_cell_uil + M_int_lil + M_cell_lil)/(V_int + V_cell + V_int_duo + V_cell_duo + V_int_uje + V_cell_uje + V_int_lje + V_cell_lje + V_int_uil + V_cell_uil + V_int_lil + V_cell_lil)">
+        <Paths>
+          <Path path="182" as="127" dim="26" />
+          <Path path="183" as="184" dim="26" />
+          <Path path="185" as="186" dim="26" />
+          <Path path="187" as="188" dim="26" />
+          <Path path="189" as="190" dim="26" />
+          <Path path="191" as="192" dim="26" />
+          <Path path="193" as="141" dim="26" />
+          <Path path="194" as="195" dim="26" />
+          <Path path="196" as="197" dim="26" />
+          <Path path="198" as="199" dim="26" />
+          <Path path="200" as="201" dim="26" />
+          <Path path="202" as="203" dim="26" />
+          <Path path="204" as="155" dim="31" />
+          <Path path="205" as="206" dim="31" />
+          <Path path="207" as="208" dim="31" />
+          <Path path="209" as="210" dim="31" />
+          <Path path="211" as="212" dim="31" />
+          <Path path="213" as="214" dim="31" />
+          <Path path="215" as="169" dim="31" />
+          <Path path="216" as="217" dim="31" />
+          <Path path="218" as="219" dim="31" />
+          <Path path="220" as="221" dim="31" />
+          <Path path="222" as="223" dim="31" />
+          <Path path="224" as="225" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="57NgMb3QWEWL2I4q9y-13Q" name="OBS_WholeBlood" dim="Concentration (molar)" formula="(1 - HCT) * C_pls+HCT * C_bc">
+        <Paths>
+          <Path path="226" as="227" dim="2" />
+          <Path path="228" as="119" dim="2" />
+          <Path path="229" as="230" />
+        </Paths>
+      </Formula>
+      <Formula id="3pvbyy3JjEeehrBNJajQBw" name="OBS_WholeBlood_PeripheralVenousBlood" dim="Concentration (molar)" formula="(1-HCT)*(fQ_art*C_pls_art+fQ_bon*C_pls_bon+fQ_fat*C_pls_fat+fQ_mus*C_pls_mus+fQ_skn*C_pls_skn) + HCT*(fQ_art*C_bc_art+fQ_bon*C_bc_bon+fQ_fat*C_bc_fat+fQ_mus*C_bc_mus+fQ_skn*C_bc_skn)">
+        <Paths>
+          <Path path="0" as="1" dim="2" />
+          <Path path="3" as="4" dim="2" />
+          <Path path="5" as="6" dim="2" />
+          <Path path="7" as="8" dim="2" />
+          <Path path="9" as="10" dim="2" />
+          <Path path="109" as="110" dim="2" />
+          <Path path="111" as="112" dim="2" />
+          <Path path="113" as="114" dim="2" />
+          <Path path="115" as="116" dim="2" />
+          <Path path="117" as="118" dim="2" />
+          <Path path="11" as="12" dim="13" />
+          <Path path="14" as="15" dim="13" />
+          <Path path="16" as="17" dim="13" />
+          <Path path="18" as="19" dim="13" />
+          <Path path="20" as="21" dim="13" />
+          <Path path="229" as="230" />
+        </Paths>
+      </Formula>
+      <Formula id="Oqearo8hHUSjUDMnRgFNoA" name="FractionObserver" dim="Fraction" formula="TotalDrugMass&gt;0 ? M/TotalDrugMass : 0">
+        <Paths>
+          <Path path="231" as="232" dim="31" />
+          <Path path="233" as="234" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="AkiQ7n5lSU6Fi9EYmnECaQ" name="FractionObserver" dim="Fraction" formula="TotalDrugMass&gt;0 ? M/TotalDrugMass : 0">
+        <Paths>
+          <Path path="231" as="232" dim="31" />
+          <Path path="233" as="234" dim="31" />
+        </Paths>
+      </Formula>
+      <Formula id="aHUliIoIGUmGqq5ta6yVdw" name="FractionObserver" dim="Fraction" formula="TotalDrugMass&gt;0 ? M/TotalDrugMass : 0">
+        <Paths>
+          <Path path="231" as="232" dim="31" />
+          <Path path="233" as="234" dim="31" />
+        </Paths>
+      </Formula>
+    </Formulas>
+    <StringMap>
+      <Map s="Organism|ArterialBlood|BloodCells|MOLECULE|Concentration" id="0" />
+      <Map s="C_bc_art" id="1" />
+      <Map s="Concentration (molar)" id="2" />
+      <Map s="Organism|Bone|BloodCells|MOLECULE|Concentration" id="3" />
+      <Map s="C_bc_bon" id="4" />
+      <Map s="Organism|Fat|BloodCells|MOLECULE|Concentration" id="5" />
+      <Map s="C_bc_fat" id="6" />
+      <Map s="Organism|Muscle|BloodCells|MOLECULE|Concentration" id="7" />
+      <Map s="C_bc_mus" id="8" />
+      <Map s="Organism|Skin|BloodCells|MOLECULE|Concentration" id="9" />
+      <Map s="C_bc_skn" id="10" />
+      <Map s="Organism|ArterialBlood|Peripheral blood flow fraction" id="11" />
+      <Map s="fQ_art" id="12" />
+      <Map s="Fraction" id="13" />
+      <Map s="Organism|Bone|Peripheral blood flow fraction" id="14" />
+      <Map s="fQ_bon" id="15" />
+      <Map s="Organism|Fat|Peripheral blood flow fraction" id="16" />
+      <Map s="fQ_fat" id="17" />
+      <Map s="Organism|Muscle|Peripheral blood flow fraction" id="18" />
+      <Map s="fQ_mus" id="19" />
+      <Map s="Organism|Skin|Peripheral blood flow fraction" id="20" />
+      <Map s="fQ_skn" id="21" />
+      <Map s="..|Concentration" id="22" />
+      <Map s="Concentration" id="23" />
+      <Map s="Organism|Liver|Pericentral|BloodCells|Volume" id="24" />
+      <Map s="V_bc_prc" id="25" />
+      <Map s="Volume" id="26" />
+      <Map s="Organism|Liver|Periportal|BloodCells|Volume" id="27" />
+      <Map s="V_bc_prp" id="28" />
+      <Map s="Organism|Liver|Pericentral|BloodCells|MOLECULE" id="29" />
+      <Map s="M_bc_prc" id="30" />
+      <Map s="Amount" id="31" />
+      <Map s="Organism|Liver|Periportal|BloodCells|MOLECULE" id="32" />
+      <Map s="M_bc_prp" id="33" />
+      <Map s="Organism|Liver|Pericentral|Interstitial|Volume" id="34" />
+      <Map s="V_int_prc" id="35" />
+      <Map s="Organism|Liver|Periportal|Interstitial|Volume" id="36" />
+      <Map s="V_int_prp" id="37" />
+      <Map s="Organism|Liver|Pericentral|Interstitial|MOLECULE" id="38" />
+      <Map s="M_int_prc" id="39" />
+      <Map s="Organism|Liver|Periportal|Interstitial|MOLECULE" id="40" />
+      <Map s="M_int_prp" id="41" />
+      <Map s="Organism|Liver|Pericentral|Intracellular|Volume" id="42" />
+      <Map s="V_cell_prc" id="43" />
+      <Map s="Organism|Liver|Periportal|Intracellular|Volume" id="44" />
+      <Map s="V_cell_prp" id="45" />
+      <Map s="Organism|Liver|Pericentral|Intracellular|MOLECULE" id="46" />
+      <Map s="M_cell_prc" id="47" />
+      <Map s="Organism|Liver|Periportal|Intracellular|MOLECULE" id="48" />
+      <Map s="M_cell_prp" id="49" />
+      <Map s="Organism|Liver|Pericentral|Plasma|Volume" id="50" />
+      <Map s="V_pls_prc" id="51" />
+      <Map s="Organism|Liver|Periportal|Plasma|Volume" id="52" />
+      <Map s="V_pls_prp" id="53" />
+      <Map s="Organism|Liver|Pericentral|Plasma|MOLECULE" id="54" />
+      <Map s="M_pls_prc" id="55" />
+      <Map s="Organism|Liver|Periportal|Plasma|MOLECULE" id="56" />
+      <Map s="M_pls_prp" id="57" />
+      <Map s="..|Effective concentration in lumen" id="58" />
+      <Map s="EffectiveLumenConcentration" id="59" />
+      <Map s="Organism|Lumen|Caecum|MOLECULE" id="60" />
+      <Map s="M_cae" id="61" />
+      <Map s="Organism|Lumen|ColonAscendens|MOLECULE" id="62" />
+      <Map s="M_colasc" id="63" />
+      <Map s="Organism|Lumen|ColonDescendens|MOLECULE" id="64" />
+      <Map s="M_coldesc" id="65" />
+      <Map s="Organism|Lumen|ColonSigmoid|MOLECULE" id="66" />
+      <Map s="M_colsigm" id="67" />
+      <Map s="Organism|Lumen|ColonTransversum|MOLECULE" id="68" />
+      <Map s="M_coltrans" id="69" />
+      <Map s="Organism|Lumen|Duodenum|MOLECULE" id="70" />
+      <Map s="M_duo" id="71" />
+      <Map s="Organism|Lumen|Feces|MOLECULE" id="72" />
+      <Map s="M_fec" id="73" />
+      <Map s="Organism|Lumen|LowerIleum|MOLECULE" id="74" />
+      <Map s="M_lil" id="75" />
+      <Map s="Organism|Lumen|LowerJejunum|MOLECULE" id="76" />
+      <Map s="M_lje" id="77" />
+      <Map s="Organism|Lumen|Rectum|MOLECULE" id="78" />
+      <Map s="M_rect" id="79" />
+      <Map s="Organism|Lumen|Stomach|MOLECULE" id="80" />
+      <Map s="M_sto" id="81" />
+      <Map s="Organism|Lumen|UpperIleum|MOLECULE" id="82" />
+      <Map s="M_uil" id="83" />
+      <Map s="Organism|Lumen|UpperJejunum|MOLECULE" id="84" />
+      <Map s="M_uje" id="85" />
+      <Map s="Neighborhoods|Lumen_sto_Lumen_duo|MOLECULE|Oral mass absorbed" id="86" />
+      <Map s="Mabs_Mucosa" id="87" />
+      <Map s="MOLECULE|Total oral drug mass" id="88" />
+      <Map s="TotalOralDrugMass" id="89" />
+      <Map s="MassAbsorbed" id="90" />
+      <Map s="OralDrugMass" id="91" />
+      <Map s="..|Oral mass absorbed segment" id="92" />
+      <Map s="..|..|Interstitial|MOLECULE|Concentration" id="93" />
+      <Map s="C_int" id="94" />
+      <Map s="..|..|Interstitial|MOLECULE|Partition coefficient (water/container)" id="95" />
+      <Map s="K_water_int" id="96" />
+      <Map s="Organism|Liver|Pericentral|Interstitial|MOLECULE|Partition coefficient (water/container)" id="97" />
+      <Map s="K_water_int_prc" id="98" />
+      <Map s="Organism|Liver|Periportal|Interstitial|MOLECULE|Partition coefficient (water/container)" id="99" />
+      <Map s="K_water_int_prp" id="100" />
+      <Map s="..|..|Intracellular|MOLECULE|Concentration" id="101" />
+      <Map s="C_cell" id="102" />
+      <Map s="..|..|Intracellular|MOLECULE|Partition coefficient (water/container)" id="103" />
+      <Map s="K_water_cell" id="104" />
+      <Map s="Organism|Liver|Pericentral|Intracellular|MOLECULE|Partition coefficient (water/container)" id="105" />
+      <Map s="K_water_cell_prc" id="106" />
+      <Map s="Organism|Liver|Periportal|Intracellular|MOLECULE|Partition coefficient (water/container)" id="107" />
+      <Map s="K_water_cell_prp" id="108" />
+      <Map s="Organism|ArterialBlood|Plasma|MOLECULE|Concentration" id="109" />
+      <Map s="C_pls_art" id="110" />
+      <Map s="Organism|Bone|Plasma|MOLECULE|Concentration" id="111" />
+      <Map s="C_pls_bon" id="112" />
+      <Map s="Organism|Fat|Plasma|MOLECULE|Concentration" id="113" />
+      <Map s="C_pls_fat" id="114" />
+      <Map s="Organism|Muscle|Plasma|MOLECULE|Concentration" id="115" />
+      <Map s="C_pls_mus" id="116" />
+      <Map s="Organism|Skin|Plasma|MOLECULE|Concentration" id="117" />
+      <Map s="C_pls_skn" id="118" />
+      <Map s="C_pls" id="119" />
+      <Map s="MOLECULE|Fraction unbound (plasma)" id="120" />
+      <Map s="fu" id="121" />
+      <Map s="..|..|Fraction interstitial" id="122" />
+      <Map s="f_int" id="123" />
+      <Map s="..|..|Fraction intracellular" id="124" />
+      <Map s="f_cell" id="125" />
+      <Map s="Organism|LargeIntestine|Interstitial|Volume" id="126" />
+      <Map s="V_int" id="127" />
+      <Map s="Organism|LargeIntestine|Mucosa|Caecum|Interstitial|Volume" id="128" />
+      <Map s="V_int_cae" id="129" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|Volume" id="130" />
+      <Map s="V_int_colasc" id="131" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|Volume" id="132" />
+      <Map s="V_int_coldesc" id="133" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|Volume" id="134" />
+      <Map s="V_int_colsigm" id="135" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|Volume" id="136" />
+      <Map s="V_int_coltrans" id="137" />
+      <Map s="Organism|LargeIntestine|Mucosa|Rectum|Interstitial|Volume" id="138" />
+      <Map s="V_int_rect" id="139" />
+      <Map s="Organism|LargeIntestine|Intracellular|Volume" id="140" />
+      <Map s="V_cell" id="141" />
+      <Map s="Organism|LargeIntestine|Mucosa|Caecum|Intracellular|Volume" id="142" />
+      <Map s="V_cell_cae" id="143" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|Volume" id="144" />
+      <Map s="V_cell_colasc" id="145" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|Volume" id="146" />
+      <Map s="V_cell_coldesc" id="147" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|Volume" id="148" />
+      <Map s="V_cell_colsigm" id="149" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|Volume" id="150" />
+      <Map s="V_cell_coltrans" id="151" />
+      <Map s="Organism|LargeIntestine|Mucosa|Rectum|Intracellular|Volume" id="152" />
+      <Map s="V_cell_rect" id="153" />
+      <Map s="Organism|LargeIntestine|Intracellular|MOLECULE" id="154" />
+      <Map s="M_cell" id="155" />
+      <Map s="Organism|LargeIntestine|Mucosa|Caecum|Intracellular|MOLECULE" id="156" />
+      <Map s="M_cell_cae" id="157" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|MOLECULE" id="158" />
+      <Map s="M_cell_colasc" id="159" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|MOLECULE" id="160" />
+      <Map s="M_cell_coldesc" id="161" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|MOLECULE" id="162" />
+      <Map s="M_cell_colsigm" id="163" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|MOLECULE" id="164" />
+      <Map s="M_cell_coltrans" id="165" />
+      <Map s="Organism|LargeIntestine|Mucosa|Rectum|Intracellular|MOLECULE" id="166" />
+      <Map s="M_cell_rect" id="167" />
+      <Map s="Organism|LargeIntestine|Interstitial|MOLECULE" id="168" />
+      <Map s="M_int" id="169" />
+      <Map s="Organism|LargeIntestine|Mucosa|Caecum|Interstitial|MOLECULE" id="170" />
+      <Map s="M_int_cae" id="171" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|MOLECULE" id="172" />
+      <Map s="M_int_colasc" id="173" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|MOLECULE" id="174" />
+      <Map s="M_int_coldesc" id="175" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|MOLECULE" id="176" />
+      <Map s="M_int_colsigm" id="177" />
+      <Map s="Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|MOLECULE" id="178" />
+      <Map s="M_int_coltrans" id="179" />
+      <Map s="Organism|LargeIntestine|Mucosa|Rectum|Interstitial|MOLECULE" id="180" />
+      <Map s="M_int_rect" id="181" />
+      <Map s="Organism|SmallIntestine|Interstitial|Volume" id="182" />
+      <Map s="Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|Volume" id="183" />
+      <Map s="V_int_duo" id="184" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|Volume" id="185" />
+      <Map s="V_int_lil" id="186" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|Volume" id="187" />
+      <Map s="V_int_lje" id="188" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|Volume" id="189" />
+      <Map s="V_int_uil" id="190" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|Volume" id="191" />
+      <Map s="V_int_uje" id="192" />
+      <Map s="Organism|SmallIntestine|Intracellular|Volume" id="193" />
+      <Map s="Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|Volume" id="194" />
+      <Map s="V_cell_duo" id="195" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|Volume" id="196" />
+      <Map s="V_cell_lil" id="197" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|Volume" id="198" />
+      <Map s="V_cell_lje" id="199" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|Volume" id="200" />
+      <Map s="V_cell_uil" id="201" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|Volume" id="202" />
+      <Map s="V_cell_uje" id="203" />
+      <Map s="Organism|SmallIntestine|Intracellular|MOLECULE" id="204" />
+      <Map s="Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|MOLECULE" id="205" />
+      <Map s="M_cell_duo" id="206" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|MOLECULE" id="207" />
+      <Map s="M_cell_lil" id="208" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|MOLECULE" id="209" />
+      <Map s="M_cell_lje" id="210" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|MOLECULE" id="211" />
+      <Map s="M_cell_uil" id="212" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|MOLECULE" id="213" />
+      <Map s="M_cell_uje" id="214" />
+      <Map s="Organism|SmallIntestine|Interstitial|MOLECULE" id="215" />
+      <Map s="Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|MOLECULE" id="216" />
+      <Map s="M_int_duo" id="217" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|MOLECULE" id="218" />
+      <Map s="M_int_lil" id="219" />
+      <Map s="Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|MOLECULE" id="220" />
+      <Map s="M_int_lje" id="221" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|MOLECULE" id="222" />
+      <Map s="M_int_uil" id="223" />
+      <Map s="Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|MOLECULE" id="224" />
+      <Map s="M_int_uje" id="225" />
+      <Map s="..|..|BloodCells|MOLECULE|Concentration" id="226" />
+      <Map s="C_bc" id="227" />
+      <Map s="..|..|Plasma|MOLECULE|Concentration" id="228" />
+      <Map s="Organism|Hematocrit" id="229" />
+      <Map s="HCT" id="230" />
+      <Map s=".." id="231" />
+      <Map s="M" id="232" />
+      <Map s="MOLECULE|Total drug mass" id="233" />
+      <Map s="TotalDrugMass" id="234" />
+    </StringMap>
+  </FormulaCache>
+</ObserverBuildingBlock>

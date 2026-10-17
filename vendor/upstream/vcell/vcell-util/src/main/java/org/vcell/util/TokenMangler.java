@@ -1,0 +1,595 @@
+/*
+ * Copyright (C) 1999-2011 University of Connecticut Health Center
+ *
+ * Licensed under the MIT License (the "License").
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/mit-license.php
+ */
+
+package org.vcell.util;
+
+import org.vcell.util.xml.XmlChars;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+
+
+/**
+ * This type was created in VisualAge.
+ */
+public class TokenMangler {
+
+/**
+ * The characters an identifier may be built from, as defined by the expression grammar in
+ * vcell-math/src/main/java/cbit/vcell/parser/Parser.jjt:
+ * <pre>
+ *   &lt;#ID:     &lt;LETTER&gt; (&lt;LETTER&gt;|&lt;DIGIT&gt;)* &gt;
+ *   &lt;#LETTER: ["a"-"z", "_", "A"-"Z"] &gt;
+ *   &lt;#DIGIT:  ["0"-"9"] &gt;
+ * </pre>
+ * Deliberately ASCII-only, and therefore <b>narrower</b> than
+ * {@link Character#isJavaIdentifierPart(char)}, which accepts any Unicode letter. Validating
+ * names with the Java predicates let names such as PROTE&Iacute;NA_A be accepted at entry and
+ * then fail to parse during math generation, leaving the application with no generated math
+ * (issue #2062). Any name that has to survive a round trip through cbit.vcell.parser.Expression
+ * must be checked here rather than with Character.isJavaIdentifier*.
+ */
+private static boolean isIdentifierStart(char c) {
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+}
+
+private static boolean isIdentifierPart(char c) {
+	return isIdentifierStart(c) || (c >= '0' && c <= '9');
+}
+
+/**
+ * @return true if name is a legal expression identifier: non-empty, starting with an ASCII
+ * letter or '_', and otherwise containing only ASCII letters, digits and '_'.
+ */
+public static boolean isValidExpressionIdentifier(String name) {
+	return name != null && name.length() > 0 && indexOfFirstIllegalIdentifierChar(name) < 0;
+}
+
+/**
+ * @return the index of the first character of name that may not appear at that position in an
+ * expression identifier, or -1 if name is a legal identifier. A digit is legal everywhere except
+ * at index 0, so the position matters and not just the character. Used to tell the user which
+ * character to remove.
+ */
+public static int indexOfFirstIllegalIdentifierChar(String name) {
+	if (name == null || name.length() == 0){
+		return -1;
+	}
+	if (!isIdentifierStart(name.charAt(0))){
+		return 0;
+	}
+	for (int i = 1; i < name.length(); i++){
+		if (!isIdentifierPart(name.charAt(i))){
+			return i;
+		}
+	}
+	return -1;
+}
+
+/** Human-readable statement of the identifier rule, for veto and validation messages. */
+public static final String IDENTIFIER_RULE_DESCRIPTION =
+	"it may contain only the letters a-z and A-Z, the digits 0-9 and '_', and may not start with a digit";
+
+	/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String fixToken(String name) {
+	if (name==null){ 
+		return "";
+	}
+	String string = name.trim();
+	if (string.equals(".")){
+		return "";
+	}
+	StringBuilder newString = new StringBuilder(string);
+	// ASCII-only, to match the expression grammar. Character.isJavaIdentifier* would let
+	// accented and other non-ASCII letters through unmangled, yielding a token that does not
+	// parse - see isValidExpressionIdentifier.
+	if (isIdentifierStart(newString.charAt(0))==false){
+		newString.insert(0,'_');
+	}
+	for (int i=1;i<newString.length();i++){
+		if (isIdentifierPart(newString.charAt(i))==false){
+			newString.setCharAt(i,'_');
+		}
+	}
+	return newString.toString();
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String fixTokenStrict(String name) {
+	return fixTokenStrict(name,0);
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String fixTokenStrict(String name, int maxLength) {
+	if (name == null) {
+		return ""; 
+	}
+	String string = name.trim();
+	if (string.length() == 0){ 
+		return string;
+	}
+	StringBuilder newString = new StringBuilder(string);
+	char charAt0 = newString.charAt(0);
+	// ASCII-only - see the note in fixToken(String).
+	if (!isIdentifierStart(charAt0)){
+		newString.insert(0,'_');
+	}
+	for (int i=1;i<newString.length();i++){
+		char charAtI = newString.charAt(i);
+		if (!isIdentifierPart(charAtI)){
+			newString.setCharAt(i,'_');
+		}
+	}
+	String token = newString.toString();
+	if (maxLength>0 && token.length()>maxLength){
+		token = token.substring(0,maxLength);
+	}
+	return token;
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getChildSummaryElementEscapedString(String inputString) {
+	//
+	//Guarantees there will be no unescaped '\n' characters in return
+	//
+	if(inputString == null || inputString.length() == 0){
+		return "";
+	}
+	StringBuilder buffer = new StringBuilder();
+
+	for (int i=0;i<inputString.length();i++){
+		char currChar = inputString.charAt(i);
+		switch (currChar){
+			case '\n':
+					buffer.append("&#010;");
+					break;
+			default:
+					buffer.append(currChar);
+					break;
+		}
+	}
+	return buffer.toString();
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getChildSummaryElementRestoredString(String inputString) {
+
+	String[] escapeSeq = {"&#010;"};
+	char[] escapedChar = {'\n'};
+	
+	return getRestoredString(inputString, escapeSeq, escapedChar);
+}
+
+
+/**
+ * @return java.lang.String
+ */
+public static String getEscapedString(String inputString) {
+	if (inputString == null){
+		throw new IllegalArgumentException("input string is null");
+	}
+	StringBuilder buffer = new StringBuilder(inputString.length()*2);
+
+	for (int i=0;i<inputString.length();i++){
+		char currChar = inputString.charAt(i);
+		switch (currChar){
+			case '<':
+					buffer.append("&lt;");
+					break;
+			case '>':
+					buffer.append("&gt;");
+					break;
+			case '&':
+					buffer.append("&amp;");
+					break;
+			case '\'':
+					buffer.append("&apos;");
+					break;
+			case '"':
+					buffer.append("&quot;");
+					break;
+			case '\t':
+					buffer.append("&#09;");
+					break;
+			case '\n':
+					buffer.append("&#10;");
+					break;
+			case '\r':
+					buffer.append("&#13;");
+					break;
+			default:
+					buffer.append(currChar);
+					break;
+		}
+	}
+	return buffer.toString();
+}
+
+/**
+ * replace instances of \ with \\
+ * @param inputString java.lang.String
+ */
+public static String getEscapedString_C(String inputString) {
+	// escape '\'
+	StringBuilder sb = new StringBuilder();
+	for (int i = 0;i < inputString.length(); i ++){
+		if (inputString.charAt(i) == '\\'){
+			sb.append(inputString.charAt(i));
+			sb.append(inputString.charAt(i));
+		} else{
+			sb.append(inputString.charAt(i));
+		}
+	}
+
+	return sb.toString();
+}
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getNextEnumeratedToken(String originalToken) {
+	
+	if (originalToken == null){
+		return null;
+	}
+	//
+	// form baseName deleting trailing numerals
+	//
+	String baseName = originalToken;
+	while (true) {
+		int length = baseName.length();
+		if (length > 0 && Character.isDigit(baseName.charAt(length - 1))) {
+			baseName = baseName.substring(0,length-1);
+		}else{
+			break;
+		}
+	}
+	//
+	// get string of remaining characters (digits)
+	//
+	String digits = "0";  // default
+	if (baseName.length()<originalToken.length()){
+		digits = originalToken.substring(baseName.length(),originalToken.length());
+	}
+	int count = Integer.parseInt(digits);
+//	System.out.println("original = '"+originalToken+"', baseName = '"+baseName+"', digits = '"+digits+"', count = "+count);
+	return baseName + (count+1);
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getNextRandomToken(String originalToken) {
+	
+	if (originalToken == null){
+		return null;
+	}
+	//
+	// form baseName deleting trailing numerals
+	//
+	String baseName = originalToken;
+	while (true) {
+		int length = baseName.length();
+		if (length > 0 && Character.isDigit(baseName.charAt(length - 1))) {
+			baseName = baseName.substring(0,length-1);
+		}else{
+			break;
+		}
+	}
+	//
+	// create new random number to append
+	//
+	int randomInt = (int)(Math.abs(Math.random()*Integer.MAX_VALUE));
+	String newToken = baseName+randomInt;
+	//System.out.println("original = '"+originalToken+"', baseName = '"+baseName+"', newName="+newToken);
+	return newToken;
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getRestoredString(String inputString) {
+
+	String[] escapeSeq =    {"&lt;","&gt;","&amp;","&apos;","&quot;","&#09;","&#10;","&#13;"};
+	char[]   escapedChar =  {'<'   ,'>'   ,'&'    ,'\''    ,'"'     ,'\t'   ,'\n'   ,'\r'};
+	
+	return getRestoredString(inputString, escapeSeq, escapedChar);
+}
+
+
+/**
+ * 
+ * @param inputString; may not be null
+ * @param escapeSeq sequences to look for; may not be null
+ * @param escapedChar replacements for sequences; may not be null
+ * @return string with substitutions made 
+ */
+public static String getRestoredString(String inputString, String[] escapeSeq, char[] escapedChar) {
+
+	if (inputString == null){
+		throw new IllegalArgumentException("TokenMangler.getRestoredString(), input string is null");
+	}
+
+	boolean bChanged = true;
+	while (bChanged){
+		bChanged = false;
+		for (int i = 0; i < escapeSeq.length; i ++){
+			int replaceIndex = inputString.indexOf(escapeSeq[i]);
+			if (replaceIndex != -1){
+				if (replaceIndex == 0){
+					inputString = escapedChar[i] + inputString.substring(escapeSeq[i].length(),inputString.length());
+				}else if (replaceIndex == inputString.length() - escapeSeq[i].length()){
+					inputString = inputString.substring(0,replaceIndex) + escapedChar[i];
+				}else{
+					inputString = inputString.substring(0,replaceIndex) + escapedChar[i] +
+									inputString.substring(replaceIndex + escapeSeq[i].length(),inputString.length());
+				}
+				bChanged = true;
+			}
+		}
+	}
+	return inputString;
+}
+
+
+/**
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String getSQLEscapedString(String inputString) {
+	return getSQLEscapedString(inputString,0);
+}
+
+
+/**
+ * @param maxLength maximum return length
+ * replace single quotes with &apos;
+ * @return String truncated if necessary 
+ */
+public static String getSQLEscapedString(String inputString, int maxLength) {
+	StringBuilder buffer = new StringBuilder(inputString.length()*2);
+
+	for (int i=0;i<inputString.length();i++){
+		char currChar = inputString.charAt(i);
+		switch (currChar){
+			case '\'':
+					buffer.append("&apos;");
+					break;
+			default:
+					buffer.append(currChar);
+					break;
+		}
+	}
+	if (maxLength<=0){
+		return buffer.toString();
+	}else{
+		return buffer.substring(0,Math.min(maxLength,buffer.length()));
+	}
+}
+
+
+/**
+ * replace single quotes with &apos;
+ */
+public static String getSQLRestoredString(String inputString) {
+
+	String escapeSeq[] = {"&apos;"};
+	char escapedChar[] = {'\''};
+	
+	return getRestoredString(inputString, escapeSeq, escapedChar);
+}
+
+
+/**
+ * This method should ensure to return a string compliant to:
+ *  letter ::= 'a'..'z','A'..'Z'
+ *  digit  ::= '0'..'9'
+ *  SName  ::= { '_' } letter { letter | '_' | digit
+ *
+ * this is for SBML level 1
+ *
+ *
+ * 11/23/2022 dan: switching to SBML level 2 and up specifications
+ *
+ *  letter ::= 'a'..'z','A'..'Z'
+ *  digit  ::= '0'..'9'
+ *  idChar ::= letter | digit | '_'
+ *  SId ::= ( letter | '_' ) idChar*
+ *
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String mangleToSName(String name) {
+	//Check is not null or empty
+	if (name==null || name.length()==0){ 
+		return "";
+	}
+	//remove extra spaces
+	String string = name.trim();
+	//
+	StringBuilder newString = new StringBuilder(string);
+	//Replace any character which is not a {letter, number, '_'} with an '_'.
+	for (int i=0;i<newString.length();i++){
+		if (!Character.isLetterOrDigit(newString.charAt(i)) && newString.charAt(i)!='_'){
+			newString.setCharAt(i,'_');
+		}
+	}
+	//If the first character is a letter just return
+	if (Character.isLetter(newString.charAt(0))) {
+		return (newString.toString());
+	}
+	//If the first character is a numeral prepend an underscore.
+	if (Character.isDigit(newString.charAt(0))) {
+		return "_"+newString;
+	}
+	return newString.toString();
+}
+
+
+/**
+ * Insert the method's description here.
+ * Creation date: (9/7/2004 2:52:38 PM)
+ * @return java.lang.String
+ * @param origString java.lang.String
+ * @param targetSubstring java.lang.String
+ * @param newSubstring java.lang.String
+ */
+public static String replaceSubString(String origString, String targetSubstring, String newSubstring) {
+	if (origString == null || targetSubstring == null || newSubstring == null){
+		throw new IllegalArgumentException("input string is null");
+	}
+	if ( targetSubstring.equals("") ) {
+		throw new IllegalArgumentException("targetSubstring must have content.");
+	}
+
+	if (targetSubstring.equals(newSubstring)) {
+		return origString;
+	}
+
+	if (newSubstring.indexOf(targetSubstring) >= 0) {
+		throw new IllegalArgumentException("targetSubstring is a substring of newSubstring");
+	}
+	
+	StringBuilder buffer = new StringBuilder(origString);
+	boolean bDone = false;
+	while (!bDone){
+		bDone = true;
+		int startIndex = buffer.toString().indexOf(targetSubstring);
+		if (startIndex > -1){
+			buffer.replace(startIndex,(startIndex+targetSubstring.length()),newSubstring);
+			bDone = false;
+		}
+	}
+	return buffer.toString();
+}
+
+public static void checkLoginID(String loginID) throws IllegalArgumentException {	
+	if (loginID == null){
+		throw new IllegalArgumentException("Login ID must not be empty");
+	} 
+	for (int i = 0; i < loginID.length(); i ++) {
+		char ch = loginID.charAt(i);
+		if (!Character.isDigit(ch) && !Character.isLetter(ch) && ch != '.' && ch != '-' && ch != '_') {
+			throw new IllegalArgumentException("Login ID contains illegal character '" + ch + "' at position " + i + ". Login ID can contain only letters, numbers, periods (.), hyphens (-), and underscores (_). " 
+					+ "Special characters or accented letters are not allowed. Please type a different Login ID.");
+		}
+	}	
+}
+
+/**
+ * 
+ * @param source
+ * @param owner
+ * @param evt may not be null
+ * @throws PropertyVetoException
+ */
+public static void checkNameProperty(Object source, String owner, PropertyChangeEvent evt) throws PropertyVetoException {
+	if (evt.getSource() == source && evt.getPropertyName().equals("name") && evt.getNewValue()!=null){
+		String newName = (String) evt.getNewValue();
+		if (newName.trim().length()==0){
+			throw new PropertyVetoException("A name must be given to save " + owner + "s", evt);
+		}
+		try {
+			// allow whitespace (entity names like BioModel may contain spaces)
+			// but reject control characters and U+FFFD
+			XmlChars.requireValidAttributeContent(newName, owner + ".name");
+		} catch (IllegalArgumentException ex) {
+			throw new PropertyVetoException(ex.getMessage(), evt);
+		}
+	}
+}
+
+/**
+ * add double quotes to ends of string if it contains a space
+ * @param pathname  (may not be null)
+ * @return original string or new double quote terminated one
+ */
+public static String getEscapedPathName(String pathname) {
+	String escapedPathName = pathname;
+	if (pathname.indexOf(' ') > 0) {
+		escapedPathName = "\"" + pathname + "\"";
+	}
+	return escapedPathName;
+}
+
+
+/**
+ * This method is only for VCID used in VCMetaData. The vcid for entities is represented as EntityType(Entity name); for example:
+ * 		Biomodel(newBiomodel). Sometimes, the entity names can have parantheses in their names, which can be a problem while 
+ * 		parsing VCId. So replace all occurrences of  '(' with '&lpar;' & ')' with '&rpar;' in the entity name before creating VCId.
+ *
+ *
+ * This method was created in VisualAge.
+ * @return java.lang.String
+ */
+public static String mangleVCId(String name) {
+	//Check is not null or empty
+	if (name==null){ 
+		throw new IllegalArgumentException("TokenMangler.mangleVCId(), input string is null");
+	}
+	StringBuilder buffer = new StringBuilder();
+
+	for (int i = 0; i < name.length(); i ++){
+		char currChar = name.charAt(i);
+		switch (currChar){
+			case '(':
+				buffer.append("&lpar;");
+				break;
+			case ')':
+				buffer.append("&rpar;");
+				break;
+			case '\'':
+				buffer.append("&apos;");
+				break;
+			case '"':
+				buffer.append("&quot;");
+				break;
+			default:
+				buffer.append(currChar);
+				break;
+		}
+	}
+
+	return buffer.toString();
+}
+
+public static String unmangleVCId(String name) {
+	String[] escapeSeq =    {"&lpar;","&rpar;", "&apos;", "&quot;"};
+	char[]   escapedChar =  {'(', ')', '\'', '"'};
+
+	
+	return getRestoredString(name, escapeSeq, escapedChar);
+}
+
+}

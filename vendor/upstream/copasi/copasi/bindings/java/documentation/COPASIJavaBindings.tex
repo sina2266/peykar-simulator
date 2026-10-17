@@ -1,0 +1,1548 @@
+\documentclass[a4,10pt]{article}
+\usepackage[latin1]{inputenc}
+%%\usepackage[english]{babel}
+\usepackage[usenames]{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{tabularx}
+
+\begin{document}
+\lstset{ %
+language=Java,                   % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+keywordstyle=\color{black}\bfseries, % print keywords bold  
+commentstyle=\color{blue},      % blue comments 
+stringstyle=\ttfamily,          % typewriter type for strings 
+showstringspaces=false,         % underline spaces within strings
+numbers=left,                   % where to put the line-numbers
+numberstyle=\tiny,              % the size of the fonts that are used for the line-numbers
+stepnumber=0,                   % the step between two line-numbers. If it's 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces within strings adding particular underscores
+showtabs=false,                 % show tabs within strings adding particular underscores
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+
+% !!!TODO!!! when adding documentation for the vector classes and the
+% CCopasiParameterGroup, make sure to document that the add methods in the
+% vector classes and the addParameter method for the parameter group (might) take
+% ownership of the onjects they are passed. In python this problem can be
+% solved by calling .__disown__() on the passed object. FOr java I haven't
+% found an equivalent solution yet. According the the SWIG documentation this
+% can be achieved via typemaps.
+%
+
+\title{Documentation for the Java bindings for COPASI}
+\author{Ralph Gauges}
+\date{\today}
+\maketitle
+\parindent=0cm
+\section{Introduction}
+This document tries to give a superficial overview of the API for the JAVA bindings of COPASI. This documentation is in no way meant to give a complete reference to the API. It is only intended to give the programmer that wants to use the JAVA bindings an overview of the classes and some examples on how certain things can be done.
+The JAVA bindings expose parts of the underlying C++ API and so far no attempt has been made to simplify the API to better fit the target language or to make it easier for the programmer. All there is so far is a way to use COPASIs classes and methods from JAVA.
+
+\section{Working with the model}
+\subsection{COPASIs Model Concept}
+In COPASI, the top level class in the backend is \textit{CDataModel}. This class contains the actual model as well as the tasks, the function database and all the output definitions (plots and reports). Right now, this class defines one global static instance of itself and many methods in COPASIs backend rely on and work with this instance. Creating a second instance  of \textit{CDataModel} therefore does not make much sense and will most likely lead to crashes sooner or later. If you work with the COPASI bindings, you are restricted to this one global instance which means that working with more than one model at any given time on one machine is not possible right now.
+\textit{CDataModel} provides the static method \textit{getGlobal()} to get the global static instance of \textit{CDataModel}.
+
+\begin{lstlisting}
+CDataModel globalModel=CDataModel.getGlobal();
+\end{lstlisting}
+
+\textit{CDataModel} contains the actual model which can be obtained with the method \textit{getModel()}, the defined tasks which can be obtained with the method \textit{getTaskList()}, the reports which are obtained via the method \textit{getReportDefinitionList()} and the function database which can be obtained with the \textit{getFunctionList()}.
+In addition to these methods \textit{CDataModel} provides some methods for loading COPASI files or importing SBML files, for saving COPASI files or exporting SBML files, for creating new models and for adding tasks to the task list.
+
+\subsection{Model Elements}
+The class in COPASI that contains the actual model data is \textit{CModel}. The current model can be obtained from the global static instance of \textit{CDataModel} via the \textit{getModel()} method. To create a new empty model, \textit{CDataModel} provides the method \textit{newModel()}. There is also the method \textit{loadModel(String filename)} which loads a COPASI model from the given filename, the method \textit{importSBML(String filename)} which imports an SBML model from the file with the given name and last but not least the method \textit{importSBMLFromString(String sbmlModelText)} which imports an SBML model from the given string. The string must be a valid SBML model string. All three methods return a boolean value which is \textbf{true} if the method succeeded and \textbf{false} otherwise.
+
+Once the model has been obtained, it can be manipulated in many ways. New model elements like compartments, metabolites, reactions and/or global parameters can be created, modified or removed. The model also has some methods to manipulate the time-, volume- and substance units of the model. Unlike SBML, models in COPASI only have global units and the units of all elements of the model are made up of these global units. Units on individual elements are not supported.
+
+To find out how many compartments, metabolites, reactions or global parameters (model values) a model has, \textit{CModel} has the following methods.
+
+\begin{lstlisting}
+// return the number of compartments in the model
+long getNumCompartments(); 
+// return the number of metabolites in the model
+long getNumMetabs(); 
+// return the number of global parameters in the model
+long getNumModelValues();
+// return the number of reactions in the model
+long getNumReactions(); 
+\end{lstlisting}
+
+To obtain a specific model element there are the following methods:
+
+\begin{lstlisting}
+CCompartment getCompartment(long index);
+CMetab getMetabolite(long index);
+CModelValue getModelValue(long index);
+CReaction getReaction(long index);
+\end{lstlisting}
+
+New model elements can be created with the following methods:
+
+\begin{lstlisting}
+/**
+ * Creates a new compartment with the given name 
+ * and an initial volume of 1.0 volume units.
+ * The newly created compartment is added to the model
+ * and the method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CCompartment createCompartment(String name);
+
+/**
+ * Creates a new compartment with the given name 
+ * and initial volume.
+ * The newly created compartment is added to the model
+ * and the method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CCompartment createCompartment(String name,double volume);
+
+/**
+ * Creates a new metabolite with the given name and an 
+ * initial concentration of 1.0 substance units/volume units.
+ * The metabolite is added to the compartment that is specified
+ * as the second argument.
+ * The newly created metabolite is added to the model and
+ * the method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CMetab createMetabolite(String name, String compartment);
+
+/**
+ * Creates a new metabolite with the given name and 
+ * initial concentration.
+ * The metabolite is added to the compartment that is 
+ * specified as the second argument.
+ * The newly created metabolite is added to the model and the
+ * method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CMetab createMetabolite(String name, String compartment, double iconc);
+
+/**
+ * Creates a new model value with the given name and 
+ * an initial value of 0.0.
+ * The newly created model value is added to the model
+ * and the method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CModelValue createModelValue(String name);
+
+/**
+ * Creates a new model value with the given name 
+ * and initial value.
+ * The newly created model value is added to the model
+ * and the method also returns the new instance.
+ * If the method fails, null is returned.
+ */
+CModelValue createModelValue(String name, double value);
+
+/**
+ * Creates a new reaction with the given name.
+ * The newly created reaction is added to the model and 
+ * the method also returns the reaction instance.
+ */
+CReaction createReaction(String name);
+\end{lstlisting}
+
+Naturally model elements can also be removed via their keys. Each object in COPASI which is derived from \textit{CDataObject} gets a unique id when it is created which in COPASI is called key. To get the key for such an object, \textit{CDataObject} provides the method \textit{getKey()}.
+\textit{CModel}, \textit{CCompartment}, \textit{CMetab}, \textit{CModelValue} and \textit{CReaction} are all derived from \textit{CDataObject} and you can therefore get the key for any of them via the \textit{getKey()} method which returns the key in the form of a String.
+
+The methods to delete elements from the model are:
+
+\begin{lstlisting}
+boolean removeCompartment(String key);
+boolean removeMetabolite(String key);
+boolean removeModelValue(String key);
+boolean removeReaction(String key);
+\end{lstlisting}
+
+These methods also delete all dependent objects. So if a compartment is deleted, all metabolites in that compartment are also deleted and if those metabolites were part of reaction those reactions are deleted as well.
+
+For example, to delete the third metabolite in the model you could write the following code (provided that there are at least three metabolites in the model):
+
+\begin{lstlisting}
+CModel model=globalDataModel.getModel();
+CMetab metab=model.getMetabolite(3);
+String key=metab.getKey();
+model.removeMetabolite(key);
+\end{lstlisting}
+
+\subsubsection{CModelEntity}
+In COPASI the classes for the model itself, for compartments, metabolites and global parameters are derived from \textit{CModelEntity} and inherit all its methods.
+Most of the time, if you manipulate any of those classes, it will be done through methods from \textit{CModelEntity}.
+\textit{CModelEntity} provides the following methods:
+
+\begin{lstlisting}
+  /**
+   * Gets the status of the entity.
+   */
+  int getStatus();
+
+  /**
+   * sets the status of an entity.
+   */
+  void setStatus(int status);
+
+  /**
+   * gets the transient value of an entity.
+   */
+  double getValue();
+
+  /**
+   * Returns the initial value of an entity.
+   */
+  double getInitialValue();
+
+  /**
+   * Sets the initial value of an entity.
+   */
+  void setInitialValue(double initialValue);
+
+  /**
+   * Returns the SBML id of an entity. If none has been set,
+   * an empty string is returned.
+   */
+  String getSBMLId();
+
+  /**
+   * Sets the SBML id on an entity.
+   * This is either done on importing an SBML file,
+   * or on exporting a model.
+   * Don't mess with this since it might break further
+   * exports to SBML.
+   */
+  void setSBMLId(String id);
+
+  /**
+   * If the entity is determined by an assignment or 
+   * an ODE, this method will return the mathematical
+   * expression for the assignment or the ODE.
+   */
+  String getExpression();
+
+  /**
+   * With this method, the mathematical expression 
+   * for entities that are determined by an assignment
+   * or an ODE can be set.
+   * You might also have to set the status of the entity
+   * to indicate that it is now determined by an ODE 
+   * or an assignment. (see setStatus())
+   */
+  boolean setExpression(String expression);
+
+  /**
+   * Returns the mathematical expression for any initial 
+   * assignment that might have been set on the entity. 
+   * This is independent of the status of the entity.
+   */
+  String getInitialExpression();
+
+  /**
+   * With this method, the mathematical expression 
+   * for the initial assignment of an entity can be set.
+   */
+  boolean setInitialExpression(String expression);
+\end{lstlisting}
+
+The \textit{setStatus(int status)} and \textit{getStatus()} methods set and return the status of an entity respectively. The status of an entity determines how it is calculated. E.g. an entity that has a status of FIXED is not changed during a time course simulation, whereas an entity that has a status value of ASSIGNMENT is determined by an assignment expression. For a full list of valid status definitions see table \ref{ModelEntityStatus}.
+
+\begin{table}[ht]
+\begin{tabular}{c|l}
+state & description \\ \hline \hline
+FIXED & entity is fixed \\ \hline
+ASSIGNMENT & entity is determined by an assignment \\ \hline
+REACTIONS & entity is determined by reactions (only applicable to metabolites) \\ \hline
+ODE & entity is determined by an ode \\ \hline
+TIME & this is the only state the model itself can have \\ \hline
+\end{tabular}
+\caption{model entity status}
+\label{ModelEntityStatus}
+\end{table}
+
+\subsubsection{compartment}
+The \textit{CCompartment} class is derived from \textit{CModelEntity} and inherits all its methods. Compartments can have the status FIXED, ASSIGNMENT or ODE. And you can set the corresponding mathematical expressions for the assignment or ODE through the methods provided by \textit{CModelEntity}. You can also either set an initial value or a mathematical expression that determines the initial value of the compartment.
+In addition to the methods provided by \textit{CModelEntity}, \textit{CCompartment} provides some methods to handle the metabolites in a compartment.
+
+\begin{lstlisting}
+/**
+ * Returns a MetabVectorNS object which contains 
+ * all metabolites that are contained in the compartment.
+ * MetabVectorNS has a size method to determine the
+ * number of metabolites and a get method that takes an 
+ * index and returns the metabolite at that index.
+ */
+MetabVectorNS getMetabolites();
+
+/**
+ * Adds the given metabolite to the compartment.
+ * If the operation succeeded, true is returned, else false.
+ */
+boolean addMetabolite(CMetab metabolite);
+
+/**
+ * Removes the given metabolite from the compartment.
+ * If the operation succeeded, true is returned, else false.
+ * This method is obsolete and should no longer be used.
+ * Future versions of the bindings might not contain this method.
+ */
+boolean removeMetabolite(CMetab metabolite);
+\end{lstlisting}
+
+\subsubsection{metabolites}
+Just like the compartment class, the class for metabolites, \textit{CMetab} is derived from \textit{CModelEntity} and inherits all its methods.
+Metabolites can have the status FIXED, ASSIGNMENT, ODE or REACTIONS. And you can set the corresponding mathematical expressions for the assignment or ODE through the methods provided by \textit{CModelEntity}. You can also either set an initial value or a mathematical expression that determines the initial value of the metabolite. Using the methods from \textit{CModelEntity} to set or get values from a metabolite means that you get or set the particle number of the metabolite. If you want to work with concentrations rather than particle numbers, \textit{CMetab} provides the methods \textit{getConcentration()}, \textit{getInitialConcentration()} and \textit{setInitialConcentration(double c)} to get the concentration, initial concentration or set the initial concentration respectively. The class also provides the method \textit{getCompartment()} which returns the compartment of the metabolite.
+
+\subsubsection{model values (global parameters)}
+In COPASI global parameters are called model values and the corresponding class is \textit{CModelValue} which is also derived from \textit{CModelEntity}. A global parameter can also be determined by an assignment or an ODE or it can be fixed. Global parameters can also have initial assignments.
+
+\subsubsection{reactions}
+The class for reaction is called \textit{CReaction}. It contains information on the metabolites taking part in the reaction as substrates, products or modifiers and about the kinetic law.
+
+\begin{lstlisting}
+/**
+ * Returns the current flux of the reaction.
+ */
+double getFlux();
+
+/**
+ * Returns the current flux of the reaction in terms 
+ * of particle numbers rather than concentrations
+ */
+double getParticleFlux();
+
+/**
+ * If the reaction is reversible, this returns true, else false.
+ */
+boolean isReversible();
+
+/**
+ * Sets whether the reaction is reversible or not.
+ */
+void setReversible(boolean reversible);
+
+/**
+ * Returns the number of compartments that are involved
+ * in this reaction.
+ */
+long getCompartmentNumber();
+
+/**
+ * Returns the SBML id of the reaction if one has been set,
+ * otherwise an empty string is returned.
+ */
+String getSBMLId();
+
+/**
+ * Sets the SBML id of the reaction.
+ * This is done during import of an SBML model, or
+ * during the first export of an SBML model.
+ * If you change the SBML id of any entity, further 
+ * exports to SBML might fail.
+ */
+void setSBMLId(String id);
+
+/**
+ * Returns the chemical equation object of the reaction.
+ */
+CChemEq getChemEq();
+
+/**
+ * Returns the function for the kinetic law used in the reaction.
+ */
+CFunction getFunction();
+
+/**
+ * Sets the kinetic law of the reaction via a functions name.
+ * A function with that name must exist in the function database.
+ */
+boolean setFunction(String functionName);
+\end{lstlisting}
+
+The \textit{getFunction} method returns the function that is used as the kinetic law. In COPASI all kinetic laws are determined by function calls. Using an expression as a kinetic law is not supported. All kinetic law expressions that are imported from SBML files are first converted to function definitions with a call to that function as the kinetic law. When those models are reexported, all expressions are exported as function calls.
+There are exceptions to this rule however. If COPASI determines that a given rate law is a Mass Action rate law, no function definition is created but the Mass Action function build into COPASI is used as the kinetic law. On reexport to SBML, the kinetic law is converted to a Mass Action expression again. In the future, similar procedures might be used for other function types as for example constant flux.
+
+The chemical equation of a reaction is stored in a \textit{CChemEq} object which can be acquired from the reaction with a call to \textit{getChemEq}.
+The chemical equation object has several methods to query the properties of the chemical equation:
+
+\begin{lstlisting}
+
+/**
+ * Returns true if the chemical reaction is reversible.
+ */
+public boolean getReversibility();
+
+/**
+ * Sets whether the given chemical equation is to be reversible.
+ */
+public void setReversibility(boolean revers);
+
+/**
+ * Adds a new metabolite to the chemical equation.
+ * key is the key of the metabolite 
+ * (keys are the ids of COPASI objects)
+ * mult is the stoichiometric coefficient
+ * role is the role of the metabolite and it can be either
+ * CChemEq.PRODUCT, CChemEq.SUBSTRATE, CChemEq.MODIFIER 
+ * or CChemEq.NOROLE.
+public boolean addMetabolite(String key, double mult, int role);
+
+/**
+ * Gets a container with all the substrates of the 
+ * chemical equation.
+ * The size of the container can be queried with
+ * its size method,
+ * the element with index i can be retrieved with the
+ * get method which takes the index as the only argument.
+ */
+public CChemEqElementVector getSubstrates();
+
+/**
+ * Gets a container with all the products of the 
+ * chemical equation.
+ * The size of the container can be queried with 
+ * its size method,
+ * the element with index i can be retrieved with the
+ * get method which takes the index as the only argument.
+ */
+public CChemEqElementVector getProducts();
+
+/**
+ * Gets a container with all the modifiers of the
+ * chemical equation.
+ * The size of the container can be queried with its
+ * size method,
+ * the element with index i can be retrieved with the 
+ * get method which takes the index as the only argument.
+ */
+public CChemEqElementVector getModifiers();
+
+/**
+ * Returns the number of compartments that are 
+ * involved in this reaction.
+ * If all metabolites that are involved in the
+ * reaction are in the same compartment 1 is returned.
+ */
+public long getCompartmentNumber();
+
+/**
+ * Returns the largest compartment involved in the reaction.
+ */
+public CCompartment getLargestCompartment();
+
+/**
+ * Returns a CChemEqElement that represents the substrate
+ * with the given index.
+ */
+public CChemEqElement getSubstrate(long index);
+
+/**
+ * Returns a CChemEqElement that represents the product
+ * with the given index.
+ */
+public CChemEqElement getProduct(long index);
+
+/**
+ * Returns a CChemEqElement that represents the modifier
+ * with the given index.
+ */
+public CChemEqElement getModifier(long index);
+\end{lstlisting}
+
+The individual entities of the chemical reaction (substrates, products and modifiers) are
+represented by \textit{CChemEqElement} instances. A \textit{CChemEqElement} object stores the stoichiometric coefficient of the reaction entity  and the key of the associated \textit{CMetab} object. Those properties can be queried and manipulated with the following methods:
+
+\begin{lstlisting}
+/**
+ * Returns the stoichiometric coefficient of the element.
+ */
+public double getMultiplicity();
+
+/**
+ * Sets the stoichiometric coefficient of the element.
+ */
+public void setMultiplicity(double multiplicity);
+
+/**
+ * Returns the associated CMetab instance.
+ */
+public CMetab getMetabolite();
+
+/**
+ * Returns the key of the associated CMetab instance.
+ */
+public String getMetaboliteKey();
+
+/**
+ * Sets the associated CMetab instance via its key.
+ */
+public void setMetabolite(String key);
+\end{lstlisting}
+
+\subsection{The Function Database}
+The function database is the place where COPASI stores all function definitions, that is all builtin functions as well as all used defined functions. There is only one global function database and it is not associated with the current model. If the model is deleted, all functions that were used in the model stay in the function database.
+
+The function database object is an instance of the class \textit{CFunctionDB} and the global function database can be acquire from the global instance of \textit{CDataModel}:
+
+\begin{lstlisting}
+CFunctionDB funDB=CDataModel.getGlobal().getFunctionList();
+\end{lstlisting}
+
+The \textit{CFunctionDB} class has a number of methods to get, remove or add new function definitions.
+
+\begin{lstlisting}
+/**
+ * Finds the function with the given name.
+ * If no function with this name can be found, null is returned.
+ */
+public CEvaluationTree findFunction(String functionName);
+
+/**
+ * Returns a container with all known function definitions.
+ * The size of the container can be queries with the size 
+ * method and individual elements of type CEvaluationTree 
+ * can be acquire with the get method. The only argument to
+ * the get method is the index of the desired function.
+ */  
+public CEvaluationTreeVectorN loadedFunctions();
+
+/**
+ * Returns a container with all functions that are suitable
+ * for the given number of substrates and products and the 
+ * given reversibility.
+ * noSubstrates: desired number of substrates
+ * noProducts: desired number of products
+ * reversibility: whether the function should be suitable for
+ * reversible or irreversible reactions.
+ */  
+public CFunctionStdVector suitableFunctions(long noSubstrates, 
+                               long noProducts, int reversibility);
+
+/**
+ * Removes the function definition with the given key.
+ */
+public boolean removeFunction(String key);
+\end{lstlisting}
+
+The individual function definitions are instances of the class \textit{CEvaluationTree} or of subclasses of that class, e.g. \textit{CFunction}.
+COPASI distinguishes between different types of function definitions:
+
+\begin{description}
+\item[CEvaluationTree.MassAction]{this is the type of the mass action kinetic function definition}
+\item[CEvaluationTree.PreDefined]{this type is set on all builtin function definitions that are not mass action}
+\item[CEvaluationTree.UserDefined]{this type is set on all user defined function definitions}
+\end{description}
+
+The type of a \textit{CEvaluationTree} object can be queried with the \textit{getType} method. 
+The formula that is associated with a function definition can be queried with the \textit{getInfix} method. This method returns the equation as a ASCII string. In order to set the equation one can use the \textit{setInfix} method. This method takes the formula as an ASCII string and returns \textit{true} if the equation has been set successfully. If there was an error, the method returns \textit{false}. 
+
+Besides the mass action function definition which is an instance if the class \textit{CMassAction} (for which there are currently no wrapper functions) all function definitions are instances of \textit{CFunction}. In addition to the method from its base class \textit{CEvaluationTree}, \textit{CFunction} has some additional methods to handle the function parameters and some other properties.
+
+\begin{lstlisting}
+/**
+ * If the reaction is reversible, the return value
+ * COPASIConstants.TriTrue,
+ * if the reaction is not reversible it is
+ * COPASIConstants.TriFalse.
+ * If the function is not meant to be used as a kinetic law,
+ * the result might  also be COPASIConstants.TriUnspecified.
+ */
+public int isReversible();
+
+/**
+ * Sets whether the function is meant to be used on reversible
+ * reaction, irreversible reactions, or if it is a general function
+ * not meant to be used as a kinetic law.
+ * The allowed values are COPASIConstants.TriTrue, COPASIConstants.
+ * TriFalse or COPASIConstants.TriUnspecified, respectively.
+ */
+public void setReversible(int reversible);
+
+/**
+ * Returns a CFunctionParameters structure that holds
+ * all parameters for the function definition.
+ */
+public CFunctionParameters getVariables();
+
+/**
+ * Returns the index of the variable with the given name.
+ * If there is no function parameter with that name, 
+ * -1 is returned.
+ */
+public long getVariableIndex(String name);
+
+/**
+ * Returns true if the function definition is suitable for the
+ * given number of substrates, products and the given reversibility.
+ */
+public boolean isSuitable(long noSubstrates, long noProducts,
+                          int reversible);
+\end{lstlisting}
+
+When the equation is set for a function definition, the parameters are parsed and added to the function definition.
+
+\subsection{Setting initial values on model entities}
+
+It is not obvious what consequences it has when the initial values of model entities are changed because changing the initial value of a model entity might influence other initial values, e.g. compartment volumes influence the concentration of the contained metabolites.
+Therefore, it is not enough to just set the initial values on model entities, but it is necessary to tell COPASI which objects have been changed so that COPASI can update dependent values.
+This update is executed with the \textit{updateInitialValues} method of \textit{CModel}. The method takes one argument which is a container that stores all initial values that have been changed in the model. The container is an instance of \textit{ObjectStdVector} and store objects of type \textit{CDataObject}. The objects stored there are the actual values that have been changed, not the model entities the values belong to, e.g. if the initial concentration of a metabolite has been changed, an object representing this initial concentration can be acquire by calling \textit{getObject} on the model entity with a \textit{CCommonName} as the argument that specifies what value to get.
+So assuming \textbf{container} is an instance of \textit{ObjectStdVector} and \textbf{metab} is an instance of \textit{CMetab} and the initial concentration of \textbf{metab} has been changed, we can add the object that corresponds to the initial concentration of \textbf{metab} with
+\small{
+\begin{verbatim}
+container.add(metab.getObject(new CCommonName("Reference=InitialConcentration")))
+\end{verbatim}
+}
+The same procedure can be used for the initial volume of compartments, he initial value of parameters and the value of local reaction parameters. The respective strings to initialize the CCommonName instance are \verb$"Reference=InitialVolume"$, \verb$"Reference=InitialValue"$ and \verb$"Reference=Value"$.
+Once all changed values have been added to the container, \textit{updateInitialValues} can by called on the instance of \textit{CModel} with the container as the only argument. 
+
+
+
+\section{Working with Tasks}
+
+\subsection{The Task-Problem-Method Concept in COPASI}
+In COPASI calculations you can do on the current model are represented by so called tasks. The base class for all tasks is \textit{CCopasiTask}. Each task contains a problem represented by a subclass of \textit{CCopasiProblem} and a method represented by a subclass of \textit{CCopasiMethod}.
+For a given task type, e.g. time course simulation, there is one task class, one problem class and one or more method classes. The problem of a task describes what is going to be done when the task is run and the method describes how it is done.
+Lets make this a little more clear by looking at the task class for running time course simulations on a model. The task class for this is \textit{CTrajectoryTask} and is contains an instance of the problem class \textit{CTrajectoryProblem}. The problem for the time course simulation stores the parameters for the simulation like start time, end time and number of steps. The method class for the time course task is a subclass of \textit{CTrajectoryMethod} which itself is a subclass of \textit{CCopasiMethod}. At the time of writing, there were six method classes derived from \textit{CTrajectoryMethod}. Two of the method classes are for deterministic simulation, two are for stochastic simulation and two are for hybrid simulation. Each of the methods contains parameters that are specific to the method and which can be changed to influence the corresponding method.
+
+All tasks are stored in \textit{CDataModel}. \textit{CDataModel} provides the method \textit{getTaskList()} to get the list of tasks. The returned object is of the type \textit{TaskVectorN} and provides a method called \textit{size()} to find out how many tasks it contains and a method \textit{get(long index)} to retrieve the task with the given index. The object that is returned is of type \textit{CCopasiTask}. Alternatively, \textit{CDataModel} has a method called \textit{getTask(long index)} which also returns the \textit{CCopasiTask} object with the given index.
+
+To get the problem and the method for a given task, \textit{CCopasiTask} provides the methods \textit{getProblem()} and \textit{getMethod()} respectively and the objects returned are of type \textit{CCopasiProblem} and \textit{CCopasiMethod}. Normally there is no need to cast the task, problem or method objects to the most specific subclass since the base classes already provide all the needed functionality.
+
+All that is needed to run any task is 
+\begin{itemize}
+\item{get the correct task from the instance of \textit{CDataModel}}
+\item{if the task does not exist yet, create a new one and add it to the instance of \textit{CDataModel}}
+\item{change the parameters of the problem if the default values are not O.K.}
+\item{change the method for the task if the one set is not the one that is wanted}
+\item{change the parameters on the method if the default values are not O.K.}
+\end{itemize}
+
+The procedure is (almost) the same no matter what the task might be, although some tasks might need some additional steps. What those additional steps are will be explained in the corresponding sections below.   
+
+The first thing is to get the correct task. For this the type of the task has to be known. The type of a task is an integer value and a list of all known types can be found in CCopasiTask.java. Some of those tasks are not available from Java yet. If we look at this list, we see that the type for the time course simulation task is CCopasiTask.timeCourse. So in order to find the time course task, we write a loop that checks all tasks that the CDataModel instance knows if one has the correct type. For each task type, there can be at most one task.
+
+So to find the time course simulation task we could use the following code:
+
+\begin{lstlisting}
+long i=0;
+long iMax=globalDataModel.getTaskList().size();
+CTrajectoryTask task=null;
+for(i=0;i<iMax;i++)
+{
+   if(globalDataModel.getTask(i).getType()==CCopasiTask.timeCourse)
+   {
+       task=globalDataModel.getTask(i);
+       break;
+   }
+}
+if(task==null)
+{
+   // create the task
+   task=globalDataModel.addTask(new CTrajectoryTask());
+}
+\end{lstlisting}
+
+The classes \textit{CCopasiProblem} and \textit{CCopasiMethod} are both derived from \textit{CCopasiParameterGroup}, they inherit all the methods from \textit{CCopasiParameterGroup} to set their parameters.
+There are two ways to get a parameter, the first method retrieves a parameter by its index, the second method gets the parameter via its name.
+
+\begin{lstlisting}
+CCopasiParameter getParameter(long index);
+CCopasiParameter getParameter(String name);
+\end{lstlisting}
+
+\textit{CCopasiParameterGroup}s methods \textit{size()} can be used to find out how many parameters are part of the parameter group.
+Each instance of \textit{CCopasiParameter} has a type that determines what kind of values are allowed for the parameter. E.g. it determines if the parameter represents an integer a float value or a string.
+Depending on the type of the parameter which can be acquire with the \textit{type()} method, the parameters value has to be set with a specific method.
+Let us for example look at the parameter called "Duration" which is a parameter of CTrajectoryProblem and determines up to which time the simulation will be calculated. The parameter itself stores a double value. Assuming you already have the correct task, you can set this parameter as follows.    
+
+\begin{lstlisting}
+CTrajectoryProblem problem=(CTrajectoryProblem)task.getProblem();
+CCopasiParameter parameter=problem.getParameter("Duration");
+if(parameter!=null && parameter.getType()==DOUBLE)
+{
+    parameter.setDblValue(100.3);
+}
+\end{lstlisting}
+
+This would set the parameter so that running a simulation would simulate a time length of $100.3$ time units. 
+
+The types that are allowed for a parameter are defined in CCopasiParameter.java. The defined types as of the time of writing are those listed in table \ref{ParameterTypes}
+
+\begin{table}[ht]
+\begin{tabular}{ c | c }
+\hline
+Type & Description \\ \hline \hline
+DOUBLE &  a double value \\ \hline
+UDOUBLE & a positive double value \\ \hline 
+INT & an integer value (long) \\ \hline 
+UINT & a positive integer value (long) \\ \hline 
+BOOL & a boolean value (0 or 1) \\ \hline 
+GROUP & a parameter group (parameter groups can be nested \\ \hline 
+STRING & a String \\ \hline
+CN & a COPASI common name (String) \\ \hline
+KEY & a key (String) \\ \hline
+FILE & a filename (String) \\ \hline
+\end{tabular}
+\label{ParameterTypes}
+\caption{parameter types}
+\end{table}
+
+Most of the time you will only have to deal with the numeric parameters of type DOUBLE, INT, UINT or BOOL.
+
+Next the method has to be set on the task. The method of a task can be set with the \textit{setMethodType(int type)} method of \textit{CCopasiTask} the argument to the method is an integer that specifies the type of the method. All methods known to COPASI have a specific type and all those types are defined in CCopasiMethod.java. Not all methods are applicable to all tasks, normally a task has a certain set of methods that can be used with the task. If the method type passed to \textit{setMethodType} is not applicable to the task on which the method has been called, the method return a value of \textbf{false}, otherwise it returns \textbf{true}.
+To find out which method is currently set on a task, you can use a call to \textit{getMethodType()} which will return an integer representing the method.
+
+Which method can be used with which task will be described in the documentation for the individual tasks.
+One the correct method has been set, the method parameters can be changed which works exactly the same way as described for the parameter of the problem above, the only difference is that the methods are used in an instance of \textit{CCopasiMethod} which can be obtained from the task with a call to \textit{getMethod()}.
+
+Once everything has been set, the task can be executed by calling the \textit{process(boolean useInitialValues)} method. The boolean argument to the method determines if the task will use the current values of all model elements to run or if all values will be reset the the elements initial values. Using the current values rather than the initial values might be useful if a simulation has already been run, but one wants to extend this simulation to get more data points.
+When a task is run, the results are either stored in a report if one was defined, and/or in memory. How reports can be defined and how the results for a specific task can be obtained will be explained in the documentation for the specific tasks below.
+
+
+\subsection{Running Time Course Simulations}
+The procedure for running a time course simulation has more or less already been described above. 
+What remains to be explained is what parameters can be used on \textit{CTrajectoryProblem} (table \ref{TrajectoryProblemParameters}) and which methods can be used with \textit{CTrajectoryTask} (table \ref{TrajectoryMethods}).
+
+\small{
+\begin{table}[ht]
+\begin{tabular}{c|c|l}
+Name & Type & Description \\ \hline \hline
+StepNumber & UINT & number of time steps that are calculated \\ \hline
+StepSize & DOUBLE & size of each time step \\ \hline
+Duration & DOUBLE & length of the simulation \\ \hline
+TimeSeriesRequested & BOOL & determines if the result is to be stored in memory \\ \hline
+OutputStartTime & DOUBLE & the time at which COPASI begins to produce output \\ \hline
+\end{tabular}
+\label{TrajectoryProblemParameters}
+\caption{trajectory problem parameters}
+\end{table}
+}
+\begin{table}[ht]
+\begin{tabular}{c|c}
+Type &  Description \\ \hline \hline
+deterministic  & simulation with LSODA \\ \hline
+LSODAR  &  simulation with LSODAR \\ \hline
+stochastic &  simulation with the next reaction method \\ \hline
+hybrid &  hybrid with next reaction method and runge kutta (4th order)\\ \hline
+hybridLSODA & hybrid with next reaction method and LSODA \\ \hline
+tauLeap & stochastic simulation with the $\tau$-leap method \\ \hline
+\end{tabular}
+\label{TrajectoryMethods}
+\caption{trajectory method types}
+\end{table}
+
+Here a complete example on how it could be done:
+
+\begin{lstlisting}
+long i=0;
+long iMax=globalDataModel.getTaskList().size();
+CTrajectoryTask task=null;
+for(i=0;i<iMax;i++)
+{
+   if(globalDataModel.getTask(i).getType()==CCopasiTask.timeCourse)
+   {
+       task=globalDataModel.getTask(i);
+       break;
+   }
+}
+if(task==null)
+{
+   // create the task
+   task=globalDataModel.addTask(new CTrajectoryTask());
+}
+if(task!=null)
+{
+  CTrajectoryProblem problem=(CTrajectoryProblem)task.getProblem();
+  CCopasiParameter parameter=problem.getParameter("Duration");
+  if(parameter!=null && parameter.getType()==DOUBLE)
+  {
+    parameter.setDblValue(100.3);
+  }
+  if(task.setMethodType(CCopasiMethod.LSODAR))
+  {
+    // maybe change some method parameters
+    task.process(true);
+  }
+  else
+  {
+    // error handling
+  }
+}
+\end{lstlisting}
+
+After running the time course simulation the results are stored in memory if the "TimeSeriesRequested" parameter was set to \textbf{true}. In order to get the results from the simulation \textit{CTrajectoryTask} provides the method \textit{getTimeSeries()} which returns an instance of \textit{CTimeSeries}.
+\textit{CTimeSeries} itself provides some methods to read out the results.
+
+\begin{lstlisting}
+/**
+ * Returns the number of steps in the time series.
+ * This should be the same number as the "StepNumber"
+ * parameter of the CTrajectoryProblem instance plus
+ * one for the initial state.
+ */
+long getRecordedSteps();
+
+/**
+ * Returns the number of variables in each row of
+ * the result. Which is the same as the number of 
+ * columns. This includes the column for time.
+ */
+long getNumVariables();
+
+/**
+ * Gets the value for a specific row and column of 
+ * the result. The rows are the individual time steps 
+ * and the columns are the variables.
+ * Indices begin with 0 and the first column (var=0) is 
+ * the time.
+ * If the column represents a metabolite, this method 
+ * returns the particle number.
+ */
+double getData(long step, long var);
+
+/**
+ * Gets the value for a specific row and column of
+ * the result. The rows are the individual time steps
+ * and the columns are the variables.
+ * Indices begin with 0 and the first column (var=0)
+ * is the time.
+ * If the column represents a metabolite, this method
+ * returns the concentration.
+ * For all other columns, the value is the same as the 
+ * one you get with getData.
+ */
+double getConcentrationData(long step, long var);
+
+/**
+ * Get the key (id) of the element represented by the
+ * column with index var.
+ */
+String getKey(long var);
+
+/**
+ * Get the SBML id of the element represented by the column
+ * with index var.
+ * Objects only have SBML ids if the model was imported from 
+ * an SBML file, or has already been exported to an SBML file.
+ */
+String getSBMLId(long var);
+\end{lstlisting}
+
+
+\subsection{Performing Steady State Calculations}
+Performing a steady state calculation is very similar to running a time course simulation. There is a task instance (\textit{CSteadyStateTask}) that contains a problem instance (\textit{CSteadyStateProblem}) and a method instance (\textit{CNewtonMethod}).
+At the time this was written, there is only one method for the steady state calculation, so we have to deal with a fixed set of parameters that can be set on the problem and the method.
+The steady state problem has two parameters. One (\textbf{JacobianRequested}) determines if the Jacobian matrix is to be calculated and the other (\textbf{StabilityAnalysisRequested}) determines if a stability analysis is to be done. Both values are boolean values and per default they are set to \textbf{true}.
+
+The \textit{CNewtonMethod} has the following parameters:
+
+\begin{description}
+\item[Resolution]{Resolution to determine if a steady state has been found (Double)}
+\item[Derivation Factor]{Used to determine the step size used for numerical differentiation (Double)}
+\item[Use Newton]{Use the Newton method to find steady states (Boolean) }
+\item[Use Integration]{Use integration to find steady states (Boolean)}
+\item[Use Back Integration]{Use backwards integration to find steady states (Boolean)}
+\item[Accept Negative Concentrations]{Accept a steady state with negative concentrations (Boolean)}
+\item[Iteration Limit]{Maximum number of iterations for the newton method (positive Integer)}
+\end{description}
+
+For a detailed description of all these parameters please have a look in the COPASI manual in the section for the steady state method.
+To run the calculation, the \textit{process} method of the task has to be used. The method takes two arguments. The first argument is a \textbf{boolean} value that determines whether the task is started with the current model values or with the initial values of all model entities. The second argument is an int value that can be either \textbf{CCopasiTask.NO\_OUTPUT} or \textbf{CCopasiTask.OUTPUT\_COMPLETE} which determined if output is generated from the task or not. This is important if reports have been defined for the task (see section \ref{CreatingReports}). 
+
+After the task has finished, the results can be queried via several methods provided by the \textit{CSteadyStateTask} instance.
+
+\begin{lstlisting}
+/**
+ * Returns an integer value. The value can either be
+ * CSteadyStateMethod.notFound, CSteadyStateMethod.found,
+ * CSteadyStateMethod.foundEquilibirium or
+ * CSteadyStateMethod.foundNegative depending on whether 
+ * a steady state was found and what properties the 
+ * found steady state has.
+ */
+public int getResult();
+
+/**
+ * If a steady state was found, the corresponding state
+ * of the model can be acquire by this method.
+ */
+public CState getState();
+
+/**
+ * Returns the Jacobian Matrix that was calculated.
+ * The returned FloatMatrix object has the method size
+ * to query its size and the methods numCols() and 
+ * numRows() to query for the number of columns and the
+ * number of rows respectively.
+ * Individual elements from the matrix can be fetched
+ * with the get method which takes the row and the column
+ * index as its two arguments.
+ * Indices are specified as long values, the return values
+ * are of type double.
+ */
+public FloatMatrix getJacobian();
+
+/**
+ * Returns the Jacobian Matrix together with annotations
+ * as to which column and row corresponds to what.
+ */
+public CDataArray getJacobianAnnotated();
+
+/**
+ * Returns the Jacobian matrix for the reduced model 
+ * (removed mass conservations).
+ * The returned FloatMatrix object has the method size
+ * to query its size and the methods numCols() and numRows()
+ * to query for the number of columns and the number of rows
+ * respectively.
+ * Individual elements from the matrix can be fetched with 
+ * the get method which takes the row and the column index
+ * as its two arguments.
+ * Indices are specified as long values, the return values
+ * are of type double.
+ */
+ */
+public FloatMatrix getJacobianReduced();
+
+/**
+ * Returns the annotated Jacobian matrix for the reduced model 
+ * (removed mass conservations).
+ */
+public CDataArray getJacobianXAnnotated();
+
+/**
+ * Returns the Eigenvalues for the full model.
+ */
+public CEigen getEigenValues();
+
+/**
+ * Returns the Eigenvalues for the reduced model.
+ */
+public CEigen getEigenValuesReduced();
+\end{lstlisting}
+
+\begin{description}
+\item[CSteadyStateMethod.notFound]{no steady state was found}
+\item[CSteadyStateMethod.found]{a steady state was found}
+\item[CSteadyStateMethod.foundEquilibrium]{a steady state was found where all reaction fluxes are zero}
+\item[CSteadyStateMethod.foundNegative]{a steady state with negative concentrations was found}
+\end{description}
+
+The class \textit{CEigen} class provides several methods to determine the characteristics of the Eigenvalues.
+
+\begin{lstlisting}
+/**
+ * Returns the largest real part in all Eigenvalues.
+ */
+public double getMaxrealpart();
+
+/**
+ * Returns the largest imaginary part in all Eigenvalues.
+ */
+public double getMaximagpart();
+
+/**
+ * Returns the number of non-zero Eigenvalues.
+ */
+public int getNzero();
+
+/**
+ * Returns the stiffness of the Eigenvalues.
+ */
+public double getStiffness();
+
+/**
+ * Returns the hierarchy of the Eigenvalues.
+ */
+public double getHierarchy();
+
+/**
+ * Returns the number of Eigenvalues with an
+ * imaginary part equal to zero.
+ */
+public int getNreal();
+
+/**
+ * Returns the number of Eigenvalues with an
+ * imaginary part different from zero.
+ */
+public int getNimag();
+
+/**
+ * Get the number of Eigenvalues with
+ * a positive real part.
+ */
+public int getNposreal();
+
+/**
+ * Get the number of Eigenvalues with
+ * a negative real part.
+ */
+public int getNnegreal();
+
+/**
+ * Returns a vector with the imaginary parts of
+ * all Eigenvalues.
+ * The vectors size can be queried with the size method.
+ * Individual elements can be acquire with the get method.
+ */
+public FloatCVector getI();
+
+/**
+ * Returns a vector with the real parts of
+ * all Eigenvalues.
+ * The vectors size can be queried with the size method.
+ * Individual elements can be acquire with the get method.
+ */
+public FloatCVector getR();
+\end{lstlisting}
+
+The \textit{CDataArray} class provides a matrix of values combined with annotation data that provides information on the rows and columns of the matrix.
+The values of the contained matrix can be acquire the same way as for the float matrix with the \textit{get} method. The method takes two arguments which are the row and the column index.
+The further methods provided are the following:
+
+\begin{lstlisting}
+/**
+ * Returns the number of dimensions of the contained matrix.
+ */
+public long dimensionality();
+
+/**
+ * Returns a vector of common names for the given 
+ * dimension of the matrix.
+ */
+public ReportItemVector getAnnotationsCN(long d);
+
+/**
+ * Returns a vector of strings that represent the 
+ * column entries in dimension d. The display
+ * argument determines whether the string contain
+ * the display name or the object name of the object 
+ * represented in a column.
+ * A value of true means that display names are returned.
+ */
+public StringStdVector getAnnotationsString(long d, boolean display);
+
+/**
+ * Same as the method above, only that the second
+ * argument is assumed to be true. So the returned
+ * vector will contain display names.
+ */
+public StringStdVector getAnnotationsString(long d);
+
+/**
+ * Gets a description of what is represented by the 
+ * dimension given as the argument to the method.
+ */  
+public String getDimensionDescription(long d);
+
+/**
+ * Returns a description of the matrix.
+ */
+public String getDescription();
+\end{lstlisting}
+
+The result of the steady state calculation is read directly from the state of the model itself, because after the calculation of the steadystate, the model will contain that state in the transient values of all model entities. So if one wants to find the concentration of some metabolite at the steady state, it can be acquire directly by getting the transient concentration from this metabolite.
+This works as long as the model has not been changed by adding or removing model entities or by doing any calculations on the model.
+
+
+\subsection{Running Parameter Scans}
+The scan task differs somewhat from the other tasks described so far. For example it is not necessary to set method and problem parameters the way it was done for the time course task.
+There are few parameters that have to be set and those can be set by convenience functions.
+The classes that are needed to run a parameter scan are \textit{CScanTask}, \textit{CScanMethod} and \textit{CScanProblem}.
+There are three parameters that can be set on the \textit{CScanProblem} instance through methods of that class.
+
+\begin{lstlisting}
+/**
+ * This method set the subtask for which the scan task
+ * can be run. E.g. whether the scan is run on a steady
+ * state calculation or on a time course.
+ * Allowed types are defined in CCopasiTask.java.
+ */
+public void setSubtask(int type);
+
+/**
+ * Returns the type of the subtask for which the parameter
+ * scan is run.
+ */
+public int getSubtask();
+
+/**
+ * This method sets whether the initial values of the model
+ * are set to the result of each run of the subtask or if the 
+ * initial values should be set to the original initial values
+ * of the model.
+ * A value of false means always use the original initial
+ * values and a value of true means use the result of the last 
+ * run as initial state for the next run.
+public void setAdjustInitialConditions(boolean aic);
+
+/**
+ * Returns true or false depending on whether the scan will adjust
+ * the initial values of the model after each run of the subtask.
+ */
+public boolean getAdjustInitialConditions();
+
+/**
+ * This methods sets whether output from the subtask is
+ * collected, or if the output only consists of the end-
+ * result of each subtask.
+ * Assuming the subtask is a time course simulation, 
+ * setting this to true will produce a time course for
+ * each run of the subtask. If the value is set to false,
+ * only the end state of each time course simulation will
+ * be written to the report.
+ */
+public void setOutputInSubtask(boolean ois);
+
+/**
+ * Returns true or false depending on whether output from the
+ * subtask is collected or not.
+ */
+public boolean getOutputInSubtask();
+\end{lstlisting}
+
+In order to run a parameter scan, one or more so called scan items have to be defined. Currently COPASI knows three types of scan items: repeat, linear and random. A parameter scan can define several scan items that are stacked and each scan item is applied to the scan item directly beneath it. The simplest scan item is the repeat type. It repeats the scan item (or if it is the lowest scan item it repeats the subtask) below it a certain number of times. No parameter is changed by this scan item type. This can e.g. be used to run a stochastic simulation several times with different random number seeds. (The stochastic time course simulation has a parameter that determines if it is started with a random seed, if this is set to false, the exactly same stochastic simulation will be run several times.)
+The linear scan item changes an associated model value (usually this will be the initial value of some model entity) within a given range. The stepsize is determined by the number of steps that is given as a parameter. The name of this scan item might be somewhat misleading since it can also change the associated value in a logarithmic fashion rather than in a linear fashion.
+Last but not least the random scan item can be used to initialize the associated value with a random value. The random value is determined by a permitted range and a distribution function.
+The scan items are implemented as a nested parameter group. All parameters for the scan items are actually parameters that are stored in a parameter group which represents a scan item.
+The class \textit{CScanProblem} which itself is also derived from \textit{CCopasiParameterGroup} contains a parameter group called \textbf{ScanItems} which holds all the scan items.
+So in the end the instance of \textit{CScanProblem} holds a parameter group called \textbf{ScanItems} which holds parameter groups that represent the individual scan items and those groups hold the parameters that determine the properties of the scan items.
+
+The following list shows the properties of the individual scan item types:
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}[t]{m{0.2\textwidth}|m{0.6\textwidth}|m{0.2\textwidth}}
+Parameter name & description & availability\\ \hline \hline 
+Number of steps (integer) & The number of steps of the scan item. For a repeat or a random scan item this is the number of repetitions, for the linear scan item this is used to determine the stepsize & all scan items\\ \hline
+Type (integer) & The type of the scan item (CScanProblem.SCAN\_RANDOM, CScanProblem.SCAN\_REPEAT or CScanProblem.SCAN\_LINEAR) & all scan items\\ \hline
+Object (String) & The common name of the object associated with the scan item. For the repeat scan item this is usually an empty string & all scan items\\ \hline
+log (boolean) & determines if the value is changed in a logarithmic fashion & linear scan item\\ \hline
+Minimum (double) & lower bound & linear and random scan item\\ \hline
+Maximum (double) & upper bound &  linear and random scan item\\ \hline
+Distribution type (integer) & determines which distribution the random numbers follow (CScanProblem.SD\_UNIFORM, CScanProblem.SD\_GAUSS and CScanProblem.SD\_BOLTZ) & random scan item\\ \hline
+\end{tabularx}
+\label{ScanItemParameters}
+\caption{scan item parameters}
+\end{table}
+
+The following example codes shows how to run a simple parameter scan. It sets up the parameter scan to contain one repeat scan item that repeats the specified subtask 10 times:
+
+\begin{lstlisting}
+CScanTask scanTask=
+      (CScanTask)CDataModel.getGlobal().addTask(CCopasiTask.scan);
+CScanProblem scanProblem=(CScanProblem)scanTask.getProblem();
+// set the desired subtask
+scanProblem.setSubtask(CCopasiTask.timeCourse);
+// always use the same initial values
+scanProblem.setAdjustInitialConditions(false);
+// get the ScanItems parameter group from the problem
+CCopasiParameterGroup scanItems=scanProblem.getGroup("ScanItems");
+// create a new parameter group to hold a scan item
+CCopasiParameterGroup scanItem=new CCopasiParameterGroup("scanItem");
+// add the parameters "Number of steps", "Type" and "Object" to the 
+// scan item and set their values
+parameterGroup.addParameter("Number of steps",
+                        CCopasiParameter.UINT);
+CCopasiParameter parameter=parameterGroup.getParameter("Number of steps");
+parameter..setUIntValue(10);
+parameterGroup.addParameter("Type", CCopasiParameter.UINT);
+parameter=parameterGroup.getParameter("Type")
+parameter.setUIntValue(CScanProblem.SCAN_REPEAT);
+parameterGroup.addParameter("Object", CCopasiParameter.CN);
+parameter=parameterGroup.getParameter("Object")
+parameter.setStringValue("");
+try
+{
+  result=scanTask.process(true);
+}
+catch(Exception e)
+{
+    System.err.println("ERROR: "+e.getMessage());
+}
+
+\end{lstlisting}
+
+It is important to note that the subtask that is going to be used by the parameter scan has to be set up properly prior to running the parameter scan. That is, if one wants to run a parameter scan on a stochastic simulation, the time course task has to be set up so that it runs a stochastic simulation. Also all other parameters like start time and end time etc. have to be specified for the trajectory task before running the parameter scan.
+The same applies to all other subtasks that are or will be enabled in the future.
+
+
+For the task describes so far, one was usually interested in the end result of the task. For parameter scans this is usually different. Here one is normally interested in the result of each calculation of the subtask that the parameter scan is being run on.
+Unfortunately those results are not stored in memory, so right now the only way to get these results is to create a report that stores them to a file. For a documentation on how to create reports and how they are connected to a task see the section on reports \ref{CreatingReports}.
+
+\subsection{Running Optimizations}
+In order to run an optimization, the general procedure is the same as with the other tasks. One has to acquire or create an instance of \textit{COptTask}, choose the desired method to use for the task out of the set of methods COPASI provides for the optimization, set the desired parameter values on the instance of \textit{COptProblem} that can be fetched from the \textit{COptTask} instance and maybe set some parameter values on the method to change the methods behaviour.
+At the time of writing, an optimization can either be done with a time course calculation or a steady state calculation. In order to tell the problem which of the two to use, the problem has a method called setSubtaskType. Valid arguments for the method are CCopasiTask.steadyState or CCopasiTask.timeCourse;
+The parameters that can be set on the methods very much depend on the method that is being used. So if you want to find out which parameters each method provides you will have to read the COPASI manual which if you are lucky does list them.
+Before running the optimization, two more items have to be set. One is the object that should be optimized, e.g. the initial value of some parameter, the other item is the objective function that the optimization uses the determine the optimal result.
+The object(s) that are going to be optimized are determined by one or more instances of \textit{COptItem}. Each \textit{COptItem} object stores a reference to the model object to optimize, the start value with which the optimization process will begin and an upper and a lower bound for the value of the object. The optimization method will then try to find values for all objects so that the objective function will (in the optimal case) become minimal.
+The objective function itself also needs to be specified before the optimization can be run. The objective function is an expression that COPASI tries to minimize by changing the values of the objects referenced in the specified \textit{COptItem}s. In order to set the objective function, the \textit{COptProblem} instance has a method called \textit{setObjectiveFunction}. This method takes a string that represents the mathematical expression of the function. The mathematical expression can contain all elements that can be used to describe expressions as described in the COPASI manual. Model objects that are used in the expression have to be referenced with their so called common name enclosed in angular brackets (<CN>). To get the common name from an object derived from \textit{CDataObject} the method \textit{getCN} can be used.
+
+Here a small example that runs a simple optimization task:
+
+\begin{lstlisting}
+// create the optimization task
+COptTask optTask=
+  (COptTask)CDataModel.getGlobal().addTask(CCopasiTask.optimization);
+if(optTask==null) return null;
+
+// use the Levenberg-Marquardt method for the optimization
+optTask.setMethodType(CCopasiMethod.LevenbergMarquardt);
+
+// acquire the problem instance from the task
+COptProblem optProblem=(COptProblem)optTask.getProblem();
+if(optProblem==null) return null;
+
+// create the objective function
+// in this case the objective function is the transient
+// value of some model parameter
+// so COPASI will try to find values for all COptItems
+// so that the transient value of the parameter after
+// the simulation is minimal
+CCommonName ref=new CCommonName("Reference=Value");
+CDataObject object=SomeVariableModelValue.getObject(ref);
+String objectiveFunction=object.getCN().getString();
+objectiveFunction="<"+objectiveFunction+">";
+// set the objective function on the problem
+optProblem.setObjectiveFunction(objectiveFunction);
+// set the problems subtask type to indicate that the optimization
+// is to be run on a time course simulation
+optProblem.setSubtaskType(CCopasiTask.timeCourse);
+
+// create an optimization item for the 
+// initial value of some model parameter
+ref=new CCommonName("Reference=InitialValue");
+object=SomeFixedModelValue.getObject(ref);
+CCommonName optObjectName=object.getCN();
+COptItem optItem2=optProblem.addOptItem(optObjectName);
+optItem2.setStartValue(1.0);
+optItem2.setLowerBound(0.0);
+optItem2.setUpperBound(2.0);
+
+// change some of the parameters of the method
+COptMethod optMethod=optTask.getMethod();
+param=optMethod.getParameter("Iteration Limit");
+param.setIntValue(2000);
+param=optMethod.getParameter("Tolerance");
+param.setDblValue(1.0e-5);
+boolean result=false;
+try
+{
+    // run the optimization
+  result=optTask.process(true);
+}
+catch(Exception e)
+{
+  System.err.println("ERROR: "+e.getMessage());
+}
+\end{lstlisting}
+
+After the optimization has been run, the solution of the optimization is stored in the problem instance.
+In order to get the lowest value COPASI was able to find for the objective function, use the call to \textit{getSolutionValue}.
+The values for the \textit{COptItem} objects corresponding to that result, use \textit{getSolutionVariables}. This method returns a container with double values. The size of the container can be queried with its \textit{size} method and individual values can be acquire by calling \textit{get} with the index of the value. The value for index \textbf{i} belongs to the \textit{COptItem} with index \textbf{i} in the list of \textit{COptItem}s.  To get a container with all defined \textit{COptItem}s, use \textit{getOptItemList}.
+
+\subsection{Fitting parameters}
+\label{ParameterFitting}
+
+Parameter fitting can be used to determine the value of certain model entities with the help of experimental data.
+The API for doing parameter fitting is very similar to the one for running an optimization (see above). This is because the classes for parameter fitting are derived from the optimization classes.
+This makes sense since the actions for running an optimization are very similar to what COPASI does when doing parameter fitting. The major difference is that for an optimization, the user has to provide an objective function that is minimized whereas for the parameter fitting, the user provides experimental data and some information about the data and COPASI determines the objective function from that information.
+
+The first step when doing parameter fitting is to get an instance of \textit{CFitTask}. Either there is already one in the list of tasks which can be used, or we simplify add one, as demonstrated in the example below.
+The \textit{CFitTask} has the methods \textit{getMethod} and \textit{getProblem} which provide the method and the problem for the task.
+
+The methods that can be used for parameter fitting should be the same set of methods that is available for the optimization. The methods that are available can be queried with \textit{getValidMethods} in \textit{CFitTask} and a specific method can be set with \textit{setMethodType} also in \textit{CFitTask}.
+
+Most settings for the parameter fitting however are done in the problem. The problem contains a parameter group called \textbf{Experiment Set} which contains the information about the experimental data against which the parameters should be fitted.
+The information for each experiment is stored in an instance of \textit{CExperiment}. The information that needs to be provided for each experment is 
+\begin{itemize}
+\item{the name of the file where the experimental data can be found}
+\item{the row number where the data for the experiment starts}
+\item{the row number where the data for the experiment ends}
+\item{the type of experiment that the data represents (time course or steady state)}
+\item{the number of data columns in the data set}
+\item{the mapping of the columns to the entities in the model and their role}
+\end{itemize}
+
+Another useful piece of information that can be set for the experiment is the separator that is used in the data file to separate the individual columns. This separator can be set with the \textit{setSeparator} method in \textit{CExperiment}. It takes a string as its only argument. One thing to watch out for is the fact that COPASI tries to match the separator exactly. That is, if the separator is set to be one space character, having two space characters between two columns in the file will lead COPASI to think that there is an empty column. Unfortunately there is no way right now to tell COPASI that the delimiter for the columns is e.g. one or more space characters.
+
+The information about the mapping from data columns to model entities is stored in an instance of \textit{CExperimentObjectmap} which can be aquired with the \textit{getObjectMap} method from \textit{CExperiment}.
+After the information for the experiment has been set, the experiment needs to be added to the experiment set. The \textit{addExperiment} method creates a copy of the experiment that is added, so make sure that you get the experiment from the experiment set before you make further modifications or use it, e.g. to add it to the fit item (see below).
+
+Next we need to create the fit items which correspond to the optimization items in the optimization task. Fit items are instances of \textit{CFitItem} and they have an upper bound, a lower bound and a start value just like optimization items.
+By default each fit item is influenced by all experiments. if you want to limit a fit item to be only influenced by certain experiments, you have to add those experiments to the fit item with the \textit{addExperiment} method of \textit{CFitItem}.
+
+There is no specialized method to add fit items to the fit problem, so we have to use the generic methods provided be \textit{CCopasiParameterGroup} to do this. The fit problem contains a parameter group called \textbf{OptimizationItemList} which holds all the fit items. Since the problem itself is derived from \textit{CCopasiParameterGroup}, we can use the \textit{getParameter} method with the name of the parameter in order to get the parameter group. Now we can add the fit items with the \textit{addParameter} method to the group.
+Just like the \textit{addExperiment} method above, this method makes a copy of its argument, so if you are planning to use the fit item again, be sure to get the fit item from the group again.
+
+A fit problem can actually contain many experiments and many fit items, but the example code below only uses one experiment and one fit item to fit the reaction parameter of a simple system. The code assumes that the models consists of only one compartment with two species named \textit{A} and \textit{B} as well as one reaction with a local reaction parameter (which is fitted).
+
+\begin{lstlisting}
+ CFitTask fitTask=
+   (CFitTask)CDataModel.getGlobal().addTask(CCopasiTask.parameterFitting);
+ // the method in a fit task is an instance of COptMethod or a subclass of
+ // it.
+ COptMethod fitMethod=(COptMethod)fitTask.getMethod();
+ // the object must be an instance of COptMethod or a subclass thereof
+ // (CFitMethod)
+ CFitProblem fitProblem=(CFitProblem)fitTask.getProblem();
+ CExperimentSet experimentSet=(CExperimentSet)fitProblem.getParameter("Experiment Set");
+ // first experiment
+ CExperiment experiment=new CExperiment();
+ experiment.setFileName("parameter_fitting_data_simple.txt");
+ experiment.setFirstRow(1);
+ experiment.setLastRow(22);
+ experiment.setHeaderRow(1);
+ experiment.setExperimentType(CCopasiTask.timeCourse);
+ experiment.setNumColumns(3);
+ CExperimentObjectMap objectMap=experiment.getObjectMap();
+ boolean result=objectMap.setNumCols(3);
+ result=objectMap.setRole(0,CExperiment.time);
+ CModel model=CDataModel.getGlobal().getModel();
+ // create the common name for time (column 0)
+ CDataObject timeReference=model.getObject(new CCommonName("Reference=Time"));
+ objectMap.setObjectCN(0,timeReference.getCN().getString());
+ CMetab metabA=model.getMetabolite(0);
+ CMetab metabB=null;
+ if(metabA.getObjectName()!="A")
+ {
+     metabB=metabA;
+     metabA=model.getMetabolite(1);
+ }
+ else
+ {
+     metabB=model.getMetabolite(1);
+ }
+ // set the role to dependent
+ objectMap.setRole(1,CExperiment.dependent);
+ // create the common name for the particle number of A (column 1)
+ CDataObject particleReference=
+     metabA.getObject(new CCommonName("Reference=ParticleNumber"));
+ objectMap.setObjectCN(1,particleReference.getCN().getString());
+ // set the role to dependent
+ objectMap.setRole(2,CExperiment.dependent);
+ // create the common name for the particle number of B (column 1)
+ particleReference=metabB.getObject(new CCommonName("Reference=ParticleNumber"));
+ objectMap.setObjectCN(2,particleReference.getCN().getString());
+ // getObjectCN returns a string whereas getCN returns a
+ // CCommonName
+ assertTrue(objectMap.getObjectCN(2).equals(particleReference.getCN().getString()));
+ experimentSet.addExperiment(experiment);
+ // addExperiment makes a copy, so we need to get the added experiment
+ // again
+ experiment=experimentSet.getExperiment(0);
+
+ CReaction reaction=model.getReaction(0);
+ CCopasiParameter parameter=reaction.getParameters().getParameter(0);
+ 
+ // define CFitItems
+ CDataObject parameterReference=
+     parameter.getObject(new CCommonName("Reference=Value"));
+ CFitItem fitItem=new CFitItem();
+ fitItem.setObjectCN(parameterReference.getCN());
+ fitItem.setStartValue(4.0);
+ fitItem.setLowerBound(new CCommonName("0.0001"));
+ fitItem.setUpperBound(new CCommonName("10"));
+ // add the experiment to the fit item
+ //fitItem.addExperiment(experiment.getKey())
+ // add the fit item to the correct parameter group
+ CCopasiParameterGroup optimizationItemGroup=
+     (CCopasiParameterGroup)fitProblem.getParameter("OptimizationItemList");
+ optimizationItemGroup.addParameter(fitItem);
+ // addParameter makes a copy of the fit item, so we have to get it back
+ fitItem=(CFitItem)optimizationItemGroup.getParameter(0);
+ result=true;
+ try
+ {
+   result=fitTask.process(true);
+ }
+ catch(Exception e)
+ {
+   result=false;
+ }
+ // get the fitted value for the reaction parameter
+ double fittedK=fitItem.getLocalValue();
+\end{lstlisting}
+
+After running the fitting task, the fit result is stored in the individual fit items. The best value that was achived during parameter fitting can be queried by the \textit{getLocalValue} method from each fit item.
+
+\section{Creating Reports}
+\label{CreatingReports}
+
+Sometimes it is necessary to write the results of a calculation to a file instead of keeping it in memory. In order to achieve this, a report for the results has to be created and this report has to be associated with a task.
+In COPASI reports are represented by the class \textit{CReport}. A report stored a so called report definition that specifies what is being written and it contains a filename that determines where the report is written to.
+In order to set the filename, you can use the method \textit{setTarget} with the path of the file as the argument. It is up to the programmer to make sure that the directory part of the path exists and that it is writable.
+To set the report definition of a report instance, use the method \textit{setReportDefinition}. The only argument to the call is an instance of class \textit{CReportDefinition}.
+A report definition can work in two modes. In the default mode, the report definition is a table and all objects that are added to the report definition are written separated by a user definable separator.
+In the second mode a report definitions consists of three parts a header, a body and a footer. The part that is specified as the header is written before the associated task is executed, the body is executed for each step of the associated task and the footer is finally written after the task has finished.
+Each part is a container that holds zero or more report definition items. To get the individual containers, the \textit{CReportDefinition} class has the methods \textit{getTableAddr} if the report definition is in table mode or \textit{getHeaderAddr}, \textit{getBodyAddr} and \textit{getFooterAddr} if it is not in table mode.
+To specify whether a report definition is to run in table mode, you can use the method \textit{setIsTable} which takes a boolean value that determines whether the report definition is a table or not. The flag can be queried with the \textit{isTable} method.
+The individual items are of type \textit{CRegisteredCommonName}. A new instance of \textit{CRegisteredCommonName} can be created by calling the constructor with a string that represents the common name of the object that is to written.
+If the registered object name should represent a model entity, the string has to be the common name of the object. If you want to add an element the report that represents a simple stirng, you have to create an instance of \textit{CDataString} by calling the constructor of this class with the string that you want to add to the report definition. Once you have an instance of \textit{CDataString}, you can create an instance of \textit{CRegisteredCommonName} the same way as it is done for other objects, you take the string representation of the common name of your instance of \textit{CDataString} and use it as the argument to the constructor of \textit{CRegisteredCommonName}.
+
+In COPASI the reports definitions are stored in the global instance of \textit{CDataModel}. To get this list use the method \textit{getReportDefinitionList} on the global instance of \textit{CDataModel}.
+
+\begin{verbatim}
+CDataModel.getGlobal().getReportDefinitionList()
+\end{verbatim}
+
+The returned object is a container that stores all report definitions. To create a new report definition, use \textit{createReportDefinitions} which is a method of the container. The two arguments to the call are the name of the report definition and a description. Once you have a report definition object, you can use \textit{setTaskType} to set the type of task the report is intended for. The method takes one argument which is one of the task types defined in \textit{CCopasiTask}, e.g. \textit{CCopasiTask.timeCourse} for the time course task.
+Next you can fill the tree sections (header, body, footer) of the report definition or the table  with whatever has to be written to the output.
+Once the report definition is finished, we have to tell the task to use it. This is done through the tasks report object which can be acquire with the \textit{getReport()} method of \textit{CCopasiTask}. The returned report object has a method \textit{setReportDefinition} which takes the report definition object as its argument.
+Last but not least, we have to specify a filename where the report is written to which is done with the \textit{setTarget} method of the same report object.
+The following example shows how to create a report for a time course simulation that writes the values of all global parameters as an xhtml file with a table for the values:
+
+\begin{lstlisting}
+...
+CDataModel global=CDataModel.getGlobal();
+CReportDefinitionVector reportDefs=global.getReportDefinitionList();
+CReportDefinition repDef=reportDefs.createReportDefinition("htmlConc",
+                                        "value table in HTML format");
+repDef.setIsTable(false);
+CDataString htmlHeader=new CDataString("<?xml version=\"1.0\"" 
+ + " encoding=\"UTF-8\"?>\n<!DOCTYPE html PUBLIC "
+ + "\"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
+ + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+ + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\""
+ + "lang=\"en\">\n<body>\n<table>\n");
+CDataString htmlFooter=new CDataString(
+                                      "</table>\n</body>\n</html>\n");
+ReportItemVector header=repDef.getHeaderAddr(); 
+header.add(new CRegisteredCommonName(htmlHeader.getCN().getString()));
+ReportItemVector footer=repDef.getFooterAddr(); 
+footer.add(new CRegisteredCommonName(htmlFooter.getCN().getString()));
+ReportItemVector body=repDef.getBodyAddr(); 
+CModel model=CDataModel.getGlobal().getModel();
+CCommonName name=new CCommonName("Reference=Time");
+CDataObject timeObject=model.getObject(name);
+CDataString s=new CDataString("<tr>\n<td>");
+body.add(new CRegisteredCommonName(s.getCN().getString()));
+body.add(new CRegisteredCommonName(timeObject.getCN().getString()));
+s=new CDataString("</td>\n");
+body.add(new CRegisteredCommonName(s.getCN().getString()));
+name=new CCommonName("Reference=Value")
+long i,iMax=model.getNumModelValues();
+for(i=0;i<iMax;++i)
+{
+    s=new CDataString("<td>");
+    body.add(new CRegisteredCommonName(s.getCN().getString()));
+    CModelValue mv=model.getModelValue(i);
+    CDataObject valueObject=mv.getObject(name);
+    body.add(new CRegisteredCommonName(valueObject.getCN().getString()));
+    s=new CDataString("</td>\n");
+    body.add(new CRegisteredCommonName(s.getCN().getString()));
+}
+s=new CDataString("</tr>\n");
+body.add(new CRegisteredCommonName(s.getCN().getString()));
+repDef.setTaskType(CCopasiTask.timeCourse);
+CReport report=task.getReport();
+report.setReportDefinition(repDef);
+report.setAppend(false);
+report.setTarget("table.xhtml");
+ ...
+\end{lstlisting}
+
+\section{Error Messages}
+\label{ErrorMessages}
+COPASI uses a message deque to store certain warning and error messages that occur during a process, e.g. during import and export of SBML files.
+The methods to work with the message deque are part of the CCopasiMessage class.
+
+It is always a good idea to check the message deque after doing complex things like running a certain task, or loading models.
+
+The following methods are available to work with the message deque in COPASI.
+
+\begin{lstlisting}
+/**
+ * This static method peeks at the first message created in COPASI.
+ * If no more messages are in the deque the message
+ * (MCCopasiMessage + 1, "Message (1): No more messages." is returned.
+ */
+CCopasiMessage peekFirstMessage();
+
+/**
+ * This static method peeks at the last message created in COPASI.
+ * If no more messages are in the deque the message
+ * (MCCopasiMessage + 1, "Message (1): No more messages." is returned.
+ */
+CCopasiMessage peekLastMessage();
+
+/**
+ * This static method retrieves the first message created in COPASI.
+ * Consecutive calls allow for the retrieval of all generated
+ * messages in chronological order. If no more messages are in
+ * the deque the message (MCCopasiMessage + 1, "Message (1):
+ * No more messages." is returned.
+ */
+CCopasiMessage getFirstMessage();
+
+/**
+ * This static method retrieves the last message created in COPASI.
+ * Consecutive calls allow for the retrieval of all generated
+ * messages in reverse chronological order. If no more messages
+ * are in the deque the message (MCCopasiMessage + 1, "Message
+ * (1): No more messages." is returned.
+ */
+CCopasiMessage getLastMessage();
+
+/**
+ * Static method that retrieves the text of all messages in the deque in chronological
+ * or reverse chronological order. If more than on message is in
+ * the deque the messages are seperated by an empty line.
+ */
+String getAllMessageText(boolean chronological);
+
+/**
+ * Static method that clears the message deque.
+ */
+void clearDeque();
+
+/**
+ * Static method that retreives the size of the message deque
+ */
+long size();
+
+/**
+ * Static methosd that retrieves the highest severity of the messages in the deque.
+ * The returned severity can be CCopasiMessage.RAW, CCopasiMessage.TRACE,
+ * CCopasiMessage.COMMANDLINE, CCopasiMessage.WARNING, CCopasiMessage.ERROR,
+ * CCopasiMessage.EXCEPTION, CCopasiMessage.RAW_FILTERED,
+ * CCopasiMessage.TRACE_FILTERED, CCopasiMessage.COMMANDLINE_FILTERED,
+ * CCopasiMessage.WARNING_FILTERED, CCopasiMessage.ERROR_FILTERED or 
+ * CCopasiMEssage.EXCEPTION_FILTERED.
+ * 
+ * The most common of those are WARNING, ERROR or EXCEPTION.
+ */
+int getHighestSeverity();
+
+/**
+ * Static method that checks whether a message with the given number is in the deque
+ */
+boolean checkForMessage(long number);
+
+/**
+ *  Retrieves the text of the message instance.
+ */
+String getText();
+
+/**
+ *  Retrieves the type of the message instance.
+ */
+int getType();
+
+/**
+ *  Retrieves the number of the message instance.
+ */
+long getNumber();
+
+\end{lstlisting}
+
+
+
+\end{document}

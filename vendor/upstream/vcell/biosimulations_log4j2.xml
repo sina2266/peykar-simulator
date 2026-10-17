@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" name="XMLConfigTest" packages="org.vcell.*">
+    <Appenders>
+        <Console name="console">
+            <PatternLayout pattern="%5p (%c{1}:%L) - %m %x%X%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.vcell" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <Logger name="cbit" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <Logger name="org.sbml.jsbml" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <Logger name = "io.jhdf" level="warn" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

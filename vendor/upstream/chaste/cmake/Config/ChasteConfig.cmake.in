@@ -1,0 +1,145 @@
+# - Config file for the Chaste package
+# It defines the following variables
+#  Chaste_INCLUDE_DIRS - include directories for FooBar
+#  Chaste_LIBRARIES    - libraries to link against
+
+# Compute paths
+
+cmake_minimum_required (VERSION 3.16.3)
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+get_filename_component(Chaste_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+set(Chaste_VERSION_MAJOR @Chaste_VERSION_MAJOR@)
+set(Chaste_VERSION_MINOR @Chaste_VERSION_MINOR@)
+
+# If not in a build tree set required variables
+if(NOT TARGET global AND NOT Chaste_BINARY_DIR)
+    set(Chaste_BINARY_DIR ${Chaste_CMAKE_DIR})
+    message("-- Found Chaste libraries in ${Chaste_BINARY_DIR}")
+    add_definitions(-DCHASTE_CMAKE)
+
+    set(Chaste_USE_VTK @Chaste_USE_VTK@)
+    if (Chaste_USE_VTK)
+        add_definitions(-DCHASTE_VTK)
+    endif()
+
+
+    set(Chaste_USE_CVODE @Chaste_USE_CVODE@)
+    if (Chaste_USE_CVODE)
+        add_definitions(-DCHASTE_CVODE)
+        add_definitions(-DCHASTE_SUNDIALS_VERSION=@Chaste_SUNDIALS_VERSION@)
+    endif()
+
+    set(Chaste_USE_XERCES @Chaste_USE_XERCES@)
+    if (Chaste_USE_XERCES)
+        add_definitions(-DCHASTE_XERCES)
+    endif()
+
+    find_package(Python3 REQUIRED)
+    set(Chaste_PYTHON_DIR @EXPORT_Chaste_PYTHON_DIR@)
+
+    option(BUILD_SHARED_LIBS
+    "Set whether we are set whether to generate dynamic-linked libraries. ON by default"
+    @BUILD_SHARED_LIBS@)
+
+    include(${Chaste_CMAKE_DIR}/cmake/Modules/ChasteMacros.cmake)
+
+    set(Chaste_NUM_CPUS_TEST @Chaste_NUM_CPUS_TEST@ CACHE STRING  "Number of cpus to use when running tests.")
+    set(Chaste_ENABLE_TESTING @Chaste_ENABLE_TESTING@ CACHE BOOL "Enable Chaste Testing")
+
+    set(TestPackTypes @TestPackTypes@)
+
+    if(Chaste_ENABLE_TESTING)
+        enable_testing()
+        set(CXXTEST_INCLUDES "${Chaste_BINARY_DIR}/cxxtest")
+        set(CXXTEST_PYTHON_TESTGEN_EXECUTABLE ${CXXTEST_INCLUDES}/cxxtestgen.py)
+        foreach(type ${TestPackTypes})
+            add_custom_target(${type})
+        endforeach()
+        add_custom_target(tutorials)
+    endif()
+
+    set(Chaste_DEPENDS_global @Chaste_DEPENDS_global@)
+    set(Chaste_DEPENDS_io @Chaste_DEPENDS_io@)
+    set(Chaste_DEPENDS_linalg @Chaste_DEPENDS_linalg@)
+    set(Chaste_DEPENDS_mesh @Chaste_DEPENDS_mesh@)
+    set(Chaste_DEPENDS_ode @Chaste_DEPENDS_ode@)
+    set(Chaste_DEPENDS_pde @Chaste_DEPENDS_pde@)
+    set(Chaste_DEPENDS_cell_based @Chaste_DEPENDS_cell_based@)
+    set(Chaste_DEPENDS_crypt @Chaste_DEPENDS_crypt@)
+    set(Chaste_DEPENDS_continuum_mechanics @Chaste_DEPENDS_continuum_mechanics@)
+    set(Chaste_DEPENDS_heart @Chaste_DEPENDS_heart@)
+    set(Chaste_DEPENDS_lung @Chaste_DEPENDS_lung@)
+    set(Chaste_DEPENDS_core @Chaste_DEPENDS_core@)
+
+    set(Chaste_global_INCLUDE_DIRS @EXPORT_Chaste_global_INCLUDE_DIRS@)
+    set(Chaste_io_INCLUDE_DIRS @EXPORT_Chaste_io_INCLUDE_DIRS@)
+    set(Chaste_linalg_INCLUDE_DIRS @EXPORT_Chaste_linalg_INCLUDE_DIRS@)
+    set(Chaste_mesh_INCLUDE_DIRS @EXPORT_Chaste_mesh_INCLUDE_DIRS@)
+    set(Chaste_ode_INCLUDE_DIRS @EXPORT_Chaste_ode_INCLUDE_DIRS@)
+    set(Chaste_pde_INCLUDE_DIRS @EXPORT_Chaste_pde_INCLUDE_DIRS@)
+    set(Chaste_continuum_mechanics_INCLUDE_DIRS @EXPORT_Chaste_continuum_mechanics_INCLUDE_DIRS@)
+    set(Chaste_cell_based_INCLUDE_DIRS @EXPORT_Chaste_cell_based_INCLUDE_DIRS@)
+    set(Chaste_crypt_INCLUDE_DIRS @EXPORT_Chaste_crypt_INCLUDE_DIRS@)
+    set(Chaste_lung_INCLUDE_DIRS @EXPORT_Chaste_lung_INCLUDE_DIRS@)
+    set(Chaste_heart_INCLUDE_DIRS @EXPORT_Chaste_heart_INCLUDE_DIRS@)
+    @EXPORT_Chaste_ADDITIONAL_PROJECTS@
+
+    set(Chaste_INCLUDES "@Chaste_INCLUDES@")
+    set(Chaste_LINK_LIBRARIES "@Chaste_LINK_LIBRARIES@")
+
+    set(Chaste_ALL_LIBRARIES "@Chaste_ALL_LIBRARIES@")
+
+    # Our library dependencies (contains definitions for IMPORTED targets)
+    include("${Chaste_CMAKE_DIR}/ChasteTargets.cmake")
+endif()
+
+set(Chaste_THIRD_PARTY_INCLUDE_DIRS "${Chaste_INCLUDES}")
+set(Chaste_THIRD_PARTY_LIBRARIES "${Chaste_LINK_LIBRARIES}")
+set(Chaste_LIBRARIES "")
+set(Chaste_INCLUDE_DIRS "")
+set(Chaste_FIND_COMPONENTS_AND_DEPS "")
+
+
+# If no components are specified include core
+if (NOT Chaste_FIND_COMPONENTS)
+    set(Chaste_FIND_COMPONENTS_AND_DEPS ${Chaste_DEPENDS_core})
+endif()
+
+# Setup dependent components in case they are not specified
+set(remaining_components ${Chaste_FIND_COMPONENTS})
+foreach(component ${Chaste_FIND_COMPONENTS})
+    list(REMOVE_AT remaining_components 0)
+    if (NOT(Chaste_FIND_COMPONENTS STREQUAL "none"))
+        list(APPEND Chaste_FIND_COMPONENTS_AND_DEPS ${component})
+        foreach(dependant_component ${Chaste_DEPENDS_${component}})
+            list(FIND remaining_components ${dependant_component} dep_component_found)
+            if (dep_component_found EQUAL -1)
+                list(APPEND Chaste_FIND_COMPONENTS_AND_DEPS ${Chaste_DEPENDS_${component}})
+            endif()
+        endforeach()
+    endif()
+endforeach(component)
+
+list(REMOVE_DUPLICATES Chaste_FIND_COMPONENTS_AND_DEPS)
+
+#message("Chaste_FIND_COMPONENTS = ${Chaste_FIND_COMPONENTS}, Chaste_FIND_COMPONENTS_AND_DEPS = ${Chaste_FIND_COMPONENTS_AND_DEPS}")
+foreach(component ${Chaste_FIND_COMPONENTS_AND_DEPS})
+    # Set up the component include directories
+    list(APPEND Chaste_INCLUDE_DIRS "${Chaste_${component}_INCLUDE_DIRS}")
+
+    if (NOT TARGET chaste_${component})
+        message(SEND_ERROR "Cannot find component ${component}")
+    elseif(Chaste_USE_SHARED_LIBS)
+        get_target_property(is_shared chaste_${component} POSITION_INDEPENDENT_CODE)
+        if (NOT is_shared)
+            message(SEND_ERROR "Requesting shared libraries but ${component} is not a shared library!")
+        endif()
+    endif()
+
+    # These are IMPORTED targets created by ChasteTargets.cmake
+    list(APPEND Chaste_LIBRARIES chaste_${component})
+endforeach(component)
+

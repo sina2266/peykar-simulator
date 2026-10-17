@@ -1,0 +1,32 @@
+using FakeItEasy;
+using OSPSuite.BDDHelper;
+using PKSim.Core.Services;
+using PKSim.Presentation.UICommands;
+
+namespace PKSim.Presentation
+{
+   public abstract class concern_for_ImportObservedDataCommmand : ContextSpecification<ImportConcentrationDataCommand>
+   {
+      protected IImportObservedDataTask _observedDataTask;
+
+      protected override void Context()
+      {
+         _observedDataTask = A.Fake<IImportObservedDataTask>();
+         sut = new ImportConcentrationDataCommand(_observedDataTask);
+      }
+   }
+
+   public class When_executing_the_import_observed_data_command : concern_for_ImportObservedDataCommmand
+   {
+      protected override void Because()
+      {
+         sut.Execute();
+      }
+
+      [Observation]
+      public void should_add_the_selected_observed_data_to_the_current_project()
+      {
+         A.CallTo(() => _observedDataTask.AddObservedDataToProject()).MustHaveHappened();
+      }
+   }
+}

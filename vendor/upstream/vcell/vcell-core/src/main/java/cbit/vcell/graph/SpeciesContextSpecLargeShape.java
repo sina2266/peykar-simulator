@@ -1,0 +1,642 @@
+package cbit.vcell.graph;
+
+import cbit.vcell.mapping.MolecularInternalLinkSpec;
+import cbit.vcell.mapping.SiteAttributesSpec;
+import cbit.vcell.mapping.SpeciesContextSpec;
+import cbit.vcell.mapping.StructuralSite;
+import cbit.vcell.model.SpeciesContext;
+import cbit.vcell.model.Structure;
+import org.vcell.model.rbm.*;
+import org.vcell.util.Coordinate;
+import org.vcell.util.Displayable;
+import org.vcell.util.Pair;
+import org.vcell.util.springsalad.NamedColor;
+
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.util.*;
+
+public class SpeciesContextSpecLargeShape extends AbstractComponentShape implements HighlightableShapeInterface {
+
+    public class CustomLine2D extends Line2D.Double {
+
+        private static final double TOLERANCE = 3.0;    // tolerance for detecting clicks near the line
+        public CustomLine2D(double x1, double y1, double x2, double y2) {
+            super(x1, y1, x2, y2);
+        }
+
+        @Override
+        public boolean contains(double x, double y) {
+            double distance = ptSegDist(x, y);          // calculate distance to the line segment
+            return distance <= TOLERANCE;
+        }
+    }
+
+    private static final double NmToPixelRatio = 18;
+    private static final double DEFAULT_UPPER_CORNER = 3;     // default screen coordinates where we want to display the first site
+    private static final double DEFAULT_LEFT_CORNER = 8;       // in nm
+
+    // x, y positions where we want to begin drawing the shape (nm from top and left of painting area)
+    private double x_offset = DEFAULT_LEFT_CORNER;
+    private double y_offset = DEFAULT_UPPER_CORNER;
+    private double nmToPixelRatio = NmToPixelRatio;
+
+//    private int nameOffset = 0;	// offset upwards from yPos where we may write some text, like the expression of the sp
+
+    final LargeShapeCanvas shapePanel;
+
+    private Displayable owner;      // it's the same scs
+
+    private SpeciesContextSpec scs;
+    private SpeciesContext sc = null;
+    private SpeciesPattern sp = null;
+    private MolecularTypePattern mtp = null;
+    private Structure structure = null;
+
+    private boolean hasAnchor = false;
+    private LinkNode mcpAnchor = null;
+    private double membraneX = 0;
+    private double membraneY = 0;
+    private double membraneRadius = 0;
+    private boolean hasExtracellularSite = false;
+    private boolean hasMembraneSite = false;
+    private boolean hasIntracellularSite = false;
+
+    // we use these to compute some offset from top and left, so that the molecule will look nicely centered on screen
+    private double minX = 0;            // coordinate of the leftmost site
+    private LinkNode leftmostSite = null;
+    private double minY = 0;            // coordinate of the topmost site
+    private LinkNode topmostSite = null;   // if more sites qualify we just keep the first we find
+    private double maxX = 0;            // coordinate of the rightmost site
+    private double maxY = 0;            // coordinate of the bottommost site
+
+    Map<Ellipse2D, SiteAttributesSpec> ellipseToSasMap = new LinkedHashMap<>();         // site oval to site attributes map
+    Map<CustomLine2D, MolecularInternalLinkSpec> lineToMilsMap = new LinkedHashMap<>(); // link line to link spec
+    // we need also the inverse association
+    Map<SiteAttributesSpec, Ellipse2D> sasToEllipseMap = new LinkedHashMap<>();
+    Map<MolecularInternalLinkSpec, CustomLine2D> milsToLineMap = new LinkedHashMap<>();
+
+    private LinkNode lnSelected = null;   // any or both of these may be selected in their tables, they are highlighted on the shape
+    private MolecularInternalLinkSpec milsSelected = null;
+    private Object lastSelectedObject = null;    // this is the last selected object, we show it on top of everything else
+
+    boolean mouseInsidePanel = false;   // we track whether the mouse is inside the panel, to decide whether to show the coordinates (we hide them if the mouse is outside the panel)
+    private Integer mousePixelX = null; // we also track the mouse in pixel coordinates, to decide whether to show the coordinates (we hide them if the mouse is outside the panel)
+    private Integer mousePixelY = null;
+    private Rectangle visibleViewport = null;   // we track the visible viewport of the scroll pane, to decide where to show the coordinates
+
+    public SpeciesContextSpecLargeShape(SpeciesContextSpec scs, LargeShapeCanvas shapePanel, Displayable owner,
+                                        LinkNode lnSelected, MolecularInternalLinkSpec milsSelected,
+                                        Object lastSelectedObject, IssueListProvider issueListProvider) {
+        super(issueListProvider);
+
+        this.owner = owner;
+        this.scs = scs;
+        this.shapePanel = shapePanel;
+
+        this.lnSelected = lnSelected;
+        this.milsSelected = milsSelected;
+        this.lastSelectedObject = lastSelectedObject;
+
+        if(scs != null) {
+            this.sc = scs.getSpeciesContext();
+        }
+        if(sc != null) {
+            this.sp = sc.getSpeciesPattern();
+            this.structure = sc.getStructure();
+        }
+        if(sp != null) {
+            if(sp.getMolecularTypePatterns().size() != 1) {
+                return;
+            }
+            this.mtp = sp.getMolecularTypePatterns().get(0);
+        } else {
+            return;
+        }
+
+        Map<LinkNode, SiteAttributesSpec> merged = scs.getAllSiteAttributes();
+        Set<MolecularInternalLinkSpec> ilSet = scs.getInternalLinkSet();
+        MolecularType mt = mtp.getMolecularType();
+        int counter = 0;    // site counter
+
+        for(Map.Entry<LinkNode, SiteAttributesSpec> e : merged.entrySet()) {
+            LinkNode ln = e.getKey();
+            SiteAttributesSpec sas = e.getValue();
+            Structure structure = sas.getLocation();
+            if(structure.getName().equals(Structure.SpringStructureEnum.Extracellular.columnName)) {
+                hasExtracellularSite = true;
+            } else if(structure.getName().equals(Structure.SpringStructureEnum.Intracellular.columnName)) {
+                hasIntracellularSite = true;
+            }
+            if(ln.getName().equals(SpeciesContextSpec.AnchorSiteString)) {
+                hasAnchor = true;
+                mcpAnchor = ln;
+                hasMembraneSite = true;
+                membraneX = merged.get(ln).getZ();
+                membraneY = merged.get(ln).getY();
+                membraneRadius = merged.get(ln).getRadius();
+            }
+            Coordinate coordinate = sas.getCoordinate();
+            double x = coordinate.getZ();
+            double y = coordinate.getY();
+            if(counter == 0) {
+                minX = x;
+                minY = y;
+                leftmostSite = ln;
+                topmostSite = ln;
+                maxX = x;
+                maxY = y;
+            } else {
+                if(x < minX) {
+                    minX = x;
+                    leftmostSite = ln;
+                }
+                if(y < minY) {
+                    minY = y;
+                    topmostSite = ln;
+                }
+                if(x > maxX) {
+                    maxX = x;
+                }
+                if(y > maxY) {
+                    maxY = y;
+                }
+            }
+            counter++;
+        }
+        // now compute the offsets, we want the sites nicely centered on screen
+        // UPPER_CORNER, LEFT_CORNER
+//        x_offset = DEFAULT_LEFT_CORNER - minX;
+//        y_offset = DEFAULT_UPPER_CORNER - minY;
+    }
+
+    private boolean isPlanarYZ() {    // we only show entities that are 2D in the YZ plane
+        Map<LinkNode, SiteAttributesSpec> merged = scs.getAllSiteAttributes();
+        double oldX = 0;    // dummy value to indulge the compiler
+        int i=0;
+        for(Map.Entry<LinkNode, SiteAttributesSpec> e : merged.entrySet()) {
+            LinkNode ln = e.getKey();
+            SiteAttributesSpec sas = e.getValue();
+            Coordinate coordinate = sas.getCoordinate();
+            // to be planar in YZ, the X coordinates of all sites must be equal
+            double x = coordinate.getX();   // here x means x
+            if(i==0) {
+                oldX = x;   // first pass
+            }
+            if(oldX != x) {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
+    public Dimension getMaxSize() {
+        int z = shapePanel.getZoomFactor();
+        nmToPixelRatio = NmToPixelRatio + z;
+        int width = (int) (nmToPixelRatio * (x_offset+maxX+10));
+        int height = (int) (nmToPixelRatio * (y_offset+maxY+6));
+        return new Dimension(width, height);
+    }
+
+    private void paintDummy(Graphics g) {
+        return;     // implement later
+    }
+    private void paintCompartments(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D)g;
+        Color colorOld = g2.getColor();
+        Paint paintOld = g2.getPaint();
+        Font fontOld = g2.getFont();
+        RenderingHints hintsOld = g2.getRenderingHints();
+        Stroke strokeOld = g2.getStroke();
+
+        Font font;
+        int zoomFactor = shapePanel.getZoomFactor();
+        nmToPixelRatio = NmToPixelRatio + zoomFactor;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        String name = structure.getName();
+        if(zoomFactor > -3) {
+            font = fontOld.deriveFont(Font.BOLD);
+            g.setFont(font);
+        } else {
+            font = fontOld;
+            g.setFont(font);
+        }
+
+        g.setColor(Color.black);
+        double VerticalTextOffset = 1.0;    // vertical means y coord
+        if(!hasMembraneSite) {
+//            double x = minX+x_offset;
+            double x = x_offset;
+            double y = VerticalTextOffset;
+            g2.drawString(name, (int)(nmToPixelRatio * x), (int)(NmToPixelRatio * y));
+        } else {
+            double x = membraneX+x_offset;     // position of membrane bar
+            double y = VerticalTextOffset;
+            g2.drawString("Extracellular", (int)(nmToPixelRatio * (x-7)), (int)(NmToPixelRatio * y));
+            g2.drawString("Intracellular", (int)(nmToPixelRatio * (x+3)), (int)(NmToPixelRatio * y));
+
+            g2.setColor(NamedColor.darker(Color.orange, 0.8));
+            float thickness = 4.0f;
+            g2.setStroke(new BasicStroke(thickness));
+            g2.drawLine((int)(nmToPixelRatio * x),      // centered on the Anchor
+                    (int)(nmToPixelRatio * (y+1)),
+                    (int)(nmToPixelRatio * x),
+                    (int)(nmToPixelRatio * (maxY+y_offset+6)));
+        }
+        g2.setStroke(strokeOld);
+        g2.setRenderingHints(hintsOld);
+        g2.setFont(fontOld);
+        g2.setPaint(paintOld);
+        g2.setColor(colorOld);
+    }
+
+    private void paintAxes(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g;
+        Color colorOld = g2.getColor();
+        Paint paintOld = g2.getPaint();
+        Font fontOld = g2.getFont();
+        RenderingHints hintsOld = g2.getRenderingHints();
+        Stroke strokeOld = g2.getStroke();
+
+        setFontForZoom(g);
+
+        int startX = 15;                            // coordinates for the arrow line (z-axis)
+        int startY = 15;
+        int endX = 60;
+        int endY = 15;
+        g2.setColor(Color.black);
+        g2.drawString("Z", endX+5, endY+3);    // coord name
+        g2.setColor(Color.gray);
+        g2.drawLine(startX, startY, endX, endY);    // draw the arrow line
+        int arrowSize = 10;                         // draw the arrow head
+        int[] xPoints = {endX, endX - arrowSize, endX - arrowSize};
+        int[] yPoints = {endY, endY - arrowSize, endY + arrowSize};
+        g2.fillPolygon(xPoints, yPoints, 3);
+
+        startX = 15;                                // coordinates for the arrow line (Y-axis)
+        startY = 15;
+        endX = 15;
+        endY = 60;
+        g2.setColor(Color.black);
+        g2.drawString("Y", endX-2, endY+12);
+        g2.setColor(Color.gray);
+        g2.drawLine(startX, startY, endX, endY);
+        int[] xPoints2 = {endX, endX - arrowSize, endX + arrowSize};
+        int[] yPoints2 = {endY, endY - arrowSize, endY - arrowSize};
+        g2.fillPolygon(xPoints2, yPoints2, 3);
+
+        startX = 15;                                // coordinates for the arrow line (Y-axis)
+        startY = 100;
+        endX = 15 + (int)nmToPixelRatio;
+        int offset = 3;
+        g2.setColor(Color.black);
+        float thickness = 2.0f;
+        g2.setStroke(new BasicStroke(thickness));
+        g2.drawLine(startX, startY, endX, startY);
+        g2.drawLine(startX, startY-offset, startX, startY+offset);
+        g2.drawLine(endX, startY-offset, endX, startY+offset);
+        g2.setStroke(strokeOld);
+        g2.drawString("1 nm", endX+10, startY+offset);
+
+        if(isPlanarYZ() == false) {
+            startX = 15;                                // coordinates for the arrow line (Y-axis)
+            startY = 130;
+            g2.setColor(Color.red.darker());
+            g2.setStroke(strokeOld);
+            g2.setFont(fontOld);
+            FontMetrics fm = g2.getFontMetrics();
+            String regularText = "The molecule is ";
+            g2.drawString(regularText, startX, startY);
+            int regularTextWidth = fm.stringWidth(regularText);
+            Font font = fontOld.deriveFont(Font.BOLD);
+            g2.setFont(font);
+            g2.drawString("3D", startX + regularTextWidth, startY);
+        }
+        g2.setStroke(strokeOld);
+        g2.setRenderingHints(hintsOld);
+        g2.setFont(fontOld);
+        g2.setPaint(paintOld);
+        g2.setColor(colorOld);
+    }
+
+    private void paintCoordinates(Graphics g) {
+
+        int locationX = 15;             // default location where to paint the mouse coordinates
+        int locationY = 160;
+        if (mousePixelX == null || mousePixelY == null) {
+            return; // no pixel position yet
+        }
+        if (mousePixelX < 0 || mousePixelY < 0 || mouseInsidePanel == false) {
+            return; // do not show if outside panel bounds
+        }
+        if(visibleViewport != null) {       // this should always be the case
+            locationX = visibleViewport.x + 15;
+            locationY = visibleViewport.y + visibleViewport.height - 20;
+        }
+        double mouseY_nm = screenToNmY(mousePixelY);
+        double mouseX_nm = screenToNmX(mousePixelX);
+        if(mouseY_nm <= 0 || mouseX_nm <= 0) {
+            return; // do not show if the mouse would be outside shape area bounds
+        }
+
+        Graphics2D g2 = (Graphics2D) g;
+        Color colorOld = g2.getColor();
+        Paint paintOld = g2.getPaint();
+        Font fontOld = g2.getFont();
+        RenderingHints hintsOld = g2.getRenderingHints();
+        Stroke strokeOld = g2.getStroke();
+
+        double y_snapped = snapToTenth(mouseY_nm);  // snap to nearest 0.1 nm
+        double z_snapped = snapToTenth(mouseX_nm);
+        // note that screen x coordinate corresponds to z coordinate in the model,
+        // and screen y coordinate corresponds to y coordinate in the model
+        g2.setColor(Color.darkGray);
+        setFontForZoom(g);
+        String text = String.format("Y = %.1f nm, Z = %.1f nm", y_snapped, z_snapped);
+        g2.drawString(text, locationX, locationY);
+
+        // draw crosshair at snapped location
+        int snapPixelY = nmToScreenY(y_snapped);
+        int snapPixelX = nmToScreenX(z_snapped);
+        g2.setColor(Color.black);
+        g2.setStroke(new BasicStroke(1f));
+        int arm = 8;        // length of the crosshair arms in pixels
+        g2.drawLine(snapPixelX - arm, snapPixelY, snapPixelX + arm, snapPixelY);
+        g2.drawLine(snapPixelX, snapPixelY - arm, snapPixelX, snapPixelY + arm);
+
+        g2.setStroke(strokeOld);
+        g2.setRenderingHints(hintsOld);
+        g2.setFont(fontOld);
+        g2.setPaint(paintOld);
+        g2.setColor(colorOld);
+    }
+
+    public Ellipse2D drawCenteredCircle(Graphics g, NamedColor namedColor, double xd, double yd, double rd,
+                                        boolean isSelected) {
+        Graphics2D g2 = (Graphics2D)g;
+        Color oldColor = g.getColor();
+        Stroke strokeOld = g2.getStroke();
+        RenderingHints hintsOld = g2.getRenderingHints();
+
+        int z = shapePanel.getZoomFactor();
+        nmToPixelRatio = NmToPixelRatio + z;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        xd = xd-rd;
+        yd = yd-rd;
+
+        int x = (int)(nmToPixelRatio * xd);
+        int y = (int)(nmToPixelRatio * yd);
+        int r = (int)(nmToPixelRatio * rd);
+
+        Ellipse2D oval = new Ellipse2D.Double(x, y, 2*r, 2*r);
+        g2.setColor(namedColor.getColor());
+        g2.fill(oval);
+
+        if(isSelected) {
+            g2.setStroke(new BasicStroke(3.6f));
+            g2.setColor(Color.darkGray);
+        } else {
+            g2.setStroke(new BasicStroke(1.4f));
+            g2.setColor(Color.black);
+        }
+        g2.draw(oval);     // black contour
+
+        g2.setStroke(strokeOld);
+        g2.setRenderingHints(hintsOld);
+        g.setColor(oldColor);
+
+        return oval;
+    }
+
+    public CustomLine2D drawLink(Graphics g, double x1d, double y1d, double x2d, double y2d, boolean isSelected) {
+
+        Graphics2D g2 = (Graphics2D)g;
+        Color oldColor = g.getColor();
+        RenderingHints hintsOld = g2.getRenderingHints();
+        Stroke strokeOld = g2.getStroke();
+
+        int z = shapePanel.getZoomFactor();
+        nmToPixelRatio = NmToPixelRatio + z;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int x1 = (int)(nmToPixelRatio * x1d);
+        int y1 = (int)(nmToPixelRatio * y1d);
+        int x2 = (int)(nmToPixelRatio * x2d);
+        int y2 = (int)(nmToPixelRatio * y2d);
+
+        g.setColor(Color.darkGray);
+        if(isSelected) {
+            g2.setStroke(new BasicStroke(3.6f));
+        } else {
+            g2.setStroke(new BasicStroke(1.4f));
+        }
+
+        CustomLine2D line = new CustomLine2D(x1, y1, x2, y2);
+        g2.draw(line);
+
+        g2.setStroke(strokeOld);
+        g2.setRenderingHints(hintsOld);
+        g.setColor(oldColor);
+
+        return line;
+    }
+
+    public void paintSelf(Graphics g, boolean bPaintContour) {
+        // activate the following 3 lines to prevent display if the object is 3D (x coordinates differ from each other)
+//        if(isPlanarYZ() == false) {
+//            return;
+//        }
+        paintCompartments(g);
+        paintAxes(g);
+        if(mtp == null || mtp.getComponentPatternList().size() == 0) {		// paint empty dummy
+            paintDummy(g);
+            paintCoordinates(g);
+            return;
+        }
+        Map<LinkNode, SiteAttributesSpec> merged = scs.getAllSiteAttributes();
+        Set<MolecularInternalLinkSpec> internalLinkSet = scs.getInternalLinkSet();
+
+        // we draw all objects as unselected first, and then we redraw the selected objects on top of everything else,
+        // so that they look highlighted and are not hidden behind other objects
+        for(MolecularInternalLinkSpec mils : internalLinkSet) {     // draw links first, so that they are under the sites
+            Pair<LinkNode, LinkNode> link = mils.getLink();
+            SiteAttributesSpec sas1 = merged.get(link.one);
+            SiteAttributesSpec sas2 = merged.get(link.two);
+            double x1 = x_offset + sas1.getCoordinate().getZ();
+            double x2 = x_offset + sas2.getCoordinate().getZ();
+            double y1 = y_offset + sas1.getCoordinate().getY();
+            double y2 = y_offset + sas2.getCoordinate().getY();
+            CustomLine2D line = drawLink(g, x1, y1, x2, y2, false);
+            lineToMilsMap.put(line, mils);
+            milsToLineMap.put(mils, line);
+        }
+        for (Map.Entry<LinkNode, SiteAttributesSpec> entry : merged.entrySet()) {    // draw the sites now
+            SiteAttributesSpec sas = entry.getValue();
+            Coordinate coord = sas.getCoordinate();
+            double radius = sas.getRadius();
+            NamedColor color = sas.getColor();
+            double x = x_offset + coord.getZ();
+            double y = y_offset + coord.getY();
+            Ellipse2D oval = drawCenteredCircle(g, color, x, y, radius, false);
+            ellipseToSasMap.put(oval, sas);
+            sasToEllipseMap.put(sas, oval);
+        }
+
+        // we redraw the selected objects on top of all unselected objects
+        if(lnSelected != null) {
+            SiteAttributesSpec sas = merged.get(lnSelected);
+            Coordinate coord = sas.getCoordinate();
+            double radius = sas.getRadius();
+            NamedColor color = sas.getColor();
+            double x = x_offset + coord.getZ();
+            double y = y_offset + coord.getY();
+            Ellipse2D newOval = drawCenteredCircle(g, color, x, y, radius, true);
+            Ellipse2D oldOval = sasToEllipseMap.get(sas);
+            sasToEllipseMap.put(sas, newOval);
+            ellipseToSasMap.remove(oldOval);
+            ellipseToSasMap.put(newOval, sas);
+        }
+        if(milsSelected != null) {
+            Pair<LinkNode, LinkNode> link = milsSelected.getLink();
+            SiteAttributesSpec sas1 = merged.get(link.one);
+            SiteAttributesSpec sas2 = merged.get(link.two);
+            double x1 = x_offset + sas1.getCoordinate().getZ();
+            double x2 = x_offset + sas2.getCoordinate().getZ();
+            double y1 = y_offset + sas1.getCoordinate().getY();
+            double y2 = y_offset + sas2.getCoordinate().getY();
+            CustomLine2D newLine = drawLink(g, x1, y1, x2, y2, true);
+            // we need to extract the mils from the lineToMilsMap, because the line we just drew is not the same
+            // as the one we drew in the first loop (and that is the one in the map)
+            CustomLine2D oldLine = milsToLineMap.get(milsSelected);
+            milsToLineMap.put(milsSelected, newLine);
+            lineToMilsMap.remove(oldLine);
+            lineToMilsMap.put(newLine, milsSelected);
+        }
+
+        // we now redraw the last selected object on top of everything else
+        if(lastSelectedObject != null) {
+            if(lastSelectedObject instanceof LinkNode) {
+                LinkNode ln = (LinkNode)lastSelectedObject;
+                SiteAttributesSpec sas = merged.get(ln);
+                if(sas == null) {
+                    throw new RuntimeException("Stale last selected site: " + ln.getName());
+                }
+                Coordinate coord = sas.getCoordinate();
+                double radius = sas.getRadius();
+                NamedColor color = sas.getColor();
+                double x = x_offset + coord.getZ();
+                double y = y_offset + coord.getY();
+                Ellipse2D newOval = drawCenteredCircle(g, color, x, y, radius, true);
+                Ellipse2D oldOval = sasToEllipseMap.get(sas);
+                sasToEllipseMap.put(sas, newOval);
+                ellipseToSasMap.remove(oldOval);
+                ellipseToSasMap.put(newOval, sas);
+            } else if(lastSelectedObject instanceof MolecularInternalLinkSpec) {
+                MolecularInternalLinkSpec mils = (MolecularInternalLinkSpec)lastSelectedObject;
+                Pair<LinkNode, LinkNode> link = mils.getLink();
+                SiteAttributesSpec sas1 = merged.get(link.one);
+                SiteAttributesSpec sas2 = merged.get(link.two);
+                double x1 = x_offset + sas1.getCoordinate().getZ();
+                double x2 = x_offset + sas2.getCoordinate().getZ();
+                double y1 = y_offset + sas1.getCoordinate().getY();
+                double y2 = y_offset + sas2.getCoordinate().getY();
+                CustomLine2D newLine = drawLink(g, x1, y1, x2, y2, true);
+                CustomLine2D oldLine = milsToLineMap.get(mils);
+                milsToLineMap.put(mils, newLine);
+                lineToMilsMap.remove(oldLine);
+                lineToMilsMap.put(newLine, mils);
+            }
+        }
+        paintCoordinates(g);
+    }
+
+
+
+    public Object contains(Point point) {
+        for (Map.Entry<Ellipse2D, SiteAttributesSpec> entry : ellipseToSasMap.entrySet()) {
+            Ellipse2D oval = entry.getKey();
+            SiteAttributesSpec sas = entry.getValue();
+            if(oval.contains(point)) {
+                return sas;
+            }
+        }
+        for (Map.Entry<CustomLine2D, MolecularInternalLinkSpec> entry : lineToMilsMap.entrySet()) {
+            CustomLine2D line = entry.getKey();
+            MolecularInternalLinkSpec mils = entry.getValue();
+            if(line.contains(point.getX(), point.getY())) {
+                return mils;
+            }
+        }
+        return null;
+    }
+
+    private Font setFontForZoom(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        Font fontOld = g2.getFont();
+        Font font;
+        int z = shapePanel.getZoomFactor();
+        if(z > -3) {
+            font = fontOld.deriveFont(Font.BOLD);
+            g.setFont(font);
+        } else {
+            font = fontOld;
+            g.setFont(font);
+        }
+        return font;
+    }
+    public double screenToNmX(int pixelX) {
+        return (pixelX / nmToPixelRatio) - x_offset;
+    }
+    public double screenToNmY(int pixelY) {
+        return (pixelY / nmToPixelRatio) - y_offset;
+    }
+    public int nmToScreenX(double nmX) {
+        return (int) Math.round((nmX + x_offset) * nmToPixelRatio);
+    }
+    public int nmToScreenY(double nmY) {
+        return (int) Math.round((nmY + y_offset) * nmToPixelRatio);
+    }
+    private static double snapToTenth(double v) {
+        return Math.round(v * 10.0) / 10.0;
+    }
+
+    @Override
+    public void paintSelf(Graphics g) {
+        paintSelf(g, true);
+    }
+    public void paintSelf(Graphics g, Integer mousePixelX, Integer mousePixelY, boolean mouseInsidePanel,
+                          Rectangle visibleViewport) {
+        this.mousePixelX = mousePixelX;
+        this.mousePixelY = mousePixelY;
+        this.mouseInsidePanel = mouseInsidePanel;
+        this.visibleViewport = visibleViewport;
+        paintSelf(g);
+    }
+
+    @Override
+    public boolean isHighlighted() {
+        return false;
+    }
+    @Override
+    public void setHighlight(boolean highlight, boolean param) {
+    }
+    @Override
+    public void turnHighlightOffRecursive(Graphics g) {
+    }
+
+    @Override
+    public String getDisplayName() {
+        return null;
+    }
+    @Override
+    public String getDisplayType() {
+        return null;
+    }
+
+}

@@ -1,0 +1,72 @@
+// Copyright (C) 2019 - 2025 by Pedro Mendes, Rector and Visitors of the
+// University of Virginia, University of Heidelberg, and University
+// of Connecticut School of Medicine.
+// All rights reserved.
+
+// Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., University of Heidelberg, and University of
+// of Connecticut School of Medicine.
+// All rights reserved.
+
+// Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., University of Heidelberg, and The University
+// of Manchester.
+// All rights reserved.
+
+// Copyright (C) 2009 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., EML Research, gGmbH, University of Heidelberg,
+// and The University of Manchester.
+// All rights reserved.
+
+#ifndef CQSpeciesWidget_h
+#define CQSpeciesWidget_h
+
+#include <QtCore/QVariant>
+
+#include "copasi/UI/ui_CQSpeciesWidget.h"
+
+#include "copasi/UI/CQSortFilterProxyModel.h"
+#include "copasi/UI/CQComboDelegate.h"
+#include "copasi/UI/CQSpecieDM.h"
+
+class CQSpeciesWidget : public CopasiWidget, public Ui::CQSpeciesWidget
+{
+  Q_OBJECT
+
+public:
+  CQSpeciesWidget(QWidget* parent = 0, const char* name = 0);
+  ~CQSpeciesWidget();
+
+  void setFramework(int framework) override;
+  CQBaseDataModel* getCqDataModel() override;
+
+private:
+  CQSpecieDM* mpSpecieDM;
+  CQSortFilterProxyModel *mpProxyModel;
+  QStringList mCompartments;
+  CQComboDelegate* mpCompartmentDelegate;
+  CQComboDelegate* mpTypeDelegate;
+  void deleteSelectedSpecies();
+
+signals:
+  void initFilter();
+
+protected:
+  bool enterProtected() override;
+  bool updateProtected(ListViews::ObjectType objectType, ListViews::Action action, const CRegisteredCommonName & cn) override;
+  bool leaveProtected() override;
+
+  void keyPressEvent(QKeyEvent* ev) override;
+  void refreshCompartments();
+
+protected slots:
+  virtual void slotBtnNewClicked();
+  virtual void slotBtnDeleteClicked(bool needFocus=false);
+  virtual void slotBtnClearClicked();
+  virtual void slotDoubleClicked(const QModelIndex proxyIndex);
+  virtual void dataChanged(const QModelIndex& topLeft,
+                           const QModelIndex& bottomRight);
+  virtual void slotFilterChanged();
+};
+
+#endif // CQSpeciesWidget_h

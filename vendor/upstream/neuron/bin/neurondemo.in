@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -e
+
+ARCH=@host_cpu@
+MODSUBDIR=@modsubdir@
+
+if test "x${NRNHOME}" = x ; then
+        prefix="@prefix@"
+	exec_prefix=@exec_prefix@
+	NRNBIN=@bindir@/
+	NRNDEMO=@prefix@/share/@PACKAGE@/demo/
+else
+    prefix="$NRNHOME"
+    exec_prefix="${prefix}"
+	NRNBIN="${exec_prefix}/bin/"
+	NRNDEMO="${prefix}/share/@PACKAGE@/demo/"
+fi
+
+if test "${NRNHOME_EXEC}" != "" ; then
+	exec_prefix="${NRNHOME_EXEC}"
+	NRNBIN="${exec_prefix}/bin/"
+fi
+
+export NRNDEMO
+
+if [ ! -f "${NRNDEMO}neuron" ] ; then
+	(cd "${NRNDEMO}release" ; "${NRNBIN}nrnivmodl" ; cd .. ; rm -f neuron ; touch neuron)
+fi
+
+if [ "@NRN_ENABLE_SHARED@" = "ON" ]; then
+    ${NRNBIN}nrniv -dll "${NRNDEMO}release/${MODSUBDIR}/@CMAKE_SHARED_LIBRARY_PREFIX@nrnmech@CMAKE_SHARED_LIBRARY_SUFFIX@" "${NRNDEMO}demo.hoc" "$@" -
+else
+    "${NRNDEMO}release/${MODSUBDIR}/special" "${NRNDEMO}demo.hoc" "$@" -
+fi

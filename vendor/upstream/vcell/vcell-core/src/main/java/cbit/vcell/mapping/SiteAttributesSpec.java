@@ -1,0 +1,337 @@
+/*
+ * Copyright (C) 1999-2011 University of Connecticut Health Center
+ *
+ * Licensed under the MIT License (the "License").
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/mit-license.php
+ */
+
+package cbit.vcell.mapping;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import cbit.vcell.model.*;
+
+import org.vcell.model.rbm.*;
+import org.vcell.model.ssld.SsldUtils;
+import org.vcell.util.*;
+import org.vcell.util.Issue.IssueCategory;
+import org.vcell.util.Issue.IssueSource;
+import org.vcell.util.IssueContext.ContextType;
+import org.vcell.util.document.Identifiable;
+import org.vcell.util.springsalad.Colors;
+import org.vcell.util.springsalad.IOHelp;
+import org.vcell.util.springsalad.NamedColor;
+
+@SuppressWarnings("serial")
+public class SiteAttributesSpec implements Serializable, Identifiable, Displayable, IssueSource, Matchable {
+
+	public final static double DEFAULT_STRUCTURAL_SITE_RADIUS = 0.8;		// nm, we make them smaller as visual cue
+
+	private final SpeciesContextSpec fieldSpeciesContextSpec;
+	private LinkNode fieldLinkNode = null;
+	private double fieldRadius = 1.0;
+	private double fieldDiffusionRate = 1.0;
+	private Structure fieldLocation = null;		// feature or membrane
+	private Coordinate fieldCoordinate = new Coordinate(0,0,0);	// double x,y,z; has distanceTo()
+	private NamedColor fieldColor = Colors.RED;
+
+	public static final String StateZero = "State0";		// default state name if no states are defined in the model; used for I/O only, not stored in the model
+	// the ComponentStatePattern must not be Any; can be recovered from the MolecularComponentPattern
+	// the BondType must be None, can be recovered from the MolecularComponentPattern
+	
+	public SiteAttributesSpec(SpeciesContextSpec scs, LinkNode ln, Structure structure) {
+		fieldSpeciesContextSpec = scs;
+		setLinkNode(ln);
+		setLocation(structure);
+	}
+	public SiteAttributesSpec(SpeciesContextSpec scs, LinkNode ln, double radius, double diffusion, Structure structure, Coordinate coordinate, NamedColor color) {
+		this(scs, ln, structure);
+		setRadius(radius);
+		setDiffusionRate(diffusion);
+		setColor(color);
+		setCoordinate(coordinate);
+	}
+	public SiteAttributesSpec(SpeciesContextSpec thisScs, SiteAttributesSpec thatSas) {
+		fieldSpeciesContextSpec = thisScs;
+		if(thatSas.getLinkNode() instanceof MolecularComponentPattern) {
+			// MolecularComponentPattern is physiology defined, we use the same instance
+			setLinkNode(thatSas.getLinkNode());
+		} else if(thatSas.getLinkNode() instanceof StructuralSite) {
+			// StructuralSite is application dependent, so we create a new instance with the same name
+			setLinkNode(new StructuralSite(thatSas.getLinkNode().getName()));
+		} else {
+			throw new RuntimeException("SiteAttributesSpec copy constructor: unknown LinkNode type");
+		}
+		setLocation(thatSas.getLocation());
+		setRadius(thatSas.getRadius());
+		setDiffusionRate(thatSas.getDiffusionRate());
+		setColor(thatSas.getColor());
+		Coordinate c = new Coordinate(thatSas.getCoordinate().getX(), thatSas.getCoordinate().getY(), thatSas.getCoordinate().getZ());
+		setCoordinate(c);	// we make a new instance for coordinates
+	}
+
+	public SpeciesContextSpec getSpeciesContextSpec() {
+		return fieldSpeciesContextSpec;
+	}
+	public LinkNode getLinkNode() {
+		return fieldLinkNode;
+	}
+	public void setLinkNode(LinkNode ln) {
+		this.fieldLinkNode = ln;
+	}
+
+	public double getRadius() {
+		return fieldRadius;
+	}
+	public void setRadius(double radius) {
+		this.fieldRadius = radius;
+	}
+
+	public double getDiffusionRate() {
+		return fieldDiffusionRate;
+	}
+	public void setDiffusionRate(double diffusionRate) {
+		this.fieldDiffusionRate = diffusionRate;
+	}
+
+	public Structure getLocation() {
+		return fieldLocation;
+	}
+	public void setLocation(Structure location) {
+		this.fieldLocation = location;
+	}
+
+	public Coordinate getCoordinate() {
+		return fieldCoordinate;
+	}
+	public void setCoordinate(Coordinate coordinate) {
+		this.fieldCoordinate = coordinate;
+	}
+
+	public NamedColor getColor() {
+		return fieldColor;
+	}
+	public void setColor(NamedColor color) {
+		this.fieldColor = color;
+	}
+	public double getX() {
+		return getCoordinate().getX();
+	}
+	public double getY() {
+		return getCoordinate().getY();
+	}
+	public double getZ() {
+		return getCoordinate().getZ();
+	}
+
+	public int getIndex() {
+		LinkNode ln = getLinkNode();
+		if(ln instanceof MolecularComponentPattern mcp) {
+			MolecularComponent mc = mcp.getMolecularComponent();
+			int index = mc.getIndex();
+			return index;
+		} else if(ln instanceof StructuralSite ss) {
+			int saMapSize = getSpeciesContextSpec().getSiteAttributesMap().size();
+			int lastMolecularComponentSiteIndex = saMapSize + 1;		// +1 because site indices are 1-based in the .vcell file
+			int idx = SsldUtils.indexOfKey(getSpeciesContextSpec().getStructuralSiteAttributesMap(), ss);
+			return lastMolecularComponentSiteIndex + idx;		// structural sites are indexed after the molecular component sites
+		} else {
+			throw new RuntimeException("getIndex(): unknown LinkNode type");
+		}
+	}
+
+	public void writeType(StringBuilder sb) {		// I/O the Site Type (mMlecularComponent)
+		if(getLinkNode() == null) {
+			throw new RuntimeException("writeType(): MolecularComponentPattern is null");
+		}
+		List<ComponentStateDefinition> csdList = null;
+		LinkNode ln = getLinkNode();
+		if(ln instanceof MolecularComponentPattern mcp) {
+			MolecularComponent mc = mcp.getMolecularComponent();
+			csdList = mc.getComponentStateDefinitions();
+		}
+		sb.append("TYPE: Name \"" + ln.getName() + "\"");
+		sb.append(" Radius " + IOHelp.DF[5].format(getRadius()) + " D " + IOHelp.DF[3].format(getDiffusionRate()) + " Color " + getColor().getName());
+		sb.append(" STATES ");
+		if(csdList == null || csdList.isEmpty()) {
+			sb.append("\"" + StateZero + "\"" + " ");
+		} else {
+			for (ComponentStateDefinition state : csdList) {
+				sb.append("\"" + state.getName() + "\"" + " ");
+			}
+		}
+		sb.append("\n");
+	}
+	public void writeSite(StringBuilder sb) {
+		if(getLinkNode() == null) {
+			throw new RuntimeException("writeSite(): MolecularComponentPattern is null");
+		}
+		ComponentStatePattern csp = null;
+		LinkNode ln = getLinkNode();
+		if(ln instanceof MolecularComponentPattern mcp) {
+			MolecularComponent mc = mcp.getMolecularComponent();
+			csp = mcp.getComponentStatePattern();
+		}
+		ComponentStateDefinition csd = null;
+		if(csp != null) {
+			csd = csp.getComponentStateDefinition();
+		}
+		if(csp == null || csd == null) {
+			csd = new ComponentStateDefinition(StateZero);
+		}
+		String initialState = csd.getName();
+		int index = this.getIndex() - 1;
+		sb.append("SITE " + index + " : " + getLocation().getName() + " : Initial State '" + initialState + "'");
+		sb.append("\n");
+		sb.append("          ");
+		this.writeType(sb);	// ex: TYPE: Name "Type2" Radius 1.00000 D 1.000 Color LIME STATES "State0" "State1" 
+		sb.append("          " + "x " + IOHelp.DF[5].format(getX()) + " y " + IOHelp.DF[5].format(getY()) + 
+				" z " + IOHelp.DF[5].format(getZ()) + " ");		// ex: x 4.00000 y 4.00000 z 20.00000
+		sb.append("\n");
+	}
+
+	@Override
+	public boolean compareEqual(Matchable obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof SiteAttributesSpec)) {
+			return false;
+		}
+		SiteAttributesSpec candidate = (SiteAttributesSpec) obj;
+
+		if(!fieldSpeciesContextSpec.compareEqual(candidate.getSpeciesContextSpec())) {
+			return false;
+		}
+		if(!fieldLinkNode.compareEqual(candidate.getLinkNode())) {
+			return false;
+		}
+		if(fieldRadius != candidate.getRadius()) {
+			return false;
+		}
+		if(fieldDiffusionRate != candidate.getDiffusionRate()) {
+			return false;
+		}
+		if(!fieldLocation.compareEqual(candidate.getLocation())) {
+			return false;
+		}
+		if(!fieldCoordinate.compareEqual(candidate.getCoordinate())) {
+			return false;
+		}
+		if(fieldColor != candidate.getColor()) {
+			return false;
+		}
+		return true;
+	}
+	public boolean compareShallow(Matchable obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof SiteAttributesSpec)) {
+			return false;
+		}
+		SiteAttributesSpec candidate = (SiteAttributesSpec) obj;
+
+		if(!fieldSpeciesContextSpec.getSpeciesContext().getName().contentEquals(candidate.getSpeciesContextSpec().getSpeciesContext().getName())) {
+			return false;
+		}
+		if(!fieldLinkNode.getName().contentEquals(candidate.getLinkNode().getName())) {
+			return false;
+		}
+		if(fieldRadius != candidate.getRadius()) {
+			return false;
+		}
+		if(fieldDiffusionRate != candidate.getDiffusionRate()) {
+			return false;
+		}
+		if(!fieldLocation.compareEqual(candidate.getLocation())) {
+			return false;
+		}
+		if(!fieldCoordinate.compareEqual(candidate.getCoordinate())) {
+			return false;
+		}
+		if(fieldColor != candidate.getColor()) {
+			return false;
+		}
+		return true;
+	}
+
+	public double computeReactionRadius() {		// in langevin solver notation is R
+		// assumes radius in nanometers
+		// Either 1.5x radius or radius+2 nm, whichever is smaller, but not smaller than radius+0.5 nm
+		double minRadius = Math.max(0.5+fieldRadius,  1.5*fieldRadius);
+		double R = Math.min(minRadius, fieldRadius+2);
+		return R;
+	}
+
+	@Deprecated
+	public void gatherIssues(IssueContext issueContext, List<Issue> issueVector) {
+		issueContext = issueContext.newChildContext(ContextType.SiteAttributesSpec, this);
+
+		if(fieldLocation instanceof Membrane) {
+			String tip = "A generic issue for SiteAttributesSpec entity.";
+			String msg = "Location is a Membrane.";
+			issueVector.add(new Issue(this, issueContext, IssueCategory.Identifiers, msg, tip, Issue.Severity.WARNING));
+		}
+	}
+
+	public static Coordinate getMinCoordinate(Map<LinkNode, SiteAttributesSpec> map) {
+		double minX = Double.POSITIVE_INFINITY;
+		double minY = Double.POSITIVE_INFINITY;
+		double minZ = Double.POSITIVE_INFINITY;
+		for (SiteAttributesSpec sas : map.values()) {
+			Coordinate c = sas.getCoordinate();
+			if (c != null) {
+				if (c.getX() < minX) minX = c.getX();
+				if (c.getY() < minY) minY = c.getY();
+				if (c.getZ() < minZ) minZ = c.getZ();
+			}
+		}
+		if (minX == Double.POSITIVE_INFINITY) {
+			return null; // map empty or all coords null
+		}
+		return new Coordinate(minX, minY, minZ);
+	}
+	public static Coordinate getMaxCoordinate(Map<LinkNode, SiteAttributesSpec> map) {
+		double maxX = Double.NEGATIVE_INFINITY;
+		double maxY = Double.NEGATIVE_INFINITY;
+		double maxZ = Double.NEGATIVE_INFINITY;
+		for (SiteAttributesSpec sas : map.values()) {
+			Coordinate c = sas.getCoordinate();
+			if (c != null) {
+				if (c.getX() > maxX) maxX = c.getX();
+				if (c.getY() > maxY) maxY = c.getY();
+				if (c.getZ() > maxZ) maxZ = c.getZ();
+			}
+		}
+		if (maxX == Double.NEGATIVE_INFINITY) {
+			return null; // map empty or all coords null
+		}
+		return new Coordinate(maxX, maxY, maxZ);
+	}
+
+	public static final String typeName = "SiteAttributesSpec";
+	@Override
+	public String getDisplayName() {
+		if(fieldLinkNode != null) {
+			LinkNode ln = getLinkNode();
+			if(ln instanceof MolecularComponentPattern mcp) {
+				return mcp.getMolecularComponent().getDisplayName();
+			} else {
+				return ln.getDisplayName();
+			}
+		}
+		return("?");
+	}
+	@Override
+	public String getDisplayType() {
+		return typeName;
+	}
+
+}
+	

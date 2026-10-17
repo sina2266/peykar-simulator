@@ -1,0 +1,2173 @@
+<?xml version="1.0"?>
+<!-- Copyright (C) 2019 - 2023 by Pedro Mendes, Rector and Visitors of the -->
+<!-- University of Virginia, University of Heidelberg, and University -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2017 - 2018 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and University of -->
+<!-- of Connecticut School of Medicine. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2010 - 2016 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., University of Heidelberg, and The University -->
+<!-- of Manchester. -->
+<!-- All rights reserved. -->
+
+<!-- Copyright (C) 2009 by Pedro Mendes, Virginia Tech Intellectual -->
+<!-- Properties, Inc., EML Research, gGmbH, University of Heidelberg, -->
+<!-- and The University of Manchester. -->
+<!-- All rights reserved. -->
+
+<grammar ns="http://www.copasi.org/static/schema" xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="COPASI">
+      <a:documentation> This is the only top element of a CopasiML file. It contains the models as
+        well as the task information. </a:documentation>
+      <attribute name="versionMajor">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="versionMinor">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="versionDevel">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="copasiSourcesModified">
+        <data type="boolean"/>
+      </attribute>
+      <zeroOrMore>
+        <attribute>
+          <a:documentation> We explicitedly allow the addition of attributes which are not in the
+            CopasiML name space so that this may be expandend by other user to suit their needs. </a:documentation>
+          <anyName>
+            <except>
+              <nsName ns=""/>
+              <nsName ns="http://www.copasi.org/static/schema"/>
+            </except>
+          </anyName>
+          <text/>
+        </attribute>
+      </zeroOrMore>
+      <optional>
+        <element name="ListOfFunctions">
+          <ref name="listOfFunctions.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="Model">
+          <ref name="model.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="ListOfTasks">
+          <ref name="listOfTasks.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="ListOfReports">
+          <ref name="listOfReportSpecifications.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="ListOfPlots">
+          <ref name="listOfPlotSpecifications.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="GUI">
+          <ref name="gui.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="ListOfLayouts">
+          <ref name="listOfLayouts.datatype"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="SBMLReference">
+          <attribute name="file">
+            <data type="string"/>
+          </attribute>
+          <oneOrMore>
+            <element name="SBMLMap">
+              <attribute name="COPASIkey">
+                <data type="IDREF">
+                  <param name="pattern">[_a-zA-Z]+_\d+</param>
+                </data>
+              </attribute>
+              <attribute name="SBMLid">
+                <data type="string">
+                  <param name="pattern">[_a-zA-Z][_a-zA-Z0-9]*</param>
+                </data>
+              </attribute>
+            </element>
+          </oneOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="ListOfUnitDefinitions">
+          <ref name="listOfUnitDefinitions.datatype"/>
+        </element>
+      </optional>
+      <zeroOrMore>
+        <element>
+          <a:documentation> We explicitedly allow the addition of elements which are not in the
+            CopasiML name space so that this may be expandend by other user to suit their needs. </a:documentation>
+          <anyName>
+            <except>
+              <nsName ns=""/>
+              <nsName ns="http://www.copasi.org/static/schema"/>
+            </except>
+          </anyName>
+          <zeroOrMore>
+            <attribute>
+              <anyName>
+                <except>
+                  <nsName ns=""/>
+                  <nsName ns="http://www.copasi.org/static/schema"/>
+                </except>
+              </anyName>
+              <text/>
+            </attribute>
+          </zeroOrMore>
+          <text/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </start>
+
+  <define name="reactionParticipant.datatype">
+    <attribute name="stoichiometry">
+      <data type="double"/>
+    </attribute>
+    <attribute name="metabolite">
+      <data type="IDREF">
+        <param name="pattern">Metabolite_\d+</param>
+      </data>
+    </attribute>
+  </define>
+
+  <define name="miriamAnnotation.element">
+    <element name="MiriamAnnotation">
+      <ref name="rdf.datatype"/>
+    </element>
+  </define>
+
+  <define name="parameter.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="type">
+      <choice>
+        <value type="string">float</value>
+        <value type="string">unsignedFloat</value>
+        <value type="string">integer</value>
+        <value type="string">unsignedInteger</value>
+        <value type="string">bool</value>
+        <value type="string">string</value>
+        <value type="string">cn</value>
+        <value type="string">key</value>
+        <value type="string">file</value>
+      </choice>
+    </attribute>
+    <attribute name="value">
+      <data type="string"/>
+    </attribute>
+  </define>
+
+  <define name="parameterText.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="type">
+      <choice>
+        <value type="string">expression</value>
+      </choice>
+    </attribute>
+    <text/>
+  </define>
+
+  <define name="parameterList.datatype">
+    <zeroOrMore>
+      <choice>
+        <element name="ParameterGroup">
+          <ref name="parameterList.datatype"/>
+          <ref name="name.attribute"/>
+        </element>
+        <element name="Parameter">
+          <ref name="parameter.datatype"/>
+        </element>
+        <element name="ParameterText">
+          <ref name="parameterText.datatype"/>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="comment.element">
+    <element name="Comment">
+      <choice>
+        <ref name="xhtml.datatype"/>
+        <text/>
+      </choice>
+    </element>
+  </define>
+
+  <define name="name.attribute">
+    <attribute name="name">
+      <data type="string">
+        <param name="pattern">[\S ]+</param>
+      </data>
+    </attribute>
+  </define>
+
+  <define name="expression.simpletype">
+    <data type="string"/>
+  </define>
+
+  <define name="UnsupportedAnnotation.datatype">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName>
+            <except>
+              <nsName ns=""/>
+              <nsName ns="http://www.copasi.org/static/schema"/>
+            </except>
+          </anyName>
+          <zeroOrMore>
+            <attribute>
+              <anyName>
+                <except>
+                  <nsName ns=""/>
+                  <nsName ns="http://www.copasi.org/static/schema"/>
+                </except>
+              </anyName>
+              <text/>
+            </attribute>
+          </zeroOrMore>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+
+  <define name="listOfUnsupportedAnnotations.datatype">
+    <oneOrMore>
+      <element name="UnsupportedAnnotation">
+        <attribute name="name"><text/></attribute>
+        <ref name="UnsupportedAnnotation.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="annotation.datatype">
+    <optional>
+      <ref name="miriamAnnotation.element"/>
+    </optional>
+    <optional>
+      <ref name="comment.element"/>
+    </optional>
+    <optional>
+      <element name="ListOfUnsupportedAnnotations">
+        <ref name="listOfUnsupportedAnnotations.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+  <define name="other.datatype">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+              <text/>
+            </attribute>
+          </zeroOrMore>
+          <ref name="other.datatype"></ref>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+
+  <define name="xhtml.datatype">
+    <zeroOrMore>
+      <element>
+        <nsName ns="http://www.w3.org/1999/xhtml"/>
+        <zeroOrMore>
+          <attribute>
+            <anyName/>
+            <text/>
+          </attribute>
+        </zeroOrMore>
+        <ref name="other.datatype"/>
+      </element>
+    </zeroOrMore>
+  </define>
+
+  <define name="rdf.datatype">
+    <grammar>
+      <include href="http://www.copasi.org/static/schema/rdfxml.rng" ns="http://relaxng.org/ns/structure/1.0"/>
+    </grammar>
+  </define>
+
+  <!--
+  <define name="rdf.datatype">
+    <element>
+      <nsName ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+          <text/>
+        </attribute>
+      </zeroOrMore>
+      <ref name="rdfContent.datatype"/>
+    </element>
+  </define>
+
+  <define name="rdfContent.datatype">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+              <text/>
+            </attribute>
+          </zeroOrMore>
+        <ref name="rdfContent.datatype"/>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+-->
+
+  <define name="reportSection.datatype">
+    <oneOrMore>
+      <ref name="object.element"/>
+    </oneOrMore>
+    <empty/>
+  </define>
+
+  <define name="listOfUnitDefinitions.datatype">
+    <oneOrMore>
+      <ref name="unitDefinition.datatype"></ref>
+    </oneOrMore>
+  </define>
+  
+  <define name="unitDefinition.datatype">
+    <element name="UnitDefinition">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Unit_\d+</param>
+      </data>
+    </attribute>
+      <ref name="name.attribute"/>
+      <attribute name="symbol">
+        <data type="string"/>
+      </attribute>
+      <ref name="annotation.datatype"/>
+      <element name="Expression">
+        <ref name="expression.simpletype"/>
+      </element>
+    </element>
+  </define>
+
+  <define name="listOfFunctions.datatype">
+    <oneOrMore>
+      <ref name="function.datatype"/>
+    </oneOrMore>
+  </define>
+
+  <define name="function.datatype">
+    <element name="Function">
+      <ref name="name.attribute"/>
+      <attribute name="key">
+        <data type="ID">
+          <param name="pattern">Function_\d+</param>
+        </data>
+      </attribute>
+      <attribute name="type">
+        <choice>
+          <value type="string">MassAction</value>
+          <value type="string">PreDefined</value>
+          <value type="string">UserDefined</value>
+          <value type="string">Function</value>
+          <value type="string">Expression</value>
+        </choice>
+      </attribute>
+      <attribute name="reversible">
+        <choice>
+          <value type="string">unspecified</value>
+          <value type="string">true</value>
+          <value type="string">false</value>
+        </choice>
+      </attribute>
+      <ref name="annotation.datatype"/>
+      <ref name="expression.element"/>
+      <optional>
+        <element name="ListOfParameterDescriptions">
+          <ref name="listOfParameterDescriptions.datatype"/>
+        </element>
+      </optional>
+    </element>
+  </define>
+
+  <define name="listOfParameterDescriptions.datatype">
+    <oneOrMore>
+      <element name="ParameterDescription">
+        <ref name="parameterDescription.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="parameterDescription.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">FunctionParameter_\d+</param>
+      </data>
+    </attribute>
+    <attribute name="order">
+      <data type="nonNegativeInteger"/>
+    </attribute>
+    <attribute name="role">
+      <choice>
+        <value type="string">product</value>
+        <value type="string">volume</value>
+        <value type="string">time</value>
+        <value type="string">modifier</value>
+        <value type="string">variable</value>
+        <value type="string">substrate</value>
+        <value type="string">constant</value>
+      </choice>
+    </attribute>
+  </define>
+
+  <define name="model.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Model_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="simulationType">
+      <value type="string">time</value>
+    </attribute>
+    <attribute name="timeUnit">
+      <data type="string"/>
+    </attribute>
+    <attribute name="volumeUnit">
+      <data type="string"/>
+    </attribute>
+    <attribute name="areaUnit">
+      <data type="string"/>
+    </attribute>
+    <attribute name="lengthUnit">
+      <data type="string"/>
+    </attribute>
+    <attribute name="quantityUnit">
+      <data type="string"/>
+    </attribute>
+    <attribute name="type">
+      <choice>
+        <value type="string">stochastic</value>
+        <value type="string">deterministic</value>
+      </choice>
+    </attribute>
+    <attribute name="avogadroConstant">
+      <data type="double"/>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <optional>
+      <ref name="initialExpression.element"/>
+    </optional>
+    <optional>
+      <element name="ListOfCompartments">
+        <ref name="listOfCompartments.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfMetabolites">
+        <ref name="listOfMetabolites.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfModelValues">
+        <ref name="listOfModelValues.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfReactions">
+        <ref name="listOfReactions.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfEvents">
+        <ref name="listOfEvents.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfModelParameterSets">
+        <ref name="listOfModelParameterSets.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="StateTemplate">
+        <zeroOrMore>
+          <element name="StateTemplateVariable">
+            <attribute name="objectReference">
+              <data type="IDREF">
+                <param name="pattern">(Model|Metabolite|Compartment|ModelValue)_\d+</param>
+              </data>
+            </attribute>
+          </element>
+        </zeroOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="InitialState">
+        <attribute name="type">
+          <data type="string"/>
+        </attribute>
+        <list>
+          <zeroOrMore>
+            <data type="double"/>
+          </zeroOrMore>
+        </list>
+      </element>
+    </optional>
+  </define>
+
+  <define name="listOfCompartments.datatype">
+    <oneOrMore>
+      <element name="Compartment">
+        <ref name="compartment.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="compartment.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Compartment_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="simulationType">
+      <choice>
+        <value type="string">ode</value>
+        <value type="string">assignment</value>
+        <value type="string">fixed</value>
+      </choice>
+    </attribute>
+    <attribute name="dimensionality">
+      <data type="int">
+        <param name="minInclusive">0</param>
+        <param name="maxInclusive">3</param>
+      </data>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <optional>
+      <ref name="expression.element"/>
+    </optional>
+    <optional>
+      <ref name="initialExpression.element"/>
+    </optional>
+    <attribute name="addNoise">
+      <data type="boolean"/>
+    </attribute>
+    <optional>
+      <ref name="noiseExpression.element"/>
+    </optional>
+  </define>
+
+  <define name="listOfMetabolites.datatype">
+    <oneOrMore>
+      <element name="Metabolite">
+        <ref name="metabolite.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="metabolite.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Metabolite_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="compartment">
+      <data type="IDREF">
+        <param name="pattern">Compartment_\d+</param>
+      </data>
+    </attribute>
+    <attribute name="simulationType">
+      <choice>
+        <value type="string">ode</value>
+        <value type="string">assignment</value>
+        <value type="string">reactions</value>
+        <value type="string">fixed</value>
+      </choice>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <optional>
+      <ref name="expression.element"/>
+    </optional>
+    <optional>
+      <ref name="initialExpression.element"/>
+    </optional>
+    <attribute name="addNoise">
+      <data type="boolean"/>
+    </attribute>
+    <optional>
+      <ref name="noiseExpression.element"/>
+    </optional>
+  </define>
+
+  <define name="listOfModelValues.datatype">
+    <oneOrMore>
+      <element name="ModelValue">
+        <ref name="modelValue.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="modelValue.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">ModelValue_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="simulationType">
+      <choice>
+        <value type="string">ode</value>
+        <value type="string">assignment</value>
+        <value type="string">fixed</value>
+      </choice>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <optional>
+      <ref name="expression.element"/>
+    </optional>
+    <optional>
+      <ref name="initialExpression.element"/>
+    </optional>
+    <attribute name="addNoise">
+      <data type="boolean"/>
+    </attribute>
+    <optional>
+      <ref name="noiseExpression.element"/>
+    </optional>
+    <optional>
+      <ref name="unit.element"/>
+    </optional>
+  </define>
+
+  <define name="listOfModelParameterSets.datatype">
+    <attribute name="activeSet">
+      <data type="IDREF">
+        <param name="pattern">ModelParameterSet_\d+</param>
+      </data>
+    </attribute>
+    <oneOrMore>
+      <element name="ModelParameterSet">
+        <ref name="modelParameterSet.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="modelParameterSet.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">ModelParameterSet_\d+</param>
+      </data>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <ref name="modelParameterGroup.datatype"/>
+  </define>
+
+  <define name="modelParameterGroup.datatype">
+    <zeroOrMore>
+      <choice>
+        <element name="ModelParameterGroup">
+          <attribute name="cn">
+            <data type="string"/>
+          </attribute>
+          <attribute name="type">
+            <choice>
+              <value type="string">Reaction</value>
+              <value type="string">Group</value>
+            </choice>
+          </attribute>
+          <ref name="modelParameterGroup.datatype"/>
+        </element>
+        <element name="ModelParameter">
+          <ref name="modelParameter.datatype"/>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="modelParameter.datatype">
+    <attribute name="cn">
+      <data type="string"/>
+    </attribute>
+    <attribute name="value">
+      <data type="double"/>
+    </attribute>
+    <attribute name="type">
+      <choice>
+        <value type="string">Model</value>
+        <value type="string">Compartment</value>
+        <value type="string">Species</value>
+        <value type="string">ModelValue</value>
+        <value type="string">ReactionParameter</value>
+      </choice>
+    </attribute>
+    <attribute name="simulationType">
+      <choice>
+        <value type="string">time</value>
+        <value type="string">ode</value>
+        <value type="string">assignment</value>
+        <value type="string">reactions</value>
+        <value type="string">fixed</value>
+      </choice>
+    </attribute>
+    <optional>
+      <ref name="initialExpression.element"/>
+    </optional>
+  </define>
+
+  <define name="listOfReactions.datatype">
+    <oneOrMore>
+      <element name="Reaction">
+        <ref name="reaction.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="reaction.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Reaction_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="reversible">
+      <data type="boolean"/>
+    </attribute>
+    <attribute name="fast">
+      <data type="boolean"/>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <optional>
+      <element name="ListOfSubstrates">
+        <oneOrMore>
+          <element name="Substrate">
+            <ref name="reactionParticipant.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfProducts">
+        <oneOrMore>
+          <element name="Product">
+            <ref name="reactionParticipant.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfModifiers">
+        <oneOrMore>
+          <element name="Modifier">
+            <ref name="reactionParticipant.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfConstants">
+        <ref name="listOfConstants.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="KineticLaw">
+        <ref name="kineticLaw.datatype"/>
+      </element>
+    </optional>
+    <attribute name="addNoise">
+      <data type="boolean"/>
+    </attribute>
+    <optional>
+      <ref name="noiseExpression.element"/>
+    </optional>
+  </define>
+
+  <define name="listOfConstants.datatype">
+    <oneOrMore>
+      <element name="Constant">
+        <ref name="constant.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="constant.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Parameter_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="value">
+      <data type="double"/>
+    </attribute>
+  </define>
+
+  <define name="kineticLaw.datatype">
+    <attribute name="unitType">
+      <choice>
+        <value type="string">Default</value>
+        <value type="string">AmountPerTime</value>
+        <value type="string">ConcentrationPerTime</value>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="scalingCompartment">
+        <data type="string">
+          <param name="pattern">CN=Root,Model=([^\\\[\]=,>]|\\.)*,Vector=Compartments\[([^\\\[\]=,>]|\\.)*\]</param>
+        </data>
+      </attribute>
+    </optional>
+    <attribute name="function">
+      <data type="IDREF">
+        <param name="pattern">Function_\d+</param>
+      </data>
+    </attribute>
+    <optional>
+      <element name="ListOfCallParameters">
+        <ref name="listOfCallParameters.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+  <define name="listOfCallParameters.datatype">
+    <oneOrMore>
+      <element name="CallParameter">
+        <ref name="callParameter.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="callParameter.datatype">
+    <attribute name="functionParameter">
+      <data type="IDREF">
+        <param name="pattern">FunctionParameter_\d+</param>
+      </data>
+    </attribute>
+    <oneOrMore>
+      <element name="SourceParameter">
+        <attribute name="reference">
+          <data type="IDREF">
+            <param name="pattern">[_a-zA-Z]+_\d+</param>
+          </data>
+        </attribute>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="listOfEvents.datatype">
+    <oneOrMore>
+      <element name="Event">
+        <ref name="event.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="event.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Event_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="fireAtInitialTime">
+      <data type="boolean"/>
+    </attribute>
+    <attribute name="persistentTrigger">
+      <data type="boolean"/>
+    </attribute>
+    <ref name="annotation.datatype"/>
+    <element name="TriggerExpression">
+      <ref name="expression.simpletype"/>
+    </element>
+    <optional>
+      <group>
+        <attribute name="delayAssignment">
+          <data type="boolean"/>
+        </attribute>
+        <element name="DelayExpression">
+          <ref name="expression.simpletype"/>
+        </element>
+      </group>
+    </optional>
+    <optional>
+      <element name="PriorityExpression">
+        <ref name="expression.simpletype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfAssignments">
+        <ref name="listOfEventAssignments.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+  <define name="listOfEventAssignments.datatype">
+    <oneOrMore>
+      <element name="Assignment">
+        <attribute name="target">
+          <data type="string"/>
+        </attribute>
+        <ref name="expression.element"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="listOfTasks.datatype">
+    <oneOrMore>
+      <element name="Task">
+        <ref name="task.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="task.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Task_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="updateModel">
+      <data type="boolean"/>
+    </attribute>
+    <attribute name="scheduled">
+      <data type="boolean"/>
+    </attribute>
+    <attribute name="type">
+      <ref name="taskTypeEnumeration.datatype"/>
+    </attribute>
+    <optional>
+      <element name="Report">
+        <ref name="report.datatype"/>
+      </element>
+    </optional>
+    <element name="Problem">
+      <ref name="parameterList.datatype"/>
+    </element>
+    <element name="Method">
+      <ref name="name.attribute"/>
+      <attribute name="type">
+        <data type="string"/>
+      </attribute>
+      <ref name="parameterList.datatype"/>
+    </element>
+  </define>
+
+  <define name="report.datatype">
+    <attribute name="reference">
+      <data type="IDREF">
+        <param name="pattern">Report_\d+</param>
+      </data>
+    </attribute>
+    <attribute name="target">
+      <data type="string"/>
+    </attribute>
+    <attribute name="append">
+      <data type="boolean"/>
+    </attribute>
+    <attribute name="confirmOverwrite">
+      <data type="boolean"/>
+    </attribute>
+  </define>
+
+  <define name="listOfReportSpecifications.datatype">
+    <oneOrMore>
+      <element name="Report">
+        <ref name="reportSpecification.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="taskTypeEnumeration.datatype">
+    <choice>
+      <value type="string">lyapunovExponents</value>
+      <value type="string">parameterFitting</value>
+      <value type="string">timeCourse</value>
+      <value type="string">moieties</value>
+      <value type="string">sensitivities</value>
+      <value type="string">optimization</value>
+      <value type="string">metabolicControlAnalysis</value>
+      <value type="string">timeScaleSeparationAnalysis</value>
+      <value type="string">scan</value>
+      <value type="string">steadyState</value>
+      <value type="string">fluxMode</value>
+      <value type="string">timeScaleSeparation</value>
+      <value type="string">crosssection</value>
+      <value type="string">linearNoiseApproximation</value>
+      <value type="string">unset</value>
+    </choice>
+  </define>
+
+  <define name="reportSpecification.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Report_\d+</param>
+      </data>
+    </attribute>
+    <ref name="name.attribute"/>
+    <attribute name="taskType">
+      <ref name="taskTypeEnumeration.datatype"/>
+    </attribute>
+    <attribute name="precision">
+      <data type="unsignedInt"/>
+    </attribute>
+    <attribute name="separator">
+      <data type="string"/>
+    </attribute>
+    <optional>
+      <ref name="comment.element"/>
+    </optional>
+    <choice>
+      <element name="Table">
+        <attribute name="printTitle">
+          <data type="boolean"/>
+        </attribute>
+        <zeroOrMore>
+          <ref name="object.element"/>
+        </zeroOrMore>
+      </element>
+      <group>
+        <optional>
+          <element name="Header">
+            <ref name="reportSection.datatype"/>
+          </element>
+        </optional>
+        <optional>
+          <element name="Body">
+            <ref name="reportSection.datatype"/>
+          </element>
+        </optional>
+        <optional>
+          <element name="Footer">
+            <ref name="reportSection.datatype"/>
+          </element>
+        </optional>
+      </group>
+    </choice>
+  </define>
+
+  <define name="listOfPlotSpecifications.datatype">
+    <oneOrMore>
+      <element name="PlotSpecification">
+        <ref name="plotSpecification.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="plotSpecification.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="type">
+      <choice>
+        <value type="string">Plot2D</value>
+        <value type="string">SimWiz</value>
+      </choice>
+    </attribute>
+    <attribute name="active">
+      <data type="boolean"/>
+    </attribute>
+    <ref name="parameterList.datatype"/>
+    <element name="ListOfPlotItems">
+      <ref name="listOfPlotItems.datatype"/>
+    </element>
+  </define>
+
+  <define name="listOfPlotItems.datatype">
+    <oneOrMore>
+      <element name="PlotItem">
+        <ref name="plotItem.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="plotItem.datatype">
+    <ref name="name.attribute"/>
+    <attribute name="type">
+      <choice>
+        <value type="string">Unset</value>
+        <value type="string">Histogram1DItem</value>
+        <value type="string">Curve2D</value>
+      </choice>
+    </attribute>
+    <ref name="parameterList.datatype"/>
+    <element name="ListOfChannels">
+      <ref name="listOfChannels.datatype"/>
+    </element>
+  </define>
+
+  <define name="listOfChannels.datatype">
+    <oneOrMore>
+      <element name="ChannelSpec">
+        <ref name="channelSpec.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="channelSpec.datatype">
+    <attribute name="cn">
+      <data type="string"/>
+    </attribute>
+    <optional>
+      <attribute name="min">
+        <data type="double"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="max">
+        <data type="double"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="gui.datatype">
+    <optional>
+      <element name="ListOfSliders">
+        <ref name="listOfSliders.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+  <define name="listOfSliders.datatype">
+    <oneOrMore>
+      <element name="Slider">
+        <ref name="slider.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="slider.datatype">
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Slider_\d+</param>
+      </data>
+    </attribute>
+    <attribute name="associatedEntityKey">
+      <data type="IDREF">
+        <param name="pattern">[_a-zA-Z]+_\d+</param>
+      </data>
+    </attribute>
+    <attribute name="objectCN">
+      <data type="string"/>
+    </attribute>
+    <attribute name="objectType">
+      <choice>
+        <value type="string">unsignedInteger</value>
+        <value type="string">unsignedFloat</value>
+        <value type="string">integer</value>
+        <value type="string">float</value>
+      </choice>
+    </attribute>
+    <attribute name="objectValue">
+      <data type="double"/>
+    </attribute>
+    <attribute name="maxValue">
+      <data type="double"/>
+    </attribute>
+    <attribute name="minValue">
+      <data type="double"/>
+    </attribute>
+    <attribute name="tickFactor">
+      <data type="positiveInteger"/>
+    </attribute>
+    <attribute name="tickNumber">
+      <data type="positiveInteger"/>
+    </attribute>
+    <attribute name="scaling">
+      <choice>
+        <value type="string">logarithmic</value>
+        <value type="string">linear</value>
+      </choice>
+    </attribute>
+  </define>
+
+  <define name="expression.element">
+    <element name="Expression">
+      <ref name="expression.simpletype"/>
+    </element>
+  </define>
+
+  <define name="initialExpression.element">
+    <element name="InitialExpression">
+      <ref name="expression.simpletype"/>
+    </element>
+  </define>
+
+  <define name="noiseExpression.element">
+    <element name="NoiseExpression">
+      <ref name="expression.simpletype"/>
+    </element>
+  </define>
+  
+  <define name="unit.element">
+    <element name="Unit">
+      <ref name="expression.simpletype"/>
+    </element>
+  </define>
+  
+  <define name="object.element">
+    <element name="Object">
+      <attribute name="cn">
+        <data type="string"/>
+      </attribute>
+    </element>
+  </define>
+
+  <!-- I need two simple data types for the render extension that -->
+  <!-- look like SBML ids, but that are not derived from ID. -->
+  <define name="layoutId.datatype">
+    <data type="string">
+      <param name="pattern">[_a-zA-Z][_a-zA-Z0-9]*</param>
+    </data>
+  </define>
+
+  <define name="layoutIdRef.datatype">
+    <data type="string">
+      <param name="pattern">[_a-zA-Z][_a-zA-Z0-9]*</param>
+    </data>
+  </define>
+
+  <define name="boundingBox.datatype">
+    <element name="Position">
+      <attribute name="x">
+        <data type="double"/>
+      </attribute>
+      <attribute name="y">
+        <data type="double"/>
+      </attribute>
+    </element>
+    <element name="Dimensions">
+      <attribute name="width">
+        <data type="double"/>
+      </attribute>
+      <attribute name="height">
+        <data type="double"/>
+      </attribute>
+    </element>
+  </define>
+
+  <define name="layoutPoint.datatype">
+    <attribute name="x">
+      <data type="double"/>
+    </attribute>
+    <attribute name="y">
+      <data type="double"/>
+    </attribute>
+  </define>
+
+  <define name="lineSegment.datatype">
+    <element name="Start">
+      <ref name="layoutPoint.datatype"/>
+    </element>
+    <element name="End">
+      <ref name="layoutPoint.datatype"/>
+    </element>
+  </define>
+
+  <define name="cubicBezier.datatype">
+    <ref name="lineSegment.datatype"/>
+    <optional>
+      <element name="BasePoint1">
+        <ref name="layoutPoint.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="BasePoint2">
+        <ref name="layoutPoint.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+  <define name="curveSegment.element" combine="choice">
+    <element name="LineSegment">
+      <ref name="lineSegment.datatype"/>
+    </element>
+  </define>
+
+  <define name="curveSegment.element" combine="choice">
+    <element name="CurveSegment">
+      <attribute ns="http://www.w3.org/2001/XMLSchema-instance" name="type">
+        <data type="string">
+          <param name="pattern">LineSegment</param>
+        </data>
+      </attribute>
+      <ref name="lineSegment.datatype"/>
+    </element>
+  </define>
+  
+  <define name="curveSegment.element" combine="choice">
+    <element name="CubicBezier">
+      <ref name="cubicBezier.datatype"/>
+    </element>
+  </define>
+
+  <define name="curveSegment.element" combine="choice">
+    <element name="CurveSegment">
+      <attribute ns="http://www.w3.org/2001/XMLSchema-instance" name="type">
+        <data type="string">
+          <param name="pattern">CubicBezier</param>
+        </data>
+      </attribute>
+      <ref name="cubicBezier.datatype"/>
+    </element>
+  </define>
+
+  <define name="layoutCurve.datatype">
+    <element name="ListOfCurveSegments">
+      <oneOrMore>
+        <ref name="curveSegment.element"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="transformation.datatype">
+    <optional>
+      <attribute name="transform">
+        <data type="string">
+          <!-- pattern for 6 or 12 comma separated floating point values -->
+          <param name="pattern"
+            >((\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*,){5}|(\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*,){11})(\s*[+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?\s*)</param>
+        </data>
+      </attribute>
+    </optional>
+  </define>
+
+  <!-- data type for key, role and type lists -->
+  <define name="wsSeparatedStringList.datatype">
+    <data type="string">
+      <!-- pattern for a whitespace separated list of string. -->
+      <!-- the list may also be empty -->
+      <param name="pattern">^(\s*\S+\s+)*(\s*\S+\s*)?$</param>
+    </data>
+  </define>
+
+  <define name="commaSeparatedStringList.datatype">
+    <data type="string">
+      <!-- pattern for a komma separated list of string. -->
+      <!-- the list may also be empty -->
+      <param name="pattern">^(\s*\S+\s*,)*(\s*\S+\s*)?$</param>
+    </data>
+  </define>
+
+  <define name="graphicalPrimitive1D.datatype">
+    <ref name="transformation.datatype"/>
+    <optional>
+      <attribute name="stroke">
+        <ref name="colorValueOrId.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stroke-width">
+        <data type="double"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stroke-dasharray">
+        <list>
+          <data type="integer"/>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="graphicalPrimitive2D.datatype">
+    <ref name="graphicalPrimitive1D.datatype"/>
+    <optional>
+      <attribute name="fill">
+        <ref name="colorValueOrId.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fill-rule">
+        <choice>
+          <value>nonzero</value>
+          <value>evenodd</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="relAbsValue.datatype">
+    <data type="string">
+      <param name="pattern"
+        >\s*((([+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?)([+\-][0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?%))|([+\-]?[0-9]*(\.[0-9]*)?([eE][+\-]?[0-9]+)?%?))\s*</param>
+    </data>
+  </define>
+
+  <define name="fontStyle.datatype">
+    <choice>
+      <value>normal</value>
+      <value>italic</value>
+    </choice>
+  </define>
+
+  <define name="fontWeight.datatype">
+    <choice>
+      <value>normal</value>
+      <value>bold</value>
+    </choice>
+  </define>
+
+  <define name="textAnchor.datatype">
+    <choice>
+      <value>start</value>
+      <value>middle</value>
+      <value>end</value>
+    </choice>
+  </define>
+
+  <define name="vtextAnchor.datatype">
+    <choice>
+      <value>top</value>
+      <value>middle</value>
+      <value>bottom</value>
+    </choice>
+  </define>
+
+  <define name="image.dataype">
+    <ref name="transformation.datatype"/>
+    <attribute name="x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="width">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="height">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="href">
+      <data type="string"/>
+    </attribute>
+  </define>
+
+  <define name="text.datatype">
+    <ref name="graphicalPrimitive1D.datatype"/>
+    <attribute name="x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <optional>
+      <attribute name="font-family">
+        <data type="string"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-size">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-style">
+        <ref name="fontStyle.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-weight">
+        <ref name="fontWeight.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="text-anchor">
+        <ref name="textAnchor.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="vtext-anchor">
+        <ref name="vtextAnchor.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="groupElements.datatype">
+    <choice>
+      <element name="Group">
+        <ref name="group.datatype"/>
+      </element>
+      <element name="Text">
+        <ref name="text.datatype"/>
+      </element>
+      <element name="Rectangle">
+        <ref name="rectangle.datatype"/>
+      </element>
+      <element name="Ellipse">
+        <ref name="ellipse.datatype"/>
+      </element>
+      <element name="Polygon">
+        <ref name="polygon.datatype"/>
+      </element>
+      <element name="Image">
+        <ref name="image.dataype"/>
+      </element>
+      <element name="Curve">
+        <ref name="renderCurve.datatype"/>
+      </element>
+    </choice>
+  </define>
+
+  <define name="group.datatype">
+    <ref name="graphicalPrimitive2D.datatype"/>
+    <zeroOrMore>
+      <ref name="groupElements.datatype"/>
+    </zeroOrMore>
+    <optional>
+      <attribute name="font-family">
+        <data type="string"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-size">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-style">
+        <ref name="fontStyle.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="font-weight">
+        <ref name="fontWeight.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="text-anchor">
+        <ref name="textAnchor.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="vtext-anchor">
+        <ref name="vtextAnchor.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="startHead">
+        <ref name="layoutIdRef.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="endHead">
+        <ref name="layoutIdRef.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="rectangle.datatype">
+    <ref name="graphicalPrimitive2D.datatype"/>
+    <attribute name="x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="width">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="height">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <optional>
+      <attribute name="rx">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ry">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="ellipse.datatype">
+    <ref name="graphicalPrimitive2D.datatype"/>
+    <attribute name="cx">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="cy">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="rx">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="ry">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="renderCurve.datatype">
+    <ref name="graphicalPrimitive1D.datatype"/>
+    <element name="ListOfElements">
+      <ref name="renderCurveElements.datatype"/>
+    </element>
+    <optional>
+      <attribute name="startHead">
+        <ref name="layoutIdRef.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="endHead">
+        <ref name="layoutIdRef.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="polygon.datatype">
+    <ref name="graphicalPrimitive2D.datatype"/>
+    <element name="ListOfElements">
+      <ref name="renderCurveElements.datatype"/>
+    </element>
+  </define>
+
+  <define name="colorValue.datatype">
+    <data type="string">
+      <param name="pattern">#([0-9a-f]|[0-9A-F]){8}|#([0-9a-f]|[0-9A-F]){6}</param>
+    </data>
+  </define>
+
+  <define name="colorValueOrId.datatype">
+    <choice>
+      <ref name="layoutIdRef.datatype"/>
+      <ref name="colorValue.datatype"/>
+    </choice>
+  </define>
+
+  <define name="gradientStop.datatype">
+    <attribute name="offset">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="stop-color">
+      <ref name="colorValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="gradientBase.datatype">
+    <oneOrMore>
+      <element name="Stop">
+        <ref name="gradientStop.datatype"/>
+      </element>
+    </oneOrMore>
+    <attribute name="id">
+      <ref name="layoutId.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="radialGradient.datatype">
+    <ref name="gradientBase.datatype"/>
+    <attribute name="cx">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="cy">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="r">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <optional>
+      <attribute name="fx">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fy">
+        <ref name="relAbsValue.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="linearGradient.datatype">
+    <ref name="gradientBase.datatype"/>
+    <attribute name="x1">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y1">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="z1">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="x2">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y2">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="z2">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="gradientGroup.datatype">
+    <choice>
+      <element name="RadialGradient">
+        <ref name="radialGradient.datatype"/>
+      </element>
+      <element name="LinearGradient">
+        <ref name="linearGradient.datatype"/>
+      </element>
+    </choice>
+  </define>
+
+  <define name="colorDefinition.datatype">
+    <attribute name="id">
+      <ref name="layoutId.datatype"/>
+    </attribute>
+    <attribute name="value">
+      <ref name="colorValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="lineEnding.datatype">
+    <element name="BoundingBox">
+      <ref name="boundingBox.datatype"/>
+    </element>
+    <element name="Group">
+      <ref name="group.datatype"/>
+    </element>
+    <attribute name="id">
+      <ref name="layoutId.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="renderInformationBase.datatype">
+    <optional>
+      <element name="ListOfColorDefinitions">
+        <oneOrMore>
+          <element name="ColorDefinition">
+            <ref name="colorDefinition.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfGradientDefinitions">
+        <oneOrMore>
+          <ref name="gradientGroup.datatype"/>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfLineEndings">
+        <oneOrMore>
+          <element name="LineEnding">
+            <ref name="lineEnding.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <optional>
+      <attribute xmlns:ns_1="http://relaxng.org/ns/compatibility/annotations/1.0"
+        name="backgroundColor" ns_1:defaultValue="#FFFFFFFF">
+        <ref name="colorValue.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="referenceRenderInformation">
+        <data type="IDREF">
+          <param name="pattern">[_a-zA-Z]+_\d+</param>
+        </data>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="name">
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="style.datatype">
+    <element name="Group">
+      <ref name="group.datatype"/>
+    </element>
+    <optional>
+      <attribute name="roleList">
+        <ref name="wsSeparatedStringList.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="typeList">
+        <ref name="wsSeparatedStringList.datatype"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="globalStyle.dataType">
+    <ref name="style.datatype"/>
+    <optional>
+      <attribute name="key">
+        <data type="ID">
+        <param name="pattern">GlobalStyle_\d+</param>
+      </data>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="localStyle.datatype">
+    <ref name="style.datatype"/>
+    <!-- actually we could be more specific here since we know that the strings are keys -->
+    <!-- but I am not sure if this is woth the trouble. -->
+    <optional>
+      <attribute name="keyList">
+        <ref name="wsSeparatedStringList.datatype"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="key">
+        <data type="ID">
+        <param name="pattern">LocalStyle_\d+</param>
+      </data>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="localRenderInformation.datatype">
+    <ref name="renderInformationBase.datatype"/>
+    <optional>
+      <element name="ListOfStyles">
+        <oneOrMore>
+          <element name="Style">
+            <ref name="localStyle.datatype"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">LocalRenderInformation_\d+</param>
+      </data>
+    </attribute>
+  </define>
+
+  <define name="globalRenderInformation.datatype">
+    <ref name="renderInformationBase.datatype"/>
+    <optional>
+      <element name="ListOfStyles">
+        <oneOrMore>
+          <element name="Style">
+            <ref name="globalStyle.dataType"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </optional>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">GlobalRenderInformation_\d+</param>
+      </data>
+    </attribute>
+  </define>
+
+  <define name="listOfGlobalRenderInformation.datatype">
+    <oneOrMore>
+      <element name="RenderInformation">
+        <ref name="globalRenderInformation.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="listOfLocalRenderInformation.datatype">
+    <oneOrMore>
+      <element name="RenderInformation">
+        <ref name="localRenderInformation.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="renderPoint.datatytpe">
+    <attribute name="x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="renderCubicBezier.datatype">
+    <ref name="renderPoint.datatytpe"/>
+    <attribute name="basePoint1_x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="basePoint1_y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="basePoint2_x">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+    <attribute name="basePoint2_y">
+      <ref name="relAbsValue.datatype"/>
+    </attribute>
+  </define>
+
+  <define name="renderCurve.element" combine="choice">
+    <element name="RenderPoint">
+      <ref name="renderPoint.datatytpe"/>
+    </element>
+  </define>
+
+  <define name="renderCurve.element" combine="choice">
+    <element name="RenderCubicBezier">
+      <ref name="renderCubicBezier.datatype"/>
+    </element>
+  </define>
+
+  <define name="renderCurveElements.datatype">
+    <oneOrMore>
+      <ref name="renderCurve.element"/>
+    </oneOrMore>
+  </define>
+
+  <define name="dimension.datatype">
+    <attribute name="width">
+      <data type="double"/>
+    </attribute>
+    <attribute name="height">
+      <data type="double"/>
+    </attribute>
+  </define>
+
+  <define name="glyph.datatype">
+    <element name="BoundingBox">
+      <ref name="boundingBox.datatype"/>
+    </element>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Layout_\d+</param>
+      </data>
+    </attribute>
+    <optional>
+      <attribute name="name">
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="listOfCompartmentGlyphs.datatype">
+    <zeroOrMore>
+      <element name="CompartmentGlyph">
+        <ref name="glyph.datatype"/>
+        <optional>
+          <attribute name="compartment">
+            <data type="IDREF">
+              <param name="pattern">Compartment_\d+</param>
+            </data>
+          </attribute>
+        </optional>
+      </element>
+    </zeroOrMore>
+  </define>
+
+  <define name="listOfMetabGlyphs.datatype">
+    <zeroOrMore>
+      <element name="MetaboliteGlyph">
+        <ref name="glyph.datatype"/>
+        <optional>
+          <attribute name="metabolite">
+            <data type="IDREF">
+              <param name="pattern">Metabolite_\d+</param>
+            </data>
+          </attribute>
+        </optional>
+      </element>
+    </zeroOrMore>
+  </define>
+
+  <define name="metaboliteReferenceGlyp.datatype">
+    <optional>
+      <element name="BoundingBox">
+        <ref name="boundingBox.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="Curve">
+        <ref name="layoutCurve.datatype"/>
+      </element>
+    </optional>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Layout_\d+</param>
+      </data>
+    </attribute>
+    <optional>
+      <attribute name="name">
+        <data type="string"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="metaboliteGlyph">
+        <data type="IDREF">
+          <param name="pattern">Layout_\d+</param>
+        </data>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="role">
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="listOfReactionGlyphs.datatype">
+    <zeroOrMore>
+      <element name="ReactionGlyph">
+        <optional>
+          <element name="BoundingBox">
+            <ref name="boundingBox.datatype"/>
+          </element>
+        </optional>
+        <optional>
+          <element name="Curve">
+            <ref name="layoutCurve.datatype"/>
+          </element>
+        </optional>
+        <optional>
+          <element name="ListOfMetaboliteReferenceGlyphs">
+            <oneOrMore>
+              <element name="MetaboliteReferenceGlyph">
+                <ref name="metaboliteReferenceGlyp.datatype"/>
+              </element>
+            </oneOrMore>
+          </element>
+        </optional>
+        <attribute name="key">
+          <data type="ID">
+            <param name="pattern">Layout_\d+</param>
+          </data>
+        </attribute>
+        <optional>
+          <attribute name="name">
+            <data type="string"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="reaction">
+            <data type="IDREF">
+              <param name="pattern">Reaction_\d+</param>
+            </data>
+          </attribute>
+        </optional>
+      </element>
+    </zeroOrMore>
+  </define>
+
+  <define name="listOfTextGlyphs.datatype">
+    <oneOrMore>
+      <element name="TextGlyph">
+        <ref name="glyph.datatype"/>
+        <optional>
+          <attribute name="graphicalObject">
+            <data type="IDREF">
+              <param name="pattern">[_a-zA-Z]+_\d+</param>
+            </data>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="originOfText">
+            <data type="IDREF">
+              <param name="pattern">[_a-zA-Z]+_\d+</param>
+            </data>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="text">
+            <data type="string"/>
+          </attribute>
+        </optional>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="listOfAdditionalGraphicalObjects.datatype">
+    <oneOrMore>
+      <element name="AdditionalGraphicalObject">
+        <ref name="glyph.datatype"/>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="layout.datatype">
+    <element name="Dimensions">
+      <ref name="dimension.datatype"/>
+    </element>
+    <optional>
+      <element name="ListOfCompartmentGlyphs">
+        <ref name="listOfCompartmentGlyphs.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfMetabGlyphs">
+        <ref name="listOfMetabGlyphs.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfReactionGlyphs">
+        <ref name="listOfReactionGlyphs.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfTextGlyphs">
+        <ref name="listOfTextGlyphs.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfAdditionalGraphicalObjects">
+        <ref name="listOfAdditionalGraphicalObjects.datatype"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="ListOfRenderInformation">
+        <ref name="listOfLocalRenderInformation.datatype"/>
+      </element>
+    </optional>
+    <attribute name="key">
+      <data type="ID">
+        <param name="pattern">Layout_\d+</param>
+      </data>
+    </attribute>
+    <optional>
+      <attribute name="name">
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="listOfLayouts.datatype">
+    <zeroOrMore>
+      <element name="Layout">
+        <ref name="layout.datatype"/>
+      </element>
+    </zeroOrMore>
+    <optional>
+      <element name="ListOfGlobalRenderInformation">
+        <ref name="listOfGlobalRenderInformation.datatype"/>
+      </element>
+    </optional>
+  </define>
+
+</grammar>
