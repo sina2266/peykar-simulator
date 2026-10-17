@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Dependent algebraic equations
+    a = 3*b
+    b = 2*time-->
+    <units name="per_second">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="my_component">
+        <variable name="time" units="second"/>
+        <variable initial_value="0" name="x" units="dimensionless"/>
+        <variable name="a" units="second"/>
+        <variable name="b" units="second"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="per_second">1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">3</cn>
+                    <ci>b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">2</cn>
+                    <ci>time</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

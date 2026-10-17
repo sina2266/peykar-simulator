@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="SodiumChannelModel">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="GateModel.cellml">
+    <component component_ref="gateEquations" name="importedGateH"/>
+    <component component_ref="gateEquations" name="importedGateM"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="SodiumChannelController.cellml">
+    <component component_ref="controller" name="controller"/>
+  </import>
+  <units name="mV">
+    <unit prefix="milli" units="volt"/>
+  </units>
+  <units name="ms">
+    <unit prefix="milli" units="second"/>
+  </units>
+  <units name="per_ms">
+    <unit exponent="-1" prefix="milli" units="second"/>
+  </units>
+  <units name="per_mV_ms">
+    <unit exponent="-1" prefix="milli" units="second"/>
+    <unit exponent="-1" prefix="milli" units="volt"/>
+  </units>
+  <units name="microA_per_cm2">
+    <unit prefix="micro" units="ampere"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <units name="mS_per_cm2">
+    <unit prefix="milli" units="siemens"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <component name="sodiumChannel">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="V" units="mV" interface="public_and_private"/>
+    <variable name="i_Na" units="microA_per_cm2" interface="private"/>
+  </component>
+  <component name="sodiumChannelEquations">
+    <variable name="Na_conductance" units="mS_per_cm2"/>
+    <variable name="g_Na" units="mS_per_cm2" interface="public"/>
+    <variable name="h" units="dimensionless" interface="private"/>
+    <variable name="m" units="dimensionless" interface="private"/>
+    <variable name="i_Na" units="microA_per_cm2" interface="public"/>
+    <variable name="V" units="mV" interface="public_and_private"/>
+    <variable name="E_Na" units="mV" interface="public"/>
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>Na_conductance</ci>
+        <apply>
+          <times/>
+          <ci>g_Na</ci>
+          <ci>h</ci>
+          <apply>
+            <power/>
+            <ci>m</ci>
+            <cn cellml:units="dimensionless">3</cn>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>i_Na</ci>
+        <apply>
+          <times/>
+          <ci>Na_conductance</ci>
+          <apply>
+            <minus/>
+            <ci>V</ci>
+            <ci>E_Na</ci>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="mGate">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="m" units="dimensionless" interface="public_and_private"/>
+    <variable name="V" units="mV" interface="public_and_private"/>
+  </component>
+  <component name="mGateParameters">
+    <variable name="m" units="dimensionless" initial_value="0.05" interface="public"/>
+  </component>
+  <component name="mGateEquations">
+    <variable name="alpha_m" units="per_ms" interface="private"/>
+    <variable name="V" units="mV" interface="public"/>
+    <variable name="beta_m" units="per_ms" interface="private"/>
+    <variable name="m" units="dimensionless" interface="public_and_private"/>
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>alpha_m</ci>
+        <apply>
+          <divide/>
+          <apply>
+            <times/>
+            <apply>
+              <minus/>
+              <cn cellml:units="per_mV_ms">0.1</cn>
+            </apply>
+            <apply>
+              <plus/>
+              <ci>V</ci>
+              <cn cellml:units="mV">50</cn>
+            </apply>
+          </apply>
+          <apply>
+            <minus/>
+            <apply>
+              <exp/>
+              <apply>
+                <divide/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <plus/>
+                    <ci>V</ci>
+                    <cn cellml:units="mV">50</cn>
+                  </apply>
+                </apply>
+                <cn cellml:units="mV">10</cn>
+              </apply>
+            </apply>
+            <cn cellml:units="dimensionless">1</cn>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>beta_m</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="per_ms">4</cn>
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <ci>V</ci>
+                  <cn cellml:units="mV">75</cn>
+                </apply>
+              </apply>
+              <cn cellml:units="mV">18</cn>
+            </apply>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="hGate">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="h" units="dimensionless" interface="public_and_private"/>
+    <variable name="V" units="mV" interface="public_and_private"/>
+  </component>
+  <component name="hGateParameters">
+    <variable name="h" units="dimensionless" initial_value="0.6" interface="public"/>
+  </component>
+  <component name="hGateEquations">
+    <variable name="alpha_h" units="per_ms" interface="private"/>
+    <variable name="beta_h" units="per_ms" interface="private"/>
+    <variable name="V" units="mV" interface="public"/>
+    <variable name="h" units="dimensionless" interface="public_and_private"/>
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>alpha_h</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="per_ms">0.07</cn>
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <minus/>
+                <apply>
+                  <plus/>
+                  <ci>V</ci>
+                  <cn cellml:units="mV">75</cn>
+                </apply>
+              </apply>
+              <cn cellml:units="mV">20</cn>
+            </apply>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>beta_h</ci>
+        <apply>
+          <divide/>
+          <cn cellml:units="per_ms">1</cn>
+          <apply>
+            <plus/>
+            <apply>
+              <exp/>
+              <apply>
+                <divide/>
+                <apply>
+                  <minus/>
+                  <apply>
+                    <plus/>
+                    <ci>V</ci>
+                    <cn cellml:units="mV">45</cn>
+                  </apply>
+                </apply>
+                <cn cellml:units="mV">10</cn>
+              </apply>
+            </apply>
+            <cn cellml:units="dimensionless">1</cn>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="sodiumChannelParameters">
+    <variable name="g_Na" units="mS_per_cm2" initial_value="120" interface="public"/>
+    <variable name="E_Na" units="mV" initial_value="35" interface="public"/>
+  </component>
+  <connection component_1="controller" component_2="sodiumChannel">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="sodiumChannel" component_2="sodiumChannelEquations">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="i_Na" variable_2="i_Na"/>
+  </connection>
+  <connection component_1="sodiumChannelEquations" component_2="sodiumChannelParameters">
+    <map_variables variable_1="g_Na" variable_2="g_Na"/>
+    <map_variables variable_1="E_Na" variable_2="E_Na"/>
+  </connection>
+  <connection component_1="sodiumChannelEquations" component_2="hGate">
+    <map_variables variable_1="h" variable_2="h"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <connection component_1="sodiumChannelEquations" component_2="mGate">
+    <map_variables variable_1="m" variable_2="m"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <connection component_1="mGate" component_2="mGateEquations">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="m" variable_2="m"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="mGateParameters" component_2="mGateEquations">
+    <map_variables variable_1="m" variable_2="m"/>
+  </connection>
+  <connection component_1="mGateEquations" component_2="importedGateM">
+    <map_variables variable_1="alpha_m" variable_2="alpha_X"/>
+    <map_variables variable_1="beta_m" variable_2="beta_X"/>
+    <map_variables variable_1="m" variable_2="X"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <connection component_1="hGate" component_2="hGateEquations">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="h" variable_2="h"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="hGateParameters" component_2="hGateEquations">
+    <map_variables variable_1="h" variable_2="h"/>
+  </connection>
+  <connection component_1="hGateEquations" component_2="importedGateH">
+    <map_variables variable_1="alpha_h" variable_2="alpha_X"/>
+    <map_variables variable_1="beta_h" variable_2="beta_X"/>
+    <map_variables variable_1="h" variable_2="X"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <encapsulation>
+    <component_ref component="sodiumChannel">
+      <component_ref component="sodiumChannelEquations">
+        <component_ref component="mGate">
+          <component_ref component="mGateParameters"/>
+          <component_ref component="mGateEquations">
+            <component_ref component="importedGateM"/>
+          </component_ref>
+        </component_ref>
+        <component_ref component="hGate">
+          <component_ref component="hGateParameters"/>
+          <component_ref component="hGateEquations">
+            <component_ref component="importedGateH"/>
+          </component_ref>
+        </component_ref>
+      </component_ref>
+      <component_ref component="sodiumChannelParameters"/>
+    </component_ref>
+  </encapsulation>
+</model>

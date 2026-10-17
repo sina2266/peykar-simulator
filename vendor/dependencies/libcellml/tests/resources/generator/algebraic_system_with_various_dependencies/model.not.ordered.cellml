@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Algebraic system with various dependencies (not ordered)
+    Variables:
+     • a: / -> 14
+     • b: 1 -> 4
+     • c: 1 -> 7
+     • d: / -> 11
+     • x: 3
+     • y: 5
+    Equations:
+     • d = b + c
+     • 3a + 2b + c = 57
+     • a + 3b - c = 19
+     • a = 3x + y
+    -->
+    <component name="my_algebraic_system">
+        <variable name="a" units="dimensionless"/>
+        <variable initial_value="1" name="b" units="dimensionless"/>
+        <variable initial_value="1" name="c" units="dimensionless"/>
+        <variable name="d" units="dimensionless"/>
+        <variable initial_value="3" name="x" units="dimensionless"/>
+        <variable initial_value="5" name="y" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <apply>
+                    <plus/>
+                    <ci>b</ci>
+                    <ci>c</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <ci>a</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>b</ci>
+                    </apply>
+                    <ci>c</ci>
+                </apply>
+                <cn cellml:units="dimensionless">57</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <ci>a</ci>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <ci>b</ci>
+                        </apply>
+                    </apply>
+                    <ci>c</ci>
+                </apply>
+                <cn cellml:units="dimensionless">19</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <ci>x</ci>
+                    </apply>
+                    <ci>y</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

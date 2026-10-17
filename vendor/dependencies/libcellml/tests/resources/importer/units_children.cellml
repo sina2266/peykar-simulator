@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="units_missing_children">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="missing_file.cellml">
+    <units units_ref="i_dont_exist_anywhere" name="imported_but_no_model"/>
+  </import>
+  <units name="units_with_imaginary_children">
+    <unit units="I_dont_exist"/>
+    <unit units="neither_do_I"/>
+    <unit units="nor_me"/>
+  </units>
+  <units name="units_with_real_children">
+    <unit units="metre"/>
+    <unit units="second"/>
+    <unit units="my_other_units"/>
+  </units>
+  <units name="my_other_units"/>
+  <units name="units_with_imported_children_missing">
+    <unit units="imported_but_no_model"/>
+  </units>
+</model>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink" name="sin_approximations_import">
+
+
+
+  <import xlink:href="sin.xml">
+    <component name="actual_sin" component_ref="sin"/>
+  </import>
+  <import xlink:href="deriv_approx_sin.xml">
+    <component name="deriv_approx_sin" component_ref="sin"/>
+  </import>
+  <import xlink:href="parabolic_approx_sin.xml">
+    <component name="parabolic_approx_sin" component_ref="sin"/>
+  </import>
+
+  <component name="main">
+    <variable name="x" units="dimensionless" interface="public_and_private"/>
+    <variable name="sin1" units="dimensionless" interface="public_and_private"/>
+    <variable units="dimensionless" name="sin2" interface="public_and_private"/>
+    <variable units="dimensionless" name="deriv_approx_initial_value" initial_value="0" interface="public_and_private"/>
+    <variable name="sin3" units="dimensionless" interface="public_and_private"/>
+	<variable name="C" units="dimensionless" interface="public_and_private" initial_value="0.75"/>
+  </component>
+
+  <encapsulation>
+
+    <component_ref component="main">
+      <component_ref component="actual_sin"/>
+      <component_ref component="deriv_approx_sin"/>
+      <component_ref component="parabolic_approx_sin"/>
+    </component_ref>
+  </encapsulation>
+
+  <connection component_1="actual_sin" component_2="main">
+    <map_variables variable_1="sin" variable_2="sin1"/>
+    <map_variables variable_1="x" variable_2="x"/>
+  </connection>
+
+  <connection component_1="deriv_approx_sin" component_2="main">
+    <map_variables variable_1="sin" variable_2="sin2"/>
+    <map_variables variable_1="x" variable_2="x"/>
+    <map_variables variable_1="sin_initial_value" variable_2="deriv_approx_initial_value"/>
+  </connection>
+
+  <connection component_1="parabolic_approx_sin" component_2="main">
+    <map_variables variable_1="sin" variable_2="sin3"/>
+    <map_variables variable_1="x" variable_2="x"/>
+	<map_variables variable_1="C" variable_2="C"/>
+  </connection>
+
+</model>

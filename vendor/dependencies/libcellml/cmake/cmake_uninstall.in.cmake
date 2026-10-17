@@ -1,0 +1,36 @@
+macro(remove_empty_directory directory)
+  file (GLOB directoryFiles "${directory}/*")
+  if(NOT directoryFiles)
+    exec_program("@CMAKE_COMMAND@" ARGS "-E remove_directory \"${directory}\""
+                 OUTPUT_VARIABLE rmOut
+                 RETURN_VALUE rmRetval)
+    if("${rmRetval}" STREQUAL 0)
+      get_filename_component(parentDirectory ${directory} DIRECTORY)
+      remove_empty_directory(${parentDirectory})
+    endif()
+  endif()
+endmacro()
+
+if(NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: @CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
+endif()
+
+file(READ "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" fileNames)
+string(REGEX REPLACE "\n" ";" fileNames "${fileNames}")
+foreach(fileName ${fileNames})
+  set(fullFileName $ENV{DESTDIR}${fileName})
+  message(STATUS "Uninstalling: ${fullFileName}")
+  if(IS_SYMLINK "${fullFileName}" OR EXISTS "${fullFileName}")
+    exec_program("@CMAKE_COMMAND@" ARGS "-E remove \"${fullFileName}\""
+                 OUTPUT_VARIABLE rmOut
+                 RETURN_VALUE rmRetval)
+    if(NOT "${rmRetval}" STREQUAL 0)
+      message(FATAL_ERROR "Problem when removing ${fullFileName}")
+    else()
+      get_filename_component(fullFileNameDir ${fullFileName} DIRECTORY)
+      remove_empty_directory(${fullFileNameDir})
+    endif()
+  else(IS_SYMLINK "${fullFileName}" OR EXISTS "${fullFileName}")
+    message(STATUS "File ${fullFileName} does not exist")
+  endif()
+endforeach()

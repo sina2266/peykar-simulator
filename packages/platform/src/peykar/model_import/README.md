@@ -31,3 +31,7 @@ See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at rep
 SBML initial-concentration derivatives. Only numeric attribute bytes are changed;
 parent XML, notices, units/context and exact upstream result lineage are retained.
 It starts no engine. See docs/epics/E3-native-scalar-flows.md for the supported subset.
+
+`cellml.py` adds separate immutable CellML 2 admission and trusted offline result
+import. It preserves original units/bytes and validates retained model/runtime/driver,
+sample grid, output units and hashes. It never executes code. See docs/epics/E5-cellml-models.md.

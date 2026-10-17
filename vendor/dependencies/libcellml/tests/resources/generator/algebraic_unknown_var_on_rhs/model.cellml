@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Algebraic equation with a constant on its LHS and the unknown variable on its RHS
+   1 = x
+   x = y-->
+    <component name="my_component">
+        <variable name="x" units="dimensionless"/>
+        <variable name="y" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <cn cellml:units="dimensionless">1</cn>
+                <ci>x</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x</ci>
+                <ci>y</ci>
+            </apply>
+        </math>
+    </component>
+</model>

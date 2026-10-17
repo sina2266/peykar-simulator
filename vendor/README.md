@@ -30,3 +30,7 @@ uv run python scripts/vendor_sources.py
 See [third-party notices](../THIRD_PARTY_NOTICES.md) and
 [runtime installation and native probes](../runtime_profiles/README.md). Source
 availability, runtime execution and biological validity have distinct evidence.
+
+E5 additionally retains the complete libCellML 0.7.1 source under
+`dependencies/libcellml`, with its original Apache-2.0 notice. Current rehash:
+26 distributions, 53,261 files, 1,814,782,314 bytes and 37 materialized Git links.

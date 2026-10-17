@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="InitializedVariables_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="child.cellml">
+        <component component_ref="not_main" name="child_main"/>
+    </import>
+    <connection>
+        <map_components component_1="main" component_2="child_main"/>
+        <map_variables variable_1="kComminuteOralMin" variable_2="kComminuteOralMin"/>
+    </connection>
+    <component name="main">
+        <variable name="kComminuteOralMin" public_interface="in" units="dimensionless"/>
+    </component>
+</model>

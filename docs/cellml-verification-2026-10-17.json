@@ -1,0 +1,531 @@
+{
+  "status": "passed",
+  "source": {
+    "schema_version": "1.0.0",
+    "spec": {
+      "schema_version": "1.0.0",
+      "id": "libcellml",
+      "version": "1.0.0",
+      "title": "libCellML 0.7.1 complete source",
+      "repository": "https://github.com/cellml/libcellml",
+      "commit": "bc71bfa5816cd3e1e1a28430366eb5688fe9e501",
+      "license": "Apache-2.0",
+      "license_files": [
+        "LICENSE"
+      ],
+      "capabilities": [
+        "cellml",
+        "ode"
+      ],
+      "limitations": [
+        "Source inspection establishes neither solver capability nor biological validity."
+      ]
+    },
+    "inventory_digest": "747645f8a5ab827a01e41e73eeabcb3d6f5c2bf209d8f4d4305823e20fd2374f",
+    "license_digests": {
+      "LICENSE": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    "tracked_files": 1094,
+    "tracked_bytes": 14943733,
+    "unresolved_submodules": [],
+    "lfs_pointers": [],
+    "state": "source_inspected",
+    "runtime_status": "not_assessed_by_source_inspection"
+  },
+  "runtime": {
+    "schema_version": "1.0.0",
+    "id": "cellml.ode.runtime",
+    "version": "1.0.0",
+    "title": "libCellML 0.7.1 / SciPy ODE runtime",
+    "engine": "libcellml",
+    "profile": "cellml.ode",
+    "sources": [
+      {
+        "schema_version": "1.0.0",
+        "id": "libcellml",
+        "version": "1.0.0"
+      }
+    ],
+    "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+    "execution_digest": "2715a1234f37a3e61bcf7c1f60f8f6d3396fc896fe6cb25b9b63ac71f4e70918",
+    "artifact_digests": {
+      "driver.py": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+      "uv.lock": "8248a9cf1971cf6d2e988990578a116e814e66547018b8259f95d1408a1b6d7e",
+      "bootstrap-result.json": "3f31487c56e24ff5247b744b7c5f2352bcdafe1a52c3bfedd9433a595aa4ec7b",
+      "bootstrap-series.csv": "f2766c735c43075eb40abd679caf8b296ec6682effbd99acb6aa782981d71456"
+    },
+    "scope": "operator_native_probe",
+    "managed_queue_supported": false,
+    "scientific_validity": "not_established",
+    "limitations": [
+      "Self-contained CellML 2 ODEs only; imports/resets/DAE/external variables unsupported.",
+      "Operator-only execution; durable API queue adapter remains separate.",
+      "Numerical fixture evidence is not biological validation."
+    ]
+  },
+  "executions": [
+    {
+      "case": "decay",
+      "receipt": {
+        "schema_version": "1.0.0",
+        "id": "cellml.decay",
+        "version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "cellml.decay",
+          "version": "1.0.0"
+        },
+        "model_digest": "0baa7a6dbd09f3824f95a888f83e012f1779e29e3be3fe84d79e736df4f127a1",
+        "runtime": {
+          "schema_version": "1.0.0",
+          "id": "cellml.ode.runtime",
+          "version": "1.0.0"
+        },
+        "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+        "driver_digest": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+        "controls": {
+          "schema_version": "1.0.0",
+          "start": 0.0,
+          "end": 20.0,
+          "time_unit": "second",
+          "intervals": 100,
+          "method": "RK45",
+          "relative_tolerance": 1e-08,
+          "absolute_tolerance": 1e-10,
+          "max_step": 0.2
+        },
+        "artifacts": {
+          "result.json": "3f31487c56e24ff5247b744b7c5f2352bcdafe1a52c3bfedd9433a595aa4ec7b",
+          "series.csv": "f2766c735c43075eb40abd679caf8b296ec6682effbd99acb6aa782981d71456",
+          "generated.py": "532cee6ae9e6540f932b8ed8fd092936e5b8b6aeea2bb6d1df1616edd04c9dd5"
+        },
+        "scope": "operator_cellml_execution",
+        "managed_queue_supported": false,
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Explicit isolated operator execution; not a durable API queue adapter.",
+          "Self-contained CellML 2 ODEs only; no resets, imports, external variables or DAE/NLA.",
+          "Original model units retained; biological validity is not established."
+        ]
+      },
+      "samples": 101,
+      "analytical_max_error": 2.9409807922320397e-13
+    },
+    {
+      "case": "robertson-radau",
+      "receipt": {
+        "schema_version": "1.0.0",
+        "id": "cellml.robertson-radau",
+        "version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "cellml.robertson",
+          "version": "1.0.0"
+        },
+        "model_digest": "50c0ec2b3486c4634ade1b1a3c9fa6199c3b555a4a021346dce0d1f5a14ec186",
+        "runtime": {
+          "schema_version": "1.0.0",
+          "id": "cellml.ode.runtime",
+          "version": "1.0.0"
+        },
+        "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+        "driver_digest": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+        "controls": {
+          "schema_version": "1.0.0",
+          "start": 0.0,
+          "end": 40.0,
+          "time_unit": "dimensionless",
+          "intervals": 200,
+          "method": "Radau",
+          "relative_tolerance": 1e-08,
+          "absolute_tolerance": 1e-10,
+          "max_step": 0.2
+        },
+        "artifacts": {
+          "result.json": "5a0b934e04cb66ee1a9e2b79d5cfc37e425b34092e316ab6158ac39868b12a0f",
+          "series.csv": "8ee6acdd9ec15cf80dc2638a5fe9939d18bb33e82ab3bc1050beec6fde36bb9a",
+          "generated.py": "616e61f5040af5f13143359ed30415056acad252b35167164832dfc2ef7b5328"
+        },
+        "scope": "operator_cellml_execution",
+        "managed_queue_supported": false,
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Explicit isolated operator execution; not a durable API queue adapter.",
+          "Self-contained CellML 2 ODEs only; no resets, imports, external variables or DAE/NLA.",
+          "Original model units retained; biological validity is not established."
+        ]
+      },
+      "samples": 201
+    },
+    {
+      "case": "robertson-bdf",
+      "receipt": {
+        "schema_version": "1.0.0",
+        "id": "cellml.robertson-bdf",
+        "version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "cellml.robertson",
+          "version": "1.0.0"
+        },
+        "model_digest": "50c0ec2b3486c4634ade1b1a3c9fa6199c3b555a4a021346dce0d1f5a14ec186",
+        "runtime": {
+          "schema_version": "1.0.0",
+          "id": "cellml.ode.runtime",
+          "version": "1.0.0"
+        },
+        "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+        "driver_digest": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+        "controls": {
+          "schema_version": "1.0.0",
+          "start": 0.0,
+          "end": 40.0,
+          "time_unit": "dimensionless",
+          "intervals": 200,
+          "method": "BDF",
+          "relative_tolerance": 1e-08,
+          "absolute_tolerance": 1e-10,
+          "max_step": 0.1
+        },
+        "artifacts": {
+          "result.json": "cc7b414002b40bd50ea5f7c7a467a668e598b6b1ec28cb65f24f4211fd2dc882",
+          "series.csv": "981d7fff5aecc93305b2b987f77edc684fb70072c06b64a0ec0b7c6164b1f121",
+          "generated.py": "616e61f5040af5f13143359ed30415056acad252b35167164832dfc2ef7b5328"
+        },
+        "scope": "operator_cellml_execution",
+        "managed_queue_supported": false,
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Explicit isolated operator execution; not a durable API queue adapter.",
+          "Self-contained CellML 2 ODEs only; no resets, imports, external variables or DAE/NLA.",
+          "Original model units retained; biological validity is not established."
+        ]
+      },
+      "samples": 201,
+      "conservation_error": 7.771561172376096e-16,
+      "radau_bdf_max_difference": 3.293009961935489e-09
+    },
+    {
+      "case": "unit-scaling",
+      "receipt": {
+        "schema_version": "1.0.0",
+        "id": "cellml.unit-scaling",
+        "version": "1.0.0",
+        "model": {
+          "schema_version": "1.0.0",
+          "id": "cellml.unit-scaling",
+          "version": "1.0.0"
+        },
+        "model_digest": "60dbacd12e68319ddd5986cfee73cc6ca22d4b14b42870108d826bae7f92b83d",
+        "runtime": {
+          "schema_version": "1.0.0",
+          "id": "cellml.ode.runtime",
+          "version": "1.0.0"
+        },
+        "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+        "driver_digest": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+        "controls": {
+          "schema_version": "1.0.0",
+          "start": 0.0,
+          "end": 10.0,
+          "time_unit": "ms",
+          "intervals": 100,
+          "method": "RK45",
+          "relative_tolerance": 1e-08,
+          "absolute_tolerance": 1e-10,
+          "max_step": 0.1
+        },
+        "artifacts": {
+          "result.json": "7e76ec3e16ae8a4602c6dee69dccbd073fb56c68f79f4f4757e6c83b2cf4933b",
+          "series.csv": "fe2029bb493d85b9ffb05ee78561077d4ba89feeba7c513de5dafd3ae7878041",
+          "generated.py": "ce3f2e1b5f486c38ffe56e659134e960d1b40a71171e8b29eb4e4a6293bc49b3"
+        },
+        "scope": "operator_cellml_execution",
+        "managed_queue_supported": false,
+        "scientific_validity": "not_established",
+        "limitations": [
+          "Explicit isolated operator execution; not a durable API queue adapter.",
+          "Self-contained CellML 2 ODEs only; no resets, imports, external variables or DAE/NLA.",
+          "Original model units retained; biological validity is not established."
+        ]
+      },
+      "samples": 101,
+      "analytical_scaling_error": 1.4210854715202004e-14
+    }
+  ],
+  "rejected_solver_cases": [
+    "wrong-time-unit",
+    "invalid-equation",
+    "timeout"
+  ],
+  "scientific_validity": "not_established",
+  "browser": {
+    "cases": [
+      {
+        "case": "model-desktop",
+        "width": 1440,
+        "height": 1000,
+        "counts": {
+          "inapplicable": 41,
+          "incomplete": 0,
+          "passes": 48,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "case": "model-mobile",
+        "width": 375,
+        "height": 812,
+        "counts": {
+          "inapplicable": 40,
+          "incomplete": 1,
+          "passes": 49,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 375,
+          "scroll": 375
+        }
+      },
+      {
+        "case": "result-1440",
+        "width": 1440,
+        "height": 1000,
+        "counts": {
+          "inapplicable": 39,
+          "incomplete": 1,
+          "passes": 50,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 1440,
+          "scroll": 1440
+        }
+      },
+      {
+        "case": "result-768",
+        "width": 768,
+        "height": 1024,
+        "counts": {
+          "inapplicable": 39,
+          "incomplete": 1,
+          "passes": 50,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 768,
+          "scroll": 768
+        }
+      },
+      {
+        "case": "result-375",
+        "width": 375,
+        "height": 812,
+        "counts": {
+          "inapplicable": 38,
+          "incomplete": 1,
+          "passes": 51,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 375,
+          "scroll": 375
+        }
+      },
+      {
+        "case": "result-812",
+        "width": 812,
+        "height": 375,
+        "counts": {
+          "inapplicable": 38,
+          "incomplete": 1,
+          "passes": 51,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 812,
+          "scroll": 812
+        }
+      },
+      {
+        "case": "result-fa-mobile",
+        "width": 375,
+        "height": 812,
+        "counts": {
+          "inapplicable": 38,
+          "incomplete": 1,
+          "passes": 51,
+          "violations": 0
+        },
+        "geometry": {
+          "width": 375,
+          "scroll": 375
+        }
+      }
+    ],
+    "raw_bom_crlf_admission_preserved": true,
+    "reader_mutations_disabled": true,
+    "browser_storage_empty": true,
+    "reload_clears_session": true,
+    "scope": "isolated operator verification data; no production browser mutations"
+  },
+  "vendor": {
+    "releases": 26,
+    "files": 53261,
+    "bytes": 1814782314,
+    "materialized_gitlinks": 37
+  },
+  "preservation": {
+    "backup": {
+      "backup": "pre-cellml-20261017T212945Z",
+      "counts": {
+        "batch_events": 57,
+        "batch_members": 38,
+        "batch_runs": 7,
+        "events": 126,
+        "experiment_events": 8,
+        "experiment_nodes": 4,
+        "experiment_runs": 2,
+        "hybrid_events": 20,
+        "hybrid_nodes": 11,
+        "hybrid_runs": 4,
+        "native_events": 69,
+        "native_runs": 22,
+        "objects": 74,
+        "runs": 42
+      },
+      "artifacts": 381
+    },
+    "original_license_files_unchanged": 24,
+    "previous_third_party_notices_preserved": true,
+    "old_scientific_schemas_unchanged": true,
+    "old_openapi_components_and_operations_unchanged": true,
+    "root_uv_lock_unchanged": true
+  },
+  "checks": {
+    "targeted_python_tests": 26,
+    "full_linux_tests": 402,
+    "full_linux_test_seconds": 29.0,
+    "statement_coverage_percent": 88,
+    "strict_mypy_source_files": 86,
+    "frontend_tests": 18,
+    "make_check_docker": "passed",
+    "host_make_build": "passed"
+  },
+  "deployment": {
+    "original_volume": "peykar3_peykar-data",
+    "offline_import": {
+      "source": "libcellml",
+      "runtime": "cellml.ode.runtime",
+      "models": 3,
+      "retained_executions": 4
+    },
+    "preservation": {
+      "all_previous_rows_retained": {
+        "objects": 74,
+        "runs": 42,
+        "events": 126,
+        "experiment_runs": 2,
+        "experiment_nodes": 4,
+        "experiment_events": 8,
+        "native_runs": 22,
+        "native_events": 69,
+        "batch_runs": 7,
+        "batch_members": 38,
+        "batch_events": 57,
+        "hybrid_runs": 4,
+        "hybrid_nodes": 11,
+        "hybrid_events": 20
+      },
+      "previous_artifact_hashes_unchanged": 381,
+      "sqlite_user_version": 1,
+      "all_queues_idle": true
+    },
+    "existing_reference_native_smoke": {
+      "reference": {
+        "run_id": "ccd792c8-9721-454d-8834-e054e6d62876",
+        "status": "succeeded",
+        "manifest_digest": "b230d4522f50df719e41ae8490cc172bb2051634998e97003178b59935617a3e",
+        "result_digest": "7eca7312bf341d2b28e448048c5b7a5987a3f6db1f36a19bf692b10bb37ef81b",
+        "samples": 11,
+        "idempotency_verified": true,
+        "evidence_class": "engineering_verification",
+        "scientific_validity": "not_established"
+      },
+      "copasi": {
+        "run": {
+          "schema_version": "1.0.0",
+          "id": "b4b5bc69-3b01-4d50-aedb-88319c5a2ee8",
+          "manifest_digest": "05c6e59cf5187be889958d2cd597fe2e388ffb61153c60fd3df5bc2fb4ad7bbc",
+          "status": "succeeded",
+          "created_at": "2026-10-17T21:36:39.374254+00:00",
+          "updated_at": "2026-10-17T21:36:42.169201+00:00",
+          "cancel_requested": false,
+          "result_digest": "75e55dc6ed982b1c9e611cf076bb635f175f91a4a69f3a596fcd9aec95a8b831",
+          "error": null
+        },
+        "result": {
+          "schema_version": "1.0.0",
+          "run_id": "b4b5bc69-3b01-4d50-aedb-88319c5a2ee8",
+          "manifest_digest": "05c6e59cf5187be889958d2cd597fe2e388ffb61153c60fd3df5bc2fb4ad7bbc",
+          "image_digest": "06f7dae30d19071ba732b4fe0a5957f7beabba49cbef31dbf20694547b4acded",
+          "driver_digest": "8d7f5d7b958458070d5e650b258f8da334ac81bf93c8a8fb388ae5f18aabce72",
+          "artifacts": {
+            "native.csv": "1ea1140267f5b6a4cd30fa446eb86fc5c3a9a615dcbb0f3f0c7db824ed0df306",
+            "quantities.json": "042b3c9463a4ba0f99f6d3f2fd19a0d47476cd335890b6c17480fa52d46a71d2"
+          },
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Actual native solver output; independent scientific validity remains open.",
+            "Original model, native units and exact image/driver identities retained."
+          ]
+        },
+        "metadata": {
+          "engine": "COPASI",
+          "model_units": {
+            "time_unit": "s",
+            "quantity_unit": "mol",
+            "length_unit": "m",
+            "area_unit": "m\u00b2",
+            "volume_unit": "l"
+          },
+          "samples": 11,
+          "species": [
+            {
+              "name": "A",
+              "display_name": "A",
+              "unit": "mol/l",
+              "compartment": "cell",
+              "sbml_id": "A"
+            },
+            {
+              "name": "B",
+              "display_name": "B",
+              "unit": "mol/l",
+              "compartment": "cell",
+              "sbml_id": "B"
+            }
+          ],
+          "columns": [
+            "A",
+            "B"
+          ],
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Native deterministic integration; scientific applicability remains unvalidated.",
+            "Original SBML, compartment/species/parameter units and runtime identity are retained."
+          ]
+        },
+        "samples": 11,
+        "max_terminal_error": 6.085636267139094e-08
+      },
+      "same_origin_app_and_csp": true,
+      "authenticated_bounded_discovery": true
+    },
+    "live_cellml_model_and_all_result_artifact_hashes_verified": true
+  }
+}

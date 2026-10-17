@@ -18,7 +18,7 @@ combines them into a misleading overall completion score.
 | S0 | Preserve data, licenses and reliable local execution | None | Working local foundation; production deployment open |
 | S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
 | S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
-| S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet and declarative SBML/PKML working; CellML/omics/image admission open |
+| S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet, SBML/PKML and CellML 2 working; reviewed CellML operator ODE solver; omics/image admission open |
 | S4 | General experiment orchestration | S0,S3 | Durable reference/native scalar DAGs, COPASI/OSP agent and bounded cohorts/sweeps; remaining native adapters and richer bindings open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
@@ -60,8 +60,8 @@ Local single-user verification does not close S0.5.
 
 Source catalogue: [engine_adapters/ecosystem-sources.json](../engine_adapters/ecosystem-sources.json).
 Actual receipts: [source inspection](../engine_adapters/ecosystem-source-receipts-2026-10-16.json).
-The permanent distribution now contains **25 source identities / 52,167 files /
-1,799,838,581 bytes**, excluding Git administrative data, with **37 materialized
+The permanent distribution now contains **26 source identities / 53,261 files /
+1,814,782,314 bytes**, excluding Git administrative data, with **37 materialized
 Git links**. See [vendor manifest](../vendor/manifest.json), [original notices](../THIRD_PARTY_NOTICES.md),
 [native runtime profiles](../runtime_profiles/README.md) and [actual new receipts](../engine_adapters/runtime-evidence-2026-10-17.json).
 Earlier 1.0.0 source inspections remain immutable historical observations; complete
@@ -89,7 +89,7 @@ and context; a graph relation never silently authorizes an executable coupling.
 - [x] S3.2 Preserve raw/normalized CSV and native vCornea count/height artifacts with units and lineage.
 - [x] S3.3 Acquire three severities of real published simulation references and a separate attributed experimental aggregate.
 - [x] S3.4a Admit exact declarative SBML core L2/L3 and original PKML with context/license and unit metadata; execute with isolated pinned COPASI/OSPSuite drivers through the native agent.
-- [ ] S3.4b Add CellML admission and a reviewed solver, retaining the same declarative/executable distinction.
+- [x] S3.4b Add bounded self-contained CellML 2 admission and a reviewed libCellML/SciPy operator ODE solver, retaining original units, immutable raw bytes and separate execution receipts. E5 includes numerical/failure/artifact checks and workbench inspection; general CellML queue/flow support remains under S4.6b.2.
 - [ ] S3.5 Add AnnData/SpatialData and image/geometry readers in separate runtimes with donor/assay/license metadata.
 - [ ] S3.6 Add explicit GEO, CELLxGENE, HuBMAP, BioModels, Physiome/ModelDB and Hugging Face connectors only where source terms and a concrete experiment support them.
 - [ ] S3.7 Add donor/experiment-level split authority, data quality decisions and dataset-to-model impact tracking.
@@ -218,7 +218,9 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
    full Linux verification and live deployment without resetting data.
 2. Native computational profiles are installed/executed, and S4.6 now delivers
    actual COPASI/OSP model jobs and E3 scalar DAGs. Extend remaining native adapters/mappings (S4.6b.2),
-   CellML admission (S3.4b) and independent original benchmarks (S1.5).
+   ontology/data admission (S2.4/S3.5) and independent original benchmarks (S1.5).
+   E5 now delivers bounded CellML 2 admission and reviewed operator ODE execution
+   (S3.4b); its general queue/flow adapter remains part of S4.6b.2.
 3. E4 now delivers the shared six-workspace UI on those APIs. Extend richer
    authoring and independent quality/split workflows as S3/S6/S11 add their contracts.
 4. Add one explicit numerical coupling and its biological bridge (S5), then expand

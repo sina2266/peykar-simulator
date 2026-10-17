@@ -11,3 +11,7 @@ also pins every coupling model. No model here is a complete digital twin.
 `native/` contains exact declarative SBML and admission metadata for an original
 vendored PKML model, with separate native-agent plans. These do not register as
 reference-engine models or confer biological validity; see native/README.md.
+
+`cellml/` adds an original synthetic CellML 2 decay verification fixture and explicit
+original-time-unit solver controls. It is not biological validation. Upstream
+Robertson/unit-scaling examples remain pristine in vendor/dependencies/libcellml.

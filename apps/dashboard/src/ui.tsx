@@ -166,14 +166,16 @@ export function Tabs({
   tabs,
   selected,
   onSelect,
+  label = 'Details',
 }: {
   tabs: string[];
   selected: string;
   onSelect: (tab: string) => void;
+  label?: string;
 }) {
   const t = useT();
   return (
-    <nav className="tabs" aria-label={t('Details')}>
+    <nav className="tabs" aria-label={t(label)}>
       {tabs.map((tab) => (
         <button
           key={tab}
@@ -537,7 +539,7 @@ export function Plot({ data }: { data: PlotData }) {
       </button>
       {table && (
         <>
-          <div className="table-scroll">
+          <div className="table-scroll" tabIndex={0} role="region" aria-label={t('Data table')}>
             <table>
               <caption>{t('Data table')}</caption>
               <thead>

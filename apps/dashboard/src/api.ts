@@ -72,6 +72,7 @@ export class Client {
       key?: string;
       signal?: AbortSignal;
       text?: boolean;
+      bytes?: boolean;
     } = {},
   ): Promise<T> {
     if (!path.startsWith('/v1/') || path.includes('://'))
@@ -100,6 +101,7 @@ export class Client {
         const problem = await response.json().catch(() => ({}));
         throw new ApiError(response.status, detailMessage(problem.detail));
       }
+      if (options.bytes) return (await response.arrayBuffer()) as T;
       return options.text ? ((await response.text()) as T) : ((await response.json()) as T);
     } catch (e) {
       if (e instanceof ApiError) throw e;
@@ -117,9 +119,16 @@ export class Client {
   }
 }
 export function download(name: string, value: unknown, type = 'application/json') {
-  const blob = new Blob([typeof value === 'string' ? value : JSON.stringify(value, null, 2)], {
-    type,
-  });
+  const blob = new Blob(
+    [
+      value instanceof ArrayBuffer || typeof value === 'string'
+        ? value
+        : JSON.stringify(value, null, 2),
+    ],
+    {
+      type,
+    },
+  );
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

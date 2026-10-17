@@ -44,3 +44,14 @@ notices are retained in [third-party](apps/dashboard/third-party) and copied int
 the packaged `/app/licenses/` directory. The build verifies those notices against
 the installed distributions. These components retain their own terms; Peykar's
 project license and all specialist library notices remain unchanged.
+
+## CellML solver source and optional runtime
+
+libCellML 0.7.1, cellml/libcellml contributors, commit
+`bc71bfa5816cd3e1e1a28430366eb5688fe9e501`: complete pristine source in
+[vendor/dependencies/libcellml](vendor/dependencies/libcellml), under its original
+[Apache-2.0 LICENSE](vendor/dependencies/libcellml/LICENSE). Upstream numerical
+fixtures retain their comments and provenance. Peykar modifications live in the
+separate `runtime_profiles/cellml` driver, not the upstream source. Optional
+libCellML/NumPy/SciPy wheels are pinned by the independent runtime lock; their
+original distribution notices remain installed in that separate image.

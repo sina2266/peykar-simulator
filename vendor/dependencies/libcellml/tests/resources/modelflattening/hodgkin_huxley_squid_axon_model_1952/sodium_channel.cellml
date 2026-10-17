@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="hodgkin_huxley_squid_axon_model_1952" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <units name="millisecond">
+        <unit prefix="milli" units="second" />
+    </units>
+    <units name="per_millisecond">
+        <unit exponent="-1" prefix="milli" units="second" />
+    </units>
+    <units name="millivolt">
+        <unit prefix="milli" units="volt" />
+    </units>
+    <units name="per_millivolt_millisecond">
+        <unit exponent="-1" units="millivolt" />
+        <unit exponent="-1" prefix="milli" units="second" />
+    </units>
+    <units name="milliS_per_cm2">
+        <unit prefix="milli" units="siemens" />
+        <unit exponent="-2" prefix="centi" units="metre" />
+    </units>
+    <units name="microF_per_cm2">
+        <unit prefix="micro" units="farad" />
+        <unit exponent="-2" prefix="centi" units="metre" />
+    </units>
+    <units name="microA_per_cm2">
+        <unit prefix="micro" units="ampere" />
+        <unit exponent="-2" prefix="centi" units="metre" />
+    </units>
+    <component name="sodium_channel_model">
+        <variable interface="public" name="i_Na" units="microA_per_cm2" />
+        <variable initial_value="120" name="g_Na" units="milliS_per_cm2" />
+        <variable name="E_Na" units="millivolt" />
+        <variable interface="public_and_private" name="time" units="millisecond" />
+        <variable interface="public_and_private" name="V" units="millivolt" />
+        <variable interface="public" name="E_R" units="millivolt" />
+        <variable interface="private" name="m" units="dimensionless" />
+        <variable interface="private" name="h" units="dimensionless" />
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq />
+                <ci>E_Na</ci>
+                <apply>
+                    <minus />
+                    <ci>E_R</ci>
+                    <cn cellml:units="millivolt">115</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <ci>i_Na</ci>
+                <apply>
+                    <times />
+                    <ci>g_Na</ci>
+                    <apply>
+                        <power />
+                        <ci>m</ci>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <ci>h</ci>
+                    <apply>
+                        <minus />
+                        <ci>V</ci>
+                        <ci>E_Na</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="sodium_channel_m_gate">
+        <variable initial_value="0.05" interface="public" name="m" units="dimensionless" />
+        <variable name="alpha_m" units="per_millisecond" />
+        <variable name="beta_m" units="per_millisecond" />
+        <variable interface="public" name="V" units="millivolt" />
+        <variable interface="public" name="time" units="millisecond" />
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq />
+                <ci>alpha_m</ci>
+                <apply>
+                    <divide />
+                    <apply>
+                        <times />
+                        <cn cellml:units="per_millivolt_millisecond">0.1</cn>
+                        <apply>
+                            <plus />
+                            <ci>V</ci>
+                            <cn cellml:units="millivolt">25</cn>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus />
+                        <apply>
+                            <exp />
+                            <apply>
+                                <divide />
+                                <apply>
+                                    <plus />
+                                    <ci>V</ci>
+                                    <cn cellml:units="millivolt">25</cn>
+                                </apply>
+                                <cn cellml:units="millivolt">10</cn>
+                            </apply>
+                        </apply>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <ci>beta_m</ci>
+                <apply>
+                    <times />
+                    <cn cellml:units="per_millisecond">4</cn>
+                    <apply>
+                        <exp />
+                        <apply>
+                            <divide />
+                            <ci>V</ci>
+                            <cn cellml:units="millivolt">18</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <apply>
+                    <diff />
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <apply>
+                    <minus />
+                    <apply>
+                        <times />
+                        <ci>alpha_m</ci>
+                        <apply>
+                            <minus />
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>m</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times />
+                        <ci>beta_m</ci>
+                        <ci>m</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="sodium_channel_h_gate">
+        <variable initial_value="0.6" interface="public" name="h" units="dimensionless" />
+        <variable name="alpha_h" units="per_millisecond" />
+        <variable name="beta_h" units="per_millisecond" />
+        <variable interface="public" name="V" units="millivolt" />
+        <variable interface="public" name="time" units="millisecond" />
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq />
+                <ci>alpha_h</ci>
+                <apply>
+                    <times />
+                    <cn cellml:units="per_millisecond">0.07</cn>
+                    <apply>
+                        <exp />
+                        <apply>
+                            <divide />
+                            <ci>V</ci>
+                            <cn cellml:units="millivolt">20</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <ci>beta_h</ci>
+                <apply>
+                    <divide />
+                    <cn cellml:units="per_millisecond">1</cn>
+                    <apply>
+                        <plus />
+                        <apply>
+                            <exp />
+                            <apply>
+                                <divide />
+                                <apply>
+                                    <plus />
+                                    <ci>V</ci>
+                                    <cn cellml:units="millivolt">30</cn>
+                                </apply>
+                                <cn cellml:units="millivolt">10</cn>
+                            </apply>
+                        </apply>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <apply>
+                    <diff />
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>h</ci>
+                </apply>
+                <apply>
+                    <minus />
+                    <apply>
+                        <times />
+                        <ci>alpha_h</ci>
+                        <apply>
+                            <minus />
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>h</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times />
+                        <ci>beta_h</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <encapsulation>
+        <component_ref component="sodium_channel_model">
+            <component_ref component="sodium_channel_m_gate" />
+            <component_ref component="sodium_channel_h_gate" />
+        </component_ref>
+    </encapsulation>
+    <connection component_1="sodium_channel_model" component_2="sodium_channel_m_gate">
+        <map_variables variable_1="m" variable_2="m" />
+        <map_variables variable_1="time" variable_2="time" />
+        <map_variables variable_1="V" variable_2="V" />
+    </connection>
+    <connection component_1="sodium_channel_model" component_2="sodium_channel_h_gate">
+        <map_variables variable_1="h" variable_2="h" />
+        <map_variables variable_1="time" variable_2="time" />
+        <map_variables variable_1="V" variable_2="V" />
+    </connection>
+</model>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Define the VOI as being time (expressed in milliseconds). Then:
+ - Use the VOI as-is (i.e. time expressed in milliseconds) to compute an ODE; and
+ - Use a scaled version of the VOI (here, time expressed in seconds) to compute another ODE. -->
+    <units name="ms">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="per_ms">
+        <unit exponent="-1" units="ms"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="environment">
+        <variable interface="public" name="t" units="ms"/>
+    </component>
+    <component name="main">
+        <variable interface="public" name="t" units="ms"/>
+        <variable initial_value="3" name="x" units="dimensionless"/>
+        <variable initial_value="5" name="y" units="dimensionless"/>
+        <variable interface="public" name="k_x" units="ms"/>
+        <variable interface="public" name="k_y" units="second"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <ci>k_x</ci>
+                    <cn cellml:units="per_ms">1</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <ci>k_y</ci>
+                    <cn cellml:units="per_s">1</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection component_1="environment" component_2="main">
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="t" variable_2="k_x"/>
+        <map_variables variable_1="t" variable_2="k_y"/>
+    </connection>
+</model>

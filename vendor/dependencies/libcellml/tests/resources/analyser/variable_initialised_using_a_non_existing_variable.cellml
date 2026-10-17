@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Define 'x' as a state variable initialised using 'k', a non-existing variable. -->
+    <component name="main">
+        <variable name="t" units="dimensionless"/>
+        <variable initial_value="k" name="x" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+        </math>
+    </component>
+</model>

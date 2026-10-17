@@ -56,3 +56,7 @@ scientific labels, units and source-authored limitations are retained verbatim.
 Original React, React DOM and Scheduler MIT notices are retained under
 `third-party/`, checked against the exact installed packages and shipped at
 `/app/licenses/`. Application source remains under Peykar's existing terms.
+
+Model Studio also exposes CellML 2 admission, original units/bytes and retained
+operator executions with plots, tables and exact artifact downloads. This tab
+explicitly separates operator execution from future CellML queue support. See E5.

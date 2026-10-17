@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink" name="deriv_approx_sin">
+
+
+  <component name="sin">
+    <variable units="dimensionless" name="x" interface="public_and_private"/>
+    <variable units="dimensionless" name="sin" initial_value="sin_initial_value" interface="public_and_private"/>
+    <variable units="dimensionless" name="sin_initial_value" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply><eq/>
+        <apply><diff/>
+          <bvar><ci>x</ci></bvar>
+          <ci>sin</ci>
+        </apply>
+        <apply><cos/>
+          <ci>x</ci>
+        </apply>
+      </apply>
+    </math>
+  </component>
+
+</model>

@@ -1,0 +1,5 @@
+
+set(TESTS_RESOURCE_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/resources)
+
+set(TEST_RESOURCE_HEADER ${CMAKE_CURRENT_BINARY_DIR}/test_resources.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/test_resources.in.h ${TEST_RESOURCE_HEADER})

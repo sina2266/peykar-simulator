@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="main_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="reusable2.xml">
+        <component name="other_component" component_ref="reusable_component" />
+    </import>
+    <component name="main_model_component">
+        <variable name="v" initial_value="1" units="dimensionless" interface="public_and_private" />
+    </component>
+    <encapsulation>
+        <component_ref component="main_model_component">
+            <component_ref component="other_component" />
+        </component_ref>
+    </encapsulation>
+</model>

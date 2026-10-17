@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Underconstrained NLA system
+   x: 1 -> 3
+   y: 1 -> -2
+   z: 1 -> 1
+   x + y + z = 2
+   6x - 4y + 5z = 31-->
+    <component name="my_algebraic_system">
+        <variable initial_value="1" name="x" units="dimensionless"/>
+        <variable initial_value="1" name="y" units="dimensionless"/>
+        <variable initial_value="1" name="z" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <ci>x</ci>
+                    <ci>y</ci>
+                    <ci>z</ci>
+                </apply>
+                <cn cellml:units="dimensionless">2</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">6</cn>
+                        <ci>x</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">-4</cn>
+                        <ci>y</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <ci>z</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">31</cn>
+            </apply>
+        </math>
+    </component>
+</model>

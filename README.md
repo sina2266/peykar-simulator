@@ -27,7 +27,7 @@ is one integration within it. Shared backends now include an immutable
 [persistent biological graphs](docs/biological-graph.md), and
 [durable multi-model experiment workflows](docs/experiment-workflows.md).
 The complete named source trees and recursive dependencies now live as ordinary
-project files in [vendor](vendor/README.md): 25 pinned distributions, 52,167 files,
+project files in [vendor](vendor/README.md): 26 pinned distributions, 53,261 files,
 37 materialized Git dependencies, and preserved original notices. [Installed
 runtime profiles](runtime_profiles/README.md) execute real COPASI, NEURON,
 PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongside
@@ -38,6 +38,9 @@ A separate [native execution agent](docs/native-agent.md) now runs admitted SBML
 through COPASI and original PKML through OSPSuite from durable API jobs, with
 frozen identities, cancellation and checksum-verified outputs. Other native queue
 adapters and continuous feedback coupling remain explicit system tasks.
+[E5 CellML](docs/epics/E5-cellml-models.md) adds original CellML 2 admission, a
+reviewed isolated libCellML/SciPy ODE solver, retained operator results and browser
+inspection; CellML queue submission remains a separate integration task.
 [E2 job cohorts](docs/epics/E2-reproducible-cohorts.md) now add bounded parameter
 sweeps, deterministic reference seed allocation, mixed native/reference batches
 and lineage-checked terminal statistics with explicit excluded members.
@@ -263,6 +266,7 @@ actually owns, including commercially, without buying a license from himself.
 
 An earlier private 0.1.0 snapshot contained Apache-2.0 terms. Any valid rights actually
 obtained under that grant remain effective; this change cannot withdraw them.
-External packages, engines, models and datasets retain their own licenses. None of
-the specialist engines is bundled. A licensing label is not a guarantee of ownership
+External packages, engines, models and datasets retain their own licenses. Pristine
+specialist sources retain their original terms; optional native runtimes are
+built separately from the API/Worker image. A licensing label is not a guarantee of ownership
 or enforceability. [Licensing rationale](docs/licensing-rationale.md).

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#"
+  xmlns:cellml="http://www.cellml.org/cellml/2.0#"
+  xmlns:xlink="http://www.w3.org/1999/xlink" name="component_library">
+  <import xlink:href="layer1/importing_bad_design_z_import_hierarchy.cellml">
+    <component name="c1_imported" component_ref="c1" />
+  </import>
+  <component name="component_in_component_library" />
+  <component name="z_component_in_component_library" />
+  <encapsulation>
+    <component_ref component="z_component_in_component_library">
+      <component_ref component="c1_imported" />
+    </component_ref>
+  </encapsulation>
+</model>

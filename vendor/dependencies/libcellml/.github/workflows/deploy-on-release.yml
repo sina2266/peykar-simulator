@@ -1,0 +1,602 @@
+name: Deploy libCellML on Release
+
+on:
+  release:
+    types:
+      - created
+      - edited
+
+env:
+  BUILD_TYPE: Release
+  ARTIFACT_RETENTION_DAYS: 7
+
+jobs:
+  setup-jobs:
+    runs-on: ubuntu-latest
+    outputs:
+      binaries-destination: ${{ steps.binaries-out.outputs.binaries-destination }}
+      allowed-jobs: ${{ steps.do-jobs.outputs.allowed-jobs }}
+    steps:
+    - name: Determine output location
+      id: binaries-out
+      shell: cmake -P {0}
+      run: |
+        set(_OUTPUT_LOCATION "nowhere")
+        set(PRERELEASE "${{ github.event.release.prerelease }}")
+        if (PRERELEASE STREQUAL "true")
+          set(_OUTPUT_LOCATION "Artifact")
+        else()
+          set(_OUTPUT_LOCATION "Publish")
+        endif()
+        if ("${{ github.event.action }}" STREQUAL "edited")
+          set(_OUTPUT_LOCATION "unknown")
+          set(RELEASE_BODY "${{ github.event.release.body }}")
+          string(REPLACE "\n" ";" _PARTS "${RELEASE_BODY}")
+          foreach(_PART ${_PARTS})
+            string(STRIP "${_PART}" _PART)
+            string(REGEX MATCH "^[[]ODD ([a-zA-Z]+) ([a-zA-Z]+)[]]$" _RESULT "${_PART}")
+            if (CMAKE_MATCH_1 STREQUAL "Publish")
+              set(_OUTPUT_LOCATION Publish)
+            elseif(CMAKE_MATCH_1 STREQUAL "Artifact")
+              set(_OUTPUT_LOCATION Artifact)
+            endif()
+          endforeach()
+        endif()
+        message(STATUS "Setting binaries destination to '${_OUTPUT_LOCATION}'.")
+        file(APPEND $ENV{GITHUB_OUTPUT} "binaries-destination=${_OUTPUT_LOCATION}")
+
+    - name: Determine next jobs
+      id: do-jobs
+      shell: cmake -P {0}
+      run: |
+        set(_ALLOWED_JOBS "All")
+        if ("${{ github.event.action }}" STREQUAL "edited")
+          set(_ALLOWED_JOBS "none")
+          set(RELEASE_BODY "${{ github.event.release.body }}")
+          string(REPLACE "\n" ";" _PARTS "${RELEASE_BODY}")
+          foreach(_PART ${_PARTS})
+            string(STRIP "${_PART}" _PART)
+            string(REGEX MATCH "^[[]ODD ([a-zA-Z]+) ([a-zA-Z]+)[]]$" _RESULT "${_PART}")
+            if (CMAKE_MATCH_2 STREQUAL "Installers")
+              set(_ALLOWED_JOBS Installers)
+            elseif(CMAKE_MATCH_2 STREQUAL "Wheels")
+              set(_ALLOWED_JOBS Wheels)
+            elseif(CMAKE_MATCH_2 STREQUAL "Javascript")
+              set(_ALLOWED_JOBS Javascript)
+            elseif(CMAKE_MATCH_2 STREQUAL "Julia")
+              set(_ALLOWED_JOBS Julia)
+            endif()
+          endforeach()
+        endif()
+        message(STATUS "Setting allowed jobs to '${_ALLOWED_JOBS}'.")
+        file(APPEND $ENV{GITHUB_OUTPUT} "allowed-jobs=${_ALLOWED_JOBS}")
+
+  os-binaries:
+    needs: setup-jobs
+    if: needs.setup-jobs.outputs.allowed-jobs == 'Installers' || needs.setup-jobs.outputs.allowed-jobs == 'All'
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Windows Server 2025 MSVC",
+            os: windows-2025,
+            cc: "cl", cxx: "cl",
+          }
+        - {
+            name: "Ubuntu 24.04 GCC",
+            os: ubuntu-24.04,
+            build_type: "Release", cc: "gcc", cxx: "g++"
+          }
+        - {
+            name: "macOS 15 Clang",
+            os: macos-15-intel,
+            cc: "clang", cxx: "clang++"
+          }
+
+    steps:
+    - name: Checkout libCellML
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ github.event.release.tag_name }}
+
+    - name: Checkout zlib
+      uses: actions/checkout@v6
+      if: runner.os == 'Windows'
+      with:
+        repository: CMLibs-Dependencies/zlib
+        path: zlib
+        ref: v1.2.12
+
+    - name: Checkout LibXml2
+      uses: actions/checkout@v6
+      if: runner.os == 'Windows'
+      with:
+        repository: CMLibs-Dependencies/libxml2
+        path: libxml2
+        ref: v2.9.10
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v3
+      if: runner.os == 'Windows'
+
+    - name: Prepare Windows environment
+      if: runner.os == 'Windows'
+      shell: cmake -P {0}
+      run: |
+        # Prepare environment script.
+
+        set(ACTION_DIR ${CMAKE_CURRENT_BINARY_DIR})
+        set(WIN_PATH)
+        file(TO_CMAKE_PATH "$ENV{PATH}" ENV_PATH)
+        set(PATH_LIST "")
+        foreach(_PATH ${ENV_PATH})
+          if (NOT "${_PATH}" MATCHES ".*Strawberry")
+            list(APPEND WIN_PATH "${_PATH}")
+          endif()
+        endforeach()
+        file(TO_NATIVE_PATH "${WIN_PATH}" WIN_PATH)
+        set(ENV{PATH} "${WIN_PATH}")
+        execute_process(COMMAND ${CMAKE_COMMAND} -S "${ACTION_DIR}/zlib" -B "${ACTION_DIR}/build-zlib" -DBUILD_SHARED_LIBS=FALSE -DCMAKE_INSTALL_PREFIX=$ENV{GITHUB_WORKSPACE}/usr/local)
+        execute_process(COMMAND ${CMAKE_COMMAND} --build "${ACTION_DIR}/build-zlib" --config Release
+          WORKING_DIRECTORY "${ACTION_DIR}/build-zlib")
+        execute_process(COMMAND ${CMAKE_COMMAND} --install "${ACTION_DIR}/build-zlib" --config Release
+          WORKING_DIRECTORY "${ACTION_DIR}/build-zlib")
+
+        execute_process(COMMAND ${CMAKE_COMMAND} -S "${ACTION_DIR}/libxml2" -B "${ACTION_DIR}/build-libxml2" -DCMAKE_PREFIX_PATH=$ENV{GITHUB_WORKSPACE}/usr/local -DCMAKE_INSTALL_PREFIX=$ENV{GITHUB_WORKSPACE}/usr/local -DBUILD_SHARED_LIBS=OFF -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_LZMA=OFF -DLIBXML2_WITH_PYTHON=OFF -DLIBXML2_WITH_TESTS=OFF -DLIBXML2_WITH_PROGRAMS=OFF
+          RESULT_VARIABLE _RESULT OUTPUT_VARIABLE _OUTPUT ERROR_VARIABLE _ERROR)
+        execute_process(COMMAND ${CMAKE_COMMAND} --build "${ACTION_DIR}/build-libxml2" --config Release
+          WORKING_DIRECTORY "${ACTION_DIR}/build-libxml2")
+        execute_process(COMMAND ${CMAKE_COMMAND} --install "${ACTION_DIR}/build-libxml2" --config Release
+          WORKING_DIRECTORY "${ACTION_DIR}/build-libxml2")
+
+    - name: Configure
+      shell: cmake -P {0}
+      run: |
+        # Configure library script
+        set(OPTIONAL_ARGUMENTS -D BINDINGS_PYTHON=OFF)
+
+        set(ENV{CC} ${{ matrix.config.cc }})
+        set(ENV{CXX} ${{ matrix.config.cxx }})
+
+        set(PYTHON_LOCATION $ENV{pythonLocation})
+
+        set(ACTION_DIR ${CMAKE_CURRENT_BINARY_DIR})
+        if (NOT "${{ runner.os }}" STREQUAL "Windows")
+          list(APPEND OPTIONAL_ARGUMENTS -D BUILD_TYPE=$ENV{BUILD_TYPE})
+          list(APPEND OPTIONAL_ARGUMENTS -D COVERAGE=OFF)
+        endif()
+
+        if ("${{ runner.os }}" STREQUAL "Windows")
+          file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/usr/local" _SAFE_PATH)
+          list(APPEND OPTIONAL_ARGUMENTS -D CMAKE_PREFIX_PATH=${_SAFE_PATH})
+        endif()
+
+        if ("${{ matrix.config.cc }}" STREQUAL "clang")
+          list(APPEND OPTIONAL_ARGUMENTS -D LLVM_COVERAGE=OFF)
+        endif()
+        if ("${{ matrix.config.os }}" STREQUAL "ubuntu-24.04")
+          list(APPEND OPTIONAL_ARGUMENTS -D PACKAGE_ANY_LINUX=TRUE)
+        endif()
+
+        message(STATUS "Configuring with optional arguments: ${OPTIONAL_ARGUMENTS}")
+        execute_process(
+          COMMAND ${CMAKE_COMMAND}
+            -S .
+            -B build
+            ${OPTIONAL_ARGUMENTS}
+          RESULT_VARIABLE _RESULT
+        )
+
+        if (NOT _RESULT EQUAL 0)
+          message(FATAL_ERROR "Configure failed.")
+        endif()
+
+    - name: Build
+      shell: cmake -P {0}
+      run: |
+        # Build library script
+
+        include(ProcessorCount)
+        ProcessorCount(N)
+
+        math(EXPR JOBS "${N} + 1")
+
+        execute_process(
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE} --parallel ${JOBS}
+          RESULT_VARIABLE _RESULT
+        )
+
+        if (NOT _RESULT EQUAL 0)
+          message(FATAL_ERROR "Build failed.")
+        endif()
+
+    - name: Test
+      shell: cmake -P {0}
+      run: |
+        # Test library script
+
+        include(ProcessorCount)
+        ProcessorCount(N)
+
+        math(EXPR JOBS "${N} + 1")
+
+        set(ENV{CTEST_OUTPUT_ON_FAILURE} "ON")
+
+        set(ACTION_DIR ${CMAKE_CURRENT_BINARY_DIR})
+        execute_process(
+          COMMAND ${CMAKE_CTEST_COMMAND} -j ${JOBS} -C $ENV{BUILD_TYPE}
+          WORKING_DIRECTORY "${ACTION_DIR}/build"
+          RESULT_VARIABLE _RESULT
+        )
+
+        if (NOT _RESULT EQUAL 0)
+          message(FATAL_ERROR "Tests failed.")
+        endif()
+
+    - name: Package
+      id: package
+      shell: cmake -P {0}
+      run: |
+        # Package library script
+
+        set(ACTION_DIR ${CMAKE_CURRENT_BINARY_DIR})
+        execute_process(
+          COMMAND ${CMAKE_CPACK_COMMAND} -C $ENV{BUILD_TYPE}
+          WORKING_DIRECTORY "${ACTION_DIR}/build"
+          RESULT_VARIABLE result
+        )
+
+        if (NOT result EQUAL 0)
+          message(FATAL_ERROR "Packaging failed.")
+        endif()
+
+        file(GLOB _DIST_FILES ${ACTION_DIR}/build/dist/*)
+        string(REPLACE ";" "\n" _DIST_FILES "${_DIST_FILES}")
+        file(APPEND $ENV{GITHUB_OUTPUT} "files<<EOF\n${_DIST_FILES}\nEOF")
+
+    - name: Publish libraries
+      if: needs.setup-jobs.outputs.binaries-destination == 'Publish'
+      uses: softprops/action-gh-release@v3
+      with:
+        files: ${{ steps.package.outputs.files }}
+        tag_name: ${{ github.event.release.tag_name }}
+
+    - name: Upload libraries as artifacts
+      if: needs.setup-jobs.outputs.binaries-destination == 'Artifact'
+      uses: actions/upload-artifact@v7
+      with:
+        path: ./build/dist/*
+        name: ${{ matrix.config.os }}
+        retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+
+  wheels:
+    needs: setup-jobs
+    if: needs.setup-jobs.outputs.allowed-jobs == 'Wheels' || needs.setup-jobs.outputs.allowed-jobs == 'All'
+    name: ${{ matrix.name }} ${{ matrix.py }} wheel
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, ubuntu-24.04, ubuntu-24.04-arm, windows-2022, windows-11-arm]
+        py: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+        include:
+          - name: 'Windows'
+            os: windows-2022
+          - name: 'Windows ARM'
+            os: windows-11-arm
+          - name: 'Linux'
+            os: ubuntu-24.04-arm
+          - name: 'Linux ARM'
+            os: ubuntu-24.04
+          - name: 'macOS'
+            os: macos-15
+        exclude:
+          - os: ubuntu-24.04
+            py: '3.9'
+          - os: ubuntu-24.04-arm
+            py: '3.9'
+
+    steps:
+      - name: Check out libCellML
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Setup for cibuildwheel
+        id: setup
+        shell: bash
+        run: |
+          mkdir src/bindings/python/libcellml
+          cp src/bindings/python/README.rst src/bindings/python/libcellml/README.rst
+          mv src/bindings/python/cibuildwheel.setup.py src/bindings/python/setup.py
+          v=${{ matrix.py }}
+          echo "Setting tag as: tag=${GITHUB_REF#refs/tags/}"
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "Setting build as: build=cp${v/./}-*"
+          echo "build=cp${v/./}-*" >> $GITHUB_OUTPUT
+          if [[ "macOS" == "${{ matrix.name }}" ]]; then
+            echo "Setting macos_archs as: macos_archs='x86_64 arm64'"
+            echo "macos_archs=x86_64 arm64" >> $GITHUB_OUTPUT
+            echo "macos_deployment_target=14.0" >> $GITHUB_OUTPUT
+          elif [[ "Windows" == "${{ matrix.name }}" ]]; then
+            echo "Setting win_arch as: win_arch=amd64"
+            echo "win_arch=amd64" >> $GITHUB_OUTPUT
+          elif [[ "Windows ARM" == "${{ matrix.name }}" ]]; then
+            echo "Setting win_arch as: win_arch=arm64"
+            echo "win_arch=arm64" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure MSVC (Windows)
+        if: runner.os == 'Windows'
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
+
+      - name: Install SWIG (macOS)
+        if: runner.os == 'macOS'
+        run: brew install swig
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.4
+        env:
+          #CIBW_BUILD_VERBOSITY: 1
+          CIBW_ARCHS: auto64
+          CIBW_ARCHS_MACOS: ${{ steps.setup.outputs.macos_archs }}
+          CIBW_BUILD: ${{ steps.setup.outputs.build }}
+          CIBW_TEST_SKIP: "*_arm64"
+          CIBW_BEFORE_ALL_LINUX: yum install -y libxml2-devel || (apk add libxml2-dev && rm /usr/lib/cmake/libxml2/libxml2-config.cmake)
+          CIBW_ENVIRONMENT: >
+            LIBCELLML_VERSION_TAG=${{ steps.setup.outputs.tag }}
+            MACOSX_DEPLOYMENT_TARGET=${{ steps.setup.outputs.macos_deployment_target }}
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
+          CIBW_BEFORE_BUILD_LINUX: pip install renamewheel
+          CIBW_BEFORE_BUILD_WINDOWS: call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvarsall.bat" ${{ steps.setup.outputs.win_arch }} && cd src/bindings/python && cmake -S wheel_dependencies -B build-wheel_dependencies -G Ninja && cd build-wheel_dependencies && ninja
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: renamewheel -w {dest_dir} {wheel}
+        with:
+          output-dir: wheelhouse
+          package-dir: src/bindings/python/
+
+      - name: Upload Python wheels as artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          path: ./wheelhouse/*.whl
+          name: ${{ matrix.name }}-${{ matrix.py }}-wheel
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+
+  publish-wheels:
+    if: needs.setup-jobs.outputs.binaries-destination == 'Publish'
+    needs: wheels
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5  # Docker+network are slow sometimes.
+    permissions:
+      id-token: write
+    name: Publish Wheels
+    steps:
+      - name: Download Python wheel artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: wheelhouse/
+          pattern: '*-wheel'
+          merge-multiple: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Twine
+        run: |
+          pip install twine
+
+      - name: Publish Python wheels
+        run: |
+          twine upload --verbose --skip-existing --repository-url https://upload.pypi.org/legacy/ ./wheelhouse/*.whl
+
+  emscripten:
+    needs: setup-jobs
+    if: needs.setup-jobs.outputs.allowed-jobs == 'Javascript' || needs.setup-jobs.outputs.allowed-jobs == 'All'
+    name: libcellml.js
+    permissions:
+      id-token: write
+    runs-on: macos-15-intel
+    steps:
+      - name: Checkout libCellML
+        uses: actions/checkout@v6
+        with:
+          path: libcellml
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Checkout zlib
+        uses: actions/checkout@v6
+        with:
+          repository: CMLibs-Dependencies/zlib
+          path: zlib
+          ref: v1.2.12
+
+      - name: Checkout LibXml2
+        uses: actions/checkout@v6
+        with:
+          repository: CMLibs-Dependencies/libxml2
+          path: libxml2
+          ref: v2.9.10
+
+      - name: Instal emscripten
+        shell: bash
+        run: |
+          brew install emscripten
+
+      - name: Instal Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Build and install zlib
+        shell: bash
+        run: |
+          mkdir build-zlib-release
+          cd build-zlib-release
+          emcmake cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/usr/local ../zlib/
+          make -j3 install
+
+      - name: Build and install libXml2
+        shell: bash
+        run: |
+          mkdir build-libxml2-release
+          cd build-libxml2-release
+          emcmake cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/usr/local -DZLIB_DIR=${GITHUB_WORKSPACE}/usr/local/lib/cmake/ZLIB-1.2.12/ -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/usr/local -DBUILD_SHARED_LIBS=OFF -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_LZMA=OFF -DLIBXML2_WITH_PYTHON=OFF -DLIBXML2_WITH_TESTS=OFF -DLIBXML2_WITH_PROGRAMS=OFF ../libxml2/
+          make -j3 install
+
+      - name: Build libcellml.js
+        shell: bash
+        run: |
+          mkdir build-libcellml-release
+          cd build-libcellml-release
+          emcmake cmake -DLibXml2_DIR=${GITHUB_WORKSPACE}/usr/local/lib/cmake/libxml2-2.9.10/ -DZLIB_DIR=${GITHUB_WORKSPACE}/usr/local/lib/cmake/ZLIB-1.2.12/ -DBUILD_TYPE=Release ../libcellml/
+          make VERBOSE=1 -j3
+
+      - name: Pack libcellml.js
+        id: package-javascript
+        shell: bash
+        run: |
+          cd build-libcellml-release/src/bindings/javascript
+          npm pack
+          package=`ls $PWD/libcellml.js-*.tgz`
+          echo "files=$package" >> $GITHUB_OUTPUT
+
+      - name: Upload libcellml.js as artifacts
+        if: needs.setup-jobs.outputs.binaries-destination == 'Artifact'
+        uses: actions/upload-artifact@v7
+        with:
+          path: ${{ steps.package-javascript.outputs.files }}
+          name: libcellml.js
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+
+      - name: Publish libcellml.js
+        if: needs.setup-jobs.outputs.binaries-destination == 'Publish'
+        run: |
+          cd build-libcellml-release/src/bindings/javascript
+
+          npm publish
+
+  julia:
+    needs: setup-jobs
+    if: needs.setup-jobs.outputs.allowed-jobs == 'Julia' || needs.setup-jobs.outputs.allowed-jobs == 'All'
+    name: Julia
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout libCellML
+        uses: actions/checkout@v6
+        with:
+          path: libcellml
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Determine release commit SHA
+        run: |
+          cd libcellml
+
+          tag="${{ github.event.release.tag_name }}"
+          sha=$(git rev-list -n 1 "$tag")
+
+          echo "release_sha=$sha" >> $GITHUB_ENV
+
+      - name: Generate GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.RELEASE_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: Yggdrasil
+
+      - name: Checkout Yggdrasil
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ github.repository_owner }}/Yggdrasil
+          token: ${{ steps.app_token.outputs.token }}
+          path: yggdrasil
+
+      - name: Create branch
+        run: |
+          cd yggdrasil
+          branch="libcellml-${{ github.event.release.tag_name }}"
+          git checkout -b "$branch"
+
+          echo "branch=$branch" >> "$GITHUB_ENV"
+
+      - name: Update build_tarballs.jl
+        run: |
+          full_version=${{ github.event.release.tag_name }}
+          version="${full_version#v}"
+          sha="$release_sha"
+
+          echo "version: $version"
+          echo "sha: $sha"
+
+          python3 - <<EOF
+          import re
+
+          path = "yggdrasil/L/libcellml/build_tarballs.jl"
+          with open(path) as f:
+              content = f.read()
+
+          version = "${version}"
+          sha = "${release_sha}"
+
+          # Update version
+          content = re.sub(
+              r'version = v"[^"]+"',
+              f'version = v"{version}"',
+              content
+          )
+
+          def replace_git_source(match):
+              return match.group(1) + sha + match.group(2)
+
+          # Update GitSource SHA
+          content = re.sub(
+              r'(GitSource\(\s*"https://github.com/cellml/libcellml",\s*")[^"]+(")',
+              replace_git_source,
+              content,
+              flags=re.DOTALL
+          )
+
+          with open(path, "w") as f:
+              f.write(content)
+          EOF
+
+          cd yggdrasil
+          git diff
+
+      - name: Commit changes
+        run: |
+          cd yggdrasil
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add L/libcellml/build_tarballs.jl
+          git commit -m "libcellml ${{ github.event.release.tag_name }}"
+
+      - name: Push branch
+        run: |
+          cd yggdrasil
+
+          git push origin "$branch"
+
+      - name: Create PR
+        if: ${{ !github.event.release.prerelease }}
+        env:
+          GH_TOKEN: ${{ secrets.YGGDRASIL_PR_PAT }}
+        run: |
+          cd yggdrasil
+
+          gh pr create \
+            --repo JuliaPackaging/Yggdrasil \
+            --head "${{ github.repository_owner }}:$branch" \
+            --base master \
+            --title "[libcellml] new version ${{ github.event.release.tag_name }}" \
+            --body "Automated update for libCellML release ${{ github.event.release.tag_name }}."

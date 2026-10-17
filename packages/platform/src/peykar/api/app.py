@@ -21,6 +21,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.batch_routes import install_batch_routes
+from peykar.api.cellml_routes import install_cellml_routes
 from peykar.api.dashboard import install_dashboard
 from peykar.api.hybrid_routes import install_hybrid_routes
 from peykar.api.middleware import BodyLimitMiddleware
@@ -161,6 +162,7 @@ def create_app(
     read = APIRouter(prefix="/v1", dependencies=[Depends(role)])
     write = APIRouter(prefix="/v1", dependencies=[Depends(write_access)])
     install_native_routes(read, write, service)
+    install_cellml_routes(read, write, service)
     install_batch_routes(read, write, service)
     install_hybrid_routes(read, write, service)
 

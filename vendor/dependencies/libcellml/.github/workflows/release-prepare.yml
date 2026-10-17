@@ -1,0 +1,177 @@
+name: Release (stage 01) - Prepare
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_branch:
+        description: "Base branch (main or tag)"
+        default: 'main'
+        required: true
+      version:
+        description: "Release version (e.g. 0.7.1, 0.7.0-rc.1)"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: release
+          path: release-repo
+
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.source_branch }}
+          path: source-repo
+
+      - name: Detect active release staging branches (PR-backed)
+        id: detect_branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd release-repo
+
+          branches=$(git branch -r \
+            | sed 's|^[[:space:]]*origin/||' \
+            | grep '^${{ vars.RELEASE_STAGING_BRANCH_STEM }}' || true)
+
+          active=()
+
+          for branch in $branches; do
+            pr_count=$(gh pr list \
+              --head "$branch" \
+              --base release \
+              --state open \
+              --json number \
+              --jq 'length')
+
+            if [ "$pr_count" -gt 0 ]; then
+              active+=("$branch")
+            fi
+          done
+
+          if [ "${#active[@]}" -eq 1 ]; then
+            echo "::error::Active release staging branch with an open PR found"
+            exit 1
+          fi
+
+          if [ "${#active[@]}" -gt 1 ]; then
+            echo "::error::Multiple active release staging branches detected:"
+            printf '%s\n' "${active[@]}"
+            exit 1
+          fi
+
+          #branch="${active[0]}"
+          #echo "release_branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Set GitHub Actions bot identity (both repos)
+        run: |
+          cd release-repo
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          cd ../source-repo
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Tag source of release
+        run: |
+          cd source-repo
+
+          git tag -a "source-v${{ inputs.version }}" -m "Source tag for release v${{ inputs.version }}"
+          git push origin "source-v${{ inputs.version }}"
+
+      - name: Create staging branch
+        run: |
+          cd release-repo
+
+          git checkout -b ${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }}
+
+      - name: Copy release changes to release repo
+        run: |
+          rsync -avW --delete --exclude='.git' source-repo/ release-repo/
+
+      - name: Commit changes
+        run: |
+          cd release-repo
+
+          git add -A
+          git commit -m "Changes to update the release branch to ${{ inputs.version }}."
+
+      - name: Push branch
+        run: |
+          cd release-repo
+
+          git push origin ${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }}
+
+  generate_changelog:
+    needs: prepare
+    uses: ./.github/workflows/release-changelog.yml
+    with:
+      changelog_branch: ${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }}
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  set_version:
+    needs: generate_changelog
+    uses: ./.github/workflows/set-version.yml
+    with:
+      target_branch: ${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }}
+      version: ${{ inputs.version }}
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  open_pr:
+    runs-on: ubuntu-latest
+    needs: set_version
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Automated release PR for v${{ inputs.version }}." > pr_body.txt
+          echo "" >> pr_body.txt
+          echo "**Do not** merge this PR, it is only for review and testing." >> pr_body.txt
+          echo "The release process will deal with it when the release is finalised." >> pr_body.txt
+
+          gh pr create \
+            --base release \
+            --head ${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }} \
+            --title "Proposed changes to create release v${{ inputs.version }} of libCellML" \
+            --body-file pr_body.txt \
+            --draft        
+
+  delete_release_branch:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - generate_changelog
+      - set_version
+      - open_pr
+    if: failure()
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Delete remote release staging branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="${{ vars.RELEASE_STAGING_BRANCH_STEM }}${{ inputs.version }}"
+          echo "Cleaning up failed release branch: $branch"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git push origin --delete "$branch" || echo "Branch already deleted"
+          git push origin :refs/tags/"source-v${{ inputs.version }}" || echo "Tag already deleted"

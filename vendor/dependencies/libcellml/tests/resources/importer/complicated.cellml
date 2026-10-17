@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#"
+  xmlns:cellml="http://www.cellml.org/cellml/2.0#"
+  xmlns:xlink="http://www.w3.org/1999/xlink" name="complicatedImports">
+  <import xlink:href="circularImport_1.cellml">
+    <component name="c1" component_ref="i_am_ok_but_my_sibling_is_cyclic" />
+  </import>
+  <import xlink:href="circularImport_1.cellml">
+    <component name="c2" component_ref="i_am_ok_but_my_sibling_is_cyclic" />
+  </import>
+  <import xlink:href="circularImport_1.cellml">
+    <component name="c3" component_ref="i_am_ok_but_my_sibling_is_cyclic" />
+  </import>
+</model>

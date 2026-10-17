@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="coth" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="frog"/>
+    <units name="imaginary">
+        <unit exponent="1" units="second"/>
+        <unit exponent="1" prefix="milli" units="second"/>
+        <unit exponent="3" units="volt"/>
+        <unit exponent="3" prefix="micro" units="volt"/>
+        <unit exponent="5" units="frog"/>
+        <unit exponent="5" prefix="nano" units="frog"/>
+    </units>
+    <component name="main">
+        <variable name="a" units="dimensionless"/>
+        <variable name="b" units="dimensionless"/>
+        <variable name="c" units="dimensionless"/>
+        <variable name="d" units="dimensionless"/>
+        <variable name="e" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <apply>
+                    <coth/>
+                    <cn cellml:units="dimensionless">1</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <apply>
+                    <coth/>
+                    <cn cellml:units="second">3</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <apply>
+                    <coth/>
+                    <cn cellml:units="volt">5</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <apply>
+                    <coth/>
+                    <cn cellml:units="frog">7</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>e</ci>
+                <apply>
+                    <coth/>
+                    <cn cellml:units="imaginary">9</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

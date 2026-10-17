@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- - Coupled pair of ODEs, encapsulated within a parent:
+     dx/dt = -y
+     dy/dt =  x
+     x(0) = 0
+     y(0) = 1
+ - Check encapsulation (the x and y ODEs are within child components)
+ - Check all information flow directions
+ - Check a variable source can have no maths in its own component
+   (see circle_x_source)
+ - Check we can export a variable both sideways and upwards
+   (see circle_x_sibling)
+ - Check connection handling using a purely pass-through component
+   (see circle_y)
+ - Check connecting a private=in, public=out (y) variable
+   (see circle_sibling)-->
+    <units name="ms">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="mM">
+        <unit prefix="milli" units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="milli_mole">
+        <unit prefix="milli" units="mole"/>
+    </units>
+    <units name="per_ms">
+        <unit exponent="-1" units="ms"/>
+    </units>
+    <component name="environment">
+        <variable interface="public" name="t" units="ms"/>
+    </component>
+    <component name="circle_parent">
+        <variable interface="public_and_private" name="t" units="ms"/>
+        <variable interface="private" name="x" units="mM"/>
+        <variable interface="public_and_private" name="y" units="mM"/>
+    </component>
+    <component name="circle_x">
+        <variable interface="public" name="t" units="ms"/>
+        <variable interface="public_and_private" name="x" units="mM"/>
+        <variable interface="public" name="y" units="mM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <ci>y</ci>
+                    </apply>
+                    <cn cellml:units="per_ms">1</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="circle_x_source">
+        <variable initial_value="0" interface="public" name="x" units="mM"/>
+    </component>
+    <component name="circle_x_sibling">
+        <variable interface="public" name="x" units="mM"/>
+        <variable name="two_x" units="milli_mole"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>two_x</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="litre">2</cn>
+                    <ci>x</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="circle_y">
+        <variable interface="public_and_private" name="t" units="ms"/>
+        <variable interface="public_and_private" name="y" units="mM"/>
+        <variable interface="public_and_private" name="x" units="mM"/>
+    </component>
+    <component name="circle_y_implementation">
+        <variable interface="public" name="t" units="ms"/>
+        <variable initial_value="1" interface="public" name="y" units="mM"/>
+        <variable interface="public" name="x" units="mM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <ci>x</ci>
+                    <cn cellml:units="per_ms">1</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="circle_sibling">
+        <variable interface="public" name="y" units="mM"/>
+        <variable name="local_complex_maths" units="mM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>local_complex_maths</ci>
+                <apply>
+                    <plus/>
+                    <ci>y</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">5</cn>
+                            <ci>y</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="mM">1</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>y</ci>
+                                <cn cellml:units="mM">2</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <encapsulation>
+        <component_ref component="circle_parent">
+            <component_ref component="circle_x">
+                <component_ref component="circle_x_source"/>
+                <component_ref component="circle_x_sibling"/>
+            </component_ref>
+            <component_ref component="circle_y">
+                <component_ref component="circle_y_implementation"/>
+            </component_ref>
+        </component_ref>
+    </encapsulation>
+    <connection component_1="circle_parent" component_2="environment">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection component_1="circle_parent" component_2="circle_x">
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="x" variable_2="x"/>
+    </connection>
+    <connection component_1="circle_parent" component_2="circle_y">
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="y" variable_2="y"/>
+    </connection>
+    <connection component_1="circle_parent" component_2="circle_sibling">
+        <map_variables variable_1="y" variable_2="y"/>
+    </connection>
+    <connection component_1="circle_x" component_2="circle_y">
+        <map_variables variable_1="x" variable_2="x"/>
+        <map_variables variable_1="y" variable_2="y"/>
+    </connection>
+    <connection component_1="circle_x" component_2="circle_x_source">
+        <map_variables variable_1="x" variable_2="x"/>
+    </connection>
+    <connection component_1="circle_x_sibling" component_2="circle_x_source">
+        <map_variables variable_1="x" variable_2="x"/>
+    </connection>
+    <connection component_1="circle_y" component_2="circle_y_implementation">
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="y" variable_2="y"/>
+        <map_variables variable_1="x" variable_2="x"/>
+    </connection>
+</model>

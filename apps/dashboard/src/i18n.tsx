@@ -2,6 +2,24 @@ import { createContext, useContext } from 'react';
 export type Locale = 'en' | 'fa';
 export const LocaleContext = createContext<Locale>('en');
 const fa: Record<string, string> = {
+  CellML: 'CellML',
+  'CellML records': 'سوابق CellML',
+  'CellML models': 'مدل‌های CellML',
+  'Operator executions': 'اجراهای اپراتور',
+  'Original CellML 2': 'فایل اصلی CellML 2',
+  'Retained operator result': 'نتیجهٔ ثبت‌شدهٔ اپراتور',
+  'Choose a CellML model or retained execution to inspect.':
+    'یک مدل CellML یا نتیجهٔ ثبت‌شده را برای بررسی انتخاب کنید.',
+  'CellML 2 admission preserves original equations and units. Execution requires the reviewed offline operator solver; API queue submission is not supported yet.':
+    'ثبت CellML 2 معادلات و واحدهای اصلی را حفظ می‌کند. اجرا با حل‌گر آفلاین بررسی‌شدهٔ اپراتور انجام می‌شود؛ صف اجرای API هنوز پشتیبانی نمی‌شود.',
+  'Inspection scope': 'دامنهٔ بررسی',
+  'Variables and original units': 'متغیرها و واحدهای اصلی',
+  Component: 'جزء',
+  'Initial value': 'مقدار اولیه',
+  'Download original model': 'دریافت فایل اصلی مدل',
+  'Original artifacts': 'فایل‌های اصلی خروجی',
+  Method: 'روش',
+
   'Saved immutable record': 'سابقهٔ تغییرناپذیر ثبت شد',
   'State conflict': 'تعارض وضعیت',
   'Refresh the run state before retrying.': 'پیش از تلاش دوباره، وضعیت اجرا را بازخوانی کنید.',

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="model">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="model1.cellml">
+    <units units_ref="second_units" name="units1_import"/>
+  </import>
+  <units name="first_units">
+    <unit exponent="-1" units="second"/>
+    <unit units="units1_import"/>
+  </units>
+  <component name="base_component">
+    <variable name="variable" units="first_units"/>
+  </component>
+</model>

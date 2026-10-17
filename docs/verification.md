@@ -1,5 +1,64 @@
 # Verification record
 
+## E5 CellML admission and operator ODE solver: 2026-10-17 local
+
+[Observed receipt](cellml-verification-2026-10-17.json) and
+[E5 scope](epics/E5-cellml-models.md) distinguish original model admission,
+operator execution, queue support and scientific validity.
+
+- `uv run pytest tests/integration/test_cellml.py -q`: **26 passed**. Checks cover
+  unsafe XML/imports/namespaces, malformed declarations, finite controls, immutable
+  BOM/CRLF bytes, original units, output/runtime/driver lineage, corruption,
+  role/body/discovery boundaries and acknowledged-container deadline cleanup.
+- `docker build --platform linux/arm64 -f runtime_profiles/cellml/Dockerfile -t peykar-cellml:0.7.1 .`
+  passed after the first actual wheel import exposed missing `libxml2.so.2`.
+  The dedicated Dockerfile explicitly pins the required libxml2 package.
+- `uv run python scripts/verify_cellml.py --output .peykar/e5-acceptance` passed
+  **four actual executions**: analytic decay (maximum absolute error
+  **2.94098e-13**), original Robertson Radau/BDF (maximum difference **3.29301e-9**,
+  conservation error **7.77156e-16**) and original time-unit scaling (error
+  **1.42109e-14**). Wrong original time unit, undefined equation and an actual
+  one-second stiff-solver deadline failed without publishing success; no CellML
+  container remained. Exact source/model bytes and generated output are retained.
+- Final **`make check-docker` passed: 402 tests in 29.00 seconds, 88% statement
+  coverage, strict Mypy 86 source files**, Ruff, schema/OpenAPI freshness,
+  **18 frontend tests** and all wheels/sdists. Host **`make build` passed**.
+  The built platform wheel includes the new services/routes and final browser
+  assets. Root `uv.lock`, all historical scientific schemas and every old OpenAPI
+  component/operation compare unchanged; six paths are additive.
+- Actual Chromium (`agent-browser@0.39.1`) admitted a BOM/CRLF CellML file through
+  the UI and matched its returned bytes/digest. Retained executions display original
+  units, actual plots and full tables. Reader mutations are disabled; reload clears
+  the session; local/session storage and cookies are empty. Final default axe audits
+  for model desktop/mobile plus result **1440×1000, 768×1024, 375×812, 812×375** and
+  Persian RTL mobile report **zero violations** and no page overflow. SVG/manual
+  contrast remains an incomplete automated check; screenshots were inspected.
+  Initial audits exposed duplicate navigation names and a non-focusable horizontal
+  data table; distinct labels and keyboard-focusable regions fixed both.
+- `uv run python scripts/verify_vendor.py` rehashed **26 distributions / 53,261
+  files / 1,814,782,314 bytes / 37 Git links**. New libCellML source contains all
+  **1,094** tracked files with its original Apache-2.0 LICENSE. All **24** existing
+  project license files retain their prior hashes; previous third-party notices
+  remain byte-for-byte as the prefix of the expanded attribution file.
+- SQLite backup API/artifact copy created and locally retained
+  `backups/pre-cellml-20261017T212945Z/`: **74 objects, 42 reference runs/126 events,
+  22 native runs/69 events, 7 cohorts/38 members/57 events, 4 hybrid runs/11 nodes/20
+  events, 2 experiments/4 nodes/8 events and 381 artifact byte sequences**.
+  `docker compose build` / `docker compose up -d --no-build` preserved the original
+  `peykar3_peykar-data` volume. All preceding rows/artifact bytes survived; schema
+  user_version remains 1 and queues are idle. API is healthy; Worker runs.
+- Trusted offline source/runtime/model/execution bundles were imported into that
+  deployment. Authenticated reads verified **three CellML models, four executions**
+  and every original model/output digest. An initial Docker copy to the read-only
+  container was rejected; transfer used its writable temporary filesystem and
+  explicit bundle filenames, excluding macOS archive metadata. Existing reference
+  and COPASI submit/result/analytic/idempotency checks also passed after upgrade;
+  retained identities are in the observed receipt. The host native agent remains
+  separate, with unchanged historical profile/driver pins.
+
+These are engineering/numerical checks. CellML managed queues/flows, multi-file
+flattening, resets/DAE/NLA and context-specific biological validation remain open.
+
 ## E4 local research workbench: 2026-10-17 local
 
 [Observed receipt](workbench-verification-2026-10-17.json) records actual browser,

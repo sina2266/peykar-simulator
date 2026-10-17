@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Multiple dependent ODEs (this is actually the van der Pol 1928 model)
+   d(x)/d(t) = y
+   d(y)/d(t) = (epsilon*(1-x^2)*y-x)
+   x(0) = -2
+   y(0) = 0
+   epsilon = 1-->
+    <units name="per_s">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="environment">
+        <variable interface="public" name="t" units="second"/>
+    </component>
+    <component name="my_x_ode">
+        <variable interface="public" name="t" units="second"/>
+        <variable initial_value="-2" interface="public" name="x" units="dimensionless"/>
+        <variable interface="public" name="y" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <ci>y</ci>
+                    <cn cellml:units="per_s">1</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="my_y_ode">
+        <variable interface="public" name="t" units="second"/>
+        <variable interface="public" name="x" units="dimensionless"/>
+        <variable initial_value="0" interface="public" name="y" units="dimensionless"/>
+        <variable initial_value="1" name="epsilon" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <times/>
+                            <ci>epsilon</ci>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <apply>
+                                    <power/>
+                                    <ci>x</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                            <ci>y</ci>
+                        </apply>
+                        <ci>x</ci>
+                    </apply>
+                    <cn cellml:units="per_s">1</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection component_1="my_x_ode" component_2="environment">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection component_1="my_y_ode" component_2="environment">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection component_1="my_x_ode" component_2="my_y_ode">
+        <map_variables variable_1="x" variable_2="x"/>
+        <map_variables variable_1="y" variable_2="y"/>
+    </connection>
+</model>

@@ -758,6 +758,414 @@
         "title": "CSVImportSpec",
         "type": "object"
       },
+      "CellMLAdmission": {
+        "additionalProperties": false,
+        "properties": {
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/CellMLModelSpec"
+          },
+          "xml_text": {
+            "title": "Xml Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "spec",
+          "xml_text"
+        ],
+        "title": "CellMLAdmission",
+        "type": "object"
+      },
+      "CellMLExecutionReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "artifacts": {
+            "additionalProperties": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "maxProperties": 8,
+            "minProperties": 3,
+            "title": "Artifacts",
+            "type": "object"
+          },
+          "controls": {
+            "$ref": "#/components/schemas/CellMLRunControls"
+          },
+          "driver_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Driver Digest",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "image_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "managed_queue_supported": {
+            "const": false,
+            "default": false,
+            "title": "Managed Queue Supported",
+            "type": "boolean"
+          },
+          "model": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "model_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Model Digest",
+            "type": "string"
+          },
+          "runtime": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "scientific_validity": {
+            "const": "not_established",
+            "default": "not_established",
+            "title": "Scientific Validity",
+            "type": "string"
+          },
+          "scope": {
+            "const": "operator_cellml_execution",
+            "default": "operator_cellml_execution",
+            "title": "Scope",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "model",
+          "model_digest",
+          "runtime",
+          "image_digest",
+          "driver_digest",
+          "controls",
+          "artifacts",
+          "limitations"
+        ],
+        "title": "CellMLExecutionReceipt",
+        "type": "object"
+      },
+      "CellMLInspection": {
+        "additionalProperties": false,
+        "properties": {
+          "model_name": {
+            "title": "Model Name",
+            "type": "string"
+          },
+          "namespace": {
+            "const": "http://www.cellml.org/cellml/2.0#",
+            "title": "Namespace",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "scope": {
+            "const": "bounded_declarative_inspection",
+            "default": "bounded_declarative_inspection",
+            "title": "Scope",
+            "type": "string"
+          },
+          "units": {
+            "additionalProperties": {
+              "items": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "title": "Units",
+            "type": "object"
+          },
+          "variables": {
+            "items": {
+              "$ref": "#/components/schemas/CellMLVariable"
+            },
+            "title": "Variables",
+            "type": "array"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "model_name",
+          "namespace",
+          "units",
+          "variables",
+          "warnings"
+        ],
+        "title": "CellMLInspection",
+        "type": "object"
+      },
+      "CellMLModelPackage": {
+        "additionalProperties": false,
+        "properties": {
+          "content_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Content Digest",
+            "type": "string"
+          },
+          "inspection": {
+            "$ref": "#/components/schemas/CellMLInspection"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "scientific_validity": {
+            "const": "not_established",
+            "default": "not_established",
+            "title": "Scientific Validity",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/CellMLModelSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "content_digest",
+          "inspection"
+        ],
+        "title": "CellMLModelPackage",
+        "type": "object"
+      },
+      "CellMLModelSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "format": {
+            "const": "cellml_2",
+            "default": "cellml_2",
+            "title": "Format",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "context",
+          "license",
+          "source",
+          "limitations"
+        ],
+        "title": "CellMLModelSpec",
+        "type": "object"
+      },
+      "CellMLRunControls": {
+        "additionalProperties": false,
+        "properties": {
+          "absolute_tolerance": {
+            "default": 1e-10,
+            "exclusiveMinimum": 0.0,
+            "maximum": 0.01,
+            "minimum": 1e-14,
+            "title": "Absolute Tolerance",
+            "type": "number"
+          },
+          "end": {
+            "title": "End",
+            "type": "number"
+          },
+          "intervals": {
+            "default": 100,
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Intervals",
+            "type": "integer"
+          },
+          "max_step": {
+            "exclusiveMinimum": 0.0,
+            "title": "Max Step",
+            "type": "number"
+          },
+          "method": {
+            "default": "RK45",
+            "enum": [
+              "RK45",
+              "Radau",
+              "BDF"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "relative_tolerance": {
+            "default": 1e-08,
+            "exclusiveMinimum": 0.0,
+            "maximum": 0.01,
+            "minimum": 1e-12,
+            "title": "Relative Tolerance",
+            "type": "number"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "start": {
+            "default": 0.0,
+            "title": "Start",
+            "type": "number"
+          },
+          "time_unit": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Time Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "end",
+          "time_unit",
+          "max_step"
+        ],
+        "title": "CellMLRunControls",
+        "type": "object"
+      },
+      "CellMLVariable": {
+        "additionalProperties": false,
+        "properties": {
+          "component": {
+            "title": "Component",
+            "type": "string"
+          },
+          "initial_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Initial Value"
+          },
+          "interface": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interface"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "units": {
+            "title": "Units",
+            "type": "string"
+          }
+        },
+        "required": [
+          "component",
+          "name",
+          "units"
+        ],
+        "title": "CellMLVariable",
+        "type": "object"
+      },
       "DatasetLineage": {
         "additionalProperties": false,
         "properties": {
@@ -5433,6 +5841,417 @@
         "summary": "Neighbors",
         "tags": [
           "biology"
+        ]
+      }
+    },
+    "/v1/cellml-executions": {
+      "get": {
+        "operationId": "executions_v1_cellml_executions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CellMLExecutionReceipt"
+                  },
+                  "title": "Response Executions V1 Cellml Executions Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Executions",
+        "tags": [
+          "CellML"
+        ]
+      }
+    },
+    "/v1/cellml-executions/{id}/versions/{version}": {
+      "get": {
+        "operationId": "execution_v1_cellml_executions__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CellMLExecutionReceipt"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Execution",
+        "tags": [
+          "CellML"
+        ]
+      }
+    },
+    "/v1/cellml-executions/{id}/versions/{version}/artifacts/{name}": {
+      "get": {
+        "operationId": "artifact_v1_cellml_executions__id__versions__version__artifacts__name__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Artifact",
+        "tags": [
+          "CellML"
+        ]
+      }
+    },
+    "/v1/cellml-models": {
+      "get": {
+        "operationId": "discover_v1_cellml_models_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CellMLModelPackage"
+                  },
+                  "title": "Response Discover V1 Cellml Models Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discover",
+        "tags": [
+          "CellML"
+        ]
+      },
+      "post": {
+        "operationId": "admit_v1_cellml_models_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CellMLAdmission"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CellMLModelPackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admit",
+        "tags": [
+          "CellML"
+        ]
+      }
+    },
+    "/v1/cellml-models/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_v1_cellml_models__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CellMLModelPackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get",
+        "tags": [
+          "CellML"
+        ]
+      }
+    },
+    "/v1/cellml-models/{id}/versions/{version}/content": {
+      "get": {
+        "operationId": "content_v1_cellml_models__id__versions__version__content_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Content",
+        "tags": [
+          "CellML"
         ]
       }
     },

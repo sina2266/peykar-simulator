@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#"
+	name="andre_test_model" id="andreTestModelId">
+	<component name="c1" id="c1Id">
+		<variable units="dimensionless" name="a1" initial_value="1"
+			interface="public_and_private" />
+		<variable units="dimensionless" name="b1" interface="public_and_private" />
+		<variable units="dimensionless" name="c1" interface="public_and_private" />
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<apply><eq/>
+				<ci>a1</ci>
+				<apply><plus/>
+					<ci>b1</ci>
+					<ci>c1</ci>
+				</apply>
+			</apply>
+		</math>
+	</component>
+	<component name="c2" id="c2Id">
+		<variable units="dimensionless" name="a2" interface="public_and_private" />
+		<variable units="dimensionless" name="b2" interface="public_and_private" />
+		<variable units="dimensionless" name="c2" interface="public_and_private" />
+		<variable units="dimensionless" name="d" />
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<apply><eq/>
+				<ci>b2</ci>
+				<apply><times/>
+					<cn xmlns:cellml="http://www.cellml.org/cellml/2.0#" cellml:units="dimensionless">2.0</cn>
+					<ci>d</ci>
+				</apply>
+			</apply>
+		</math>
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<apply><eq/>
+				<ci>d</ci>
+				<cn xmlns:cellml="http://www.cellml.org/cellml/2.0#" cellml:units="dimensionless" type="e-notation">0.5<sep/>1</cn>
+			</apply>
+		</math>
+	</component>
+	<connection component_1="c1" component_2="c2">
+		<map_variables variable_1="a1" variable_2="a2"/>
+		<map_variables variable_1="b1" variable_2="b2"/>
+		<map_variables variable_1="c1" variable_2="c2"/>
+	</connection>
+</model>

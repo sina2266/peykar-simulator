@@ -1,0 +1,73 @@
+{
+  "$id": "urn:peykar:schema:CellMLRunControls:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "absolute_tolerance": {
+      "default": 1e-10,
+      "exclusiveMinimum": 0,
+      "maximum": 0.01,
+      "minimum": 1e-14,
+      "title": "Absolute Tolerance",
+      "type": "number"
+    },
+    "end": {
+      "title": "End",
+      "type": "number"
+    },
+    "intervals": {
+      "default": 100,
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Intervals",
+      "type": "integer"
+    },
+    "max_step": {
+      "exclusiveMinimum": 0,
+      "title": "Max Step",
+      "type": "number"
+    },
+    "method": {
+      "default": "RK45",
+      "enum": [
+        "RK45",
+        "Radau",
+        "BDF"
+      ],
+      "title": "Method",
+      "type": "string"
+    },
+    "relative_tolerance": {
+      "default": 1e-08,
+      "exclusiveMinimum": 0,
+      "maximum": 0.01,
+      "minimum": 1e-12,
+      "title": "Relative Tolerance",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "start": {
+      "default": 0.0,
+      "title": "Start",
+      "type": "number"
+    },
+    "time_unit": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Time Unit",
+      "type": "string"
+    }
+  },
+  "required": [
+    "end",
+    "time_unit",
+    "max_step"
+  ],
+  "title": "CellMLRunControls",
+  "type": "object"
+}

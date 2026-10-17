@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "CellMLVariable": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "title": "Component",
+          "type": "string"
+        },
+        "initial_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Initial Value"
+        },
+        "interface": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interface"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "units": {
+          "title": "Units",
+          "type": "string"
+        }
+      },
+      "required": [
+        "component",
+        "name",
+        "units"
+      ],
+      "title": "CellMLVariable",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:CellMLInspection:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "model_name": {
+      "title": "Model Name",
+      "type": "string"
+    },
+    "namespace": {
+      "const": "http://www.cellml.org/cellml/2.0#",
+      "title": "Namespace",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "const": "bounded_declarative_inspection",
+      "default": "bounded_declarative_inspection",
+      "title": "Scope",
+      "type": "string"
+    },
+    "units": {
+      "additionalProperties": {
+        "items": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "title": "Units",
+      "type": "object"
+    },
+    "variables": {
+      "items": {
+        "$ref": "#/$defs/CellMLVariable"
+      },
+      "title": "Variables",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "model_name",
+    "namespace",
+    "units",
+    "variables",
+    "warnings"
+  ],
+  "title": "CellMLInspection",
+  "type": "object"
+}

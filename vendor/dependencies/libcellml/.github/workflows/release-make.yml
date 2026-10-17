@@ -1,0 +1,130 @@
+name: Release (stage 03) - Make
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  determine_release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_branch: ${{ steps.find_branch.outputs.release_branch }}
+      release_version: ${{ steps.find_branch.outputs.release_version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Determine release staging branch
+        id: find_branch
+        run: |
+          git remote set-branches origin '*'
+          git fetch -v --depth=1
+
+          branch=$(git branch -r \
+            | grep 'origin/${{ vars.RELEASE_STAGING_BRANCH_STEM }}' \
+            | sed 's|[ \t]*origin/||' \
+            | sort -V \
+            | tail -1)
+
+          if [ -z "$branch" ]; then
+            echo "::error::No release staging branch found"
+            exit 1
+          fi
+
+          echo "release_branch=$branch" >> "$GITHUB_OUTPUT"
+          tag="${branch#${{ vars.RELEASE_STAGING_BRANCH_STEM }}}"
+          echo "release_version=$tag" >> "$GITHUB_OUTPUT"
+
+  make_release:
+    needs: determine_release
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Generate GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.RELEASE_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: libcellml
+
+      - name: Checkout repository - staging branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.determine_release.outputs.release_branch }}
+          fetch-depth: 0
+          path: repo-staging
+
+      - name: Checkout repository - release branch
+        uses: actions/checkout@v6
+        with:
+          ref: release
+          token: ${{ steps.app_token.outputs.token }}
+          fetch-depth: 0
+          path: repo-release
+
+      - name: Set GitHub Actions bot identity
+        run: |
+          cd repo-release
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update release branch
+        run: |
+          rsync -avW --delete --exclude='.git' repo-staging/ repo-release/
+          cd repo-release
+
+          git add -A
+          git commit -m "Release v${{ needs.determine_release.outputs.release_version }}."
+          git tag -a "v${{ needs.determine_release.outputs.release_version }}" -m "Release v${{ needs.determine_release.outputs.release_version }}."
+
+      - name: Push changes
+        run: |
+          cd repo-release
+
+          git push origin release "v${{ needs.determine_release.outputs.release_version }}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+        run: |
+          cd repo-release
+
+          version="${{ needs.determine_release.outputs.release_version }}"
+          core="${version%%+*}"
+
+          day=$(date +%-d)
+
+          # Determine suffix
+          if [[ $day -ge 11 && $day -le 13 ]]; then
+            suffix="th"
+          else
+            case $((day % 10)) in
+              1) suffix="st" ;;
+              2) suffix="nd" ;;
+              3) suffix="rd" ;;
+              *) suffix="th" ;;
+            esac
+          fi
+
+          formatted_date="$(date +"$day$suffix %B %Y")"
+
+          if [[ "$core" == *"-"* ]]; then
+            prerelease_flag="--prerelease"
+            note="This is a release candidate of libCellML made on ${formatted_date}."
+          else
+            prerelease_flag=""
+            note="This is an official release of libCellML made on ${formatted_date}."
+          fi
+
+          gh release create "v${{ needs.determine_release.outputs.release_version }}" \
+            --title "v${{ needs.determine_release.outputs.release_version }}" \
+            --notes "$note" ${prerelease_flag}

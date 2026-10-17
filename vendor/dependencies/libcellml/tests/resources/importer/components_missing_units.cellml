@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="concrete">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="missing_model.cellml">
+    <units units_ref="i_dont_have_a_model_anyway" name="imported_units_with_no_model"/>
+  </import>
+  <component name="concrete">
+    <variable name="a" units="units_that_dont_exist" />
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply>
+        <eq/>
+        <ci>a</ci>
+        <cn xmlns:cellml="http://www.cellml.org/cellml/2.0#" cellml:units="other_units_that_dont_exist">1</cn>
+      </apply>
+    </math>
+  </component>
+  <component name="units_missing_model">
+    <variable name="a" units="imported_units_with_no_model" />
+  </component>
+</model>

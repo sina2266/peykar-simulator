@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="coverage" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <component name="my_component">
+        <variable initial_value="0" name="x" units="dimensionless"/>
+        <variable initial_value="0" name="y" units="dimensionless"/>
+        <variable initial_value="0" name="z" units="dimensionless"/>
+        <variable name="t" units="dimensionless"/>
+        <variable name="u" units="dimensionless"/>
+        <variable name="v" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <!-- <diff/> -->
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="dimensionless" type="e-notation">1.7977<sep/>308</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>u</ci>
+                        <degree>
+                            <cn cellml:units="dimensionless" type="e-notation">1.7977<sep/>308</cn>
+                        </degree>
+                    </bvar>
+                    <ci>y</ci>
+                </apply>
+                <cn cellml:units="dimensionless" type="e-notation">1.7977<sep/>308</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>v</ci>
+                        <degree>
+                            <cn cellml:units="dimensionless" type="e-notation">XXYY</cn>
+                        </degree>
+                    </bvar>
+                    <ci>z</ci>
+                </apply>
+                <cn cellml:units="dimensionless">3</cn>
+            </apply>
+        </math>
+    </component>
+</model>

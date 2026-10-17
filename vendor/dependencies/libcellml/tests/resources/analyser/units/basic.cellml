@@ -1,0 +1,602 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="basic" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="second_13">
+        <unit exponent="13" units="second"/>
+    </units>
+    <units name="second_m13">
+        <unit exponent="-13" units="second"/>
+    </units>
+    <units name="nanosecond">
+        <unit prefix="nano" units="second"/>
+    </units>
+    <units name="nanosecond_13">
+        <unit exponent="13" units="nanosecond"/>
+    </units>
+    <units name="nanosecond_m13">
+        <unit exponent="-13" units="nanosecond"/>
+    </units>
+    <units name="other_nanosecond">
+        <unit prefix="milli" units="second"/>
+        <unit prefix="micro" units="second"/>
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="other_nanosecond_13">
+        <unit exponent="13" units="other_nanosecond"/>
+    </units>
+    <units name="other_nanosecond_m13">
+        <unit exponent="-13" units="other_nanosecond"/>
+    </units>
+    <units name="volt_13">
+        <unit exponent="13" units="volt"/>
+    </units>
+    <units name="volt_m13">
+        <unit exponent="-13" units="volt"/>
+    </units>
+    <units name="nanovolt">
+        <unit prefix="nano" units="volt"/>
+    </units>
+    <units name="nanovolt_13">
+        <unit exponent="13" units="nanovolt"/>
+    </units>
+    <units name="nanovolt_m13">
+        <unit exponent="-13" units="nanovolt"/>
+    </units>
+    <units name="other_nanovolt">
+        <unit prefix="milli" units="volt"/>
+        <unit prefix="micro" units="volt"/>
+        <unit exponent="-1" units="volt"/>
+    </units>
+    <units name="other_nanovolt_13">
+        <unit exponent="13" units="other_nanovolt"/>
+    </units>
+    <units name="other_nanovolt_m13">
+        <unit exponent="-13" units="other_nanovolt"/>
+    </units>
+    <units name="frog"/>
+    <units name="frog_13">
+        <unit exponent="13" units="frog"/>
+    </units>
+    <units name="frog_m13">
+        <unit exponent="-13" units="frog"/>
+    </units>
+    <units name="nanofrog">
+        <unit prefix="nano" units="frog"/>
+    </units>
+    <units name="nanofrog_13">
+        <unit exponent="13" units="nanofrog"/>
+    </units>
+    <units name="nanofrog_m13">
+        <unit exponent="-13" units="nanofrog"/>
+    </units>
+    <units name="other_nanofrog">
+        <unit prefix="milli" units="frog"/>
+        <unit prefix="micro" units="frog"/>
+        <unit exponent="-1" units="frog"/>
+    </units>
+    <units name="other_nanofrog_13">
+        <unit exponent="13" units="other_nanofrog"/>
+    </units>
+    <units name="other_nanofrog_m13">
+        <unit exponent="-13" units="other_nanofrog"/>
+    </units>
+    <units name="second_volt_frog">
+        <unit units="second"/>
+        <unit units="volt"/>
+        <unit units="frog"/>
+    </units>
+    <units name="second_volt_frog_13">
+        <unit exponent="13" units="second_volt_frog"/>
+    </units>
+    <units name="second_volt_frog_m13">
+        <unit exponent="-13" units="second_volt_frog"/>
+    </units>
+    <units name="nanosecond_volt_frog">
+        <unit prefix="nano" units="second_volt_frog"/>
+    </units>
+    <units name="nanosecond_volt_frog_13">
+        <unit exponent="13" units="nanosecond_volt_frog"/>
+    </units>
+    <units name="nanosecond_volt_frog_m13">
+        <unit exponent="-13" units="nanosecond_volt_frog"/>
+    </units>
+    <units name="other_nanosecond_volt_frog">
+        <unit prefix="milli" units="second_volt_frog"/>
+        <unit prefix="micro" units="second_volt_frog"/>
+        <unit exponent="-1" units="second_volt_frog"/>
+    </units>
+    <units name="other_nanosecond_volt_frog_13">
+        <unit exponent="13" units="other_nanosecond_volt_frog"/>
+    </units>
+    <units name="other_nanosecond_volt_frog_m13">
+        <unit exponent="-13" units="other_nanosecond_volt_frog"/>
+    </units>
+    <component name="main">
+        <variable name="second" units="second"/>
+        <variable name="second_13" units="second_13"/>
+        <variable name="second_m13" units="second_m13"/>
+        <variable name="nanosecond" units="nanosecond"/>
+        <variable name="nanosecond_13" units="nanosecond_13"/>
+        <variable name="nanosecond_m13" units="nanosecond_m13"/>
+        <variable name="other_nanosecond" units="other_nanosecond"/>
+        <variable name="other_nanosecond_13" units="other_nanosecond_13"/>
+        <variable name="other_nanosecond_m13" units="other_nanosecond_m13"/>
+        <variable name="mixed_nanosecond" units="nanosecond"/>
+        <variable name="mixed_nanosecond_13" units="nanosecond_13"/>
+        <variable name="mixed_nanosecond_m13" units="nanosecond_m13"/>
+        <variable name="volt" units="volt"/>
+        <variable name="volt_13" units="volt_13"/>
+        <variable name="volt_m13" units="volt_m13"/>
+        <variable name="nanovolt" units="nanovolt"/>
+        <variable name="nanovolt_13" units="nanovolt_13"/>
+        <variable name="nanovolt_m13" units="nanovolt_m13"/>
+        <variable name="other_nanovolt" units="other_nanovolt"/>
+        <variable name="other_nanovolt_13" units="other_nanovolt_13"/>
+        <variable name="other_nanovolt_m13" units="other_nanovolt_m13"/>
+        <variable name="mixed_nanovolt" units="nanovolt"/>
+        <variable name="mixed_nanovolt_13" units="nanovolt_13"/>
+        <variable name="mixed_nanovolt_m13" units="nanovolt_m13"/>
+        <variable name="frog" units="frog"/>
+        <variable name="frog_13" units="frog_13"/>
+        <variable name="frog_m13" units="frog_m13"/>
+        <variable name="nanofrog" units="nanofrog"/>
+        <variable name="nanofrog_13" units="nanofrog_13"/>
+        <variable name="nanofrog_m13" units="nanofrog_m13"/>
+        <variable name="other_nanofrog" units="other_nanofrog"/>
+        <variable name="other_nanofrog_13" units="other_nanofrog_13"/>
+        <variable name="other_nanofrog_m13" units="other_nanofrog_m13"/>
+        <variable name="mixed_nanofrog" units="nanofrog"/>
+        <variable name="mixed_nanofrog_13" units="nanofrog_13"/>
+        <variable name="mixed_nanofrog_m13" units="nanofrog_m13"/>
+        <variable name="second_volt_frog" units="second_volt_frog"/>
+        <variable name="second_volt_frog_13" units="second_volt_frog_13"/>
+        <variable name="second_volt_frog_m13" units="second_volt_frog_m13"/>
+        <variable name="nanosecond_volt_frog" units="nanosecond_volt_frog"/>
+        <variable name="nanosecond_volt_frog_13" units="nanosecond_volt_frog_13"/>
+        <variable name="nanosecond_volt_frog_m13" units="nanosecond_volt_frog_m13"/>
+        <variable name="other_nanosecond_volt_frog" units="other_nanosecond_volt_frog"/>
+        <variable name="other_nanosecond_volt_frog_13" units="other_nanosecond_volt_frog_13"/>
+        <variable name="other_nanosecond_volt_frog_m13" units="other_nanosecond_volt_frog_m13"/>
+        <variable name="mixed_nanosecond_volt_frog" units="nanosecond_volt_frog"/>
+        <variable name="mixed_nanosecond_volt_frog_13" units="nanosecond_volt_frog_13"/>
+        <variable name="mixed_nanosecond_volt_frog_m13" units="nanosecond_volt_frog_m13"/>
+        <variable initial_value="1" name="secondCst" units="second"/>
+        <variable initial_value="1" name="nanosecondCst" units="nanosecond"/>
+        <variable initial_value="1" name="other_nanosecondCst" units="other_nanosecond"/>
+        <variable initial_value="1" name="voltCst" units="volt"/>
+        <variable initial_value="1" name="nanovoltCst" units="nanovolt"/>
+        <variable initial_value="1" name="other_nanovoltCst" units="other_nanovolt"/>
+        <variable initial_value="1" name="frogCst" units="frog"/>
+        <variable initial_value="1" name="nanofrogCst" units="nanofrog"/>
+        <variable initial_value="1" name="other_nanofrogCst" units="other_nanofrog"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>second</ci>
+                <ci>secondCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>second_13</ci>
+                <apply>
+                    <power/>
+                    <ci>secondCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>second_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>secondCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond</ci>
+                <ci>nanosecondCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond_13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond</ci>
+                <ci>other_nanosecondCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond</ci>
+                <ci>other_nanosecondCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanosecondCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>volt</ci>
+                <ci>voltCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>volt_13</ci>
+                <apply>
+                    <power/>
+                    <ci>voltCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>volt_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>voltCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanovolt</ci>
+                <ci>nanovoltCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanovolt_13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanovolt_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanovolt</ci>
+                <ci>other_nanovoltCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanovolt_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanovolt_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanovolt</ci>
+                <ci>other_nanovoltCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanovolt_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanovolt_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanovoltCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>frog</ci>
+                <ci>frogCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>frog_13</ci>
+                <apply>
+                    <power/>
+                    <ci>frogCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>frog_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>frogCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanofrog</ci>
+                <ci>nanofrogCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanofrog_13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanofrog_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanofrog</ci>
+                <ci>other_nanofrogCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanofrog_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanofrog_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanofrog</ci>
+                <ci>other_nanofrogCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanofrog_13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanofrog_m13</ci>
+                <apply>
+                    <power/>
+                    <ci>other_nanofrogCst</ci>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>second_volt_frog</ci>
+                <apply>
+                    <times/>
+                    <ci>secondCst</ci>
+                    <ci>voltCst</ci>
+                    <ci>frogCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>second_volt_frog_13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>secondCst</ci>
+                        <ci>voltCst</ci>
+                        <ci>frogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>second_volt_frog_m13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>secondCst</ci>
+                        <ci>voltCst</ci>
+                        <ci>frogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond_volt_frog</ci>
+                <apply>
+                    <times/>
+                    <ci>nanosecondCst</ci>
+                    <ci>nanovoltCst</ci>
+                    <ci>nanofrogCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond_volt_frog_13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>nanosecondCst</ci>
+                        <ci>nanovoltCst</ci>
+                        <ci>nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>nanosecond_volt_frog_m13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>nanosecondCst</ci>
+                        <ci>nanovoltCst</ci>
+                        <ci>nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond_volt_frog</ci>
+                <apply>
+                    <times/>
+                    <ci>other_nanosecondCst</ci>
+                    <ci>other_nanovoltCst</ci>
+                    <ci>other_nanofrogCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond_volt_frog_13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>other_nanosecondCst</ci>
+                        <ci>other_nanovoltCst</ci>
+                        <ci>other_nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>other_nanosecond_volt_frog_m13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>other_nanosecondCst</ci>
+                        <ci>other_nanovoltCst</ci>
+                        <ci>other_nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond_volt_frog</ci>
+                <apply>
+                    <times/>
+                    <ci>other_nanosecondCst</ci>
+                    <ci>other_nanovoltCst</ci>
+                    <ci>other_nanofrogCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond_volt_frog_13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>other_nanosecondCst</ci>
+                        <ci>other_nanovoltCst</ci>
+                        <ci>other_nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">13</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mixed_nanosecond_volt_frog_m13</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <ci>other_nanosecondCst</ci>
+                        <ci>other_nanovoltCst</ci>
+                        <ci>other_nanofrogCst</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">-13</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

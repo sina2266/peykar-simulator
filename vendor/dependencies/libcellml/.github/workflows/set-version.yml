@@ -1,0 +1,60 @@
+name: Set Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: "Target branch (main or release staging branch)"
+        default: 'main'
+        required: true
+      version:
+        description: "Version to set (e.g. 0.7.1, 0.7.0-rc.1)"
+        required: true
+
+  workflow_call:
+    inputs:
+      target_branch:
+        description: "Target branch (main or release staging branch)"
+        type: string
+        required: true
+      version:
+        description: "Version to set (e.g. 0.7.1, 0.7.0-rc.1)"
+        type: string
+        required: true
+    secrets:
+      GH_TOKEN:
+        description: "GitHub token with permissions to push to the repository"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  set-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.target_branch }}
+
+      - name: Set GitHub Actions bot identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update version numbers
+        run: |
+          version=${{ inputs.version }}
+          core=$(sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+).*/\1/' <<< "$version")
+          dev="${version#"$core"}"
+          echo "Core version: $core, Dev suffix: $dev"
+          python3 .github/scripts/set_version.py . $core $dev
+
+      - name: Commit version change
+        run: |
+          git add -A
+          git commit -m "Set the version number throughout the codebase to ${{ inputs.version }}."
+
+      - name: Push branch
+        run: |
+          git push

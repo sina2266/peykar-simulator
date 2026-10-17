@@ -1,0 +1,414 @@
+/* The content of this file was generated using a modified C profile of libCellML 0.7.1. */
+
+double xor(double x, double y)
+{
+    return (x != 0.0) ^ (y != 0.0);
+}
+
+double min(double x, double y)
+{
+    return (x < y)?x:y;
+}
+
+double max(double x, double y)
+{
+    return (x > y)?x:y;
+}
+
+double sec(double x)
+{
+    return 1.0/cos(x);
+}
+
+double csc(double x)
+{
+    return 1.0/sin(x);
+}
+
+double cot(double x)
+{
+    return 1.0/tan(x);
+}
+
+double sech(double x)
+{
+    return 1.0/cosh(x);
+}
+
+double csch(double x)
+{
+    return 1.0/sinh(x);
+}
+
+double coth(double x)
+{
+    return 1.0/tanh(x);
+}
+
+double asec(double x)
+{
+    return acos(1.0/x);
+}
+
+double acsc(double x)
+{
+    return asin(1.0/x);
+}
+
+double acot(double x)
+{
+    return atan(1.0/x);
+}
+
+double asech(double x)
+{
+    double oneOverX = 1.0/x;
+
+    return log(oneOverX+sqrt(oneOverX*oneOverX-1.0));
+}
+
+double acsch(double x)
+{
+    double oneOverX = 1.0/x;
+
+    return log(oneOverX+sqrt(oneOverX*oneOverX+1.0));
+}
+
+double acoth(double x)
+{
+    double oneOverX = 1.0/x;
+
+    return 0.5*log((1.0+oneOverX)/(1.0-oneOverX));
+}
+
+double * createStatesArray()
+{
+    double *res = (double *) malloc(STATE_COUNT*sizeof(double));
+
+    for (size_t i = 0; i < STATE_COUNT; ++i) {
+        res[i] = NAN;
+    }
+
+    return res;
+}
+
+double * createConstantsArray()
+{
+    double *res = (double *) malloc(CONSTANT_COUNT*sizeof(double));
+
+    for (size_t i = 0; i < CONSTANT_COUNT; ++i) {
+        res[i] = NAN;
+    }
+
+    return res;
+}
+
+double * createComputedConstantsArray()
+{
+    double *res = (double *) malloc(COMPUTED_CONSTANT_COUNT*sizeof(double));
+
+    for (size_t i = 0; i < COMPUTED_CONSTANT_COUNT; ++i) {
+        res[i] = NAN;
+    }
+
+    return res;
+}
+
+double * createAlgebraicVariablesArray()
+{
+    double *res = (double *) malloc(ALGEBRAIC_VARIABLE_COUNT*sizeof(double));
+
+    for (size_t i = 0; i < ALGEBRAIC_VARIABLE_COUNT; ++i) {
+        res[i] = NAN;
+    }
+
+    return res;
+}
+
+double * createExternalVariablesArray()
+{
+    double *res = (double *) malloc(EXTERNAL_VARIABLE_COUNT*sizeof(double));
+
+    for (size_t i = 0; i < EXTERNAL_VARIABLE_COUNT; ++i) {
+        res[i] = NAN;
+    }
+
+    return res;
+}
+
+void deleteArray(double *array)
+{
+    free(array);
+}
+
+typedef struct {
+    double voi;
+    double *states;
+    double *rates;
+    double *constants;
+    double *computedConstants;
+    double *algebraicVariables;
+    double *externalVariables;
+} RootFindingInfo;
+
+extern void nlaSolve(void (*objectiveFunction)(double *, double *, void *),
+                     double *u, size_t n, void *data);
+
+void objectiveFunction0(double *u, double *f, void *data)
+{
+    double voi = ((RootFindingInfo *) data)->voi;
+    double *states = ((RootFindingInfo *) data)->states;
+    double *rates = ((RootFindingInfo *) data)->rates;
+    double *constants = ((RootFindingInfo *) data)->constants;
+    double *computedConstants = ((RootFindingInfo *) data)->computedConstants;
+    double *algebraicVariables = ((RootFindingInfo *) data)->algebraicVariables;
+    double *externalVariables = ((RootFindingInfo *) data)->externalVariables;
+
+    algebraicVariables[0] = u[0];
+    algebraicVariables[1] = u[1];
+
+    f[0] = algebraicVariables[1]+algebraicVariables[0]+states[0]-0.0;
+    f[1] = algebraicVariables[1]-algebraicVariables[0]-(computedConstants[198]+computedConstants[197]);
+}
+
+void findRoot0(double voi, double *states, double *rates, double *constants, double *computedConstants, double *algebraicVariables, double *externalVariables)
+{
+    RootFindingInfo rfi = { voi, states, rates, constants, computedConstants, algebraicVariables, externalVariables };
+    double u[2];
+
+    u[0] = algebraicVariables[0];
+    u[1] = algebraicVariables[1];
+
+    nlaSolve(objectiveFunction0, u, 2, &rfi);
+
+    algebraicVariables[0] = u[0];
+    algebraicVariables[1] = u[1];
+}
+
+void initialiseArrays(double *states, double *rates, double *constants, double *computedConstants, double *algebraicVariables)
+{
+    states[0] = 0.0;
+    constants[0] = 1.23;
+    constants[1] = 123.0;
+    constants[2] = 1.0e1;
+    constants[3] = 1.23e1;
+    constants[4] = 1.0E1;
+    constants[5] = 1.23E1;
+    constants[6] = 7.0;
+    computedConstants[176] = 123.0;
+    computedConstants[177] = 123.456789;
+    computedConstants[178] = 123.0e99;
+    computedConstants[179] = 123.456789e99;
+    computedConstants[181] = 1.0;
+    computedConstants[182] = 0.0;
+    computedConstants[183] = 2.71828182845905;
+    computedConstants[184] = 3.14159265358979;
+    computedConstants[185] = INFINITY;
+    computedConstants[186] = NAN;
+    computedConstants[198] = 1.0;
+    computedConstants[197] = 3.0;
+    algebraicVariables[0] = 2.0;
+    algebraicVariables[1] = 1.0;
+}
+
+void computeComputedConstants(double voi, double *states, double *rates, double *constants, double *computedConstants, double *algebraicVariables)
+{
+    computedConstants[0] = eq(constants[1], constants[0]);
+    computedConstants[1] = constants[1]/eq(constants[0], constants[0]);
+    computedConstants[2] = neq(constants[1], constants[0]);
+    computedConstants[3] = constants[1]/neq(constants[0], constants[2]);
+    computedConstants[4] = lt(constants[1], constants[0]);
+    computedConstants[5] = constants[1]/lt(constants[0], constants[2]);
+    computedConstants[6] = leq(constants[1], constants[0]);
+    computedConstants[7] = constants[1]/leq(constants[0], constants[2]);
+    computedConstants[8] = gt(constants[1], constants[0]);
+    computedConstants[9] = constants[1]/gt(constants[0], constants[2]);
+    computedConstants[10] = geq(constants[1], constants[0]);
+    computedConstants[11] = constants[1]/geq(constants[0], constants[2]);
+    computedConstants[12] = and(constants[1], constants[0]);
+    computedConstants[13] = and(constants[1], and(constants[0], constants[2]));
+    computedConstants[14] = and(lt(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[15] = and(constants[1]+constants[0], gt(constants[2], constants[3]));
+    computedConstants[16] = and(constants[1], gt(constants[0], constants[2]));
+    computedConstants[17] = and(constants[1]-constants[0], gt(constants[2], constants[3]));
+    computedConstants[18] = and(-constants[1], gt(constants[0], constants[2]));
+    computedConstants[19] = and(pow(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[20] = and(pow(constants[1], 1.0/constants[0]), gt(constants[2], constants[3]));
+    computedConstants[21] = and(lt(constants[1], constants[0]), constants[2]+constants[3]);
+    computedConstants[22] = and(lt(constants[1], constants[0]), constants[2]);
+    computedConstants[23] = and(lt(constants[1], constants[0]), constants[2]-constants[3]);
+    computedConstants[24] = and(lt(constants[1], constants[0]), -constants[2]);
+    computedConstants[25] = and(lt(constants[1], constants[0]), pow(constants[2], constants[3]));
+    computedConstants[26] = and(lt(constants[1], constants[0]), pow(constants[2], 1.0/constants[3]));
+    computedConstants[27] = constants[1]/and(constants[0], constants[2]);
+    computedConstants[28] = or(constants[1], constants[0]);
+    computedConstants[29] = or(constants[1], or(constants[0], constants[2]));
+    computedConstants[30] = or(lt(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[31] = or(constants[1]+constants[0], gt(constants[2], constants[3]));
+    computedConstants[32] = or(constants[1], gt(constants[0], constants[2]));
+    computedConstants[33] = or(constants[1]-constants[0], gt(constants[2], constants[3]));
+    computedConstants[34] = or(-constants[1], gt(constants[0], constants[2]));
+    computedConstants[35] = or(pow(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[36] = or(pow(constants[1], 1.0/constants[0]), gt(constants[2], constants[3]));
+    computedConstants[37] = or(lt(constants[1], constants[0]), constants[2]+constants[3]);
+    computedConstants[38] = or(lt(constants[1], constants[0]), constants[2]);
+    computedConstants[39] = or(lt(constants[1], constants[0]), constants[2]-constants[3]);
+    computedConstants[40] = or(lt(constants[1], constants[0]), -constants[2]);
+    computedConstants[41] = or(lt(constants[1], constants[0]), pow(constants[2], constants[3]));
+    computedConstants[42] = or(lt(constants[1], constants[0]), pow(constants[2], 1.0/constants[3]));
+    computedConstants[43] = constants[1]/or(constants[0], constants[2]);
+    computedConstants[44] = xor(constants[1], constants[0]);
+    computedConstants[45] = xor(constants[1], xor(constants[0], constants[2]));
+    computedConstants[46] = xor(lt(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[47] = xor(constants[1]+constants[0], gt(constants[2], constants[3]));
+    computedConstants[48] = xor(constants[1], gt(constants[0], constants[2]));
+    computedConstants[49] = xor(constants[1]-constants[0], gt(constants[2], constants[3]));
+    computedConstants[50] = xor(-constants[1], gt(constants[0], constants[2]));
+    computedConstants[51] = xor(pow(constants[1], constants[0]), gt(constants[2], constants[3]));
+    computedConstants[52] = xor(pow(constants[1], 1.0/constants[0]), gt(constants[2], constants[3]));
+    computedConstants[53] = xor(lt(constants[1], constants[0]), constants[2]+constants[3]);
+    computedConstants[54] = xor(lt(constants[1], constants[0]), constants[2]);
+    computedConstants[55] = xor(lt(constants[1], constants[0]), constants[2]-constants[3]);
+    computedConstants[56] = xor(lt(constants[1], constants[0]), -constants[2]);
+    computedConstants[57] = xor(lt(constants[1], constants[0]), pow(constants[2], constants[3]));
+    computedConstants[58] = xor(lt(constants[1], constants[0]), pow(constants[2], 1.0/constants[3]));
+    computedConstants[59] = constants[1]/xor(constants[0], constants[2]);
+    computedConstants[60] = not(constants[1]);
+    computedConstants[61] = constants[1]+constants[0]+constants[2];
+    computedConstants[62] = lt(constants[1], constants[0])+gt(constants[2], constants[3]);
+    computedConstants[63] = constants[1];
+    computedConstants[64] = constants[1]-constants[0];
+    computedConstants[65] = lt(constants[1], constants[0])-gt(constants[2], constants[3]);
+    computedConstants[66] = lt(constants[1], constants[0])-(constants[2]+constants[3]);
+    computedConstants[67] = lt(constants[1], constants[0])-constants[2];
+    computedConstants[68] = constants[1]-(-constants[0]);
+    computedConstants[69] = constants[1]-(-constants[0]*constants[2]);
+    computedConstants[70] = -constants[1];
+    computedConstants[71] = -lt(constants[1], constants[0]);
+    computedConstants[72] = constants[1]*constants[0];
+    computedConstants[73] = constants[1]*constants[0]*constants[2];
+    computedConstants[74] = lt(constants[1], constants[0])*gt(constants[2], constants[3]);
+    computedConstants[75] = (constants[1]+constants[0])*gt(constants[2], constants[3]);
+    computedConstants[76] = constants[1]*gt(constants[0], constants[2]);
+    computedConstants[77] = (constants[1]-constants[0])*gt(constants[2], constants[3]);
+    computedConstants[78] = -constants[1]*gt(constants[0], constants[2]);
+    computedConstants[79] = lt(constants[1], constants[0])*(constants[2]+constants[3]);
+    computedConstants[80] = lt(constants[1], constants[0])*constants[2];
+    computedConstants[81] = lt(constants[1], constants[0])*(constants[2]-constants[3]);
+    computedConstants[82] = lt(constants[1], constants[0])*-constants[2];
+    computedConstants[83] = constants[1]/constants[0];
+    computedConstants[84] = lt(constants[1], constants[0])/gt(constants[3], constants[2]);
+    computedConstants[85] = (constants[1]+constants[0])/gt(constants[3], constants[2]);
+    computedConstants[86] = constants[1]/gt(constants[2], constants[0]);
+    computedConstants[87] = (constants[1]-constants[0])/gt(constants[3], constants[2]);
+    computedConstants[88] = -constants[1]/gt(constants[2], constants[0]);
+    computedConstants[89] = lt(constants[1], constants[0])/(constants[2]+constants[3]);
+    computedConstants[90] = lt(constants[1], constants[0])/constants[2];
+    computedConstants[91] = lt(constants[1], constants[0])/(constants[2]-constants[3]);
+    computedConstants[92] = lt(constants[1], constants[0])/-constants[2];
+    computedConstants[93] = lt(constants[1], constants[0])/(constants[2]*constants[3]);
+    computedConstants[94] = lt(constants[1], constants[0])/(constants[2]/constants[3]);
+    computedConstants[95] = sqrt(constants[1]);
+    computedConstants[96] = pow(constants[1], 2.0);
+    computedConstants[97] = pow(constants[1], 3.0);
+    computedConstants[98] = pow(constants[1], constants[0]);
+    computedConstants[99] = pow(leq(constants[1], constants[0]), geq(constants[2], constants[3]));
+    computedConstants[100] = pow(constants[1]+constants[0], geq(constants[2], constants[3]));
+    computedConstants[101] = pow(constants[1], geq(constants[0], constants[2]));
+    computedConstants[102] = pow(constants[1]-constants[0], geq(constants[2], constants[3]));
+    computedConstants[103] = pow(-constants[1], geq(constants[0], constants[2]));
+    computedConstants[104] = pow(constants[1]*constants[0], geq(constants[2], constants[3]));
+    computedConstants[105] = pow(constants[1]/constants[0], geq(constants[2], constants[3]));
+    computedConstants[106] = pow(leq(constants[1], constants[0]), constants[2]+constants[3]);
+    computedConstants[107] = pow(leq(constants[1], constants[0]), constants[2]);
+    computedConstants[108] = pow(leq(constants[1], constants[0]), constants[2]-constants[3]);
+    computedConstants[109] = pow(leq(constants[1], constants[0]), -constants[2]);
+    computedConstants[110] = pow(leq(constants[1], constants[0]), constants[2]*constants[3]);
+    computedConstants[111] = pow(leq(constants[1], constants[0]), constants[2]/constants[3]);
+    computedConstants[112] = pow(leq(constants[1], constants[0]), pow(constants[2], constants[3]));
+    computedConstants[113] = pow(leq(constants[1], constants[0]), pow(constants[2], 1.0/constants[3]));
+    computedConstants[114] = sqrt(constants[1]);
+    computedConstants[115] = sqrt(constants[1]);
+    computedConstants[116] = pow(constants[1], 1.0/3.0);
+    computedConstants[117] = pow(constants[1], 1.0/constants[0]);
+    computedConstants[118] = pow(lt(constants[1], constants[0]), 1.0/gt(constants[3], constants[2]));
+    computedConstants[119] = pow(constants[1]+constants[0], 1.0/gt(constants[3], constants[2]));
+    computedConstants[120] = pow(constants[1], 1.0/gt(constants[2], constants[0]));
+    computedConstants[121] = pow(constants[1]-constants[0], 1.0/gt(constants[3], constants[2]));
+    computedConstants[122] = pow(-constants[1], 1.0/gt(constants[2], constants[0]));
+    computedConstants[123] = pow(constants[1]*constants[0], 1.0/gt(constants[3], constants[2]));
+    computedConstants[124] = pow(constants[1]/constants[0], 1.0/gt(constants[3], constants[2]));
+    computedConstants[125] = pow(lt(constants[1], constants[0]), 1.0/(constants[2]+constants[3]));
+    computedConstants[126] = pow(lt(constants[1], constants[0]), 1.0/constants[2]);
+    computedConstants[127] = pow(lt(constants[1], constants[0]), 1.0/(constants[2]-constants[3]));
+    computedConstants[128] = pow(lt(constants[1], constants[0]), 1.0/-constants[2]);
+    computedConstants[129] = pow(lt(constants[1], constants[0]), 1.0/(constants[2]*constants[3]));
+    computedConstants[130] = pow(lt(constants[1], constants[0]), 1.0/(constants[2]/constants[3]));
+    computedConstants[131] = pow(lt(constants[1], constants[0]), 1.0/pow(constants[2], constants[3]));
+    computedConstants[132] = pow(lt(constants[1], constants[0]), 1.0/pow(constants[2], 1.0/constants[3]));
+    computedConstants[133] = fabs(constants[1]);
+    computedConstants[134] = exp(constants[1]);
+    computedConstants[135] = log(constants[1]);
+    computedConstants[136] = log10(constants[1]);
+    computedConstants[137] = log(constants[1])/log(2.0);
+    computedConstants[138] = log10(constants[1]);
+    computedConstants[139] = log(constants[1])/log(constants[0]);
+    computedConstants[140] = ceil(constants[1]);
+    computedConstants[141] = floor(constants[1]);
+    computedConstants[142] = min(constants[1], constants[0]);
+    computedConstants[143] = min(constants[1], min(constants[0], constants[2]));
+    computedConstants[144] = max(constants[1], constants[0]);
+    computedConstants[145] = max(constants[1], max(constants[0], constants[2]));
+    computedConstants[146] = fmod(constants[1], constants[0]);
+    computedConstants[147] = sin(constants[1]);
+    computedConstants[148] = cos(constants[1]);
+    computedConstants[149] = tan(constants[1]);
+    computedConstants[150] = sec(constants[1]);
+    computedConstants[151] = csc(constants[1]);
+    computedConstants[152] = cot(constants[1]);
+    computedConstants[153] = sinh(constants[1]);
+    computedConstants[154] = cosh(constants[1]);
+    computedConstants[155] = tanh(constants[1]);
+    computedConstants[156] = sech(constants[1]);
+    computedConstants[157] = csch(constants[1]);
+    computedConstants[158] = coth(constants[1]);
+    computedConstants[159] = asin(constants[1]);
+    computedConstants[160] = acos(constants[1]);
+    computedConstants[161] = atan(constants[1]);
+    computedConstants[162] = asec(constants[1]);
+    computedConstants[163] = acsc(constants[1]);
+    computedConstants[164] = acot(constants[1]);
+    computedConstants[165] = asinh(constants[1]);
+    computedConstants[166] = acosh(constants[1]);
+    computedConstants[167] = atanh(constants[1]/2.0);
+    computedConstants[168] = asech(constants[1]);
+    computedConstants[169] = acsch(constants[1]);
+    computedConstants[170] = acoth(2.0*constants[1]);
+    computedConstants[171] = (gt(constants[1], constants[0]))?constants[1]:NAN;
+    computedConstants[172] = (gt(constants[1], constants[0]))?constants[1]:constants[2];
+    computedConstants[173] = (gt(constants[1], constants[0]))?constants[1]:(gt(constants[2], constants[3]))?constants[2]:(gt(constants[4], constants[5]))?constants[4]:NAN;
+    computedConstants[174] = (gt(constants[1], constants[0]))?constants[1]:(gt(constants[2], constants[3]))?constants[2]:(gt(constants[4], constants[5]))?constants[4]:constants[6];
+    computedConstants[175] = 123.0+((gt(constants[1], constants[0]))?constants[1]:NAN);
+    computedConstants[180] = constants[1];
+    computedConstants[187] = and(constants[1], constants[0])+((gt(constants[2], constants[3]))?constants[0]:NAN)+constants[4]+and(constants[5], constants[6]);
+    computedConstants[188] = and(constants[1], constants[0])-(((gt(constants[2], constants[3]))?constants[0]:NAN)-(constants[4]-((gt(constants[2], constants[3]))?constants[0]:NAN)))-and(constants[5], constants[6]);
+    computedConstants[189] = and(constants[1], constants[0])*((gt(constants[2], constants[3]))?constants[0]:NAN)*constants[4]*((gt(constants[2], constants[3]))?constants[0]:NAN)*and(constants[5], constants[6]);
+    computedConstants[190] = and(constants[1], constants[0])/(((gt(constants[2], constants[3]))?constants[0]:NAN)/(constants[4]/((gt(constants[2], constants[3]))?constants[0]:NAN)));
+    computedConstants[191] = and(or(constants[1], constants[0]), and(xor(constants[1], constants[0]), and((gt(constants[2], constants[3]))?constants[0]:NAN, and(and(and(constants[4], (gt(constants[2], constants[3]))?constants[0]:NAN), xor(constants[1], constants[0])), or(constants[1], constants[0])))));
+    computedConstants[192] = or(and(constants[1], constants[0]), or(xor(constants[1], constants[0]), or((gt(constants[2], constants[3]))?constants[0]:NAN, or(or(or(constants[4], (gt(constants[2], constants[3]))?constants[0]:NAN), xor(constants[1], constants[0])), and(constants[1], constants[0])))));
+    computedConstants[193] = xor(and(constants[1], constants[0]), xor(or(constants[1], constants[0]), xor((gt(constants[2], constants[3]))?constants[0]:NAN, xor(xor(xor(constants[4], (gt(constants[2], constants[3]))?constants[0]:NAN), or(constants[1], constants[0])), and(constants[1], constants[0])))));
+    computedConstants[194] = pow(and(constants[1], constants[0]), pow((gt(constants[2], constants[3]))?constants[0]:NAN, pow(pow(constants[4], (gt(constants[2], constants[3]))?constants[0]:NAN), and(constants[1], constants[0]))));
+    computedConstants[195] = pow(pow(pow(and(constants[1], constants[0]), 1.0/pow((gt(constants[2], constants[3]))?constants[0]:NAN, 1.0/constants[4])), 1.0/((gt(constants[2], constants[3]))?constants[0]:NAN)), 1.0/and(constants[1], constants[0]));
+    computedConstants[196] = -and(constants[1], constants[0])+-((gt(constants[2], constants[3]))?constants[0]:NAN);
+}
+
+void computeRates(double voi, double *states, double *rates, double *constants, double *computedConstants, double *algebraicVariables, double *externalVariables, ExternalVariable externalVariable)
+{
+    rates[0] = 1.0;
+}
+
+void computeVariables(double voi, double *states, double *rates, double *constants, double *computedConstants, double *algebraicVariables, double *externalVariables, ExternalVariable externalVariable)
+{
+    externalVariables[0] = externalVariable(voi, states, rates, constants, computedConstants, algebraicVariables, externalVariables, 0);
+    findRoot0(voi, states, rates, constants, computedConstants, algebraicVariables, externalVariables);
+}

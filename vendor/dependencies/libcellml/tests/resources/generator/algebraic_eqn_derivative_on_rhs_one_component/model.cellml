@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Algebraic equation with a derivative on its RHS
+   x = d(v)/d(t)-->
+    <units name="per_s">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="my_component">
+        <variable name="t" units="second"/>
+        <variable initial_value="1" name="v" units="dimensionless"/>
+        <variable name="a" units="per_s"/>
+        <variable name="x" units="per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <ci>a</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <cn cellml:units="per_s">1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x</ci>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

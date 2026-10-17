@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="EmptySodiumChannelModel">
+  <units name="per_ms">
+    <unit exponent="-1" prefix="milli" units="second"/>
+  </units>
+  <component name="sodium_channel">
+  </component>
+  <component name="mGate">
+    <variable name="alpha_m" units="per_ms"/>
+  </component>
+  <encapsulation>
+    <component_ref component="sodium_channel">
+      <component_ref component="mGate"/>
+    </component_ref>
+  </encapsulation>
+</model>

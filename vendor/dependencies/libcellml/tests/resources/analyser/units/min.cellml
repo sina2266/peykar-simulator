@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="min" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="frog"/>
+    <units name="imaginary">
+        <unit exponent="1" units="second"/>
+        <unit exponent="1" prefix="milli" units="second"/>
+        <unit exponent="3" units="volt"/>
+        <unit exponent="3" prefix="micro" units="volt"/>
+        <unit exponent="5" units="frog"/>
+        <unit exponent="5" prefix="nano" units="frog"/>
+    </units>
+    <component name="main">
+        <variable name="a" units="dimensionless"/>
+        <variable name="b" units="dimensionless"/>
+        <variable name="c" units="dimensionless"/>
+        <variable name="d" units="dimensionless"/>
+        <variable name="e" units="dimensionless"/>
+        <variable name="f" units="dimensionless"/>
+        <variable name="g" units="dimensionless"/>
+        <variable initial_value="1" name="aCst" units="dimensionless"/>
+        <variable initial_value="3" name="bCst" units="second"/>
+        <variable initial_value="5" name="cCst" units="volt"/>
+        <variable initial_value="7" name="dCst" units="frog"/>
+        <variable initial_value="9" name="eCst" units="imaginary"/>
+        <variable initial_value="11" name="fCst" units="second"/>
+        <variable initial_value="13" name="gCst" units="volt"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <apply>
+                    <min/>
+                    <ci>aCst</ci>
+                    <cn cellml:units="dimensionless">1</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <apply>
+                    <min/>
+                    <ci>bCst</ci>
+                    <cn cellml:units="dimensionless">3</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <apply>
+                    <min/>
+                    <ci>cCst</ci>
+                    <cn cellml:units="dimensionless">5</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <apply>
+                    <min/>
+                    <ci>dCst</ci>
+                    <cn cellml:units="dimensionless">7</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>e</ci>
+                <apply>
+                    <min/>
+                    <ci>eCst</ci>
+                    <cn cellml:units="dimensionless">9</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f</ci>
+                <apply>
+                    <min/>
+                    <ci>fCst</ci>
+                    <cn cellml:units="imaginary">11</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>g</ci>
+                <apply>
+                    <min/>
+                    <ci>gCst</ci>
+                    <cn cellml:units="frog">13</cn>
+                    <cn cellml:units="imaginary">15</cn>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

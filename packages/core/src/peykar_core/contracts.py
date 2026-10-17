@@ -4,6 +4,7 @@ Tuples avoid hidden mutable collections. Foreign keys are checked by application
 Model validity is contextual evidence, never a global quality score.
 """
 
+import math
 from enum import StrEnum
 from pathlib import PurePosixPath
 from typing import Annotated, Literal, Self
@@ -981,3 +982,78 @@ class HybridFlowRunRecord(Contract):
     created_at: str
     updated_at: str
     nodes: tuple[FlowNodeRecord, ...]
+
+
+class CellMLModelSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    format: Literal["cellml_2"] = "cellml_2"
+    context: ScientificContext
+    license: Annotated[str, Field(min_length=1, max_length=500)]
+    source: Annotated[str, Field(min_length=1, max_length=2000)]
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class CellMLVariable(Contract):
+    component: str
+    name: str
+    units: str
+    initial_value: str | None = None
+    interface: str | None = None
+
+
+class CellMLInspection(Contract):
+    model_name: str
+    namespace: Literal["http://www.cellml.org/cellml/2.0#"]
+    units: dict[str, tuple[dict[str, str], ...]]
+    variables: tuple[CellMLVariable, ...]
+    warnings: tuple[str, ...]
+    scope: Literal["bounded_declarative_inspection"] = "bounded_declarative_inspection"
+
+
+class CellMLModelPackage(Contract):
+    spec: CellMLModelSpec
+    content_digest: Sha256
+    inspection: CellMLInspection
+    scientific_validity: Literal["not_established"] = "not_established"
+
+
+class CellMLRunControls(Contract):
+    start: Number = 0.0
+    end: Number
+    time_unit: Annotated[str, Field(min_length=1, max_length=200)]
+    intervals: Annotated[StrictInt, Field(ge=1, le=10000)] = 100
+    method: Literal["RK45", "Radau", "BDF"] = "RK45"
+    relative_tolerance: Annotated[Positive, Field(ge=1e-12, le=1e-2)] = 1e-8
+    absolute_tolerance: Annotated[Positive, Field(ge=1e-14, le=1e-2)] = 1e-10
+    max_step: Positive
+
+    @model_validator(mode="after")
+    def horizon(self) -> Self:
+        span = self.end - self.start
+        if (
+            not math.isfinite(span)
+            or span <= 0
+            or self.max_step > span
+            or self.start + span / self.intervals <= self.start
+            or self.end - span / self.intervals >= self.end
+        ):
+            raise ValueError("CellML requires a positive horizon and bounded maximum step")
+        return self
+
+
+class CellMLExecutionReceipt(Contract):
+    id: Identifier
+    version: Version
+    model: Reference
+    model_digest: Sha256
+    runtime: Reference
+    image_digest: Sha256
+    driver_digest: Sha256
+    controls: CellMLRunControls
+    artifacts: Annotated[dict[str, Sha256], Field(min_length=3, max_length=8)]
+    scope: Literal["operator_cellml_execution"] = "operator_cellml_execution"
+    managed_queue_supported: Literal[False] = False
+    scientific_validity: Literal["not_established"] = "not_established"
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="MembraneController">
+  <units name="ms">
+    <unit prefix="milli" units="second"/>
+  </units>
+  <units name="microA_per_cm2">
+    <unit prefix="micro" units="ampere"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <component name="controller">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="i_stim" units="microA_per_cm2" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"
+      xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>i_stim</ci>
+        <piecewise>
+          <piece>
+            <cn cellml:units="microA_per_cm2">20</cn>
+            <apply>
+              <and/>
+              <apply>
+                <geq/>
+                <ci>t</ci>
+                <cn cellml:units="ms">10</cn>
+              </apply>
+              <apply>
+                <leq/>
+                <ci>t</ci>
+                <cn cellml:units="ms">10.5</cn>
+              </apply>
+            </apply>
+          </piece>
+          <otherwise>
+            <cn cellml:units="microA_per_cm2">0</cn>
+          </otherwise>
+        </piecewise>
+      </apply>
+    </math>
+  </component>
+</model>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#"
+  xmlns:cellml="http://www.cellml.org/cellml/2.0#"
+  xmlns:xlink="http://www.w3.org/1999/xlink" name="import_component_from_library_and_another_component">
+  <import xlink:href="layer1/import_from_component_library.cellml">
+    <component name="main" component_ref="component_from_component_library" />
+  </import>
+  <import xlink:href="component_library.cellml">
+    <component name="c1" component_ref="component_in_component_library" />
+  </import>
+  <encapsulation>
+    <component_ref component="main">
+      <component_ref component="c1" />
+    </component_ref>
+  </encapsulation>
+</model>

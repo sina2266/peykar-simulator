@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="nested_components">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="source.cellml">
+    <component component_ref="c" name="C"/>
+  </import>
+  <component name="A"/>
+  <component name="B"/>
+  <encapsulation>
+    <component_ref component="A">
+      <component_ref component="B">
+        <component_ref component="C"/>
+      </component_ref>
+    </component_ref>
+  </encapsulation>
+</model>

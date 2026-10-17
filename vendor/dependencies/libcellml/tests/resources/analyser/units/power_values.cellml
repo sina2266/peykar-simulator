@@ -1,0 +1,1169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="coverage" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="second3">
+        <unit exponent="3" units="second"/>
+    </units>
+    <units name="second4">
+        <unit exponent="4" units="second"/>
+    </units>
+    <units name="second5">
+        <unit exponent="5" units="second"/>
+    </units>
+    <component name="my_component">
+        <variable name="t" units="second"/>
+        <variable name="u" units="dimensionless"/>
+        <variable name="x" initial_value="1" units="second"/>
+        <variable name="xx" initial_value="1" units="second"/>
+        <variable name="y" initial_value="3" units="dimensionless"/>
+        <variable name="z" initial_value="1" units="dimensionless"/>
+        <variable name="eqnEq" units="second"/>
+        <variable name="eqnNeq" units="second"/>
+        <variable name="eqnLt" units="second"/>
+        <variable name="eqnLeq" units="second"/>
+        <variable name="eqnGt" units="second"/>
+        <variable name="eqnGeq" units="second"/>
+        <variable name="eqnAnd" units="second"/>
+        <variable name="eqnAnd2" units="second"/>
+        <variable name="eqnAnd3" units="second"/>
+        <variable name="eqnOr" units="second"/>
+        <variable name="eqnOr2" units="second"/>
+        <variable name="eqnOr3" units="second"/>
+        <variable name="eqnXor" units="second"/>
+        <variable name="eqnNot" units="second"/>
+        <variable name="eqnPlus" units="second"/>
+        <variable name="eqnPlus2" units="second"/>
+        <variable name="eqnMinus" units="second"/>
+        <variable name="eqnMinus2" units="second"/>
+        <variable name="eqnTimes" units="second"/>
+        <variable name="eqnDivide" units="second"/>
+        <variable name="eqnPower" units="second"/>
+        <variable name="eqnRoot" units="second"/>
+        <variable name="eqnRoot2" units="second"/>
+        <variable name="eqnAbs" units="second"/>
+        <variable name="eqnExp" units="second"/>
+        <variable name="eqnLn" units="second"/>
+        <variable name="eqnLog" units="second"/>
+        <variable name="eqnLog2" units="second"/>
+        <variable name="eqnLog10" units="second"/>
+        <variable name="eqnCeiling" units="second"/>
+        <variable name="eqnFloor" units="second"/>
+        <variable name="eqnMin" units="second"/>
+        <variable name="eqnMin2" units="second"/>
+        <variable name="eqnMax" units="second"/>
+        <variable name="eqnMax2" units="second"/>
+        <variable name="eqnRem" units="second"/>
+        <variable name="eqnDiff" units="second"/>
+        <variable name="eqnDiff2" units="second"/>
+        <variable name="eqnSin" units="second"/>
+        <variable name="eqnCos" units="second"/>
+        <variable name="eqnTan" units="second"/>
+        <variable name="eqnSec" units="second"/>
+        <variable name="eqnCsc" units="second"/>
+        <variable name="eqnCot" units="second"/>
+        <variable name="eqnSinh" units="second"/>
+        <variable name="eqnCosh" units="second"/>
+        <variable name="eqnTanh" units="second"/>
+        <variable name="eqnSech" units="second"/>
+        <variable name="eqnCsch" units="second"/>
+        <variable name="eqnCoth" units="second"/>
+        <variable name="eqnArcsin" units="second"/>
+        <variable name="eqnArccos" units="second"/>
+        <variable name="eqnArctan" units="second"/>
+        <variable name="eqnArcsec" units="second"/>
+        <variable name="eqnArccsc" units="second"/>
+        <variable name="eqnArccot" units="second"/>
+        <variable name="eqnArcsinh" units="second"/>
+        <variable name="eqnArccosh" units="second"/>
+        <variable name="eqnArctanh" units="second"/>
+        <variable name="eqnArcsech" units="second"/>
+        <variable name="eqnArccsch" units="second"/>
+        <variable name="eqnArccoth" units="second"/>
+        <variable name="eqnPiecewise" units="second"/>
+        <variable name="eqnCi" units="second"/>
+        <variable name="eqnCi2" units="second"/>
+        <variable name="eqnCi3" units="second3"/>
+        <variable name="eqnCi4" units="second4"/>
+        <variable name="eqnCi5" units="second5"/>
+        <variable name="eqnCn" units="second"/>
+        <variable name="eqnTrue" units="second"/>
+        <variable name="eqnFalse" units="second"/>
+        <variable name="eqnExponentiale" units="second"/>
+        <variable name="eqnPi" units="second"/>
+        <variable name="eqnInfinity" units="second"/>
+        <variable name="eqnNotanumber" units="second"/>
+        <variable name="eqnCoverage" units="second"/>
+        <variable name="eqnCoverage2" units="second"/>
+        <variable name="eqnCoverage3" units="second"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnEq</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <eq/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnNeq</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <neq/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLt</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <lt/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLeq</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <leq/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnGt</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <gt/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnGeq</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <geq/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnAnd</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <and/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnAnd2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <and/>
+                        <apply>
+                            <not/>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnAnd3</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <and/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <apply>
+                            <not/>
+                            <cn cellml:units="dimensionless">5</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnOr</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <or/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnOr2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <or/>
+                        <apply>
+                            <not/>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnOr3</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <or/>
+                        <apply>
+                            <not/>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <apply>
+                            <not/>
+                            <cn cellml:units="dimensionless">5</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnXor</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <xor/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnNot</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <not/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnPlus</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnPlus2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMinus</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMinus2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnTimes</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnDivide</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnPower</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <power/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnRoot</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <root/>
+                        <degree>
+                            <cn cellml:units="dimensionless">5</cn>
+                        </degree>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnRoot2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <root/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnAbs</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <abs/>
+                        <cn cellml:units="dimensionless">-3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnExp</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <exp/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLn</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <ln/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLog</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <log/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLog2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <log/>
+                        <logbase>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </logbase>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnLog10</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <log/>
+                        <logbase>
+                            <cn cellml:units="dimensionless">10</cn>
+                        </logbase>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCeiling</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <ceiling/>
+                        <cn cellml:units="dimensionless">3.21</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnFloor</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <floor/>
+                        <cn cellml:units="dimensionless">3.21</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMin</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <min/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMin2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <min/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMax</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <max/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnMax2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <max/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnRem</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <rem/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <cn cellml:units="dimensionless">5</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnDiff</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <diff/>
+                        <bvar>
+                            <ci>t</ci>
+                        </bvar>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <diff/>
+                        <bvar>
+                            <ci>t</ci>
+                        </bvar>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+                <ci>eqnDiff2</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <diff/>
+                        <bvar>
+                            <ci>t</ci>
+                        </bvar>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+                <apply>
+                    <power/>
+                    <ci>xx</ci>
+                    <apply>
+                        <diff/>
+                        <bvar>
+                            <ci>t</ci>
+                        </bvar>
+                        <ci>xx</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnSin</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <sin/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCos</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <cos/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnTan</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <tan/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnSec</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <sec/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCsc</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <csc/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCot</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <cot/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnSinh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <sinh/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCosh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <cosh/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnTanh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <tanh/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnSech</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <sech/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCsch</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <csch/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCoth</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <coth/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArcsin</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arcsin/>
+                        <cn cellml:units="dimensionless">0.3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccos</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccos/>
+                        <cn cellml:units="dimensionless">0.3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArctan</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arctan/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArcsec</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arcsec/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccsc</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccsc/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccot</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccot/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArcsinh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arcsinh/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccosh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccosh/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArctanh</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arctanh/>
+                        <cn cellml:units="dimensionless">0.3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArcsech</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arcsech/>
+                        <cn cellml:units="dimensionless">0.3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccsch</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccsch/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnArccoth</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <arccoth/>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnPiecewise</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <piecewise>
+                        <piece>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <apply>
+                                <gt/>
+                                <ci>y</ci>
+                                <cn cellml:units="dimensionless">5</cn>
+                            </apply>
+                        </piece>
+                        <otherwise>
+                            <cn cellml:units="dimensionless">7</cn>
+                        </otherwise>
+                    </piecewise>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCi</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <ci>y</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCi2</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <ci>z</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCi3</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <ci>z</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCi4</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <plus/>
+                        <ci>y</ci>
+                        <ci>z</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCi5</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <power/>
+                            <apply>
+                                <minus/>
+                                <ci>y</ci>
+                                <ci>z</ci>
+                            </apply>
+                            <apply>
+                                <minus/>
+                                <ci>y</ci>
+                                <ci>z</ci>
+                            </apply>
+                        </apply>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCn</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <cn cellml:units="dimensionless">3</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnTrue</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <true/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnFalse</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <false/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnExponentiale</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <exponentiale/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnPi</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <pi/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnInfinity</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <infinity/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnNotanumber</ci>
+                <apply>
+                    <power/>
+                    <ci>x</ci>
+                    <notanumber/>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCoverage</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <power/>
+                                <ci>x</ci>
+                                <apply>
+                                    <minus/>
+                                    <ci>y</ci>
+                                    <ci>u</ci>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <power/>
+                                <ci>x</ci>
+                                <ci>u</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>x</ci>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCoverage2</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <power/>
+                                <ci>x</ci>
+                                <apply>
+                                    <minus/>
+                                    <ci>y</ci>
+                                    <ci>u</ci>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <power/>
+                                <ci>x</ci>
+                                <ci>u</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>x</ci>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>eqnCoverage3</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <power/>
+                            <ci>x</ci>
+                            <ci>u</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>x</ci>
+                        <ci>x</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

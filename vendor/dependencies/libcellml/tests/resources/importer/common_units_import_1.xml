@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink" name="common_units_import_1">
+  
+  <import xlink:href="common_units_import_units.xml">
+    <units name="ms" units_ref="ms"/>
+    <units name="uA_per_cmsq" units_ref="uA_per_cmsq"/>
+	<units name="mV" units_ref="mV"/>
+  </import>
+  <import xlink:href="common_units_import_2.xml">
+    <component name="component_in_model_1" component_ref="component_in_model_2"/>
+  </import>
+
+  <component name="params">
+    <variable name="stimPeriod" initial_value="50" units="ms" interface="public"/>
+    <variable name="stimDuration" initial_value="0.5" units="ms" interface="public"/>
+    <variable name="stimCurrent" initial_value="-10.0" units="uA_per_cmsq" interface="public"/>
+  </component>
+
+</model>

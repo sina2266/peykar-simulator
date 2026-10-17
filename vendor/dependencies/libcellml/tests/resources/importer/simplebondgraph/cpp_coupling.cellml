@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="CardiovascularSystem" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="cpp_coupling_parameters.cellml">
+        <component component_ref="parameters" name="parameters"/>
+    </import>
+    <import xlink:href="cpp_coupling_modules.cellml">
+        <component component_ref="vp_simple_type" name="main_vessel_module"/>
+    </import>
+    <connection>
+        <map_components component_1="parameters" component_2="main_vessel_module"/>
+        <map_variables variable_1="C_main_vessel" variable_2="C"/>
+    </connection>
+</model>

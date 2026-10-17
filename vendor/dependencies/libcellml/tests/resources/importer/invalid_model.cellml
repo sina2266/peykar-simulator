@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="invalid_model">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="simple_model.cellml">
+    <units units_ref="unitsA" name="unitsA_imported"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="simple_model.cellml">
+    <units units_ref="unitsB" name="unitsB_imported"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="simple_model_2.cellml">
+    <component component_ref="componentC" name="componentC_imported"/>
+  </import>
+  <units name="units1">
+    <unit prefix="milli" offset="32" units="second"/>
+  </units>
+  <units name="units2">
+    <unit prefix="milli" units="second" />
+    <illegal />
+  </units>
+  <units name="units3">
+    <unit prefix="milli" units="second" />
+  </units>
+  <component name="component1">
+    <variable name="v1" units="units1"/>
+    <wrong />
+  </component>
+  <component name="component2">
+    <variable name="variable2" path="/here"/>
+  </component>
+  <component name="component3">
+    <reset name="variable2" />
+  </component>
+  <component name="component4">
+    <variable name="v1" units="unitsB_imported"/>
+  </component>
+  <component name="component5">
+    <notlegal/>
+  </component>
+  <encapsulation>
+    <component_ref component="component4">
+      <component_ref component="componentC_imported" />
+    </component_ref>
+  </encapsulation>
+</model>

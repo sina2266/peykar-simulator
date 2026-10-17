@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Underconstrained NLA system
+   x1: 1 -> 3
+   y1: 1 -> -2
+   z1: 1 -> 1
+   x1 + y1 + z1 = 2
+   6x1 - 4y1 + 5z1 = 31-->
+    <!-- Overconstrained NLA system
+   x2: 1 -> 3
+   y2: 1 -> -2
+   z2: 1 -> 1
+   x2 + y2 + z2 = 2
+   6x2 - 4y2 + 5z2 = 31
+   5x2 + 2y2 + 2z2 = 13
+   -2x2 + y2 + 3z2 = -5-->
+    <component name="my_algebraic_system">
+        <variable initial_value="1" name="x1" units="dimensionless"/>
+        <variable initial_value="1" name="y1" units="dimensionless"/>
+        <variable initial_value="1" name="z1" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <ci>x1</ci>
+                    <ci>y1</ci>
+                    <ci>z1</ci>
+                </apply>
+                <cn cellml:units="dimensionless">2</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">6</cn>
+                        <ci>x1</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">-4</cn>
+                        <ci>y1</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <ci>z1</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">31</cn>
+            </apply>
+        </math>
+        <variable initial_value="1" name="x2" units="dimensionless"/>
+        <variable initial_value="1" name="y2" units="dimensionless"/>
+        <variable initial_value="1" name="z2" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <ci>x2</ci>
+                    <ci>y2</ci>
+                    <ci>z2</ci>
+                </apply>
+                <cn cellml:units="dimensionless">2</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">6</cn>
+                        <ci>x2</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">-4</cn>
+                        <ci>y2</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <ci>z2</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">31</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">5</cn>
+                        <ci>x2</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>y2</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>z2</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">31</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">-2</cn>
+                        <ci>x2</ci>
+                    </apply>
+                    <ci>y2</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <ci>z2</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">-5</cn>
+            </apply>
+        </math>
+    </component>
+</model>

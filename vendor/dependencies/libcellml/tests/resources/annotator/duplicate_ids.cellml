@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="everything" id="duplicateId" >
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="some-other-model.xml" id="duplicateId">
+    <component component_ref="a_component_in_that_model" name="component1" id="duplicateId"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="some-other-model.xml" id="duplicateId" >
+    <units units_ref="a_units_in_that_model" name="units1" id="duplicateId" />
+  </import>
+  <units name="units2" id="duplicateId">
+    <unit units="second" id="duplicateId"/>
+  </units>
+  <units name="units3" id="duplicateId"/>
+  <units name="blob" id="duplicateId"/>
+  <component name="component2">
+    <variable name="variable1" units="units2" interface="private" id="duplicateId"/>
+    <variable name="variable2" units="units2" id="duplicateId"/>
+    <reset variable="variable1" test_variable="variable2" order="1" id="duplicateId">
+      <test_value id="duplicateId">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+          <apply>
+            <eq/>
+            <ci>variable1</ci>
+            <cn cellml:units="units2">3.4</cn>
+          </apply>
+        </math>
+      </test_value>
+      <reset_value id="duplicateId">
+        <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+          <apply>
+            <eq/>
+            <ci>variable1</ci>
+            <cn cellml:units="units2">9.0</cn>
+          </apply>
+        </math>
+      </reset_value>
+    </reset>
+  </component>
+  <component name="component3" id="duplicateId">
+    <variable name="variable1" units="units2" interface="public" id="duplicateId" />
+    <variable name="variable2" units="units2" interface="public" id="duplicateId" />
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>variable4</ci>
+        <cn cellml:units="units2">9.0</cn>
+      </apply>
+    </math>
+  </component>
+  <component name="component4" id="duplicateId">
+    <variable name="variable1" units="units2" interface="public" id="duplicateId" />
+    <variable name="variable2" units="units2" interface="public" id="duplicateId" />
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>variable4</ci>
+        <cn cellml:units="units2">9.0</cn>
+      </apply>
+    </math>
+  </component>
+  <connection component_1="component2" component_2="component3" id="duplicateId">
+    <map_variables variable_1="variable1" variable_2="variable1" id="duplicateId"/>
+    <map_variables variable_1="variable2" variable_2="variable2" id="duplicateId"/>
+  </connection>
+  <connection component_1="component2" component_2="component4" id="duplicateId">
+    <map_variables variable_1="variable1" variable_2="variable1" id="duplicateId"/>
+    <map_variables variable_1="variable2" variable_2="variable2" id="duplicateId"/>
+  </connection>
+  <encapsulation id="duplicateId">
+    <component_ref component="component2" id="duplicateId">
+      <component_ref component="component3" id="duplicateId"/>
+    </component_ref>
+  </encapsulation>
+</model>

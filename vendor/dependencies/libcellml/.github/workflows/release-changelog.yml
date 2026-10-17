@@ -1,0 +1,64 @@
+name: Generate and Commit Changelog
+
+on:
+  workflow_call:
+    inputs:
+      changelog_branch:
+        description: "The target branch for adding the changelog to, a release staging branch"
+        required: true
+        type: string
+    secrets:
+      GH_TOKEN:
+        description: "GitHub token with permissions to push to the repository"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Extract release tag from release staging branch
+        id: determine_release
+        run: |
+          branch=${{ inputs.changelog_branch }}
+
+          # Extract release tag by removing prefix
+          tag="${branch#${{ vars.RELEASE_STAGING_BRANCH_STEM }}}"
+          echo "RELEASE_VERSION=$tag" >> "$GITHUB_ENV"
+
+      - name: Checkout release staging branch
+        run: |
+          git checkout "${{ inputs.changelog_branch }}"
+
+      - uses: actions/setup-python@v6
+        if: ${{ env.ACT != 'true' }}
+        with:
+          python-version: "3.12"
+
+      - name: Generate changelog
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          pip install requests packaging
+          python .github/scripts/generate_changelog.py -p cellml/libcellml PREV v${{ env.RELEASE_VERSION }}
+          mv changelog_*.rst docs/changelogs/
+          python .github/scripts/clean_and_reindex_changelogs.py .
+
+      - name: Commit changelog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/changelogs/changelog_*.rst docs/changelogs/index.rst docs/index.rst
+          git commit -m "Add changelog for release ${RELEASE_VERSION}" || echo "No changes to commit"
+          git push

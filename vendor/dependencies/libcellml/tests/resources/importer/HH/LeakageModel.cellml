@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="Leakage">
+  <units name="mV">
+    <unit prefix="milli" units="volt"/>
+  </units>
+  <units name="ms">
+    <unit prefix="milli" units="second"/>
+  </units>
+  <units name="per_mV">
+    <unit exponent="-1" prefix="milli" units="volt"/>
+  </units>
+  <units name="mS_per_cm2">
+    <unit prefix="milli" units="siemens"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <units name="microA_per_cm2">
+    <unit prefix="micro" units="ampere"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <component name="leakage">
+    <variable name="i_L" units="microA_per_cm2" interface="public" />
+    <variable name="g_L" units="mS_per_cm2" interface="public"/>
+    <variable name="E_L" units="mV" interface="public"/>
+    <variable name="V" units="mV" interface="public" />
+    <math xmlns="http://www.w3.org/1998/Math/MathML"
+      xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>i_L</ci>
+        <apply>
+          <times/>
+          <ci>g_L</ci>
+          <apply>
+            <minus/>
+            <ci>V</ci>
+            <ci>E_L</ci>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+</model>

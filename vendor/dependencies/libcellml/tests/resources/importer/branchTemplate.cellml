@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="branchModel">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf1"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf2"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf3"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf4"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="flower" name="flower1"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="flower" name="flower2"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf5"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="leaf" name="leaf6"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="thingsThatGrowOnBranches.cellml">
+    <component component_ref="fruit" name="fruit"/>
+  </import>
+  <component name="leafyBranch"/>
+  <component name="floweryBranch"/>
+  <component name="fruityBranch"/>
+  <encapsulation>
+    <component_ref component="leafyBranch">
+      <component_ref component="leaf1"/>
+      <component_ref component="leaf2"/>
+      <component_ref component="leaf3"/>
+    </component_ref>
+    <component_ref component="floweryBranch">
+      <component_ref component="leaf4"/>
+      <component_ref component="flower1"/>
+      <component_ref component="flower2"/>
+    </component_ref>
+    <component_ref component="fruityBranch">
+      <component_ref component="leaf5"/>
+      <component_ref component="leaf6"/>
+      <component_ref component="fruit"/>
+    </component_ref>
+  </encapsulation>
+</model>

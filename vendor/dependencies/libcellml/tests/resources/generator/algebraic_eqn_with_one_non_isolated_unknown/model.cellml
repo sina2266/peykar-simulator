@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Algebraic equation with one non-isolated unknown
+    Variables:
+     • a: 1 -> 9
+     • b
+     • c
+     • d
+    Equation:
+     • a + b = c + d
+    -->
+    <component name="my_algebraic_eqn">
+        <variable initial_value="1" name="a" units="dimensionless"/>
+        <variable name="b" units="dimensionless"/>
+        <variable name="c" units="dimensionless"/>
+        <variable name="d" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <cn cellml:units="dimensionless">3</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <cn cellml:units="dimensionless">5</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <cn cellml:units="dimensionless">7</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <ci>a</ci>
+                    <ci>b</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <ci>c</ci>
+                    <ci>d</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

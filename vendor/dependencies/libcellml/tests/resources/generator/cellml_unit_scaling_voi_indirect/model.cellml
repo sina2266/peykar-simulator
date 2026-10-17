@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Define the VOI as being time (expressed in seconds). Then:
+ - Use the VOI as-is (i.e. time expressed in seconds) in a component to compute an ODE;
+ - Use a scaled version of the VOI (here, time expressed in milliseconds) in a component to compute another ODE
+ - Use a scaled version of the VOI (here, time expressed in kiloseconds) in a component to compute another ODE. -->
+    <units name="ms">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="ks">
+        <unit prefix="kilo" units="second"/>
+    </units>
+    <units name="m_per_s">
+        <unit units="metre"/>
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="m_per_ms">
+        <unit units="metre"/>
+        <unit exponent="-1" units="ms"/>
+    </units>
+    <units name="m_per_ks">
+        <unit units="metre"/>
+        <unit exponent="-1" units="ks"/>
+    </units>
+    <component name="environment">
+        <variable interface="public" name="t" units="second"/>
+    </component>
+    <component name="t_in_s">
+        <variable interface="public" name="t" units="second"/>
+        <variable initial_value="3" name="x" units="metre"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="m_per_s">5</cn>
+            </apply>
+        </math>
+    </component>
+    <component name="t_in_ms">
+        <variable interface="public" name="t" units="ms"/>
+        <variable initial_value="7" name="x" units="metre"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="m_per_ms">9</cn>
+            </apply>
+        </math>
+    </component>
+    <component name="t_in_ks">
+        <variable interface="public" name="t" units="ks"/>
+        <variable initial_value="11" name="x" units="metre"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="m_per_ks">13</cn>
+            </apply>
+        </math>
+    </component>
+    <connection component_1="environment" component_2="t_in_s">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection component_1="environment" component_2="t_in_ms">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection component_1="environment" component_2="t_in_ks">
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+</model>

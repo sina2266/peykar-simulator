@@ -194,6 +194,109 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/cellml-executions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Executions */
+        get: operations["executions_v1_cellml_executions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cellml-executions/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Execution */
+        get: operations["execution_v1_cellml_executions__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cellml-executions/{id}/versions/{version}/artifacts/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Artifact */
+        get: operations["artifact_v1_cellml_executions__id__versions__version__artifacts__name__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cellml-models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Discover */
+        get: operations["discover_v1_cellml_models_get"];
+        put?: never;
+        /** Admit */
+        post: operations["admit_v1_cellml_models_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cellml-models/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get */
+        get: operations["get_v1_cellml_models__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cellml-models/{id}/versions/{version}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Content */
+        get: operations["content_v1_cellml_models__id__versions__version__content_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/datasets": {
         parameters: {
             query?: never;
@@ -1678,6 +1781,203 @@ export interface components {
             value_unit: string;
             /** Version */
             version: string;
+        };
+        /** CellMLAdmission */
+        CellMLAdmission: {
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            spec: components["schemas"]["CellMLModelSpec"];
+            /** Xml Text */
+            xml_text: string;
+        };
+        /** CellMLExecutionReceipt */
+        CellMLExecutionReceipt: {
+            /** Artifacts */
+            artifacts: {
+                [key: string]: string;
+            };
+            controls: components["schemas"]["CellMLRunControls"];
+            /** Driver Digest */
+            driver_digest: string;
+            /** Id */
+            id: string;
+            /** Image Digest */
+            image_digest: string;
+            /** Limitations */
+            limitations: string[];
+            /**
+             * Managed Queue Supported
+             * @default false
+             * @constant
+             */
+            managed_queue_supported: false;
+            model: components["schemas"]["Reference"];
+            /** Model Digest */
+            model_digest: string;
+            runtime: components["schemas"]["Reference"];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /**
+             * Scientific Validity
+             * @default not_established
+             * @constant
+             */
+            scientific_validity: "not_established";
+            /**
+             * Scope
+             * @default operator_cellml_execution
+             * @constant
+             */
+            scope: "operator_cellml_execution";
+            /** Version */
+            version: string;
+        };
+        /** CellMLInspection */
+        CellMLInspection: {
+            /** Model Name */
+            model_name: string;
+            /**
+             * Namespace
+             * @constant
+             */
+            namespace: "http://www.cellml.org/cellml/2.0#";
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /**
+             * Scope
+             * @default bounded_declarative_inspection
+             * @constant
+             */
+            scope: "bounded_declarative_inspection";
+            /** Units */
+            units: {
+                [key: string]: {
+                    [key: string]: string;
+                }[];
+            };
+            /** Variables */
+            variables: components["schemas"]["CellMLVariable"][];
+            /** Warnings */
+            warnings: string[];
+        };
+        /** CellMLModelPackage */
+        CellMLModelPackage: {
+            /** Content Digest */
+            content_digest: string;
+            inspection: components["schemas"]["CellMLInspection"];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /**
+             * Scientific Validity
+             * @default not_established
+             * @constant
+             */
+            scientific_validity: "not_established";
+            spec: components["schemas"]["CellMLModelSpec"];
+        };
+        /** CellMLModelSpec */
+        CellMLModelSpec: {
+            context: components["schemas"]["ScientificContext"];
+            /**
+             * Format
+             * @default cellml_2
+             * @constant
+             */
+            format: "cellml_2";
+            /** Id */
+            id: string;
+            /** License */
+            license: string;
+            /** Limitations */
+            limitations: string[];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Source */
+            source: string;
+            /** Title */
+            title: string;
+            /** Version */
+            version: string;
+        };
+        /** CellMLRunControls */
+        CellMLRunControls: {
+            /**
+             * Absolute Tolerance
+             * @default 1e-10
+             */
+            absolute_tolerance: number;
+            /** End */
+            end: number;
+            /**
+             * Intervals
+             * @default 100
+             */
+            intervals: number;
+            /** Max Step */
+            max_step: number;
+            /**
+             * Method
+             * @default RK45
+             * @enum {string}
+             */
+            method: "RK45" | "Radau" | "BDF";
+            /**
+             * Relative Tolerance
+             * @default 1e-8
+             */
+            relative_tolerance: number;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /**
+             * Start
+             * @default 0
+             */
+            start: number;
+            /** Time Unit */
+            time_unit: string;
+        };
+        /** CellMLVariable */
+        CellMLVariable: {
+            /** Component */
+            component: string;
+            /** Initial Value */
+            initial_value?: string | null;
+            /** Interface */
+            interface?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Units */
+            units: string;
         };
         /** DatasetLineage */
         DatasetLineage: {
@@ -3749,6 +4049,232 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    executions_v1_cellml_executions_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CellMLExecutionReceipt"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    execution_v1_cellml_executions__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CellMLExecutionReceipt"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    artifact_v1_cellml_executions__id__versions__version__artifacts__name__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discover_v1_cellml_models_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CellMLModelPackage"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admit_v1_cellml_models_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CellMLAdmission"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CellMLModelPackage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_v1_cellml_models__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CellMLModelPackage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    content_v1_cellml_models__id__versions__version__content_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

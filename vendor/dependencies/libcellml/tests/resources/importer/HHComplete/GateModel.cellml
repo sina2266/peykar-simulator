@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="GateModel">
+  <units name="ms">
+    <unit prefix="milli" units="second"/>
+  </units>
+  <units name="per_ms">
+    <unit exponent="-1" prefix="milli" units="second"/>
+  </units>
+  <component name="gate">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="X" units="dimensionless" interface="public_and_private"/>
+  </component>
+  <component name="gateEquations">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="alpha_X" units="per_ms" interface="public"/>
+    <variable name="beta_X" units="per_ms" interface="public"/>
+    <variable name="X" units="dimensionless" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"
+      xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>t</ci>
+          </bvar>
+          <ci>X</ci>
+        </apply>
+        <apply>
+          <minus/>
+          <apply>
+            <times/>
+            <ci>alpha_X</ci>
+            <apply>
+              <minus/>
+              <cn cellml:units="dimensionless">1</cn>
+              <ci>X</ci>
+            </apply>
+          </apply>
+          <apply>
+            <times/>
+            <ci>beta_X</ci>
+            <ci>X</ci>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="gateParameters">
+    <variable name="X" units="dimensionless" initial_value="0" interface="public"/>
+    <variable name="alpha" units="per_ms" initial_value="0.1" interface="public"/>
+    <variable name="beta" units="per_ms" initial_value="0.5" interface="public"/>
+  </component>
+  <connection component_1="gate" component_2="gateEquations">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="X" variable_2="X"/>
+  </connection>
+  <connection component_1="gateEquations" component_2="gateParameters">
+    <map_variables variable_1="alpha_X" variable_2="alpha"/>
+    <map_variables variable_1="beta_X" variable_2="beta"/>
+    <map_variables variable_1="X" variable_2="X"/>
+  </connection>
+  <encapsulation>
+    <component_ref component="gate">
+      <component_ref component="gateEquations"/>
+      <component_ref component="gateParameters"/>
+    </component_ref>
+  </encapsulation>
+</model>

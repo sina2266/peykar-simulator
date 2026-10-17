@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "id": "cellml.ode.runtime",
+  "version": "1.0.0",
+  "title": "libCellML 0.7.1 / SciPy ODE runtime",
+  "engine": "libcellml",
+  "profile": "cellml.ode",
+  "sources": [
+    {
+      "schema_version": "1.0.0",
+      "id": "libcellml",
+      "version": "1.0.0"
+    }
+  ],
+  "image_digest": "edd3495628c4b24101a373f892f45bf5ea5723d856e3696545eeb271d0eba29e",
+  "execution_digest": "2715a1234f37a3e61bcf7c1f60f8f6d3396fc896fe6cb25b9b63ac71f4e70918",
+  "artifact_digests": {
+    "driver.py": "3d52e676246271d05174b79147616b4480cff429bf59361e1a61b7fdd8294185",
+    "uv.lock": "8248a9cf1971cf6d2e988990578a116e814e66547018b8259f95d1408a1b6d7e",
+    "bootstrap-result.json": "3f31487c56e24ff5247b744b7c5f2352bcdafe1a52c3bfedd9433a595aa4ec7b",
+    "bootstrap-series.csv": "f2766c735c43075eb40abd679caf8b296ec6682effbd99acb6aa782981d71456"
+  },
+  "scope": "operator_native_probe",
+  "managed_queue_supported": false,
+  "scientific_validity": "not_established",
+  "limitations": [
+    "Self-contained CellML 2 ODEs only; imports/resets/DAE/external variables unsupported.",
+    "Operator-only execution; durable API queue adapter remains separate.",
+    "Numerical fixture evidence is not biological validation."
+  ]
+}

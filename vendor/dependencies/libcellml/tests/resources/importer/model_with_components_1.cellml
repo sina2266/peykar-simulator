@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="component_model_1">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="model_with_components_2.cellml">
+    <component component_ref="c2" name="c"/>
+  </import>
+  <component name="c_base"/>
+  <component name="c_base_child_1"/>
+  <component name="c_base_child_2"/>
+  <encapsulation>
+    <component_ref component="c_base">
+      <component_ref component="c_base_child_1"/>
+      <component_ref component="c_base_child_2">
+        <component_ref component="c"/>
+      </component_ref>
+    </component_ref>
+  </encapsulation>
+</model>
+

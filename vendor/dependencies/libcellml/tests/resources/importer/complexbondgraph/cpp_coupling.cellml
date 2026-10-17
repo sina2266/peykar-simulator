@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="CardiovascularSystem" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="cpp_coupling_parameters.cellml">
+        <component component_ref="parameters" name="parameters"/>
+    </import>
+    <component name="environment">
+        <variable name="time" public_interface="out" units="dimensionless"/>
+    </component>
+    <import xlink:href="cpp_coupling_modules.cellml">
+        <component component_ref="vp_simple_type" name="main_vessel_module"/>
+    </import>
+    <component name="main_vessel">
+        <variable name="u" public_interface="in" units="dimensionless"/>
+        <variable name="v" public_interface="in" units="dimensionless"/>
+        <variable name="q_C" public_interface="in" units="dimensionless"/>
+        <variable name="R" public_interface="in" units="dimensionless"/>
+        <variable name="C" public_interface="in" units="dimensionless"/>
+        <variable name="u_ext" public_interface="in" units="dimensionless"/>
+        <variable name="I" public_interface="in" units="dimensionless"/>
+        <variable name="u_out" public_interface="in" units="dimensionless"/>
+        <variable name="v_in" public_interface="in" units="dimensionless"/>
+    </component>
+    <connection>
+        <map_components component_1="main_vessel" component_2="main_vessel_module"/>
+        <map_variables variable_1="u" variable_2="u"/>
+        <map_variables variable_1="v" variable_2="v"/>
+        <map_variables variable_1="q_C" variable_2="q_C"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="C" variable_2="C"/>
+        <map_variables variable_1="u_ext" variable_2="u_ext"/>
+        <map_variables variable_1="I" variable_2="I"/>
+        <map_variables variable_1="u_out" variable_2="u_out"/>
+        <map_variables variable_1="v_in" variable_2="v_in"/>
+    </connection>
+    <connection>
+        <map_components component_1="parameters" component_2="main_vessel_module"/>
+        <map_variables variable_1="R_main_vessel" variable_2="R"/>
+        <map_variables variable_1="C_main_vessel" variable_2="C"/>
+        <map_variables variable_1="u_ext_main_vessel" variable_2="u_ext"/>
+        <map_variables variable_1="I_main_vessel" variable_2="I"/>
+        <map_variables variable_1="u_out_main_vessel" variable_2="u_out"/>
+        <map_variables variable_1="v_in_main_vessel" variable_2="v_in"/>
+    </connection>
+    <connection>
+        <map_components component_1="environment" component_2="main_vessel_module"/>
+        <map_variables variable_1="time" variable_2="t"/>
+    </connection>
+</model>

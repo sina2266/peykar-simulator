@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<model name="level13_model" xmlns="http://www.cellml.org/cellml/2.0#"
+	xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<import xlink:href="level2.xml">
+		<component name="level2_in_level13" component_ref="level2_component" />
+	</import>
+	<component name="level13_component">
+		<variable name="v" initial_value="1" units="dimensionless" interface="public_and_private"/>
+	</component>
+	<import xlink:href="model_that_doesnt_exist.xml">
+		<component name="doesnt_exist" component_ref="still_doesnt_exist"/>
+	</import>
+	<connection component_1="level13_component" component_2="level2_in_level13">
+		<map_variables variable_1="v" variable_2="parameter" />
+	</connection>
+	<encapsulation>
+		<component_ref component="level13_component">
+			<component_ref component="level2_in_level13" />
+		</component_ref>
+	</encapsulation>
+</model>

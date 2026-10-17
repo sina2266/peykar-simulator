@@ -16,3 +16,7 @@ See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at rep
 Worker ticks also reconcile bounded job cohorts across ordinary/native queues.
 Native `prepare`/`enqueue` separates validation from caller-owned atomic dispatch;
 no Docker capability is added to this Worker. See the E2 cohort guide.
+
+`cellml_operator.py` is an explicitly invoked offline ODE operator, outside the
+API/Worker queue. It uses a separately admitted runtime/local image/driver allowlist,
+resource-bounded Docker execution and verified result import. See the E5 guide.

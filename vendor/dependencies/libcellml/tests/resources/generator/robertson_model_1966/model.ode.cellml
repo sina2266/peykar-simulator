@@ -1,0 +1,121 @@
+<model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink" name="robertson_ode_model">
+    <!-- Roberston model as an ODE system
+    Reference: HH Robertson. The solution of a set of reaction rate equations. Numerical Analysis: An Introduction (J Walsh ed.). London, England: Academic Press, 1966, pp. 178–182.
+    Variables:
+     • t
+     • k1: 0.04
+     • k2: 3e7
+     • k3: 1e4
+     • y1: 1
+     • y2: 0
+     • y3: 0
+    Equations:
+     • dy1/dt = -k1*y1 + k3*y2*y3
+     • dy2/dt = k1*y1 - k2*y2^2 - k3*y2*y3
+     • dy3/dt = k2*y2^2
+     • y2_scaled = 1000.0*y2
+    -->
+    <component name="main">
+        <variable name="t" units="dimensionless"/>
+        <variable initial_value="0.04" name="k1" units="dimensionless"/>
+        <variable initial_value="3e7" name="k2" units="dimensionless"/>
+        <variable initial_value="1e4" name="k3" units="dimensionless"/>
+        <variable initial_value="1" name="y1" units="dimensionless"/>
+        <variable initial_value="0" name="y2" units="dimensionless"/>
+        <variable initial_value="0" name="y3" units="dimensionless"/>
+        <variable name="y2_scaled" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y1</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <minus/>
+                            <ci>k1</ci>
+                        </apply>
+                        <ci>y1</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k3</ci>
+                        <ci>y2</ci>
+                        <ci>y3</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y2</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <times/>
+                            <ci>k1</ci>
+                            <ci>y1</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2</ci>
+                            <apply>
+                                <power/>
+                                <ci>y2</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k3</ci>
+                        <ci>y2</ci>
+                        <ci>y3</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>y3</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <ci>k2</ci>
+                    <apply>
+                        <power/>
+                        <ci>y2</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>y2_scaled</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">10000.0</cn>
+                    <ci>y2</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

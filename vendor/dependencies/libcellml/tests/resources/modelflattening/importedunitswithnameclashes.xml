@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="main_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="import_for_importedunitswithnameclashes.xml">
+        <component name="my_component" component_ref="reusable_component" />
+    </import>
+    <units name="common_units">
+        <unit units="second" />
+    </units>
+    <component name="best_component">
+        <variable name="v" initial_value="1" units="common_units" interface="public_and_private" />
+    </component>
+</model>

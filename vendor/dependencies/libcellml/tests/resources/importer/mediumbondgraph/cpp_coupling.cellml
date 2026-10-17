@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="CardiovascularSystem" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="cpp_coupling_parameters.cellml">
+        <component component_ref="parameters" name="parameters"/>
+    </import>
+    <component name="environment">
+        <variable name="time" public_interface="out" units="dimensionless"/>
+    </component>
+    <import xlink:href="cpp_coupling_modules.cellml">
+        <component component_ref="vp_simple_type" name="main_vessel_module"/>
+    </import>
+    <component name="main_vessel">
+        <variable name="C" public_interface="in" units="dimensionless"/>
+    </component>
+    <connection>
+        <map_components component_1="main_vessel" component_2="main_vessel_module"/>
+        <map_variables variable_1="C" variable_2="C"/>
+    </connection>
+    <connection>
+        <map_components component_1="parameters" component_2="main_vessel_module"/>
+        <map_variables variable_1="C_main_vessel" variable_2="C"/>
+    </connection>
+    <connection>
+        <map_components component_1="environment" component_2="main_vessel_module"/>
+        <map_variables variable_1="time" variable_2="t"/>
+    </connection>
+</model>

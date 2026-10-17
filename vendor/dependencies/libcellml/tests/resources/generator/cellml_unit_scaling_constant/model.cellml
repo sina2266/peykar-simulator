@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Define 'c' as a constant expressed in mM in component 'constants'. Then:
+ - Use 'c' as-is (i.e. expressed in mM) to compute a variable; and
+ - Use a scaled version of 'c' (here, expressed in M) to compute another variable.
+Then, we repeat the same thing using other constants, which initial value is 'c', defined either in the same component
+or in a different one. Scaling is only performed at the connection level. So, for the case where the initial value is
+defined in the same component, we have no scaling but a warning instead. -->
+    <units name="ms">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="M">
+        <unit units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="mM">
+        <unit prefix="milli" units="M"/>
+    </units>
+    <component name="constants">
+        <variable initial_value="c_mM" interface="public" name="ind_c_mM" units="mM"/>
+        <variable initial_value="c" interface="public" name="c_mM" units="mM"/>
+        <variable initial_value="123" interface="public" name="c" units="mM"/>
+        <variable initial_value="c" interface="public" name="c_M" units="M"/>
+        <variable initial_value="c_M" interface="public" name="ind_c_M" units="M"/>
+    </component>
+    <component name="other_constants">
+        <variable initial_value="oc_mM" interface="public" name="ind_oc_mM" units="mM"/>
+        <variable initial_value="c" interface="public" name="oc_mM" units="mM"/>
+        <variable interface="public" name="c" units="M"/>
+        <variable initial_value="c" interface="public" name="oc_M" units="M"/>
+        <variable initial_value="oc_M" interface="public" name="ind_oc_M" units="M"/>
+    </component>
+    <component name="main">
+        <variable name="comp_c_mM_mM" units="mM"/>
+        <variable name="comp_c_mM_M" units="M"/>
+        <variable name="comp_c_M_mM" units="mM"/>
+        <variable name="comp_c_M_M" units="M"/>
+        <variable name="comp_k_mM" units="mM"/>
+        <variable name="comp_k_M" units="M"/>
+        <variable name="comp_oc_mM_mM" units="mM"/>
+        <variable name="comp_oc_mM_M" units="M"/>
+        <variable name="comp_oc_M_mM" units="mM"/>
+        <variable name="comp_oc_M_M" units="M"/>
+        <variable interface="public" name="c_mM_mM" units="mM"/>
+        <variable interface="public" name="ind_c_mM_mM" units="mM"/>
+        <variable interface="public" name="c_mM_M" units="M"/>
+        <variable interface="public" name="ind_c_mM_M" units="M"/>
+        <variable interface="public" name="c_M_mM" units="mM"/>
+        <variable interface="public" name="ind_c_M_mM" units="mM"/>
+        <variable interface="public" name="c_M_M" units="M"/>
+        <variable interface="public" name="ind_c_M_M" units="M"/>
+        <variable interface="public" name="k_mM" units="mM"/>
+        <variable interface="public" name="k_M" units="M"/>
+        <variable interface="public" name="oc_mM_mM" units="mM"/>
+        <variable interface="public" name="ind_oc_mM_mM" units="mM"/>
+        <variable interface="public" name="oc_mM_M" units="M"/>
+        <variable interface="public" name="ind_oc_mM_M" units="M"/>
+        <variable interface="public" name="oc_M_mM" units="mM"/>
+        <variable interface="public" name="ind_oc_M_mM" units="mM"/>
+        <variable interface="public" name="oc_M_M" units="M"/>
+        <variable interface="public" name="ind_oc_M_M" units="M"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>comp_c_mM_mM</ci>
+                <apply>
+                    <plus/>
+                    <ci>c_mM_mM</ci>
+                    <ci>ind_c_mM_mM</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_c_mM_M</ci>
+                <apply>
+                    <plus/>
+                    <ci>c_mM_M</ci>
+                    <ci>ind_c_mM_M</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_c_M_mM</ci>
+                <apply>
+                    <plus/>
+                    <ci>c_M_mM</ci>
+                    <ci>ind_c_M_mM</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_c_M_M</ci>
+                <apply>
+                    <plus/>
+                    <ci>c_M_M</ci>
+                    <ci>ind_c_M_M</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_k_mM</ci>
+                <apply>
+                    <plus/>
+                    <ci>k_mM</ci>
+                    <ci>k_mM</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_k_M</ci>
+                <apply>
+                    <plus/>
+                    <ci>k_M</ci>
+                    <ci>k_M</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_oc_mM_mM</ci>
+                <apply>
+                    <plus/>
+                    <ci>oc_mM_mM</ci>
+                    <ci>ind_oc_mM_mM</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_oc_mM_M</ci>
+                <apply>
+                    <plus/>
+                    <ci>oc_mM_M</ci>
+                    <ci>ind_oc_mM_M</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_oc_M_mM</ci>
+                <apply>
+                    <plus/>
+                    <ci>oc_M_mM</ci>
+                    <ci>ind_oc_M_mM</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>comp_oc_M_M</ci>
+                <apply>
+                    <plus/>
+                    <ci>oc_M_M</ci>
+                    <ci>ind_oc_M_M</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection component_1="main" component_2="constants">
+        <map_variables variable_1="ind_c_mM_mM" variable_2="ind_c_mM"/>
+        <map_variables variable_1="ind_c_mM_M" variable_2="ind_c_mM"/>
+        <map_variables variable_1="ind_c_M_mM" variable_2="ind_c_M"/>
+        <map_variables variable_1="ind_c_M_M" variable_2="ind_c_M"/>
+        <map_variables variable_1="c_mM_mM" variable_2="c_mM"/>
+        <map_variables variable_1="c_mM_M" variable_2="c_mM"/>
+        <map_variables variable_1="c_M_mM" variable_2="c_M"/>
+        <map_variables variable_1="c_M_M" variable_2="c_M"/>
+        <map_variables variable_1="k_mM" variable_2="c"/>
+        <map_variables variable_1="k_M" variable_2="c"/>
+    </connection>
+    <connection component_1="main" component_2="other_constants">
+        <map_variables variable_1="ind_oc_mM_mM" variable_2="ind_oc_mM"/>
+        <map_variables variable_1="ind_oc_mM_M" variable_2="ind_oc_mM"/>
+        <map_variables variable_1="ind_oc_M_mM" variable_2="ind_oc_M"/>
+        <map_variables variable_1="ind_oc_M_M" variable_2="ind_oc_M"/>
+        <map_variables variable_1="oc_mM_mM" variable_2="oc_mM"/>
+        <map_variables variable_1="oc_mM_M" variable_2="oc_mM"/>
+        <map_variables variable_1="oc_M_mM" variable_2="oc_M"/>
+        <map_variables variable_1="oc_M_M" variable_2="oc_M"/>
+    </connection>
+    <connection component_1="constants" component_2="other_constants">
+        <map_variables variable_1="c" variable_2="c"/>
+    </connection>
+</model>

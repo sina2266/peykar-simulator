@@ -1,0 +1,395 @@
+name: Release (stage 04) - Finalise
+
+on:
+  workflow_dispatch:
+    inputs:
+      successful:
+        description: "Was the release successful? (yes/no)"
+        required: true
+        default: false
+        type: boolean
+
+
+permissions:
+  contents: write
+
+jobs:
+  determine_release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_branch: ${{ steps.find_branch.outputs.release_branch }}
+      release_version: ${{ steps.find_branch.outputs.release_version }}
+      just_version: ${{ steps.find_branch.outputs.just_version }}
+      pr_number: ${{ steps.find_pr.outputs.pr_number }}
+      metadata_b64: ${{ steps.extract_metadata.outputs.metadata_b64 }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Determine release staging branch
+        id: find_branch
+        run: |
+          git remote set-branches origin '*'
+          git fetch -v --depth=1
+
+          branch=$(git branch -r \
+            | grep 'origin/${{ vars.RELEASE_STAGING_BRANCH_STEM }}' \
+            | sed 's|[ \t]*origin/||' \
+            | sort -V \
+            | tail -1)
+
+          if [ -z "$branch" ]; then
+            echo "::error::No release staging branch found"
+            exit 1
+          fi
+
+          echo "release_branch=$branch" >> "$GITHUB_OUTPUT"
+          just_version="${branch#${{ vars.RELEASE_STAGING_BRANCH_STEM }}}"
+          echo "just_version=$just_version" >> "$GITHUB_OUTPUT"
+          echo "release_version=v$just_version" >> "$GITHUB_OUTPUT"
+
+      - name: Determine PR number
+        id: find_pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="${{ steps.find_branch.outputs.release_branch }}"
+
+          pr_number=$(gh pr list \
+            --head "$branch" \
+            --base release \
+            --state open \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -z "$pr_number" ]; then
+            echo "::error::No PR found for branch $branch"
+            exit 1
+          fi
+
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
+
+      - name: Extract metadata
+        id: extract_metadata
+        if: ${{ inputs.successful }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pr_number="${{ steps.find_pr.outputs.pr_number }}"
+
+          metadata=$(gh pr view "$pr_number" --json comments --jq '.comments[].body' | sed -n '/```json/,/```/p' | sed '1d;$d')
+
+          if [ -z "$metadata" ]; then
+            echo "::error::No metadata found in PR #$pr_number"
+            exit 1
+          fi
+
+          encoded=$(echo "$metadata" | base64 -w 0)
+
+          echo "metadata_b64=$encoded" >> "$GITHUB_OUTPUT"
+
+          echo "Extracted metadata: $metadata"
+
+  prepare_documentation:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.successful }}
+    needs: determine_release
+    steps:
+      - name: Checkout release repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.determine_release.outputs.release_version }}
+          path: libcellml
+
+      - name: Generate GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.RELEASE_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          owner: libcellml
+          repositories: website-src
+
+      - name: Checkout website-src repository
+        uses: actions/checkout@v6
+        with:
+          repository: libcellml/website-src
+          token: ${{ steps.app_token.outputs.token }}
+          ref: production
+          path: website-src
+
+      - name: Extract documentation metadata
+        id: extract_doc_metadata
+        run: |
+          metadata_b64="${{ needs.determine_release.outputs.metadata_b64 }}"
+          metadata=$(echo "$metadata_b64" | base64 -d)
+          echo "$metadata"
+
+          database_repo=$(echo "$metadata" | jq -r '.database_repo')
+          database_sha=$(echo "$metadata" | jq -r '.database_sha')
+
+          echo "database_repo=$database_repo" >> "$GITHUB_OUTPUT"
+          echo "database_sha=$database_sha" >> "$GITHUB_OUTPUT"
+
+          passed_tests=$(echo "$metadata" | jq -r '.test_summary | to_entries | map(select(.key != "total_failed" and .value.failed == 0)) | map(.key)')
+          encoded=$(echo "$passed_tests" | base64 -w 0)
+          echo "passed_tests_b64=$encoded" >> "$GITHUB_OUTPUT"
+
+          echo "Database repo.: $database_repo"
+          echo "Database SHA: $database_sha"
+          echo "Passed tests: $passed_tests"
+
+      - name: Checkout documentation database repository
+        if: steps.extract_doc_metadata.outputs.database_sha != 'null'
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ steps.extract_doc_metadata.outputs.database_repo }}
+          ref: ${{ steps.extract_doc_metadata.outputs.database_sha }}
+          path: database
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install Sphinx
+        run: |
+          pip install Sphinx lxml sphinx_tabs
+
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen graphviz
+
+      - name: Make website documentation directory
+        id: make_docs_dir
+        run: |
+          docs_dir="website-src/public/generated/${{ needs.determine_release.outputs.release_version }}"
+          mkdir -p $docs_dir
+          echo "docs_dir=$docs_dir" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare user documentation
+        if: steps.extract_doc_metadata.outputs.database_sha != 'null'
+        run: |
+          passed_tests=$(echo "${{ steps.extract_doc_metadata.outputs.passed_tests_b64 }}" | base64 -d)
+          echo "Preparing documentation for release ${{ needs.determine_release.outputs.release_version }} with database at ${{ steps.extract_doc_metadata.outputs.database_sha }} and passed tests: $passed_tests"
+
+          mkdir docs
+          echo "$passed_tests" | jq -r '.[]' | while read test; do
+            echo -n "Processing test: $test"
+            repo=$(python libcellml/.github/scripts/get_test_suite_definition_info.py repo "database/${test}.cmake")
+            branch=$(python libcellml/.github/scripts/get_test_suite_definition_info.py branch "database/${test}.cmake")
+            echo ", repo: $repo, branch: $branch"
+            git clone "$repo" "docs/$test"
+            cd "docs/$test"
+            git reset --hard "$branch"
+            cd ../..
+          done
+
+          ls docs
+
+      - name: Prepare libCellML documentation targets
+        run: |
+          cmake -S libcellml -B build-libcellml-release -DBUILD_TYPE=Release -DBINDINGS_PYTHON=OFF -DBUILD_SHARED=ON -DCOVERAGE=OFF -DLLVM_COVERAGE=OFF -DMEMCHECK=OFF -DUNIT_TESTS=OFF
+
+      - name: Build libCellML API documentation
+        run: |
+          cmake --build build-libcellml-release --target api_xml_docs
+          mv build-libcellml-release/docs/doxygen-xml ${{ steps.make_docs_dir.outputs.docs_dir }}/api
+
+      - name: Build libCellML Developer documentation
+        run: |
+          sphinx-build -b html -c build-libcellml-release/docs/_build -d _doctrees libcellml/docs developer_docs
+          sphinx-build -b xml -c build-libcellml-release/docs/_build -d _doctrees libcellml/docs developer_docs
+
+          python libcellml/.github/scripts/sphinx_numfig_for_xml.py developer_docs
+          python libcellml/.github/scripts/remove_html_files.py developer_docs
+
+          mv developer_docs ${{ steps.make_docs_dir.outputs.docs_dir }}/developer
+
+      - name: Build tested documentation
+        run: |
+          echo "this"
+          passed_tests=$(echo "${{ steps.extract_doc_metadata.outputs.passed_tests_b64 }}" | base64 -d)
+          echo "$passed_tests" | jq -r '.[]' | while read test; do
+            echo "Building documentation for test: $test"
+            sphinx-build -b html "docs/$test" "docs/$test/_build"
+            sphinx-build -b xml "docs/$test" "docs/$test/_build"
+            python libcellml/.github/scripts/sphinx_numfig_for_xml.py "docs/$test/_build"
+            python libcellml/.github/scripts/remove_html_files.py "docs/$test/_build"
+            short_test=${test#libcellml_}
+            ls "docs/$test/_build"
+            mv "docs/$test/_build" "${{ steps.make_docs_dir.outputs.docs_dir }}/$short_test"
+          done
+
+      - name: Create release asset list
+        env:
+          LIBCELLML_AUTHORISED_PERSONAL_ACCESS_TOKEN: ${{ github.token }}
+        run: |
+          python libcellml/.github/scripts/create_release_asset_list.py -p cellml/libcellml "${{ needs.determine_release.outputs.release_version }}"
+          mv release_assets.json "${{ steps.make_docs_dir.outputs.docs_dir }}/release_assets.json"
+
+      - name: Generate testing provenance
+        run: |
+          metadata_b64="${{ needs.determine_release.outputs.metadata_b64 }}"
+          metadata=$(echo "$metadata_b64" | base64 -d)
+
+          database_repo=$(echo "$metadata" | jq -r '.database_repo')
+          database_sha=$(echo "$metadata" | jq -r '.database_sha')
+          database_tag=$(echo "$metadata" | jq -r '.database_tag')
+
+          framework_repo=$(echo "$metadata" | jq -r '.end_to_end_test_repo')
+          framework_sha=$(echo "$metadata" | jq -r '.end_to_end_test_sha')
+          framework_tag=$(echo "$metadata" | jq -r '.end_to_end_test_tag')
+
+          jq -n \
+            --arg framework_repo "$framework_repo" \
+            --arg framework_tag "$framework_tag" \
+            --arg framework_sha "$framework_sha" \
+            --arg database_repo "$database_repo" \
+            --arg database_tag "$database_tag" \
+            --arg database_sha "$database_sha" \
+            '{
+              version: "0.1.0",
+              id: "libcellml-website-validation-provenance",
+              testing_framework: {
+                project: $framework_repo,
+                reference: $framework_tag,
+                sha: $framework_sha
+              },
+              testing_database: {
+                project: $database_repo,
+                reference: $database_tag,
+                sha: $database_sha
+              }
+            }' > validation_provenance.json
+
+          echo "Generated validation_provenance.json:"
+          cat validation_provenance.json
+          mv validation_provenance.json "${{ steps.make_docs_dir.outputs.docs_dir }}/validation_provenance.json"
+
+      - name: Update libCellML Website
+        run: |
+          python libcellml/.github/scripts/documentation_version_update.py website-src
+          cd website-src
+          git status
+          git diff
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/generated/${{ needs.determine_release.outputs.release_version }}
+          git add src/js/documentationversions.js
+
+          git commit -m "Add documentation for libCellML ${{ needs.determine_release.outputs.release_version }}"
+          git push origin production:release_documentation_${{ needs.determine_release.outputs.release_version }}
+
+      - name: Create website release documentation pull request
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+        run: |
+          cd website-src
+          pr_url=$(gh pr create \
+            --repo libcellml/website-src \
+            --head release_documentation_${{ needs.determine_release.outputs.release_version }} \
+            --base production \
+            --title "Add documentation for libCellML ${{ needs.determine_release.outputs.release_version }}" \
+            --body "This PR adds the generated documentation for libCellML ${{ needs.determine_release.outputs.release_version }} to the website repository.")
+
+          echo "Created PR: $pr_url"
+
+  set_version_post:
+    needs: determine_release
+    if: ${{ inputs.successful }}
+    uses: ./.github/workflows/set-version.yml
+    with:
+      target_branch: ${{ needs.determine_release.outputs.release_branch }}
+      version: ${{ needs.determine_release.outputs.just_version }}.post
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  tidy_up:
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - determine_release
+      - set_version_post
+    steps:
+      - name: Generate GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.RELEASE_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: libcellml
+
+      - name: Install Python
+        if: ${{ inputs.successful }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Checkout release changes
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.determine_release.outputs.release_branch }}
+          path: release-changes
+
+      - name: Checkout return branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ steps.app_token.outputs.token }}
+          path: update
+
+      - name: Prepare to update main with release changes
+        if: ${{ inputs.successful }}
+        run: |
+
+          rsync -avW --delete --exclude='.git' release-changes/ update/
+
+          cd update
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          git commit -m "Update main with release changes from ${{ needs.determine_release.outputs.release_branch }}."
+
+      - name: Install CMake and Ninja
+        if: ${{ inputs.successful }}
+        uses: lukka/get-cmake@latest
+
+      - name: Configure libCellML
+        if: ${{ inputs.successful }}
+        run: cmake -G Ninja -S update -B build -DBINDINGS_PYTHON=ON -DBUILD_SHARED=ON -DCOVERAGE=OFF -DLLVM_COVERAGE=OFF -DMEMCHECK=OFF -DUNIT_TESTS=ON
+
+      - name: Build libCellML
+        if: ${{ inputs.successful }}
+        run: cmake --build build
+
+      - name: Run unit tests
+        if: ${{ inputs.successful }}
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Push to main
+        if: ${{ inputs.successful }}
+        run: |
+          cd update
+          git push origin main
+
+      - name: Close PR and delete branch
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+        run: |
+          cd update
+
+          pr_number="${{ needs.determine_release.outputs.pr_number }}"
+
+          echo "Closing PR #$pr_number and deleting branch"
+
+          gh pr close "$pr_number" --delete-branch
+
+          if [[ "${{ inputs.successful }}" == "false" ]]; then
+            git push origin ":refs/tags/source-${{ needs.determine_release.outputs.release_version }}"
+          fi

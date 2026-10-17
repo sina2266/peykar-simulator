@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="leakage_current" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <units name="millisecond">
+        <unit prefix="milli" units="second" />
+    </units>
+    <units name="millivolt">
+        <unit prefix="milli" units="volt" />
+    </units>
+    <units name="milliS_per_cm2">
+        <unit prefix="milli" units="siemens" />
+        <unit exponent="-2" prefix="centi" units="metre" />
+    </units>
+    <units name="microA_per_cm2">
+        <unit prefix="micro" units="ampere" />
+        <unit exponent="-2" prefix="centi" units="metre" />
+    </units>
+    <component name="leakage_current">
+        <variable interface="public" name="i_L" units="microA_per_cm2" />
+        <variable initial_value="0.3" name="g_L" units="milliS_per_cm2" />
+        <variable name="E_L" units="millivolt" />
+        <variable interface="public" name="time" units="millisecond" />
+        <variable interface="public" name="V" units="millivolt" />
+        <variable interface="public" name="E_R" units="millivolt" />
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq />
+                <ci>E_L</ci>
+                <apply>
+                    <minus />
+                    <ci>E_R</ci>
+                    <cn cellml:units="millivolt">10.613</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq />
+                <ci>i_L</ci>
+                <apply>
+                    <times />
+                    <ci>g_L</ci>
+                    <apply>
+                        <minus />
+                        <ci>V</ci>
+                        <ci>E_L</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="complex_units" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="second_2">
+        <unit exponent="2" units="second"/>
+    </units>
+    <units name="atto_second">
+        <unit prefix="atto" units="second"/>
+    </units>
+    <units name="apple">
+        <unit exponent="3" multiplier="0.001" prefix="micro" units="second"/>
+    </units>
+    <units name="orange">
+        <unit exponent="5" units="second"/>
+        <unit multiplier="1000" units="second"/>
+        <unit prefix="pico" units="second"/>
+    </units>
+    <component name="main">
+        <variable name="a" units="apple"/>
+        <variable name="b" units="apple"/>
+        <variable name="c" units="apple"/>
+        <variable name="d" units="apple"/>
+        <variable name="e" units="apple"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <cn cellml:units="orange">1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="orange">1</cn>
+                    <cn cellml:units="second_2">1</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="orange">1</cn>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="second_2">1</cn>
+                        <cn cellml:units="atto_second">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="orange">1</cn>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="second_2">1</cn>
+                            <cn cellml:units="atto_second">1</cn>
+                        </apply>
+                    </apply>
+                    <cn cellml:units="second_2">1</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>e</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="orange">1</cn>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="second_2">1</cn>
+                            <cn cellml:units="atto_second">1</cn>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <power/>
+                        <cn cellml:units="second_2">1</cn>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

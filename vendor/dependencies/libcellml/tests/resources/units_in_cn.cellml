@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="myModel">
+  <units name="myUnitsThatReallyExist">
+    <unit exponent="-1" units="second"/>
+  </units>
+  <component name="myComponent">
+    <variable name="a" units="second"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"
+      xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>a</ci>
+        <cn cellml:units="myUnitsThatReallyExist">1</cn>
+      </apply>
+    </math>
+  </component>
+</model>

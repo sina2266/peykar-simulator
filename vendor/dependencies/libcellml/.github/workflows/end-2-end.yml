@@ -1,0 +1,172 @@
+name: End 2 End Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git reference to test (branch, tag, or commit)"
+        type: string
+      end_to_end_test_repo:
+        description: "Repository containing end-to-end tests (e.g. user/repo)"
+        type: string
+      end_to_end_test_tag:
+        description: "Tag of the end-to-end test repository to use (e.g. v1.0.0)"
+        type: string
+      database_repo:
+        description: "Database to use for end-to-end tests (e.g. user/database)"
+        type: string
+      database_tag:
+        description: "Tag of the database repository to use (e.g. v1.0.0)"
+        type: string
+  workflow_call:
+    inputs:
+      ref:
+        description: "Git reference to test (branch, tag, or commit)"
+        required: true
+        type: string
+      end_to_end_test_repo:
+        description: "Repository containing end-to-end tests (e.g. user/repo)"
+        required: true
+        type: string
+      end_to_end_test_tag:
+        description: "Tag of the end-to-end test repository to use (e.g. v1.0.0)"
+        required: true
+        type: string
+      database_repo:
+        description: "Database to use for end-to-end tests (e.g. user/database)"
+        required: true
+        type: string
+      database_tag:
+        description: "Tag of the database repository to use (e.g. v1.0.0)"
+        required: true
+        type: string
+    outputs:
+      test_summary:
+        description: "Combined test summary JSON"
+        value: ${{ jobs.end2end.outputs.test_summary }}
+
+jobs:
+  set_inputs:
+    runs-on: ubuntu-latest
+    outputs:
+      end_to_end_test_repo: ${{ steps.set_inputs.outputs.end_to_end_test_repo }}
+      end_to_end_test_tag: ${{ steps.set_inputs.outputs.end_to_end_test_tag }}
+      database_repo: ${{ steps.set_inputs.outputs.database_repo }}
+      database_tag: ${{ steps.set_inputs.outputs.database_tag }}
+    steps:
+      - name: Set inputs for downstream jobs
+        id: set_inputs
+        run: |
+          # Because we can't use the vars context in the workflow_dispatch inputs, we need to set the default values here.
+          end_to_end_test_repo=${{ inputs.end_to_end_test_repo || vars.DEFAULT_END_TO_END_TEST_REPO }}
+          end_to_end_test_tag=${{ inputs.end_to_end_test_tag || vars.DEFAULT_END_TO_END_TEST_TAG }}
+          database_repo=${{ inputs.database_repo || vars.DEFAULT_DATABASE_REPO }}
+          database_tag=${{ inputs.database_tag || vars.DEFAULT_DATABASE_TAG }}
+
+          echo "end_to_end_test_repo=$end_to_end_test_repo" >> "$GITHUB_OUTPUT"
+          echo "end_to_end_test_tag=$end_to_end_test_tag" >> "$GITHUB_OUTPUT"
+          echo "database_repo=$database_repo" >> "$GITHUB_OUTPUT"
+          echo "database_tag=$database_tag" >> "$GITHUB_OUTPUT"
+
+          echo "Inputs set for downstream jobs:"
+          echo "End-to-end test repository: $end_to_end_test_repo, tag: $end_to_end_test_tag"
+          echo "Database repository: $database_repo, tag: $database_tag"
+
+  end2end:
+    runs-on: ubuntu-latest
+    needs: set_inputs
+    outputs:
+      test_summary: ${{ steps.export_summary.outputs.test_summary }}
+    steps:
+      - name: Checkout libCellML repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+          path: libcellml
+
+      - name: Checkout end 2 end test repository
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.end_to_end_test_repo }}
+          ref: ${{ inputs.end_to_end_test_tag }}
+          path: end-to-end-framework
+
+      - name: Checkout database repository
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ inputs.database_repo }}
+          ref: ${{ inputs.database_tag }}
+          path: database
+
+      - name: Install Python
+        if: ${{ env.ACT != 'true' }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install CMake and Ninja
+        uses: lukka/get-cmake@latest
+
+      - name: Configure libCellML
+        run: cmake -G Ninja -S libcellml -B build -DBUILD_TYPE=Release -DBINDINGS_PYTHON=ON -DBUILD_SHARED=ON -DCOVERAGE=OFF -DLLVM_COVERAGE=OFF -DMEMCHECK=OFF -DUNIT_TESTS=OFF
+
+      - name: Build libCellML
+        run: cmake --build build
+
+      - name: Install libCellML
+        run: sudo cmake --build build --target install
+
+      - name: Install libCellML for Python
+        run: pip install build/src/bindings/python
+
+      - name: Configure end-to-end framework
+        run: |
+          cmake -G Ninja -S end-to-end-framework -B end-to-end-framework-build -DTEST_DB=${GITHUB_WORKSPACE}/database
+
+      - name: Build end-to-end tests
+        run: |
+          cmake --build end-to-end-framework-build
+
+      - name: Run end-to-end tests
+        run: |
+          cd end-to-end-framework-build
+          ctest --output-on-failure | tee ctest_output.txt
+
+      - name: Parse test results
+        id: parse_results
+        run: |
+          cd end-to-end-framework-build
+          python ${GITHUB_WORKSPACE}/libcellml/.github/scripts/scrape_ctest_output.py < ctest_output.txt > test_summary.json
+
+      - name: Export test summary
+        id: export_summary
+        run: |
+          cd end-to-end-framework
+          framework_sha=$(git rev-parse HEAD)
+          cd ../
+          cd database
+          database_sha=$(git rev-parse HEAD)
+          cd ../
+
+          summary=$(cat end-to-end-framework-build/test_summary.json)
+
+          combined=$(jq -n \
+            --argjson summary "$summary" \
+            --arg framework_sha "$framework_sha" \
+            --arg database_sha "$database_sha" \
+            '{
+              test_summary: $summary,
+              repos: {
+                end_to_end_framework: $framework_sha,
+                database: $database_sha
+              }
+            }')
+
+          echo "Test summary:"
+          echo $combined
+
+          {
+            echo "test_summary<<EOF"
+            echo "$combined"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="multipliers" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="millisecond">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="millivolt">
+        <unit prefix="milli" units="volt"/>
+    </units>
+    <units name="frog"/>
+    <units name="millifrog">
+        <unit prefix="milli" units="frog"/>
+    </units>
+    <units name="imaginary">
+        <unit exponent="1" units="second"/>
+        <unit exponent="1" prefix="milli" units="second"/>
+        <unit exponent="3" units="volt"/>
+        <unit exponent="3" prefix="micro" units="volt"/>
+        <unit exponent="5" units="frog"/>
+        <unit exponent="5" prefix="nano" units="frog"/>
+    </units>
+    <units name="milliimaginary">
+        <unit prefix="milli" units="imaginary"/>
+    </units>
+    <component name="main">
+        <variable name="a" units="second"/>
+        <variable name="b" units="volt"/>
+        <variable name="c" units="frog"/>
+        <variable name="d" units="imaginary"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <cn cellml:units="millisecond">1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <cn cellml:units="millivolt">3</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <cn cellml:units="millifrog">5</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <cn cellml:units="milliimaginary">7</cn>
+            </apply>
+        </math>
+    </component>
+</model>

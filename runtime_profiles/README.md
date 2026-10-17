@@ -104,3 +104,8 @@ endpoint and no Docker socket in API/Worker containers. A separate reviewed
 SBML/PKML, using the exact installed COPASI/OSP images and local driver allowlist.
 The historical probe receipts remain unchanged; new execution profiles describe
 this additional capability.
+
+The separate [CellML ODE profile](cellml/README.md) installs libCellML 0.7.1 and
+SciPy in an isolated locked image; E5 records actual analytic/stiff/unit-scaling
+checks, original-unit outputs and failure cleanup. It is an operator solver, not
+a third kind in the historical native queue.

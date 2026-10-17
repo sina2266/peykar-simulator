@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="non_first_order_odes" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="per_second">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="main">
+        <variable name="time" units="second" interface="public"/>
+        <variable name="x" units="dimensionless" initial_value="0"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                        <degree>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </degree>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="per_second">1</cn>
+            </apply>
+        </math>
+    </component>
+    <component name="sub">
+        <variable name="time" units="second" interface="public_and_private"/>
+        <variable name="y" units="dimensionless" initial_value="0"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                        <degree>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </degree>
+                    </bvar>
+                    <ci>y</ci>
+                </apply>
+                <cn cellml:units="per_second">1</cn>
+            </apply>
+        </math>
+    </component>
+    <component name="sub_sub">
+        <variable name="time" units="second" interface="public"/>
+        <variable name="z" units="dimensionless" initial_value="0"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                        <degree>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </degree>
+                    </bvar>
+                    <ci>z</ci>
+                </apply>
+                <cn cellml:units="per_second">1</cn>
+            </apply>
+        </math>
+    </component>
+    <encapsulation>
+        <component_ref component="sub">
+            <component_ref component="sub_sub"/>
+        </component_ref>
+    </encapsulation>
+    <connection component_1="main" component_2="sub">
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection component_1="sub" component_2="sub_sub">
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+</model>

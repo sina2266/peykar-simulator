@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+This CellML file was generated on 9/12/2008 at 1:55:44 at p.m. using:
+
+COR (0.9.31.1125)
+Copyright 2002-2008 Dr Alan Garny
+http://COR.physiol.ox.ac.uk/ - COR@physiol.ox.ac.uk
+
+CellML 1.0 was used to generate this model
+http://www.CellML.org/
+-->
+
+<model xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqs="http://www.cellml.org/bqs/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:ns7="http://www.cellml.org/metadata/simulation/1.0#" name="novak_pataki_ciliberto_tyson_2001_version01" cmeta:id="novak_pataki_ciliberto_tyson_2001_version01">
+   <units name="minute">
+      <unit units="second" multiplier="60"/>
+   </units>
+   <units name="first_order_rate_constant">
+      <unit units="minute" exponent="-1"/>
+   </units>
+   <component name="environment">
+      <variable units="minute" public_interface="out" name="time" cmeta:id="environment_time"/>
+   </component>
+   <component name="preMPF">
+      <variable units="dimensionless" public_interface="out" cmeta:id="preMPF_preMPF" name="preMPF" initial_value="0"/>
+      <variable units="first_order_rate_constant" name="kwee"/>
+      <variable units="first_order_rate_constant" name="kwee_" initial_value="0.15"/>
+      <variable units="first_order_rate_constant" name="kwee__" initial_value="1.3"/>
+      <variable units="first_order_rate_constant" name="Vawee" initial_value="0.25"/>
+      <variable units="first_order_rate_constant" name="Viwee" initial_value="1"/>
+      <variable units="dimensionless" name="Jawee" initial_value="0.01"/>
+      <variable units="dimensionless" name="Jiwee" initial_value="0.01"/>
+      <variable units="first_order_rate_constant" name="k25"/>
+      <variable units="first_order_rate_constant" name="k25_" initial_value="0.05"/>
+      <variable units="first_order_rate_constant" name="k25__" initial_value="5"/>
+      <variable units="first_order_rate_constant" name="Va25" initial_value="1"/>
+      <variable units="first_order_rate_constant" name="Vi25" initial_value="0.25"/>
+      <variable units="dimensionless" name="Ja25" initial_value="0.01"/>
+      <variable units="dimensionless" name="Ji25" initial_value="0.01"/>
+      <variable units="first_order_rate_constant" public_interface="in" name="k2_"/>
+      <variable units="first_order_rate_constant" public_interface="in" name="k2__"/>
+      <variable units="first_order_rate_constant" public_interface="in" name="k2___"/>
+      <variable units="dimensionless" public_interface="in" name="Cdc13T"/>
+      <variable units="dimensionless" public_interface="in" name="Ste9"/>
+      <variable units="dimensionless" public_interface="in" name="MPF"/>
+      <variable units="dimensionless" public_interface="in" name="Slp1"/>
+      <variable units="minute" public_interface="in" name="time"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>preMPF</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <minus/>
+                  <apply>
+                     <times/>
+                     <ci>kwee</ci>
+                     <apply>
+                        <minus/>
+                        <ci>Cdc13T</ci>
+                        <ci>preMPF</ci>
+                     </apply>
+                  </apply>
+                  <apply>
+                     <times/>
+                     <ci>k25</ci>
+                     <ci>preMPF</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <apply>
+                     <plus/>
+                     <ci>k2_</ci>
+                     <apply>
+                        <times/>
+                        <ci>k2__</ci>
+                        <ci>Ste9</ci>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>k2___</ci>
+                        <ci>Slp1</ci>
+                     </apply>
+                  </apply>
+                  <ci>preMPF</ci>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>kwee</ci>
+            <apply>
+               <plus/>
+               <ci>kwee_</ci>
+               <apply>
+                  <divide/>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <minus/>
+                        <ci>kwee__</ci>
+                        <ci>kwee_</ci>
+                     </apply>
+                     <cn cellml:units="dimensionless">2</cn>
+                     <ci>Vawee</ci>
+                     <ci>Jiwee</ci>
+                  </apply>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <minus/>
+                        <apply>
+                           <times/>
+                           <ci>Viwee</ci>
+                           <ci>MPF</ci>
+                        </apply>
+                        <ci>Vawee</ci>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>Viwee</ci>
+                        <ci>MPF</ci>
+                        <ci>Jawee</ci>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>Vawee</ci>
+                        <ci>Jiwee</ci>
+                     </apply>
+                     <apply>
+                        <root/>
+                        <apply>
+                           <minus/>
+                           <apply>
+                              <power/>
+                              <apply>
+                                 <plus/>
+                                 <apply>
+                                    <minus/>
+                                    <apply>
+                                       <times/>
+                                       <ci>Viwee</ci>
+                                       <ci>MPF</ci>
+                                    </apply>
+                                    <ci>Vawee</ci>
+                                 </apply>
+                                 <apply>
+                                    <times/>
+                                    <ci>Viwee</ci>
+                                    <ci>MPF</ci>
+                                    <ci>Jawee</ci>
+                                 </apply>
+                                 <apply>
+                                    <times/>
+                                    <ci>Vawee</ci>
+                                    <ci>Jiwee</ci>
+                                 </apply>
+                              </apply>
+                              <cn cellml:units="dimensionless" xmlns:cellml="http://www.cellml.org/cellml/1.1#" >2</cn>
+                           </apply>
+                           <apply>
+                              <times/>
+                              <cn cellml:units="dimensionless">4</cn>
+                              <ci>Vawee</ci>
+                              <ci>Jiwee</ci>
+                              <apply>
+                                 <minus/>
+                                 <apply>
+                                    <times/>
+                                    <ci>Viwee</ci>
+                                    <ci>MPF</ci>
+                                 </apply>
+                                 <ci>Vawee</ci>
+                              </apply>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>k25</ci>
+            <apply>
+               <plus/>
+               <ci>k25_</ci>
+               <apply>
+                  <divide/>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <minus/>
+                        <ci>k25__</ci>
+                        <ci>k25_</ci>
+                     </apply>
+                     <cn cellml:units="dimensionless">2</cn>
+                     <ci>Va25</ci>
+                     <ci>MPF</ci>
+                     <ci>Ji25</ci>
+                  </apply>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <minus/>
+                        <ci>Vi25</ci>
+                        <apply>
+                           <times/>
+                           <ci>Va25</ci>
+                           <ci>MPF</ci>
+                        </apply>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>Vi25</ci>
+                        <ci>Ja25</ci>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>Va25</ci>
+                        <ci>MPF</ci>
+                        <ci>Ji25</ci>
+                     </apply>
+                     <apply>
+                        <root/>
+                        <apply>
+                           <minus/>
+                           <apply>
+                              <power/>
+                              <apply>
+                                 <plus/>
+                                 <apply>
+                                    <minus/>
+                                    <ci>Vi25</ci>
+                                    <apply>
+                                       <times/>
+                                       <ci>Va25</ci>
+                                       <ci>MPF</ci>
+                                    </apply>
+                                 </apply>
+                                 <apply>
+                                    <times/>
+                                    <ci>Vi25</ci>
+                                    <ci>Ja25</ci>
+                                 </apply>
+                                 <apply>
+                                    <times/>
+                                    <ci>Va25</ci>
+                                    <ci>MPF</ci>
+                                    <ci>Ji25</ci>
+                                 </apply>
+                              </apply>
+                              <cn cellml:units="dimensionless">2</cn>
+                           </apply>
+                           <apply>
+                              <times/>
+                              <cn cellml:units="dimensionless">4</cn>
+                              <ci>Va25</ci>
+                              <ci>MPF</ci>
+                              <ci>Ji25</ci>
+                              <apply>
+                                 <minus/>
+                                 <ci>Vi25</ci>
+                                 <apply>
+                                    <times/>
+                                    <ci>Va25</ci>
+                                    <ci>MPF</ci>
+                                 </apply>
+                              </apply>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="Slp1T">
+      <variable units="dimensionless" public_interface="out" name="Slp1T" initial_value="0"/>
+      <variable units="first_order_rate_constant" name="k5_" initial_value="0.005"/>
+      <variable units="first_order_rate_constant" name="k5__" initial_value="0.3"/>
+      <variable units="dimensionless" name="J5" initial_value="0.3"/>
+      <variable units="first_order_rate_constant" public_interface="in" name="k6"/>
+      <variable units="dimensionless" public_interface="in" name="MPF"/>
+      <variable units="minute" public_interface="in" name="time"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>Slp1T</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <plus/>
+                  <ci>k5_</ci>
+                  <apply>
+                     <divide/>
+                     <apply>
+                        <times/>
+                        <ci>k5__</ci>
+                        <apply>
+                           <power/>
+                           <ci>MPF</ci>
+                           <cn cellml:units="dimensionless">4</cn>
+                        </apply>
+                     </apply>
+                     <apply>
+                        <plus/>
+                        <apply>
+                           <power/>
+                           <ci>J5</ci>
+                           <cn cellml:units="dimensionless">4</cn>
+                        </apply>
+                        <apply>
+                           <power/>
+                           <ci>MPF</ci>
+                           <cn cellml:units="dimensionless">4</cn>
+                        </apply>
+                     </apply>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>k6</ci>
+                  <ci>Slp1T</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+</model>

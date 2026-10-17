@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqs="http://www.cellml.org/bqs/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" name="landesberg_sideman_1994" cmeta:id="landesberg_sideman_1994">
+<units name="umeter">
+    <unit units="meter" prefix="micro"/>
+ </units>
+ <units name="uliter">
+     <unit units="liter" prefix="micro"/>
+  </units>
+   <units name="umeter_per_second">
+      <unit units="umeter"/>
+      <unit units="per_second"/>
+   </units>
+   <units name="uM">
+      <unit units="mole" prefix="micro"/>
+      <unit units="liter" exponent="-1"/>
+   </units>
+   <units name="per_second">
+      <unit units="second" exponent="-1"/>
+   </units>
+   <units name="uM_per_second">
+      <unit units="uM"/>
+      <unit units="per_second"/>
+   </units>
+   <units name="uM_per_umeter">
+      <unit units="uM"/>
+      <unit units="umeter" exponent="-1"/>
+   </units>
+   <units name="uM_per_umeter_per_second">
+      <unit units="uM"/>
+      <unit units="umeter" exponent="-1"/>
+      <unit units="per_second"/>
+   </units>
+   <units name="per_uM_per_second">
+      <unit units="uM" exponent="-1"/>
+      <unit units="per_second"/>
+   </units>
+   <units name="mN">
+      <unit units="newton" prefix="milli"/>
+   </units>
+   <units name="mN_second_per_umeter">
+      <unit units="mN"/>
+      <unit units="umeter_per_second" exponent="-1"/>
+   </units>
+   <component name="environment">
+      <variable units="second" public_interface="out" name="time"/>
+   </component>
+   <component name="parameters">
+   <variable units="umeter" public_interface="out" name="L_a" initial_value="1.15"/>
+   <variable units="meter" public_interface="out" name="L_prime_m" initial_value="1.5"/>
+   <variable units="uliter" public_interface="out" name="L_1" initial_value="1.5"/>
+   <variable units="liter" public_interface="out" name="L_prime_q" initial_value="1.9"/>
+   </component>
+</model>

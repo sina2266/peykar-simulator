@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<model name="cardiac_AP_minimal"
+    xmlns="http://www.cellml.org/cellml/1.1#"
+    xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <component name="environment">
+        <variable name="nK_stim" units="dimensionless"/>
+        <math
+            xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>nK_stim</ci>
+                <cn cellml:units="dimensionless">0.3</cn>
+            </apply>
+        </math>
+        <variable name="stimPeriod" units="second"/>
+        <math
+            xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+            <apply>
+                <eq/>
+                <ci>stimPeriod</ci>
+                <cn cellml:units="second">42.6</cn>
+            </apply>
+        </math>
+    </component>
+</model>

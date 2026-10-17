@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+  <model name="coverage" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+  <units name="huge" />
+  <units name="prefixhuge">
+    <unit prefix="92233720368547758077876856757465433" units="huge"/>
+  </units>
+  <units name="prefixtext">
+    <unit prefix="XXYY" units="huge"/>
+  </units>
+  <units name="prefixreallybig">
+    <unit prefix="92233720368547758077876856757465433" units="huge"/>
+  </units>
+  <component name="comp1">
+    <variable name="var1" units="prefixreallybig" initial_value=""/>
+    <variable name="varA" units="prefixreallybig"/>
+  </component>
+  <component name="comp2">
+    <variable name="var2" units="prefixtext"/>
+    <variable name="varB" units="prefixhuge"/>
+  </component>
+  <connection  component_1="comp1"  component_2="comp2">
+    <map_variables variable_1="var1" variable_2="var2"/>
+    <map_variables variable_1="varA" variable_2="varB"/>
+  </connection>
+</model>

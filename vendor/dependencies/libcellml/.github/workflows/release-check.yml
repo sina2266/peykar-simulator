@@ -1,0 +1,245 @@
+name: Release (stage 02) - Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "All inputs for this workflow run have defaults set through the vars context. (This input is for your information only.)"
+        default: "Check repository vars.DEFAULT_* for current values."
+        type: string
+      end_to_end_test_repo:
+        description: "Repository containing end-to-end tests (e.g. user/repo)"
+        type: string
+      end_to_end_test_tag:
+        description: "Tag of the end-to-end test repository to use (e.g. v1.0.0)"
+        type: string
+      database_repo:
+        description: "Database to use for end-to-end tests (e.g. user/database)"
+        type: string
+      database_tag:
+        description: "Tag of the database repository to use (e.g. v1.0.0)"
+        type: string
+
+jobs:
+  set_inputs:
+    runs-on: ubuntu-latest
+    outputs:
+      end_to_end_test_repo: ${{ steps.set_inputs.outputs.end_to_end_test_repo }}
+      end_to_end_test_tag: ${{ steps.set_inputs.outputs.end_to_end_test_tag }}
+      database_repo: ${{ steps.set_inputs.outputs.database_repo }}
+      database_tag: ${{ steps.set_inputs.outputs.database_tag }}
+    steps:
+      - name: Set inputs for downstream jobs
+        id: set_inputs
+        run: |
+          # Because we can't use the vars context in the workflow_dispatch inputs, we need to set the default values here.
+          end_to_end_test_repo=${{ inputs.end_to_end_test_repo || vars.DEFAULT_END_TO_END_TEST_REPO }}
+          end_to_end_test_tag=${{ inputs.end_to_end_test_tag || vars.DEFAULT_END_TO_END_TEST_TAG }}
+          database_repo=${{ inputs.database_repo || vars.DEFAULT_DATABASE_REPO }}
+          database_tag=${{ inputs.database_tag || vars.DEFAULT_DATABASE_TAG }}
+
+          echo "end_to_end_test_repo=$end_to_end_test_repo" >> "$GITHUB_OUTPUT"
+          echo "end_to_end_test_tag=$end_to_end_test_tag" >> "$GITHUB_OUTPUT"
+          echo "database_repo=$database_repo" >> "$GITHUB_OUTPUT"
+          echo "database_tag=$database_tag" >> "$GITHUB_OUTPUT"
+
+          echo "Inputs set for downstream jobs:"
+          echo "End-to-end test repository: $end_to_end_test_repo, tag: $end_to_end_test_tag"
+          echo "Database repository: $database_repo, tag: $database_tag"
+
+  determine_release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_branch: ${{ steps.find_branch.outputs.release_branch }}
+      pr_number: ${{ steps.find_pr.outputs.pr_number }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Determine release staging branch
+        id: find_branch
+        run: |
+          git remote set-branches origin '*'
+          git fetch -v --depth=1
+
+          branch=$(git branch -r \
+            | grep 'origin/${{ vars.RELEASE_STAGING_BRANCH_STEM }}' \
+            | sed 's|[ \t]*origin/||' \
+            | sort -V \
+            | tail -1)
+
+          if [ -z "$branch" ]; then
+            echo "::error::No release staging branch found"
+            exit 1
+          fi
+
+          echo "release_branch=$branch" >> "$GITHUB_OUTPUT"
+          tag="${branch#${{ vars.RELEASE_STAGING_BRANCH_STEM }}}"
+          echo "release_version=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Determine PR number
+        id: find_pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch=${{ steps.find_branch.outputs.release_branch }}
+
+          pr_number=$(gh pr list \
+            --head "$branch" \
+            --base release \
+            --state open \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -z "$pr_number" ]; then
+            echo "::error::No open PR found for branch $branch"
+            exit 1
+          fi
+
+          echo "Found PR: #$pr_number"
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
+
+  run_ci:
+    needs: determine_release
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.determine_release.outputs.release_branch }}
+    permissions:
+      contents: read
+
+  ci_comment:
+    needs:
+      - run_ci
+      - determine_release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.determine_release.outputs.release_branch }}
+
+      - name: Post CI results comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "CI results summary:"
+          echo "${{ needs.determine_release.outputs.release_branch }} (PR #${{ needs.determine_release.outputs.pr_number }})"
+
+          pr_number=${{ needs.determine_release.outputs.pr_number }}
+
+          if [ "${{ needs.run_ci.result }}" == "success" ]; then
+            status_text="✅ CI checks passed successfully."
+          else
+            status_text="❌ CI checks failed. This release requires changes, delete this PR and branch, fix the problems and try again."
+          fi
+
+          URL=$(gh pr view "$PR_NUMBER" --json comments --jq '.comments[] | select(.body | contains("## Unit Tests")) | .url')
+          comment_id=$(echo "${URL##*-}")
+
+          full_comment=$(cat <<EOF
+          ## Unit Tests
+
+          $status_text
+
+          EOF
+          )
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing comment with ID: $comment_id (${{ github.repository }})"
+            gh api "repos/${{ github.repository }}/issues/comments/$comment_id" -X PATCH -f body="$full_comment"
+          else
+            echo "Creating new comment for PR #$pr_number"
+            gh pr comment "$pr_number" --body "$full_comment"
+          fi
+
+  documentation_checks:
+    needs:
+      - set_inputs
+      - ci_comment
+      - determine_release
+    uses: ./.github/workflows/end-2-end.yml
+    with:
+      ref: ${{ needs.determine_release.outputs.release_branch }}
+      end_to_end_test_repo: ${{ needs.set_inputs.outputs.end_to_end_test_repo }}
+      end_to_end_test_tag: ${{ needs.set_inputs.outputs.end_to_end_test_tag }}
+      database_repo: ${{ needs.set_inputs.outputs.database_repo }}
+      database_tag: ${{ needs.set_inputs.outputs.database_tag }}
+
+  documentation_comment:
+    if: always() && needs.determine_release.result == 'success' && needs.set_inputs.result == 'success'
+    needs:
+      - determine_release
+      - documentation_checks
+      - set_inputs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.determine_release.outputs.release_branch }}
+      - name: Post documentation checks comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEST_REPO: ${{ needs.set_inputs.outputs.end_to_end_test_repo }}
+          TEST_TAG: ${{ needs.set_inputs.outputs.end_to_end_test_tag }}
+          DB_REPO: ${{ needs.set_inputs.outputs.database_repo }}
+          DB_TAG: ${{ needs.set_inputs.outputs.database_tag }}
+        run: |
+          pr_number=${{ needs.determine_release.outputs.pr_number }}
+
+          if [ "${{ needs.documentation_checks.result }}" == "success" ]; then
+            status_text="✅ Documentation checks passed successfully."
+          else
+            status_text="❌ Documentation checks failed. The tested documentation tests do not work with this version of libCellML."
+          fi
+
+          URL=$(gh pr view "$PR_NUMBER" --json comments --jq '.comments[] | select(.body | contains("## Documentation Tests")) | .url')
+          comment_id=$(echo "${URL##*-}")
+
+          summary='${{ needs.documentation_checks.outputs.test_summary }}'
+
+          if [[ -z "$summary" ]]; then
+            summary='{ "test_summary": {}, "repos": { "end_to_end_framework": "null", "database": "null" } }'
+          fi
+
+          combined=$(jq -n \
+            --arg TEST_REPO "$TEST_REPO" \
+            --arg TEST_TAG "$TEST_TAG" \
+            --arg TEST_SHA "$(echo "$summary" | jq -r .repos.end_to_end_framework)" \
+            --arg DB_REPO "$DB_REPO" \
+            --arg DB_TAG "$DB_TAG" \
+            --arg DB_SHA "$(echo "$summary" | jq -r .repos.database)" \
+            --arg timestamp "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --argjson test_summary "$(echo "$summary" | jq '.test_summary')" \
+            '{
+              end_to_end_test_repo: $TEST_REPO,
+              end_to_end_test_tag: $TEST_TAG,
+              end_to_end_test_sha: $TEST_SHA,
+              database_repo: $DB_REPO,
+              database_tag: $DB_TAG,
+              database_sha: $DB_SHA,
+              timestamp: $timestamp,
+              test_summary: $test_summary
+            }')
+
+          # metadata="{\"end_to_end_test_repo\":\"$TEST_REPO\",\"end_to_end_test_tag\":\"$TEST_TAG\",\"database_repo\":\"$DB_REPO\",\"database_tag\":\"$DB_TAG\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}"
+
+          full_comment=$(cat <<EOF
+          ## Documentation Tests
+
+          $status_text
+
+          \`\`\`json
+          $combined
+          \`\`\`
+          EOF
+          )
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing comment with ID: $comment_id (${{ github.repository }})"
+            gh api "repos/${{ github.repository }}/issues/comments/$comment_id" -X PATCH -f body="$full_comment"
+          else
+            echo "Creating new comment for PR #$pr_number"
+            gh pr comment "$pr_number" --body "$full_comment"
+          fi

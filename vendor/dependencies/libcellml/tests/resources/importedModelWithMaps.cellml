@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="import_me">
+  <component name="importMe">
+    <variable name="x" units="dimensionless" interface="public_and_private"/>
+  </component>
+  <component name="child1">
+    <variable name="x" units="dimensionless" interface="public_and_private"/>
+  </component>
+    <component name="child2">
+    <variable name="x" units="dimensionless" interface="public_and_private"/>
+  </component>
+  <connection component_1="child1" component_2="child2">
+    <map_variables variable_1="x" variable_2="x" />
+  </connection>
+  <encapsulation>
+    <component_ref component="importMe">
+      <component_ref component="child1" />
+      <component_ref component="child2" />
+    </component_ref>
+  </encapsulation>
+</model>

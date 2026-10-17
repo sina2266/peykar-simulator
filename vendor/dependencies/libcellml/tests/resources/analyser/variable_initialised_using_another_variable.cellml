@@ -1,0 +1,618 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Define (in this order so that we can confirm that xXxxStateYyyy and xXxxxNlaYyyy get properly initialised even though they depend on something that is defined later on):
+
+  - Block #1:
+    - 'xStateStateCst' as a state variable initialised using 'kStateStateCst', a state variable initialised using 'kStateCst', a constant.
+    - 'xStateStateCompCst' as a state variable initialised using 'kStateStateCompCst', a state variable initialised using 'kStateCompCst', a computed constant.
+    - 'xStateStateState' as a state variable initialised using 'kStateStateState', a state variable initialised using 'kStateState', a state variable.
+    - 'xStateStateAlgebraic' as a state variable initialised using 'kStateStateAlgebraic', a state variable initialised using 'kStateAlgebraic', an algebraic variable.
+    - 'xStateStateNla' as a state variable initialised using 'kStateStateNla', a state variable initialised using 'kStateNla', a non-linear algebraic variable.
+
+ - Block #2:
+    - 'xNlaStateCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaStateCst', a state variable initialised using 'kStateCst', a constant.
+    - 'xNlaStateCompCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaStateCompCst', a state variable initialised using 'kStateCompCst', a computed constant.
+    - 'xNlaStateState' as a non-linear algebraic variable which initial guess is provided by 'kNlaStateState', a state variable initialised using 'kStateState', a state variable.
+    - 'xNlaStateAlgebraic' as a non-linear algebraic variable which initial guess is provided by 'kNlaStateAlgebraic', a state variable initialised using 'kStateAlgebraic', an algebraic variable.
+    - 'xNlaStateNla' as a non-linear algebraic variable which initial guess is provided by 'kNlaStateNla', a state variable initialised using 'kStateNla', a non-linear algebraic variable.
+
+ - Block #3:
+    - 'xStateNlaCst' as a state variable initialised using 'kStateNlaCst', a non-linear algebraic variable which initial guess is provided by 'kNlaCst', a constant.
+    - 'xStateNlaCompCst' as a state variable initialised using 'kStateNlaCompCst', a non-linear algebraic variable which initial guess is provided by 'kNlaCompCst', a computed constant.
+    - 'xStateNlaState' as a state variable initialised using 'kStateNlaState', a non-linear algebraic variable which initial guess is provided by 'kNlaState', a state variable.
+    - 'xStateNlaAlgebraic' as a state variable initialised using 'kStateNlaAlgebraic', a non-linear algebraic variable which initial guess is provided by 'kNlaAlgebraic', an algebraic variable.
+    - 'xStateNlaNla' as a state variable initialised using 'kStateNlaNla', a non-linear algebraic variable which initial guess is provided by 'kNlaNla', a non-linear algebraic variable.
+
+ - Block #4:
+    - 'xNlaNlaCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaNlaCst', a non-linear algebraic variable which initial guess is provided by 'kNlaCst', a constant.
+    - 'xNlaNlaCompCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaNlaCompCst', a non-linear algebraic variable which initial guess is provided by 'kNlaCompCst', a computed constant.
+    - 'xNlaNlaState' as a non-linear algebraic variable which initial guess is provided by 'kNlaNlaState', a non-linear algebraic variable which initial guess is provided by 'kNlaState', a state variable.
+    - 'xNlaNlaAlgebraic' as a non-linear algebraic variable which initial guess is provided by 'kNlaNlaAlgebraic', a non-linear algebraic variable which initial guess is provided by 'kNlaAlgebraic', an algebraic variable.
+    - 'xNlaNlaNla' as a non-linear algebraic variable which initial guess is provided by 'kNlaNlaNla', a non-linear algebraic variable which initial guess is provided by 'kNlaNla', a non-linear algebraic variable.
+
+ - Block #5:
+    - 'xStateCst' as a state variable initialised using 'kStateCst', a constant.
+    - 'xStateCompCst' as a state variable initialised using 'kStateCompCst', a computed constant.
+    - 'xStateState' as a state variable initialised using 'kStateState', a state variable.
+    - 'xStateAlgebraic' as a state variable initialised using 'kStateAlgebraic', an algebraic variable.
+    - 'xStateNla' as a state variable initialised using 'kStateNla', a non-linear algebraic variable.
+
+ - Block #6:
+    - 'xNlaCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaCst', a constant.
+    - 'xNlaCompCst' as a non-linear algebraic variable which initial guess is provided by 'kNlaCompCst', a computed constant.
+    - 'xNlaState' as a non-linear algebraic variable which initial guess is provided by 'kNlaState', a state variable.
+    - 'xNlaAlgebraic' as a non-linear algebraic variable which initial guess is provided by 'kNlaAlgebraic', an algebraic variable.
+    - 'xNlaNla' as a non-linear algebraic variable which initial guess is provided by 'kNlaNla', a non-linear algebraic variable.
+ -->
+    <component name="main">
+        <variable name="t" units="dimensionless"/>
+
+        <!-- Block #1 -->
+
+        <variable initial_value="kStateStateCst" name="xStateStateCst" units="dimensionless"/>
+        <variable initial_value="kStateCst" name="kStateStateCst" units="dimensionless"/>
+        <variable initial_value="kStateStateCompCst" name="xStateStateCompCst" units="dimensionless"/>
+        <variable initial_value="kStateCompCst" name="kStateStateCompCst" units="dimensionless"/>
+        <variable initial_value="kStateStateState" name="xStateStateState" units="dimensionless"/>
+        <variable initial_value="kStateState" name="kStateStateState" units="dimensionless"/>
+        <variable initial_value="kStateStateAlgebraic" name="xStateStateAlgebraic" units="dimensionless"/>
+        <variable initial_value="kStateAlgebraic" name="kStateStateAlgebraic" units="dimensionless"/>
+        <variable initial_value="kStateStateNla" name="xStateStateNla" units="dimensionless"/>
+        <variable initial_value="kStateNla" name="kStateStateNla" units="dimensionless"/>
+
+        <!-- Block #2 -->
+
+        <variable initial_value="kNlaStateCst" name="xNlaStateCst" units="dimensionless"/>
+        <variable initial_value="kStateCst" name="kNlaStateCst" units="dimensionless"/>
+        <variable initial_value="kNlaStateCompCst" name="xNlaStateCompCst" units="dimensionless"/>
+        <variable initial_value="kStateCompCst" name="kNlaStateCompCst" units="dimensionless"/>
+        <variable initial_value="kNlaStateState" name="xNlaStateState" units="dimensionless"/>
+        <variable initial_value="kStateState" name="kNlaStateState" units="dimensionless"/>
+        <variable initial_value="kNlaStateAlgebraic" name="xNlaStateAlgebraic" units="dimensionless"/>
+        <variable initial_value="kStateAlgebraic" name="kNlaStateAlgebraic" units="dimensionless"/>
+        <variable initial_value="kNlaStateNla" name="xNlaStateNla" units="dimensionless"/>
+        <variable initial_value="kStateNla" name="kNlaStateNla" units="dimensionless"/>
+
+        <!-- Block #3 -->
+
+        <variable initial_value="kStateNlaCst" name="xStateNlaCst" units="dimensionless"/>
+        <variable initial_value="kNlaCst" name="kStateNlaCst" units="dimensionless"/>
+        <variable initial_value="kStateNlaCompCst" name="xStateNlaCompCst" units="dimensionless"/>
+        <variable initial_value="kNlaCompCst" name="kStateNlaCompCst" units="dimensionless"/>
+        <variable initial_value="kStateNlaState" name="xStateNlaState" units="dimensionless"/>
+        <variable initial_value="kNlaState" name="kStateNlaState" units="dimensionless"/>
+        <variable initial_value="kStateNlaAlgebraic" name="xStateNlaAlgebraic" units="dimensionless"/>
+        <variable name="kStateNlaAlgebraic" units="dimensionless"/>
+        <variable initial_value="kStateNlaNla" name="xStateNlaNla" units="dimensionless"/>
+        <variable initial_value="kNlaNla" name="kStateNlaNla" units="dimensionless"/>
+
+        <!-- Block #4 -->
+
+        <variable initial_value="kNlaNlaCst" name="xNlaNlaCst" units="dimensionless"/>
+        <variable initial_value="kNlaCst" name="kNlaNlaCst" units="dimensionless"/>
+        <variable initial_value="kNlaNlaCompCst" name="xNlaNlaCompCst" units="dimensionless"/>
+        <variable initial_value="kNlaCompCst" name="kNlaNlaCompCst" units="dimensionless"/>
+        <variable initial_value="kNlaNlaState" name="xNlaNlaState" units="dimensionless"/>
+        <variable initial_value="kNlaState" name="kNlaNlaState" units="dimensionless"/>
+        <variable initial_value="kNlaNlaAlgebraic" name="xNlaNlaAlgebraic" units="dimensionless"/>
+        <variable name="kNlaNlaAlgebraic" units="dimensionless"/>
+        <variable initial_value="kNlaNlaNla" name="xNlaNlaNla" units="dimensionless"/>
+        <variable initial_value="kNlaNla" name="kNlaNlaNla" units="dimensionless"/>
+
+        <!-- Block #5 -->
+
+        <variable initial_value="kStateCst" name="xStateCst" units="dimensionless"/>
+        <variable initial_value="3" name="kStateCst" units="dimensionless"/>
+        <variable initial_value="kStateCompCst" name="xStateCompCst" units="dimensionless"/>
+        <variable name="kStateCompCst" units="dimensionless"/>
+        <variable initial_value="kStateState" name="xStateState" units="dimensionless"/>
+        <variable initial_value="5" name="kStateState" units="dimensionless"/>
+        <variable initial_value="kStateAlgebraic" name="xStateAlgebraic" units="dimensionless"/>
+        <variable name="kStateAlgebraic" units="dimensionless"/>
+        <variable initial_value="kStateNla" name="xStateNla" units="dimensionless"/>
+        <variable initial_value="7" name="kStateNla" units="dimensionless"/>
+
+        <!-- Block #6 -->
+
+        <variable initial_value="kNlaCst" name="xNlaCst" units="dimensionless"/>
+        <variable initial_value="3" name="kNlaCst" units="dimensionless"/>
+        <variable initial_value="kNlaCompCst" name="xNlaCompCst" units="dimensionless"/>
+        <variable name="kNlaCompCst" units="dimensionless"/>
+        <variable initial_value="kNlaState" name="xNlaState" units="dimensionless"/>
+        <variable initial_value="5" name="kNlaState" units="dimensionless"/>
+        <variable initial_value="kNlaAlgebraic" name="xNlaAlgebraic" units="dimensionless"/>
+        <variable name="kNlaAlgebraic" units="dimensionless"/>
+        <variable initial_value="kNlaNla" name="xNlaNla" units="dimensionless"/>
+        <variable initial_value="7" name="kNlaNla" units="dimensionless"/>
+
+        <!-- Block #1 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateStateCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateStateCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateStateCompCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateStateCompCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateStateState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateStateState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateStateAlgebraic</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateStateAlgebraic</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateStateNla</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateStateNla</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+        </math>
+
+        <!-- Block #2 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaStateCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaStateCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaStateCompCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaStateCompCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaStateState</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaStateState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaStateAlgebraic</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaStateAlgebraic</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaStateNla</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaStateNla</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+        </math>
+
+        <!-- Block #3 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNlaCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kStateNlaCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNlaCompCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kStateNlaCompCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNlaState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kStateNlaState</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNlaAlgebraic</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kStateNlaAlgebraic</ci>
+                <ci>t</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNlaNla</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kStateNlaNla</ci>
+            </apply>
+        </math>
+
+        <!-- Block #4 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNlaCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kNlaNlaCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNlaCompCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kNlaNlaCompCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNlaState</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kNlaNlaState</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNlaAlgebraic</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kNlaNlaAlgebraic</ci>
+                <ci>t</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNlaNla</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kNlaNlaNla</ci>
+            </apply>
+        </math>
+
+        <!-- Block #5 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateCompCst</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kStateCompCst</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.23</cn>
+                    <ci>kStateCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kStateState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateAlgebraic</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kStateAlgebraic</ci>
+                <ci>t</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>xStateNla</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kStateNla</ci>
+            </apply>
+        </math>
+
+        <!-- Block #6 -->
+
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaCompCst</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kNlaCompCst</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.23</cn>
+                    <ci>kNlaCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaState</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>kNlaState</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1.23</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaAlgebraic</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>kNlaAlgebraic</ci>
+                <ci>t</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>xNlaNla</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <ci>kNlaNla</ci>
+            </apply>
+        </math>
+    </component>
+</model>

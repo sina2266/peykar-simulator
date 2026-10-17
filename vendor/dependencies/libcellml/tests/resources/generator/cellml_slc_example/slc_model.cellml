@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="test_model">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="units_BG.cellml">
+    <units units_ref="per_sec" name="per_sec"/>
+    <units units_ref="fmol_per_sec" name="fmol_per_sec"/>
+    <units units_ref="per_fmol" name="per_fmol"/>
+    <units units_ref="fmol" name="fmol"/>
+    <units units_ref="per_fmol_sec4" name="per_fmol_sec4"/>
+    <units units_ref="per_fmol_sec3" name="per_fmol_sec3"/>
+    <units units_ref="per_fmol2_sec3" name="per_fmol2_sec3"/>
+    <units units_ref="per_sec3" name="per_sec3"/>
+  </import>
+  <component name="SLC_template3_ss">
+    <variable name="v" units="fmol_per_sec" />
+    <variable name="E" units="fmol" initial_value="1.1" />
+    <variable name="q_Ai" units="fmol" initial_value="2"/>
+    <variable name="q_Ao" units="fmol" initial_value="150" />
+    <variable name="P_0" units="per_fmol_sec4" initial_value="21262500" id="b4da6c"/>
+    <variable name="P_1" units="per_fmol_sec4" initial_value="3402000"  id="b4da6d"/>
+    <variable name="P_2" units="per_fmol_sec3"  initial_value="2902500"  id="b4da6e"/>
+    <variable name="P_3" units="per_fmol_sec3"  initial_value="2902500" interface="public" id="b4da6f"/>
+    <variable name="P_4" units="per_fmol2_sec3" initial_value="247140"  id="b4da70"/>
+    <variable name="P_5" units="per_sec3" initial_value="810000"  id="b4da71"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply>
+        <eq/>
+        <ci>v</ci>
+        <apply>
+          <divide/>
+          <apply>
+            <times/>
+            <ci>E</ci>
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>P_0</ci>
+                <ci>q_Ao</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>P_1</ci>
+                <ci>q_Ai</ci>
+              </apply>
+            </apply>
+          </apply>
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <ci>P_2</ci>
+              <ci>q_Ai</ci>
+            </apply>
+            <apply>
+              <times/>
+              <ci>P_3</ci>
+              <ci>q_Ao</ci>
+            </apply>
+            <apply>
+              <times/>
+              <ci>P_4</ci>
+              <ci>q_Ai</ci>
+              <ci>q_Ao</ci>
+            </apply>
+            <ci>P_5</ci>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+</model>

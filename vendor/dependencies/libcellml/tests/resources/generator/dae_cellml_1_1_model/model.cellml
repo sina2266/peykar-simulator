@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="BG3" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <units name="J_per_C">
+        <unit units="joule"/>
+        <unit exponent="-1" units="coulomb"/>
+    </units>
+    <units name="C_per_s">
+        <unit units="coulomb"/>
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="C_per_s2">
+        <unit units="coulomb"/>
+        <unit exponent="-2" units="second"/>
+    </units>
+    <units name="C2_per_J">
+        <unit exponent="2" units="coulomb"/>
+        <unit exponent="-1" units="joule"/>
+    </units>
+    <units name="Js_per_C2">
+        <unit units="joule"/>
+        <unit units="second"/>
+        <unit exponent="-2" units="coulomb"/>
+    </units>
+    <units name="Js_per_C">
+        <unit units="joule"/>
+        <unit units="second"/>
+        <unit exponent="-1" units="coulomb"/>
+    </units>
+    <units name="Js2_per_C2">
+        <unit units="joule"/>
+        <unit exponent="2" units="second"/>
+        <unit exponent="-2" units="coulomb"/>
+    </units>
+    <component name="main">
+        <variable name="t" units="second"/>
+        <variable initial_value="1" name="v_in" units="C_per_s"/>
+        <variable initial_value="1" name="v_out" units="C_per_s"/>
+        <!-- State variables-->
+        <variable initial_value="1" name="q_1" units="coulomb"/>
+        <variable name="v_1" units="C_per_s"/>
+        <variable name="v_2" units="C_per_s"/>
+        <variable initial_value="0" name="v_3" units="C_per_s"/>
+        <variable name="u_1" units="J_per_C"/>
+        <variable name="u_2" units="J_per_C"/>
+        <variable name="u_3" units="J_per_C"/>
+        <!--var p_3: Js_per_C {init: 0};-->
+        <!-- Constitutive parameters-->
+        <variable initial_value="20" name="C" units="C2_per_J"/>
+        <variable initial_value="2" name="R" units="Js_per_C2"/>
+        <variable initial_value="10" name="L" units="Js2_per_C2"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q_1</ci>
+                </apply>
+                <ci>v_1</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v_in</ci>
+                <apply>
+                    <plus/>
+                    <ci>v_1</ci>
+                    <ci>v_2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v_2</ci>
+                <apply>
+                    <plus/>
+                    <ci>v_3</ci>
+                    <ci>v_out</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u_1</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_2</ci>
+                    <ci>u_3</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>u_1</ci>
+                <apply>
+                    <divide/>
+                    <ci>q_1</ci>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u_2</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>v_2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v_3</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <ci>u_3</ci>
+                    <ci>L</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

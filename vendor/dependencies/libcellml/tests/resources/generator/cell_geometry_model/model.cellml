@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="cell_geometry_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="centimeter">
+        <unit prefix="centi" units="metre"/>
+    </units>
+    <units name="centimeter_squared">
+        <unit exponent="2" units="centimeter"/>
+    </units>
+     <units name="microlitre">
+        <unit prefix="micro" units="litre"/>
+    </units>
+    <units name="microlitre_per_centimeter_cubed">
+        <unit units="microlitre"/>
+        <unit exponent="-3" units="centimeter"/>
+    </units>
+    <component name="cell_geometry">
+        <variable initial_value="0.01" name="L" units="centimeter"/>
+        <variable initial_value="0.0011" name="rad" units="centimeter"/>
+        <variable name="vcell" units="microlitre" interface="public"/>
+        <variable name="vss" units="microlitre" interface="public"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>vcell</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="microlitre_per_centimeter_cubed">1000</cn>
+                    <cn cellml:units="dimensionless">3.14</cn>
+                    <ci>rad</ci>
+                    <ci>rad</ci>
+                    <ci>L</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>vss</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.02</cn>
+                    <ci>vcell</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>
+

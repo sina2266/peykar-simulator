@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#"
+	name="segfault" id="segfault_id">
+    <component name="component1"></component>
+    <component name="component2">
+        <variable name="a" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply><eq/>
+                <ci>a</ci>
+                <cn xmlns:cellml="http://www.cellml.org/cellml/2.0#" cellml:units="dimensionless">10</cn>
+            </apply>
+        </math>
+    </component>
+    <encapsulation>
+        <component_ref component="component1">
+            <component_ref component="component2"/>
+        </component_ref>
+    </encapsulation>
+</model>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<model
+    name="sin_approximations_import_mixed"
+    xmlns="http://www.cellml.org/cellml/2.0#"
+    xmlns:cellml1="http://www.cellml.org/cellml/1.0#"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <import xlink:href="sin.xml">
+    <component name="actual_sin" component_ref="sin"/>
+  </import>
+  <import xlink:href="deriv_approx_sin.xml">
+    <component name="deriv_approx_sin" component_ref="sin"/>
+  </import>
+  <import xlink:href="parabolic_approx_sin.xml">
+    <component name="parabolic_approx_sin" component_ref="sin"/>
+  </import>
+
+  <cellml1:component name="main" id="main">
+    <variable id="x" name="x" initial_value="0" units="dimensionless" public_interface="out" private_interface="out"/>
+    <variable id="sin" name="sin1" units="dimensionless" public_interface="out" private_interface="in"/>
+    <variable id="deriv_approx" name="sin2" units="dimensionless" public_interface="out" private_interface="in"/>
+    <variable id="deriv_approx_initial_value" name="deriv_approx_initial_value" initial_value="0" units="dimensionless" public_interface="out" private_interface="out"/>
+    <variable id="parabolic_approx" name="sin3" units="dimensionless" public_interface="out" private_interface="in"/>
+  </cellml1:component>
+  
+  <connection>
+    <map_components component_1="actual_sin" component_2="main"/>
+    <map_variables variable_1="sin" variable_2="sin1"/>
+    <map_variables variable_1="x" variable_2="x"/>
+  </connection>
+  
+  <connection>
+    <map_components component_1="deriv_approx_sin" component_2="main"/>
+    <map_variables variable_1="sin" variable_2="sin2"/>
+    <map_variables variable_1="x" variable_2="x"/>
+    <map_variables variable_1="sin_initial_value" variable_2="deriv_approx_initial_value"/>
+  </connection>
+
+  <connection>
+    <map_components component_1="parabolic_approx_sin" component_2="main"/>
+    <map_variables variable_1="sin" variable_2="sin3"/>
+    <map_variables variable_1="x" variable_2="x"/>
+  </connection>
+
+</model>

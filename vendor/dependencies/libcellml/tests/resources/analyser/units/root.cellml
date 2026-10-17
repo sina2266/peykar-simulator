@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="root" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="frog"/>
+    <units name="imaginary">
+        <unit exponent="1" units="second"/>
+        <unit exponent="1" prefix="milli" units="second"/>
+        <unit exponent="3" units="volt"/>
+        <unit exponent="3" prefix="micro" units="volt"/>
+        <unit exponent="5" units="frog"/>
+        <unit exponent="5" prefix="nano" units="frog"/>
+    </units>
+    <units name="second_1_2">
+        <unit exponent="0.5" units="second"/>
+    </units>
+    <units name="volt_1_2">
+        <unit exponent="0.5" units="volt"/>
+    </units>
+    <units name="frog_1_2">
+        <unit exponent="0.5" units="frog"/>
+    </units>
+    <units name="imaginary_1_2">
+        <unit exponent="0.5" units="imaginary"/>
+    </units>
+    <units name="second_1_100">
+        <unit exponent="0.01" units="second"/>
+    </units>
+    <units name="volt_1_200">
+        <unit exponent="0.005" units="volt"/>
+    </units>
+    <units name="frog_1_400">
+        <unit exponent="0.0025" units="frog"/>
+    </units>
+    <units name="imaginary_1_800">
+        <unit exponent="0.00125" units="imaginary"/>
+    </units>
+    <component name="main">
+        <variable name="a" units="dimensionless"/>
+        <variable name="b" units="dimensionless"/>
+        <variable name="c" units="dimensionless"/>
+        <variable name="d" units="dimensionless"/>
+        <variable name="e" units="dimensionless"/>
+        <variable name="f" units="second_1_2"/>
+        <variable name="g" units="volt_1_2"/>
+        <variable name="h" units="frog_1_2"/>
+        <variable name="i" units="imaginary_1_2"/>
+        <variable name="j" units="dimensionless"/>
+        <variable name="k" units="dimensionless"/>
+        <variable name="l" units="dimensionless"/>
+        <variable name="m" units="dimensionless"/>
+        <variable name="n" units="dimensionless"/>
+        <variable name="o" units="dimensionless"/>
+        <variable name="p" units="dimensionless"/>
+        <variable name="q" units="dimensionless"/>
+        <variable name="r" units="dimensionless"/>
+        <variable name="s" units="second_1_100"/>
+        <variable name="t" units="volt_1_200"/>
+        <variable name="u" units="frog_1_400"/>
+        <variable name="v" units="imaginary_1_800"/>
+        <variable initial_value="1" name="aCst" units="dimensionless"/>
+        <variable initial_value="3" name="bCst" units="second"/>
+        <variable initial_value="5" name="cCst" units="volt"/>
+        <variable initial_value="7" name="dCst" units="frog"/>
+        <variable initial_value="9" name="eCst" units="imaginary"/>
+        <variable initial_value="11" name="fCst" units="second"/>
+        <variable initial_value="13" name="gCst" units="volt"/>
+        <variable initial_value="15" name="hCst" units="frog"/>
+        <variable initial_value="17" name="iCst" units="imaginary"/>
+        <variable initial_value="19" name="jCst" units="dimensionless"/>
+        <variable initial_value="21" name="kCst" units="second"/>
+        <variable initial_value="23" name="lCst" units="volt"/>
+        <variable initial_value="25" name="mCst" units="frog"/>
+        <variable initial_value="27" name="nCst" units="imaginary"/>
+        <variable initial_value="29" name="oCst" units="second"/>
+        <variable initial_value="31" name="pCst" units="volt"/>
+        <variable initial_value="33" name="qCst" units="frog"/>
+        <variable initial_value="35" name="rCst" units="imaginary"/>
+        <variable initial_value="100" name="sCst" units="second"/>
+        <variable initial_value="200" name="tCst" units="volt"/>
+        <variable initial_value="400" name="uCst" units="frog"/>
+        <variable initial_value="800" name="vCst" units="imaginary"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>a</ci>
+                <apply>
+                    <root/>
+                    <ci>aCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>b</ci>
+                <apply>
+                    <root/>
+                    <ci>bCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>c</ci>
+                <apply>
+                    <root/>
+                    <ci>cCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>d</ci>
+                <apply>
+                    <root/>
+                    <ci>dCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>e</ci>
+                <apply>
+                    <root/>
+                    <ci>eCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f</ci>
+                <apply>
+                    <root/>
+                    <ci>fCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>g</ci>
+                <apply>
+                    <root/>
+                    <ci>gCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <root/>
+                    <ci>hCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>i</ci>
+                <apply>
+                    <root/>
+                    <ci>iCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>j</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </degree>
+                    <ci>jCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="second">3</cn>
+                    </degree>
+                    <ci>kCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>l</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="volt">5</cn>
+                    </degree>
+                    <ci>lCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>m</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="frog">7</cn>
+                    </degree>
+                    <ci>mCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>n</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="imaginary">9</cn>
+                    </degree>
+                    <ci>nCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>o</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">11</cn>
+                    </degree>
+                    <ci>oCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>p</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">13</cn>
+                    </degree>
+                    <ci>pCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">15</cn>
+                    </degree>
+                    <ci>qCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">17</cn>
+                    </degree>
+                    <ci>rCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>s</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">100</cn>
+                    </degree>
+                    <ci>sCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">200</cn>
+                    </degree>
+                    <ci>tCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">400</cn>
+                    </degree>
+                    <ci>uCst</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v</ci>
+                <apply>
+                    <root/>
+                    <degree>
+                        <cn cellml:units="dimensionless">800</cn>
+                    </degree>
+                    <ci>vCst</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

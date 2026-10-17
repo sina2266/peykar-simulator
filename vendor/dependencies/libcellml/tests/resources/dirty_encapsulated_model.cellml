@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="dirtyModel">
+  <component name="component"/>
+  <component name="emptyChildComponent"/>
+  <component name="nonEmptyComponent">
+    <variable name="x" units="dimensionless"/>
+  </component>
+  <encapsulation>
+    <component_ref component="component">
+      <component_ref component="emptyChildComponent">
+        <component_ref>
+          <component_ref/>
+        </component_ref>
+      </component_ref>
+      <component_ref component="nonEmptyComponent"/>
+    </component_ref>
+  </encapsulation>
+</model>

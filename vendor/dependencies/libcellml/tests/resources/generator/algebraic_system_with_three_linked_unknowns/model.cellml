@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="my_model" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <!-- Algebraic system with three linked unknown
+    Variables:
+     • x: 1 -> 1
+     • y: 1 -> -1
+     • z: 1 -> 1
+    Equations:
+     • 2x + y - 2z = -1
+     • 3x - 3y - z = 5
+     • x - 2y + 3z = 6
+    -->
+    <component name="my_algebraic_system">
+        <variable initial_value="1" name="x" units="dimensionless"/>
+        <variable initial_value="1" name="y" units="dimensionless"/>
+        <variable initial_value="1" name="z" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">2</cn>
+                            <ci>x</ci>
+                        </apply>
+                        <ci>y</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>z</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">-1</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <ci>x</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <ci>y</ci>
+                        </apply>
+                    </apply>
+                    <ci>z</ci>
+                </apply>
+                <cn cellml:units="dimensionless">5</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>x</ci>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">2</cn>
+                            <ci>y</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">3</cn>
+                        <ci>z</ci>
+                    </apply>
+                </apply>
+                <cn cellml:units="dimensionless">6</cn>
+            </apply>
+        </math>
+    </component>
+</model>

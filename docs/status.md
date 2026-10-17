@@ -9,11 +9,11 @@ interfaces/acceptance criteria without an executable integration.
 | uv monorepo with three distributions | Implemented | Core, engines, platform; one lockfile |
 | Model/data/scenario contracts and JSON Schemas | Implemented | Schema 1.0.0 only |
 | Versioned model registry and pinned dependencies | Implemented | Local persistent profile |
-| Declarative model import inspection | Partial | JSON plus bounded SBML core L2/L3 and PKML XML; exact raw bytes, context/license and original units; no execution during admission; CellML open |
+| Declarative model import inspection | Partial | JSON, bounded SBML core L2/L3, PKML and self-contained CellML 2; exact raw bytes, context/license and original units; no execution during admission; CellML has a separate reviewed operator ODE solver, managed CellML queue open |
 | External native agent and durable queue | Implemented for two kinds | COPASI SBML and OSPSuite PKML; immutable model/profile/runtime, local driver/image allowlist, leases/cancellation/timeout and validated native artifacts; separate host agent, no API Docker socket; bounded COPASI/reference scalar DAG composition now implemented separately; other engine adapters open |
 | Offline external artifact admission | Partial | SHA-256 checks for every declared source/dependency/runtime-lock file; immutable local inventory; no installation, execution or undeclared dependency discovery |
-| Managed specialist source ecosystem | Implemented local source distribution | 25 permanent vendor distributions / 52,167 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
-| Native runtime evidence registry | Implemented locally | 11 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
+| Managed specialist source ecosystem | Implemented local source distribution | 26 permanent vendor distributions / 53,261 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
+| Native runtime evidence registry | Implemented locally | 12 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
 | Species/context checks and capability search | Implemented | Exact matching; no inferred transfer |
 | Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example; no full ontology/claim reconciliation |
 | Persistent knowledge-gap declarations | Implemented locally | Immutable manual records; exact affected-model versions; filtered API/CLI reads; no automatic closure or execution blocking |
@@ -82,3 +82,7 @@ individual biological-model gates. The source registry, persistent graphs and
 sequential experiment service are shared platform capabilities, documented in
 [libraries](library-ecosystem.md), [biology](biological-graph.md) and
 [workflows](experiment-workflows.md). The full system is not declared finished.
+
+E5 delivers bounded CellML admission and real libCellML/SciPy ODE execution,
+including upstream stiff/unit-scaling fixtures and retained browser results.
+See [scope and remaining adapters](epics/E5-cellml-models.md).

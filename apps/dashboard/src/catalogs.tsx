@@ -10,6 +10,7 @@ import {
 } from './api';
 import { useSession } from './session';
 import { useT } from './i18n';
+import { CellMLCatalog } from './cellml';
 import {
   useResource,
   Boundary,
@@ -37,6 +38,7 @@ export function Models() {
   const [selected, setSelected] = useState<string>();
   const resource = useResource(
     async (signal) => {
+      if (tab === 'CellML') return [];
       if (tab === 'Reference models')
         return await client.request<Model[]>(`/v1/models?limit=20&offset=${offset}`, { signal });
       if (tab === 'Native models')
@@ -59,7 +61,7 @@ export function Models() {
         description="Use exact model versions and explicit budgets. Follow the result through both queues."
       />
       <Tabs
-        tabs={['Reference models', 'Native models', 'Sources & runtimes']}
+        tabs={['Reference models', 'Native models', 'CellML', 'Sources & runtimes']}
         selected={tab}
         onSelect={(v) => {
           setTab(v);
@@ -68,89 +70,93 @@ export function Models() {
           setSearch('');
         }}
       />
-      <Boundary resource={resource}>
-        {(data) =>
-          tab === 'Sources & runtimes' ? (
-            <SourceCatalog
-              data={
-                data as [
-                  Schema['LibrarySourceReceipt'][],
-                  Schema['NativeRuntimeEvidence'][],
-                  Schema['NativeExecutionProfile'][],
-                ]
-              }
-            />
-          ) : (
-            (() => {
-              const models = data as (Model | NativeModel)[];
-              const shown = models.filter((m) => {
-                const s = 'spec' in m ? m.spec : m;
-                return `${s.id} ${s.title}`.toLowerCase().includes(search.toLowerCase());
-              });
-              const current = models.find((m) => identity('spec' in m ? m.spec : m) === selected);
-              return (
-                <>
-                  <div className="section-tools">
-                    <Field label="Search this page">
-                      <input
-                        type="search"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
-                    </Field>
-                    <button onClick={resource.refresh}>{t('Refresh')}</button>
-                  </div>
-                  <div className="split-view">
-                    <div className="record-list">
-                      {shown.length ? (
-                        shown.map((m) => {
-                          const s = 'spec' in m ? m.spec : m;
-                          return (
-                            <button
-                              className={`record ${identity(s) === selected ? 'selected' : ''}`}
-                              key={identity(s)}
-                              onClick={() => setSelected(identity(s))}
-                            >
-                              <span className="record-top">
-                                <strong>
-                                  <bdi>{s.title}</bdi>
-                                </strong>
-                                <span className="version">v{s.version}</span>
-                              </span>
-                              <span className="mono">{s.id}</span>
-                              <span>
-                                {'format' in s ? s.format.toUpperCase() : (s as Model).engine} ·{' '}
-                                <bdi>{s.context.species}</bdi>
-                              </span>
-                            </button>
-                          );
-                        })
-                      ) : (
-                        <Empty text={search ? 'No matching records' : undefined} />
-                      )}
-                      <Pager
-                        offset={offset}
-                        count={models.length}
-                        setOffset={(v) => {
-                          setOffset(v);
-                          setSelected(undefined);
-                        }}
-                      />
+      {tab === 'CellML' ? (
+        <CellMLCatalog />
+      ) : (
+        <Boundary resource={resource}>
+          {(data) =>
+            tab === 'Sources & runtimes' ? (
+              <SourceCatalog
+                data={
+                  data as [
+                    Schema['LibrarySourceReceipt'][],
+                    Schema['NativeRuntimeEvidence'][],
+                    Schema['NativeExecutionProfile'][],
+                  ]
+                }
+              />
+            ) : (
+              (() => {
+                const models = data as (Model | NativeModel)[];
+                const shown = models.filter((m) => {
+                  const s = 'spec' in m ? m.spec : m;
+                  return `${s.id} ${s.title}`.toLowerCase().includes(search.toLowerCase());
+                });
+                const current = models.find((m) => identity('spec' in m ? m.spec : m) === selected);
+                return (
+                  <>
+                    <div className="section-tools">
+                      <Field label="Search this page">
+                        <input
+                          type="search"
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
+                        />
+                      </Field>
+                      <button onClick={resource.refresh}>{t('Refresh')}</button>
                     </div>
-                    <div className="inspector">
-                      {current ? (
-                        <ModelDetail model={current} />
-                      ) : (
-                        <Empty text="Choose a model to inspect its exact version, parameters and ports." />
-                      )}
+                    <div className="split-view">
+                      <div className="record-list">
+                        {shown.length ? (
+                          shown.map((m) => {
+                            const s = 'spec' in m ? m.spec : m;
+                            return (
+                              <button
+                                className={`record ${identity(s) === selected ? 'selected' : ''}`}
+                                key={identity(s)}
+                                onClick={() => setSelected(identity(s))}
+                              >
+                                <span className="record-top">
+                                  <strong>
+                                    <bdi>{s.title}</bdi>
+                                  </strong>
+                                  <span className="version">v{s.version}</span>
+                                </span>
+                                <span className="mono">{s.id}</span>
+                                <span>
+                                  {'format' in s ? s.format.toUpperCase() : (s as Model).engine} ·{' '}
+                                  <bdi>{s.context.species}</bdi>
+                                </span>
+                              </button>
+                            );
+                          })
+                        ) : (
+                          <Empty text={search ? 'No matching records' : undefined} />
+                        )}
+                        <Pager
+                          offset={offset}
+                          count={models.length}
+                          setOffset={(v) => {
+                            setOffset(v);
+                            setSelected(undefined);
+                          }}
+                        />
+                      </div>
+                      <div className="inspector">
+                        {current ? (
+                          <ModelDetail model={current} />
+                        ) : (
+                          <Empty text="Choose a model to inspect its exact version, parameters and ports." />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </>
-              );
-            })()
-          )
-        }
-      </Boundary>
+                  </>
+                );
+              })()
+            )
+          }
+        </Boundary>
+      )}
       {tab === 'Native models' && <NativeAdmission onDone={resource.refresh} />}
     </>
   );
@@ -316,16 +322,22 @@ function SourceCatalog({
     </div>
   );
 }
-function NativeAdmission({ onDone }: { onDone: () => void }) {
+export function NativeAdmission({
+  onDone,
+  cellml = false,
+}: {
+  onDone: () => void;
+  cellml?: boolean;
+}) {
   const { client, admin } = useSession();
   const t = useT();
   const [xml, setXml] = useState('');
   const [fileError, setFileError] = useState<unknown>();
   const initial = {
-    id: 'my.native-model',
+    id: cellml ? 'my.cellml-model' : 'my.native-model',
     version: '1.0.0',
     title: 'My admitted model',
-    format: 'sbml',
+    format: cellml ? 'cellml_2' : 'sbml',
     context: {
       species: 'synthetic',
       biological_system: 'reference verification',
@@ -344,7 +356,7 @@ function NativeAdmission({ onDone }: { onDone: () => void }) {
       <Field label="Declarative XML file">
         <input
           type="file"
-          accept=".xml,.sbml,.pkml"
+          accept={cellml ? '.xml,.cellml' : '.xml,.sbml,.pkml'}
           disabled={!admin}
           onChange={async (e) => {
             setXml('');
@@ -354,7 +366,7 @@ function NativeAdmission({ onDone }: { onDone: () => void }) {
             if (f.size > 1400000) {
               setFileError(
                 new Error(
-                  'This file exceeds the safe HTTP import size. Use offline operator admission for larger PKML files.',
+                  'This file exceeds the safe HTTP import size. Use offline operator admission for larger files.',
                 ),
               );
               return;
@@ -379,7 +391,7 @@ function NativeAdmission({ onDone }: { onDone: () => void }) {
         initial={initial}
         disabled={!admin || !xml}
         clientAction={(spec) =>
-          client.request('/v1/native-models', {
+          client.request(cellml ? '/v1/cellml-models' : '/v1/native-models', {
             body: { spec, xml_text: xml },
           })
         }

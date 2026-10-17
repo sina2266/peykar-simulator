@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><model xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink" name="common_units_import_2">
+  
+  <import xlink:href="common_units_import_units.xml">
+    <units name="mV" units_ref="mV"/>
+    <units name="ms" units_ref="ms"/>
+    <units name="uA_per_cmsq" units_ref="uA_per_cmsq"/>
+    <units name="mS_per_cmsq" units_ref="mS_per_cmsq"/>
+    <units name="uF_per_cmsq" units_ref="uF_per_cmsq"/>
+  </import>
+  <component name="component_in_model_2">
+    <variable name="V_initial" units="mV" interface="public_and_private"/>
+    <variable name="Istim" units="uA_per_cmsq" interface="public_and_private"/>
+    <variable name="INa" units="uA_per_cmsq" interface="public_and_private"/>
+    <variable name="IK" units="uA_per_cmsq" interface="public_and_private"/>
+    <variable name="Ileak" units="uA_per_cmsq" interface="public_and_private"/>
+    <variable name="h" units="dimensionless" interface="public_and_private"/>
+    <variable name="m" units="dimensionless" interface="public_and_private"/>
+    <variable name="n" units="dimensionless" interface="public_and_private"/>
+    <variable name="V" units="mV" initial_value="V_initial" interface="public_and_private"/>
+    <variable name="minus_V" units="mV" interface="public_and_private"/>
+    <variable name="VNa" units="mV" interface="public_and_private"/>
+    <variable name="VK" units="mV" interface="public_and_private"/>
+    <variable name="Vleak" units="mV" interface="public_and_private"/>
+    <variable name="gNa_max" units="mS_per_cmsq" interface="public_and_private"/>
+    <variable name="gK_max" units="mS_per_cmsq" interface="public_and_private"/>
+    <variable name="gleak_max" units="mS_per_cmsq" interface="public_and_private"/>
+    <variable name="Cm" units="uF_per_cmsq" interface="public_and_private"/>
+    <variable name="time" units="ms" interface="public_and_private"/>
+  </component>
+</model>

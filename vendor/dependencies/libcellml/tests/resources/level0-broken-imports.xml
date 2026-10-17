@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<model name="level0_model" xmlns="http://www.cellml.org/cellml/2.0#"
+	xmlns:cellml="http://www.cellml.org/cellml/2.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<import xlink:href="level1-3.xml">
+		<component name="level13_in_level0_1" component_ref="level13_component" />
+	</import>
+	<import xlink:href="level1-3.xml">
+		<component name="level13_in_level0_2" component_ref="level13_component" />
+	</import>
+	<import xlink:href="level1-3.xml">
+		<component name="level13_in_level0_3" component_ref="level13_component" />
+	</import>
+	<import xlink:href="level1-3.xml">
+		<component name="level13_in_level0_4" component_ref="doesnt_exist" />
+	</import>
+	<component name="level0_component">
+		<variable name="v_l0_1" initial_value="1" units="dimensionless" interface="public"/>
+		<variable name="v_l0_2" initial_value="2" units="dimensionless" interface="public"/>
+		<variable name="v_l0_3" initial_value="3" units="dimensionless" interface="public"/>
+		<variable name="v_l0_4" initial_value="4" units="dimensionless" interface="public"/>
+	</component>
+	<connection component_1="level0_component" component_2="level13_in_level0_1">
+		<map_variables variable_1="v_l0_1" variable_2="v" />
+	</connection>
+	<connection component_1="level0_component" component_2="level13_in_level0_2">
+		<map_variables variable_1="v_l0_2" variable_2="v" />
+	</connection>
+	<connection component_1="level0_component" component_2="level13_in_level0_3">
+		<map_variables variable_1="v_l0_3" variable_2="v" />
+	</connection>
+	<connection component_1="level0_component" component_2="level13_in_level0_4">
+		<map_variables variable_1="v_l0_4" variable_2="v" />
+	</connection>
+
+</model>

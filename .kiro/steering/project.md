@@ -244,3 +244,37 @@ commands/outcomes in `docs/verification.md`.
   reference/native smoke checks pass. Exact receipts are in
   docs/workbench-verification-2026-10-17.json. Continue meaningful verified main
   commits/pushes; richer scientific authoring and remaining roadmap EPICs stay open.
+
+## E5 CellML admission and reviewed operator solver, 2026-10-17
+
+- E4 milestone 30fc035a was pushed to main before this continuation. E5 closes
+  bounded S3.4b with separate CellML contracts, model admission/result reads and
+  explicit operator CLI, without expanding old NativeModelSpec/Profile literals.
+- Complete libCellML v0.7.1 source commit bc71bfa5816cd3e1e1a28430366eb5688fe9e501
+  is pristine under vendor/dependencies/libcellml (1,094 files, Apache-2.0 LICENSE).
+  Total vendor rehash: 26 distributions/53,261 files/1,814,782,314 bytes/37 Git links.
+- Structural CellML 2 inspection starts no engine. Full parser/validator/analyser/
+  generated ODE execution runs in a separately locked offline non-root Docker
+  profile; explicit original-time-unit controls, finite output grids and exact
+  model/runtime/image/driver/variable/unit/artifact identities are checked.
+- E5 operator supports RK45/Radau/BDF, self-contained ODEs only; no imports, resets,
+  external variables, DAE/NLA, checkpoint, API queue or native flow support. Keep
+  these limits truthful. Do not silently add formats to historical native schemas.
+- Model Studio now admits/inspects CellML and plots retained actual operator results.
+  Binary download preserves BOM/line endings; tokens stay in page memory. Distinct
+  tab navigation labels and keyboard-focusable horizontal data regions fix actual
+  desktop/mobile axe findings. Seven final browser/size/RTL audits have no violations.
+- Actual four-run replay passed analytic decay, stiff Robertson Radau/BDF/conservation
+  and original unit scaling; wrong units/equations and a real deadline publish no
+  success and leave no solver container. This does not establish biological validity.
+- Final make check-docker: 402 tests/29.00 seconds/88% coverage, strict mypy 86 files,
+  18 frontend tests, current schemas/OpenAPI and all package builds. Host make build
+  passed; old schemas/OpenAPI operations/root uv.lock and 24 original license hashes
+  remain unchanged. See docs/cellml-verification-2026-10-17.json and the E5 guide.
+- Backup backups/pre-cellml-20261017T212945Z is copied locally. All 74 earlier objects,
+  42 reference/22 native/7 cohort/4 hybrid/2 experiment runs, related events/nodes and
+  381 artifact byte sequences survived deployment. Original volume preserved; API
+  healthy/Worker running; new CellML reads and old reference/COPASI live runs pass.
+- Continue meaningful verified main commits/pushes, then dependency-ready roadmap
+  work. Ontology/data admission and remaining native adapters/benchmarks stay open;
+  source-only or numerically verified work must not be called biological validation.

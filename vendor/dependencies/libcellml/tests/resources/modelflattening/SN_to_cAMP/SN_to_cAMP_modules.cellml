@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="modules" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <component name="SN_pre_synaptic">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- state variables-->
+        <variable name="V_init" public_interface="in" units="milliV"/>
+        <variable initial_value="V_init" name="V" public_interface="out" units="milliV"/>
+        <variable name="Caz_init" public_interface="in" units="dimensionless"/>
+        <variable initial_value="Caz_init" name="Caz" public_interface="out" units="dimensionless"/>
+        <variable name="NE_init" public_interface="in" units="dimensionless"/>
+        <variable initial_value="NE_init" name="NE" public_interface="out" units="dimensionless"/>
+        <!--algebraic variables-->
+        <variable name="iNa_N" units="nanoA"/>
+        <variable name="iCa_N" units="nanoA"/>
+        <variable name="ikv" units="nanoA"/>
+        <variable name="iA" units="nanoA"/>
+        <variable name="ikca" units="nanoA"/>
+        <variable initial_value="0.0" name="I_app" units="nanoA"/>
+        <!-- voltage-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>V</ci>
+                </apply>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="milliV_per_V">1000</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>iNa_N</ci>
+                        <ci>iCa_N</ci>
+                        <ci>ikv</ci>
+                        <ci>iA</ci>
+                        <ci>ikca</ci>
+                        <ci>I_app</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>iNa_N</ci>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>iCa_N</ci>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>ikv</ci>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>iA</ci>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>ikca</ci>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <!-- todo there are no calcium pumps, potentially needs improving.-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>Caz</ci>
+                </apply>
+                <cn cellml:units="nanoA">0.0</cn>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NE</ci>
+                </apply>
+                <cn cellml:units="dimensionless">0.0</cn>
+            </apply>
+        </math>
+    </component>
+</model>

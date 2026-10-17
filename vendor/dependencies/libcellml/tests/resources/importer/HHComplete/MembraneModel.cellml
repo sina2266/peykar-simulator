@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.cellml.org/cellml/2.0#" name="MembraneModel">
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="SodiumChannelModel.cellml">
+    <component component_ref="sodiumChannel" name="sodiumChannel"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="PotassiumChannelModel.cellml">
+    <component component_ref="potassiumChannel" name="potassiumChannel"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="LeakageModel.cellml">
+    <component component_ref="leakage" name="leakage"/>
+  </import>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="MembraneModelController.cellml">
+    <component component_ref="controller" name="controller"/>
+  </import>
+  <units name="mV">
+    <unit prefix="milli" units="volt"/>
+  </units>
+  <units name="ms">
+    <unit prefix="milli" units="second"/>
+  </units>
+  <units name="mS_per_cm2">
+    <unit prefix="milli" units="siemens"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <units name="microA_per_cm2">
+    <unit prefix="micro" units="ampere"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <units name="microF_per_cm2">
+    <unit prefix="micro" units="farad"/>
+    <unit exponent="-2" prefix="centi" units="metre"/>
+  </units>
+  <component name="membrane">
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="i_stim" units="microA_per_cm2" interface="public_and_private"/>
+  </component>
+  <component name="membraneParameters">
+    <variable name="V" units="mV" interface="public_and_private" initial_value="-75" />
+    <variable name="Cm" units="microF_per_cm2" interface="public_and_private" initial_value="1" />
+  </component>
+  <component name="membraneEquations">
+    <variable name="V" units="mV" interface="public_and_private"/>
+    <variable name="t" units="ms" interface="public_and_private"/>
+    <variable name="i_K" units="microA_per_cm2" interface="public_and_private"/>
+    <variable name="i_Na" units="microA_per_cm2" interface="public_and_private"/>
+    <variable name="i_L" units="microA_per_cm2" interface="public_and_private"/>
+    <variable name="i_stim" units="microA_per_cm2" interface="public_and_private"/>
+    <variable name="i_tot" units="microA_per_cm2"/>
+    <variable name="Cm" units="microF_per_cm2" interface="public_and_private"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"
+      xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+      <apply><eq/>
+        <ci>i_tot</ci>
+        <apply><plus/>
+          <apply><minus/>
+            <ci>i_stim</ci>
+          </apply>
+          <ci>i_K</ci>
+          <ci>i_Na</ci>
+          <ci>i_L</ci>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>t</ci>
+          </bvar>
+          <ci>V</ci>
+        </apply>
+        <apply>
+          <divide/>
+          <apply>
+            <times/>
+            <cn cellml:units="dimensionless">-1</cn>
+            <ci>i_tot</ci>
+          </apply>
+          <ci>Cm</ci>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <connection component_1="membraneEquations" component_2="sodiumChannel">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="i_Na" variable_2="i_Na"/>
+    <map_variables variable_1="E_Na" variable_2="E_Na"/>
+    <map_variables variable_1="g_Na" variable_2="g_Na"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="membraneEquations" component_2="potassiumChannel">
+    <map_variables variable_1="t" variable_2="t"/>
+    <map_variables variable_1="i_K" variable_2="i_K"/>
+    <map_variables variable_1="g_K" variable_2="g_K"/>
+    <map_variables variable_1="E_K" variable_2="E_K"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="membraneEquations" component_2="leakage">
+    <map_variables variable_1="i_L" variable_2="i_L"/>
+    <map_variables variable_1="g_L" variable_2="g_L"/>
+    <map_variables variable_1="E_L" variable_2="E_L"/>
+    <map_variables variable_1="V" variable_2="V"/>
+  </connection>
+  <connection component_1="membraneEquations" component_2="membraneParameters">
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="Cm" variable_2="Cm"/>
+  </connection>
+  <connection component_1="membraneEquations" component_2="membrane">
+    <map_variables variable_1="i_stim" variable_2="i_stim"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <connection component_1="controller" component_2="membrane">
+    <map_variables variable_1="i_stim" variable_2="i_stim"/>
+    <map_variables variable_1="t" variable_2="t"/>
+  </connection>
+  <encapsulation>
+    <component_ref component="membrane">
+      <component_ref component="membraneEquations">
+        <component_ref component="sodiumChannel"/>
+        <component_ref component="potassiumChannel"/>
+        <component_ref component="leakage"/>
+      </component_ref>
+      <component_ref component="membraneParameters"/>
+    </component_ref>
+  </encapsulation>
+</model>

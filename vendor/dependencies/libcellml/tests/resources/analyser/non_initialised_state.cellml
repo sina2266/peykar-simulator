@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="non_initialised_state" xmlns="http://www.cellml.org/cellml/2.0#" xmlns:cellml="http://www.cellml.org/cellml/2.0#">
+    <units name="per_second">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <component name="my_component">
+        <variable interface="public" name="time" units="second"/>
+        <variable name="x" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>x</ci>
+                </apply>
+                <cn cellml:units="per_second">1</cn>
+            </apply>
+        </math>
+    </component>
+</model>
