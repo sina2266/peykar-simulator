@@ -1,0 +1,67 @@
+{
+  "$id": "urn:peykar:schema:NativeRunResult:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "additionalProperties": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "maxProperties": 100,
+      "minProperties": 1,
+      "title": "Artifacts",
+      "type": "object"
+    },
+    "driver_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Driver Digest",
+      "type": "string"
+    },
+    "image_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Image Digest",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "manifest_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scientific_validity": {
+      "const": "not_established",
+      "default": "not_established",
+      "title": "Scientific Validity",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "manifest_digest",
+    "image_digest",
+    "driver_digest",
+    "artifacts",
+    "limitations"
+  ],
+  "title": "NativeRunResult",
+  "type": "object"
+}

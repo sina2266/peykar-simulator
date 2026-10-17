@@ -1,0 +1,246 @@
+{
+  "observed_at": "2026-10-17T08:33:47.685541+00:00",
+  "scope": "local_single_workspace_native_agent",
+  "live_api_runs": {
+    "runs": [
+      {
+        "run": {
+          "schema_version": "1.0.0",
+          "id": "a80fb520-715c-4604-9969-213bc1af526b",
+          "manifest_digest": "ced79b8e24a4d10dd2a6908f046c06dae5b94419ce61adb132e0447c2e1516cc",
+          "status": "succeeded",
+          "created_at": "2026-10-17T08:32:37.107974+00:00",
+          "updated_at": "2026-10-17T08:32:39.019771+00:00",
+          "cancel_requested": false,
+          "result_digest": "4b34b245c771bb0f9b42c982fb1e2666735f7308724e5cf41404919a4227df34",
+          "error": null
+        },
+        "result": {
+          "schema_version": "1.0.0",
+          "run_id": "a80fb520-715c-4604-9969-213bc1af526b",
+          "manifest_digest": "ced79b8e24a4d10dd2a6908f046c06dae5b94419ce61adb132e0447c2e1516cc",
+          "image_digest": "06f7dae30d19071ba732b4fe0a5957f7beabba49cbef31dbf20694547b4acded",
+          "driver_digest": "8d7f5d7b958458070d5e650b258f8da334ac81bf93c8a8fb388ae5f18aabce72",
+          "artifacts": {
+            "native.csv": "039bf8a473753af1cfa772ac975123c51385f1861472d90afed3dc574a34175a",
+            "quantities.json": "042b3c9463a4ba0f99f6d3f2fd19a0d47476cd335890b6c17480fa52d46a71d2"
+          },
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Actual native solver output; independent scientific validity remains open.",
+            "Original model, native units and exact image/driver identities retained."
+          ]
+        },
+        "native_metadata": {
+          "engine": "COPASI",
+          "model_units": {
+            "time_unit": "s",
+            "quantity_unit": "mol",
+            "length_unit": "m",
+            "area_unit": "m²",
+            "volume_unit": "l"
+          },
+          "samples": 11,
+          "species": [
+            {
+              "name": "A",
+              "display_name": "A",
+              "unit": "mol/l",
+              "compartment": "cell",
+              "sbml_id": "A"
+            },
+            {
+              "name": "B",
+              "display_name": "B",
+              "unit": "mol/l",
+              "compartment": "cell",
+              "sbml_id": "B"
+            }
+          ],
+          "columns": [
+            "A",
+            "B"
+          ],
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Native deterministic integration; scientific applicability remains unvalidated.",
+            "Original SBML, compartment/species/parameter units and runtime identity are retained."
+          ]
+        },
+        "idempotency_verified": true,
+        "max_analytic_error": 1.5673282000028266e-07,
+        "max_conservation_error": 3.3306690738754696e-16
+      },
+      {
+        "run": {
+          "schema_version": "1.0.0",
+          "id": "e682d2cc-6404-493a-9cda-d725eafb9381",
+          "manifest_digest": "4f321d7ef92a374ac380f8ff5954436a1bd0bbe77ede0c0cb5c270a3dbee70f9",
+          "status": "succeeded",
+          "created_at": "2026-10-17T08:32:37.130887+00:00",
+          "updated_at": "2026-10-17T08:32:43.706831+00:00",
+          "cancel_requested": false,
+          "result_digest": "9546e2b287ce85e3c112348b8a7d866206ecf7ab2901c1bebe39b2007b553917",
+          "error": null
+        },
+        "result": {
+          "schema_version": "1.0.0",
+          "run_id": "e682d2cc-6404-493a-9cda-d725eafb9381",
+          "manifest_digest": "4f321d7ef92a374ac380f8ff5954436a1bd0bbe77ede0c0cb5c270a3dbee70f9",
+          "image_digest": "c6d8c56338b888c5da0f3ab98538756040547fa2e37722a6b22ea3ba4245d682",
+          "driver_digest": "88fcfd7c6f4226d892984349e417d087f50c3bd16281de660e7aeea3d303e110",
+          "artifacts": {
+            "native.csv": "a238f212b697af0bfc7b7a02735da05119169a82811386259ef214c3ba2576d2",
+            "quantities.json": "d607bf15e0daaf1b677ed7936da113b64e1faf420dc0d40470c579baba980c17"
+          },
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Actual native solver output; independent scientific validity remains open.",
+            "Original model, native units and exact image/driver identities retained."
+          ]
+        },
+        "native_metadata": {
+          "engine": "OSPSuite",
+          "version": "12.4.5",
+          "samples": 491,
+          "quantities": {
+            "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)": {
+              "unit": "µmol/l",
+              "dimension": "Concentration (molar)"
+            },
+            "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound": {
+              "unit": "µmol/l",
+              "dimension": "Concentration (molar)"
+            },
+            "Time": {
+              "unit": "min",
+              "dimension": "Time"
+            }
+          },
+          "scientific_validity": "not_established",
+          "limitations": [
+            "Original PKML output schedule and native units retained.",
+            "Native execution does not establish independent biological validity."
+          ]
+        },
+        "idempotency_verified": true
+      }
+    ],
+    "queued_cancellation": {
+      "schema_version": "1.0.0",
+      "id": "3d3d0816-e3ad-439d-8c05-c59fc9a4b644",
+      "manifest_digest": "dbac674422dbc107a5ebe7a81107b754cc4c5b29043718763fe0d9a991818534",
+      "status": "cancelled",
+      "created_at": "2026-10-17T08:32:43.741915+00:00",
+      "updated_at": "2026-10-17T08:32:43.747511+00:00",
+      "cancel_requested": true,
+      "result_digest": null,
+      "error": null
+    },
+    "scientific_validity": "not_established",
+    "image_installation_or_pull": false
+  },
+  "live_failure_tests": [
+    {
+      "mode": "cancelled",
+      "run": {
+        "schema_version": "1.0.0",
+        "id": "5e7b7029-167d-4199-b255-2e2e9339df2c",
+        "manifest_digest": "b712cb7ecaa0eb0b8447dc8903b937e61270d5283bd67cf29f12327262b78138",
+        "status": "cancelled",
+        "created_at": "2026-10-17T08:33:01.351830+00:00",
+        "updated_at": "2026-10-17T08:33:03.662499+00:00",
+        "cancel_requested": true,
+        "result_digest": null,
+        "error": null
+      },
+      "agent_error": "Cancelled",
+      "container_removed": true
+    },
+    {
+      "mode": "timeout",
+      "run": {
+        "schema_version": "1.0.0",
+        "id": "b558d682-c9f9-47aa-9392-1d1624156587",
+        "manifest_digest": "bdc6da0fffbb1c38cb64a46309bcf8a563cd7cd97d459d9e8b60eae0ce1ab645",
+        "status": "failed",
+        "created_at": "2026-10-17T08:33:03.691060+00:00",
+        "updated_at": "2026-10-17T08:33:04.010283+00:00",
+        "cancel_requested": false,
+        "result_digest": null,
+        "error": "native_execution_failed"
+      },
+      "agent_error": "TimeoutError",
+      "container_removed": true
+    }
+  ],
+  "data_preservation": {
+    "all_original_rows_retained": {
+      "objects": 57,
+      "runs": 11,
+      "events": 33,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8
+    },
+    "all_original_artifacts_unchanged": 342,
+    "sqlite_user_version": 1,
+    "current_counts": {
+      "objects": 61,
+      "runs": 12,
+      "events": 36,
+      "experiment_runs": 2,
+      "experiment_nodes": 4,
+      "experiment_events": 8,
+      "native_runs": 7,
+      "native_events": 21
+    },
+    "original_licenses_unchanged": 24
+  },
+  "final_linux_regression": {
+    "command": "make check-docker",
+    "tests_passed": 312,
+    "seconds": 16.93,
+    "coverage_percent": 87,
+    "strict_mypy_files": 71,
+    "schemas_current": true,
+    "all_three_wheels_and_sdists_built": true
+  },
+  "host_package_build": {
+    "command": "make build",
+    "passed": true
+  },
+  "ordinary_worker_smoke": {
+    "run_id": "df7b36ae-09d2-469f-a9ce-e77779254991",
+    "status": "succeeded",
+    "samples": 11,
+    "idempotency_verified": true
+  },
+  "retained_rejected_attempt": {
+    "run_id": "f424b790-ba29-4e28-b85d-0e6e3daa089b",
+    "status": "failed",
+    "reason": "Original IndividualId identity column initially required an invented unit; validator corrected, failure retained."
+  },
+  "scientific_validity": "not_established",
+  "limitations": [
+    "Only COPASI SBML and OSPSuite PKML use this native queue.",
+    "External host agent lifecycle remains separate from API/ordinary Worker.",
+    "No CellML, native DAG coupling, checkpoint/resume or independent biological validation."
+  ],
+  "persistent_host_loop_smoke": {
+    "run": {
+      "schema_version": "1.0.0",
+      "id": "a68cb549-d325-4a2a-b4b4-5ce4d063f316",
+      "manifest_digest": "72b3fc92f46f59a07359ea7ce89c67b50602e8cb155accb82e703286474495b5",
+      "status": "succeeded",
+      "created_at": "2026-10-17T08:34:08.186501+00:00",
+      "updated_at": "2026-10-17T08:34:10.419088+00:00",
+      "cancel_requested": false,
+      "result_digest": "760aee9c8ffb92d75446a8a3cb5808b91d7d194a6768852a1d085efddca2debb",
+      "error": null
+    },
+    "independent_loop_agent": true,
+    "result_artifact_hashes_verified": true,
+    "anonymous_native_model_read_status": 401
+  }
+}

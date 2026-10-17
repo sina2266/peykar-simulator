@@ -18,8 +18,8 @@ combines them into a misleading overall completion score.
 | S0 | Preserve data, licenses and reliable local execution | None | Working local foundation; production deployment open |
 | S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
 | S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
-| S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet working; SBML/CellML/omics/image adapters open |
-| S4 | General experiment orchestration | S0,S3 | Durable DAG workflows with terminal-to-initial scalar transfer working; ensembles and external-engine queue open |
+| S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet and declarative SBML/PKML working; CellML/omics/image admission open |
+| S4 | General experiment orchestration | S0,S3 | Durable scalar DAG workflows plus external native agent for COPASI/OSP; ensembles and other native adapters open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
 | S7 | Controlled model optimization and improvement | S1,S4,S6 | Limited decay calibration only; challenger/promotion workflow open |
@@ -88,7 +88,8 @@ and context; a graph relation never silently authorizes an executable coupling.
 - [x] S3.1 Admit immutable JSON packages and digest-pinned local external inventories.
 - [x] S3.2 Preserve raw/normalized CSV and native vCornea count/height artifacts with units and lineage.
 - [x] S3.3 Acquire three severities of real published simulation references and a separate attributed experimental aggregate.
-- [ ] S3.4 Implement SBML/CellML admission with compartment/species/parameter units and an isolated solver; distinguish declarative model files from executable code.
+- [x] S3.4a Admit exact declarative SBML core L2/L3 and original PKML with context/license and unit metadata; execute with isolated pinned COPASI/OSPSuite drivers through the native agent.
+- [ ] S3.4b Add CellML admission and a reviewed solver, retaining the same declarative/executable distinction.
 - [ ] S3.5 Add AnnData/SpatialData and image/geometry readers in separate runtimes with donor/assay/license metadata.
 - [ ] S3.6 Add explicit GEO, CELLxGENE, HuBMAP, BioModels, Physiome/ModelDB and Hugging Face connectors only where source terms and a concrete experiment support them.
 - [ ] S3.7 Add donor/experiment-level split authority, data quality decisions and dataset-to-model impact tracking.
@@ -103,7 +104,8 @@ units/context/transformations testable and no automatic execution from data impo
 - [x] S4.3 Enqueue child and attach it to its experiment atomically; test concurrency, retries, rollback, cancellation and failure propagation.
 - [x] S4.4 Expose register/submit/status/cancel/results/events through authenticated API/CLI; retain each child's manifest/result provenance.
 - [ ] S4.5 Add batch/ensemble/sweep plans with resource aggregation and deterministic seed allocation.
-- [ ] S4.6 Add an external-engine agent protocol that consumes admitted runtime/source bundles without exposing a Docker socket or host credentials to the API.
+- [x] S4.6 Add a durable external-engine agent protocol consuming admitted runtime/source identities, with no API Docker socket or host credentials. Actual COPASI SBML and OSPSuite PKML jobs pass model admission → claim → solver → verified API output.
+- [ ] S4.6b Extend the reviewed agent to remaining native engines and explicitly bound native experiment nodes; runtime probes alone do not provide queue adapters.
 - [ ] S4.7 Add checkpoint/restart and engine capability negotiation; never claim unsupported state restoration.
 
 Exit for the delivered subset: a real upstream result initializes the downstream
@@ -155,13 +157,13 @@ Changing pristine upstream source solely to make it look “optimized” does no
 | Engine/model | Source state | Next execution task | Interaction gate |
 |---|---|---|---|
 | vCornea / CC3D 4.7.0 | Git and licensed archive preserved; native runtime executed | Full published scenario and original-analysis correspondence; general external agent | Existing EGF process ownership, lattice/time/observation mapping |
-| COPASI | Complete Build-309 source | Installed 4.47.309 runtime; real SBML numerical probe passes; general SBML admission/queue next | Compartment volumes, species units, reaction ownership |
+| COPASI | Complete Build-309 source | Installed 4.47.309 runtime; actual admitted SBML API/agent jobs and analytical checks pass; biological model benchmarks next | Compartment volumes, species units, reaction ownership |
 | VCell | Complete 8.2.1.01 plus eight native solver sources | Original BioModel1 OMEX runs with real HDF5; general model/queue adapter next | Intracellular geometry and PDE/ODE boundaries |
 | PhysiCell / BioFVM | Complete 1.14.2 and source-built MaBoSS | Native template and original 486-cell Boolean fixture execute; general agent/field exchange next | Agent state, substrate flux and phenotype ownership |
 | Chaste | Complete 2026.1 source; matching official native build | Original ODE and both Delta/Notch monolayers pass; refinement/context-specific tissue evidence next | Mesh, mechanics/electrophysiology and conservation |
 | NEURON | Complete 9.0.2 with recursive submodules | Actual native HH current clamp passes; general model/morphology admission next | Voltage/current/ion semantics and morphology |
-| PK-Sim | Complete v12.3.173 source/dependencies | OSPSuite headless PKML runs; Windows project-authoring GUI remains separate | Exposure/PBPK compartments, populations and physiological context |
-| MoBi | Complete v12.3.136 source/dependencies | Same headless computation profile runs original Aciclovir PKML; building-block admission next | Building-block ownership and kinetic/physiological interfaces |
+| PK-Sim | Complete v12.3.173 source/dependencies | Original PKML executes through the durable API/agent queue; Windows project-authoring GUI remains separate | Exposure/PBPK compartments, populations and physiological context |
+| MoBi | Complete v12.3.136 source/dependencies | Original Aciclovir PKML runs through API/agent; original schedule/units retained; building-block admission next | Building-block ownership and kinetic/physiological interfaces |
 | GEARS | Complete pinned source, own CPU lock | Network forward/backward and real Dixit H5AD reader pass; full original screen/split/benchmark next | Cell type/training context; transcript changes do not directly define tissue effects |
 
 These workstreams can progress independently. No engine must be forced into an
@@ -207,8 +209,9 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
 
 1. **Delivered in this continuation:** S1–S4 shared source/graph/workflow backends,
    full Linux verification and live deployment without resetting data.
-2. Resolve/build the COPASI and PhysiCell execution profiles and general external
-   agent (S1.4–S1.5, S3.4, S4.6); freeze independent original benchmarks.
+2. Native computational profiles are installed/executed, and S4.6 now delivers
+   actual COPASI/OSP model jobs. Extend agent adapters/native DAG nodes (S4.6b),
+   CellML admission (S3.4b) and independent original benchmarks (S1.5).
 3. Build the shared UI and Biological/Model/Experiment workspaces on those actual APIs
    while S6 gathers measurement/context evidence.
 4. Add one explicit numerical coupling and its biological bridge (S5), then expand

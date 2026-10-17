@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version2/core" level="3" version="2">
+<model id="peykar_transfer" substanceUnits="mole" timeUnits="second" volumeUnits="litre" extentUnits="mole">
+<listOfUnitDefinitions><unitDefinition id="per_second"><listOfUnits><unit kind="second" exponent="-1" scale="0" multiplier="1"/></listOfUnits></unitDefinition></listOfUnitDefinitions>
+<listOfCompartments><compartment id="cell" size="1" spatialDimensions="3" units="litre" constant="true"/></listOfCompartments>
+<listOfSpecies><species id="A" compartment="cell" initialConcentration="1" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+<species id="B" compartment="cell" initialConcentration="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/></listOfSpecies>
+<listOfParameters><parameter id="k" value="0.1" units="per_second" constant="true"/></listOfParameters>
+<listOfReactions><reaction id="transfer" reversible="false"><listOfReactants><speciesReference species="A" stoichiometry="1" constant="true"/></listOfReactants><listOfProducts><speciesReference species="B" stoichiometry="1" constant="true"/></listOfProducts>
+<kineticLaw><math xmlns="http://www.w3.org/1998/Math/MathML"><apply><times/><ci>k</ci><ci>A</ci><ci>cell</ci></apply></math></kineticLaw></reaction></listOfReactions>
+</model></sbml>

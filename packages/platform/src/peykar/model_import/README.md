@@ -20,4 +20,9 @@ immutable registration. API reads expose this independently of queue capability.
 It never starts processes, installs dependencies, fetches images or executes
 upstream code. See runtime_profiles/README.md.
 
+`native_models.py` admits bounded declarative SBML/PKML XML, preserves exact bytes
+and original units and rejects entities/includes. Operator-only execution profiles
+pin an existing runtime and reviewed driver; admission starts no engine. A separate
+external agent executes explicitly submitted native jobs. See docs/native-agent.md.
+
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

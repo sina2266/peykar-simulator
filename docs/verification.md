@@ -1,5 +1,69 @@
 # Verification record
 
+## Declarative SBML/PKML and native agent: 2026-10-17 local
+
+[Actual retained outcomes](native-agent-verification-2026-10-17.json) include exact
+live run/result/image/driver/artifact identities and preservation counts. This is
+engineering verification of two native drivers, not completion of the platform.
+
+- `uv run pytest -q tests/integration/test_native_jobs.py`: **32 passed** after the
+  real-output correction. Covers immutable raw XML/units, hostile XML, model/profile
+  compatibility, idempotency/concurrent claims, additive migration preservation,
+  stale leases, cancellation, numerical envelopes, API roles/claim tokens, local
+  image/driver allowlists, output symlinks and supervised cancellation/timeout.
+- Final **`make check-docker` passed**: Ruff lint/format, strict Mypy **71** source
+  files, **312 tests in 16.93 seconds**, **87%** statement coverage, current generated
+  schemas/OpenAPI and all three wheel/sdist pairs. `make build` also passed on the
+  host. The platform wheel includes `003_native_runs.sql` and native modules.
+  Earlier immutable schema JSON files and the workspace uv lock were not changed.
+- `scripts/verify_native_agent.py` passed against isolated API port 8012 for actual
+  COPASI SBML and original OSPSuite PKML, including minute-to-second conversion.
+  The temporary development server was stopped after verification.
+- Before deployment, SQLite's backup API plus artifact copy created
+  `backups/pre-native-agent-20261017T082908Z/`, copied to local `.peykar/backups/`.
+  Ordinary/experiment queues were idle. `docker compose build` and
+  `docker compose up -d --no-build` rebuilt/recreated API and Worker on the same
+  `peykar3_peykar-data` volume, without adding Docker socket access.
+- Offline `peykar native register-profile` admitted both reviewed profiles; offline
+  `register-model` admitted original **7,428,313-byte** Aciclovir PKML from the
+  vendored OSPSuite-R source. Its exact SHA-256 is retained in the model metadata.
+  The existing 2 MB HTTP limit remains; declarative XML admission is capped at 10 MiB.
+- The first live PKML attempt correctly failed publication because the validator
+  mistook native `IndividualId` for a physical quantity. Run
+  `f424b790-ba29-4e28-b85d-0e6e3daa089b` remains failed. The fix retains that original
+  integer identity without assigning a unit and rejects mixed/noninteger identities;
+  native quantity metadata must match every other column. Actual output replay,
+  targeted tests and the final full regression above passed after this correction.
+- Live command `uv run python scripts/verify_native_agent.py --output
+  .peykar/native-agent-live-final-verification --pkml-model-id native.aciclovir`
+  passed: HTTP SBML admission, idempotent native jobs, real Docker solvers, downloaded
+  artifact hashes, event order and queued cancellation. COPASI run
+  `a80fb520-715c-4604-9969-213bc1af526b` returned **11** points over **one minute**,
+  max analytical error **1.5673282e-7**, conservation error **3.3306691e-16**.
+  Original PKML run `e682d2cc-6404-493a-9cda-d725eafb9381` returned **491** samples,
+  original **µmol/l** and **minute** metadata, with no schedule override.
+- An explicit local failure check used the real installed containers: cancelling
+  running PKML `5e7b7029-167d-4199-b255-2e2e9339df2c` ended cancelled; a 0.05-second
+  COPASI budget `b558d682-c9f9-47aa-9392-1d1624156587` ended failed with `TimeoutError`.
+  Both published no result and left no named native container behind.
+- Started `peykar native agent ... --loop` separately on the host. It consumed a new
+  HTTP-submitted job without the verifier executing the container itself: run
+  `a68cb549-d325-4a2a-b4b4-5ce4d063f316` succeeded and output hashes matched. Anonymous
+  native model access returned **401**. Agent startup is separate from Compose and
+  needs host lifecycle supervision across restarts; it is not installed as an OS service.
+- Existing ordinary Worker verification via `scripts/verify_api.py
+  experiments/manifests/decay.json` passed again, run
+  `df7b36ae-09d2-469f-a9ce-e77779254991`, **11 samples**, idempotency and hashes checked.
+- Post-upgrade comparisons retained every pre-upgrade row: **57 objects, 11 ordinary
+  runs, 33 events, 2 experiments, 4 nodes and 8 experiment events**. All **342** prior
+  artifact hashes and **24** original license hashes match; SQLite `user_version`
+  remains **1**. New records are additive, including the retained failed attempt.
+
+CellML, other native engine queue adapters, native DAG integration, independent
+biological validation, checkpoint/resume, feedback coupling and complete UI remain
+open in the roadmap. Historical operator-probe evidence was not rewritten to
+advertise the new, separately registered execution profiles.
+
 ## Permanent sources and installed runtimes: 2026-10-17 local
 
 The [observed summary](native-runtime-verification-2026-10-17.json) and

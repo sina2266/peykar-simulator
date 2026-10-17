@@ -87,11 +87,47 @@ commands/outcomes in `docs/verification.md`.
   19,264 genes, 21 conditions. Only bounded matrix QC ran; no GEARS original split,
   trained predictor score, donor independence or cross-cell-type validity is claimed.
 - `NativeRuntimeService` admits offline operator evidence with source/image/artifact
-  checks; `/v1/runtimes` and `peykar runtimes` expose 11 immutable records. API/Worker
-  have no Docker socket. General external-engine queue execution remains S4.6.
+  checks; `/v1/runtimes` and `peykar runtimes` expose 11 immutable historical probe
+  records. API/Worker have no Docker socket. The subsequent native-agent milestone
+  below implements S4.6 for two explicit driver kinds.
 - Final full regression passed: 280 tests, 88% coverage, strict mypy 65 files and all
   package builds. Deployed API/Worker share the original volume; real submit/result
   smoke passed. All 34 old objects, 10 old runs, all related events/workflows and 46
   old artifact byte sequences survived. All 24 original project license hashes match.
 - Pre-runtime backup `backups/pre-runtimes-20261016T220136Z/` is also copied locally.
   Keep older backups, model/schema versions, raw datasets and partial downloads.
+
+## Declarative native model/agent milestone, 2026-10-17
+
+- `NativeModelService` preserves exact bounded SBML core L2/L3 and PKML XML,
+  context/license and original units. DTD/entities/includes are rejected; model
+  admission never executes code. Original Aciclovir PKML is 7,428,313 bytes and
+  uses offline admission under the 10 MiB limit; keep the existing 2 MB HTTP cap.
+- `NativeExecutionProfile` separately pins a historical runtime and reviewed
+  driver. Do not rewrite the immutable probe's `managed_queue_supported=false`;
+  new `/v1/native-profiles` describes queue capability. The host's local catalog
+  must independently match image/driver hashes; no automatic image pulls.
+- S4.6 now has a dedicated additive SQLite queue/events migration, physical controls,
+  idempotency, 30-second fenced leases, cancellation and checked numerical outputs.
+  API/ordinary Worker never run Docker. The explicitly started host agent supports
+  COPASI SBML and OSPSuite PKML; other native adapters, CellML, native DAG nodes and
+  feedback/checkpoints remain open. Read docs/native-agent.md before extension.
+- OSPSuite retains the original `IndividualId` identity column, with no invented
+  physical unit. This driver admits one individual; quantity metadata must match
+  the remaining columns. A rejected first live attempt remains as a failed record.
+- Final Linux regression after that actual-output fix: 312 tests passed, strict
+  mypy 71 source files, current schemas and all package wheel/sdist builds. The
+  operator replay script is scripts/verify_native_agent.py; it retains every run.
+- Pre-upgrade backup `backups/pre-native-agent-20261017T082908Z/` is copied locally;
+  it contains 57 objects, 11 ordinary runs, 33 events, two workflows/four nodes/eight
+  workflow events and 342 artifact byte sequences. Preserve it and older backups.
+- Final deployed checks retained all those rows/artifact bytes and 24 original
+  license hashes. API/ordinary Worker are healthy; native COPASI (11 samples) and
+  original PKML (491 samples) passed actual submit/result verification. Real
+  running cancellation/timeout removed their containers and published no results.
+  The separately started host `native agent --loop` consumed another actual job;
+  it is not an installed OS service and needs supervision across host restarts.
+  See docs/native-agent-verification-2026-10-17.json for exact retained run identities.
+- Git milestone d5b7f25a successfully pushed complete upstream source distribution
+  to main. Continue committing/pushing only completed, verified meaningful steps;
+  serialize index mutations with the app and never remove a live index lock.

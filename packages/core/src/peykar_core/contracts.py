@@ -397,6 +397,86 @@ class NativeRuntimeEvidence(Contract):
     limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
 
 
+class NativeModelSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    format: Literal["sbml", "pkml"]
+    context: ScientificContext
+    license: Annotated[str, Field(min_length=1, max_length=500)]
+    source: Annotated[str, Field(min_length=1, max_length=2000)]
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class NativeModelInspection(Contract):
+    root: str
+    namespace: str
+    model_time_unit: str | None = None
+    parameter_units: dict[str, str | None] = {}
+    species_units: dict[str, str | None] = {}
+    compartment_units: dict[str, str | None] = {}
+    warnings: tuple[str, ...] = ()
+
+
+class NativeModelPackage(Contract):
+    spec: NativeModelSpec
+    content_digest: Sha256
+    inspection: NativeModelInspection
+    scientific_validity: Literal["not_established"] = "not_established"
+
+
+class NativeExecutionProfile(Contract):
+    id: Identifier
+    version: Version
+    kind: Literal["copasi_sbml", "osp_pkml"]
+    runtime: Reference
+    driver_digest: Sha256
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class NativeRunSpec(Contract):
+    model: Reference
+    profile: Reference
+    duration: Quantity | None = None
+    intervals: Annotated[StrictInt, Field(ge=1, le=10000)] | None = None
+    wall_seconds: Annotated[Positive, Field(le=600)] = 180.0
+
+
+class NativeRunManifest(Contract):
+    run_id: str
+    created_at: str
+    plan: NativeRunSpec
+    model_snapshot: NativeModelPackage
+    profile_snapshot: NativeExecutionProfile
+    runtime_snapshot: NativeRuntimeEvidence
+
+
+class NativeRunRecord(Contract):
+    id: str
+    manifest_digest: Sha256
+    status: RunStatus
+    created_at: str
+    updated_at: str
+    cancel_requested: bool = False
+    result_digest: Sha256 | None = None
+    error: str | None = None
+
+
+class NativeAgentClaim(Contract):
+    manifest: NativeRunManifest
+    token: Annotated[str, Field(pattern=r"^[a-f0-9]{32}$")]
+
+
+class NativeRunResult(Contract):
+    run_id: str
+    manifest_digest: Sha256
+    image_digest: Sha256
+    driver_digest: Sha256
+    artifacts: Annotated[dict[str, Sha256], Field(min_length=1, max_length=100)]
+    scientific_validity: Literal["not_established"] = "not_established"
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
 class ExperimentNode(Contract):
     id: Identifier
     plan: SimulationPlan

@@ -21,6 +21,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from peykar import __version__
 from peykar.api.middleware import BodyLimitMiddleware
+from peykar.api.native_routes import install_native_routes
 from peykar.api.platform_routes import install_platform_routes
 from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
 from peykar.data_fabric.csv_import import import_csv
@@ -155,6 +156,7 @@ def create_app(
 
     read = APIRouter(prefix="/v1", dependencies=[Depends(role)])
     write = APIRouter(prefix="/v1", dependencies=[Depends(write_access)])
+    install_native_routes(read, write, service)
 
     @read.get("/engines", tags=["models"])
     def engines(svc: Annotated[SimulationService, Depends(service)]) -> tuple[dict[str, str], ...]:

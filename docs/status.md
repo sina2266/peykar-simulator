@@ -9,7 +9,8 @@ interfaces/acceptance criteria without an executable integration.
 | uv monorepo with three distributions | Implemented | Core, engines, platform; one lockfile |
 | Model/data/scenario contracts and JSON Schemas | Implemented | Schema 1.0.0 only |
 | Versioned model registry and pinned dependencies | Implemented | Local persistent profile |
-| Declarative model import inspection | Partial | JSON only; no remote fetching or execution |
+| Declarative model import inspection | Partial | JSON plus bounded SBML core L2/L3 and PKML XML; exact raw bytes, context/license and original units; no execution during admission; CellML open |
+| External native agent and durable queue | Implemented for two kinds | COPASI SBML and OSPSuite PKML; immutable model/profile/runtime, local driver/image allowlist, leases/cancellation/timeout and validated native artifacts; separate host agent, no API Docker socket; other engines and native DAG composition open |
 | Offline external artifact admission | Partial | SHA-256 checks for every declared source/dependency/runtime-lock file; immutable local inventory; no installation, execution or undeclared dependency discovery |
 | Managed specialist source ecosystem | Implemented local source distribution | 25 permanent vendor distributions / 52,167 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
 | Native runtime evidence registry | Implemented locally | 11 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
@@ -70,7 +71,8 @@ tests or implemented biological integrations.
 Validation details for this delivered snapshot are in `docs/verification.md`.
 The completed engineering acceptance and remaining P1 scientific gate are recorded
 in [EPIC E1](epics/E1-vcornea-native-runtime.md). Native execution is an explicit
-operator workflow outside the management API; archived simulation benchmarks remain
+operator workflow for vCornea. SBML/PKML now have a separate durable API queue and
+explicit [host agent](native-agent.md); archived simulation benchmarks remain
 distinct from experimental observations.
 
 The [whole-platform roadmap](roadmap.md) now separates shared S0–S13 delivery from

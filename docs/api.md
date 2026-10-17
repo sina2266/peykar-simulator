@@ -83,6 +83,10 @@ for filters, limits and the lack of automatic job blocking/closure.
 Native operator evidence is available through authenticated reader/admin calls:
 `GET /v1/runtimes?engine=copasi` and `GET /v1/runtimes/{id}/versions/{version}`.
 `NativeRuntimeEvidence` includes source references, image/output digests,
-`managed_queue_supported=false` and limitations. Offline CLI admission verifies
-the retained bundle; there is no HTTP native installation/execution endpoint.
+`managed_queue_supported=false` and limitations for the historical operator probe.
+Offline CLI admission verifies the retained bundle. New `/v1/native-profiles`
+separately advertise reviewed queue drivers; `/v1/native-models` admits declarative
+SBML/PKML and `/v1/native-runs` manages explicit native jobs through an operator
+agent. Installation/profile registration stays offline; API has no Docker access.
+Full routes, permissions, limits and commands: [native agent](native-agent.md).
 See [runtime profiles](../runtime_profiles/README.md).

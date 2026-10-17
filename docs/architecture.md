@@ -188,5 +188,8 @@ identities, trust axes, claim/conflict registries and L0-L3 authority levels.
 Permanent `vendor/` sources and isolated `runtime_profiles/` builds keep heavy
 scientific runtimes outside core/API. The offline native-evidence registry verifies
 source references and image/output hashes, and exposes authenticated read-only
-discovery. It never invokes Docker or installs code in API/Worker. A separate
-external-engine agent/queue protocol remains S4.6. See runtime_profiles/README.md.
+discovery. It never invokes Docker or installs code in API/Worker. The
+external-engine protocol now has a separate durable native queue and local host
+agent for COPASI SBML/OSPSuite PKML. Immutable execution profiles reference the
+historical evidence; that evidence retains its original probe-only meaning.
+API/Worker never receive Docker access. See native-agent.md and runtime_profiles/README.md.

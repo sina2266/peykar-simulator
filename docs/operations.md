@@ -64,7 +64,8 @@ and independent security review are required for that threat model.
 `InProcessExecutor` is an explicit Python-only cooperative option for trusted
 integrations/tests. It lacks child process limits. The default bounded worker
 currently requires Linux; it fails explicitly elsewhere. No checkpoint/resume,
-native restart or general external-engine runtime is supplied.
+native restart is supplied. A separate explicitly allowlisted host agent now
+executes COPASI SBML and OSPSuite PKML; see [native operations](native-agent.md).
 
 ## API security
 

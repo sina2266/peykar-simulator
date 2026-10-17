@@ -33,8 +33,10 @@ PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongs
 vCornea. Retained source/runtime evidence is discoverable through the API/CLI. The
 workflow worker actually transfers terminal scalar outputs into downstream initial
 parameters, with atomic dispatch, units/context checks, cancellation and provenance.
-General native-engine queue adapters, continuous feedback coupling and the full UI remain
-explicit system tasks, independent of the eye-model publication gate.
+A separate [native execution agent](docs/native-agent.md) now runs admitted SBML
+through COPASI and original PKML through OSPSuite from durable API jobs, with
+frozen identities, cancellation and checksum-verified outputs. Other native queue
+adapters, continuous feedback coupling and the full UI remain explicit system tasks.
 
 [راهنمای فارسی](README.fa.md) · [Master blueprint](docs/master-blueprint.md) · [Architecture](docs/architecture.md) ·
 [Implementation status](docs/status.md) · [Roadmap](docs/roadmap.md) ·

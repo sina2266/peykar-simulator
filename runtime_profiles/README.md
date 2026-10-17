@@ -99,4 +99,8 @@ the API does not certify that another host has the image installed or can execut
 
 Authenticated `GET /v1/runtimes` and `GET /v1/runtimes/{id}/versions/{version}` expose
 these records, with optional `?engine=copasi` filtering. There is no HTTP installation
-or native-code execution endpoint and no Docker socket in API/Worker containers.
+endpoint and no Docker socket in API/Worker containers. A separate reviewed
+[native agent](../docs/native-agent.md) now consumes durable API jobs for admitted
+SBML/PKML, using the exact installed COPASI/OSP images and local driver allowlist.
+The historical probe receipts remain unchanged; new execution profiles describe
+this additional capability.
