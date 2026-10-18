@@ -194,6 +194,145 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/biology/process-networks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Discover */
+        get: operations["discover_v1_biology_process_networks_get"];
+        put?: never;
+        /** Register */
+        post: operations["register_v1_biology_process_networks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/process-networks/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get */
+        get: operations["get_v1_biology_process_networks__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/process-networks/{id}/versions/{version}/sources/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Source */
+        get: operations["source_v1_biology_process_networks__id__versions__version__sources__source_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/process-networks/{id}/versions/{version}/stoichiometry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stoichiometry */
+        get: operations["stoichiometry_v1_biology_process_networks__id__versions__version__stoichiometry_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/process-ownership": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Plans */
+        get: operations["plans_v1_biology_process_ownership_get"];
+        put?: never;
+        /** Own */
+        post: operations["own_v1_biology_process_ownership_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/process-ownership/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Plan */
+        get: operations["plan_v1_biology_process_ownership__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/state-frames": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Frames */
+        get: operations["frames_v1_biology_state_frames_get"];
+        put?: never;
+        /** Frame */
+        post: operations["frame_v1_biology_state_frames_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/state-frames/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Frame */
+        get: operations["get_frame_v1_biology_state_frames__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/biology/vocabularies": {
         parameters: {
             query?: never;
@@ -1844,6 +1983,75 @@ export interface components {
             /** Version */
             version: string;
         };
+        /** BiologicalProcessNetwork */
+        BiologicalProcessNetwork: {
+            /**
+             * Approval
+             * @default unreviewed_declaration
+             * @constant
+             */
+            approval: "unreviewed_declaration";
+            context: components["schemas"]["ScientificContext"];
+            /** Id */
+            id: string;
+            /** Limitations */
+            limitations: string[];
+            /** Reactions */
+            reactions: components["schemas"]["BiologicalReaction"][];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Sources */
+            sources: components["schemas"]["ProcessSource"][];
+            /** States */
+            states: components["schemas"]["MolecularState"][];
+            /** Title */
+            title: string;
+            /** Version */
+            version: string;
+        };
+        /** BiologicalReaction */
+        BiologicalReaction: {
+            /** Evidence */
+            evidence: string[];
+            /** External Id */
+            external_id: string;
+            /** Id */
+            id: string;
+            /** Inferred */
+            inferred: boolean;
+            /** Inputs */
+            inputs: components["schemas"]["StoichiometricTerm"][];
+            /** Label */
+            label: string;
+            /**
+             * Modifiers
+             * @default []
+             */
+            modifiers: components["schemas"]["ProcessModifier"][];
+            /** Outputs */
+            outputs: components["schemas"]["StoichiometricTerm"][];
+            /** Reversible */
+            reversible?: boolean | null;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Source Class */
+            source_class: string;
+            /** Source Id */
+            source_id: string;
+            /**
+             * Unexpanded Relations
+             * @default []
+             */
+            unexpanded_relations: components["schemas"]["ProcessSourceRelation"][];
+        };
         /** BiologicalRelationship */
         BiologicalRelationship: {
             context: components["schemas"]["ScientificContext"];
@@ -2855,6 +3063,139 @@ export interface components {
             /** Version */
             version: string;
         };
+        /** MolecularAttribute */
+        MolecularAttribute: {
+            /** Name */
+            name: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Value */
+            value: string;
+        };
+        /** MolecularLocation */
+        MolecularLocation: {
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+        };
+        /** MolecularState */
+        MolecularState: {
+            /**
+             * Alternatives
+             * @default []
+             */
+            alternatives: string[];
+            /**
+             * Attributes
+             * @default []
+             */
+            attributes: components["schemas"]["MolecularAttribute"][];
+            /**
+             * Components
+             * @default []
+             */
+            components: components["schemas"]["StoichiometricTerm"][];
+            /** External Id */
+            external_id: string;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "protein" | "chemical" | "complex" | "set" | "other";
+            /** Label */
+            label: string;
+            /** Locations */
+            locations: components["schemas"]["MolecularLocation"][];
+            /** Molecular Identity */
+            molecular_identity?: string | null;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Source Id */
+            source_id: string;
+            /** Species */
+            species?: string | null;
+        };
+        /** MolecularStateFrame */
+        MolecularStateFrame: {
+            /**
+             * Approval
+             * @default unreviewed_declaration
+             * @constant
+             */
+            approval: "unreviewed_declaration";
+            /** Network Digest */
+            network_digest: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            spec: components["schemas"]["MolecularStateFrameSpec"];
+        };
+        /** MolecularStateFrameSpec */
+        MolecularStateFrameSpec: {
+            context: components["schemas"]["ScientificContext"];
+            /** Evidence */
+            evidence: string[];
+            /** Id */
+            id: string;
+            /** Instance Id */
+            instance_id: string;
+            /** Limitations */
+            limitations: string[];
+            network: components["schemas"]["Reference"];
+            /**
+             * Origin
+             * @enum {string}
+             */
+            origin: "synthetic" | "experimental" | "model_output";
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            time: components["schemas"]["Quantity"];
+            /** Values */
+            values: components["schemas"]["MolecularStateValue"][];
+            /** Version */
+            version: string;
+        };
+        /** MolecularStateValue */
+        MolecularStateValue: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "amount" | "concentration" | "count";
+            quantity: components["schemas"]["Quantity"];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** State Id */
+            state_id: string;
+        };
         /** NativeAgentClaim */
         NativeAgentClaim: {
             manifest: components["schemas"]["NativeRunManifest"];
@@ -3283,6 +3624,149 @@ export interface components {
              */
             schema_version: "1.0.0";
         };
+        /** ProcessExclusion */
+        ProcessExclusion: {
+            /** Reaction Id */
+            reaction_id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+        };
+        /** ProcessModifier */
+        ProcessModifier: {
+            /** Activity */
+            activity?: string | null;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "catalyst" | "positive_regulator" | "negative_regulator" | "regulator";
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** State Id */
+            state_id: string;
+        };
+        /** ProcessOwnershipAssignment */
+        ProcessOwnershipAssignment: {
+            /** Evidence */
+            evidence: string[];
+            model: components["schemas"]["Reference"];
+            /**
+             * Model Kind
+             * @enum {string}
+             */
+            model_kind: "reference" | "native" | "cellml";
+            /** Owner Id */
+            owner_id: string;
+            /** Rationale */
+            rationale: string;
+            /** Reaction Ids */
+            reaction_ids: string[];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+        };
+        /** ProcessOwnershipPlan */
+        ProcessOwnershipPlan: {
+            /**
+             * Approval
+             * @default unreviewed_declaration
+             * @constant
+             */
+            approval: "unreviewed_declaration";
+            /**
+             * Execution Authorized
+             * @default false
+             * @constant
+             */
+            execution_authorized: false;
+            /** Model Digests */
+            model_digests: {
+                [key: string]: string;
+            };
+            /** Network Digest */
+            network_digest: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            spec: components["schemas"]["ProcessOwnershipSpec"];
+        };
+        /** ProcessOwnershipSpec */
+        ProcessOwnershipSpec: {
+            /**
+             * Assignments
+             * @default []
+             */
+            assignments: components["schemas"]["ProcessOwnershipAssignment"][];
+            context: components["schemas"]["ScientificContext"];
+            /**
+             * Exclusions
+             * @default []
+             */
+            exclusions: components["schemas"]["ProcessExclusion"][];
+            /** Id */
+            id: string;
+            network: components["schemas"]["Reference"];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Version */
+            version: string;
+        };
+        /** ProcessSource */
+        ProcessSource: {
+            /** Attribution */
+            attribution: string[];
+            /** Id */
+            id: string;
+            /** License */
+            license: string;
+            /** Raw Digest */
+            raw_digest: string;
+            /** Revision */
+            revision: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Url */
+            url: string;
+        };
+        /** ProcessSourceRelation */
+        ProcessSourceRelation: {
+            /** Label */
+            label: string;
+            /** Predicate */
+            predicate: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Target */
+            target: string;
+        };
         /** Quantity */
         Quantity: {
             /**
@@ -3553,6 +4037,27 @@ export interface components {
              * @constant
              */
             validity_status: "unvalidated";
+        };
+        /** StoichiometricTerm */
+        StoichiometricTerm: {
+            /**
+             * Denominator
+             * @default 1
+             */
+            denominator: number;
+            /**
+             * Numerator
+             * @default 1
+             */
+            numerator: number;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** State Id */
+            state_id: string;
         };
         /** VCorneaCellCountRequest */
         VCorneaCellCountRequest: {
@@ -4430,6 +4935,364 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discover_v1_biology_process_networks_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BiologicalProcessNetwork"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_v1_biology_process_networks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BiologicalProcessNetwork"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BiologicalProcessNetwork"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_v1_biology_process_networks__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BiologicalProcessNetwork"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    source_v1_biology_process_networks__id__versions__version__sources__source_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stoichiometry_v1_biology_process_networks__id__versions__version__stoichiometry_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plans_v1_biology_process_ownership_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessOwnershipPlan"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    own_v1_biology_process_ownership_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProcessOwnershipSpec"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessOwnershipPlan"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plan_v1_biology_process_ownership__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProcessOwnershipPlan"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    frames_v1_biology_state_frames_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MolecularStateFrame"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    frame_v1_biology_state_frames_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MolecularStateFrameSpec"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MolecularStateFrame"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_frame_v1_biology_state_frames__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MolecularStateFrame"];
                 };
             };
             /** @description Validation Error */

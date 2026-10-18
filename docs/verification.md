@@ -1,5 +1,63 @@
 # Verification record
 
+## E7 multiparty processes, ownership and instance frames: 2026-10-18 local
+
+[Observed receipt](process-verification-2026-10-18.json) and
+[E7 scope](epics/E7-multiparty-processes.md) record bounded S2.5 delivery.
+
+- Explicit `curl --fail --location` acquisition retained **19 original Reactome
+  query JSON responses / 138,226 bytes**, now committed with original versions,
+  SHA-256, URLs and CC0 attribution. An initial Python urllib request returned
+  HTTP 403; curl retrieved the original responses successfully. No model code,
+  linked website figure or media was fetched/executed.
+- `uv run python scripts/verify_processes.py --output .peykar/e7-final` passed
+  offline replay: **15 molecular states / 3 reactions**, exact raw hashes, net
+  dimerization coefficient **−2**, ATP/ADP coefficients **−12/+12**, separate catalyst,
+  seven ligand alternatives, original sequence ranges and six phosphorylation-site
+  declarations. Explicit ownership exclusions, original-unit synthetic sample,
+  rejected duplicate ownership/unresolved-set quantities/immutable overwrite and
+  reconstruction passed. Synthetic samples remain isolated from production.
+- `uv run pytest tests/integration/test_processes.py -q`: **38 passed**. Checks
+  include malformed/checksum/revision/path/missing-root source bundles, rational
+  coefficient bounds, composition cycles, unknown/duplicate states, context/model
+  ownership partition, concurrent immutable admission, count/concentration/time
+  units, corruption and API roles/body/pagination. No solver job is enqueued.
+- Final **`make check-docker`: 469 passed in 35.56 seconds, 89% statement coverage,
+  strict Mypy 94 files**, Ruff, current scientific schemas/OpenAPI, **18 frontend
+  tests** and all wheels/sdists. Host **`make build`** passed. All previous scientific
+  schemas/OpenAPI components/operations, root `uv.lock` and **24** original license
+  hashes remain unchanged; prior third-party notices remain as an exact prefix.
+- Actual Chromium (`agent-browser@0.39.1`) submitted structured ownership/exclusions
+  and an original-unit synthetic state frame. Changing an existing ownership version
+  returned an immutable conflict. **15** final axe/geometry checks include reaction,
+  phosphorylated state, matrix, ownership, source views, sample form at desktop/
+  tablet/mobile/landscape and Persian RTL: **zero violations and no page overflow**.
+  Screenshots were inspected; automated manual/SVG contrast checks remain incomplete.
+  Reader form mutations are disabled, reload clears session and browser storage/
+  cookies remain empty. Temporary test API/browser sessions were closed.
+- SQLite backup API/artifact copy retained `backups/pre-processes-20261018T110527Z/`
+  in the original volume and locally: **101 objects, 44 reference runs/132 events,
+  24 native runs/75 events, 7 cohorts/38 members/57 events, 4 hybrid runs/11 nodes/20
+  events, 2 experiments/4 nodes/8 events, 67,937 vocabulary terms/4,030 alias rows and
+  418 artifact byte sequences**. Every locally copied artifact rehashed correctly.
+- `docker compose build` / `docker compose up -d --no-build` passed. An explicit
+  network-disabled, non-root offline operator admitted the source network and an
+  honest three-process exclusion declaration on **peykar3_peykar-data**. No synthetic
+  or browser frame was imported. Authenticated reads rehashed all nineteen original
+  sources, verified exact matrix/source identities and confirmed network/ownership
+  replacement attempts return **409** without replacing records.
+- All eight earlier vocabulary snapshots/nine annotations and three CellML models/
+  four executions remain; sixteen vocabulary and twelve CellML artifacts rehashed.
+  Actual reference and native COPASI submit → worker/agent → verified output,
+  idempotency, eleven samples, original units and analytical checks passed. All
+  prior rows and **418** artifact bytes survived; SQLite user_version stays 1 and
+  all queues are idle. Original API/Worker volume and separate native agent remain.
+
+These are engineering/provenance checks. Declared model ownership does not prove
+mechanism correspondence or authorize execution; sample origin is unreviewed.
+Scientific claim authority, kinetic/elemental balance, measurement approval,
+feedback/bridges and runtime checkpoints remain open.
+
 ## E6 biological vocabularies and contextual annotations: 2026-10-18 local
 
 [Observed receipt](vocabulary-verification-2026-10-18.json) and

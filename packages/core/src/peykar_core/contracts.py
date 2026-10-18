@@ -1151,3 +1151,141 @@ class VocabularyMappingConflict(Contract):
     mappings: Annotated[tuple[Reference, ...], Field(min_length=2, max_length=2)]
     reason: Literal["competing_exact_mappings"] = "competing_exact_mappings"
     resolution: Literal["unreviewed"] = "unreviewed"
+
+
+# Separate process/state contracts preserve every historical graph/edge meaning.
+ProcessText = Annotated[str, Field(min_length=1, max_length=2000, pattern=r"\S")]
+
+
+class ProcessSource(Contract):
+    id: Identifier
+    url: Annotated[str, Field(pattern=r"^https://", max_length=2000)]
+    revision: ProcessText
+    raw_digest: Sha256
+    license: ProcessText
+    attribution: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=20)]
+
+
+class MolecularLocation(Contract):
+    id: VocabularyID
+    label: ProcessText
+
+
+class MolecularAttribute(Contract):
+    name: Annotated[str, Field(min_length=1, max_length=100)]
+    value: ProcessText
+
+
+class StoichiometricTerm(Contract):
+    state_id: Identifier
+    numerator: Annotated[StrictInt, Field(ge=1, le=1000000)] = 1
+    denominator: Annotated[StrictInt, Field(ge=1, le=1000000)] = 1
+
+
+class MolecularState(Contract):
+    id: Identifier
+    label: ProcessText
+    source_id: Identifier
+    external_id: ProcessText
+    kind: Literal["protein", "chemical", "complex", "set", "other"]
+    species: str | None = None
+    locations: Annotated[tuple[MolecularLocation, ...], Field(min_length=1, max_length=20)]
+    molecular_identity: ProcessText | None = None
+    attributes: Annotated[tuple[MolecularAttribute, ...], Field(max_length=100)] = ()
+    components: Annotated[tuple[StoichiometricTerm, ...], Field(max_length=200)] = ()
+    alternatives: Annotated[tuple[Identifier, ...], Field(max_length=200)] = ()
+
+
+class ProcessModifier(Contract):
+    state_id: Identifier
+    role: Literal["catalyst", "positive_regulator", "negative_regulator", "regulator"]
+    activity: ProcessText | None = None
+
+
+class ProcessSourceRelation(Contract):
+    predicate: ProcessText
+    target: ProcessText
+    label: ProcessText
+
+
+class BiologicalReaction(Contract):
+    id: Identifier
+    label: ProcessText
+    source_id: Identifier
+    external_id: ProcessText
+    source_class: ProcessText
+    inferred: bool
+    reversible: bool | None = None
+    inputs: Annotated[tuple[StoichiometricTerm, ...], Field(min_length=1, max_length=200)]
+    outputs: Annotated[tuple[StoichiometricTerm, ...], Field(min_length=1, max_length=200)]
+    modifiers: Annotated[tuple[ProcessModifier, ...], Field(max_length=100)] = ()
+    unexpanded_relations: Annotated[tuple[ProcessSourceRelation, ...], Field(max_length=200)] = ()
+    evidence: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=100)]
+
+
+class BiologicalProcessNetwork(Contract):
+    id: Identifier
+    version: Version
+    title: ProcessText
+    context: ScientificContext
+    sources: Annotated[tuple[ProcessSource, ...], Field(min_length=1, max_length=100)]
+    states: Annotated[tuple[MolecularState, ...], Field(min_length=1, max_length=500)]
+    reactions: Annotated[tuple[BiologicalReaction, ...], Field(min_length=1, max_length=200)]
+    limitations: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=30)]
+    approval: Literal["unreviewed_declaration"] = "unreviewed_declaration"
+
+
+class ProcessOwnershipAssignment(Contract):
+    owner_id: Identifier
+    model_kind: Literal["reference", "native", "cellml"]
+    model: Reference
+    reaction_ids: Annotated[tuple[Identifier, ...], Field(min_length=1, max_length=200)]
+    rationale: ProcessText
+    evidence: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=20)]
+
+
+class ProcessExclusion(Contract):
+    reaction_id: Identifier
+    reason: ProcessText
+
+
+class ProcessOwnershipSpec(Contract):
+    id: Identifier
+    version: Version
+    network: Reference
+    context: ScientificContext
+    assignments: Annotated[tuple[ProcessOwnershipAssignment, ...], Field(max_length=200)] = ()
+    exclusions: Annotated[tuple[ProcessExclusion, ...], Field(max_length=200)] = ()
+
+
+class ProcessOwnershipPlan(Contract):
+    spec: ProcessOwnershipSpec
+    network_digest: Sha256
+    model_digests: dict[Identifier, Sha256]
+    approval: Literal["unreviewed_declaration"] = "unreviewed_declaration"
+    execution_authorized: Literal[False] = False
+
+
+class MolecularStateValue(Contract):
+    state_id: Identifier
+    quantity: Quantity
+    kind: Literal["amount", "concentration", "count"]
+
+
+class MolecularStateFrameSpec(Contract):
+    id: Identifier
+    version: Version
+    network: Reference
+    instance_id: Identifier
+    context: ScientificContext
+    time: Quantity
+    origin: Literal["synthetic", "experimental", "model_output"]
+    values: Annotated[tuple[MolecularStateValue, ...], Field(min_length=1, max_length=500)]
+    evidence: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=30)]
+    limitations: Annotated[tuple[ProcessText, ...], Field(min_length=1, max_length=30)]
+
+
+class MolecularStateFrame(Contract):
+    spec: MolecularStateFrameSpec
+    network_digest: Sha256
+    approval: Literal["unreviewed_declaration"] = "unreviewed_declaration"

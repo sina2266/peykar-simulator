@@ -1,0 +1,217 @@
+{
+  "$defs": {
+    "ProcessExclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "reaction_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Reaction Id",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reason",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reaction_id",
+        "reason"
+      ],
+      "title": "ProcessExclusion",
+      "type": "object"
+    },
+    "ProcessOwnershipAssignment": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "model": {
+          "$ref": "#/$defs/Reference"
+        },
+        "model_kind": {
+          "enum": [
+            "reference",
+            "native",
+            "cellml"
+          ],
+          "title": "Model Kind",
+          "type": "string"
+        },
+        "owner_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Owner Id",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Rationale",
+          "type": "string"
+        },
+        "reaction_ids": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "type": "string"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Reaction Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner_id",
+        "model_kind",
+        "model",
+        "reaction_ids",
+        "rationale",
+        "evidence"
+      ],
+      "title": "ProcessOwnershipAssignment",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:ProcessOwnershipSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assignments": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProcessOwnershipAssignment"
+      },
+      "maxItems": 200,
+      "title": "Assignments",
+      "type": "array"
+    },
+    "context": {
+      "$ref": "#/$defs/ScientificContext"
+    },
+    "exclusions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProcessExclusion"
+      },
+      "maxItems": 200,
+      "title": "Exclusions",
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "network": {
+      "$ref": "#/$defs/Reference"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "network",
+    "context"
+  ],
+  "title": "ProcessOwnershipSpec",
+  "type": "object"
+}

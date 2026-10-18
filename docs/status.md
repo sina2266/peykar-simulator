@@ -15,7 +15,7 @@ interfaces/acceptance criteria without an executable integration.
 | Managed specialist source ecosystem | Implemented local source distribution | 26 permanent vendor distributions / 53,261 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
 | Native runtime evidence registry | Implemented locally | 12 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
 | Species/context checks and capability search | Implemented | Exact matching; no inferred transfer |
-| Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example plus E6 pinned vocabulary/identifier snapshots and unreviewed contextual annotations; no OWL/taxon reasoning or scientific claim approval |
+| Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example plus E6 vocabulary annotations and E7 multiparty states/reactions, exact stoichiometry, declared ownership and sample frames; no OWL/taxon reasoning, kinetic bridge or scientific claim approval |
 | Persistent knowledge-gap declarations | Implemented locally | Immutable manual records; exact affected-model versions; filtered API/CLI reads; no automatic closure or execution blocking |
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
@@ -91,3 +91,12 @@ E6 adds eight pinned vocabulary/identifier snapshots (67,937 terms, 4,030 aliase
 source-preserving indexed reads and graph-entity annotations/conflicts through
 API/CLI and Biological Explorer. Entry subsets and unreviewed declarations are
 explicit; [scope and remaining authority](epics/E6-biological-vocabularies.md).
+
+E7 delivers bounded [multiparty biological process representation](epics/E7-multiparty-processes.md)
+through offline admission, protected API/CLI and Biological Explorer. Nineteen
+original Reactome query files retain three reactions/fifteen states, exact 2/12
+multiplicities, compartments, sequence ranges, modifications and alternative sets.
+Frozen ownership declarations require one owner or explicit exclusion per reaction;
+instance frames retain original units and explicit unreviewed origin/evidence.
+These declarations do not authorize execution, verify model/mechanism correspondence,
+resolve scientific claims, establish elemental balance or replace tissue sinks.

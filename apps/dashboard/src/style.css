@@ -1627,3 +1627,47 @@
     }
   }
 }
+
+@layer components {
+  .process-equation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+  }
+  .process-participants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .process-participants button {
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+  .process-arrow {
+    font-size: 1.7rem;
+  }
+  [dir='rtl'] .process-arrow {
+    transform: scaleX(-1);
+  }
+  .process-sources {
+    list-style: none;
+    padding: 0;
+  }
+  .process-sources > li,
+  .process-owner-row {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .process-sources code {
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 640px) {
+    .process-equation {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .process-arrow {
+      display: none;
+    }
+  }
+}

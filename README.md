@@ -275,3 +275,8 @@ External packages, engines, models and datasets retain their own licenses. Prist
 specialist sources retain their original terms; optional native runtimes are
 built separately from the API/Worker image. A licensing label is not a guarantee of ownership
 or enforceability. [Licensing rationale](docs/licensing-rationale.md).
+
+E7 adds [multiparty biological processes](docs/epics/E7-multiparty-processes.md):
+exact rational stoichiometry, source-defined molecular states/complexes/alternative
+sets, unreviewed process ownership/exclusions and original-unit sample frames.
+Biological Explorer exposes the real APIs; no kinetic/biological approval is inferred.

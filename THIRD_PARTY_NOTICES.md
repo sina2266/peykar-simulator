@@ -73,3 +73,14 @@ Sources: [GO terms](https://www.geneontology.org/docs/go-citation-policy/),
 [HGNC](https://www.genenames.org/about/license/),
 [UniProt](https://www.uniprot.org/api-documentation/support-data),
 [Reactome](https://reactome.org/license).
+
+### E7 Reactome process query data
+
+`biological_libraries/processes/reactome-egfr/` retains nineteen original Reactome
+Knowledgebase query JSON responses (138,226 bytes), individually pinned by URL,
+source version and SHA-256 in `bundle.json`. Attribution: Reactome Knowledgebase
+contributors, https://reactome.org/. Data: CC0-1.0, https://reactome.org/license.
+Source coordinates, molecular modifications, names and literature references are
+preserved. The Peykar projection is an unreviewed subset; no approval, executable
+kinetics or biological validity is asserted. Linked website figures/media are not
+included, and their separate terms are not generalized to the dataset.

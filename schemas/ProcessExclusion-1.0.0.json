@@ -1,0 +1,31 @@
+{
+  "$id": "urn:peykar:schema:ProcessExclusion:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "reaction_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Reaction Id",
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Reason",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reaction_id",
+    "reason"
+  ],
+  "title": "ProcessExclusion",
+  "type": "object"
+}

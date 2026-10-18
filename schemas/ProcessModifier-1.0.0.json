@@ -1,0 +1,49 @@
+{
+  "$id": "urn:peykar:schema:ProcessModifier:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activity": {
+      "anyOf": [
+        {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Activity"
+    },
+    "role": {
+      "enum": [
+        "catalyst",
+        "positive_regulator",
+        "negative_regulator",
+        "regulator"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "State Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state_id",
+    "role"
+  ],
+  "title": "ProcessModifier",
+  "type": "object"
+}

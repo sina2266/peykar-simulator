@@ -43,3 +43,9 @@ indexed current/obsolete/alias reads and immutable contextual graph-entity
 annotations with competing-declaration provenance. Earlier graph versions and
 legacy ontology_id strings remain unchanged. These annotations remain unreviewed;
 no ontology reasoning, mechanism execution or independent claim approval is inferred.
+
+E7 adds separate [multiparty process contracts](epics/E7-multiparty-processes.md):
+source-pinned molecular states/reactions, exact rational stoichiometry, declared
+process ownership/exclusions and sample-instance frames. The original graph and
+edge meanings remain immutable. These are unreviewed contextual declarations;
+scientific model correspondence, claim authority and execution bridges remain open.

@@ -302,3 +302,34 @@ commands/outcomes in `docs/verification.md`.
 - Read docs/epics/E6-biological-vocabularies.md before extending. Next dependency-
   ready biological milestone is S2.5 multiparty reactions, stoichiometry, contextual
   state instances and process ownership. Keep S2.6/S5 scientific/kinetic gates open.
+
+## E7 multiparty processes and instance frames, 2026-10-18
+
+- E6 commit 36c66d37 was pushed/verified on main. E7 adds separate process/state
+  contracts and biology/processes.py + reactome_processes.py, API/CLI/workbench.
+  Old graph/edge/schema semantics stay immutable. Bounded S2.5 is delivered;
+  S2.6/S5/S11 scientific model correspondence/approval/bridge authority stay open.
+- Nineteen exact original Reactome query JSON files (138,226 bytes, CC0 attribution)
+  are committed under biological_libraries/processes/reactome-egfr. Projection:
+  fifteen states/three reactions, dimer input2, ATP/ADP12, separate catalyst,
+  compartments, original coordinates/six phosphorylation sites, complexes and
+  seven alternative ligands. Numeric repeated references are multiplicities.
+- Exact reduced rational matrices infer no kinetics or elemental balance. Each
+  reaction in a frozen ownership plan needs one same-context exact model owner or
+  reasoned exclusion. Plans remain unreviewed and do not authorize execution.
+  Sample-instance frames retain original physical units/origin/evidence, unknown
+  states stay unknown, unresolved sets cannot receive quantities. Frames are not
+  shared runtime states, verified outputs, checkpoint restoration or measurement approval.
+- Final make check-docker: 469 tests/35.56 seconds/89% coverage, strict mypy94 files,
+  18 frontend tests/current schemas/all builds; host make build passed. Fifteen
+  browser desktop/tablet/mobile/RTL audits have zero axe violations/overflow.
+  Actual ownership/sample form writes and immutable conflict passed; reader writes
+  disabled, tokens memory only, reload clears session. Temporary sessions closed.
+- Backup pre-processes-20261018T110527Z is retained in the original volume and locally:
+  101 old objects, 44 reference/24 native/7 cohort/4 hybrid/2 experiment runs, all
+  related rows, 67,937 terms/4,030 alias rows and 418 artifact byte sequences survive.
+  All 24 original license hashes, historical schemas/OpenAPI operations/uv.lock stay.
+- Deployed reads verify all nineteen source hashes/matrix and three honest process
+  exclusions. No synthetic/browser frames imported. Earlier vocabulary/CellML data
+  and artifacts plus actual reference/COPASI pipelines pass; queues idle, user_version1.
+  See docs/process-verification-2026-10-18.json and E7 guide before extension.

@@ -1,0 +1,65 @@
+{
+  "$id": "urn:peykar:schema:ProcessSource:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attribution": {
+      "items": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Attribution",
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "license": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "License",
+      "type": "string"
+    },
+    "raw_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Digest",
+      "type": "string"
+    },
+    "revision": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Revision",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "url": {
+      "maxLength": 2000,
+      "pattern": "^https://",
+      "title": "Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "url",
+    "revision",
+    "raw_digest",
+    "license",
+    "attribution"
+  ],
+  "title": "ProcessSource",
+  "type": "object"
+}

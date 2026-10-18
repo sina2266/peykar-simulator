@@ -1,0 +1,612 @@
+{
+  "$defs": {
+    "BiologicalReaction": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "external_id": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "External Id",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "inferred": {
+          "title": "Inferred",
+          "type": "boolean"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/StoichiometricTerm"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Inputs",
+          "type": "array"
+        },
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Label",
+          "type": "string"
+        },
+        "modifiers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ProcessModifier"
+          },
+          "maxItems": 100,
+          "title": "Modifiers",
+          "type": "array"
+        },
+        "outputs": {
+          "items": {
+            "$ref": "#/$defs/StoichiometricTerm"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Outputs",
+          "type": "array"
+        },
+        "reversible": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reversible"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_class": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Class",
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "unexpanded_relations": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ProcessSourceRelation"
+          },
+          "maxItems": 200,
+          "title": "Unexpanded Relations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "source_id",
+        "external_id",
+        "source_class",
+        "inferred",
+        "inputs",
+        "outputs",
+        "evidence"
+      ],
+      "title": "BiologicalReaction",
+      "type": "object"
+    },
+    "MolecularAttribute": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "MolecularAttribute",
+      "type": "object"
+    },
+    "MolecularLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Label",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "MolecularLocation",
+      "type": "object"
+    },
+    "MolecularState": {
+      "additionalProperties": false,
+      "properties": {
+        "alternatives": {
+          "default": [],
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "type": "string"
+          },
+          "maxItems": 200,
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "attributes": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/MolecularAttribute"
+          },
+          "maxItems": 100,
+          "title": "Attributes",
+          "type": "array"
+        },
+        "components": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/StoichiometricTerm"
+          },
+          "maxItems": 200,
+          "title": "Components",
+          "type": "array"
+        },
+        "external_id": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "External Id",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "protein",
+            "chemical",
+            "complex",
+            "set",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Label",
+          "type": "string"
+        },
+        "locations": {
+          "items": {
+            "$ref": "#/$defs/MolecularLocation"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Locations",
+          "type": "array"
+        },
+        "molecular_identity": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Molecular Identity"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "species": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Species"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "source_id",
+        "external_id",
+        "kind",
+        "locations"
+      ],
+      "title": "MolecularState",
+      "type": "object"
+    },
+    "ProcessModifier": {
+      "additionalProperties": false,
+      "properties": {
+        "activity": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activity"
+        },
+        "role": {
+          "enum": [
+            "catalyst",
+            "positive_regulator",
+            "negative_regulator",
+            "regulator"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "state_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "State Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state_id",
+        "role"
+      ],
+      "title": "ProcessModifier",
+      "type": "object"
+    },
+    "ProcessSource": {
+      "additionalProperties": false,
+      "properties": {
+        "attribution": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Attribution",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "License",
+          "type": "string"
+        },
+        "raw_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Raw Digest",
+          "type": "string"
+        },
+        "revision": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Revision",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 2000,
+          "pattern": "^https://",
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "revision",
+        "raw_digest",
+        "license",
+        "attribution"
+      ],
+      "title": "ProcessSource",
+      "type": "object"
+    },
+    "ProcessSourceRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Label",
+          "type": "string"
+        },
+        "predicate": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Predicate",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "predicate",
+        "target",
+        "label"
+      ],
+      "title": "ProcessSourceRelation",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "StoichiometricTerm": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "default": 1,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "default": 1,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Numerator",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "state_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "State Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state_id"
+      ],
+      "title": "StoichiometricTerm",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:BiologicalProcessNetwork:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approval": {
+      "const": "unreviewed_declaration",
+      "default": "unreviewed_declaration",
+      "title": "Approval",
+      "type": "string"
+    },
+    "context": {
+      "$ref": "#/$defs/ScientificContext"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "reactions": {
+      "items": {
+        "$ref": "#/$defs/BiologicalReaction"
+      },
+      "maxItems": 200,
+      "minItems": 1,
+      "title": "Reactions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/ProcessSource"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "states": {
+      "items": {
+        "$ref": "#/$defs/MolecularState"
+      },
+      "maxItems": 500,
+      "minItems": 1,
+      "title": "States",
+      "type": "array"
+    },
+    "title": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "context",
+    "sources",
+    "states",
+    "reactions",
+    "limitations"
+  ],
+  "title": "BiologicalProcessNetwork",
+  "type": "object"
+}

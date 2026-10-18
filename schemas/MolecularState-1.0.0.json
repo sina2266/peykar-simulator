@@ -1,0 +1,219 @@
+{
+  "$defs": {
+    "MolecularAttribute": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "MolecularAttribute",
+      "type": "object"
+    },
+    "MolecularLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Label",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "MolecularLocation",
+      "type": "object"
+    },
+    "StoichiometricTerm": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "default": 1,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "default": 1,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Numerator",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "state_id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "State Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state_id"
+      ],
+      "title": "StoichiometricTerm",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:MolecularState:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alternatives": {
+      "default": [],
+      "items": {
+        "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+        "type": "string"
+      },
+      "maxItems": 200,
+      "title": "Alternatives",
+      "type": "array"
+    },
+    "attributes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/MolecularAttribute"
+      },
+      "maxItems": 100,
+      "title": "Attributes",
+      "type": "array"
+    },
+    "components": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StoichiometricTerm"
+      },
+      "maxItems": 200,
+      "title": "Components",
+      "type": "array"
+    },
+    "external_id": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "External Id",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "protein",
+        "chemical",
+        "complex",
+        "set",
+        "other"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "label": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Label",
+      "type": "string"
+    },
+    "locations": {
+      "items": {
+        "$ref": "#/$defs/MolecularLocation"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Locations",
+      "type": "array"
+    },
+    "molecular_identity": {
+      "anyOf": [
+        {
+          "maxLength": 2000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Molecular Identity"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "species": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Species"
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "source_id",
+    "external_id",
+    "kind",
+    "locations"
+  ],
+  "title": "MolecularState",
+  "type": "object"
+}

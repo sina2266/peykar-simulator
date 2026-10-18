@@ -1,0 +1,37 @@
+{
+  "$id": "urn:peykar:schema:StoichiometricTerm:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "denominator": {
+      "default": 1,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Denominator",
+      "type": "integer"
+    },
+    "numerator": {
+      "default": 1,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Numerator",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state_id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "State Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "state_id"
+  ],
+  "title": "StoichiometricTerm",
+  "type": "object"
+}

@@ -583,6 +583,212 @@
         "title": "BiologicalGraphSpec",
         "type": "object"
       },
+      "BiologicalProcessNetwork": {
+        "additionalProperties": false,
+        "properties": {
+          "approval": {
+            "const": "unreviewed_declaration",
+            "default": "unreviewed_declaration",
+            "title": "Approval",
+            "type": "string"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "reactions": {
+            "items": {
+              "$ref": "#/components/schemas/BiologicalReaction"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Reactions",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/ProcessSource"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Sources",
+            "type": "array"
+          },
+          "states": {
+            "items": {
+              "$ref": "#/components/schemas/MolecularState"
+            },
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "States",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "context",
+          "sources",
+          "states",
+          "reactions",
+          "limitations"
+        ],
+        "title": "BiologicalProcessNetwork",
+        "type": "object"
+      },
+      "BiologicalReaction": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "external_id": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "External Id",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "inferred": {
+            "title": "Inferred",
+            "type": "boolean"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/StoichiometricTerm"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Inputs",
+            "type": "array"
+          },
+          "label": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Label",
+            "type": "string"
+          },
+          "modifiers": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ProcessModifier"
+            },
+            "maxItems": 100,
+            "title": "Modifiers",
+            "type": "array"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/StoichiometricTerm"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Outputs",
+            "type": "array"
+          },
+          "reversible": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reversible"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_class": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Class",
+            "type": "string"
+          },
+          "source_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Id",
+            "type": "string"
+          },
+          "unexpanded_relations": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ProcessSourceRelation"
+            },
+            "maxItems": 200,
+            "title": "Unexpanded Relations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "source_id",
+          "external_id",
+          "source_class",
+          "inferred",
+          "inputs",
+          "outputs",
+          "evidence"
+        ],
+        "title": "BiologicalReaction",
+        "type": "object"
+      },
       "BiologicalRelationship": {
         "additionalProperties": false,
         "properties": {
@@ -2960,6 +3166,341 @@
         "title": "ModelPackage",
         "type": "object"
       },
+      "MolecularAttribute": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "value": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "title": "MolecularAttribute",
+        "type": "object"
+      },
+      "MolecularLocation": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Label",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "MolecularLocation",
+        "type": "object"
+      },
+      "MolecularState": {
+        "additionalProperties": false,
+        "properties": {
+          "alternatives": {
+            "default": [],
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "attributes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/MolecularAttribute"
+            },
+            "maxItems": 100,
+            "title": "Attributes",
+            "type": "array"
+          },
+          "components": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/StoichiometricTerm"
+            },
+            "maxItems": 200,
+            "title": "Components",
+            "type": "array"
+          },
+          "external_id": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "External Id",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "protein",
+              "chemical",
+              "complex",
+              "set",
+              "other"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Label",
+            "type": "string"
+          },
+          "locations": {
+            "items": {
+              "$ref": "#/components/schemas/MolecularLocation"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Locations",
+            "type": "array"
+          },
+          "molecular_identity": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Molecular Identity"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Source Id",
+            "type": "string"
+          },
+          "species": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Species"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "source_id",
+          "external_id",
+          "kind",
+          "locations"
+        ],
+        "title": "MolecularState",
+        "type": "object"
+      },
+      "MolecularStateFrame": {
+        "additionalProperties": false,
+        "properties": {
+          "approval": {
+            "const": "unreviewed_declaration",
+            "default": "unreviewed_declaration",
+            "title": "Approval",
+            "type": "string"
+          },
+          "network_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Network Digest",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/MolecularStateFrameSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "network_digest"
+        ],
+        "title": "MolecularStateFrame",
+        "type": "object"
+      },
+      "MolecularStateFrameSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "evidence": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "instance_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Instance Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "network": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "origin": {
+            "enum": [
+              "synthetic",
+              "experimental",
+              "model_output"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "time": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "values": {
+            "items": {
+              "$ref": "#/components/schemas/MolecularStateValue"
+            },
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Values",
+            "type": "array"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "network",
+          "instance_id",
+          "context",
+          "time",
+          "origin",
+          "values",
+          "evidence",
+          "limitations"
+        ],
+        "title": "MolecularStateFrameSpec",
+        "type": "object"
+      },
+      "MolecularStateValue": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "amount",
+              "concentration",
+              "count"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/Quantity"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "state_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "State Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state_id",
+          "quantity",
+          "kind"
+        ],
+        "title": "MolecularStateValue",
+        "type": "object"
+      },
       "NativeAgentClaim": {
         "additionalProperties": false,
         "properties": {
@@ -3960,6 +4501,351 @@
         "title": "ParameterValue",
         "type": "object"
       },
+      "ProcessExclusion": {
+        "additionalProperties": false,
+        "properties": {
+          "reaction_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Reaction Id",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Reason",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reaction_id",
+          "reason"
+        ],
+        "title": "ProcessExclusion",
+        "type": "object"
+      },
+      "ProcessModifier": {
+        "additionalProperties": false,
+        "properties": {
+          "activity": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity"
+          },
+          "role": {
+            "enum": [
+              "catalyst",
+              "positive_regulator",
+              "negative_regulator",
+              "regulator"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "state_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "State Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state_id",
+          "role"
+        ],
+        "title": "ProcessModifier",
+        "type": "object"
+      },
+      "ProcessOwnershipAssignment": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "model": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "model_kind": {
+            "enum": [
+              "reference",
+              "native",
+              "cellml"
+            ],
+            "title": "Model Kind",
+            "type": "string"
+          },
+          "owner_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "rationale": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Rationale",
+            "type": "string"
+          },
+          "reaction_ids": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Reaction Ids",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "owner_id",
+          "model_kind",
+          "model",
+          "reaction_ids",
+          "rationale",
+          "evidence"
+        ],
+        "title": "ProcessOwnershipAssignment",
+        "type": "object"
+      },
+      "ProcessOwnershipPlan": {
+        "additionalProperties": false,
+        "properties": {
+          "approval": {
+            "const": "unreviewed_declaration",
+            "default": "unreviewed_declaration",
+            "title": "Approval",
+            "type": "string"
+          },
+          "execution_authorized": {
+            "const": false,
+            "default": false,
+            "title": "Execution Authorized",
+            "type": "boolean"
+          },
+          "model_digests": {
+            "patternProperties": {
+              "^[a-z][a-z0-9_.-]{0,79}$": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "title": "Model Digests",
+            "type": "object"
+          },
+          "network_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Network Digest",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/ProcessOwnershipSpec"
+          }
+        },
+        "required": [
+          "spec",
+          "network_digest",
+          "model_digests"
+        ],
+        "title": "ProcessOwnershipPlan",
+        "type": "object"
+      },
+      "ProcessOwnershipSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "assignments": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ProcessOwnershipAssignment"
+            },
+            "maxItems": 200,
+            "title": "Assignments",
+            "type": "array"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "exclusions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ProcessExclusion"
+            },
+            "maxItems": 200,
+            "title": "Exclusions",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "network": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "network",
+          "context"
+        ],
+        "title": "ProcessOwnershipSpec",
+        "type": "object"
+      },
+      "ProcessSource": {
+        "additionalProperties": false,
+        "properties": {
+          "attribution": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Attribution",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "License",
+            "type": "string"
+          },
+          "raw_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Raw Digest",
+            "type": "string"
+          },
+          "revision": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Revision",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "url": {
+            "maxLength": 2000,
+            "pattern": "^https://",
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "revision",
+          "raw_digest",
+          "license",
+          "attribution"
+        ],
+        "title": "ProcessSource",
+        "type": "object"
+      },
+      "ProcessSourceRelation": {
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Label",
+            "type": "string"
+          },
+          "predicate": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Predicate",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "predicate",
+          "target",
+          "label"
+        ],
+        "title": "ProcessSourceRelation",
+        "type": "object"
+      },
       "Quantity": {
         "additionalProperties": false,
         "properties": {
@@ -4547,6 +5433,41 @@
           "limitations"
         ],
         "title": "SimulationResult",
+        "type": "object"
+      },
+      "StoichiometricTerm": {
+        "additionalProperties": false,
+        "properties": {
+          "denominator": {
+            "default": 1,
+            "maximum": 1000000.0,
+            "minimum": 1.0,
+            "title": "Denominator",
+            "type": "integer"
+          },
+          "numerator": {
+            "default": 1,
+            "maximum": 1000000.0,
+            "minimum": 1.0,
+            "title": "Numerator",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "state_id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "State Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state_id"
+        ],
+        "title": "StoichiometricTerm",
         "type": "object"
       },
       "VCorneaCellCountRequest": {
@@ -6410,6 +7331,633 @@
         "summary": "Neighbors",
         "tags": [
           "biology"
+        ]
+      }
+    },
+    "/v1/biology/process-networks": {
+      "get": {
+        "operationId": "discover_v1_biology_process_networks_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BiologicalProcessNetwork"
+                  },
+                  "title": "Response Discover V1 Biology Process Networks Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discover",
+        "tags": [
+          "processes"
+        ]
+      },
+      "post": {
+        "operationId": "register_v1_biology_process_networks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BiologicalProcessNetwork"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BiologicalProcessNetwork"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Register",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/process-networks/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_v1_biology_process_networks__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BiologicalProcessNetwork"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/process-networks/{id}/versions/{version}/sources/{source_id}": {
+      "get": {
+        "operationId": "source_v1_biology_process_networks__id__versions__version__sources__source_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "source_id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Source Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Source",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/process-networks/{id}/versions/{version}/stoichiometry": {
+      "get": {
+        "operationId": "stoichiometry_v1_biology_process_networks__id__versions__version__stoichiometry_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Stoichiometry V1 Biology Process Networks  Id  Versions  Version  Stoichiometry Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Stoichiometry",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/process-ownership": {
+      "get": {
+        "operationId": "plans_v1_biology_process_ownership_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProcessOwnershipPlan"
+                  },
+                  "title": "Response Plans V1 Biology Process Ownership Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Plans",
+        "tags": [
+          "processes"
+        ]
+      },
+      "post": {
+        "operationId": "own_v1_biology_process_ownership_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProcessOwnershipSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessOwnershipPlan"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Own",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/process-ownership/{id}/versions/{version}": {
+      "get": {
+        "operationId": "plan_v1_biology_process_ownership__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessOwnershipPlan"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Plan",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/state-frames": {
+      "get": {
+        "operationId": "frames_v1_biology_state_frames_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MolecularStateFrame"
+                  },
+                  "title": "Response Frames V1 Biology State Frames Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Frames",
+        "tags": [
+          "processes"
+        ]
+      },
+      "post": {
+        "operationId": "frame_v1_biology_state_frames_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MolecularStateFrameSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MolecularStateFrame"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Frame",
+        "tags": [
+          "processes"
+        ]
+      }
+    },
+    "/v1/biology/state-frames/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_frame_v1_biology_state_frames__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MolecularStateFrame"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Frame",
+        "tags": [
+          "processes"
         ]
       }
     },

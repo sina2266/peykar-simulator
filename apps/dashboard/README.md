@@ -66,3 +66,9 @@ revision/license inspection, current/obsolete search, alias lookup, parent reads
 original/normalized downloads, a structured annotation form and unreviewed conflict
 records. Taxon applicability, reconciliation and biological approval remain explicit
 backend limits; see docs/epics/E6-biological-vocabularies.md.
+
+E7 Biological Explorer → Processes & states exposes actual equations and clickable
+molecular states/components/alternatives, exact stoichiometric matrix export,
+original source downloads, structured ownership/exclusion and instance-frame forms,
+retained unreviewed records, original units and shared responsive/RTL/role/error
+states. Scientific mechanism approval and runtime restoration remain open.

@@ -77,7 +77,7 @@ explicit scientific applicability statement. A source-only entry fails this gate
 - [x] S2.2 Reject unknown endpoints, duplicate identities and hierarchy cycles; query bounded neighborhoods with truncation disclosure.
 - [x] S2.3 Import a small sourced human EGF/EGFR graph from inspected Reactome/UniProt evidence; keep it separate from a kinetic mechanism.
 - [x] S2.4 Add pinned ontology/identifier connectors with mapping/conflict provenance. E6 admits complete basic CL/Uberon/GO releases plus explicit HGNC/UniProt/Reactome entry subsets, exact raw/normalized data, indexed queries and unreviewed contextual annotations. Full database ingestion, OWL/taxon reasoning and scientific reconciliation are not inferred.
-- [ ] S2.5 Represent multiparty reactions, stoichiometry, process ownership, state instances and contextual claims rather than treating every interaction as a pairwise edge.
+- [x] S2.5 Represent multiparty reactions, stoichiometry, process ownership, state instances and contextual declarations. E7 adds immutable process networks, exact rational matrices, source-defined molecular states/complexes/alternative sets, one-owner-or-exclusion plans and original-unit sample frames. These remain unreviewed declarations; scientific authority and executable bridge enforcement remain S2.6/S5/S11.
 - [ ] S2.6 Add scientific claim/conflict authority and evidence review; connect executable model versions to represented biological entities. E6 graph-entity identifier annotations are unreviewed declarations and do not close this gate.
 
 Exit: entity, model and runtime instance remain distinct; queries retain evidence
@@ -220,7 +220,8 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
    actual COPASI/OSP model jobs and E3 scalar DAGs. Extend remaining native adapters/mappings (S4.6b.2),
    richer data admission (S3.5) and independent original benchmarks (S1.5).
    E6 delivers pinned biological vocabularies and contextual identifier annotations
-   (S2.4); multiparty processes and scientific claim authority remain S2.5/S2.6.
+   (S2.4); E7 delivers bounded multiparty processes and declared sample frames (S2.5).
+   Scientific claim/model correspondence authority remains S2.6/S11; engine coupling stays S5.
    E5 now delivers bounded CellML 2 admission and reviewed operator ODE execution
    (S3.4b); its general queue/flow adapter remains part of S4.6b.2.
 3. E4 now delivers the shared six-workspace UI on those APIs. Extend richer

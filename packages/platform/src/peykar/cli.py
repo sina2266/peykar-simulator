@@ -19,6 +19,7 @@ from peykar.knowledge_gap_cli import knowledge_gap_app
 from peykar.model_import.cli import external_artifact_app
 from peykar.native_cli import native_app
 from peykar.platform_cli import experiment_app, graph_app, library_app, runtime_app
+from peykar.process_cli import process_app
 from peykar.simulation.service import SimulationService
 from peykar.simulation.worker import Worker
 from peykar.validation.service import EvaluationService
@@ -47,6 +48,7 @@ app.add_typer(batch_app, name="batches")
 app.add_typer(hybrid_app, name="flows")
 app.add_typer(cellml_app, name="cellml")
 app.add_typer(vocabulary_app, name="vocabularies")
+app.add_typer(process_app, name="processes")
 
 
 def local_service() -> SimulationService:

@@ -12,6 +12,7 @@ import { useSession } from './session';
 import { useT } from './i18n';
 import { CellMLCatalog } from './cellml';
 import { VocabularyExplorer, VocabularyMappings } from './vocabularies';
+import { ProcessExplorer } from './processes';
 import {
   useResource,
   Boundary,
@@ -412,7 +413,7 @@ export function Biology() {
         description="Inspect entities, relations and their evidence."
       />
       <Tabs
-        tabs={['Graph snapshots', 'Vocabularies', 'Entity annotations']}
+        tabs={['Graph snapshots', 'Vocabularies', 'Entity annotations', 'Processes & states']}
         selected={tab}
         onSelect={setTab}
       />
@@ -420,8 +421,10 @@ export function Biology() {
         <GraphExplorer />
       ) : tab === 'Vocabularies' ? (
         <VocabularyExplorer />
-      ) : (
+      ) : tab === 'Entity annotations' ? (
         <VocabularyMappings />
+      ) : (
+        <ProcessExplorer />
       )}
     </>
   );

@@ -27,6 +27,7 @@ from peykar.api.hybrid_routes import install_hybrid_routes
 from peykar.api.middleware import BodyLimitMiddleware
 from peykar.api.native_routes import install_native_routes
 from peykar.api.platform_routes import install_platform_routes
+from peykar.api.process_routes import install_process_routes
 from peykar.api.vocabulary_routes import install_vocabulary_routes
 from peykar.api.workspace_routes import install_workspace_routes
 from peykar.biology.knowledge_gaps import KnowledgeGapService, Severity
@@ -165,6 +166,7 @@ def create_app(
     install_native_routes(read, write, service)
     install_cellml_routes(read, write, service)
     install_vocabulary_routes(read, write, service)
+    install_process_routes(read, write, service)
     install_batch_routes(read, write, service)
     install_hybrid_routes(read, write, service)
 

@@ -16,3 +16,8 @@ library inspection and native solver readiness are separate platform states.
 The implemented `vocabularies/` catalog adds pinned ontology/identifier data and
 source-linked graph annotations, separate from kinetic mechanisms or biological
 model validity. See the E6 guide for actual sources, scope and conflict semantics.
+
+[Multiparty processes](processes/README.md) retain nineteen original Reactome query
+files and project three reactions/fifteen molecular states with exact multiplicity,
+source identity, complex/set distinctions and original attributes. This source
+data is separate from any executable kinetic model or validated biological bridge.
