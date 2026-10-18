@@ -11,6 +11,7 @@ import {
 import { useSession } from './session';
 import { useT } from './i18n';
 import { CellMLCatalog } from './cellml';
+import { VocabularyExplorer, VocabularyMappings } from './vocabularies';
 import {
   useResource,
   Boundary,
@@ -402,6 +403,30 @@ export function NativeAdmission({
 }
 
 export function Biology() {
+  const [tab, setTab] = useState('Graph snapshots');
+  return (
+    <>
+      <PageHeading
+        eyebrow="Biological Explorer"
+        title="Versioned biological context"
+        description="Inspect entities, relations and their evidence."
+      />
+      <Tabs
+        tabs={['Graph snapshots', 'Vocabularies', 'Entity annotations']}
+        selected={tab}
+        onSelect={setTab}
+      />
+      {tab === 'Graph snapshots' ? (
+        <GraphExplorer />
+      ) : tab === 'Vocabularies' ? (
+        <VocabularyExplorer />
+      ) : (
+        <VocabularyMappings />
+      )}
+    </>
+  );
+}
+function GraphExplorer() {
   const { client, admin } = useSession();
   const t = useT();
   const [graphIndex, setGraphIndex] = useState(0);
@@ -432,11 +457,6 @@ export function Biology() {
   );
   return (
     <>
-      <PageHeading
-        eyebrow="Biological Explorer"
-        title="Versioned biological context"
-        description="Inspect entities, relations and their evidence."
-      />
       <div className="notice">{t('Evidence relations are not executable biological bridges.')}</div>
       <Boundary resource={graphs}>
         {(items) =>

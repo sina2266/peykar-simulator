@@ -1,0 +1,107 @@
+{
+  "$id": "urn:peykar:schema:VocabularySourceSpec:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attribution": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Attribution",
+      "type": "array"
+    },
+    "connector": {
+      "enum": [
+        "obo",
+        "hgnc_json",
+        "uniprot_json",
+        "reactome_json"
+      ],
+      "title": "Connector",
+      "type": "string"
+    },
+    "domain": {
+      "enum": [
+        "anatomy",
+        "cell",
+        "gene",
+        "protein",
+        "pathway",
+        "function"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "license": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "License",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "raw_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Digest",
+      "type": "string"
+    },
+    "revision": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Revision",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_url": {
+      "maxLength": 2000,
+      "pattern": "^https://",
+      "title": "Source Url",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "connector",
+    "domain",
+    "source_url",
+    "revision",
+    "raw_digest",
+    "license",
+    "attribution",
+    "limitations"
+  ],
+  "title": "VocabularySourceSpec",
+  "type": "object"
+}

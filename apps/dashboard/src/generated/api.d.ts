@@ -194,6 +194,143 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/biology/vocabularies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Discover */
+        get: operations["discover_v1_biology_vocabularies_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabularies/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get */
+        get: operations["get_v1_biology_vocabularies__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabularies/{id}/versions/{version}/artifacts/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Artifact */
+        get: operations["artifact_v1_biology_vocabularies__id__versions__version__artifacts__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabularies/{id}/versions/{version}/term": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Term */
+        get: operations["term_v1_biology_vocabularies__id__versions__version__term_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabularies/{id}/versions/{version}/terms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search */
+        get: operations["search_v1_biology_vocabularies__id__versions__version__terms_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabulary-mapping-conflicts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Conflicts */
+        get: operations["conflicts_v1_biology_vocabulary_mapping_conflicts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabulary-mappings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mappings */
+        get: operations["mappings_v1_biology_vocabulary_mappings_get"];
+        put?: never;
+        /** Map Entity */
+        post: operations["map_entity_v1_biology_vocabulary_mappings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/biology/vocabulary-mappings/{id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mapping */
+        get: operations["mapping_v1_biology_vocabulary_mappings__id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/cellml-executions": {
         parameters: {
             query?: never;
@@ -2115,6 +2252,54 @@ export interface components {
             /** Unit */
             unit: string;
         };
+        /** EntityVocabularyMapping */
+        EntityVocabularyMapping: {
+            /**
+             * Approval
+             * @default unreviewed_declaration
+             * @constant
+             */
+            approval: "unreviewed_declaration";
+            /** Graph Digest */
+            graph_digest: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            spec: components["schemas"]["EntityVocabularyMappingSpec"];
+            target: components["schemas"]["VocabularyTermRecord"];
+        };
+        /** EntityVocabularyMappingSpec */
+        EntityVocabularyMappingSpec: {
+            context: components["schemas"]["ScientificContext"];
+            /** Entity Id */
+            entity_id: string;
+            /** Evidence */
+            evidence: string[];
+            graph: components["schemas"]["Reference"];
+            /** Id */
+            id: string;
+            /** Rationale */
+            rationale: string;
+            /**
+             * Relation
+             * @enum {string}
+             */
+            relation: "exact_match" | "broad_match" | "narrow_match" | "related_match" | "rejected_match";
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Term Id */
+            term_id: string;
+            /** Version */
+            version: string;
+            vocabulary: components["schemas"]["Reference"];
+        };
         /** EvaluationRequest */
         EvaluationRequest: {
             /**
@@ -3605,6 +3790,202 @@ export interface components {
              */
             status: "unvalidated" | "reference_verified" | "context_validated";
         };
+        /** VocabularyMappingConflict */
+        VocabularyMappingConflict: {
+            /** Id */
+            id: string;
+            /** Mappings */
+            mappings: components["schemas"]["Reference"][];
+            /**
+             * Reason
+             * @default competing_exact_mappings
+             * @constant
+             */
+            reason: "competing_exact_mappings";
+            /**
+             * Resolution
+             * @default unreviewed
+             * @constant
+             */
+            resolution: "unreviewed";
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Version */
+            version: string;
+        };
+        /** VocabularyPackage */
+        VocabularyPackage: {
+            /** Alias Count */
+            alias_count: number;
+            /**
+             * Interpretation
+             * @default identifier_and_ontology_declarations_not_executable_mechanisms
+             * @constant
+             */
+            interpretation: "identifier_and_ontology_declarations_not_executable_mechanisms";
+            /** Normalized Digest */
+            normalized_digest: string;
+            /** Obsolete Count */
+            obsolete_count: number;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Source Metadata */
+            source_metadata: {
+                [key: string]: string[];
+            };
+            spec: components["schemas"]["VocabularySourceSpec"];
+            /** Term Count */
+            term_count: number;
+            /**
+             * Transformer
+             * @default vocabulary.declarative.1.0.0
+             * @constant
+             */
+            transformer: "vocabulary.declarative.1.0.0";
+            /** Unresolved Parent Ids */
+            unresolved_parent_ids: string[];
+        };
+        /** VocabularyRelation */
+        VocabularyRelation: {
+            /** Relation */
+            relation: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Target */
+            target: string;
+        };
+        /** VocabularySourceSpec */
+        VocabularySourceSpec: {
+            /** Attribution */
+            attribution: string[];
+            /**
+             * Connector
+             * @enum {string}
+             */
+            connector: "obo" | "hgnc_json" | "uniprot_json" | "reactome_json";
+            /**
+             * Domain
+             * @enum {string}
+             */
+            domain: "anatomy" | "cell" | "gene" | "protein" | "pathway" | "function";
+            /** Id */
+            id: string;
+            /** License */
+            license: string;
+            /** Limitations */
+            limitations: string[];
+            /** Raw Digest */
+            raw_digest: string;
+            /** Revision */
+            revision: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Source Url */
+            source_url: string;
+            /** Title */
+            title: string;
+            /** Version */
+            version: string;
+        };
+        /** VocabularyTerm */
+        VocabularyTerm: {
+            /**
+             * Aliases
+             * @default []
+             */
+            aliases: string[];
+            /**
+             * Consider
+             * @default []
+             */
+            consider: string[];
+            /** Definition */
+            definition?: string | null;
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+            /**
+             * Namespace
+             * @default
+             */
+            namespace: string;
+            /**
+             * Obsolete
+             * @default false
+             */
+            obsolete: boolean;
+            /** Obsolete Declaration */
+            obsolete_declaration?: string | null;
+            /**
+             * Parents
+             * @default []
+             */
+            parents: string[];
+            /**
+             * Relationships
+             * @default []
+             */
+            relationships: components["schemas"]["VocabularyRelation"][];
+            /**
+             * Replaced By
+             * @default []
+             */
+            replaced_by: string[];
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            /** Species */
+            species?: string | null;
+            /**
+             * Synonyms
+             * @default []
+             */
+            synonyms: string[];
+            /**
+             * Xrefs
+             * @default []
+             */
+            xrefs: string[];
+        };
+        /** VocabularyTermRecord */
+        VocabularyTermRecord: {
+            /** Matched Alias */
+            matched_alias: boolean;
+            /** Requested Id */
+            requested_id: string;
+            /**
+             * Schema Version
+             * @default 1.0.0
+             * @constant
+             */
+            schema_version: "1.0.0";
+            term: components["schemas"]["VocabularyTerm"];
+            /** Term Digest */
+            term_digest: string;
+            vocabulary: components["schemas"]["Reference"];
+            /** Vocabulary Digest */
+            vocabulary_digest: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -4049,6 +4430,304 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discover_v1_biology_vocabularies_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VocabularyPackage"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_v1_biology_vocabularies__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VocabularyPackage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    artifact_v1_biology_vocabularies__id__versions__version__artifacts__kind__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    term_v1_biology_vocabularies__id__versions__version__term_get: {
+        parameters: {
+            query: {
+                term_id: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VocabularyTermRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_v1_biology_vocabularies__id__versions__version__terms_get: {
+        parameters: {
+            query?: {
+                q?: string;
+                namespace?: string | null;
+                obsolete?: boolean | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VocabularyTermRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    conflicts_v1_biology_vocabulary_mapping_conflicts_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VocabularyMappingConflict"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mappings_v1_biology_vocabulary_mappings_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntityVocabularyMapping"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    map_entity_v1_biology_vocabulary_mappings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntityVocabularyMappingSpec"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntityVocabularyMapping"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mapping_v1_biology_vocabulary_mappings__id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntityVocabularyMapping"];
                 };
             };
             /** @description Validation Error */

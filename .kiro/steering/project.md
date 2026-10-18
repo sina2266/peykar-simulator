@@ -278,3 +278,27 @@ commands/outcomes in `docs/verification.md`.
 - Continue meaningful verified main commits/pushes, then dependency-ready roadmap
   work. Ontology/data admission and remaining native adapters/benchmarks stay open;
   source-only or numerically verified work must not be called biological validation.
+
+## E6 vocabulary snapshots and annotations, 2026-10-18
+
+- E5 commit 464e3467 was pushed to main. Bounded S2.4 now has offline OBO/HGNC/
+  UniProt/Reactome admission, exact source/term/alias provenance and indexed reads,
+  unreviewed graph-entity annotations and atomic competing-exact-mapping records.
+- Eight pinned sources retain 67,937 terms/4,030 aliases/10,813 obsolete terms.
+  CL/Uberon/GO basic releases are complete; HGNC/UniProt/Reactome are explicit entry
+  subsets. Preserve exact raw bytes, original licenses and qualified obsolete flags.
+  No OWL/taxon reasoning, scientific approval or executable bridge is implemented.
+- Biological Explorer exposes source/term/alias/obsolete inspection, binary original
+  downloads and structured annotations. Ten final browser/size/RTL audits show no
+  axe violations or page overflow; reader writes disabled, credentials memory only.
+- Final make check-docker: 431 tests/31.75 seconds/89% coverage, strict mypy90 files,
+  18 frontend tests/current schemas/all packages; host make build passed. Historical
+  contracts/OpenAPI operations/uv.lock and 24 original license hashes are unchanged.
+- Backup pre-vocabularies-20261017T215613Z is retained in the original volume and
+  locally. All 83 old objects, 43 reference/23 native/7 cohort/4 hybrid/2 experiment
+  runs, related rows and 401 artifact byte sequences survive. Deployed API source/
+  alias/obsolete/annotation reads and old reference/COPASI pipelines pass; three
+  CellML models/four executions and their 12 artifacts remain verified. Queues idle.
+- Read docs/epics/E6-biological-vocabularies.md before extending. Next dependency-
+  ready biological milestone is S2.5 multiparty reactions, stoichiometry, contextual
+  state instances and process ownership. Keep S2.6/S5 scientific/kinetic gates open.

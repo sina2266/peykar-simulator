@@ -55,3 +55,21 @@ fixtures retain their comments and provenance. Peykar modifications live in the
 separate `runtime_profiles/cellml` driver, not the upstream source. Optional
 libCellML/NumPy/SciPy wheels are pinned by the independent runtime lock; their
 original distribution notices remain installed in that separate image.
+
+## Biological vocabulary and identifier data
+
+The [E6 source catalog](biological_libraries/vocabularies/sources.json) pins original
+release/entry bytes and names the creators, source URLs and declared terms. Cell
+Ontology contributors (2026-06-08 basic) and Gene Ontology Consortium (2026-01-23
+basic) declare CC-BY-4.0. The original Uberon 2026-10-01 basic header declares
+CC-BY-3.0; this declaration is preserved. HGNC/HUGO Gene Nomenclature Committee
+entry responses use CC0-1.0; UniProt Consortium entries use CC-BY-4.0; Reactome
+data uses CC0-1.0. Original raw headers, attribution and content remain in the
+artifact store, separate from normalized/indexed data and Peykar code. Linked
+external images/media retain their own declarations and are not downloaded.
+Sources: [GO terms](https://www.geneontology.org/docs/go-citation-policy/),
+[CL](https://obofoundry.org/ontology/cl.html),
+[Uberon](https://obofoundry.org/ontology/uberon.html),
+[HGNC](https://www.genenames.org/about/license/),
+[UniProt](https://www.uniprot.org/api-documentation/support-data),
+[Reactome](https://reactome.org/license).

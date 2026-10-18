@@ -1478,6 +1478,123 @@
         "title": "EndpointStatistics",
         "type": "object"
       },
+      "EntityVocabularyMapping": {
+        "additionalProperties": false,
+        "properties": {
+          "approval": {
+            "const": "unreviewed_declaration",
+            "default": "unreviewed_declaration",
+            "title": "Approval",
+            "type": "string"
+          },
+          "graph_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Graph Digest",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/EntityVocabularyMappingSpec"
+          },
+          "target": {
+            "$ref": "#/components/schemas/VocabularyTermRecord"
+          }
+        },
+        "required": [
+          "spec",
+          "graph_digest",
+          "target"
+        ],
+        "title": "EntityVocabularyMapping",
+        "type": "object"
+      },
+      "EntityVocabularyMappingSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "$ref": "#/components/schemas/ScientificContext"
+          },
+          "entity_id": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Entity Id",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "graph": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "rationale": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Rationale",
+            "type": "string"
+          },
+          "relation": {
+            "enum": [
+              "exact_match",
+              "broad_match",
+              "narrow_match",
+              "related_match",
+              "rejected_match"
+            ],
+            "title": "Relation",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "term_id": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "title": "Term Id",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          },
+          "vocabulary": {
+            "$ref": "#/components/schemas/Reference"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "graph",
+          "entity_id",
+          "vocabulary",
+          "term_id",
+          "relation",
+          "context",
+          "rationale",
+          "evidence"
+        ],
+        "title": "EntityVocabularyMappingSpec",
+        "type": "object"
+      },
       "EvaluationRequest": {
         "additionalProperties": false,
         "properties": {
@@ -5058,6 +5175,458 @@
         ],
         "title": "ValidityProfile",
         "type": "object"
+      },
+      "VocabularyMappingConflict": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "mappings": {
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Mappings",
+            "type": "array"
+          },
+          "reason": {
+            "const": "competing_exact_mappings",
+            "default": "competing_exact_mappings",
+            "title": "Reason",
+            "type": "string"
+          },
+          "resolution": {
+            "const": "unreviewed",
+            "default": "unreviewed",
+            "title": "Resolution",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "mappings"
+        ],
+        "title": "VocabularyMappingConflict",
+        "type": "object"
+      },
+      "VocabularyPackage": {
+        "additionalProperties": false,
+        "properties": {
+          "alias_count": {
+            "minimum": 0.0,
+            "title": "Alias Count",
+            "type": "integer"
+          },
+          "interpretation": {
+            "const": "identifier_and_ontology_declarations_not_executable_mechanisms",
+            "default": "identifier_and_ontology_declarations_not_executable_mechanisms",
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "normalized_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Normalized Digest",
+            "type": "string"
+          },
+          "obsolete_count": {
+            "minimum": 0.0,
+            "title": "Obsolete Count",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_metadata": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Source Metadata",
+            "type": "object"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/VocabularySourceSpec"
+          },
+          "term_count": {
+            "maximum": 100000.0,
+            "minimum": 1.0,
+            "title": "Term Count",
+            "type": "integer"
+          },
+          "transformer": {
+            "const": "vocabulary.declarative.1.0.0",
+            "default": "vocabulary.declarative.1.0.0",
+            "title": "Transformer",
+            "type": "string"
+          },
+          "unresolved_parent_ids": {
+            "items": {
+              "maxLength": 200,
+              "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+              "type": "string"
+            },
+            "title": "Unresolved Parent Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "spec",
+          "normalized_digest",
+          "term_count",
+          "alias_count",
+          "obsolete_count",
+          "unresolved_parent_ids",
+          "source_metadata"
+        ],
+        "title": "VocabularyPackage",
+        "type": "object"
+      },
+      "VocabularyRelation": {
+        "additionalProperties": false,
+        "properties": {
+          "relation": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Relation",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "target": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "relation",
+          "target"
+        ],
+        "title": "VocabularyRelation",
+        "type": "object"
+      },
+      "VocabularySourceSpec": {
+        "additionalProperties": false,
+        "properties": {
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Attribution",
+            "type": "array"
+          },
+          "connector": {
+            "enum": [
+              "obo",
+              "hgnc_json",
+              "uniprot_json",
+              "reactome_json"
+            ],
+            "title": "Connector",
+            "type": "string"
+          },
+          "domain": {
+            "enum": [
+              "anatomy",
+              "cell",
+              "gene",
+              "protein",
+              "pathway",
+              "function"
+            ],
+            "title": "Domain",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "license": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "License",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "raw_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Raw Digest",
+            "type": "string"
+          },
+          "revision": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Revision",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "pattern": "^https://",
+            "title": "Source Url",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "connector",
+          "domain",
+          "source_url",
+          "revision",
+          "raw_digest",
+          "license",
+          "attribution",
+          "limitations"
+        ],
+        "title": "VocabularySourceSpec",
+        "type": "object"
+      },
+      "VocabularyTerm": {
+        "additionalProperties": false,
+        "properties": {
+          "aliases": {
+            "default": [],
+            "items": {
+              "maxLength": 200,
+              "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Aliases",
+            "type": "array"
+          },
+          "consider": {
+            "default": [],
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Consider",
+            "type": "array"
+          },
+          "definition": {
+            "anyOf": [
+              {
+                "maxLength": 32768,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Definition"
+          },
+          "id": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          },
+          "namespace": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Namespace",
+            "type": "string"
+          },
+          "obsolete": {
+            "default": false,
+            "title": "Obsolete",
+            "type": "boolean"
+          },
+          "obsolete_declaration": {
+            "anyOf": [
+              {
+                "maxLength": 8192,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Obsolete Declaration"
+          },
+          "parents": {
+            "default": [],
+            "items": {
+              "maxLength": 200,
+              "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "title": "Parents",
+            "type": "array"
+          },
+          "relationships": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/VocabularyRelation"
+            },
+            "maxItems": 2000,
+            "title": "Relationships",
+            "type": "array"
+          },
+          "replaced_by": {
+            "default": [],
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "title": "Replaced By",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "species": {
+            "anyOf": [
+              {
+                "pattern": "^NCBITaxon:[0-9]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Species"
+          },
+          "synonyms": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Synonyms",
+            "type": "array"
+          },
+          "xrefs": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 2000,
+            "title": "Xrefs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "VocabularyTerm",
+        "type": "object"
+      },
+      "VocabularyTermRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "matched_alias": {
+            "title": "Matched Alias",
+            "type": "boolean"
+          },
+          "requested_id": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "title": "Requested Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0.0",
+            "default": "1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "term": {
+            "$ref": "#/components/schemas/VocabularyTerm"
+          },
+          "term_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Term Digest",
+            "type": "string"
+          },
+          "vocabulary": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "vocabulary_digest": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Vocabulary Digest",
+            "type": "string"
+          }
+        },
+        "required": [
+          "vocabulary",
+          "vocabulary_digest",
+          "requested_id",
+          "matched_alias",
+          "term",
+          "term_digest"
+        ],
+        "title": "VocabularyTermRecord",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -5841,6 +6410,623 @@
         "summary": "Neighbors",
         "tags": [
           "biology"
+        ]
+      }
+    },
+    "/v1/biology/vocabularies": {
+      "get": {
+        "operationId": "discover_v1_biology_vocabularies_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyPackage"
+                  },
+                  "title": "Response Discover V1 Biology Vocabularies Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discover",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabularies/{id}/versions/{version}": {
+      "get": {
+        "operationId": "get_v1_biology_vocabularies__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VocabularyPackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabularies/{id}/versions/{version}/artifacts/{kind}": {
+      "get": {
+        "operationId": "artifact_v1_biology_vocabularies__id__versions__version__artifacts__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "title": "Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Artifact",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabularies/{id}/versions/{version}/term": {
+      "get": {
+        "operationId": "term_v1_biology_vocabularies__id__versions__version__term_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "term_id",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "title": "Term Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VocabularyTermRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Term",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabularies/{id}/versions/{version}/terms": {
+      "get": {
+        "operationId": "search_v1_biology_vocabularies__id__versions__version__terms_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "default": "",
+              "maxLength": 200,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "namespace",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace"
+            }
+          },
+          {
+            "in": "query",
+            "name": "obsolete",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Obsolete"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyTermRecord"
+                  },
+                  "title": "Response Search V1 Biology Vocabularies  Id  Versions  Version  Terms Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Search",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabulary-mapping-conflicts": {
+      "get": {
+        "operationId": "conflicts_v1_biology_vocabulary_mapping_conflicts_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyMappingConflict"
+                  },
+                  "title": "Response Conflicts V1 Biology Vocabulary Mapping Conflicts Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Conflicts",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabulary-mappings": {
+      "get": {
+        "operationId": "mappings_v1_biology_vocabulary_mappings_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EntityVocabularyMapping"
+                  },
+                  "title": "Response Mappings V1 Biology Vocabulary Mappings Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mappings",
+        "tags": [
+          "vocabularies"
+        ]
+      },
+      "post": {
+        "operationId": "map_entity_v1_biology_vocabulary_mappings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityVocabularyMappingSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityVocabularyMapping"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Map Entity",
+        "tags": [
+          "vocabularies"
+        ]
+      }
+    },
+    "/v1/biology/vocabulary-mappings/{id}/versions/{version}": {
+      "get": {
+        "operationId": "mapping_v1_biology_vocabulary_mappings__id__versions__version__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityVocabularyMapping"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mapping",
+        "tags": [
+          "vocabularies"
         ]
       }
     },

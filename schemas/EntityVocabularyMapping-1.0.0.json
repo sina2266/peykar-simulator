@@ -1,0 +1,409 @@
+{
+  "$defs": {
+    "EntityVocabularyMappingSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/ScientificContext"
+        },
+        "entity_id": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "graph": {
+          "$ref": "#/$defs/Reference"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "exact_match",
+            "broad_match",
+            "narrow_match",
+            "related_match",
+            "rejected_match"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "term_id": {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+          "title": "Term Id",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        },
+        "vocabulary": {
+          "$ref": "#/$defs/Reference"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "graph",
+        "entity_id",
+        "vocabulary",
+        "term_id",
+        "relation",
+        "context",
+        "rationale",
+        "evidence"
+      ],
+      "title": "EntityVocabularyMappingSpec",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ScientificContext": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_system": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Biological System",
+          "type": "string"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Species",
+          "type": "string"
+        }
+      },
+      "required": [
+        "species",
+        "biological_system"
+      ],
+      "title": "ScientificContext",
+      "type": "object"
+    },
+    "VocabularyRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "relation": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Relation",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relation",
+        "target"
+      ],
+      "title": "VocabularyRelation",
+      "type": "object"
+    },
+    "VocabularyTerm": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "consider": {
+          "default": [],
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Consider",
+          "type": "array"
+        },
+        "definition": {
+          "anyOf": [
+            {
+              "maxLength": 32768,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Definition"
+        },
+        "id": {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "namespace": {
+          "default": "",
+          "maxLength": 200,
+          "title": "Namespace",
+          "type": "string"
+        },
+        "obsolete": {
+          "default": false,
+          "title": "Obsolete",
+          "type": "boolean"
+        },
+        "obsolete_declaration": {
+          "anyOf": [
+            {
+              "maxLength": 8192,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Obsolete Declaration"
+        },
+        "parents": {
+          "default": [],
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+            "type": "string"
+          },
+          "maxItems": 200,
+          "title": "Parents",
+          "type": "array"
+        },
+        "relationships": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/VocabularyRelation"
+          },
+          "maxItems": 2000,
+          "title": "Relationships",
+          "type": "array"
+        },
+        "replaced_by": {
+          "default": [],
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Replaced By",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "species": {
+          "anyOf": [
+            {
+              "pattern": "^NCBITaxon:[0-9]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Species"
+        },
+        "synonyms": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Synonyms",
+          "type": "array"
+        },
+        "xrefs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2000,
+          "title": "Xrefs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "title": "VocabularyTerm",
+      "type": "object"
+    },
+    "VocabularyTermRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "matched_alias": {
+          "title": "Matched Alias",
+          "type": "boolean"
+        },
+        "requested_id": {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+          "title": "Requested Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "term": {
+          "$ref": "#/$defs/VocabularyTerm"
+        },
+        "term_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Term Digest",
+          "type": "string"
+        },
+        "vocabulary": {
+          "$ref": "#/$defs/Reference"
+        },
+        "vocabulary_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Vocabulary Digest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vocabulary",
+        "vocabulary_digest",
+        "requested_id",
+        "matched_alias",
+        "term",
+        "term_digest"
+      ],
+      "title": "VocabularyTermRecord",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:EntityVocabularyMapping:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approval": {
+      "const": "unreviewed_declaration",
+      "default": "unreviewed_declaration",
+      "title": "Approval",
+      "type": "string"
+    },
+    "graph_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Graph Digest",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "spec": {
+      "$ref": "#/$defs/EntityVocabularyMappingSpec"
+    },
+    "target": {
+      "$ref": "#/$defs/VocabularyTermRecord"
+    }
+  },
+  "required": [
+    "spec",
+    "graph_digest",
+    "target"
+  ],
+  "title": "EntityVocabularyMapping",
+  "type": "object"
+}

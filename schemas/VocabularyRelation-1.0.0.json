@@ -1,0 +1,31 @@
+{
+  "$id": "urn:peykar:schema:VocabularyRelation:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "relation": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Relation",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Target",
+      "type": "string"
+    }
+  },
+  "required": [
+    "relation",
+    "target"
+  ],
+  "title": "VocabularyRelation",
+  "type": "object"
+}

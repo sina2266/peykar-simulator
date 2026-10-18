@@ -23,6 +23,7 @@ from peykar.simulation.service import SimulationService
 from peykar.simulation.worker import Worker
 from peykar.validation.service import EvaluationService
 from peykar.vcornea_cli import vcornea_app
+from peykar.vocabulary_cli import vocabulary_app
 from peykar_core.contracts import (
     CSVImportSpec,
     EvaluationSetSpec,
@@ -45,6 +46,7 @@ app.add_typer(native_app, name="native")
 app.add_typer(batch_app, name="batches")
 app.add_typer(hybrid_app, name="flows")
 app.add_typer(cellml_app, name="cellml")
+app.add_typer(vocabulary_app, name="vocabularies")
 
 
 def local_service() -> SimulationService:

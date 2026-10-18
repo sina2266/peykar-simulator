@@ -1,0 +1,186 @@
+{
+  "$defs": {
+    "VocabularySourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "attribution": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Attribution",
+          "type": "array"
+        },
+        "connector": {
+          "enum": [
+            "obo",
+            "hgnc_json",
+            "uniprot_json",
+            "reactome_json"
+          ],
+          "title": "Connector",
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "anatomy",
+            "cell",
+            "gene",
+            "protein",
+            "pathway",
+            "function"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_.-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "raw_digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Raw Digest",
+          "type": "string"
+        },
+        "revision": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Revision",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_url": {
+          "maxLength": 2000,
+          "pattern": "^https://",
+          "title": "Source Url",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "title",
+        "connector",
+        "domain",
+        "source_url",
+        "revision",
+        "raw_digest",
+        "license",
+        "attribution",
+        "limitations"
+      ],
+      "title": "VocabularySourceSpec",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:VocabularyPackage:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alias_count": {
+      "minimum": 0,
+      "title": "Alias Count",
+      "type": "integer"
+    },
+    "interpretation": {
+      "const": "identifier_and_ontology_declarations_not_executable_mechanisms",
+      "default": "identifier_and_ontology_declarations_not_executable_mechanisms",
+      "title": "Interpretation",
+      "type": "string"
+    },
+    "normalized_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Normalized Digest",
+      "type": "string"
+    },
+    "obsolete_count": {
+      "minimum": 0,
+      "title": "Obsolete Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_metadata": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Source Metadata",
+      "type": "object"
+    },
+    "spec": {
+      "$ref": "#/$defs/VocabularySourceSpec"
+    },
+    "term_count": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Term Count",
+      "type": "integer"
+    },
+    "transformer": {
+      "const": "vocabulary.declarative.1.0.0",
+      "default": "vocabulary.declarative.1.0.0",
+      "title": "Transformer",
+      "type": "string"
+    },
+    "unresolved_parent_ids": {
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+        "type": "string"
+      },
+      "title": "Unresolved Parent Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "spec",
+    "normalized_digest",
+    "term_count",
+    "alias_count",
+    "obsolete_count",
+    "unresolved_parent_ids",
+    "source_metadata"
+  ],
+  "title": "VocabularyPackage",
+  "type": "object"
+}

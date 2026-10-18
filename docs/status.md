@@ -15,7 +15,7 @@ interfaces/acceptance criteria without an executable integration.
 | Managed specialist source ecosystem | Implemented local source distribution | 26 permanent vendor distributions / 53,261 files / 37 materialized recursive Git dependencies, zero unresolved links/LFS pointers; original notices retained; 12 new complete source receipts coexist with 9 historical receipts |
 | Native runtime evidence registry | Implemented locally | 12 actual retained execution/QC receipts, checksum/source/image validation, authenticated reads and offline operator CLI; no automatic installation or API Docker access |
 | Species/context checks and capability search | Implemented | Exact matching; no inferred transfer |
-| Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example; no full ontology/claim reconciliation |
+| Biological graph | Partial | Persistent versioned snapshots, hierarchy/context/evidence checks, bounded neighborhoods and API/CLI; curated human EGF/EGFR example plus E6 pinned vocabulary/identifier snapshots and unreviewed contextual annotations; no OWL/taxon reasoning or scientific claim approval |
 | Persistent knowledge-gap declarations | Implemented locally | Immutable manual records; exact affected-model versions; filtered API/CLI reads; no automatic closure or execution blocking |
 | Typed port compatibility | Implemented | Scalars/declared shape; no automatic scale mapping |
 | Composite DAG planning | Partial | Compatibility/order only, no general engine composition |
@@ -86,3 +86,8 @@ sequential experiment service are shared platform capabilities, documented in
 E5 delivers bounded CellML admission and real libCellML/SciPy ODE execution,
 including upstream stiff/unit-scaling fixtures and retained browser results.
 See [scope and remaining adapters](epics/E5-cellml-models.md).
+
+E6 adds eight pinned vocabulary/identifier snapshots (67,937 terms, 4,030 aliases),
+source-preserving indexed reads and graph-entity annotations/conflicts through
+API/CLI and Biological Explorer. Entry subsets and unreviewed declarations are
+explicit; [scope and remaining authority](epics/E6-biological-vocabularies.md).

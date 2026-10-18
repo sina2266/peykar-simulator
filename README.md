@@ -53,6 +53,11 @@ SBML initial-state derivatives; original source models and their notices are pre
 [Scientific contracts](docs/scientific-contracts.md) · [Blueprint coverage](docs/requirements-traceability.md) ·
 [Licensing](LICENSING.md) · [Research sources](docs/sources.md)
 
+[E6 biological vocabularies](docs/epics/E6-biological-vocabularies.md) add pinned
+CL/Uberon/GO and HGNC/UniProt/Reactome identifier snapshots, contextual annotations
+and preserved competing declarations in Biological Explorer. These remain
+unreviewed source-linked declarations, separate from executable biological bridges.
+
 The complete original Persian v3.0 architecture, supplied before the Peykar name
 was chosen, is [archived verbatim](docs/blueprints/README.md). Its
 [55-section and 24-scenario coverage map](docs/blueprint-v3-coverage.md) keeps future

@@ -17,7 +17,7 @@ combines them into a misleading overall completion score.
 |---|---|---|---|
 | S0 | Preserve data, licenses and reliable local execution | None | Working local foundation; production deployment open |
 | S1 | Managed ecosystem of reusable source libraries | S0 | Complete permanent vendor trees and 37 recursive dependencies; native operator profiles installed/executed; original benchmark coverage remains explicit |
-| S2 | Persistent biological entities, relations and evidence | S0 | Versioned graph snapshots and bounded queries working; ontology imports/claim reconciliation open |
+| S2 | Persistent biological entities, relations and evidence | S0 | Versioned graphs, pinned OBO/identifier snapshots and unreviewed contextual annotations/conflicts working; reaction/claim authority open |
 | S3 | Standard model/data package import | S1,S2 | JSON, scalar/native CSV/Parquet, SBML/PKML and CellML 2 working; reviewed CellML operator ODE solver; omics/image admission open |
 | S4 | General experiment orchestration | S0,S3 | Durable reference/native scalar DAGs, COPASI/OSP agent and bounded cohorts/sweeps; remaining native adapters and richer bindings open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
@@ -76,9 +76,9 @@ explicit scientific applicability statement. A source-only entry fails this gate
 - [x] S2.1 Persist immutable entity/relationship snapshots with context, species and evidence.
 - [x] S2.2 Reject unknown endpoints, duplicate identities and hierarchy cycles; query bounded neighborhoods with truncation disclosure.
 - [x] S2.3 Import a small sourced human EGF/EGFR graph from inspected Reactome/UniProt evidence; keep it separate from a kinetic mechanism.
-- [ ] S2.4 Add pinned ontology connectors (anatomy, cell, gene, protein, pathway) with mapping/conflict provenance.
+- [x] S2.4 Add pinned ontology/identifier connectors with mapping/conflict provenance. E6 admits complete basic CL/Uberon/GO releases plus explicit HGNC/UniProt/Reactome entry subsets, exact raw/normalized data, indexed queries and unreviewed contextual annotations. Full database ingestion, OWL/taxon reasoning and scientific reconciliation are not inferred.
 - [ ] S2.5 Represent multiparty reactions, stoichiometry, process ownership, state instances and contextual claims rather than treating every interaction as a pairwise edge.
-- [ ] S2.6 Add claim/conflict records and evidence review; connect executable model versions to the biological entities they actually represent.
+- [ ] S2.6 Add scientific claim/conflict authority and evidence review; connect executable model versions to represented biological entities. E6 graph-entity identifier annotations are unreviewed declarations and do not close this gate.
 
 Exit: entity, model and runtime instance remain distinct; queries retain evidence
 and context; a graph relation never silently authorizes an executable coupling.
@@ -218,7 +218,9 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
    full Linux verification and live deployment without resetting data.
 2. Native computational profiles are installed/executed, and S4.6 now delivers
    actual COPASI/OSP model jobs and E3 scalar DAGs. Extend remaining native adapters/mappings (S4.6b.2),
-   ontology/data admission (S2.4/S3.5) and independent original benchmarks (S1.5).
+   richer data admission (S3.5) and independent original benchmarks (S1.5).
+   E6 delivers pinned biological vocabularies and contextual identifier annotations
+   (S2.4); multiparty processes and scientific claim authority remain S2.5/S2.6.
    E5 now delivers bounded CellML 2 admission and reviewed operator ODE execution
    (S3.4b); its general queue/flow adapter remains part of S4.6b.2.
 3. E4 now delivers the shared six-workspace UI on those APIs. Extend richer

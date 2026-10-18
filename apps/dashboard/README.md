@@ -60,3 +60,9 @@ Original React, React DOM and Scheduler MIT notices are retained under
 Model Studio also exposes CellML 2 admission, original units/bytes and retained
 operator executions with plots, tables and exact artifact downloads. This tab
 explicitly separates operator execution from future CellML queue support. See E5.
+
+Biological Explorer adds real graph/vocabulary/annotation workspaces: source
+revision/license inspection, current/obsolete search, alias lookup, parent reads,
+original/normalized downloads, a structured annotation form and unreviewed conflict
+records. Taxon applicability, reconciliation and biological approval remain explicit
+backend limits; see docs/epics/E6-biological-vocabularies.md.

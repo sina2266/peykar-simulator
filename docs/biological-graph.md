@@ -37,3 +37,9 @@ maximum nodes 1–500. A truncated neighborhood says so; ordering is determinist
 Adjacency does not execute a mechanism or justify cross-scale causality. Ontology
 synchronization, multiparty reactions, scientific claim/conflict resolution and
 model-to-entity mappings remain the next graph extensions.
+
+E6 now adds [pinned vocabulary and identifier snapshots](epics/E6-biological-vocabularies.md),
+indexed current/obsolete/alias reads and immutable contextual graph-entity
+annotations with competing-declaration provenance. Earlier graph versions and
+legacy ontology_id strings remain unchanged. These annotations remain unreviewed;
+no ontology reasoning, mechanism execution or independent claim approval is inferred.

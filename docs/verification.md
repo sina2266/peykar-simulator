@@ -1,5 +1,52 @@
 # Verification record
 
+## E6 biological vocabularies and contextual annotations: 2026-10-18 local
+
+[Observed receipt](vocabulary-verification-2026-10-18.json) and
+[E6 scope](epics/E6-biological-vocabularies.md) record bounded S2.4 delivery.
+
+- `uv run python scripts/acquire_vocabularies.py` verified all eight cached original
+  files. `uv run python scripts/verify_vocabularies.py --output .peykar/e6-final`
+  admitted complete basic CL/Uberon/GO releases and five identifier-entry responses:
+  **67,937 terms, 4,030 aliases, 10,813 obsolete terms**, nine unreviewed contextual
+  annotations and isolated synthetic concurrency/conflict fixtures. Original raw
+  and normalized digests passed; gene/protein, precursor/mature ligand and obsolete
+  exact-target mistakes were rejected. Production excludes synthetic fixtures.
+- Real Uberon data exposed two qualified `is_obsolete: true {source=...}` flags
+  initially treated as current. Boolean-token parsing now retains the complete
+  original declaration/provenance, with conflicting flags rejected. Final replay
+  includes both corrected obsolete terms. No provider replacement is automatic.
+- `uv run pytest tests/integration/test_vocabularies.py -q`: **29 passed**.
+  Final **`make check-docker`: 431 passed in 31.75 seconds, 89% statement coverage,
+  strict Mypy 90 files**, Ruff, generated schemas/OpenAPI, **18 frontend tests** and
+  all wheels/sdists. Host **`make build`** passed. Historical scientific schemas,
+  existing OpenAPI operations/components, root `uv.lock` and **24** original project
+  license hashes remain unchanged. Existing third-party notices remain intact.
+- Actual Chromium (`agent-browser@0.39.1`) searched current/obsolete terms, resolved
+  a disclosed UniProt alias and submitted a structured unreviewed annotation.
+  Changed content under an existing identity returned immutable conflict. Reader
+  mutations are disabled; local/session storage and cookies remain empty. Ten
+  final axe audits include desktop/tablet/mobile/landscape, annotation conflict
+  states, term detail and Persian RTL: **zero violations and no page overflow**.
+  Screenshots were inspected; automated SVG/manual contrast checks remain incomplete.
+- SQLite backup API/artifact copy retained `backups/pre-vocabularies-20261017T215613Z/`
+  in the original volume and locally: **83 objects, 43 reference runs/129 events,
+  23 native runs/72 events, 7 cohorts/38 members/57 events, 4 hybrid runs/11 nodes/20
+  events, 2 experiments/4 nodes/8 events and 401 artifact byte sequences**.
+  `docker compose build` and `docker compose up -d --no-build` passed. An explicit
+  offline, network-disabled operator imported eight sources and nine annotations
+  into the original `peykar3_peykar-data` volume; no scientific code was executed.
+- Authenticated deployed reads rehashed all **16** vocabulary artifacts, confirmed
+  the two qualified Uberon flags and alias disclosure, nine unreviewed annotations
+  and zero production conflicts. Three earlier CellML models/four executions remain;
+  all **12** CellML execution artifacts rehashed correctly. Actual reference and
+  COPASI submit → worker/agent → results, idempotency, original units, eleven samples
+  and analytical checks passed. All preceding rows and **401** earlier artifact
+  bytes survived; SQLite user_version remains 1, queues idle, API healthy/Worker up.
+
+These are engineering/data-provenance checks. OWL/taxon reasoning, biological
+reconciliation, scientific approval and executable biological coupling remain open.
+
 ## E5 CellML admission and operator ODE solver: 2026-10-17 local
 
 [Observed receipt](cellml-verification-2026-10-17.json) and

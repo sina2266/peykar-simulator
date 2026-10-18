@@ -12,3 +12,7 @@ source/license, numerical invariants, parameter bounds and independent tests.
 kinetic library. Its source hashes and limitations are recorded alongside it.
 Persistent graph/API behavior is documented in docs/biological-graph.md; source
 library inspection and native solver readiness are separate platform states.
+
+The implemented `vocabularies/` catalog adds pinned ontology/identifier data and
+source-linked graph annotations, separate from kinetic mechanisms or biological
+model validity. See the E6 guide for actual sources, scope and conflict semantics.

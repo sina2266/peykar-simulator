@@ -1,0 +1,181 @@
+{
+  "$defs": {
+    "VocabularyRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "relation": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Relation",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relation",
+        "target"
+      ],
+      "title": "VocabularyRelation",
+      "type": "object"
+    }
+  },
+  "$id": "urn:peykar:schema:VocabularyTerm:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "aliases": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+        "type": "string"
+      },
+      "maxItems": 1000,
+      "title": "Aliases",
+      "type": "array"
+    },
+    "consider": {
+      "default": [],
+      "items": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Consider",
+      "type": "array"
+    },
+    "definition": {
+      "anyOf": [
+        {
+          "maxLength": 32768,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Definition"
+    },
+    "id": {
+      "maxLength": 200,
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+      "title": "Id",
+      "type": "string"
+    },
+    "label": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Label",
+      "type": "string"
+    },
+    "namespace": {
+      "default": "",
+      "maxLength": 200,
+      "title": "Namespace",
+      "type": "string"
+    },
+    "obsolete": {
+      "default": false,
+      "title": "Obsolete",
+      "type": "boolean"
+    },
+    "obsolete_declaration": {
+      "anyOf": [
+        {
+          "maxLength": 8192,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Obsolete Declaration"
+    },
+    "parents": {
+      "default": [],
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$",
+        "type": "string"
+      },
+      "maxItems": 200,
+      "title": "Parents",
+      "type": "array"
+    },
+    "relationships": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/VocabularyRelation"
+      },
+      "maxItems": 2000,
+      "title": "Relationships",
+      "type": "array"
+    },
+    "replaced_by": {
+      "default": [],
+      "items": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Replaced By",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "species": {
+      "anyOf": [
+        {
+          "pattern": "^NCBITaxon:[0-9]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Species"
+    },
+    "synonyms": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1000,
+      "title": "Synonyms",
+      "type": "array"
+    },
+    "xrefs": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 2000,
+      "title": "Xrefs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "label"
+  ],
+  "title": "VocabularyTerm",
+  "type": "object"
+}

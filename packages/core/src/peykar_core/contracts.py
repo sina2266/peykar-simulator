@@ -1057,3 +1057,97 @@ class CellMLExecutionReceipt(Contract):
     managed_queue_supported: Literal[False] = False
     scientific_validity: Literal["not_established"] = "not_established"
     limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+VocabularyID = Annotated[
+    str, Field(pattern=r"^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$", max_length=200)
+]
+
+
+class VocabularySourceSpec(Contract):
+    id: Identifier
+    version: Version
+    title: Annotated[str, Field(min_length=1, max_length=500)]
+    connector: Literal["obo", "hgnc_json", "uniprot_json", "reactome_json"]
+    domain: Literal["anatomy", "cell", "gene", "protein", "pathway", "function"]
+    source_url: Annotated[str, Field(pattern=r"^https://", max_length=2000)]
+    revision: Annotated[str, Field(min_length=1, max_length=500)]
+    raw_digest: Sha256
+    license: Annotated[str, Field(min_length=1, max_length=500)]
+    attribution: Annotated[tuple[str, ...], Field(min_length=1, max_length=20)]
+    limitations: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class VocabularyRelation(Contract):
+    relation: Annotated[str, Field(min_length=1, max_length=200)]
+    target: Annotated[str, Field(min_length=1, max_length=2000)]
+
+
+class VocabularyTerm(Contract):
+    id: VocabularyID
+    label: Annotated[str, Field(min_length=1, max_length=2000)]
+    namespace: Annotated[str, Field(max_length=200)] = ""
+    species: Annotated[str, Field(pattern=r"^NCBITaxon:[0-9]+$")] | None = None
+    definition: Annotated[str, Field(max_length=32768)] | None = None
+    aliases: Annotated[tuple[VocabularyID, ...], Field(max_length=1000)] = ()
+    synonyms: Annotated[tuple[str, ...], Field(max_length=1000)] = ()
+    xrefs: Annotated[tuple[str, ...], Field(max_length=2000)] = ()
+    parents: Annotated[tuple[VocabularyID, ...], Field(max_length=200)] = ()
+    relationships: Annotated[tuple[VocabularyRelation, ...], Field(max_length=2000)] = ()
+    obsolete: bool = False
+    obsolete_declaration: Annotated[str, Field(max_length=8192)] | None = None
+    replaced_by: tuple[Annotated[str, Field(min_length=1, max_length=2000)], ...] = ()
+    consider: tuple[Annotated[str, Field(min_length=1, max_length=2000)], ...] = ()
+
+
+class VocabularyPackage(Contract):
+    spec: VocabularySourceSpec
+    normalized_digest: Sha256
+    term_count: Annotated[StrictInt, Field(ge=1, le=100000)]
+    alias_count: Annotated[StrictInt, Field(ge=0)]
+    obsolete_count: Annotated[StrictInt, Field(ge=0)]
+    unresolved_parent_ids: tuple[VocabularyID, ...]
+    source_metadata: dict[str, tuple[str, ...]]
+    transformer: Literal["vocabulary.declarative.1.0.0"] = "vocabulary.declarative.1.0.0"
+    interpretation: Literal["identifier_and_ontology_declarations_not_executable_mechanisms"] = (
+        "identifier_and_ontology_declarations_not_executable_mechanisms"
+    )
+
+
+class VocabularyTermRecord(Contract):
+    vocabulary: Reference
+    vocabulary_digest: Sha256
+    requested_id: VocabularyID
+    matched_alias: bool
+    term: VocabularyTerm
+    term_digest: Sha256
+
+
+class EntityVocabularyMappingSpec(Contract):
+    id: Identifier
+    version: Version
+    graph: Reference
+    entity_id: Annotated[str, Field(min_length=1, max_length=500)]
+    vocabulary: Reference
+    term_id: VocabularyID
+    relation: Literal[
+        "exact_match", "broad_match", "narrow_match", "related_match", "rejected_match"
+    ]
+    context: ScientificContext
+    rationale: Annotated[str, Field(min_length=1, max_length=4000)]
+    evidence: Annotated[tuple[str, ...], Field(min_length=1, max_length=50)]
+
+
+class EntityVocabularyMapping(Contract):
+    spec: EntityVocabularyMappingSpec
+    graph_digest: Sha256
+    target: VocabularyTermRecord
+    approval: Literal["unreviewed_declaration"] = "unreviewed_declaration"
+
+
+class VocabularyMappingConflict(Contract):
+    id: Identifier
+    version: Version
+    mappings: Annotated[tuple[Reference, ...], Field(min_length=2, max_length=2)]
+    reason: Literal["competing_exact_mappings"] = "competing_exact_mappings"
+    resolution: Literal["unreviewed"] = "unreviewed"
