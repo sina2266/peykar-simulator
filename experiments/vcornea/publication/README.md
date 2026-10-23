@@ -6,6 +6,11 @@ has slight, mild and moderate severities. Reconstructed formation now passes its
 full-horizon subset; injury execution and the full frozen gate remain pending. See the
 [operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
 
+The [October24 completion audit](completion-audit-2026-10-24.md) retains six full
+January injury exits, the mixed frozen subset result and a separate derived
+native abort. Both January formation jobs now run from their frozen prepared
+inputs after an explicit capacity review; failed prerequisite plans remain intact.
+
 The [complete January2025 archive source](january-source-family-audit-2026-10-23.md)
 is now separately pinned as `stash-hpc-5.0.0`. Its formation/injury projects have
 different original mechanisms and defaults. Earlier candidates and all negative
@@ -17,6 +22,12 @@ final180-day structure/EGF panels without changing numerical observations. A
 separate exact inverse identifies original initial target/lambda pairs from418
 original cells under declared shared-parameter assumptions. The32 historical
 parameter-file variants do not establish the selected cohorts' exact controls.
+
+The [earlier published archive audit](prior-source-audit-2026-10-23.md) retains all
+26 original source files from record16764319. Its physics/numeric controls match
+the later archive; it supplies no missing original run parameters. Four completed
+derived injury jobs fail their unchanged diagnostic comparison. The remaining
+full runs continue, including six January jobs with verified actual720h pulses.
 
 Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
 and James A. Glazier. Final paper:

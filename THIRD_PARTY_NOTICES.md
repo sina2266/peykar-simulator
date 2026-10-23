@@ -54,6 +54,17 @@ commit `c7f95d28dfa2329abb7353caab724c52f9341dee`, was recovered from those same
 licensed archive objects. It retains the same original authors/CC-BY-4.0 scope,
 pristine bytes/modes and its own inventory. Derived recipe5 preserves its two
 different family mechanisms; execution overlays and control overrides are explicit.
+
+The earlier published [Zenodo16764319](https://doi.org/10.5281/zenodo.16764319)
+source is also preserved as all26 original ordinary files in
+[`vendor/models/vcornea-16764319`](vendor/models/vcornea-16764319), under that
+record's CC-BY-4.0 declaration and the same five named authors. Its independently
+verified whole ZIP/inventory remain distinct from16884414; no missing upstream
+README or license file is invented. Original nonexecutable identity is retained;
+ZIP permission bits are recorded separately from regular local0644 permissions.
+The two `observed-2026-10-23/original-merge-*.xml.txt` files retain unchanged
+original unresolved XML artifacts from the licensed archive's Git objects, with
+the same authors/CC-BY-4.0 scope. They are evidence text, not executable configs.
 Peykar's private source overlays and observation/analysis wrappers are separately
 identified modifications; no upstream endorsement or biological validity is inferred.
 

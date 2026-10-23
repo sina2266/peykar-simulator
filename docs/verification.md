@@ -1,5 +1,43 @@
 # Verification record
 
+## Earlier original source and completed injury evidence: 2026-10-24 local
+
+- Whole earlier Code ZIP16764319 downloaded and verified228667541 bytes,
+  MD5 441c5af29b1e175e8bf12ded8b1f411b, SHA2567ceeab7d... . All26 ordinary files
+  retained pristine with an independent inventory.23 match the later archive;
+  two launchers and one newline-only parameter file differ, with no changed
+  numeric/Boolean controls or steppables. All238 older Git object files match.
+- Objects-only reachability checked all832 original objects:808 reachable from56
+  commits,24 additional objects containing22trees/two unresolved XML merge blobs.
+  Extra named parameters were already audited; raw conflict artifacts preserved,
+  never resolved/installed/executed. Current public source/alternate PIFF checks
+  recovered no selected-cohort seed/parameter files; no author messages sent.
+- `uv run pytest tests/unit/test_vcornea_sources.py -q` passed20 tests/0.11s.
+  `uv run python scripts/verify_vendor.py` verified29 distributions,53387 files,
+  1824257046 bytes and37 materialized Git links. Existing pristine sources remain.
+- Final `make check-docker` passed531 tests/39.04s/86% coverage, strict mypy99
+  source files,18 frontend tests, current contracts and all wheel/sdist builds.
+  Log `.peykar/cornea-prior-source-check-docker-20261023.log`; anonymous task-private
+  Docker config uses the existing Desktop socket. Host `make build` passed,
+  log `.peykar/cornea-prior-source-host-build-20261024.log`.
+- Real source5 injury6 completed50400MCS/exit0,11311.59–11557.02s. Explicit native46
+  chemical audit checked all50401-sample grids and actual720h [100,75] pulses.
+  Read-only retention script verified all six durable proofs and interim pulse
+  SHA continuity. `analyze_vcornea_series.py --diagnostic-case slight-injury
+  --diagnostic-case mild-injury --diagnostic-case moderate-injury` completed all
+  stages: frozen comparison2/diagnostic_not_reproduced, original0/spatial0.
+  Three jobs pass all scalar checks, three fail; full family gate remains open.
+- Source4 terminal inspection verified five full exits and retained moderate7's
+  actual SIGABRT/-6 (outer134), last observed25000MCS. Original macOS allocator
+  detection stack was inspected and sanitized evidence retained. Corruption
+  origin remains undetermined; the full derived analysis correctly stopped.
+- A finite explicitly invoked offline operator checked two January formation
+  workspaces had never started, preserved the old failed prerequisite plan and
+  started the same frozen prepared inputs after inspecting no active native jobs.
+  New plan `.peykar/cornea-stash-prepared-formation46-20261024`; actual completion
+  and full follow-on remain pending. No schedule/API/Worker deployment/data reset.
+
+
 ## Full corneal final-state panels and original inverse constraints: 2026-10-23
 
 - Targeted original-field/publication-analysis checks passed **16 tests /0.10s**;

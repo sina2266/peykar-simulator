@@ -1,0 +1,22 @@
+"""Read-only interim engineering observation of actual full-timing chemical pulses."""
+import hashlib,json,time
+from pathlib import Path
+import numpy as np
+import pandas as pd
+root=Path('.peykar/cornea-stash-injury46-20261023');plan=json.loads((root/'plan.json').read_text());rows=[];paired={};doses={'slight-injury':750.0,'mild-injury':1500.0,'moderate-injury':2500.0}
+for j in plan['jobs']:
+ p=Path(j['directory']);record=json.loads((p/'record.json').read_text());manifest=json.loads((p/'manifest.json').read_text());field=p/'lattice-7200.npz';assert time.time()-field.stat().st_mtime>5
+ with np.load(field,allow_pickle=False) as values:
+  kinds,egf,sls=[values[k].copy() for k in ['cell_type','egf','sls']]
+ assert kinds.shape==egf.shape==sls.shape==(200,90) and np.isfinite(egf).all() and np.isfinite(sls).all()
+ coords=np.argwhere(sls>0).tolist();assert coords==[[100,75]] and sls.sum()==doses[j['case']]
+ cells=pd.read_csv(p/'cells-7200.csv');counts={label:int((cells.TypeID==kind).sum()) for kind,label in [(1,'Stem'),(3,'Basal'),(4,'Wing'),(5,'Superficial')]}
+ progress=[json.loads(l) for l in (p/'progress.jsonl').read_text().splitlines()];pulse=next(r for r in progress if r['step_mcs']==7200);assert pulse['counts']==counts
+ for kind in cells.TypeID.unique():assert int((kinds==kind).sum())==int(cells[cells.TypeID==kind].Volume_lattice.sum())
+ paired.setdefault(j['seed'],[]).append((j['case'],kinds,egf))
+ rows.append(dict(case=j['case'],seed=j['seed'],native_status_observed=record['status'],latest_observed_mcs=progress[-1]['step_mcs'],pulse_mcs=7200,pulse_hour=720,coordinates_xy=coords,actual_total=float(sls.sum()),expected_total=doses[j['case']],cell_counts=counts,pulse_field_sha256=hashlib.sha256(field.read_bytes()).hexdigest(),manifest_digest=j['manifest_digest'],eligible_for_final_comparison=False))
+paired_checks=[]
+for seed,values in paired.items():
+ paired_checks.append({'seed':seed,'scope':'Common new seed across doses, before chemical effects; no independent-replicate claim across different cases','same_cell_type_fields_at_pulse':all(np.array_equal(values[0][1],v[1]) for v in values[1:]),'same_egf_fields_at_pulse':all(np.array_equal(values[0][2],v[2]) for v in values[1:])})
+report=dict(schema_version='1.0.0',scope='Interim full-timing pulse, finite-field and cell/lattice consistency observations; no native completion/publication acceptance inferred',utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),audit_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),jobs=rows,common_seed_checks=paired_checks,full_publication_acceptance=False)
+Path('.peykar/cornea-stash-full-pulse-audit-20261023.json').open('x').write(json.dumps(report,indent=2,allow_nan=False)+'\n');print(json.dumps({'jobs':[{k:j[k] for k in ['case','seed','coordinates_xy','actual_total','cell_counts','native_status_observed']} for j in rows],'common_seed_checks':paired_checks},indent=2))

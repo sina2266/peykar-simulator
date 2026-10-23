@@ -1,0 +1,336 @@
+<!-- Model level Anotation -->
+<!-- <Annotation> -->
+
+   <!-- Taxonomy -->
+   <!-- <bqbiol:hasTaxon>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/taxonomy/9606">
+      </rdf:Bag>
+   </bqbiol:hasTaxon> -->
+
+   <!-- Tissue -->
+   <!-- <bqbiol:occursIn>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/bto/BTO:0000286">
+      </rdf:Bag>
+   </bqbiol:occursIn> -->
+
+    <!-- Cell Type -->
+   <!-- <bqbiol:hasPart>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/cl/CL:0000575">
+         https://zfin.org/ZFA:0009264#summary
+      </rdf:Bag>
+   -->
+   <!-- Modeling Approach -->
+   <!-- <bqbiol:isPropertyOf>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/mamo/MAMO_0000024">
+      </rdf:Bag>
+   </bqbiol:isPropertyOf> -->
+
+   <!-- Biological Process -->
+   <!-- <bqbiol:hasProperty>
+      <rdf:Bag>
+            <rdf:li rdf:resource="http://identifiers.org/go/GO:0042060">
+            
+      </rdf:Bag>
+   </bqbiol:hasProperty> -->
+
+   <!--  Model Relevance to a Particular Area  -->
+   <!-- <bqbiol:hasProperty>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/ncit/C17206">
+      </rdf:Bag>
+   </bqbiol:hasProperty> -->    
+   
+   <!-- Created -->
+     <!-- <dc:created>
+        <rdf:Description>
+          <dc:date>2024-08-19T12:00:00Z</dc:date>
+        </rdf:Description>
+      </dc:created> -->
+   
+
+   <!-- Creators -->
+   <!-- <bqbiol:isDescribedBy>
+      <rdf:Bag>
+         <rdf:li rdf:resource="https://orcid.org/0000-0001-9227-9667?lang=en">         
+      </rdf:Bag>   
+   </bqbiol:isDescribedBy> -->
+   <!-- Notes -->
+<!-- </Annotation> -->
+
+<CompuCell3D Revision="0" Version="4.5">
+   <Metadata>
+      <NumberOfProcessors>1</NumberOfProcessors>
+      <DebugOutputFrequency>10</DebugOutputFrequency>
+   </Metadata>
+   <Potts>
+       <!-- When Dimentions are changed make sure to change the initial parameters for wall creation -->
+       <Dimensions x="200" y="90" z="1" />
+       <Steps>100000</Steps>
+       <Temperature>8.0</Temperature>
+       <NeighborOrder>2</NeighborOrder>
+    </Potts>
+    <Plugin Name="CellType">
+       <CellType TypeId="0" TypeName="Medium" />
+       <CellType TypeId="1" TypeName="STEM" />              #ff007f Rose 
+       <CellType Freeze="" TypeId="2" TypeName="LIMB" />    #ffa7f6 Pink
+       <CellType TypeId="3" TypeName="BASAL" />             #ffbe99 Peach Orange 
+       <CellType TypeId="4" TypeName="WING" />              #0055ff Blue
+       <CellType TypeId="5" TypeName="SUPER" />             #55ffff Cyan
+       <CellType Freeze="" TypeId="6" TypeName="MEMB" />    #ff00ff Magenta       
+       <CellType TypeId="7" TypeName="STROMA" />            #c681ff Heliotrope Purple
+       <CellType TypeId="8" TypeName="KERATO" />            Reserved for future use
+       <CellType TypeId="9" Freeze="" TypeName="WALL" />    #ffffff White
+       <CellType TypeId="10" TypeName="TEAR" />             #55ff00 Bright-Green
+       <CellType Freeze="" TypeId="11" TypeName="FIBRO" />  Reserved for future use
+       <CellType Freeze="" TypeId="12" TypeName="MYOF" />   Reserved for future use
+       <CellType Freeze="" TypeId="13" TypeName="BM" />     Reserved for future use
+   </Plugin>
+   <Plugin Name="Volume" />
+   <Plugin Name="Surface" />
+   <Plugin Name="CenterOfMass">
+   </Plugin>
+   <Plugin Name="NeighborTracker">
+   </Plugin>
+   <Plugin Name="ExternalPotential">
+       <Algorithm>PixelBased</Algorithm>
+   </Plugin>
+   <Plugin Name="Contact">
+       <!-- Specification of adhesion energies -->
+       <Energy Type1="Medium" Type2="Medium">10.0</Energy>
+       <Energy Type1="Medium" Type2="STEM">10.0</Energy>
+       <Energy Type1="Medium" Type2="LIMB">10.0</Energy>
+       <Energy Type1="Medium" Type2="BASAL">10.0</Energy>
+       <Energy Type1="Medium" Type2="WING">10.0</Energy>
+       <Energy Type1="Medium" Type2="SUPER">10.0</Energy>
+       <Energy Type1="Medium" Type2="MEMB">10.0</Energy>
+       <Energy Type1="Medium" Type2="STROMA">10.0</Energy>
+       <Energy Type1="Medium" Type2="WALL">5.0</Energy>
+       <Energy Type1="Medium" Type2="TEAR">5.0</Energy>
+
+       <Energy Type1="STEM" Type2="STEM">10.0</Energy>
+       <Energy Type1="STEM" Type2="LIMB">5.0</Energy>
+       <Energy Type1="STEM" Type2="BASAL">10.0</Energy>
+       <Energy Type1="STEM" Type2="WING">10.0</Energy>
+       <Energy Type1="STEM" Type2="SUPER">10.0</Energy>
+       <Energy Type1="STEM" Type2="MEMB">5.0</Energy>
+       <Energy Type1="STEM" Type2="STROMA">20.0</Energy>
+       <Energy Type1="STEM" Type2="WALL">10.0</Energy>
+       <Energy Type1="STEM" Type2="TEAR">5.0</Energy>
+              
+       <Energy Type1="LIMB" Type2="LIMB">10.0</Energy>
+       <Energy Type1="LIMB" Type2="BASAL">10.0</Energy>
+       <Energy Type1="LIMB" Type2="WING">10.0</Energy>
+       <Energy Type1="LIMB" Type2="SUPER">10.0</Energy>
+       <Energy Type1="LIMB" Type2="MEMB">10.0</Energy>
+       <Energy Type1="LIMB" Type2="STROMA">10.0</Energy>
+       <Energy Type1="LIMB" Type2="WALL">10.0</Energy>
+       <Energy Type1="LIMB" Type2="TEAR">5.0</Energy>
+      
+       <Energy Type1="BASAL" Type2="BASAL">10.0</Energy>
+       <Energy Type1="BASAL" Type2="WING">10.0</Energy>
+       <Energy Type1="BASAL" Type2="SUPER">15.0</Energy>
+       <Energy Type1="BASAL" Type2="MEMB">5.0</Energy>
+       <Energy Type1="BASAL" Type2="STROMA">20.0</Energy>
+       <Energy Type1="BASAL" Type2="WALL">10.0</Energy>
+       <Energy Type1="BASAL" Type2="TEAR">5.0</Energy>     
+     
+       <Energy Type1="WING" Type2="WING">5.0</Energy>
+       <Energy Type1="WING" Type2="SUPER">6.0</Energy>
+       <Energy Type1="WING" Type2="MEMB">15.0</Energy>
+       <Energy Type1="WING" Type2="STROMA">10.0</Energy>
+       <Energy Type1="WING" Type2="WALL">10.0</Energy>
+       <Energy Type1="WING" Type2="TEAR">5.0</Energy>
+       
+       <Energy Type1="SUPER" Type2="SUPER">2.0</Energy>
+       <Energy Type1="SUPER" Type2="MEMB">15.0</Energy>
+       <Energy Type1="SUPER" Type2="STROMA">10.0</Energy>
+       <Energy Type1="SUPER" Type2="WALL">5.0</Energy>
+       <Energy Type1="SUPER" Type2="TEAR">2.0</Energy>
+       
+       <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
+       <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
+       <Energy Type1="MEMB" Type2="WALL">10.0</Energy>
+       <Energy Type1="MEMB" Type2="TEAR">2.0</Energy>
+       
+       <Energy Type1="STROMA" Type2="STROMA">10.0</Energy>
+       <Energy Type1="STROMA" Type2="WALL">10.0</Energy>
+       <Energy Type1="STROMA" Type2="TEAR">10.0</Energy>
+
+       <Energy Type1="WALL" Type2="WALL">10.0</Energy>
+       <Energy Type1="WALL" Type2="TEAR">5.0</Energy>
+       
+       <Energy Type1="TEAR" Type2="TEAR">0.1</Energy>
+
+       <NeighborOrder>2</NeighborOrder>
+    </Plugin>
+
+   <Plugin Name="PixelTracker"> 
+   </Plugin>
+
+   <Plugin Name="BoundaryPixelTracker">
+      <NeighborOrder>1</NeighborOrder>
+   </Plugin>
+
+   <Plugin Name="Chemotaxis">
+      <ChemicalField Name="BASALMVBIAS">
+       </ChemicalField>
+       <ChemicalField Name="EGF">
+       </ChemicalField>
+   </Plugin>
+
+   <Steppable Type="DiffusionSolverFE">
+      <DiffusionField Name="EGF">
+      <!-- Whole simulation has 160 µm Height and 400 µm Width 
+      An hour is 10 mcs
+
+      EGF Diffusion constant 5.18 +/- 0.16 x 10(-7) (SE) cm^2/s {DOI: 10.1152/jn.00352.2004, PMID: 15269225}
+      5.18 µm^2/s * 3600 s/hour = 18648 µm^2/hour
+
+      CC3D diffusion constant = 18648 µm^2/hour * (1 voxel/2 µm)^2 * (1 hour/10 MCS) = 186.48 voxels^2/MCS 
+      Hex transformed to 161 voxels^2/MCS         
+
+      The diffusion length L is related to the diffusion constant D and the time t by: 
+      L = sqrt(2Dt)
+
+      Given that the diffusion constant is 5.18 µm^2/s, and 1 mcs is 6 minutes (or 360 seconds):
+
+      Using the above formula and given D, we can find the diffusion length for 1 mcs:
+
+      L = sqrt(2 x 5.18 µm^2/s x 360 s)
+      L ≈ sqrt(3724.8 µm^2)
+      L ≈ 61 µm or 30.5 voxels with no decay.
+      
+      EGF has a variable circulating half life, ranging from 42 minutes to 114 minutes. [PMID: 1748552]
+      To determine the decay constant, the formula relating the decay constant (λ) and the half-life (T_half) is:
+      λ = ln(2) / T_half
+      
+      For an EGF half-life (T_half) of 42 minutes (or 2520 seconds):
+      λ_lower = ln(2) / 2520 seconds
+      λ_lower ≈ 0.0002750584 s
+
+      For 1 mcs (6 minutes or 360 seconds):
+      λ_mcs_lower = 0.0002750584 x 360
+      λ_mcs_lower ≈ 0.09902102579 per mcs
+
+      For an EGF half-life (T_half) of 114 minutes (or 6840 seconds):
+      λ_upper = ln(2) / 6840 seconds
+      λ_upper ≈ 0.0001013373 s
+
+      For 1 mcs (6 minutes or 360 seconds):
+      λ_mcs_upper = 0.0001013373 x 360
+      λ_mcs_upper ≈ 0.03648143055 per mcs
+
+      For an EGF half-life (T_half) of 78 minutes (or 4680 seconds):
+      λ_mean = ln(2) / 4680 seconds
+      λ_mean ≈ 0.00014810837 s
+
+      For 1 mcs (6 minutes or 360 seconds):
+      λ_mcs_mean = 0.00014810837 x 360
+      λ_mcs_mean ≈ 0.05331901388 per mcs
+      
+      Considering both diffusion and decay, the diffusion length (L') can be approximated as:
+      L' = sqrt(2D/λ)
+
+      For the lower limit:
+      L' = sqrt((2 x 186) / 0.09902102579)
+      L' ≈  abs(61.2925597984) 61 voxels 
+
+      For the upper limit:
+      L' = sqrt((2 x 186) / 0.03648143055)
+      L' ≈ abs(100.980040358) 100 voxels
+
+      For the upper limit:
+      L' = sqrt((2 x 186) / 0.05331901388)
+      L' ≈ abs(83.5276793581) 83 voxels -->
+         <DiffusionData>
+            <FieldName>EGF</FieldName>
+            <GlobalDiffusionConstant id="EGF_GlbDiff">186</GlobalDiffusionConstant>
+            <GlobalDecayConstant id="EGF_GlobalDecay">0.05331901388</GlobalDecayConstant>
+            <DiffusionCoefficient CellType="SUPER" id="EGF_Coef_SUPER">0.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">20.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="LIMB">0.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>  
+         </DiffusionData>
+         <SecretionData>
+            <ConstantConcentration Type="TEAR">1.0</ConstantConcentration>
+         </SecretionData>
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantDerivative PlanePosition="Min" Value="0.0" />
+               <ConstantDerivative PlanePosition="Max" Value="0.0" />
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantValue PlanePosition="Min" Value="0.0" />
+               <ConstantValue PlanePosition="Max" Value="0.0" /> 
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField> 
+
+      <DiffusionField Name="BASALMVBIAS">
+         <DiffusionData>
+            <FieldName>BASALMVBIAS</FieldName>
+         </DiffusionData>
+         <SecretionData>
+            <SecretionOnContact id="Basal_bias_xml" SecreteOnContactWith="Medium" Type="Medium">0.0</SecretionOnContact>
+         </SecretionData>
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantDerivative PlanePosition="Min" Value="0.0" />
+               <ConstantDerivative PlanePosition="Max" Value="0.0" />
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantDerivative PlanePosition="Min" Value="0.0" />
+               <ConstantDerivative PlanePosition="Max" Value="0.0" />
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField>
+
+      <DiffusionField Name="SLS">
+         <DiffusionData>
+            <FieldName>SLS</FieldName>
+            <GlobalDiffusionConstant id="SLS_GlbDiff">5.0</GlobalDiffusionConstant>
+            <GlobalDecayConstant id="SLS_GlobalDecay">0.0</GlobalDecayConstant>
+            <DiffusionCoefficient CellType="SUPER" id="SLS_Coef_SUPER">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="MEMB" id="SLS_Coef_MEMB">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="LIMB" id="SLS_Coef_LIMB">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="WALL" id="SLS_Coef_WALL">0.0</DiffusionCoefficient>             
+            <DiffusionCoefficient CellType="TEAR" id="SLS_Coef_TEAR">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="STEM" id="SLS_Coef_STEM">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="BASAL" id="SLS_Coef_BASAL">5.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="WING" id="SLS_Coef_WING">5.0</DiffusionCoefficient>
+         </DiffusionData>
+         <SecretionData>
+         </SecretionData>
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantDerivative PlanePosition="Min" Value="0.0" />
+               <ConstantDerivative PlanePosition="Max" Value="0.0" />
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantDerivative PlanePosition="Min" Value="0.0" />
+               <ConstantDerivative PlanePosition="Max" Value="0.0" /> 
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField>
+
+   </Steppable>
+
+   <Plugin Name="FocalPointPlasticity">
+      <Local/>
+      <NeighborOrder>1</NeighborOrder>
+   </Plugin>
+
+   <Plugin Name="Secretion">
+      <Field Name="SLS">
+      </Field>
+   </Plugin>
+   
+    <Steppable Type="PIFInitializer">
+        <PIFName>Epithelium.piff</PIFName>
+    </Steppable>
+   
+</CompuCell3D>

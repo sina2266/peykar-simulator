@@ -35,6 +35,12 @@ S1–S4/model expansion. Scientific gates remain mandatory before model validity
 or a biological coupling is claimed. UI work depends on concrete operations and
 states; an illustrative graph or animation cannot substitute for execution.
 
+The [October24 corneal observations](../experiments/vcornea/publication/completion-audit-2026-10-24.md)
+retain six completed January injuries (three full scalar passes, three failures),
+one earlier native abort and the original failed prerequisite plans. Two previously
+unstarted formation jobs now execute their frozen inputs under explicit offline
+capacity review. The four-group full gate remains open; no other model work starts.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
@@ -60,8 +66,8 @@ Local single-user verification does not close S0.5.
 
 Source catalogue: [engine_adapters/ecosystem-sources.json](../engine_adapters/ecosystem-sources.json).
 Actual receipts: [source inspection](../engine_adapters/ecosystem-source-receipts-2026-10-16.json).
-The permanent distribution now contains **28 source identities / 53,361 files /
-1,820,409,663 bytes**, excluding Git administrative data, with **37 materialized
+The permanent distribution now contains **29 source identities / 53,387 files /
+1,824,257,046 bytes**, excluding Git administrative data, with **37 materialized
 Git links**. See [vendor manifest](../vendor/manifest.json), [original notices](../THIRD_PARTY_NOTICES.md),
 [native runtime profiles](../runtime_profiles/README.md) and [actual new receipts](../engine_adapters/runtime-evidence-2026-10-17.json).
 Earlier 1.0.0 source inspections remain immutable historical observations; complete
@@ -277,10 +283,16 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Recover the complete January2025 archive snapshot and retain its distinct
   HPC formation/injury mechanisms, controls and original initial states as
   `stash-hpc-5.0.0`; no silent state/mechanism mixing or changed acceptance criteria.
+- [x] Check both published Zenodo versions; verify/materialize all26 earlier
+  ordinary source files and compare all238 original object files byte-for-byte.
+  No extra numeric controls/history were found; keep its distinct archive identity.
 - [ ] Finish its two full formation and six injury runs under explicit native-worker
   capacity checks, then retain the complete unchanged comparison/original math/
   spatial analysis. A newer stash is a separately identified candidate, not proof
   of the original cohort's exact source version.
+- [ ] Investigate observed long same-numeric-seed divergence under one native
+  worker before claiming bitwise replay or paired pre-injury states. Existing
+  stochastic acceptance/input plans stay frozen; no cause or fix is invented.
 
 See the [source/analysis inventory](../experiments/vcornea/publication/README.md)
 and [operator commands](../runtime_profiles/vcornea-publication/README.md).

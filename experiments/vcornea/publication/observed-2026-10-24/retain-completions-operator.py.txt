@@ -1,0 +1,45 @@
+"""Read-only final injury proof and failure extraction; no scientific code execution."""
+import hashlib,json,shutil,sys
+from pathlib import Path
+sys.path.insert(0,str(Path('scripts').resolve()))
+from resume_vcornea import verified_completed
+
+out=Path('experiments/vcornea/publication/observed-2026-10-24');out.mkdir(exist_ok=False)
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(name,d):
+ with (out/name).open('x')as f:json.dump(d,f,indent=2,allow_nan=False);f.write('\n')
+p=Path('.peykar/cornea-stash-injury46-20261023');plan=json.loads((p/'plan.json').read_text())
+interim=json.loads(Path('experiments/vcornea/publication/observed-2026-10-23/january-full-timing-pulse-observations.json').read_text())
+previous={(j['case'],j['seed']):j for j in interim['jobs']};jobs=[]
+for j in plan['jobs']:
+ assert verified_completed(j,plan['profile_digest'],plan['protocol_digest'])
+ root=Path(j['directory']);record=json.loads((root/'record.json').read_text());proof=json.loads((root/'completion.json').read_text())
+ assert record['returncode']==proof['returncode']==0
+ old=previous[(j['case'],j['seed'])]
+ assert old['manifest_digest']==j['manifest_digest']
+ assert old['pulse_field_sha256']==record['outputs']['lattice-7200.npz']
+ jobs.append({'case':j['case'],'seed':j['seed'],'manifest':json.loads((root/'manifest.json').read_text()),'record':record,'proof':proof,'interim_pulse_sha256':old['pulse_field_sha256'],'interim_pulse_matches_actual_completion':True})
+write('january-six-injury-completion.json',{'schema_version':'1.0.0','scope':'All six actual full native injury exits and pulse hash continuity; complete family comparison remains separate','plan_sha256':sha(p/'plan.json'),'protocol_sha256':plan['protocol_digest'],'jobs':jobs,'independent_biological_validation':False})
+a=Path('.peykar/cornea-stash-injury-diagnostic-20261024')
+state=json.loads((a/'status.json').read_text());assert state['status']=='diagnostic_not_reproduced'
+for name,source in {'january-injury-diagnostic-report.json':'comparison/report.json','january-injury-diagnostic-report.md':'comparison/report.md','january-injury-diagnostic-spatial.json':'spatial-analysis/report.json','january-injury-original-analysis.json':'original-analysis/receipt.json','january-injury-analysis-stages.json':'status.json'}.items():
+ shutil.copyfile(a/source,out/name)
+for case in ['slight-injury','mild-injury','moderate-injury']:
+ for seed in [7,11]:
+  for category,suffix in [('comparison','counts'),('spatial-analysis','structure'),('spatial-analysis','egf')]:
+   source=(a/category/f'{case}-seed-{seed}-counts.png') if category=='comparison' else (a/category/f'{case}-{seed}-{suffix}.png')
+   shutil.copyfile(source,out/f'january-{case}-seed{seed}-{suffix}.png')
+shutil.copyfile('.peykar/cornea-stash-completed-chemical-audit-20261024.json',out/'january-six-injury-full-chemical-audit.json')
+p=Path('.peykar/cornea-observed-injury46-20261023');plan=json.loads((p/'plan.json').read_text());jobs=[]
+for j in plan['jobs']:
+ root=Path(j['directory']);r=json.loads((root/'record.json').read_text());c=json.loads((root/'completion.json').read_text())
+ good=verified_completed(j,plan['profile_digest'],plan['protocol_digest'])
+ assert good==(r['status']=='succeeded')
+ jobs.append({'case':j['case'],'seed':j['seed'],'verified_completed':good,'record':r,'proof':c,'manifest_digest':j['manifest_digest']})
+crash=Path.home()/'Library/Logs/DiagnosticReports/python3.10-2026-10-23-221712.ips';d=json.loads(crash.read_text().split('\n',1)[1]);frames=[]
+for f in d['threads'][d['faultingThread']]['frames']:
+ frames.append({'symbol':f.get('symbol'),'symbol_offset':f.get('symbolLocation'),'image_basename':Path(d['usedImages'][f['imageIndex']]['path']).name})
+write('derived4-terminal-execution-and-abort.json',{'schema_version':'1.0.0','scope':'Terminal series with one true SIGABRT; five exits verified, incomplete moderate7 excluded from full scientific comparison','plan_sha256':sha(p/'plan.json'),'status':plan['status'],'jobs':jobs,'crash':{'private_original_sha256':sha(crash),'pid':d['pid'],'capture_time':d['captureTime'],'exception':d['exception'],'termination':d['termination'],'allocator_observation':'nanov2_guard_corruption_detected; allocation on BoundaryPixelTracker update from Potts parallel worker; detection stack is not proof of corruption origin','faulting_thread':d['faultingThread'],'frames':frames},'full_publication_comparison_eligible':False,'independent_biological_validation':False})
+shutil.copyfile('.peykar/run-cornea-stash-prepared-formation-20261024.py',out/'prepared-formation-operator.py.txt')
+shutil.copyfile(__file__,out/'retain-completions-operator.py.txt')
+print('Six completed January injuries verified; five derived jobs verified; actual failed native job retained; portable observations written')

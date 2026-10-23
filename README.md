@@ -28,8 +28,13 @@ actual tissue layers were inspected. Injury execution/comparison remains pending
 including a declared reconstruction based on original observed state constraints.
 One original spatial file has truncated optional fields, now explicitly recorded.
 No full publication match or biological validity is claimed.
-The complete later-source baseline now retains its failed four-group comparison;
-four reconstructed injury jobs are running and two wait for capacity. Original
+The complete later-source baseline retains its failed four-group comparison.
+Five derived injury jobs completed; the sixth aborted inside the native engine,
+with its actual exit and partial outputs retained. All six January injury jobs
+completed: three pass every frozen scalar criterion, three fail. Its two previously
+unstarted formation jobs now run from their original prepared inputs under an
+explicit reviewed capacity release. The earlier failed prerequisite plans remain.
+Original
 figure export now preserves titles/axis labels with identical numerical summaries.
 The complete January2025 archive snapshot is also retained. A separate fifth
 reconstruction keeps its different formation/injury mechanisms and original
@@ -42,7 +47,7 @@ is one integration within it. Shared backends now include an immutable
 [persistent biological graphs](docs/biological-graph.md), and
 [durable multi-model experiment workflows](docs/experiment-workflows.md).
 The complete named source trees and recursive dependencies now live as ordinary
-project files in [vendor](vendor/README.md): 28 pinned distributions, 53,361 files,
+project files in [vendor](vendor/README.md): 29 pinned distributions, 53,387 files,
 37 materialized Git dependencies, and preserved original notices. [Installed
 runtime profiles](runtime_profiles/README.md) execute real COPASI, NEURON,
 PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongside

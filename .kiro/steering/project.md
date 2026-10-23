@@ -9,8 +9,8 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
   Latest user priority (2026-10-18) supersedes the earlier parallel-work sequence:
   finish full corneal publication reproduction and analysis before another model.
 - All named specialist source trees are now permanent ordinary files under `vendor/`,
-  not only ignored acquisition caches: 28 source identities, 53,361 files,
-  1,820,409,663 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
+  not only ignored acquisition caches: 29 source identities, 53,387 files,
+  1,824,257,046 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
   The separately pinned VCell solvers, MaBoSS and OSP R packages are included.
   Historical source receipts 1.0.0 remain; 12 complete inventories use version 2.0.0.
   Source availability, dependency completion, runtime, adapter and validity are
@@ -615,3 +615,52 @@ commands/outcomes in `docs/verification.md`.
   combined follow-on. Never duplicate or alter these running/prepared identities.
 - Final make check-docker531 tests/39.40s/86%, mypy99,18 frontend/current contracts/all
   builds; host make build passed. Logs cornea-final-state-*. Heartbeat stays PAUSED.
+
+## Four actual completions and source5 admission, 2026-10-23 19:20UTC
+
+- Mainc42ba24035b14f90adc2e660a0514d9d97181d77 was pushed/remote-SHA verified,
+  exact20-file stage and clean tree after531-test/full-horizon/original-inverse increment.
+- ALL FOUR source4 slight/mild jobs genuinely completed50400MCS/exit0, elapsed
+  6574.92–6592.11s. Each earlier7200MCS pulse hash exactly matches its actual
+  completion record; no interim observation was promoted without the real exit.
+- Source4moderate2 now run under the existing53938 supervisor. Full combined54075
+  still waits for these two; no full reconstructed comparison has been declared.
+- Read-only capacity-view73782 genuinely completed after all FOUR verified exits.
+  Source5injury73824 is running all six one-worker jobs (guards79021/79022/79023/
+  79027/79028/79029 observed19:20; always recheck ownership). First native snapshots
+  show original4/32/127/46 counts; no parameter/protocol/source identity changed.
+- Current requested worker maximum is8 source4moderate +6 source5injury =14.
+  Source5formation73826 waits for WHOLE source4series; combined73926 still waits
+  for BOTH source5families. Do not duplicate or relax gates. Heartbeat stays PAUSED.
+- `.peykar/cornea-observed-first-four-completion-verification-20261023.json`
+  retains real elapsed/exit/manifest/proof and pulse-hash continuity. Source4full
+  gate, source5full gate and independent biology remain pending.
+
+## Prior published source and terminal injury observations, October24 local
+
+- Earlier official16764319 CodeZIP is fully MD5/SHA verified;26 pristine source
+  files3847383bytes added as29th distribution. Total53387files1824257046bytes,
+  37 links.23files same as16884414;2launchers/1newline-only Parameters differ.
+  No numeric/Boolean/mechanism change; no new scientific profile/run claimed.
+- All238 older original object files match current. Of832 inspected objects,
+  808 reachable from56commits;22trees+2unresolved XML merge artifacts extra.
+  Preserve original conflicts as data; never install/resolve them as configs.
+  Six extra-tree named parameter blobs already among32. No selected run metadata.
+- Final source increment check-docker531tests39.04s86%/mypy99/18frontend/builds;
+  host make build passed. Source pins/licenses/uv.lock/protocol remain preserved.
+- At23:04UTC source4terminal:5verifiedfull exits,moderate7actual SIGABRT/-6,
+  outer134,lastobserved25000MCS. Mac allocator detects guard corruption during
+  BoundaryPixelTracker allocation in parallel Potts worker; origin UNDETERMINED.
+  Failed evidence and blocked derived combined analysis retained. Never infer success.
+- Source5injury6 all50400MCS/exit0,11311.59–11557.02s. Originalmath/spatial0,
+  frozen injury diagnostic2:moderate2+mild11passall,slight2+mild7fail. All50401
+  chemical samples and actual720h[100,75]doses checked; interim hashes matchproofs.
+  Portable receipts/figures observed-2026-10-24,completion-audit-2026-10-24.md.
+- Old source5formation plan failed success prerequisite before ANY job started.
+  Explicit reviewed private operator95506 reuses SAME never-started prepared inputs
+  in new series .peykar/cornea-stash-prepared-formation46-20261024,2jobs×4workers.
+  Original failed plan preserved, verified no active native solver before release.
+  Do not duplicate/reconfigure these jobs. New bounded full follow-on95617 uses
+  formation as waiting primary and completedinjury6 as additional; directory
+  .peykar/cornea-stash-full-analysis-20261024. Recheck ownership/status now.
+- Full publication gate and independent biology still open. Heartbeat stays PAUSED.

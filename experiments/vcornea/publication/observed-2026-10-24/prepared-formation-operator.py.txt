@@ -1,0 +1,53 @@
+"""Reviewed finite offline release of two never-started frozen formation jobs.
+
+The earlier success prerequisite failed. All native processes were inspected as
+absent before this explicit capacity decision. Preserve the original failed plan;
+reuse its prepared inputs, never a failed/started workspace. No schedule is made.
+"""
+import json
+import os
+import subprocess
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
+from peykar.integrations.vcornea_publication import execute_native, write_operator_json
+from peykar_core.hashing import bytes_digest, digest
+
+previous = Path('.peykar/cornea-stash-formation46-20261023')
+output = Path('.peykar/cornea-stash-prepared-formation46-20261024')
+raw = (previous / 'plan.json').read_bytes()
+plan = json.loads(raw)
+assert plan['status'] == 'execution_failed' and plan['failure'] == 'ValueError'
+for job in plan['jobs']:
+    root = Path(job['directory'])
+    assert job['status'] == 'prepared'
+    assert not any((root / n).exists() for n in ['record.json', 'completion.json', 'engine.log'])
+    assert digest(json.loads((root / 'manifest.json').read_bytes())) == job['manifest_digest']
+processes = subprocess.run(['ps', '-axo', 'pid,command'], capture_output=True, text=True, check=True).stdout
+for line in processes.splitlines():
+    assert not any(n in line for n in ['completion_guard.py', 'scripts/reproduce_vcornea.py', 'scripts/resume_vcornea.py'])
+assert bytes_digest((previous / 'comparison.json').read_bytes()) == plan['protocol_digest']
+profile = Path('runtime_profiles/vcornea-publication/macos-arm64-4.6.0-profile.json')
+assert digest(json.loads(profile.read_bytes())) == plan['profile_digest']
+output.mkdir(exist_ok=False)
+(output / 'previous-plan.json').write_bytes(raw)
+(output / 'comparison.json').write_bytes((previous / 'comparison.json').read_bytes())
+plan.update(status='running', supervisor_pid=os.getpid(), predecessor_digest=bytes_digest(raw),
+    execution_prerequisites=[],
+    capacity_release='Explicit reviewed offline operator; previous failed series terminal and no native jobs active; original failed plan preserved; never-started prepared inputs retained')
+plan.pop('failure')
+write_operator_json(output / 'plan.json', plan)
+with ThreadPoolExecutor(max_workers=2) as pool:
+    futures = {pool.submit(execute_native, Path(j['directory']), Path('.peykar/cornea-native46'), profile, wall_seconds=86400): j for j in plan['jobs']}
+    for future in as_completed(futures):
+        job = futures[future]
+        try:
+            record = future.result()
+            job.update(status=record['status'], elapsed_seconds=record['elapsed_seconds'])
+        except Exception as error:
+            job.update(status='failed', failure=type(error).__name__)
+        write_operator_json(output / 'plan.json', plan)
+        print(job['case'], job['seed'], job['status'], flush=True)
+plan['status'] = 'execution_completed' if all(j['status'] == 'succeeded' for j in plan['jobs']) else 'execution_failed'
+write_operator_json(output / 'plan.json', plan)
+raise SystemExit(0 if plan['status'] == 'execution_completed' else 1)

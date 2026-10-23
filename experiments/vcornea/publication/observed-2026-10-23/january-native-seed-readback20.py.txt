@@ -1,0 +1,20 @@
+"""Explicit short native seed-control readback; full jobs/criteria remain untouched."""
+from pathlib import Path
+import json
+from xml.etree import ElementTree
+from peykar.integrations.vcornea_publication import prepare_publication,execute_native
+from peykar.integrations.vcornea_runtime import _file_inventory
+from peykar_core.hashing import bytes_digest,canonical_json,digest
+root=Path('.peykar/cornea-stash-seed-readback20-20261023');root.mkdir(exist_ok=False);rows=[]
+for seed in [7,11]:
+ p=root/f'seed-{seed}';m=prepare_publication(Path('vendor/models/vcornea-history-c7f95d28'),Path('engine_adapters/compucell3d/vcornea-history-c7f95d28.json'),p,'mild-injury',seed,parameter_profile='stash-hpc-5.0.0')
+ params=p/'project/Simulation/Parameters.py';params.write_bytes(params.read_bytes()+b'\nSimTime=20\n')
+ tree=ElementTree.parse(p/'project/Simulation/vCornea_v2.xml');tree.find('./Potts/Steps').text='22';tree.write(p/'project/Simulation/vCornea_v2.xml',encoding='utf-8',xml_declaration=True)
+ m['controls']['steps_mcs']=20;m['parameter_overrides']['SimTime']=20;m['engineering_probe']={'scope':'Read-only native seed getters, no pulse before horizon20','full_publication_acceptance':False}
+ driver=(p/'driver.py').read_bytes();old=b'"step_mcs": mcs,';assert driver.count(old)==1;driver=driver.replace(old,old+b'\n                "native_rng_seed_readback": int(self.simulator.getRNGSeed()),\n                "native_seed_property": int(self.simulator.getRandomSeed()),');(p/'driver.py').write_bytes(driver);m['driver_digest']=bytes_digest(driver);m['execution_files']=_file_inventory(p/'project');m['execution_tree_digest']=digest(m['execution_files']);(p/'manifest.json').write_text(canonical_json(m)+'\n')
+ r=execute_native(p,Path('.peykar/cornea-native46'),Path('runtime_profiles/vcornea-publication/macos-arm64-4.6.0-profile.json'),wall_seconds=900);assert r['status']=='succeeded' and r['returncode']==0
+ progress=[json.loads(l) for l in (p/'progress.jsonl').read_text().splitlines()];assert all(v['native_rng_seed_readback']==seed for v in progress)
+ assert bytes_digest((p/'progress.jsonl').read_bytes())==r['outputs']['progress.jsonl']
+ rows.append({'seed':seed,'manifest':m,'record':r,'completion':json.loads((p/'completion.json').read_text()),'actual_progress':progress,'no_bitwise_or_paired_trajectory_guarantee':True});print(seed,'actual RNG',[(q['step_mcs'],q['native_rng_seed_readback'],q['native_seed_property']) for q in progress],r['elapsed_seconds'],flush=True)
+report={'schema_version':'1.0.0','scope':'Actual installed4.6 seed control readback in20MCS probes only; not full publication acceptance or a cause of long-run divergence','source_sha256':bytes_digest(Path(__file__).read_bytes()),'full_publication_acceptance':False,'jobs':rows}
+(root/'report.json').open('x').write(json.dumps(report,indent=2)+'\n')

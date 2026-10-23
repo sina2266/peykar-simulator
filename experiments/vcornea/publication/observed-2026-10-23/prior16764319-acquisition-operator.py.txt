@@ -1,0 +1,33 @@
+"""Explicit bounded previous published source acquisition; no code/config/hook execution."""
+import hashlib,json,os,time,urllib.request,zipfile
+from pathlib import Path,PurePosixPath
+from peykar.integrations.vcornea_sources import _inventory,_check_info,_publish
+root=Path('.peykar/external/archives');partial=root/'vCornea-16764319.zip.partial-20261023';final=root/'vCornea-16764319.zip';assert not final.exists()
+url='https://zenodo.org/api/records/16764319/files/vCornea.zip/content';size=228667541;md5=hashlib.md5(usedforsecurity=False);sha=hashlib.sha256();total=0;started=time.monotonic()
+with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Peykar-reviewed-source-acquisition/0.3.0','Accept-Encoding':'identity'}),timeout=30) as response,partial.open('xb') as output:
+ if response.status!=200:raise ValueError('Whole prior archive requiresHTTP200')
+ while chunk:=response.read(1024*1024):
+  total+=len(chunk)
+  if total>size or time.monotonic()-started>1200:raise ValueError('Prior code archive acquisition budget exceeded')
+  output.write(chunk);md5.update(chunk);sha.update(chunk)
+ output.flush();os.fsync(output.fileno())
+if total!=size or md5.hexdigest()!='441c5af29b1e175e8bf12ded8b1f411b':raise ValueError('Prior original code ZIP authenticity check failed; preserve partial')
+os.link(partial,final)
+dest=Path('.peykar/external/vcornea-prior-archive-16764319');assert not dest.exists();files=[]
+with zipfile.ZipFile(final) as archive,zipfile.ZipFile(root/'vCornea-16884414.zip') as newer:
+ current={i.filename:i for i in newer.infolist()};entries=_inventory(archive)
+ for info in entries:
+  if info.is_dir() or '.git' in PurePosixPath(info.filename).parts:continue
+  _check_info(info);raw=archive.read(info);assert len(raw)==info.file_size
+  relative=PurePosixPath(info.filename).relative_to('vCornea').as_posix();_publish(dest,relative,raw)
+  identical=None
+  if info.filename in current:identical=raw==newer.read(current[info.filename])
+  files.append(dict(path=relative,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),zip_crc32=f'{info.CRC:08x}',crc_verified=True,identical_to_record16884414=identical))
+ # Do not read downloaded configuration/hooks/refs. Compare only original object bytes.
+ objects=[i for i in entries if i.filename.startswith('vCornea/.git/objects/') and not i.is_dir()]
+ missing=[i.filename for i in objects if i.filename not in current]
+ changed=[]
+ for info in objects:
+  if info.filename in current and archive.read(info)!=newer.read(current[info.filename]):changed.append(info.filename)
+report=dict(schema_version='1.0.0',record=16764319,url=url,license='CC-BY-4.0 (original Zenodo record declaration)',archive_bytes=total,archive_md5_verified=True,archive_md5=md5.hexdigest(),archive_sha256=sha.hexdigest(),elapsed_seconds=time.monotonic()-started,source_files=files,prior_git_object_files=len(objects),prior_git_objects_missing_from_v2=missing,prior_git_objects_byte_different_from_v2=changed,git_configuration_hooks_or_refs_loaded=False,model_code_executed=False,source_execution_authorized_by_this_receipt=False)
+Path('.peykar/cornea-prior-code-acquisition-20261023.json').open('x').write(json.dumps(report,indent=2)+'\n');print('Verified whole prior code ZIP',total,'bytes,',len(files),'ordinary source files,',len(objects),'Git object files compared read-only',flush=True);print('Ordinary changes',[(f['path'],f['identical_to_record16884414']) for f in files if not f['identical_to_record16884414']],flush=True);print('Prior-only/changed original object files',missing,changed,flush=True)
