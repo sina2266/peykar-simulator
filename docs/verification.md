@@ -1,5 +1,50 @@
 # Verification record
 
+## Completed corneal formation and original field integrity: 2026-10-23
+
+- Existing `reproduce_vcornea.py --parameter-profile historical-hpc-3.0.0` jobs
+  actually completed both seeds7/11 at43200MCS, exit0,5963.56/5962.51s. Existing
+  `analyze_vcornea_series.py --diagnostic-case self-organization` completed all three
+  stages exit0 at16:29UTC. Each seed passed4/4 stable count means,4/4 full hourly
+  trajectories and10/10 thickness bins under the unchanged1189fd62... protocol.
+  Both actual layer figures, both original-analysis figures and a count-overlay
+  figure were visually inspected. Portable proofs/figures have formation-historical3-*
+  names in `experiments/vcornea/publication/observed-2026-10-23`. The full injury
+  publication gate remains pending; this is explicitly a formation subset.
+- A read-only audit of all56 original Git commit metadata and two formation source
+  fingerprints retained the January2025 stash and historical notebook4.5.0 stdout/
+  failed simulation cell. Setup scripts request4.6.0; no exact HPC runtime or
+  original per-run seed is inferred. Receipts are source-history-observations-2026-10-23.json.
+- An initial original-EGF inspection failed on the missing finalCONTROL EGF_Seen
+  array; `.peykar/cornea-original-sensing-audit-initial-failure-20261023.json` retains
+  the observed error. Actual ASCII inspection then found Pressure9597/18000 values
+  and three later fields absent in the correct-checksum original file. The checked
+  reader rejects incomplete/nonfinite required fields and records optional gaps.
+- `uv run pytest tests/integration/test_vcornea_original_fields.py
+  tests/integration/test_vcornea_publication_analysis.py -q` passed **15 tests /0.09s**.
+  Targeted Ruff check/format passed. These software fixtures are not tissue validation.
+- `inspect_original_spatial.py --source .peykar/external/vcornea-original-spatial-16884414
+  --catalog experiments/vcornea/publication/spatial-source-catalog-1.0.0.json
+  --output .peykar/cornea-original-spatial-inspection-layout-20261023` actually
+  inspected10 snapshots, recording one incomplete optional-field snapshot. Every
+  earlier cell-type/EGF/SLS PNG hash matched exactly; no raw data changed.
+- `audit_original_sensing.py` with the same source/catalog and output
+  `.peykar/cornea-original-sensing-audit-retry2-20261023` retained1218 positive cells
+  and one unavailable snapshot. Its per-cell CSV retains the Mild46200MCS stem8002
+  sum discrepancy1.807958/relative0.893025; all other relative discrepancies are at
+  most2.611e-7. No outlier was discarded. The earlier successful pre-format attempt
+  retains its exact source copy and receipt; the final run pins the formatted source.
+  These original-field observations change no candidate parameters or criteria.
+- Final **`make check-docker` passed518 tests /37.63s /86% coverage**, strict mypy98
+  files,18 frontend tests, current contract exports and all three wheel/sdist pairs.
+  Host **`make build` passed**. Logs:
+  `.peykar/cornea-formation-quality-check-docker-20261023.log` and
+  `.peykar/cornea-formation-quality-build-20261023.log`. The existing task-private
+  anonymous Docker config used the same Desktop socket. Original locks/schemas/
+  model packages/licenses/vendor files have no Git changes; protocol SHA stays
+  1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43.
+  API health returned200/ok; API/Worker still run on their original shared volume.
+
 ## Corneal original-state constraints and declared reconstruction: 2026-10-23
 
 - `audit_original_state.py` actually read original MildComb0/moderateMCS0 pressure,

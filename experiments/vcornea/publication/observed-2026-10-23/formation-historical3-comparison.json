@@ -1,0 +1,400 @@
+{
+  "schema_version": "1.0.0",
+  "class": "simulation_reference_comparison",
+  "protocol_digest": "1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43",
+  "plan_digest": "51e8490b00efbe75a2080138590e5ac7fcb1a1eadfd65c99572295005af1b94e",
+  "reference_replicates": 65,
+  "candidate_runs": 2,
+  "jobs": [
+    {
+      "case": "self-organization",
+      "seed": 7,
+      "manifest_digest": "9bf3936e453d4458c94e6861001a47240ee0e2b1eb3d65eb58d7eac5c34dadd9",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "76670003557c488d79476a9777e7135e89694e58b4b395b428f36524c838248a",
+      "outputs": {
+        "cells-0.csv": "023ef4cb7885ddabaeecd71d1d3517a836bcb3ba597204098b37b9a727cd0539",
+        "cells-1680.csv": "7b4272959be798808ccf9fc387c9339679533ff82811d3c60544d061ae548ec4",
+        "cells-240.csv": "cf8a1e50a058f26e3147e911438943ae3d97082c1242f5be99f8ec35a5eee2bd",
+        "cells-3600.csv": "19237314c2f01d5b86eb764631d71411206949dcc7ccaa5572346bfc7d5eb05f",
+        "cells-43200.csv": "6a73aa0af17a50df99e5029cc8a20bf572becd791cfb30fc6b405553e9461d00",
+        "cells-720.csv": "4c3c53f7f925b017485646920f09ff2d453ce354595fe20e74c28c5c5c16b8fc",
+        "lattice-0.npz": "de4cd24e19359725ec61e6ecea4617c1a6e956b7e0d0bdcac13e3257857e3d7e",
+        "lattice-1680.npz": "fbf103da72f4e69b1f9305d93d6187e329127fc195d70798c0f2ada03cd60465",
+        "lattice-240.npz": "75a23f8d5baf455ff70b962b0eed3f898dbde1d120b8c8cde4e8a4c42dadd450",
+        "lattice-3600.npz": "e039a5ba3acaddf0c065675157e87f0c617b8fb1c17b1f2b155fc00ea71046d1",
+        "lattice-43200.npz": "b5dc00f7adf9bfae019a91ebbd288b2147dc09389ea3e74c322e5c616cb70799",
+        "lattice-720.npz": "d2f21cb15cb627004b7196fd848520f1630e68a545474d9fb0ea9193f511405b",
+        "progress.jsonl": "c50db2d3cd9ba09c9501cfcd4a9fccd933dc693c6ab31c1afacb03df9b36468d",
+        "project/Simulation/cell_count_43201.csv": "9807f0e5733d08842a2699d72c3078894d1c4b7c9509e98beb895b94e990cc11",
+        "project/Simulation/mass_conservation_rep_43201.parquet": "217796f86de25b91f18197aec7445580e2b3893f32d683c0b247a2634240ae64",
+        "project/Simulation/mitosis_43201.csv": "88d9218ea02cec467eb760479bcaabacd3feca113df6a52908e4c99044a2e8aa",
+        "project/Simulation/single_cell_pres_EGF_rep_43201.parquet": "c0a7b44e9aa1bcf43c8762382c1d24433eaa5b8eca111f97e830f18cd6892e38",
+        "project/Simulation/thickness_raw_rep_43201.parquet": "4bb51bcbf4401fcfe92039b50fe62cb00c456da543879375292394e6c6054b9f",
+        "project/Simulation/thickness_rep_43201.parquet": "0cc46c3ac0bb7d6c831b7384832269fc1e364d85a7bb4e9701883f0ee40649b6"
+      },
+      "elapsed_seconds": 5963.560933792032,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 49.805286574195236,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -0.3191510574394556,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9976857208979403,
+            "minimum_coverage": 0.9,
+            "rmse": 2.2994293235308207,
+            "maximum_absolute_difference": 9.095238095238095,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 142.663177178749,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": -0.6423150259842316,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.992362878963203,
+            "minimum_coverage": 0.9,
+            "rmse": 6.363151643179397,
+            "maximum_absolute_difference": 22.61904761904762,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 31.029311698508245,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": 0.14690744133298494,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9972228650775283,
+            "minimum_coverage": 0.9,
+            "rmse": 1.4745137156525836,
+            "maximum_absolute_difference": 5.61904761904762,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.832766291546715,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": 0.07749155668548457,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 1.0,
+            "minimum_coverage": 0.9,
+            "rmse": 0.7585907527598792,
+            "maximum_absolute_difference": 3.1904761904761907,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 72.07105110222248,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": -1.6139998207470398,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": true
+        },
+        "1": {
+          "observed": 62.68788257495446,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": -0.062233046291197525,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": true
+        },
+        "2": {
+          "observed": 49.64572287354579,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 0.390754020683147,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": true
+        },
+        "3": {
+          "observed": 46.0101508331492,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 0.6647166048718418,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": true
+        },
+        "4": {
+          "observed": 45.2500972358057,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": -0.6484320127945224,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": true
+        },
+        "5": {
+          "observed": 44.29183736195115,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": -0.48282302204515304,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": true
+        },
+        "6": {
+          "observed": 44.58466586052457,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": -0.9865576647151002,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": true
+        },
+        "7": {
+          "observed": 45.65907896092145,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": -0.11076340573089283,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": true
+        },
+        "8": {
+          "observed": 45.428024988162164,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": 0.15883497270001357,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": true
+        },
+        "9": {
+          "observed": 45.02431282504304,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 0.46869434370955076,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": true
+        }
+      },
+      "chemical_pulse": null,
+      "passed": true
+    },
+    {
+      "case": "self-organization",
+      "seed": 11,
+      "manifest_digest": "57dbc74c1c19a3a19e87cbdd83150c343687f488094a60e2a1c86f69f442e926",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "73844fb20f712103e06bc4c2438f012f0e0d15eb0368f6983d49cf954efefffe",
+      "outputs": {
+        "cells-0.csv": "07b9c45cce4282a76c77f77ec48ec0df6f927b98b30179eeb1e1c6a79c09da9c",
+        "cells-1680.csv": "e2d5c175b4e69e9b34421ca579d0e8b80115003201215de7a720f680dc7905ca",
+        "cells-240.csv": "67da3551e647b1ee4fe6cbbc49780b598140790e3a7b9215c57fee2f6011187d",
+        "cells-3600.csv": "3d86ccb7ea680511a9aaa4bd8a7a75fe5d672a8c17abe71850140c8d442ee1a8",
+        "cells-43200.csv": "ef8bf0bdb608ff34bca11747ac694df5afbcaf7395faaadd6e18f32f382d014e",
+        "cells-720.csv": "b73304b341fbeff6397d2f64fe66071e66e29ac9eb6b051e1d76b55a2a5d6a36",
+        "lattice-0.npz": "462c7ccaab9138672aa514663fd598821e6447d141766b3016016bc50b3f5e15",
+        "lattice-1680.npz": "90420160fff6af22948063af72934b05cc43175f866b99cead6a0a0f82187f1e",
+        "lattice-240.npz": "af7cb9763eb6ffc75487b779e00506870fd115e9492b79685a72f9d9854e5b2c",
+        "lattice-3600.npz": "10be4d5a651d9cf156032f0bb11614092b23141eb02959afeb335ffea363a283",
+        "lattice-43200.npz": "a6117efa60d6231a3e4f7480eea2e1851bed71a604f4a00922f938d1062dfb5a",
+        "lattice-720.npz": "2a3433ae0f60e7207e3e9b2230dfbb0b337c9b59250c6b8c39afaeba431dbfa9",
+        "progress.jsonl": "fe461b3c62337bfc5155fa2d5b7193651b8280ca6964635d3f07366eead5a901",
+        "project/Simulation/cell_count_43201.csv": "05e0aadee17c43fa37b35b00b280651189502bdb3d9932d8b9bb1a0f4d29a740",
+        "project/Simulation/mass_conservation_rep_43201.parquet": "5a81be8d2ff786867f4da07ffe258a0b89c791196573076c4c4385eccdaa8bd5",
+        "project/Simulation/mitosis_43201.csv": "e3257babf4ce36f56538197eb0f5d483b37ebdbf777bc763df6d915e1d8f9a90",
+        "project/Simulation/single_cell_pres_EGF_rep_43201.parquet": "83005b597fa0ef7d25b19a61b944d3e7f67da62a03fca18e02bcfece904042b7",
+        "project/Simulation/thickness_raw_rep_43201.parquet": "bb817c5108ceaa9162d6e827b5ae12aef58a8d6ad8821471fe1b881b85725bf3",
+        "project/Simulation/thickness_rep_43201.parquet": "f52d1fe29f26d242d54b288226b139f1052b48c76dd07ee0f3315025fac60546"
+      },
+      "elapsed_seconds": 5962.509395000059,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 49.73462444386286,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -0.3898131877718285,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9967600092571164,
+            "minimum_coverage": 0.9,
+            "rmse": 2.4021653406131867,
+            "maximum_absolute_difference": 9.333333333333336,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 145.45485475006544,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": 2.1493625453321954,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9965285813469105,
+            "minimum_coverage": 0.9,
+            "rmse": 5.8877196276806725,
+            "maximum_absolute_difference": 20.0,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 30.87725726249673,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": -0.005146994678529637,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9983800046285582,
+            "minimum_coverage": 0.9,
+            "rmse": 1.4689050933897012,
+            "maximum_absolute_difference": 5.333333333333334,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.747971735147867,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": -0.007302999713363789,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 1.0,
+            "minimum_coverage": 0.9,
+            "rmse": 0.7531598432927942,
+            "maximum_absolute_difference": 3.333333333333333,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 71.99431419139182,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": -1.6907367315777009,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": true
+        },
+        "1": {
+          "observed": 63.06273285289426,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": 0.312617231648602,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": true
+        },
+        "2": {
+          "observed": 51.29972882595193,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 2.0447599730892847,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": true
+        },
+        "3": {
+          "observed": 48.21012555801582,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 2.864691329738463,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": true
+        },
+        "4": {
+          "observed": 47.10026330176041,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": 1.2017340531601874,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": true
+        },
+        "5": {
+          "observed": 44.26121264086545,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": -0.513447743130854,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": true
+        },
+        "6": {
+          "observed": 45.462324344008906,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": -0.10889918123076114,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": true
+        },
+        "7": {
+          "observed": 45.71442694906884,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": -0.05541541758350377,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": true
+        },
+        "8": {
+          "observed": 45.0287262690899,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": -0.24046374637224943,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": true
+        },
+        "9": {
+          "observed": 44.913984975858,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 0.3583664945245104,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": true
+        }
+      },
+      "chemical_pulse": null,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Thresholds are declared reference-variability checks, not clinical acceptance or a confidence interval.",
+    "Autocorrelated time samples are not independent biological replicates.",
+    "Original archived per-run parameter files and seeds are unavailable.",
+    "The lifetime repair changes undefined memory access; agreement must be measured."
+  ],
+  "independent_biological_validation": false,
+  "diagnostic_subset": [
+    "self-organization"
+  ],
+  "all_publication_groups_assessed": false,
+  "status": "diagnostic_passed",
+  "files": {
+    "self-organization-seed-11-counts.png": "15cbe38643269330de3762d6bc6963105c903fb8facba19ad85c5681fff79571",
+    "self-organization-seed-7-counts.png": "570f589175879b9d429165a16975a33dfb6ae3964ffe1186984ac71b74d45e29"
+  }
+}

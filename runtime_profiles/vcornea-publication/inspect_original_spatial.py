@@ -7,7 +7,93 @@ are distinct from the four scalar cohorts in the frozen reproduction protocol.
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
+
+
+def read_ascii_fields(raw, required, expected_dimensions=(200, 90, 1)):
+    """Read this archive's scalar FIELD layout without trusting allocated VTK arrays.
+
+    A truncated optional field is retained as a source-quality gap. Required
+    fields must contain every actual finite value; no missing value is filled.
+    """
+    lines = raw.decode("ascii").splitlines()
+    if (
+        len(lines) < 10
+        or not lines[0].startswith("# vtk DataFile Version ")
+        or lines[2].strip() != "ASCII"
+        or lines[3].strip() != "DATASET STRUCTURED_POINTS"
+    ):
+        raise ValueError("Unsupported original VTK layout")
+    dimensions = lines[4].split()
+    if dimensions[0] != "DIMENSIONS" or tuple(map(int, dimensions[1:])) != expected_dimensions:
+        raise ValueError("Original VTK dimensions differ")
+    points = math.prod(expected_dimensions)
+    if lines[7].split() != ["POINT_DATA", str(points)]:
+        raise ValueError("Original VTK point count differs")
+    declaration = lines[8].split()
+    if len(declaration) != 3 or declaration[:2] != ["FIELD", "FieldData"]:
+        raise ValueError("Original VTK FIELD declaration differs")
+    declared = int(declaration[2])
+    if not 1 <= declared <= 64:
+        raise ValueError("Original VTK field count is outside the reviewed bound")
+    tokens = " ".join(lines[9:]).split()
+    cursor = 0
+    arrays, fields = {}, []
+    names = set()
+    for _ in range(declared):
+        if cursor == len(tokens):
+            break
+        if len(tokens) - cursor < 4:
+            raise ValueError("Incomplete original VTK field header")
+        name, components, tuples, kind = tokens[cursor : cursor + 4]
+        cursor += 4
+        if (
+            name in names
+            or components != "1"
+            or tuples != str(points)
+            or kind not in {"char", "long", "double", "float", "int"}
+        ):
+            raise ValueError("Unsupported or duplicate original VTK scalar field")
+        names.add(name)
+        observed = min(points, len(tokens) - cursor)
+        try:
+            values = [float(v) for v in tokens[cursor : cursor + observed]]
+        except ValueError as error:
+            raise ValueError("Nonnumeric original VTK field: " + name) from error
+        cursor += observed
+        finite = all(math.isfinite(v) for v in values)
+        complete = observed == points and finite
+        fields.append(
+            {
+                "name": name,
+                "expected_values": points,
+                "observed_values": observed,
+                "finite": finite,
+                "complete": complete,
+            }
+        )
+        if name in required:
+            if not complete:
+                raise ValueError("Required original VTK field is incomplete/nonfinite: " + name)
+            arrays[name] = values
+        if observed != points:
+            break
+    if cursor != len(tokens):
+        raise ValueError("Unexpected trailing original VTK data")
+    if set(arrays) != set(required):
+        raise ValueError("Required original VTK fields are missing")
+    quality = {
+        "reader": "checked_original_ascii_scalar_fields-1.0.0",
+        "declared_field_count": declared,
+        "discovered_field_count": len(fields),
+        "undiscovered_field_count": declared - len(fields),
+        "all_declared_fields_complete": len(fields) == declared
+        and all(f["complete"] for f in fields),
+        "required_fields_complete": True,
+        "fields": fields,
+    }
+    return arrays, quality
 
 
 def inspect(source, catalog, output):
@@ -16,10 +102,8 @@ def inspect(source, catalog, output):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     import numpy as np
-    import vtk
     from analyze_spatial import COLORS
     from matplotlib.colors import BoundaryNorm, ListedColormap
-    from vtk.util.numpy_support import vtk_to_numpy
 
     pins = json.loads(catalog.read_bytes())
     loaded = []
@@ -32,24 +116,13 @@ def inspect(source, catalog, output):
             raise ValueError("Original spatial artifact identity/confinement differs")
         if path.suffix != ".vtk":
             continue
-        reader = vtk.vtkStructuredPointsReader()
-        reader.SetFileName(str(path))
-        reader.ReadAllScalarsOn()
-        reader.ReadAllFieldsOn()
-        reader.Update()
-        data = reader.GetOutput()
-        if data.GetDimensions() != (200, 90, 1) or data.GetNumberOfPoints() != 18000:
-            raise ValueError("Original VTK dimensions differ")
+        values, quality = read_ascii_fields(
+            path.read_bytes(), ["CellType", "CellId", "ClusterId", "EGF", "SLS"]
+        )
         arrays = {}
         for key in ["CellType", "CellId", "ClusterId", "EGF", "SLS"]:
-            array = data.GetPointData().GetArray(key)
-            if array is None:
-                raise ValueError("Original VTK field is missing: " + key)
-            values = vtk_to_numpy(array).copy()
-            if values.shape != (18000,) or not np.isfinite(values).all():
-                raise ValueError("Original VTK field is incomplete/nonfinite")
             # VTK flattened order is x-fastest. Export explicitly as x,y.
-            arrays[key] = values.reshape((90, 200)).T
+            arrays[key] = np.asarray(values[key]).reshape((90, 200)).T
         if not np.isin(arrays["CellType"], range(11)).all():
             raise ValueError("Unknown original cell type")
         kinds = arrays["CellType"].astype(int)
@@ -59,7 +132,7 @@ def inspect(source, catalog, output):
                 raise ValueError("Original cell identity maps to multiple types")
         mcs = int(path.stem.split("_")[-1])
         label = member["path"].removeprefix("Data/").split("/LatticeData/")[0]
-        loaded.append((member, label, mcs, arrays))
+        loaded.append((member, label, mcs, arrays, quality))
     output.mkdir(parents=True, exist_ok=False)
     report = {
         "schema_version": "1.0.0",
@@ -70,7 +143,7 @@ def inspect(source, catalog, output):
         "independent_biological_validation": False,
         "snapshots": [],
     }
-    for ordinal, (member, label, mcs, arrays) in enumerate(loaded):
+    for ordinal, (member, label, mcs, arrays, quality) in enumerate(loaded):
         kinds = arrays["CellType"].astype(int)
         counts = {
             str(kind): len(np.unique(arrays["CellId"][kinds == kind]))
@@ -83,6 +156,7 @@ def inspect(source, catalog, output):
                 "sha256": member["sha256"],
                 "mcs": mcs,
                 "time_hours": mcs / 10,
+                "original_field_completeness": quality,
                 "cell_counts_by_original_type_id": counts,
                 "lattice_sites_by_type_id": {
                     str(kind): int((kinds == kind).sum()) for kind in np.unique(kinds)
@@ -125,8 +199,18 @@ def inspect(source, catalog, output):
     report["files"] = {
         p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in output.iterdir() if p.is_file()
     }
+    report["snapshots_with_incomplete_optional_fields"] = sum(
+        not row["original_field_completeness"]["all_declared_fields_complete"]
+        for row in report["snapshots"]
+    )
     (output / "report.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
-    print("Inspected", len(loaded), "original VTK snapshots; no scalar-cohort match inferred")
+    print(
+        "Inspected",
+        len(loaded),
+        "original VTK snapshots; incomplete optional-field snapshots:",
+        report["snapshots_with_incomplete_optional_fields"],
+        "; no scalar-cohort match inferred",
+    )
 
 
 if __name__ == "__main__":

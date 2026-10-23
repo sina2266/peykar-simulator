@@ -415,13 +415,15 @@ commands/outcomes in `docs/verification.md`.
   its95 literal batch controls (40/8/10,43200MCS), original Temperature10/geometry,
   lifetime overlay2 and a declared read-only five→ten output-bin overlay. No fitting.
   Two20MCS native grid probes gave identical counts/cells/fields. Full seeds7/11
-  running under PID41677 in `.peykar/cornea-historical-formation46-20261023`;
-  diagnostic-only follow-on PID43430 in `.peykar/cornea-historical-formation-analysis-20261023`.
+  completed in `.peykar/cornea-historical-formation46-20261023`;
+  diagnostic-only follow-on in `.peykar/cornea-historical-formation-analysis-20261023`
+  passed all formation checks (see completed subset below). Historical PIDs41677/43430
+  are no longer active; never signal a reused PID from a document.
   A diagnostic subset can never satisfy the full four-group publication gate.
 - Old injury PIFF3/35/132/39 differs from archived injury4/32/127/46; historical
   injury execution is deliberately unsupported pending actual state correspondence.
   Do not cherry-pick a later PIFF/parameters and label them recovered old controls.
-- Acquired10 original VTK files/three descriptors, read all fields and rendered actual
+- Acquired10 original VTK files/three descriptors, checked required fields and rendered actual
   cell/EGF/SLS figures. These spatial groups differ from selected scalar groups;
   exact cohort/seed correspondence is not invented. DML Version1.0 is a file schema,
   not the CompuCell3D version. Original clinical/experimental validation stays open.
@@ -466,3 +468,38 @@ commands/outcomes in `docs/verification.md`.
   New source-state/orchestration final make check-docker passed510 tests/44.46s/86%,
   mypy98 files,18 frontend tests/contracts/all builds; host make build passed.
   Commit/push the verified increment; do not present pending runs as completed.
+
+## Completed formation subset and original field integrity, 2026-10-23
+
+- Main39bda9a7 was already pushed. The two historical formation jobs actually
+  completed exit0 in5963.56/5962.51s,43200MCS each. Their bounded follow-on completed
+  all three stages, diagnostic_comparison_passed: each seed passes4/4 stable count
+  means,4/4 full hourly trajectories and10/10 thickness bins under the unchanged
+  protocol1189fd62... . Both original-analysis figures, count comparison and both
+  actual layer figures were visually inspected. Formation alone is not the full gate.
+- Portable positive receipts/figures have formation-historical3-* names under
+  experiments/vcornea/publication/observed-2026-10-23. Previous negatives stay intact.
+  Six earlier injury jobs remain active; the prepared derived6 and combined analysis
+  still use their existing prerequisite gates. Inspect live records before acting.
+- Actual original CONTROL/Images finalVTK ends in Pressure:9597/18000 values, with
+  three additional declared fields absent. Archive size/CRC/SHA remain correct.
+  A new checked ASCII reader rejects incomplete required fields, records optional
+  gaps and never fills missing values. All10 earlier cell/EGF/SLS figure hashes are
+  unchanged when reading the complete original values directly. The earlier VTK
+  sensing attempt failed on a missing field; its failure and later attempts remain.
+- Original EGF sensing audit retains1218 positive epithelial cells across six
+  snapshots. Median reported/summed field ratio is approximately1; all except one
+  have relative discrepancies at most2.611e-7. Mild46200MCS stemID8002 differs
+  by1.807958 (relative0.893025); retain it, do not discard/invent a confirmed cause.
+  The finalCONTROL sensing field is unavailable, not zero. No candidate criteria change.
+- Source-history audit retains56 original commits and the January2025 stash50-file
+  formation fingerprint: only plot methods differ from July, while temperature8/
+  diffusion12 and ten bins differ. Stored local notebook stdout4.5.0 has a failed
+  simulation cell; setup scripts request4.6.0. Neither identifies HPC run binaries.
+- The user explicitly requested that the Peykar heartbeat remain PAUSED. Do not
+  reactivate/create a schedule. Existing explicit native operators/analysis continue.
+- Final source-quality/formation increment verification:15 targeted tests, then
+  make check-docker518 tests/37.63s/86%, mypy98 files,18 frontend tests, contracts
+  and all package builds. Host make build passed. API healthy/Worker up5days;
+  original locks/schemas/models/licenses/vendor bytes have no Git changes.
+  Preserve the per-cell CSV's actual CRLF bytes via its scientific-output attribute.

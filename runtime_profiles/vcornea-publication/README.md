@@ -173,10 +173,10 @@ all original controls. Private lifetime repair2.0.0 and a declared read-only
 five→ten height-bin overlay are separately hashed. Actual20MCS checks showed
 identical counts/cells/EGF/SLS with either observation grid.
 
-The two full new-seed7/11 formation jobs are already running in
+The two full new-seed7/11 formation jobs genuinely completed in
 `.peykar/cornea-historical-formation46-20261023`; do not duplicate them.
-Their follow-on `.peykar/cornea-historical-formation-analysis-20261023` uses
-`--diagnostic-case self-organization`. This explicit option permits a completed
+Their completed follow-on `.peykar/cornea-historical-formation-analysis-20261023` uses
+`--diagnostic-case self-organization` and passes. This explicit option permits a completed
 subset inspection while preserving all frozen thresholds and the default
 four-cohort gate; a subset result is always labelled `diagnostic_*`.
 Historical injury preparation is rejected because the July injury PIFF has a
@@ -228,3 +228,34 @@ copies original plans and creates a separate combined plan for the full four-coh
 gate. Parent plans and source versions are preserved; numerical failure still exits2.
 The first follow-on race before initial plan publication is retained as a failed
 attempt; the bounded preparation-wait fix is covered by a regression test.
+
+## Formation result and original field integrity
+
+The two historical formation jobs and all three follow-on stages have completed.
+Both seeds pass every frozen formation count/trajectory/thickness check; actual
+layers and original-analysis figures were inspected. This is a formation-only
+`diagnostic_passed`, not the pending full four-group gate. See the
+[portable result](../../experiments/vcornea/publication/observed-2026-10-23/formation-historical3-comparison.md).
+Do not start replacement/duplicate formation runs.
+
+The original finalCONTROL VTK is internally truncated despite its correct archive
+checksum. `inspect_original_spatial.py` now reads/checks actual ASCII field values,
+retains the9597/18000 Pressure values and three missing fields as explicit gaps,
+and uses only complete required fields. All previous ten image hashes are unchanged.
+The fresh actual inspection is `.peykar/cornea-original-spatial-inspection-layout-20261023`;
+older receipts and raw bytes remain intact.
+
+An explicit additional analysis exports original EGF sensing/summed/mean fields:
+
+```bash
+.peykar/cornea-native46/bin/python \
+  runtime_profiles/vcornea-publication/audit_original_sensing.py \
+  --source .peykar/external/vcornea-original-spatial-16884414 \
+  --catalog experiments/vcornea/publication/spatial-source-catalog-1.0.0.json \
+  --output .peykar/original-sensing-new
+```
+
+The actual retry2 audit retains1218 positive epithelial cells, one large original
+outlier and the unavailable finalCONTROL sensing field. Earlier failed/read-only
+and pre-format attempts remain separately retained. No missing value is replaced
+or descriptive statistic turned into a candidate acceptance rule.

@@ -235,16 +235,24 @@ The earlier independently advancing workstreams resume after this corneal gate.
   retain the separate source identity, unchanged HPC mechanics and original controls.
 - [x] Add durable actual-child-exit proofs and resume only verified completed jobs;
   four old complete-looking injury outputs without exit evidence remain unpromoted.
-- [ ] Finish the six injury retries/unstarted jobs in
-  `.peykar/cornea-hpc46-resumed-20261023` and historical formation seeds7/11 in
-  `.peykar/cornea-historical-formation46-20261023`; inspect current records/PIDs
-  before starting anything. Each job has a24-hour deadline; preserve failed runs.
+- [x] Finish historical formation seeds7/11 through43200MCS, apply all frozen
+  count/trajectory/thickness checks, replay original math and inspect actual layers.
+  Both pass the formation subset; the full four-group publication gate remains open.
+- [ ] Finish six earlier injury retries/unstarted jobs in
+  `.peykar/cornea-hpc46-resumed-20261023`; inspect current records/PIDs before starting
+  anything. Each job has a24-hour deadline; preserve failed runs.
 - [ ] Apply the unchanged frozen reference comparison to every full run, replay the
   authors' math on new outputs, inspect actual spatial/EGF/recovery results and retain
   negative findings. Current source/table disagreements preclude an exact-final-table claim.
 - [x] Inspect10 actual original VTK snapshots/three descriptors, retaining group
   differences: MildComb0 is4620h/pulse300h, moderate spatial data ends1058h and
   CONTROL4265h. These are not the selected full scalar cohorts or independent experiments.
+- [x] Check actual ASCII field lengths rather than native reader allocation alone:
+  retain the truncated original CONTROL final Pressure and missing fields, read only
+  complete required data, and export original per-cell EGF sensing with all outliers.
+- [x] Audit all56 archived Git commit metadata and the retained notebook. Preserve
+  the January2025 stash formation fingerprint and local4.5.0 probe separately;
+  neither establishes exact cohort identity or changes active runtime/parameters.
 - [x] Resolve useful injury initial constraints from original VTK pressure/volume,
   identity/type/lineage and measured pulse coordinates:4/32/127/46 cells, conditional
   targets40/40/25/25 and[100,75]. Exact pre-sweep state/source/seed remains unknown.

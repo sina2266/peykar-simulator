@@ -21,11 +21,13 @@ declarations. [EPIC E1](docs/epics/E1-vcornea-native-runtime.md) adds licensed s
 acquisition, a locked native runtime, real CSV/Parquet ingestion and seeded native
 regression. The [corneal publication reconstruction](experiments/vcornea/publication/README.md)
 now retains 65 original replicates, unchanged original analysis and all 17 final
-paper supplements. Original analysis was actually replayed; full candidate
-formation runs completed, but their frozen count/thickness comparison failed.
-Six injury runs and a separate recovered July 2024 formation candidate are running;
-a derived injury candidate based on original observed state constraints is prepared
-behind them. No full publication match or biological validity is claimed.
+paper supplements. Original analysis was actually replayed. Later-source formation
+failed the frozen comparison; both complete180-day runs using recovered July2024
+mechanisms now pass all frozen count/trajectory/thickness checks. Original math and
+actual tissue layers were inspected. Injury execution/comparison remains pending,
+including a declared reconstruction based on original observed state constraints.
+One original spatial file has truncated optional fields, now explicitly recorded.
+No full publication match or biological validity is claimed.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

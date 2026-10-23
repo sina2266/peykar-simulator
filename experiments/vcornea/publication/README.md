@@ -2,8 +2,8 @@
 
 The immediate target is the two configurations provided by the authors: tissue
 formation from stem cells, then chemical injury/recovery. The injury configuration
-has slight, mild and moderate severities. Full candidate execution and its frozen
-comparison are **running**, not yet accepted. See the
+has slight, mild and moderate severities. Reconstructed formation now passes its
+full-horizon subset; injury execution and the full frozen gate remain pending. See the
 [operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
 
 Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
@@ -130,9 +130,9 @@ multiplier2→1, superficial sloughing probability and tear-volume replacement.
 This is why changing only three parameters in later mechanics cannot represent
 the recovered historical model. Original formation XML requests four CC3D workers;
 BLAS/OpenMP environment1 is not a native CPU cap or bitwise stochastic guarantee.
-Full formation seeds7/11 are running in
-`.peykar/cornea-historical-formation46-20261023`, with diagnostic-only follow-on in
-`.peykar/cornea-historical-formation-analysis-20261023`. No parameters were fitted
+Full formation seeds7/11 completed in
+`.peykar/cornea-historical-formation46-20261023`, with successful diagnostic-only follow-on in
+`.peykar/cornea-historical-formation-analysis-20261023` (details below). No parameters were fitted
 to the failed results. Exact historical per-run source/seed identity remains unknown.
 
 Historical injury is not silently mixed into this candidate: its initial PIFF has
@@ -197,4 +197,59 @@ formation records, retains each original plan/source identity and applies the fu
 unchanged four-group comparison, original math and spatial analysis. The first
 follow-on started before initial plan publication and failed; its log/state remain,
 and a targeted regression now verifies the bounded preparation wait.
-No candidate success or independent biological validation is asserted.
+No full injury-candidate success or independent biological validation is asserted.
+
+## Completed historical formation subset, October23
+
+Both `historical-hpc-3.0.0` jobs genuinely completed43200MCS/180simulated days:
+seed7 in5963.56s and seed11 in5962.51s, each with actual exit0 and a durable
+completion proof. The [frozen comparison](observed-2026-10-23/formation-historical3-comparison.md)
+passes **4/4 count means,4/4 hourly trajectories and10/10 thickness bins for each
+seed**. Protocol SHA256 stays1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43.
+
+| Stable mean, cells | Original21-run mean | New seed7 | New seed11 |
+|---|---:|---:|---:|
+| Superficial |50.12444|49.80529|49.73462|
+| Wing |143.30549|142.66318|145.45485|
+| Basal |30.88240|31.02931|30.87726|
+| Stem |4.75527|4.83277|4.74797|
+
+The original count/thickness mathematics also completed, producing two figures
+and full4321-hourly-row trajectories. Both original figures, a reference-overlay
+count figure and both [actual layer figures](observed-2026-10-23/formation-historical3-seed7-structure.png)
+were visually inspected. Independent cell volumes/lattice occupancy agree at all
+six observed times per seed. The descriptive top-connected fluid-access proxy
+has no exposed original basal columns at days15/180 in either seed; this is a2D
+simulation observation, not clinical healing. [Execution/source proofs](observed-2026-10-23/formation-historical3-execution.json)
+and [spatial numbers](observed-2026-10-23/formation-historical3-spatial.json) are retained.
+
+This is the successful **formation subset**, labelled `diagnostic_passed` by the
+operator. The full four-group gate and injury/recovery remain pending. Old failed
+later-source results, exact source versions, unknown original seeds/build and
+the declared injury reconstruction are preserved. The [additional history audit](source-history-audit-2026-10-23.md)
+records original stash/notebook evidence without replacing current model controls.
+
+## Original spatial file completeness and sensing
+
+Correct ZIP/CRC/SHA does not guarantee an internally complete scientific file.
+Original `CONTROL/Images/LatticeData/Step_042650.vtk` declares10 fields but ends
+inside Pressure after9597/18000 values; three later fields are absent. The
+[field inventory](observed-2026-10-23/original-spatial-field-completeness.json)
+retains that gap. A checked ASCII reader now accepts only actual complete finite
+required fields and reports incomplete optional fields. It never fills missing
+data or relies on a native reader's preallocated array length. All10 earlier
+cell-type/EGF/SLS image byte hashes are unchanged with this direct reader.
+
+The [original sensing audit](observed-2026-10-23/original-sensing.json) exports
+all1218 positive epithelial cells in six original snapshots. Reported EGF divided
+by the saved cell-summed field has median approximately1; division by the cell-mean
+field has median23–24. All except one cell have relative sum discrepancies at most
+2.611e-7. MildComb0/46200MCS stemID8002 differs by1.807958 (relative0.893025).
+That actual outlier remains in the [cell-level CSV](observed-2026-10-23/original-egf-by-cell.csv);
+steppable timing/inheritance is a possible explanation, not a proven cause. The
+finalCONTROL sensing field remains unavailable. These are descriptive source
+correspondence observations, with no new candidate acceptance or parameter fitting.
+
+The [experimental context audit](experimental-context-audit-2026-10-23.md) keeps
+the original rabbit literature and calibration-use conflict separate from these
+simulation observations; no matching raw independent tissue validation is claimed.
