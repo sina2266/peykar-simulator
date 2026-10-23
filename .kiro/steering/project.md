@@ -434,3 +434,35 @@ commands/outcomes in `docs/verification.md`.
   Metadata NumberOfProcessors. Both formation sources retain original4 workers;
   later-source injury retains1. No hard native CPU cap or cross-thread bitwise
   stochastic equivalence is claimed; never rewrite executed manifests to hide this.
+
+## Derived injury candidate from original observed constraints, 2026-10-23
+
+- source-state-correspondence-1.0.0.json SHA256
+  08b485a996d7ee5a636fa950f6b64d8c1ba05f18f7d7bf3319e70573c95a2d05 retains
+  original per-cell pressure/volume under known source lambdas: unique initial
+  targets40/40/25/25 for stem/basal/wing/superficial. Lambda itself is assumed from
+  source, not recovered. Every original VTK cell ID/type matches the separately
+  archived PIFF90690242...; pixel geometry afterMCS0 differs, so no exact checkpoint.
+  Original lineage fields support the older initializer, and actual MildComb0 pulse
+  at3000MCS is exactly one[100,75] site/1500 units. Its group/time remains separate.
+- New observed-injury-4.0.0 is explicitly derived: complete July HPC mechanisms,
+  original batch defaults40/8/10/Temperature10/Y75, separately evidenced original
+  PIFF, declared7200/50400MCS/dose overrides. It does not weaken version3's rejection
+  of silent injury-state replacement or assert original historical seeds/environment.
+- Actual600MCS moderate probe exit0/130.00s, pulse deliberately20MCS at[100,75]/2500;
+  count61/hourly, height610/ten bins, SLS601/per-MCS rows pass. Membrane990→869,
+  epithelial sites5013→2758; actual lattice/cell-volume checks pass. Engineering only.
+- Six full derived injury jobs prepared/frozen before new results in
+  .peykar/cornea-observed-injury46-20261023, detached supervisor53938. It waits24h
+  for BOTH previous series to genuinely complete/verify before at most4 simultaneous
+  jobs (original4 CC3D workers each),24h per-job. Do not duplicate/change these inputs.
+- Full combined follow-on PID54075 at
+  .peykar/cornea-reconstructed-combined-analysis-retry1-20261023 waits at most48h,
+  then combines actual injury6 with historical formation2, retaining separate input
+  plans/source identities and unchanged protocol. Default full gate still needs4
+  groups×2 seeds. Original first combined follow-on failed before plan publication;
+  retained logs/state and a targeted preparation-wait regression document the fix.
+- Main60884638 already pushed the prior verified497-test source/recovery milestone.
+  New source-state/orchestration final make check-docker passed510 tests/44.46s/86%,
+  mypy98 files,18 frontend tests/contracts/all builds; host make build passed.
+  Commit/push the verified increment; do not present pending runs as completed.

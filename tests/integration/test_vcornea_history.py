@@ -9,6 +9,8 @@ from peykar.integrations.vcornea_history import (
     BATCH,
     HISTORICAL_COMMIT,
     HISTORICAL_TREE,
+    INJURY_STATE_SHA256,
+    STATE_EVIDENCE_SHA256,
     historical_controls,
     literal_control,
 )
@@ -110,3 +112,79 @@ def test_historical_injury_state_is_not_silently_mixed_with_later_source(tmp_pat
             parameter_profile="historical-hpc-3.0.0",
         )
     assert not (tmp_path / "injury").exists()
+
+
+@pytest.mark.parametrize(
+    "recipe,dose",
+    [
+        ("slight-injury", 750.0),
+        ("mild-injury", 1500.0),
+        ("moderate-injury", 2500.0),
+    ],
+)
+def test_evidenced_state_reconstruction_is_an_explicit_separate_version(tmp_path, recipe, dose):
+    state = Path("vendor/models/vcornea-16884414/Local/Project/paper_version/Epithelium.piff")
+    root = tmp_path / "derived-injury"
+    manifest = prepare_publication(
+        SOURCE,
+        PINS,
+        root,
+        recipe,
+        7,
+        parameter_profile="observed-injury-4.0.0",
+        injury_state=state,
+    )
+    assert manifest["parameter_profile"] == "observed-injury-4.0.0"
+    assert manifest["publication_recipe_version"] == "4.0.0"
+    assert manifest["historical_batch_controls"]["InitBASAL_TargetVolume"] == 40
+    assert manifest["historical_batch_controls"]["SLS_Y_Center"] == 75
+    assert manifest["historical_batch_controls"]["SimTime"] == 46200
+    assert manifest["parameter_overrides"] == {
+        "SimTime": 50400,
+        "InjuryTime": 7200,
+        "SLS_Concentration": dose,
+    }
+    assert manifest["controls"] == {"steps_mcs": 50400, "seed": 7}
+    proof = manifest["state_reconstruction"]
+    assert proof["not_exact_historical_tree_execution"]
+    assert proof["evidence_sha256"] == STATE_EVIDENCE_SHA256
+    assert bytes_digest(Path(proof["evidence"]).read_bytes()) == STATE_EVIDENCE_SHA256
+    assert bytes_digest((root / "project/Epithelium.piff").read_bytes()) == INJURY_STATE_SHA256
+    assert (root / "project/Epithelium.piff").read_bytes() == state.read_bytes()
+    tree = ElementTree.parse(root / "project/Simulation/vCornea_v2.xml")
+    assert tree.findtext("./Potts/Steps") == "50402"
+    assert tree.findtext("./Metadata/NumberOfProcessors") == "4"
+
+
+def test_observed_state_requires_explicit_unchanged_data_and_cannot_change_formation(tmp_path):
+    with pytest.raises(InvalidRequest, match="explicit evidenced"):
+        prepare_publication(
+            SOURCE,
+            PINS,
+            tmp_path / "absent",
+            "mild-injury",
+            7,
+            parameter_profile="observed-injury-4.0.0",
+        )
+    wrong = tmp_path / "substituted.piff"
+    wrong.write_text("invented initial cells")
+    with pytest.raises(Conflict, match="evidenced archived PIFF"):
+        prepare_publication(
+            SOURCE,
+            PINS,
+            tmp_path / "wrong",
+            "mild-injury",
+            7,
+            parameter_profile="observed-injury-4.0.0",
+            injury_state=wrong,
+        )
+    with pytest.raises(InvalidRequest, match="does not accept"):
+        prepare_publication(
+            SOURCE,
+            PINS,
+            tmp_path / "formation",
+            "self-organization",
+            7,
+            parameter_profile="historical-hpc-3.0.0",
+            injury_state=wrong,
+        )

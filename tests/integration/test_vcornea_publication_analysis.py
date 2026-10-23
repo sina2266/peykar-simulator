@@ -90,3 +90,19 @@ def test_diagnostic_subset_cannot_pass_the_default_full_series_gate():
     plan["jobs"].append(plan["jobs"][0])
     with pytest.raises(ValueError, match="distinct seeds"):
         comparison.validate_series_jobs(plan, protocol, ["formation"])
+
+
+def test_original_pressure_inverse_retains_sign_ambiguity_and_requires_known_lambda():
+    spec = importlib.util.spec_from_file_location(
+        "cornea_state_audit", Path("runtime_profiles/vcornea-publication/audit_original_state.py")
+    )
+    audit = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(audit)
+    first = {"volume": 32, "absolute_pressure": 32}
+    assert audit.pressure_targets([first], 2) == [24, 40]
+    second = {"volume": 25, "absolute_pressure": 60}
+    assert audit.pressure_targets([first, second], 2) == [40]
+    assert audit.pressure_targets([first, {"volume": 10, "absolute_pressure": 0}], 2) == []
+    for lam in [0, -1, float("nan")]:
+        with pytest.raises(ValueError, match="known positive"):
+            audit.pressure_targets([first], lam)

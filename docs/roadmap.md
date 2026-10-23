@@ -245,10 +245,17 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Inspect10 actual original VTK snapshots/three descriptors, retaining group
   differences: MildComb0 is4620h/pulse300h, moderate spatial data ends1058h and
   CONTROL4265h. These are not the selected full scalar cohorts or independent experiments.
-- [ ] Resolve historical injury initial-state correspondence before any old-source
-  injury candidate: July HPC PIFF has3/35/132/39 stem/basal/wing/superficial cells,
-  while selected archived injury trajectories and retained injury VTK start4/32/127/46.
-  Do not silently combine a later initial state with older mechanisms.
+- [x] Resolve useful injury initial constraints from original VTK pressure/volume,
+  identity/type/lineage and measured pulse coordinates:4/32/127/46 cells, conditional
+  targets40/40/25/25 and[100,75]. Exact pre-sweep state/source/seed remains unknown.
+- [x] Prepare explicit `observed-injury-4.0.0` with complete historical mechanisms,
+  separately evidenced archived PIFF and declared frozen overrides; actual600MCS
+  native grid/pulse/lattice checks pass. Preserve the old-state mismatch and every
+  source identity; this is a declared reconstruction, not unchanged old Git execution.
+- [ ] Finish the six prepared derived injury runs after both existing series complete;
+  combine their actual records with historical formation2 for the full unchanged
+  comparison, original math and spatial inspection. Operators wait with explicit
+  deadlines and never duplicate healthy jobs or mutate previous plans.
 - [ ] Establish independently applicable biological measurements; calibration ranges
   and the unrelated monolayer assay do not supply independent tissue validation.
 

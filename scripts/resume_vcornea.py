@@ -78,6 +78,7 @@ def main():
     parser.add_argument("--profile", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--max-parallel", type=int, choices=range(1, 9), default=4)
+    parser.add_argument("--injury-state", type=Path)
     args = parser.parse_args()
     original = (args.previous / "plan.json").read_bytes()
     previous = json.loads(original)
@@ -116,6 +117,7 @@ def main():
             old["case"],
             old["seed"],
             parameter_profile=previous["parameter_profile"],
+            injury_state=args.injury_state,
         )
         manifest["comparison_protocol_digest"] = previous["protocol_digest"]
         manifest["previous_attempt_manifest_digest"] = old["manifest_digest"]

@@ -24,7 +24,8 @@ now retains 65 original replicates, unchanged original analysis and all 17 final
 paper supplements. Original analysis was actually replayed; full candidate
 formation runs completed, but their frozen count/thickness comparison failed.
 Six injury runs and a separate recovered July 2024 formation candidate are running;
-no full publication match or biological validity is claimed.
+a derived injury candidate based on original observed state constraints is prepared
+behind them. No full publication match or biological validity is claimed.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

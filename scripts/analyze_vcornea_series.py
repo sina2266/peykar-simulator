@@ -11,7 +11,51 @@ from pathlib import Path
 from resume_vcornea import active_record, verified_completed
 
 from peykar.integrations.vcornea_publication import write_operator_json
-from peykar_core.hashing import bytes_digest
+from peykar_core.hashing import bytes_digest, canonical_json
+
+
+def combine_completed_series(primary, additional, output):
+    directories = [primary, *additional]
+    plans = [json.loads((directory / "plan.json").read_bytes()) for directory in directories]
+    first = plans[0]
+    protocol = (primary / "comparison.json").read_bytes()
+    jobs = []
+    pairs = set()
+    for directory, plan in zip(directories, plans, strict=True):
+        if (
+            plan["status"] != "execution_completed"
+            or plan["profile_digest"] != first["profile_digest"]
+            or plan["protocol_digest"] != first["protocol_digest"]
+            or (directory / "comparison.json").read_bytes() != protocol
+            or bytes_digest(protocol) != plan["protocol_digest"]
+        ):
+            raise ValueError(
+                "Combined series require the same frozen protocol/runtime and real exits"
+            )
+        for job in plan["jobs"]:
+            pair = (job["case"], job["seed"])
+            if pair in pairs or not verified_completed(
+                job, plan["profile_digest"], plan["protocol_digest"]
+            ):
+                raise ValueError("Duplicate or unverified native job in combined series")
+            pairs.add(pair)
+            jobs.append(dict(job, original_series=str(directory.resolve())))
+    output.mkdir(exist_ok=False)
+    combined = {
+        **first,
+        "jobs": jobs,
+        "scope": "Combined comparison; every configuration retains its own source identity",
+        "input_plans": [],
+    }
+    for index, directory in enumerate(directories):
+        raw = (directory / "plan.json").read_bytes()
+        (output / f"input-plan-{index}.json").write_bytes(raw)
+        combined["input_plans"].append(
+            {"path": str(directory.resolve()), "sha256": bytes_digest(raw)}
+        )
+    (output / "comparison.json").write_bytes(protocol)
+    (output / "plan.json").write_text(canonical_json(combined) + "\n")
+    return output
 
 
 def main():
@@ -23,6 +67,7 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--wait-seconds", type=int, default=90000)
     parser.add_argument("--diagnostic-case", action="append")
+    parser.add_argument("--include-completed-series", action="append", type=Path, default=[])
     args = parser.parse_args()
     if not 1 <= args.wait_seconds <= 172800:
         parser.error("Analysis wait budget must be between1 and172800 seconds")
@@ -40,14 +85,19 @@ def main():
     write_operator_json(args.output / "status.json", state)
     started = time.monotonic()
     while True:
-        raw = (args.runs / "plan.json").read_bytes()
-        plan = json.loads(raw)
-        if plan["status"] in ("execution_completed", "execution_failed"):
-            break
         if time.monotonic() - started > args.wait_seconds:
             state.update(status="native_wait_deadline", finished_utc=datetime.now(UTC).isoformat())
             write_operator_json(args.output / "status.json", state)
             raise SystemExit(1)
+        plan_path = args.runs / "plan.json"
+        if not plan_path.exists():
+            # Source copies are prepared before the first atomic plan publication.
+            time.sleep(5)
+            continue
+        raw = plan_path.read_bytes()
+        plan = json.loads(raw)
+        if plan["status"] in ("execution_completed", "execution_failed"):
+            break
         # Reconcile only actual successful child-exit proofs after the outer process is gone.
         parent = subprocess.run(
             ["ps", "-ww", "-p", str(plan["supervisor_pid"]), "-o", "command="],
@@ -88,8 +138,14 @@ def main():
         state.update(status="native_execution_failed", finished_utc=datetime.now(UTC).isoformat())
         write_operator_json(args.output / "status.json", state)
         raise SystemExit(1)
+    if args.include_completed_series:
+        args.runs = combine_completed_series(
+            args.runs, args.include_completed_series, args.output / "combined-runs"
+        )
+        plan = json.loads((args.runs / "plan.json").read_bytes())
     state.update(
         status="analyzing",
+        runs=str(args.runs.resolve()),
         plan_digest=bytes_digest((args.runs / "plan.json").read_bytes()),
         protocol_digest=plan["protocol_digest"],
     )

@@ -151,3 +151,50 @@ four selected complete scalar cohorts. These are original simulation observation
 not independent experimental measurements. DML's Version1.0 is its schema version,
 not the engine version. The [dated engineering receipt](observed-2026-10-23/engineering.json)
 retains actual short-probe results and the declared limitations.
+
+## Observed injury-state reconstruction, version4.0.0
+
+Further [original-state inspection](source-state-correspondence-1.0.0.json) resolves
+useful constraints without claiming an exact historical per-run snapshot:
+
+- For both retained injury VTKs atMCS0, every cell ID/type agrees with the separately
+  archived injury PIFF (SHA256 `906902426fb315c670f41337a8e91aeef4d32bcea7280f0bf8af9a790509e6c4`).
+  Saved pixel shapes differ after a sweep:160/168 type sites and748/730 ID sites.
+  The result establishes identity/type correspondence, not exact pre-sweep geometry.
+- Conditioned on the lambda values shared by the reviewed sources, each group's
+  original pressure/actual-volume observations have a common initial target of
+  **40 stem /40 basal /25 wing /25 superficial** lattice sites. The inverse uses
+  `abs(2*lambda*(volume-target))`, retaining sign ambiguity until multiple cells
+  identify a common target. Lambda itself, original seeds and hidden state are not
+  recovered. In particular the later-source basal25 control is inconsistent with
+  those spatial observations under its own lambda2.
+- Original cell-lineage fields are present, consistent with the historical
+  initializer removed from the later source. Original MildComb0 at3000MCS has
+  exactly one positive SLS site at **[100,75]**, total1500. Its timing/group stays
+  separate from the frozen selected7200MCS cohorts.
+
+`observed-injury-4.0.0` is therefore a **declared derived reconstruction**: complete
+historical HPC injury mechanisms/defaults (40/8/10, Temperature10, Y75), the separately
+evidenced original PIFF, and explicit frozen7200/50400MCS/dose controls. Original
+historical controls and every override remain in its manifest. It is not presented
+as executing the untouched old Git tree or recovering original seeds. Version3's
+formation recipe and rejection of silently substituted injury states remain intact.
+
+An [actual600MCS moderate-injury probe](observed-2026-10-23/derived-injury-engineering.json)
+completed exit0 in130.00s with pulse deliberately at20MCS. It retained the61-hourly-row
+count grid,610 ten-bin height rows,601 per-MCS SLS rows, actual pulse[100,75]/2500,
+and lattice/cell-volume agreement. Membrane sites990→869, epithelial sites5013→2758.
+These are engineering observations, not a full-horizon or biological acceptance.
+
+Six full new-seed7/11 injury jobs are already prepared/frozen in
+`.peykar/cornea-observed-injury46-20261023` (supervisor53938). They wait for both
+existing native series to genuinely complete before execution, at most four jobs
+with original four-worker CC3D XML each. Each job has a24-hour deadline; wait24h.
+The explicitly started follow-on is
+`.peykar/cornea-reconstructed-combined-analysis-retry1-20261023` (supervisor54075),
+with bounded48h wait. It combines those six completed records with the two historical
+formation records, retains each original plan/source identity and applies the full
+unchanged four-group comparison, original math and spatial analysis. The first
+follow-on started before initial plan publication and failed; its log/state remain,
+and a targeted regression now verifies the bounded preparation wait.
+No candidate success or independent biological validation is asserted.

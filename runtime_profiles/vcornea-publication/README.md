@@ -198,3 +198,33 @@ uv run python scripts/acquire_vcornea_publication.py \
 
 The catalog declares that those three spatial groups differ from the selected
 four scalar cohorts; partial spatial horizons are never labelled complete.
+
+## Explicitly evidenced injury-state candidate
+
+`audit_original_state.py` reads the original VTK pressure/volume/lineage fields,
+checks the admitted PIFF identities/types and records the chemical injection
+coordinates. Its immutable [receipt](../../experiments/vcornea/publication/source-state-correspondence-1.0.0.json)
+conditions target-volume recovery on the known source lambda; sign ambiguity,
+pixel differences and spatial-group mismatch remain explicit. It does not infer
+unknown seeds, lambda, a full checkpoint or clinical validity.
+
+The separate `observed-injury-4.0.0` profile requires an explicit `--injury-state`
+file with the exact admitted SHA256, complete historical HPC source and the unchanged
+frozen protocol. It preserves original controls and separately declares the7200MCS
+pulse,50400MCS horizon and original scalar-cohort doses. A600MCS native probe actually
+completed with the expected initial counts, ten-bin/hourly grid and pulse[100,75].
+
+Six full jobs are already prepared in `.peykar/cornea-observed-injury46-20261023`.
+They were explicitly invoked with `--wait-for-series` for both active earlier series.
+That operator snapshots the prerequisite definitions, rejects changed identities/
+failed exits, verifies real completed records, waits at most24h and then executes
+at most four jobs. It is not an API-triggered scientific action or a checkpoint resume.
+Do not duplicate or change those prepared workspaces.
+
+The follow-on `.peykar/cornea-reconstructed-combined-analysis-retry1-20261023` uses
+`--include-completed-series` for the historical formation plan. It accepts only
+genuinely completed, disjoint job identities with exactly matching runtime/protocol,
+copies original plans and creates a separate combined plan for the full four-cohort
+gate. Parent plans and source versions are preserved; numerical failure still exits2.
+The first follow-on race before initial plan publication is retained as a failed
+attempt; the bounded preparation-wait fix is covered by a regression test.

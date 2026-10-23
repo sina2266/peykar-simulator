@@ -1,5 +1,49 @@
 # Verification record
 
+## Corneal original-state constraints and declared reconstruction: 2026-10-23
+
+- `audit_original_state.py` actually read original MildComb0/moderateMCS0 pressure,
+  volume and lineage fields plus MildComb0's3000MCS pulse. The immutable receipt
+  `experiments/vcornea/publication/source-state-correspondence-1.0.0.json` hashes
+  to `08b485a996d7ee5a636fa950f6b64d8c1ba05f18f7d7bf3319e70573c95a2d05`.
+  Under the known source lambdas, all observed cells imply common initial targets
+  40/40/25/25 for stem/basal/wing/superficial; no unknown lambda/seed is inferred.
+  All original cell identities/types match the archived injury PIFF, while actual
+  savedMCS0 geometry differs160/168 type pixels and748/730 ID pixels. The separate
+  original MildComb0 pulse is exactly[100,75]/1500 at3000MCS, not selected Comb1 timing.
+- An isolated installed CC3D4.6.0 `CellG` getter control gave pressure−160/−100 for
+  volume0/lambda2/target40/25. Assigning its read-only volume property was rejected;
+  no native tissue state or original dataset was changed to perform that check.
+- The explicitly declared `observed-injury-4.0.0` uses complete historical HPC
+  mechanisms/defaults and a separately evidenced original injury PIFF. Its source,
+  original controls, new frozen dose/time/horizon and state-evidence hashes remain
+  separate. It does not claim untouched historical Git execution, original seeds,
+  an exact restart checkpoint or independent biological validation.
+- Actual600MCS moderate probe completed **exit0 /130.004s** with early20MCS pulse:
+  initial4/32/127/46 counts, actual[100,75]/2500 injection,61 hourly count rows,
+  610 ten-bin height rows,601 per-MCS SLS rows. Exact grids/pulse and every observed
+  lattice/cell-volume equality passed. Membrane990→869 sites; epithelium5013→2758.
+  Original writer flushes before the SimTime+1 tracking sample; a manual inspection
+  initially expected602 SLS rows, then checked the actual correct601-row0..600 grid.
+  The [actual engineering receipt](../experiments/vcornea/publication/observed-2026-10-23/derived-injury-engineering.json)
+  retains the native record/output hashes. This short probe is not publication acceptance.
+- Six full source/state candidates were prepared and frozen in
+  `.peykar/cornea-observed-injury46-20261023`, with actual execution gated behind
+  both existing native series. Prerequisite definitions/runtime/protocol/real exits
+  are checked, wait24h, at most4 jobs with original4 CC3D workers each,24h/job.
+  The full combined comparison/original/spatial follow-on retains all source/input
+  plans and checks actual disjoint jobs; it never mutates earlier series or criteria.
+- First combined follow-on failed before initial plan publication; its log/state
+  remain. The fixed bounded preparation wait was exercised by a targeted regression.
+  Original-state/history/analysis/operator tests passed **28 tests /0.49s**; Ruff and
+  strict mypy passed. Final **`make check-docker` passed510 tests /44.46s /86%
+  coverage**, strict mypy98 files,18 frontend tests, contracts and all wheel/sdist
+  builds. Host `make build` also passed. Logs:
+  `.peykar/cornea-state-check-docker-20261023.log` and
+  `.peykar/cornea-state-build-20261023.log`. The same task-private anonymous Docker
+  configuration avoided the unrelated account-helper stall. Neither software
+  success nor queued full jobs imply a scientific match.
+
 ## Corneal publication reconstruction and recovery: 2026-10-18 / 2026-10-23
 
 This is an offline operator/scientific continuation. API/Worker were observed

@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -11,8 +12,52 @@ from peykar.integrations.vcornea_publication import (
     RECIPES,
     execute_native,
     prepare_publication,
+    write_operator_json,
 )
 from peykar_core.hashing import bytes_digest, canonical_json, digest
+
+
+def series_definition(plan):
+    return {
+        "protocol_digest": plan["protocol_digest"],
+        "profile_digest": plan["profile_digest"],
+        "jobs": [
+            {key: job[key] for key in ["case", "seed", "directory", "manifest_digest"]}
+            for job in plan["jobs"]
+        ],
+    }
+
+
+def wait_for_series(requirements, output, budget):
+    from resume_vcornea import verified_completed
+
+    started = time.monotonic()
+    expected = []
+    for ordinal, directory in enumerate(requirements):
+        raw = (directory / "plan.json").read_bytes()
+        (output / f"prerequisite-{ordinal}.json").write_bytes(raw)
+        expected.append((directory, series_definition(json.loads(raw))))
+    while expected:
+        if time.monotonic() - started > budget:
+            raise TimeoutError("Prerequisite series wait deadline exceeded")
+        remaining = []
+        for directory, definition in expected:
+            plan = json.loads((directory / "plan.json").read_bytes())
+            if series_definition(plan) != definition:
+                raise ValueError("Prerequisite native job/protocol/runtime identities changed")
+            if plan["status"] == "execution_failed":
+                raise ValueError("Prerequisite native series failed; preserve its evidence")
+            if plan["status"] != "execution_completed":
+                remaining.append((directory, definition))
+                continue
+            if not all(
+                verified_completed(job, plan["profile_digest"], plan["protocol_digest"])
+                for job in plan["jobs"]
+            ):
+                raise ValueError("Prerequisite completed records could not be verified")
+        expected = remaining
+        if expected:
+            time.sleep(5)
 
 
 def main() -> None:
@@ -26,11 +71,16 @@ def main() -> None:
     parser.add_argument("--case", action="append", choices=tuple(RECIPES), required=True)
     parser.add_argument("--seed", type=int, action="append", required=True)
     parser.add_argument("--parameter-profile", choices=PARAMETER_PROFILES, default="local-1.0.0")
+    parser.add_argument("--injury-state", type=Path)
     parser.add_argument("--max-parallel", type=int, choices=(1, 2, 3, 4), default=2)
     parser.add_argument("--wall-seconds", type=float, default=86400)
+    parser.add_argument("--wait-for-series", type=Path, action="append", default=[])
+    parser.add_argument("--wait-seconds", type=int, default=86400)
     args = parser.parse_args()
     if len(args.case) != len(set(args.case)) or len(args.seed) != len(set(args.seed)):
         parser.error("Cases and seeds must be unique")
+    if not 1 <= args.wait_seconds <= 172800:
+        parser.error("Prerequisite wait budget must be between1 and172800 seconds")
     args.output.mkdir(parents=True, exist_ok=False)
     protocol = json.loads(args.protocol.read_bytes())
     if not protocol.get("frozen_before_full_candidate_execution"):
@@ -44,6 +94,7 @@ def main() -> None:
         "parameter_profile": args.parameter_profile,
         "max_parallel": args.max_parallel,
         "wall_seconds_per_run": args.wall_seconds,
+        "execution_prerequisites": [str(p.resolve()) for p in args.wait_for_series],
         "jobs": [],
         "interpretation": "Reproduction is pending until full runs and frozen comparisons pass.",
     }
@@ -58,6 +109,7 @@ def main() -> None:
                 case,
                 seed,
                 parameter_profile=args.parameter_profile,
+                injury_state=args.injury_state,
             )
             manifest["comparison_protocol_digest"] = plan["protocol_digest"]
             (directory / "manifest.json").write_text(canonical_json(manifest) + "\n")
@@ -70,6 +122,15 @@ def main() -> None:
                     "status": "prepared",
                 }
             )
+    if args.wait_for_series:
+        plan["status"] = "waiting_for_prerequisites"
+        write_operator_json(args.output / "plan.json", plan)
+        try:
+            wait_for_series(args.wait_for_series, args.output, args.wait_seconds)
+        except Exception as error:
+            plan.update(status="execution_failed", failure=type(error).__name__)
+            write_operator_json(args.output / "plan.json", plan)
+            raise
     plan["status"] = "running"
     (args.output / "plan.json").write_text(canonical_json(plan) + "\n")
     with ThreadPoolExecutor(max_workers=args.max_parallel) as executor:

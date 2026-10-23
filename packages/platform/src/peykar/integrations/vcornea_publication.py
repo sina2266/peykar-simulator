@@ -31,7 +31,7 @@ RECIPES: dict[str, tuple[ScenarioName, int, dict[str, int | float]]] = {
     "mild-injury": ("injury", 50400, {"InjuryTime": 7200, "SLS_Concentration": 1500.0}),
     "moderate-injury": ("injury", 50400, {"InjuryTime": 7200, "SLS_Concentration": 2500.0}),
 }
-PARAMETER_PROFILES = ("local-1.0.0", "hpc-2.0.0", "historical-hpc-3.0.0")
+PARAMETER_PROFILES = ("local-1.0.0", "hpc-2.0.0", "historical-hpc-3.0.0", "observed-injury-4.0.0")
 
 
 def write_operator_json(path: Path, value: dict[str, Any]) -> None:
@@ -114,11 +114,21 @@ def prepare_publication(
     seed: int,
     *,
     parameter_profile: str = "local-1.0.0",
+    injury_state: Path | None = None,
 ) -> dict[str, Any]:
-    if parameter_profile == "historical-hpc-3.0.0":
+    if parameter_profile in ("historical-hpc-3.0.0", "observed-injury-4.0.0"):
         from peykar.integrations.vcornea_history import prepare_historical_publication
 
-        return prepare_historical_publication(source, pins, destination, recipe, seed)
+        if parameter_profile == "observed-injury-4.0.0":
+            if injury_state is None or recipe == "self-organization":
+                raise InvalidRequest("Observed injury requires the explicit evidenced initial PIFF")
+        elif injury_state is not None:
+            raise InvalidRequest("Historical formation profile does not accept another state")
+        return prepare_historical_publication(
+            source, pins, destination, recipe, seed, injury_state=injury_state
+        )
+    if injury_state is not None:
+        raise InvalidRequest("This source profile retains its original initial state")
     overrides = publication_overrides(recipe, parameter_profile)
     scenario, steps, _ = RECIPES[recipe]
     manifest = prepare_run(source, pins, destination, scenario=scenario, steps=steps, seed=seed)

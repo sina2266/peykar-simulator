@@ -27,6 +27,7 @@ RUN uv sync --frozen --all-packages --no-dev --no-editable
 
 FROM build AS verification
 COPY vendor/models/vcornea-history-b6123adf vendor/models/vcornea-history-b6123adf
+COPY vendor/models/vcornea-16884414/Local/Project/paper_version/Epithelium.piff vendor/models/vcornea-16884414/Local/Project/paper_version/Epithelium.piff
 COPY --from=dashboard /usr/local/bin/node /usr/local/bin/node
 COPY --from=dashboard /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
 COPY --from=dashboard /app/apps/dashboard apps/dashboard
