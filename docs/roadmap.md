@@ -238,9 +238,11 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Finish historical formation seeds7/11 through43200MCS, apply all frozen
   count/trajectory/thickness checks, replay original math and inspect actual layers.
   Both pass the formation subset; the full four-group publication gate remains open.
-- [ ] Finish six earlier injury retries/unstarted jobs in
+- [x] Finish six earlier injury retries/unstarted jobs in
   `.peykar/cornea-hpc46-resumed-20261023`; inspect current records/PIDs before starting
   anything. Each job has a24-hour deadline; preserve failed runs.
+  All six genuinely completed; full baseline returns not_reproduced. Original math,
+  actual structure/EGF and complete50401-sample chemical traces were inspected.
 - [ ] Apply the unchanged frozen reference comparison to every full run, replay the
   authors' math on new outputs, inspect actual spatial/EGF/recovery results and retain
   negative findings. Current source/table disagreements preclude an exact-final-table claim.
@@ -264,6 +266,8 @@ The earlier independently advancing workstreams resume after this corneal gate.
   combine their actual records with historical formation2 for the full unchanged
   comparison, original math and spatial inspection. Operators wait with explicit
   deadlines and never duplicate healthy jobs or mutate previous plans.
+  Both prerequisite series are complete; four derived jobs run and two wait for
+  capacity. Preserve the negative baseline and the passing formation subset.
 - [ ] Establish independently applicable biological measurements; calibration ranges
   and the unrelated monolayer assay do not supply independent tissue validation.
 

@@ -253,3 +253,24 @@ correspondence observations, with no new candidate acceptance or parameter fitti
 The [experimental context audit](experimental-context-audit-2026-10-23.md) keeps
 the original rabbit literature and calibration-use conflict separate from these
 simulation observations; no matching raw independent tissue validation is claimed.
+
+## Complete later-source baseline and current derived execution
+
+The [completed baseline audit](completed-baseline-audit-2026-10-23.md) records all
+eight genuinely completed later-source jobs. Its unchanged full comparison is
+`not_reproduced`: both moderate jobs pass, whereas the other six fail. All six
+full injury chemical traces have50401 finite/nonnegative samples and actual
+declared pulse sites[100,65]. Original pulse/producer/recovery/structural audits
+remain separate from candidate acceptance and biological validation.
+
+Both prerequisite native series have finished. Four `observed-injury-4.0.0` jobs
+are running and two moderate jobs wait for capacity; the existing combined
+follow-on retains the successful historical formation pair. Do not restart the
+completed baseline or duplicate healthy jobs. Full reconstructed acceptance is
+still pending.
+
+Some original-analysis exports clipped titles/axis labels. The display wrapper
+now fits layouts/bounds without changing the authors' code or math. Replaying
+all65 original and8 baseline runs retained identical summaries and all eight
+full-horizon mean CSV byte sequences. Corrected figures and exact equivalence
+proofs are linked from the completed baseline audit; earlier exports remain intact.

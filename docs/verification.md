@@ -1,5 +1,53 @@
 # Verification record
 
+## Complete corneal baseline and original-analysis export: 2026-10-23
+
+- Six resumed injury jobs actually completed50400MCS, exit0,11262.71–11443.62s.
+  The full eight-job follow-on finished17:29UTC: comparison exit2/not_reproduced,
+  original/spatial analysis exit0. Both moderate seeds pass the frozen scalar
+  criteria; the other six jobs fail. Complete results and actual source/exit proofs
+  are linked from `experiments/vcornea/publication/completed-baseline-audit-2026-10-23.md`.
+- Explicit `.peykar/audit_completed_cornea_chemical_20261023.py --runs
+  .peykar/cornea-hpc46-resumed-20261023 --output
+  .peykar/cornea-hpc46-full-chemical-audit-20261023.json` ran in native46 Python.
+  All six traces have50401 finite/nonnegative samples, full0.1h grids and actual
+  one-site pulses[100,65], matching their declared source controls. The exact
+  read-only recipe and report are retained; it does not execute model code.
+- Read-only original audits checked44 scalar SLS traces (all exact720h/dose/grid),
+  65 Parquet producer metadata (fastparquet2024.5.0 /pandas2.2.2, keypandas only),
+  descriptive original population-count returns and the same2D basal-access proxy.
+  MildComb0 is52µm exposed at24h and0µm at120h; its time/group remains separate from
+  selected MildComb1. All original member hashes remain pinned. No new biological
+  acceptance or source/runtime/seed inference was made from these observations.
+- Original-analysis PNGs actually clipped some titles/axis labels. A bounds-only
+  export attempt did not solve every figure and remains retained with its exact
+  source versions. The final wrapper also fits the layout before export. Upstream
+  plot/membrane source hashes and all scientific mathematics remain unchanged.
+- `analyze_candidates.py --source experiments/vcornea/publication/upstream --runs
+  .peykar/cornea-hpc46-resumed-20261023 --output
+  .peykar/cornea-hpc46-original-layout-retry2-20261023` completed all8 native inputs.
+  `analyze_original.py --source experiments/vcornea/publication/upstream --data
+  .peykar/external/vcornea-publication-cohorts-16884414/Data --output
+  .peykar/cornea-original-cohorts-layout-retry1-20261023` completed all65 originals.
+  Numerical summaries and all eight full-horizon mean CSV byte sequences match the
+  earlier analyses. The older65-run receipt has no per-input hash list; its summaries/
+  CSVs were compared, and the new receipt retains the130 actual input hashes.
+- Final nativeMild count and original formation-height/moderate-count exports were
+  visually inspected with complete titles/axis labels. The earlier baseline layer
+  figures for three severities, moderate EGF and all three original injury-count
+  figures were also inspected. Comparison script302b06bc... and frozen protocol
+  1189fd62... are unchanged. Layout wrapper SHA is
+  d0c09adc23322eace61fe13a0212e13e7161efe729b1c050b9c2d20d4ad26a97.
+- Derived operator53938 started its four slight/mild jobs after both native
+  prerequisites actually completed; two moderate jobs wait for capacity. Combined
+  follow-on54075 remains waiting for six actual records. The complete reconstructed
+  comparison and independent biological validation remain open.
+- Final **`make check-docker` passed518 tests /47.09s /86% coverage**, strict
+  mypy98 source files,18 frontend tests, current contracts and all wheel/sdist
+  builds. Log: `.peykar/cornea-completed-baseline-check-docker-20261023.log`.
+  All130 fresh original-analysis input hashes exactly match the frozen protocol.
+  Host `make build` also passed; log `.peykar/cornea-completed-baseline-build-20261023.log`.
+
 ## Completed corneal formation and original field integrity: 2026-10-23
 
 - Existing `reproduce_vcornea.py --parameter-profile historical-hpc-3.0.0` jobs

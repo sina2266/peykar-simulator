@@ -259,3 +259,30 @@ The actual retry2 audit retains1218 positive epithelial cells, one large origina
 outlier and the unavailable finalCONTROL sensing field. Earlier failed/read-only
 and pre-format attempts remain separately retained. No missing value is replaced
 or descriptive statistic turned into a candidate acceptance rule.
+
+## Completed baseline and original-analysis export
+
+The resumed later-source series and its follow-on genuinely completed:
+`.peykar/cornea-hpc46-analysis-20261023` is `not_reproduced`, with numerical
+comparison exit2 and original/spatial analysis exit0. Both moderate seeds pass
+the frozen scalar checks; the other six baseline jobs fail. Actual source/runtime/
+completion proofs and all six full chemical grids/pulse positions were checked.
+Do not resume this completed series again.
+
+The derived operator is now running four injury jobs, with two moderate jobs
+waiting for capacity. Its existing combined follow-on still waits for all six
+actual completions. These are previously invoked explicit offline operators;
+the management API does not execute this model code.
+
+All65 original height Parquets identify fastparquet2024.5.0 /pandas2.2.2 producer
+metadata. The current runtime writes PyArrow16.1.0 /pandas2.3.3. This partial original
+writer information does not identify CC3D binaries/seeds/full environment. Current
+runtime locks and active jobs remain unchanged; numerical units/values are compared.
+
+`analyze_original.py` now fits layout/bounds in its display hook so original titles
+and labels are fully visible. Original code/math stay unchanged. Actual original65
+and baseline8 replays preserve all numerical summaries and all eight mean CSV byte
+sequences. Earlier clipped/bounds-only attempts remain as separate evidence; final
+outputs are `.peykar/cornea-original-cohorts-layout-retry1-20261023` and
+`.peykar/cornea-hpc46-original-layout-retry2-20261023`. The combined follow-on uses
+the corrected exporter when the six new native runs actually finish.

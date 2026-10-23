@@ -1,0 +1,93 @@
+"""Explicit read-only verification of completed native chemical traces and pulse fields."""
+
+import argparse
+import ast
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path('runtime_profiles/vcornea-publication').resolve()))
+from compare import checksum, load_run
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--runs', type=Path, required=True)
+parser.add_argument('--output', type=Path, required=True)
+args = parser.parse_args()
+plan = json.loads((args.runs / 'plan.json').read_bytes())
+protocol_path = args.runs / 'comparison.json'
+protocol = json.loads(protocol_path.read_bytes())
+if plan['status'] != 'execution_completed' or checksum(protocol_path) != plan['protocol_digest']:
+    raise ValueError('Complete the exact frozen native series before this audit')
+rows = []
+for job in plan['jobs']:
+    if job['case'] == 'self-organization':
+        continue
+    root, manifest, record, _counts, _height, pulse = load_run(
+        plan, job, plan['protocol_digest'], protocol
+    )
+    control_names = {'SLS_X_Center', 'SLS_Y_Center', 'InjuryTime', 'SLS_Concentration'}
+    controls = {}
+    for node in ast.parse((root / 'project/Simulation/Parameters.py').read_bytes()).body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id in control_names:
+                    controls[target.id] = ast.literal_eval(node.value)
+    if set(controls) != control_names:
+        raise ValueError('Explicit chemical execution controls are missing')
+    tracking = next(name for name in record['outputs'] if Path(name).name.startswith('surfactant_'))
+    frame = pd.read_csv(root / tracking)
+    horizon = manifest['controls']['steps_mcs']
+    values = frame[['Total Amount', 'Time']].to_numpy(dtype=float)
+    if (
+        len(frame) != horizon + 1
+        or not np.isfinite(values).all()
+        or (frame['Total Amount'] < 0).any()
+        or not np.allclose(frame.Time, np.arange(horizon + 1) / 10, rtol=0, atol=1e-9)
+    ):
+        raise ValueError('Full finite/nonnegative original MCS chemical tracking grid is required')
+    injury = int(controls['InjuryTime'])
+    lattice_name = f'lattice-{injury}.npz'
+    if record['outputs'].get(lattice_name) != checksum(root / lattice_name):
+        raise ValueError('Actual pulse field is not admitted by the native completion record')
+    with np.load(root / lattice_name, allow_pickle=False) as saved:
+        sls = saved['sls'].copy()
+    coordinates = np.argwhere(sls > 0).tolist()
+    expected = [[int(controls['SLS_X_Center']), int(controls['SLS_Y_Center'])]]
+    if (
+        sls.shape != (200, 90)
+        or not np.isfinite(sls).all()
+        or coordinates != expected
+        or not np.isclose(sls.sum(), controls['SLS_Concentration'], rtol=1e-9, atol=1e-9)
+    ):
+        raise ValueError('Actual pulse field differs from its declared execution controls')
+    rows.append({
+        'case': job['case'], 'seed': job['seed'], 'manifest_digest': job['manifest_digest'],
+        'tracking_file': tracking, 'tracking_sha256': record['outputs'][tracking],
+        'tracking_samples': len(frame), 'last_hour': float(frame.Time.iloc[-1]),
+        'maximum_grid_error_hours': float(np.abs(frame.Time.to_numpy() - np.arange(horizon + 1) / 10).max()),
+        'minimum_amount': float(frame['Total Amount'].min()),
+        'maximum_amount': float(frame['Total Amount'].max()),
+        'last_amount': float(frame['Total Amount'].iloc[-1]),
+        'pulse': pulse, 'pulse_field_sha256': record['outputs'][lattice_name],
+        'actual_positive_coordinates_xy': coordinates, 'source_controls': controls,
+        'checks_passed': True,
+    })
+if not rows:
+    raise ValueError('No actual completed chemical jobs were available')
+report = {
+    'schema_version': '1.0.0',
+    'scope': 'Read-only engineering verification of full chemical traces and declared pulse fields; no new publication or biological acceptance',
+    'plan_sha256': checksum(args.runs / 'plan.json'),
+    'protocol_sha256': checksum(protocol_path),
+    'audit_source_sha256': checksum(Path(__file__)),
+    'independent_biological_validation': False,
+    'jobs': rows,
+}
+with args.output.open('x') as stream:
+    json.dump(report, stream, indent=2, allow_nan=False)
+    stream.write('\n')
+print('Actual completed chemical tracking/pulse checks:', len(rows), 'jobs; no model code executed')

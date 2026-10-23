@@ -28,6 +28,9 @@ actual tissue layers were inspected. Injury execution/comparison remains pending
 including a declared reconstruction based on original observed state constraints.
 One original spatial file has truncated optional fields, now explicitly recorded.
 No full publication match or biological validity is claimed.
+The complete later-source baseline now retains its failed four-group comparison;
+four reconstructed injury jobs are running and two wait for capacity. Original
+figure export now preserves titles/axis labels with identical numerical summaries.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

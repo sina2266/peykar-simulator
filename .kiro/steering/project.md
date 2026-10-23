@@ -503,3 +503,46 @@ commands/outcomes in `docs/verification.md`.
   and all package builds. Host make build passed. API healthy/Worker up5days;
   original locks/schemas/models/licenses/vendor bytes have no Git changes.
   Preserve the per-cell CSV's actual CRLF bytes via its scientific-output attribute.
+
+## Complete baseline and derived execution, 2026-10-23
+
+- Mainc11c5047 was pushed/remote-SHA verified with a clean tree after the518-test
+  source-quality/formation milestone. Never recreate that completed work.
+- All six resumed injury jobs genuinely completed50400MCS, exit0,11262.71–11443.62s.
+  Whole source2 baseline8 comparison is not_reproduced: formation2 fail, slight2
+  have9/10 height bins, mild2 have9/10 (seed11 also3/4 count means), moderate2 pass
+  all frozen scalar checks. Original math/spatial stages exit0; overall completion
+  at17:29UTC. Old supervisor32354 and follow-on35547 are complete, not live operators.
+- Explicit read-only chemical audit verified each full50401-sample0.1h trace,
+  finite/nonnegative data and actual[100,65] pulse field matching its source controls.
+  Do not relabel these as[100,75] or promote passing moderate alone to a full gate.
+- Derived supervisor53938 is now running first four slight/mild jobs; moderate2
+  wait for its maxparallel4 capacity. Original XML requests4 CC3D workers/job.
+  Combined follow-on54075 still waits for six real completions then combines them
+  with the two completed historical formation records. Inspect current ownership/
+  progress before acting. Full reconstructed publication gate remains pending.
+- Original44 scalar SLS traces all confirm pulse720h/doses750/1500/2500 and50401
+  rows. Descriptive original count-return observations retain all missing events;
+  they are not clinical healing or new acceptance criteria. Same structural proxy
+  on original MildComb0 finds52µm exposure at24h,0 at120h; group/time differs from
+  selected MildComb1. Source/receipt files are linked from completed-baseline-audit.
+- Original65 Parquets identify fastparquet2024.5.0 /pandas2.2.2, metadata keypandas
+  only. Current writer is PyArrow16.1.0 /pandas2.3.3; do not mutate active environments
+  or infer unknown original engine/seed/date/full dependencies from writer versions.
+- Actual original-analysis figures had clipped titles/axis labels. Wrapper-only
+  tight layout/bounds correction retains exact original code/math. Bounds-only
+  attempts failed visually and remain; final native8/original65 replays have equal
+  numerical summaries and all eight full-horizon mean CSV byte sequences.
+  Current wrapper SHA d0c09adc23322eace61fe13a0212e13e7161efe729b1c050b9c2d20d4ad26a97;
+  comparison script302b06bc... and protocol1189fd62... remain unchanged.
+- Final make check-docker passed518 tests/47.09s/86%, mypy98 source files,18 frontend
+  tests, current contracts and all package builds. All130 fresh original-analysis
+  input hashes exactly match the frozen protocol. Retain completed baseline/export
+  receipts and commit/push this verified meaningful increment normally.
+  Host make build also passed; existing locks/schemas/model/vendor/license bytes
+  remain unchanged. Do not confuse these software checks with pending scientific acceptance.
+- Interim field observation `.peykar/cornea-derived-first-pulse-observation-20261023.json`
+  verified the four running jobs' actual7200MCS pulses at[100,75], doses750/1500.
+  It explicitly remains ineligible for final comparison until native completion;
+  retain those hashes for checking against the later durable completion proofs.
+  Heartbeat remains PAUSED by explicit user request; keep current native work active.

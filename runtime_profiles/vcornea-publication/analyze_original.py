@@ -41,6 +41,7 @@ def run(source: Path, data: Path, output: Path, *, groups=None) -> None:
         "original_plot_digest": PLOT_SHA,
         "original_membrane_digest": MEMBRANE_SHA,
         "analysis_wrapper_digest": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "figure_export": "Export layout/bounds; original titles, labels and math retained",
         "groups": {},
         "input_files": {},
         "scope": (
@@ -72,9 +73,11 @@ def run(source: Path, data: Path, output: Path, *, groups=None) -> None:
         def save_current(figures=figures, folder=folder):
             number = len(figures) + 1
             figure = plt.gcf()
+            figure.tight_layout(pad=1.4)
+            figure.canvas.draw()
             for suffix in ("png", "pdf"):
                 path = folder / f"original-{number}.{suffix}"
-                figure.savefig(path, dpi=160)
+                figure.savefig(path, dpi=160, bbox_inches="tight", pad_inches=0.15)
                 figures.append(str(path.relative_to(output))) if suffix == "png" else None
             plt.close("all")
 
