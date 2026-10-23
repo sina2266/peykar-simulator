@@ -12,6 +12,12 @@ different original mechanisms and defaults. Earlier candidates and all negative
 results remain retained; this newer snapshot does not establish exact historical
 cohort identity or change the frozen comparison.
 
+[Full-horizon state audit](full-horizon-state-audit-2026-10-23.md) adds the actual
+final180-day structure/EGF panels without changing numerical observations. A
+separate exact inverse identifies original initial target/lambda pairs from418
+original cells under declared shared-parameter assumptions. The32 historical
+parameter-file variants do not establish the selected cohorts' exact controls.
+
 Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
 and James A. Glazier. Final paper:
 [PLOS Computational Biology, 2025, e1013410](https://doi.org/10.1371/journal.pcbi.1013410).

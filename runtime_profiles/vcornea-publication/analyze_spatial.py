@@ -21,6 +21,27 @@ COLORS = [
 LABELS = {1: "Stem", 3: "Basal", 4: "Wing", 5: "Superficial"}
 
 
+def figure_times(snapshots, horizon, injury):
+    structure = (
+        [0, 240, 720, 1680, 3600, horizon]
+        if injury is None
+        else [
+            0,
+            injury,
+            injury + 240,
+            injury + 720,
+            injury + 1200,
+            injury + 1680,
+            injury + 4800,
+            horizon,
+        ]
+    )
+    fields = [] if injury is None else [injury, injury + 10, injury + 4800, horizon]
+    if any(t not in snapshots for t in [*structure, *fields]):
+        raise ValueError("Full-horizon formation/recovery snapshots are incomplete")
+    return structure, fields
+
+
 def membrane_surface(initial):
     result = {}
     for x, column in enumerate(initial):
@@ -77,7 +98,7 @@ def analyze(directory, output):
     report = {
         "schema_version": "1.0.0",
         "plan_digest": checksum(directory / "plan.json"),
-        "observation_version": "vcornea.spatial-diagnostics-1.0.0",
+        "observation_version": "vcornea.spatial-diagnostics-1.1.0",
         "spatial_mapping": "x,y lattice order; 200x90 sites; 2 micrometres/site (paper2.2)",
         "scope": "Descriptive endpoints, not preregistered acceptance or clinical validation",
         "independent_biological_validation": False,
@@ -141,14 +162,12 @@ def analyze(directory, output):
             rows.append(row)
             snapshots[mcs] = kinds, egf
         injury = manifest.get("parameter_overrides", {}).get("InjuryTime")
-        times = (
-            [0, 240, 720, 1680, 3600, manifest["controls"]["steps_mcs"]]
-            if injury is None
-            else [injury + t for t in [0, 240, 720, 1200, 1680, 4800]]
+        horizon = manifest["controls"]["steps_mcs"]
+        times, field_times = figure_times(snapshots, horizon, injury)
+        columns = len(times) // 2
+        figure, axes = plt.subplots(
+            2, columns, figsize=(columns * 4.4, 7), sharex=True, sharey=True
         )
-        if any(t not in snapshots for t in times):
-            raise ValueError("Publication formation/recovery snapshots are incomplete")
-        figure, axes = plt.subplots(2, 3, figsize=(14, 7), sharex=True, sharey=True)
         cmap = ListedColormap(COLORS)
         norm = BoundaryNorm(np.arange(-0.5, 11.5), len(COLORS))
         for t, ax in zip(times, axes.flat, strict=True):
@@ -161,7 +180,12 @@ def analyze(directory, output):
                 interpolation="nearest",
             )
             day = (t - (injury or 0)) / 240
-            ax.set_title(f"Day {day:g}" + (" after pulse" if injury else ""))
+            title = f"Day {day:g}" + (" after pulse" if injury else "")
+            if injury is not None and t == 0:
+                title = "Initial state · before preconditioning"
+            elif t == horizon:
+                title = "Final · " + title
+            ax.set_title(title)
             ax.set_xlabel("Radial position (µm)")
             ax.set_ylabel("Depth position (µm)")
         figure.suptitle(f"{job['case']} · seed {job['seed']} · actual 2D lattice")
@@ -174,10 +198,8 @@ def analyze(directory, output):
         figure.savefig(output / f"{job['case']}-{job['seed']}-structure.png", dpi=160)
         plt.close(figure)
         if injury is not None:
-            figure, axes = plt.subplots(1, 3, figsize=(14, 4), sharey=True)
-            for t, ax in zip([injury, injury + 10, injury + 4800], axes, strict=True):
-                if t not in snapshots:
-                    raise ValueError("Original field comparison times are incomplete")
+            figure, axes = plt.subplots(1, len(field_times), figsize=(17, 4), sharey=True)
+            for t, ax in zip(field_times, axes, strict=True):
                 field = snapshots[t][1]
                 image = ax.imshow(
                     field.T,
@@ -188,7 +210,10 @@ def analyze(directory, output):
                     cmap="turbo",
                     interpolation="nearest",
                 )
-                ax.set_title(f"{(t - injury) / 10:g} hours after pulse")
+                ax.set_title(
+                    ("Final · " if t == horizon else "")
+                    + f"{(t - injury) / 10:g} hours after pulse"
+                )
                 ax.set_xlabel("Radial position (µm)")
             axes[0].set_ylabel("Depth position (µm)")
             figure.colorbar(image, ax=axes, label="Original EGF field (model scale0–1)", shrink=0.8)
@@ -202,6 +227,9 @@ def analyze(directory, output):
                 "case": job["case"],
                 "seed": job["seed"],
                 "manifest_digest": job["manifest_digest"],
+                "full_horizon_mcs": horizon,
+                "structure_figure_times_mcs": times,
+                "egf_figure_times_mcs": field_times,
                 "snapshots": rows,
             }
         )

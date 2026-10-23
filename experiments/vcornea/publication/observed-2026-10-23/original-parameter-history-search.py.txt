@@ -1,0 +1,27 @@
+"""Read-only original object/parameter audit; never import or execute upstream files."""
+import ast,hashlib,json,os,subprocess
+from pathlib import Path
+from collections import defaultdict
+from peykar.integrations.vcornea_history import literal_control
+from peykar_core.errors import InvalidRequest
+root=Path('.peykar/cornea-original-parameter-history-20261023');root.mkdir(exist_ok=False);(root/'blobs').mkdir()
+base=['git','--git-dir='+str(Path('.peykar/external/vcornea-licensed-history.git').resolve())];env={**os.environ,'GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null','GIT_TERMINAL_PROMPT':'0'}
+index=json.loads(Path('.peykar/cornea-all-original-parameter-paths-20261023.json').read_text());commits={r['commit']:r for r in json.loads(Path('experiments/vcornea/publication/source-history-observations-2026-10-23.json').read_text())['all_commit_metadata']}
+groups=defaultdict(list)
+for r in index['parameter_metadata_path_blobs']:
+ if r['path'].endswith('/Parameters.py'):groups[r['blob']].append(r)
+rows=[]
+for blob,identities in sorted(groups.items()):
+ raw=subprocess.check_output(base+['cat-file','blob',blob],env=env,timeout=30);assert len(raw)<131072;(root/'blobs'/f'{blob}.py').write_bytes(raw);values={};unread=[];seeds=[]
+ for node in ast.parse(raw).body:
+  if not isinstance(node,ast.Assign):continue
+  for n in node.targets:
+   if not isinstance(n,ast.Name):continue
+   if 'seed' in n.id.lower():seeds.append(n.id)
+   try:values[n.id]=literal_control(node.value)
+   except InvalidRequest:unread.append(n.id)
+ origins=[dict(path=r['path'],commit=r['commit'],author_time=commits[r['commit']]['author_time'],subject=commits[r['commit']]['subject']) for r in identities]
+ rows.append(dict(git_blob=blob,sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),numeric_controls=values,not_numeric_or_not_reviewed=unread,top_level_seed_assignments=seeds,origins=origins))
+output_runs=[r for r in rows if any('/Output/' in o['path'] or o['path'].startswith(('Output/','Processed Data/')) for o in r['origins'])]
+report=dict(schema_version='1.0.0',scope='All named original Parameters.py identities in all56 Git commit trees; literal AST only, no model execution',archive_sha256='855245e200cc322371b133a8c9e9fc0e81310ab7f3603ebf49afc4afcaf718dc',object_counts=index['object_counts'],object_uncompressed_bytes=index['object_bytes'],unique_parameter_blobs=len(rows),output_parameter_blobs=len(output_runs),output_simulation_horizons=sorted({r['numeric_controls'].get('SimTime') for r in output_runs if r['numeric_controls'].get('SimTime') is not None}),data_archive_parameter_named_entries=index['data_archive_metadata_candidates'],parameters=rows,limitations=['Older2023 and one100MCS January2025 run parameters exist; no selected July2024 cohort parameters identified by this path audit.','Top-level literal seed assignments are only one evidence search, not a claim that source code never seeds randomness.','Original output/control files are not fitted to candidate results or substituted into running jobs.','Only pathname categories were searched; arbitrary unnamed blob contents were not searched.'],audit_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
+(root/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n');print('Parameters',len(rows),'output variants',len(output_runs),'output horizons',report['output_simulation_horizons'],'seed assignments',sum(len(r['top_level_seed_assignments']) for r in rows),'DataZIP named metadata',len(report['data_archive_parameter_named_entries']))

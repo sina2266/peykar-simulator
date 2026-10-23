@@ -92,6 +92,24 @@ def test_diagnostic_subset_cannot_pass_the_default_full_series_gate():
         comparison.validate_series_jobs(plan, protocol, ["formation"])
 
 
+def test_recovery_figures_require_actual_final_state_beyond_twenty_day_images():
+    spec = importlib.util.spec_from_file_location(
+        "cornea_final_spatial", Path("runtime_profiles/vcornea-publication/analyze_spatial.py")
+    )
+    spatial = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(spatial)
+    available = dict.fromkeys([0, 7200, 7210, 7440, 7920, 8400, 8880, 12000])
+    with pytest.raises(ValueError, match="Full-horizon"):
+        spatial.figure_times(available, 50400, 7200)
+    available[50400] = "actual final snapshot"
+    structure, fields = spatial.figure_times(available, 50400, 7200)
+    assert structure[0] == 0 and structure[-1] == 50400 and fields[-1] == 50400
+    # Initial state and the complete180-day recovery are visible alongside the early course.
+    assert (structure[-1] - 7200) / 240 == 180
+    formation = dict.fromkeys([0, 240, 720, 1680, 3600, 43200])
+    assert spatial.figure_times(formation, 43200, None) == (list(formation), [])
+
+
 def test_original_pressure_inverse_retains_sign_ambiguity_and_requires_known_lambda():
     spec = importlib.util.spec_from_file_location(
         "cornea_state_audit", Path("runtime_profiles/vcornea-publication/audit_original_state.py")

@@ -581,3 +581,37 @@ commands/outcomes in `docs/verification.md`.
 - Final make check-docker530 tests/40.18s/86%, mypy99,18 frontend/contracts/all builds;
   host make build passed. No live API/Worker deployment or volume mutation.
   Protocol1189fd62... and compare302b06bc... unchanged. Heartbeat remains PAUSED.
+
+## Full-horizon observation and original inverse evidence, 2026-10-23
+
+- Main490ec07caad51702e0551dfaf8b47e71390377c4 was pushed/remote-SHA verified,
+  with79 exact-byte staged files,530 tests/40.18s/86%, host build and clean tree.
+  Original API/Worker remain on the same volume, /healthz200/ok; no deployment.
+- Spatial diagnostics1.1.0 now includes actual initial and final180-day post-pulse
+  structure and final4320h EGF. Actual source2 baseline8 re-analysis passed every
+  lattice/cell/count check; ALL earlier numeric snapshot rows are identical. Both
+  moderate final structure/EGF exports visually inspected. Final widths0/4um and
+  membrane842/784 remain descriptive; full source2 comparison is still negative.
+- Original56 commit object inventory has368 blobs/408trees. Bounded named-parameter
+  AST audit found32 unique Parameters.py blobs,16 under output paths, horizons100/
+  14600MCS, no top-level seed assignments.78574 DataZIP pathnames have no parameter/
+  seed/manifest/config/batch-named member.2023 valid_combinations is unrelated LHS
+  exploration. No selected2024 per-run parameters identified; do not treat scope as
+  arbitrary-blob content search or proof that source never seeds RNG.
+- New exact inverse uses ALL418 original initial pressure/volume cells, not a known
+  lambda/target prior or candidate fitting. Under stated common-per-type parameters
+  and pressure timing/formula, targets40/40/25/25 and lambdas2/2/2/5 are unique in
+  both original spatial groups. Every sign branch checked with exact rational
+  arithmetic; ambiguity/inconsistency self-checks retained. Original spatial groups
+  still differ from selected scalar cohorts. Existing08b485... state receipt unchanged.
+- Native pressure getter was checked at volume0 only, matching reviewed4.6 source
+ 397f8b1; original nonzero-volume inverse remains conditional on the reviewed formula.
+  Native cell.volume setter rejected initial probe; missing probe receipt stopped
+  first inverse attempt, then corrected fresh proof succeeded. No model state changed.
+- Official4.6 release chronology dates differJune8/July6 2024, both before cohort
+  directory dates. Neither recovers HPC binaries; active runtime/controls unchanged.
+- Source4 native four slight/mild jobs still progress; moderate2 wait for capacity.
+  Source5 injury6/formation2 stay prepared behind existing explicit gates and bounded
+  combined follow-on. Never duplicate or alter these running/prepared identities.
+- Final make check-docker531 tests/39.40s/86%, mypy99,18 frontend/current contracts/all
+  builds; host make build passed. Logs cornea-final-state-*. Heartbeat stays PAUSED.

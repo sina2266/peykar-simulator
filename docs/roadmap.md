@@ -258,6 +258,10 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Resolve useful injury initial constraints from original VTK pressure/volume,
   identity/type/lineage and measured pulse coordinates:4/32/127/46 cells, conditional
   targets40/40/25/25 and[100,75]. Exact pre-sweep state/source/seed remains unknown.
+- [x] Independently solve both initial target and lambda from all418 original
+  cell observations under the stated common-parameter/pressure model; retain
+  ambiguity/assumptions and separate spatial/scalar cohorts. Full-horizon figures
+  now show actual final180-day state, with every earlier numeric row unchanged.
 - [x] Prepare explicit `observed-injury-4.0.0` with complete historical mechanisms,
   separately evidenced archived PIFF and declared frozen overrides; actual600MCS
   native grid/pulse/lattice checks pass. Preserve the old-state mismatch and every

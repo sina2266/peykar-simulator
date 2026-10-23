@@ -1,0 +1,46 @@
+"""Exact inverse of original initial per-cell pressure/volume; no candidate fitting."""
+import hashlib,importlib.util,json,math
+from fractions import Fraction
+from pathlib import Path
+
+def recover(rows):
+ if not rows:raise ValueError('Actual original cell observations required')
+ points=[]
+ for r in rows:
+  v,p=r['volume'],r['absolute_pressure']
+  if not math.isfinite(v) or not math.isfinite(p) or v<=0 or p<0:raise ValueError('Invalid original volume/absolute pressure')
+  points.append((Fraction(str(v)),Fraction(str(p))))
+ distinct=next(((v,p) for v,p in points[1:] if v!=points[0][0]),None)
+ if distinct is None:return {'status':'not_identifiable' if len({p for v,p in points})==1 else 'no_shared_solution','solutions':[]}
+ v1,p1=points[0];v2,p2=distinct;solutions=set()
+ for s1 in [-1,1]:
+  for s2 in [-1,1]:
+   a=(s1*p1-s2*p2)/(v1-v2)
+   if a<=0:continue
+   target=v1-s1*p1/a
+   if target<0:continue
+   if all(abs(a*(v-target))==p for v,p in points):solutions.add((a/2,target))
+ return {'status':'unique_under_declared_shared_parameter_model' if len(solutions)==1 else 'ambiguous' if solutions else 'no_shared_solution','solutions':[{'lambda_volume':float(lam),'lambda_exact_fraction':str(lam),'initial_target_volume':float(target),'target_exact_fraction':str(target)} for lam,target in sorted(solutions)],'cells_checked':len(rows),'distinct_observed_volumes':len({v for v,p in points}),'exact_arithmetic':True,'outliers_discarded':0}
+
+# Explicit analytical checks retain ambiguity and reject inconsistent data.
+def row(v,p):return {'volume':v,'absolute_pressure':p}
+assert recover([row(10,2),row(20,4)])['status']=='ambiguous'
+assert recover([row(10,2),row(20,4),row(1,0.2)])['status']=='unique_under_declared_shared_parameter_model'
+assert recover([row(32,16)])['status']=='not_identifiable'
+assert recover([row(10,2),row(10,3)])['status']=='no_shared_solution'
+assert recover([row(37,12),row(33,28),row(35,20)])['solutions'][0]['initial_target_volume']==40
+
+spec=importlib.util.spec_from_file_location('original_ascii','runtime_profiles/vcornea-publication/inspect_original_spatial.py');reader=importlib.util.module_from_spec(spec);spec.loader.exec_module(reader)
+state_path=Path('experiments/vcornea/publication/source-state-correspondence-1.0.0.json');state=json.loads(state_path.read_text());rows=[]
+source=Path('.peykar/external/vcornea-original-spatial-16884414')
+for initial in state['initial_observations']:
+ p=source/initial['path'];assert hashlib.sha256(p.read_bytes()).hexdigest()==initial['sha256'];values,quality=reader.read_ascii_fields(p.read_bytes(),['CellType','CellId','Pressure'])
+ for kind,label in [(1,'Stem'),(3,'Basal'),(4,'Wing'),(5,'Superficial')]:
+  cells=sorted({int(cid) for k,cid in zip(values['CellType'],values['CellId']) if k==kind});observed=[]
+  for cid in cells:
+   pressure={p for i,p in zip(values['CellId'],values['Pressure']) if i==cid};assert len(pressure)==1
+   observed.append({'cell_id':cid,'volume':sum(i==cid for i in values['CellId']),'absolute_pressure':next(iter(pressure))})
+  assert observed==initial['pressure_constraints'][label]['cells'];result=recover(observed);assert result['status']=='unique_under_declared_shared_parameter_model'
+  rows.append({'path':initial['path'],'source_sha256':initial['sha256'],'type':label,**result})
+report={'schema_version':'1.0.0','scope':'Original initial spatial constraints; exact shared-lambda/shared-target inverse, not candidate fitting or selected scalar-cohort identity','formula':'absolute_pressure = abs(2 * lambda_volume * (volume - target_volume))','formula_native_4_6_probe':json.loads(Path('.peykar/cornea-native46-pressure-formula-20261023.json').read_text()),'assumptions':['All cells of a given type share one positive lambda and nonnegative initial target at this saved initialization.','Stored cell-level Pressure follows the reviewed absolute native pressure formula and corresponds to the observed volume.','Only original initial fields are inverted; dynamic post-injury target/lambda changes are outside this inverse.'],'original_conditional_state_report_sha256':hashlib.sha256(state_path.read_bytes()).hexdigest(),'checked_ascii_reader_sha256':hashlib.sha256(Path('runtime_profiles/vcornea-publication/inspect_original_spatial.py').read_bytes()).hexdigest(),'audit_source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'all_original_cells_checked':sum(r['cells_checked'] for r in rows),'parameter_prior_used':False,'frozen_protocol_changed':False,'running_candidate_controls_changed':False,'independent_biological_validation':False,'results':rows,'limits':['Unique only under the declared common-parameter/pressure-timing model, not recovered per-run metadata.','Spatial MildComb0 and moderate groups are distinct from selected scalar cohorts.','This does not recover original seeds, engine build, EGF controls or all missing simulation parameters.']}
+out=Path('.peykar/cornea-original-pressure-identifiability-20261023.json');out.open('x').write(json.dumps(report,indent=2,allow_nan=False)+'\n');print('Original cells',report['all_original_cells_checked'],'all eight type/group solutions unique under declared model; no parameter prior or candidate output used');print([(r['type'],r['solutions']) for r in rows])

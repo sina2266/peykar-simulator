@@ -1,0 +1,194 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "Original initial spatial constraints; exact shared-lambda/shared-target inverse, not candidate fitting or selected scalar-cohort identity",
+  "formula": "absolute_pressure = abs(2 * lambda_volume * (volume - target_volume))",
+  "formula_native_4_6_probe": {
+    "scope": "Installed4.6.0 getter on empty native cells, validating the formula at volume0 only; no model simulation",
+    "checks": [
+      {
+        "volume": 0,
+        "target": 40,
+        "lambda_volume": 2,
+        "native_pressure": -160.0
+      },
+      {
+        "volume": 0,
+        "target": 25,
+        "lambda_volume": 5,
+        "native_pressure": -250.0
+      },
+      {
+        "volume": 0,
+        "target": 0,
+        "lambda_volume": 2,
+        "native_pressure": 0.0
+      }
+    ],
+    "initial_attempt_failure": "Setting native cell.volume raised AttributeError because volume is read only; no simulation/state was changed",
+    "limits": "Nonzero-volume identity is conditioned on the reviewed native source formula; these checks alone do not prove every possible input."
+  },
+  "assumptions": [
+    "All cells of a given type share one positive lambda and nonnegative initial target at this saved initialization.",
+    "Stored cell-level Pressure follows the reviewed absolute native pressure formula and corresponds to the observed volume.",
+    "Only original initial fields are inverted; dynamic post-injury target/lambda changes are outside this inverse."
+  ],
+  "original_conditional_state_report_sha256": "08b485a996d7ee5a636fa950f6b64d8c1ba05f18f7d7bf3319e70573c95a2d05",
+  "checked_ascii_reader_sha256": "edd9b829c9585af1c5db53dfbaaa795394169d31b4042aa7b41f0f96207850b4",
+  "audit_source_sha256": "5a59e19cae63e19ae89d1333c99149a8877f7f73c72fb04f3f05704e1af35b43",
+  "all_original_cells_checked": 418,
+  "parameter_prior_used": false,
+  "frozen_protocol_changed": false,
+  "running_candidate_controls_changed": false,
+  "independent_biological_validation": false,
+  "results": [
+    {
+      "path": "Data/(Mild) 1500_G/Comb0/LatticeData/Step_000000.vtk",
+      "source_sha256": "7d3134a465a112390c54c47672c80dfc2a19c2c862fa6911e0bef7fb1c9b5f3c",
+      "type": "Stem",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 40.0,
+          "target_exact_fraction": "40"
+        }
+      ],
+      "cells_checked": 4,
+      "distinct_observed_volumes": 4,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Mild) 1500_G/Comb0/LatticeData/Step_000000.vtk",
+      "source_sha256": "7d3134a465a112390c54c47672c80dfc2a19c2c862fa6911e0bef7fb1c9b5f3c",
+      "type": "Basal",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 40.0,
+          "target_exact_fraction": "40"
+        }
+      ],
+      "cells_checked": 32,
+      "distinct_observed_volumes": 19,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Mild) 1500_G/Comb0/LatticeData/Step_000000.vtk",
+      "source_sha256": "7d3134a465a112390c54c47672c80dfc2a19c2c862fa6911e0bef7fb1c9b5f3c",
+      "type": "Wing",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 25.0,
+          "target_exact_fraction": "25"
+        }
+      ],
+      "cells_checked": 127,
+      "distinct_observed_volumes": 10,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Mild) 1500_G/Comb0/LatticeData/Step_000000.vtk",
+      "source_sha256": "7d3134a465a112390c54c47672c80dfc2a19c2c862fa6911e0bef7fb1c9b5f3c",
+      "type": "Superficial",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 5.0,
+          "lambda_exact_fraction": "5",
+          "initial_target_volume": 25.0,
+          "target_exact_fraction": "25"
+        }
+      ],
+      "cells_checked": 46,
+      "distinct_observed_volumes": 6,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Moderate) 2500_G/LatticeData/Step_000000.vtk",
+      "source_sha256": "89ed504b9860024ccdd8c632652e495a2892471e1a1981216b8bfcbd56887a0d",
+      "type": "Stem",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 40.0,
+          "target_exact_fraction": "40"
+        }
+      ],
+      "cells_checked": 4,
+      "distinct_observed_volumes": 4,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Moderate) 2500_G/LatticeData/Step_000000.vtk",
+      "source_sha256": "89ed504b9860024ccdd8c632652e495a2892471e1a1981216b8bfcbd56887a0d",
+      "type": "Basal",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 40.0,
+          "target_exact_fraction": "40"
+        }
+      ],
+      "cells_checked": 32,
+      "distinct_observed_volumes": 16,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Moderate) 2500_G/LatticeData/Step_000000.vtk",
+      "source_sha256": "89ed504b9860024ccdd8c632652e495a2892471e1a1981216b8bfcbd56887a0d",
+      "type": "Wing",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 2.0,
+          "lambda_exact_fraction": "2",
+          "initial_target_volume": 25.0,
+          "target_exact_fraction": "25"
+        }
+      ],
+      "cells_checked": 127,
+      "distinct_observed_volumes": 8,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    },
+    {
+      "path": "Data/(Moderate) 2500_G/LatticeData/Step_000000.vtk",
+      "source_sha256": "89ed504b9860024ccdd8c632652e495a2892471e1a1981216b8bfcbd56887a0d",
+      "type": "Superficial",
+      "status": "unique_under_declared_shared_parameter_model",
+      "solutions": [
+        {
+          "lambda_volume": 5.0,
+          "lambda_exact_fraction": "5",
+          "initial_target_volume": 25.0,
+          "target_exact_fraction": "25"
+        }
+      ],
+      "cells_checked": 46,
+      "distinct_observed_volumes": 6,
+      "exact_arithmetic": true,
+      "outliers_discarded": 0
+    }
+  ],
+  "limits": [
+    "Unique only under the declared common-parameter/pressure-timing model, not recovered per-run metadata.",
+    "Spatial MildComb0 and moderate groups are distinct from selected scalar cohorts.",
+    "This does not recover original seeds, engine build, EGF controls or all missing simulation parameters."
+  ]
+}

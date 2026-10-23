@@ -1,4 +1,40 @@
-# Verification log
+# Verification record
+
+## Full corneal final-state panels and original inverse constraints: 2026-10-23
+
+- Targeted original-field/publication-analysis checks passed **16 tests /0.10s**;
+  targeted Ruff check/format passed. The added case rejects injury figures that
+  have early20-day snapshots but lack the actual final50400MCS state.
+- `analyze_spatial.py --runs .peykar/cornea-hpc46-resumed-20261023 --output
+  .peykar/cornea-baseline-final-spatial-20261023` actually re-read all eight verified
+  jobs and completed the lattice/cell/count checks. Every original numeric snapshot
+  row is identical to the previous report. Diagnostics1.1 adds initial/final panels
+  and explicit figure times; no simulation or frozen comparison changed.
+- Both moderate seeds' full-horizon structure/EGF figures were visually inspected.
+  Final descriptive basal-access widths0/4µm and membrane842/784 versus990 remain
+  observations, not clinical closure or a new acceptance threshold. Full source2
+  comparison remains not_reproduced; source4/5 full work is still pending.
+- Explicit read-only original parameter search inspected32 unique Parameters.py
+  blobs across all56 commit trees; output versions have100/14600MCS horizons.
+  No selected-cohort controls or top-level seed assignment were identified by this
+  bounded path/literal AST search. All78574 DataZIP pathnames were searched for
+  parameter/config/seed/manifest/batch names; exact input hashes and scope retained.
+- Separate exact original pressure inverse re-read418 initial cells with the checked
+  ASCII reader. Under declared common-target/common-lambda and pressure-timing
+  assumptions, all eight type/group systems uniquely yield targets40/40/25/25 and
+  lambdas2/2/2/5. Every cell satisfies the exact rational equations; no outlier,
+  candidate output or known numeric lambda/target was supplied. Original spatial
+  groups differ from the frozen scalar cohorts. Earlier conditional receipt is unchanged.
+- The installed4.6 getter matched its reviewed397f8b1 source formula at volume0
+  for three target/lambda settings. An initial attempt to set read-only volume
+  raised AttributeError; the first inverse attempt then lacked its probe receipt.
+  Corrected read-only probes/inverse completed with preserved actual source/results.
+  Official release chronology does not identify the original HPC binary; no runtime changed.
+- Final **`make check-docker` passed531 tests /39.40s /86% coverage**, strict mypy99
+  files,18 frontend tests, current contracts and all builds. Host **`make build`
+  passed**. Logs `.peykar/cornea-final-state-check-docker-20261023.log` and
+  `.peykar/cornea-final-state-build-20261023.log`. Frozen protocol/compare/source
+  versions/licenses/live volume are unchanged; heartbeat remains paused.
 
 ## Separate January corneal source families: 2026-10-23
 
@@ -29,8 +65,6 @@
   are read from actual XML (injury1,formation4). A bounded follow-on waits for both
   families before the unchanged full comparison/original math/spatial analysis.
   Current scientific outcome is pending, not a full reproduction claim.
-
-# Verification record
 
 ## Complete corneal baseline and original-analysis export: 2026-10-23
 
