@@ -17,6 +17,7 @@ from pathlib import Path, PurePosixPath
 
 from peykar.integrations.vcornea_history import HISTORICAL_COMMIT, HISTORICAL_TREE
 from peykar.integrations.vcornea_runtime import ARCHIVE_SHA256, _file_inventory
+from peykar.integrations.vcornea_stash import STASH_COMMIT, STASH_TREE
 from peykar_core.hashing import canonical_json, digest
 
 
@@ -30,10 +31,12 @@ def recover(archive: Path, pins: Path, output: Path) -> None:
     if sha.hexdigest() != ARCHIVE_SHA256:
         raise ValueError("Code ZIP differs from the pinned licensed archive")
     evidence = json.loads(pins.read_bytes())
+    commit = evidence["git_commit"]
+    reviewed = {HISTORICAL_COMMIT: HISTORICAL_TREE, STASH_COMMIT: STASH_TREE}
     if (
-        evidence["git_commit"] != HISTORICAL_COMMIT
+        commit not in reviewed
         or evidence["original_archive_sha256"] != ARCHIVE_SHA256
-        or digest(evidence["files"]) != HISTORICAL_TREE
+        or digest(evidence["files"]) != reviewed[commit]
     ):
         raise ValueError("Historical source pins differ")
     with tempfile.TemporaryDirectory(prefix="peykar-vcornea-history-") as temporary:
@@ -72,7 +75,7 @@ def recover(archive: Path, pins: Path, output: Path) -> None:
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 with source.open(info) as original, destination.open("xb") as target:
                     shutil.copyfileobj(original, target)
-        entries = git("ls-tree", "-rz", "--full-tree", HISTORICAL_COMMIT).split(b"\0")
+        entries = git("ls-tree", "-rz", "--full-tree", commit).split(b"\0")
         recovered = root / "snapshot"
         recovered.mkdir()
         seen = set()
@@ -107,8 +110,8 @@ def recover(archive: Path, pins: Path, output: Path) -> None:
     receipt = {
         "schema_version": "1.0.0",
         "archive_sha256": ARCHIVE_SHA256,
-        "git_commit": HISTORICAL_COMMIT,
-        "source_tree_digest": HISTORICAL_TREE,
+        "git_commit": commit,
+        "source_tree_digest": reviewed[commit],
         "files": len(seen),
         "model_code_executed": False,
     }

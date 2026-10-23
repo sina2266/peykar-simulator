@@ -1,0 +1,29 @@
+import hashlib,json
+from pathlib import Path
+import numpy as np
+import pandas as pd
+
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+a=Path('.peykar/cornea-stash-probes-20261023/formation20');b=Path('.peykar/cornea-stash-probes-retry1-20261023/formation20-unobserved');c=Path('.peykar/cornea-stash-probes-retry1-20261023/moderate600')
+records={str(p):json.loads((p/'record.json').read_text()) for p in [a,b,c]}
+for p in [a,b,c]:
+ r=records[str(p)];assert r['status']=='succeeded' and r['returncode']==0
+ proof=json.loads((p/'completion.json').read_text());assert proof['returncode']==0
+ for name,h in r['outputs'].items():assert sha(p/name)==h
+shared=[name for name in records[str(b)]['outputs'] if name.startswith('project/Simulation/')]
+equivalent={name:sha(a/name)==sha(b/name) for name in shared};assert all(equivalent.values())
+r=records[str(c)];rows=[]
+for p in sorted(c.glob('lattice-*.npz'),key=lambda p:int(p.stem.split('-')[-1])):
+ mcs=int(p.stem.split('-')[-1]);cells=pd.read_csv(c/f'cells-{mcs}.csv');counts=pd.read_csv(next(c.glob('project/Simulation/cell_count_*.csv')));count=counts[counts.Time==mcs/10].iloc[0]
+ with np.load(p,allow_pickle=False) as v:
+  kinds,egf,sls=[v[k] for k in ['cell_type','egf','sls']]
+  assert kinds.shape==egf.shape==sls.shape==(200,90) and np.isfinite(egf).all() and np.isfinite(sls).all()
+  for t in cells.TypeID.unique():assert (kinds==t).sum()==cells[cells.TypeID==t].Volume_lattice.sum()
+  for t,label in [(1,'Stem'),(3,'Basal'),(4,'Wing'),(5,'Superficial')]:assert len(cells[cells.TypeID==t])==count[label]
+  if mcs==20:assert np.argwhere(sls>0).tolist()==[[100,75]] and abs(sls.sum()-2500)<1e-9
+  rows.append(dict(mcs=mcs,counts={label:int(count[label]) for label in ['Stem','Basal','Wing','Superficial']},basement_sites=int(np.isin(kinds,[2,6]).sum()),epithelial_sites=int(np.isin(kinds,[1,3,4,5]).sum()),sls_sum=float(sls.sum()),lattice_sha256=sha(p),cell_sha256=sha(c/f'cells-{mcs}.csv')))
+counts=pd.read_csv(next(c.glob('project/Simulation/cell_count_*.csv')));heights=pd.read_parquet(next(c.glob('project/Simulation/thickness_*.parquet')));tracking=pd.read_csv(next(c.glob('project/Simulation/surfactant_*.csv')))
+assert len(counts)==61 and len(heights)==610 and len(tracking)==601
+assert np.allclose(tracking.Time,np.arange(601)/10,rtol=0,atol=1e-9) and np.isfinite(tracking['Total Amount']).all() and (tracking['Total Amount']>=0).all()
+report=dict(schema_version='1.0.0',scope='Actual short native engineering probes; not full publication or biological acceptance',full_publication_acceptance=False,read_only_observation_equivalence=equivalent,moderate_probe=dict(horizon_mcs=600,early_pulse_mcs=20,dose=2500,actual_pulse_xy=[100,75],counts_rows=len(counts),height_rows=len(heights),chemical_rows=len(tracking),snapshots=rows),runs=[dict(directory=str(p),manifest=json.loads((p/'manifest.json').read_text()),record=records[str(p)],completion=json.loads((p/'completion.json').read_text())) for p in [a,b,c]],audit_source_sha256=sha(Path(__file__)),failed_preparation_preserved='First wrapper stopped on missing unobserved-driver filename after successful formation20; no native injury was started in that attempt')
+out=Path('experiments/vcornea/publication/observed-2026-10-23/january-native-probes.json');assert not out.exists();out.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n');print('Numeric files identical',len(equivalent),'moderate rows',len(counts),len(heights),len(tracking),'basement',rows[0]['basement_sites'],rows[-1]['basement_sites'],'epithelial',rows[0]['epithelial_sites'],rows[-1]['epithelial_sites'])

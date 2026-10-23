@@ -6,6 +6,7 @@ import os
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from xml.etree import ElementTree
 
 from peykar.integrations.vcornea_publication import (
     PARAMETER_PROFILES,
@@ -15,6 +16,24 @@ from peykar.integrations.vcornea_publication import (
     write_operator_json,
 )
 from peykar_core.hashing import bytes_digest, canonical_json, digest
+
+
+def validate_parallelism(jobs, maximum):
+    """Bound requested CC3D workers; BLAS environment controls cannot replace XML."""
+    workers = []
+    for job in jobs:
+        tree = ElementTree.parse(Path(job["directory"]) / "project/Simulation/vCornea_v2.xml")
+        count = int(tree.findtext("./Metadata/NumberOfProcessors") or "0")
+        if count not in (1, 4):
+            raise ValueError("Unreviewed native worker count")
+        workers.append(count)
+    reserved = sum(sorted(workers, reverse=True)[:maximum])
+    if not 1 <= maximum <= 6 or reserved > 16 or (maximum > 4 and any(n != 1 for n in workers)):
+        raise ValueError("At most four multiworker jobs or six single-worker jobs are supported")
+    return {
+        "requested_workers_per_job": workers,
+        "maximum_simultaneous_requested_workers": reserved,
+    }
 
 
 def series_definition(plan):
@@ -72,7 +91,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, action="append", required=True)
     parser.add_argument("--parameter-profile", choices=PARAMETER_PROFILES, default="local-1.0.0")
     parser.add_argument("--injury-state", type=Path)
-    parser.add_argument("--max-parallel", type=int, choices=(1, 2, 3, 4), default=2)
+    parser.add_argument("--max-parallel", type=int, choices=(1, 2, 3, 4, 5, 6), default=2)
     parser.add_argument("--wall-seconds", type=float, default=86400)
     parser.add_argument("--wait-for-series", type=Path, action="append", default=[])
     parser.add_argument("--wait-seconds", type=int, default=86400)
@@ -122,6 +141,7 @@ def main() -> None:
                     "status": "prepared",
                 }
             )
+    plan["native_worker_budget"] = validate_parallelism(plan["jobs"], args.max_parallel)
     if args.wait_for_series:
         plan["status"] = "waiting_for_prerequisites"
         write_operator_json(args.output / "plan.json", plan)

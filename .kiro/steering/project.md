@@ -9,8 +9,8 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
   Latest user priority (2026-10-18) supersedes the earlier parallel-work sequence:
   finish full corneal publication reproduction and analysis before another model.
 - All named specialist source trees are now permanent ordinary files under `vendor/`,
-  not only ignored acquisition caches: 25 source identities, 52,167 files,
-  1,799,838,581 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
+  not only ignored acquisition caches: 28 source identities, 53,361 files,
+  1,820,409,663 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
   The separately pinned VCell solvers, MaBoSS and OSP R packages are included.
   Historical source receipts 1.0.0 remain; 12 complete inventories use version 2.0.0.
   Source availability, dependency completion, runtime, adapter and validity are
@@ -546,3 +546,38 @@ commands/outcomes in `docs/verification.md`.
   It explicitly remains ineligible for final comparison until native completion;
   retain those hashes for checking against the later durable completion proofs.
   Heartbeat remains PAUSED by explicit user request; keep current native work active.
+
+## Complete January family snapshot and reviewed capacity, 2026-10-23
+
+- Main3a391e7e was already pushed/remote-verified after the518-test
+  baseline/layout increment; preserve its complete negative baseline and old logs.
+- Complete January23,2025 stashc7f95d28dfa2329abb7353caab724c52f9341dee now retained
+  as50 pristine files/2783833 bytes. Treecf708f13..., independent pins/inventory;
+  explicit objects-only recovery verified identical files. Vendor totals28/53361/
+  1820409663bytes/37 links. Formation keeps old mechanics40/8/12/T8/4workers;
+  injury keeps its DIFFERENT normalized mechanisms25/7/20/T8/1worker. Original
+  injury PIFF is identical to later archive after CRLF→LF only; never substitute bytes.
+- New stash-hpc-5.0.0 retains both original family projects/defaults and original
+  ten bins. Injury only explicitly overrides activationTrue/pulse7200/horizon50400/
+  doses750,1500,2500. New seeds7/11 and reconstructed4.6 runtime remain disclosed.
+  This January source postdates selected2024 data; no exact-cohort identity claim.
+- Actual formation20 observer/unobserved exit0, five numeric files byte-identical;
+  moderate600 early20 pulse[100,75]/2500 exit0/139.91s,61/610/601rows, exact lattice/
+  count/volume consistency. Basement990→901, epithelium5015→4204; engineering only.
+  Initial wrapper driver-filename failure happened before its next native runs;
+  preserve the failed preparation and successful fresh probe evidence.
+- Explicit native operator checks XML worker counts: up to4 multiworker jobs/16
+  requested workers, or6 only when ALL request1. Per-series bound is not hardCPUcap.
+- Capacity-view operator73782 watches FOUR source4 slight/mild actual completions,
+  pins their job definitions and verifies outputs/exits. It then admits six source5
+  injury jobs (supervisor73824) with at most6workers alongside only source4moderate2
+  at most8workers. This read-only prerequisite view is not another simulation.
+- Source5formation supervisor73826 waits for whole source4series before two4worker
+  jobs; together with injury6 the maximum request remains14workers. All8 source5
+  inputs are already frozen/prepared, no healthy native job duplicated or stopped.
+- Source5combined follow-on73926 waits for BOTH complete/verified families before
+  running full comparison/original math/spatial analysis. Each native job24h bounded;
+  waits24/48h. Check live ownership/status, never signal a historicalPID blindly.
+- Final make check-docker530 tests/40.18s/86%, mypy99,18 frontend/contracts/all builds;
+  host make build passed. No live API/Worker deployment or volume mutation.
+  Protocol1189fd62... and compare302b06bc... unchanged. Heartbeat remains PAUSED.

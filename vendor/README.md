@@ -33,7 +33,13 @@ availability, runtime execution and biological validity have distinct evidence.
 
 E5 additionally retains the complete libCellML 0.7.1 source under
 `dependencies/libcellml`, with its original Apache-2.0 notice. Current rehash:
-27 distributions, 53,311 files, 1,817,625,830 bytes and 37 materialized Git links.
+28 distributions, 53,361 files, 1,820,409,663 bytes and 37 materialized Git links.
 The additional50 original files in `models/vcornea-history-b6123adf` were recovered
 from Git objects embedded in the pinned licensed Zenodo code ZIP. Its July2024
 identity, complete blob hashes and attribution remain separate from later sources.
+The complete January2025 stash adds another50 original files in
+`models/vcornea-history-c7f95d28`, preserving distinct formation/injury mechanisms
+and original modes. Reacquire either reviewed snapshot with
+`scripts/recover_vcornea_history.py --archive <original-code.zip> --pins
+engine_adapters/compucell3d/vcornea-history-<commit-prefix>.json --output <fresh-path>`.
+Only the two pinned commits are admitted; no downloaded Git config/hooks execute.

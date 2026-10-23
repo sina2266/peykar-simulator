@@ -31,6 +31,10 @@ No full publication match or biological validity is claimed.
 The complete later-source baseline now retains its failed four-group comparison;
 four reconstructed injury jobs are running and two wait for capacity. Original
 figure export now preserves titles/axis labels with identical numerical summaries.
+The complete January2025 archive snapshot is also retained. A separate fifth
+reconstruction keeps its different formation/injury mechanisms and original
+family defaults; [source correspondence and limits](experiments/vcornea/publication/january-source-family-audit-2026-10-23.md)
+remain explicit. Existing full runs and frozen acceptance criteria are preserved.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
@@ -38,7 +42,7 @@ is one integration within it. Shared backends now include an immutable
 [persistent biological graphs](docs/biological-graph.md), and
 [durable multi-model experiment workflows](docs/experiment-workflows.md).
 The complete named source trees and recursive dependencies now live as ordinary
-project files in [vendor](vendor/README.md): 27 pinned distributions, 53,311 files,
+project files in [vendor](vendor/README.md): 28 pinned distributions, 53,361 files,
 37 materialized Git dependencies, and preserved original notices. [Installed
 runtime profiles](runtime_profiles/README.md) execute real COPASI, NEURON,
 PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongside

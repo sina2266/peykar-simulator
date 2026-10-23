@@ -48,6 +48,12 @@ comes directly from Git objects inside the same licensed Zenodo code ZIP, commit
 retained, with original authors/CC-BY-4.0 attribution and an independent inventory.
 Peykar's private lifetime and observation overlays are separately identified;
 neither downloaded Git hooks/configuration nor batch launchers were executed.
+The separate complete50-file January2025 stash at
+[`vendor/models/vcornea-history-c7f95d28`](vendor/models/vcornea-history-c7f95d28),
+commit `c7f95d28dfa2329abb7353caab724c52f9341dee`, was recovered from those same
+licensed archive objects. It retains the same original authors/CC-BY-4.0 scope,
+pristine bytes/modes and its own inventory. Derived recipe5 preserves its two
+different family mechanisms; execution overlays and control overrides are explicit.
 Peykar's private source overlays and observation/analysis wrappers are separately
 identified modifications; no upstream endorsement or biological validity is inferred.
 

@@ -132,3 +132,39 @@ def test_follow_on_waits_for_initial_plan_publication_and_retains_failure(
         analysis.main()
     assert result.value.code == 1
     assert json.loads((output / "status.json").read_bytes())["status"] == "native_execution_failed"
+
+
+@pytest.mark.parametrize(
+    "workers,maximum,accepted",
+    [
+        ([1] * 6, 6, True),
+        ([4] * 6, 4, True),
+        ([4] * 6, 6, False),
+        ([1, 4], 5, False),
+        ([2], 1, False),
+    ],
+)
+def test_parallelism_checks_native_xml_instead_of_blas_environment(
+    tmp_path, operators, workers, maximum, accepted
+):
+    execution, _ = operators
+    jobs = []
+    for ordinal, count in enumerate(workers):
+        root = tmp_path / str(ordinal)
+        simulation = root / "project/Simulation"
+        simulation.mkdir(parents=True)
+        (simulation / "vCornea_v2.xml").write_text(
+            "<CompuCell3D><Metadata><NumberOfProcessors>"
+            + str(count)
+            + "</NumberOfProcessors></Metadata></CompuCell3D>"
+        )
+        jobs.append({"directory": str(root)})
+    if not accepted:
+        with pytest.raises(ValueError):
+            execution.validate_parallelism(jobs, maximum)
+    else:
+        result = execution.validate_parallelism(jobs, maximum)
+        assert result["requested_workers_per_job"] == workers
+        assert result["maximum_simultaneous_requested_workers"] == sum(
+            sorted(workers, reverse=True)[:maximum]
+        )

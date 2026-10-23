@@ -6,6 +6,19 @@ API model admission. Source choices, original data and unresolved paper conflict
 are documented in the [experiment inventory](../../experiments/vcornea/publication/README.md).
 Full candidate runs remain pending until their actual outputs pass comparison.
 
+The separately reviewed `stash-hpc-5.0.0` profile accepts only the complete pinned
+January2025 source at `vendor/models/vcornea-history-c7f95d28` and its matching
+`engine_adapters/compucell3d/vcornea-history-c7f95d28.json` pins. It retains each
+family's original HPC project/state/defaults: formation40/8/12/Temperature8/four
+workers; injury25/7/20/Temperature8/one worker. Only declared injury activation,
+7200MCS pulse,50400MCS horizon and750/1500/2500 dose differ from its batch controls.
+Both use original ten bins and lifetime overlay2. See the
+[source audit and unresolved correspondence](../../experiments/vcornea/publication/january-source-family-audit-2026-10-23.md).
+`reproduce_vcornea.py --max-parallel 6` is allowed only when every prepared XML
+requests one native worker. Multiworker series remain limited to four jobs/at
+most16 requested workers. This bounds a series, not the operating system or
+concurrent independent series; inspect those before starting additional jobs.
+
 ## Pinned installed environments
 
 `macos-arm64-4.6.0-explicit.txt` contains 400 exact official/conda-forge package

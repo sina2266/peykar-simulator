@@ -60,8 +60,8 @@ Local single-user verification does not close S0.5.
 
 Source catalogue: [engine_adapters/ecosystem-sources.json](../engine_adapters/ecosystem-sources.json).
 Actual receipts: [source inspection](../engine_adapters/ecosystem-source-receipts-2026-10-16.json).
-The permanent distribution now contains **26 source identities / 53,261 files /
-1,814,782,314 bytes**, excluding Git administrative data, with **37 materialized
+The permanent distribution now contains **28 source identities / 53,361 files /
+1,820,409,663 bytes**, excluding Git administrative data, with **37 materialized
 Git links**. See [vendor manifest](../vendor/manifest.json), [original notices](../THIRD_PARTY_NOTICES.md),
 [native runtime profiles](../runtime_profiles/README.md) and [actual new receipts](../engine_adapters/runtime-evidence-2026-10-17.json).
 Earlier 1.0.0 source inspections remain immutable historical observations; complete
@@ -270,6 +270,13 @@ The earlier independently advancing workstreams resume after this corneal gate.
   capacity. Preserve the negative baseline and the passing formation subset.
 - [ ] Establish independently applicable biological measurements; calibration ranges
   and the unrelated monolayer assay do not supply independent tissue validation.
+- [x] Recover the complete January2025 archive snapshot and retain its distinct
+  HPC formation/injury mechanisms, controls and original initial states as
+  `stash-hpc-5.0.0`; no silent state/mechanism mixing or changed acceptance criteria.
+- [ ] Finish its two full formation and six injury runs under explicit native-worker
+  capacity checks, then retain the complete unchanged comparison/original math/
+  spatial analysis. A newer stash is a separately identified candidate, not proof
+  of the original cohort's exact source version.
 
 See the [source/analysis inventory](../experiments/vcornea/publication/README.md)
 and [operator commands](../runtime_profiles/vcornea-publication/README.md).

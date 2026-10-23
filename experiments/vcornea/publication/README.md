@@ -6,6 +6,12 @@ has slight, mild and moderate severities. Reconstructed formation now passes its
 full-horizon subset; injury execution and the full frozen gate remain pending. See the
 [operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
 
+The [complete January2025 archive source](january-source-family-audit-2026-10-23.md)
+is now separately pinned as `stash-hpc-5.0.0`. Its formation/injury projects have
+different original mechanisms and defaults. Earlier candidates and all negative
+results remain retained; this newer snapshot does not establish exact historical
+cohort identity or change the frozen comparison.
+
 Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
 and James A. Glazier. Final paper:
 [PLOS Computational Biology, 2025, e1013410](https://doi.org/10.1371/journal.pcbi.1013410).

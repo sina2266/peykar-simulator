@@ -1,3 +1,35 @@
+# Verification log
+
+## Separate January corneal source families: 2026-10-23
+
+- `uv run python scripts/recover_vcornea_history.py --archive
+  .peykar/external/archives/vCornea-16884414.zip --pins
+  engine_adapters/compucell3d/vcornea-history-c7f95d28.json --output
+  .peykar/cornea-stash-recovery-20261023` verified all50 original files from the
+  pinned ZIP objects. No downloaded Git config/hooks/model code executed.
+- `uv run python scripts/verify_vendor.py` verified28 distributions,53361 files,
+  1820409663 bytes and37 materialized Git links. Earlier notices/source bytes remain.
+- Targeted corneal stash/history/operator/publication/completion checks passed
+  **46 tests /1.09s**. Targeted Ruff check/format and mypy on the new integration passed.
+- Explicit native probes captured real exit0: formation20 with/without observer
+  in22.12/15.09s, all five original numeric files byte-identical; moderate600 in
+  139.91s, actual early pulse20MCS at[100,75]/2500. Native read-only audit checked
+  61 count rows,610 height rows,601 full chemical samples and every saved cell/lattice
+  volume/count. Basement990→901, epithelial5015→4204. These are engineering probes,
+  never full publication or biological acceptance. The first wrapper's missing
+  driver filename stopped after successful formation; its unexecuted preparation
+  and log remain. Corrected fresh attempt retains actual native proof.
+- Final **`make check-docker` passed530 tests /40.18s /86% coverage**, strict
+  mypy99 source files,18 frontend tests, current contracts and all wheel/sdist builds.
+  Log `.peykar/cornea-january-source-check-docker-20261023.log`; task-private anonymous
+  Docker config uses the original Desktop socket. Host **`make build` passed**,
+  log `.peykar/cornea-january-source-build-20261023.log`.
+- Six source5 injury and two formation full jobs are frozen in separate prepared
+  plans and wait for explicit source4 capacity/completion gates. Native worker counts
+  are read from actual XML (injury1,formation4). A bounded follow-on waits for both
+  families before the unchanged full comparison/original math/spatial analysis.
+  Current scientific outcome is pending, not a full reproduction claim.
+
 # Verification record
 
 ## Complete corneal baseline and original-analysis export: 2026-10-23
