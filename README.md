@@ -8,7 +8,8 @@ and cellular models to tissues, organs, and interacting systems.
 
 **Release 0.3.0 is an executable engineering foundation, not a validated biological
 simulator.** It includes two synthetic reference engines and a working, explicit
-operator workflow for the archived vCornea model in isolated CompuCell3D 4.7.0.
+operator workflow for the archived vCornea model in isolated CompuCell3D, plus a
+separate pinned 4.6.0 full-horizon publication replay currently running.
 General multiscale execution and independent biological validation remain future
 work. The local six-workspace [research workbench](docs/epics/E4-research-workbench.md)
 now exposes the implemented scientific workflows.
@@ -18,8 +19,12 @@ offline admission of digest-pinned external files, operator-mapped CompuCell3D
 scalar exports, frozen seed-paired comparisons and persistent knowledge-gap
 declarations. [EPIC E1](docs/epics/E1-vcornea-native-runtime.md) adds licensed source
 acquisition, a locked native runtime, real CSV/Parquet ingestion and seeded native
-regression. Six published reference files and bounded native runs were verified.
-Full published-scenario reproduction and biological validity remain separate gates.
+regression. The [corneal publication reconstruction](experiments/vcornea/publication/README.md)
+now retains 65 original replicates, unchanged original analysis and all 17 final
+paper supplements. Original analysis was actually replayed; full candidate
+formation runs completed, but their frozen count/thickness comparison failed.
+Six injury runs and a separate recovered July 2024 formation candidate are running;
+no full publication match or biological validity is claimed.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
@@ -27,7 +32,7 @@ is one integration within it. Shared backends now include an immutable
 [persistent biological graphs](docs/biological-graph.md), and
 [durable multi-model experiment workflows](docs/experiment-workflows.md).
 The complete named source trees and recursive dependencies now live as ordinary
-project files in [vendor](vendor/README.md): 26 pinned distributions, 53,261 files,
+project files in [vendor](vendor/README.md): 27 pinned distributions, 53,311 files,
 37 materialized Git dependencies, and preserved original notices. [Installed
 runtime profiles](runtime_profiles/README.md) execute real COPASI, NEURON,
 PhysiCell/PhysiBoSS, Chaste, VCell, GEARS and PK-Sim/MoBi headless checks alongside

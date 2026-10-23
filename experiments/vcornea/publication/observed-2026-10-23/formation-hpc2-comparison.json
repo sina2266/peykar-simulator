@@ -1,0 +1,394 @@
+{
+  "schema_version": "1.0.0",
+  "class": "simulation_reference_comparison",
+  "protocol_digest": "1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43",
+  "plan_digest": "a835bfba1b8e97a19f4b6457c6dd261c0c8926c6d2bebfb3564f458011d065bd",
+  "reference_replicates": 65,
+  "candidate_runs": 2,
+  "jobs": [
+    {
+      "case": "self-organization",
+      "seed": 7,
+      "manifest_digest": "c39200bed125378f42fb4a4ed076234735b9e40c374c5af094799855c83f04d6",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "4e0f5f1e04fbda7c0b2b56b30149af62cda871e3169e97cc4d9a1276c2e53431",
+      "outputs": {
+        "cells-0.csv": "3adb562e62e63b781abdd6a3d3adfc697b1007a43ccec82c9ef50eb35acb5444",
+        "cells-1680.csv": "9a149cbd5a0719a050fa3fc0f58ba8719d0a3ee6d50f5ee1d9f924cb3ac8d8fb",
+        "cells-240.csv": "0829c291319d44d8550e97015294ebb3a5779b612064a24f2ca7e26a1a40cb21",
+        "cells-3600.csv": "ed886da544bc158a0421de210c95deb77bed95d9c9ca6710cacdb8cb56d94c20",
+        "cells-43200.csv": "92fe5d665a640da37b66743f9c49cf7f210cb46ecc7173ab6ce5121a2f6738e0",
+        "cells-720.csv": "d05d383dfa9cfaf1749aeef098893fad01f9455381fe25b79a6701f7c25cc297",
+        "lattice-0.npz": "9810753109a1dc044104bfed8fe11a8c1d5180ddd03933b525473eeb27d08b3f",
+        "lattice-1680.npz": "c24ee6d33d42a05358152b66c6acf538d120488c8042a9c29dfc8f88239847ab",
+        "lattice-240.npz": "57a7a193bd1306ef3611a7c70dd0447092aa76eab882ed8b3187fda54123c4f0",
+        "lattice-3600.npz": "b2bb97a40d7935ac4538d44e58ef41ba912fad465d6bb465f2e4f119a404dfa4",
+        "lattice-43200.npz": "6fe60d96397f259fd8028fb391e17e8353ea2335fb6046c0dcc8710d79af78c0",
+        "lattice-720.npz": "926b8fac00c5cca7b65547f4caa0b397d8cc66ed89ecabc9aea33bcd8dcc5f41",
+        "progress.jsonl": "f9dc78a1b6fc7063ec87d041edcce302aa01e4007b12f4191ee3d97fc2034ec2",
+        "project/Simulation/cell_count_43201.csv": "3f229452edfde8c8e93339acf0e5323937470dec99bc2e6476bfba377368c97a",
+        "project/Simulation/surfactant_43201.csv": "4603706883a03314dbc10fa791fc4d821aca6aad7acc98b14531bc6c78ec596b",
+        "project/Simulation/thickness_rep_43201.parquet": "c93c0a4c2fdab22a085be4140819ac7d3bb0db0126b46d19d575864981abc13f"
+      },
+      "elapsed_seconds": 4275.924543291796,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.58701910494635,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -2.5374185266883416,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9386716037954177,
+            "minimum_coverage": 0.9,
+            "rmse": 4.291809729520606,
+            "maximum_absolute_difference": 18.142857142857146,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 140.18424496205182,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": -3.12124724268142,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9266373524647072,
+            "minimum_coverage": 0.9,
+            "rmse": 12.447177715446953,
+            "maximum_absolute_difference": 60.76190476190476,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 27.617639361423713,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": -3.264764895751547,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.8636889608886832,
+            "minimum_coverage": 0.9,
+            "rmse": 3.5777371612172235,
+            "maximum_absolute_difference": 8.333333333333332,
+            "passed": false
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.77074064381052,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": 0.015465908949289897,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9981485767183522,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8137304427675282,
+            "maximum_absolute_difference": 4.380952380952381,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 63.19761023393649,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": -10.487440689033036,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": false
+        },
+        "1": {
+          "observed": 60.15538787521133,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": -2.594727746034323,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": true
+        },
+        "2": {
+          "observed": 55.45249735585871,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 6.1975285029960645,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": false
+        },
+        "3": {
+          "observed": 55.094621919229084,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 9.749187690951729,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": false
+        },
+        "4": {
+          "observed": 55.45621219603825,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": 9.557682947438032,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": false
+        },
+        "5": {
+          "observed": 53.317996116358145,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": 8.54333573236184,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": false
+        },
+        "6": {
+          "observed": 53.53782570745808,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": 7.966602182218416,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": false
+        },
+        "7": {
+          "observed": 52.99072907229369,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": 7.220886705641348,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": false
+        },
+        "8": {
+          "observed": 53.468200001208544,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": 8.199009985746393,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": false
+        },
+        "9": {
+          "observed": 51.00675673595943,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 6.451138254625938,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": false
+        }
+      },
+      "chemical_pulse": null,
+      "passed": false
+    },
+    {
+      "case": "self-organization",
+      "seed": 11,
+      "manifest_digest": "b16e5e955a13cdcbcd47c15874c35480dcd96cedd4e940bfce8a28f76244d719",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "7621dcd1d3b62b16f698b762b9c1032d33474e1ef38af9aaaa407fab6c80d977",
+      "outputs": {
+        "cells-0.csv": "2ec5ccd316d7e9fc00620c85384d5d5eb0a2b29e25b16d44d3a8ae96be72b5d7",
+        "cells-1680.csv": "a2035d27907f2187f09c86de2f8fb189ca47725105cdc4f66d50b2cd86ab271e",
+        "cells-240.csv": "3708ecd5938673f0801da408a11c327b40945345fb31f2219ad2ca462405706f",
+        "cells-3600.csv": "259c857e39913ac6e58ad334612385ed19c2a9755b38fabcc80496319097f5ae",
+        "cells-43200.csv": "af4b974a11cfca3dd970d9ccf2b579adb7803d525209a140c9f0b01ac37435b8",
+        "cells-720.csv": "64a281944ce7e18974dd714959c8c1b55eea5d760c003011295774be5e1fba92",
+        "lattice-0.npz": "3b5f9ca00015828c48d8738a301bf4fc70353e43a748ce954de7ef04ffdb2290",
+        "lattice-1680.npz": "40b57efa6ceccdac70fe6889a4cd529c67d4786a149324254427d8a242e5610d",
+        "lattice-240.npz": "b35ea47dfbbf5155f906330878de3728f9a55d887f7b8e3e03a34515ff5a91fe",
+        "lattice-3600.npz": "9deeccab70b36696b6c51c6cdbc002efe46e1a93d0139cd28fcc3bc3586c6bab",
+        "lattice-43200.npz": "935eb3ead93fbd9bae4af538802a5780f3a204378f2da102fd57d108e344fe48",
+        "lattice-720.npz": "49def8960594ed440e81507f36c9772592c4fb8573e1eeb60b4f40ff83580143",
+        "progress.jsonl": "bda9dd544d8edc431f4107e5973e7909b0d36c455c81e4f96cedf09aa2f584e0",
+        "project/Simulation/cell_count_43201.csv": "f919719d54fd8422a18c36f3278a259518f2a783873f4d42364160c853add99c",
+        "project/Simulation/surfactant_43201.csv": "4603706883a03314dbc10fa791fc4d821aca6aad7acc98b14531bc6c78ec596b",
+        "project/Simulation/thickness_rep_43201.parquet": "aedfdf52283641a4a1b2862cf6f7c58cdec78ff2d31ee83acef22bd37d103c4d"
+      },
+      "elapsed_seconds": 4277.325153000187,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 48.014132426066475,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -2.110305205568217,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9405230270770655,
+            "minimum_coverage": 0.9,
+            "rmse": 4.27127752141106,
+            "maximum_absolute_difference": 18.38095238095238,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 141.09055221146298,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": -2.2149399932702636,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9308030548484147,
+            "minimum_coverage": 0.9,
+            "rmse": 12.937869440288347,
+            "maximum_absolute_difference": 57.47619047619048,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 28.1873855011777,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": -2.695018755997559,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9065031242767878,
+            "minimum_coverage": 0.9,
+            "rmse": 3.2853886094573825,
+            "maximum_absolute_difference": 10.476190476190474,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.715781209107563,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": -0.03949352575366749,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9981485767183522,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8161510450503656,
+            "maximum_absolute_difference": 4.380952380952381,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 62.28397441171175,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": -11.40107651125777,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": false
+        },
+        "1": {
+          "observed": 60.58438592237914,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": -2.165729698866514,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": true
+        },
+        "2": {
+          "observed": 56.70508795661259,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 7.450119103749941,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": false
+        },
+        "3": {
+          "observed": 56.50520408436253,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 11.159769856085177,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": false
+        },
+        "4": {
+          "observed": 56.07839931444806,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": 10.179870065847844,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": false
+        },
+        "5": {
+          "observed": 52.384257685422725,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": 7.609597301426419,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": false
+        },
+        "6": {
+          "observed": 52.646442301541356,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": 7.075218776301689,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": false
+        },
+        "7": {
+          "observed": 55.02636058329281,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": 9.256518216640472,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": false
+        },
+        "8": {
+          "observed": 55.11090457540533,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": 9.841714559943178,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": false
+        },
+        "9": {
+          "observed": 52.94156318660812,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 8.385944705274632,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": false
+        }
+      },
+      "chemical_pulse": null,
+      "passed": false
+    }
+  ],
+  "limitations": [
+    "Thresholds are declared reference-variability checks, not clinical acceptance or a confidence interval.",
+    "Autocorrelated time samples are not independent biological replicates.",
+    "Original archived per-run parameter files and seeds are unavailable.",
+    "The lifetime repair changes undefined memory access; agreement must be measured."
+  ],
+  "independent_biological_validation": false,
+  "diagnostic_subset": [
+    "self-organization"
+  ],
+  "all_publication_groups_assessed": false,
+  "status": "diagnostic_not_reproduced",
+  "files": {
+    "self-organization-seed-11-counts.png": "1691643f760505b0099eda0ccc48f3fdcbcd904959c2205c941522630be60453",
+    "self-organization-seed-7-counts.png": "b5d72cf6555b39f31b1406ce5fad322f6c16ecb642352871fe8c084b06052b5f"
+  }
+}

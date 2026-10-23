@@ -29,7 +29,10 @@ dev = [
 ]
 
 [tool.ruff]
-extend-exclude = ["vendor"]
+extend-exclude = [
+  "vendor", "experiments/vcornea/publication/upstream",
+  "runtime_profiles/vcornea-publication/notices",
+]
 target-version = "py312"
 line-length = 100
 src = ["packages/core/src", "packages/engines/src", "packages/platform/src"]

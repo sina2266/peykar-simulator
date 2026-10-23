@@ -6,7 +6,8 @@ retain the requested project context. Root `AGENTS.md`, `README.md`,
 
 - The user's objective is the whole platform, not an eye-model-only product.
   Roadmap S0–S13 now covers all shared domains and specialist/biological gates;
-  do not make unrelated engineering work wait for a missing vCornea publication seed.
+  Latest user priority (2026-10-18) supersedes the earlier parallel-work sequence:
+  finish full corneal publication reproduction and analysis before another model.
 - All named specialist source trees are now permanent ordinary files under `vendor/`,
   not only ignored acquisition caches: 25 source identities, 52,167 files,
   1,799,838,581 bytes, 37 fully materialized recursive Git dependencies, no LFS pointers.
@@ -333,3 +334,103 @@ commands/outcomes in `docs/verification.md`.
   exclusions. No synthetic/browser frames imported. Earlier vocabulary/CellML data
   and artifacts plus actual reference/COPASI pipelines pass; queues idle, user_version1.
   See docs/process-verification-2026-10-18.json and E7 guide before extension.
+
+## Current user priority: complete corneal reproduction before switching, 2026-10-18
+
+- Finish the two principal published configurations (tissue self-organization and
+  injury/recovery), full original horizon and original analysis/comparison. Recover
+  exact archived scenario parameters and distinguish unknown stochastic seeds from
+  a reproducible selected new seed. Do not claim biological validity from software tests.
+- Stay on corneal investigation/runs/analysis when evidence is missing; do not
+  substitute unrelated feature milestones. Hourly continuation prompt was updated
+  to enforce this priority and avoid duplicate long runs.
+- Retain potential reuse of installed sources for retina/other tissues as a roadmap
+  backlog with context/evidence gates, not as installed biological functionality.
+
+## Full corneal publication work in progress, 2026-10-18
+
+- Read experiments/vcornea/publication/README.md and
+  runtime_profiles/vcornea-publication/README.md before continuing this work.
+  174 scalar files/65 original replicates, two unchanged analysis files and17
+  final-paper supplements were actually acquired. Original analysis ran on all65;
+  its14 output identities and replicate summaries are retained as a receipt.
+- Historical PRIMARY series: `.peykar/cornea-hpc46-full-20261018`, former supervisor
+  PID79137, exec session56885 (gone by October23; see continuation below).
+  Four jobs at a time, seeds7/11, formation43200MCS
+  and all three injury severities50400MCS (pulse7200MCS), 24-hour per-job deadline.
+  Inspect current PID/records/progress and plan before acting; these PIDs are
+  historical locators, not permission to signal an unrelated reused PID.
+  Do not launch duplicates, alter private inputs/profiles or restart healthy jobs.
+- This primary series uses `hpc-2.0.0`, actual official CC3D4.6.0 revision2
+  (397f8b1), separate400-package lock/profile, and native-lifetime overlay2.0.0.
+  HPC formation source supplies40/8/12 versus Local/final-table25/7/20. Injury Y65
+  differs from final S10 Y75. Unknown per-run parameters/seeds stay unknown.
+  Do not silently merge these source contexts or fit parameters to candidates.
+- Frozen comparison SHA256 remains
+  1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43.
+  Preserve comparison-1.0.0.json exactly; it predates full candidate execution.
+  After all8 actual jobs succeed, run compare.py, analyze_candidates.py and
+  analyze_spatial.py as documented, inspect images and retain every negative result.
+  Execution completion alone does not close P1 or establish biological validation.
+- Earlier `.peykar/cornea-full-20261018` 4.7.0/Local diagnostic series was explicitly
+  superseded after discovering the HPC preset, original engine version and a second
+  invalid native lifetime. Its8 failed records, inputs/progress/logs and operator
+  supersession receipt remain. Do not resume it or classify it as a full reproduction.
+- Source repairs reacquire deleted FPP links and stop a membrane pixel iterator
+  after deleting its cell. Upstream/vendor bytes remain unchanged. Actual4.6.0
+  observer/unobserved20MCS raw outputs are byte-identical. The600MCS moderate
+  injury probe passed in127.76s and removed200/990 membrane lattice sites; exact
+  lattice/cell-volume consistency passed. Both are engineering checks only.
+- New observations preserve actual cell centers,200x90 cell-type lattices and
+  EGF/SLS fields at formation/injury/recovery times; no RNG draws/state writes.
+  Fluid access to a fixed original basal surface is a descriptive2D proxy, never
+  clinical wound closure or whole-eye defect area. Independent data gate stays open.
+- No production service/volume upgrade was performed for this offline work.
+  Preserve the original live volume and E7 backup/objects. Meaningful engineering
+  changes should be tested/committed/pushed while full scientific results stay pending.
+
+## Corneal recovery and source correspondence, 2026-10-23
+
+- Old formation2 jobs genuinely completed with captured returncode0. Both fail the
+  frozen comparison:2/4 stable count means and1/10 thickness bins pass; hourly
+  coverage3/4 (seed7) and4/4 (seed11). Never present these as successful reproduction.
+- Old slight/mild4 jobs have complete-looking files but no captured exit; preserve
+  interrupted-output-inventory-2026-10-23.json. Moderate2 never started. No success
+  was inferred. Fresh resume series `.peykar/cornea-hpc46-resumed-20261023` reuses
+  only formation2, reruns missing-evidence4 and starts moderate2, maxparallel6.
+  Detached supervisor PID32354; original-analysis/comparison/spatial follow-on
+  PID35547, output `.peykar/cornea-hpc46-analysis-20261023`. Check actual ownership
+  and current progress before acting, never signal by historical PID alone.
+- New copied completion_guard.py records the actual native child's exit, manifest,
+  runtime and output hashes independently of the outer supervisor. Explicit recovery
+  can reconcile that proof; it cannot repair old unguarded missing exits. Actual
+  guarded20MCS probe passed with byte-identical original numeric outputs.
+- Original data DML directories are dated July15/16 2024. Recovered commit
+  b6123adf992e5b48442c0ebedd34ba7cd3162ef2 (July14) directly from licensed Code ZIP
+  embedded Git objects, without loading Git config/hooks. All50 original files/modes
+  now retained as vendor/models/vcornea-history-b6123adf with independent pins.
+  Reacquisition script actually verified50 identical files. Current vendor totals:
+  27 distributions,53,311 files,1,817,625,830bytes,37 materialized Git links.
+- Separate historical-hpc-3.0.0 formation candidate uses the complete old HPC source,
+  its95 literal batch controls (40/8/10,43200MCS), original Temperature10/geometry,
+  lifetime overlay2 and a declared read-only five→ten output-bin overlay. No fitting.
+  Two20MCS native grid probes gave identical counts/cells/fields. Full seeds7/11
+  running under PID41677 in `.peykar/cornea-historical-formation46-20261023`;
+  diagnostic-only follow-on PID43430 in `.peykar/cornea-historical-formation-analysis-20261023`.
+  A diagnostic subset can never satisfy the full four-group publication gate.
+- Old injury PIFF3/35/132/39 differs from archived injury4/32/127/46; historical
+  injury execution is deliberately unsupported pending actual state correspondence.
+  Do not cherry-pick a later PIFF/parameters and label them recovered old controls.
+- Acquired10 original VTK files/three descriptors, read all fields and rendered actual
+  cell/EGF/SLS figures. These spatial groups differ from selected scalar groups;
+  exact cohort/seed correspondence is not invented. DML Version1.0 is a file schema,
+  not the CompuCell3D version. Original clinical/experimental validation stays open.
+- Dated portable negative results, source/field observations and figures are under
+  experiments/vcornea/publication/observed-2026-10-23. Current comparison SHA256 is
+  still1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43.
+- No API/Worker deployment or live data-volume mutation occurred for these offline
+  experiments. Keep the E7 deployment, original licenses/backups/raw datasets intact.
+- Native thread correction: BLAS/OpenMP environment1 does not override CC3D XML
+  Metadata NumberOfProcessors. Both formation sources retain original4 workers;
+  later-source injury retains1. No hard native CPU cap or cross-thread bitwise
+  stochastic equivalence is claimed; never rewrite executed manifests to hide this.

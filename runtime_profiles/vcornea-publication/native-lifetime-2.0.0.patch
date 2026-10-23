@@ -1,0 +1,21 @@
+--- upstream/Simulation/vCornea_v2Steppables.py
++++ private/Simulation/vCornea_v2Steppables.py
+@@ -451,7 +451,9 @@
+                 self.delete_fpp_link(existing_link_with_closestWALL) 
+         
+         # update the forces if so defined            
+-            if self.AutoAdjustLinks:
++            # Peykar repair: reacquire a live link after possible deletion.
++            existing_link_with_closestWALL = self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)
++            if existing_link_with_closestWALL and self.AutoAdjustLinks:
+                 if self.Lambda_link_adjustment:
+                     self.link_lambda_update(existing_link_with_closestWALL)
+                 else:
+@@ -746,6 +748,7 @@
+                                 for pixel in pixel_list:
+                                     if self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] > 0.1:                            
+                                         self.delete_cell(cell)
++                                        break  # Peykar: deleted cell invalidates its pixel iterator
+                             else:
+                                 if self.SLS_Threshold_Method:
+                                     if (cell.dict['SLS'] > self.SLS_threshold/cell.dict['Initial_Volume']):  

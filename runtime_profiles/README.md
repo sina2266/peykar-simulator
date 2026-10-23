@@ -13,6 +13,7 @@ records exact image/artifact/source identities separately from biological validi
 | Profile | Installed environment / actual executed check |
 |---|---|
 | `vcornea` | CC3D 4.7.0, 424-package conda lock; original admitted archive, 600 MCS across injury; E1 also has repeated seed-7/11 checks |
+| [`vcornea-publication`](vcornea-publication/README.md) | Official ARM64 CC3D4.6.0 revision2,400 packages; original65-replicate analysis and native observer/injury probes pass. Later-source formation failed frozen checks; injury series and separately recovered July2024 formation running. Real durable child-exit proof prevents file-only success inference |
 | `copasi` | python-copasi 4.47.309 + BasiCO 0.88, own uv lock; real SBML reaction integration, 11 samples, analytical error 6.09e-8 and conservation error 2.22e-16 |
 | `neuron` | NEURON 9.0.2 native wheel, own uv lock; actual HH compartment/current clamp, 401 samples, peak 39.1181 mV |
 | `physicell` | C++/OpenMP build from vendored 1.14.2; original template, bounded one-minute run, native MultiCellDS/MAT/SVG outputs |

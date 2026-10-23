@@ -1,5 +1,90 @@
 # Verification record
 
+## Corneal publication reconstruction and recovery: 2026-10-18 / 2026-10-23
+
+This is an offline operator/scientific continuation. API/Worker were observed
+healthy on October23 and were not redeployed; the original `peykar3_peykar-data`,
+licenses, historical model/schema versions and `uv.lock` were not changed.
+
+- Original acquisition retained174 scalar members for65 published replicates,
+  two unchanged analysis files and17 final-paper DOCX supplements. Selected ZIP
+  members passed size/CRC/SHA checks; whole Data.zip MD5 remains unverified.
+  `analyze_original.py` actually executed the authors' unchanged count/thickness
+  math on all65 replicates, retaining14 output identities/five figures; source
+  audit read71 table controls. Receipts are under `experiments/vcornea/publication`.
+- Official macOS ARM64 CC3D4.6.0 revision2 and400 exact packages were installed
+  in a separate prefix. Capture pins the installed interpreter/engine; original
+  notices are retained for484 distinct package identities/607 supplied files.
+  This reconstructs the engine version, not the authors' complete original system.
+- Original deleted FPP-link access actually crashed natively. Private lifetime
+  overlay1 reacquires the link; overlay2 also stops iteration after deleting a
+  membrane cell. Extracted-method regression tests exercise both invalid lifetimes
+  and their repaired behavior; upstream/vendor bytes remain unchanged.
+- Actual4.6.0 observer/unobserved20MCS outputs had byte-identical counts, SLS and
+  Parquet data. An actual600MCS moderate-injury probe (pulse deliberately20MCS)
+  completed exit0 in127.76s; membrane sites990→790 and epithelial sites5015→3994,
+  with actual lattice occupancy matching independent cell volumes. These are
+  instrumentation/memory-safety checks, not published full-horizon acceptance.
+- October18 `make check-docker` completed **484 tests /38.36s /87% coverage**,
+  strict mypy96 files,18 frontend tests, contracts and package builds.
+  `make build` also produced all three wheel/sdist pairs. Logs:
+  `.peykar/cornea-check-docker.log`, `.peykar/cornea-build.log`.
+- On October23, the former supervisor was gone. Only two full43,200MCS formation
+  runs had actual recorded exit0. Four injury datasets looked complete but lacked
+  captured exits; two moderate jobs never started. Their original bytes/logs/records
+  remain. The explicit resume operator reused only the two verified successes and
+  started six fresh bounded jobs; it did not infer success or overwrite old runs.
+- The copied completion guard was actually exercised in a20MCS native probe:
+  exit0/64.56s and count/SLS/Parquet bytes identical to the earlier observer probe.
+  Its durable proof captures real child exit/source/runtime/output hashes; three
+  real-subprocess tests cover success, failure and proof/reconciliation identity.
+- A completed formation-only diagnostic plan was derived from the two captured
+  successes, retaining the parent plan bytes/digest. `compare.py --diagnostic-case
+  self-organization` returned **exit2 / diagnostic_not_reproduced**: each seed
+  passes2/4 stable count means and1/10 thickness bins; hourly coverage3/4 and4/4.
+  Earlier analysis on the still-running parent correctly refused admission.
+  `analyze_spatial.py` passed actual lattice/cell/count checks and rendered both
+  full formation series; the seed7 figure was visually inspected. The authors'
+  original math was separately replayed on those two completed outputs.
+- `recover_vcornea_history.py --archive .peykar/external/archives/vCornea-16884414.zip
+  --output .peykar/external/vcornea-history-reacquisition-check-20261023` recovered
+  and hash-verified all50 files of July14 commit b6123adf directly from original
+  licensed archive objects. Downloaded Git configuration/hooks were never loaded;
+  no model/batch launcher executed during acquisition. The separate historical
+  formation candidate retains complete HPC mechanics,95 original literal controls,
+  Temperature10 and43200MCS. Two actual20MCS native five-/ten-bin probes completed
+  exit0 in8.09s each with identical count bytes, cell observations and EGF/SLS arrays.
+  Full historical seeds7/11 are still running; no scientific pass is asserted.
+- Selected spatial acquisition retained10 original VTK snapshots/three descriptors.
+  `inspect_original_spatial.py` actually checked their hashes/dimensions/finite
+  fields/cell identities and rendered10 observations. Original MildComb0 at324h
+  was visually inspected. These spatial groups differ from the four scalar cohorts;
+  incomplete moderate/CONTROL horizons are explicit and no identity is invented.
+- Targeted publication/lifetime/guard/history/analysis tests passed **27 tests**,
+  followed by **15 tests** after the diagnostic-admission change. Native
+  `test_analysis.py` passed4 synthetic software tests in3.11s. Its printed
+  eight-run "passed" message refers solely to generated fixtures, not actual science.
+  Ruff passed,300 files formatted; strict mypy passed98 files.
+- `scripts/verify_vendor.py` rehashed **27 distributions /53,311 files /
+  1,817,625,830bytes /37 materialized Git links**, with no missing source, unresolved
+  LFS payload or altered original notice. `make build` on October23 produced all
+  three wheel/sdist pairs. Final **`make check-docker` passed497 tests /41.90s /
+  86% statement coverage**, strict
+  mypy98 files,18 frontend tests, source/schema/OpenAPI checks and all package builds.
+  The first build attempt stalled in `docker-credential-desktop get` before tests
+  and was stopped as an owned process. A task-private empty `DOCKER_CONFIG` and
+  the same inspected Docker Desktop socket allowed anonymous public-image access;
+  existing credentials/settings and live services were unchanged. Final log:
+  `.peykar/cornea-check-docker-public-20261023.log`; host build:
+  `.peykar/cornea-build-20261023.log`.
+
+The unchanged frozen comparison SHA256 is
+`1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43`.
+Negative results are retained under `experiments/vcornea/publication/observed-2026-10-23`.
+The two principal publication scenarios are **not yet reproduced**. Original seeds,
+per-run parameter snapshots and independent applicable biological validation remain
+unavailable; original simulation output is not experimental evidence.
+
 ## E7 multiparty processes, ownership and instance frames: 2026-10-18 local
 
 [Observed receipt](process-verification-2026-10-18.json) and

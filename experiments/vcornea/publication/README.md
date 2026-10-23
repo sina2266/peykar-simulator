@@ -1,0 +1,153 @@
+# Corneal publication reconstruction
+
+The immediate target is the two configurations provided by the authors: tissue
+formation from stem cells, then chemical injury/recovery. The injury configuration
+has slight, mild and moderate severities. Full candidate execution and its frozen
+comparison are **running**, not yet accepted. See the
+[operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
+
+Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
+and James A. Glazier. Final paper:
+[PLOS Computational Biology, 2025, e1013410](https://doi.org/10.1371/journal.pcbi.1013410).
+Archived code/data: [Zenodo 16884414](https://doi.org/10.5281/zenodo.16884414),
+dated before the final article. Both declare CC-BY-4.0. Retain attribution and
+[original terms](https://creativecommons.org/licenses/by/4.0/legalcode.en).
+
+## Original material actually recovered
+
+| Archived group selected by the original plotting script | Replicates | Full raw horizon |
+|---|---:|---:|
+| `STEM_ONLY_proper_thickness_6months/Comb0` | 21 | 4,320 hours / 43,200 MCS |
+| `(Slight) 750_G/Comb0` | 13 | 5,040 hours / 50,400 MCS |
+| `(Mild) 1500_G/Comb1` | 16 | 5,040 hours / 50,400 MCS |
+| `(Moderate) 2500_G/Comb1` | 15 | 5,040 hours / 50,400 MCS |
+
+All 174 original scalar members (counts, binned height and supplied chemical
+tracking) and two original analysis files were acquired with ZIP CRC, byte size
+and local SHA-256 checks. The complete 6.75 GB ZIP's MD5 remains unverified;
+selected-member verification is the declared scope. Raw members remain under
+`.peykar/external/vcornea-publication-cohorts-16884414/`, with a portable
+[176-member catalog](source-catalog-1.0.0.json) for reacquisition.
+
+`upstream/plot_manager.py` and `upstream/membrane_height.csv` are **unchanged
+original bytes**. Their math was actually executed headlessly on all 65 published
+replicates, producing five original count/thickness figures and four full-horizon
+count-mean CSVs. Exact outputs and replicate summaries are in
+[the original analysis receipt](original-analysis-2026-10-18.json); local rendered
+files are in `.peykar/cornea-original-analysis-output/native-replay-1/`.
+Only the display hook is replaced by PNG/PDF export. Original count plots stop
+at 4,320 hours; the additional numeric export retains the full injury horizon.
+Q-Q plots and hourly samples do not establish independent biological replication.
+
+All 17 final-paper supplementary DOCX files are retained unchanged under
+`paper-supplements/`, with publisher URLs, sizes and hashes in the same catalog.
+The [71-entry source audit](source-audit-1.0.0.json) reads table values and source
+ASTs without importing downloaded model code.
+
+## Source conflicts and declared reconstruction choices
+
+| Control | Archived Local | Archived HPC | Final paper/tables | Current primary replay |
+|---|---|---|---|---|
+| Engine | Current project used 4.7.0 | Original complete environment not archived | Article §2.1 says 4.6.0 | Official macOS ARM64 4.6.0 revision2, commit label `397f8b1`; dependencies reconstructed |
+| Formation basal target volume / EGF half-max / superficial EGF diffusion | 25 / 7 / 20 | **40 / 8 / 12**, in the batch script named like the archived cohort | S8/S9 give 25 / 7 / 20 | Separate `hpc-2.0.0` profile restores the published batch defaults; Local history retained |
+| Formation duration | 50,400 MCS | 50,400 MCS | Six-month analysis | 43,200 MCS, matching every selected original raw series |
+| Injury time / duration | Convenience 500 / 7,700 MCS | Convenience 500 / 7,700 MCS | S10 and source comments give 7,200 / 50,400 MCS | 7,200 / 50,400 MCS |
+| Chemical source Y | 65 lattice sites | 65 lattice sites | S10 says 75 | 65 to reconstruct the archived executable; conflict remains explicit |
+| Injury selector | `False` selects chemical exposure in actual code | Same | S11 description reverses the Boolean meaning | Follow executable semantics; never switch to ablation from that description |
+| SLS threshold | Numeric 2.0 | Numeric 2.0 | S11 lists Boolean `True` | Preserve the numeric source threshold |
+| Injury initial state | `Epithelium.piff` | Same | Per-run state/seeds absent | Original 46 superficial /127 wing /32 basal /4 stem cells |
+
+The archive has no per-run seed/parameter snapshots. Seeds **7 and 11 are new
+explicit seeds**, not recovered historical seeds. The HPC preset is a supported
+source-based reconstruction, not proof that it generated every old replicate.
+Final-table and archived executable configurations must not be silently conflated.
+No parameter was fitted to the new candidate outputs and the frozen tolerance
+file has not been changed after execution began.
+
+## Comparison and biological interpretation
+
+[Comparison 1.0.0](comparison-1.0.0.json) was frozen before full candidate runs.
+It pins all 130 original count/height artifacts, hourly reference means/sample SDs,
+between-replicate stable means and ten regional thickness estimates. Count means
+use a 3-SD envelope plus one-cell quantization, hourly trajectories require 90%
+coverage in the corresponding 3-SD envelope plus one cell, and height-derived
+means use 3 SD plus 2 µm. These are explicit engineering variability checks,
+not clinical acceptance, confidence intervals or statistical equivalence tests.
+Each seed is assessed separately; an ensemble mean cannot hide a failed seed.
+
+Original raw `Time` is already hours (10 MCS/hour). The article §2.2 maps each
+lattice site to 2 µm and describes a 200×90 cross-section. Thickness comparison
+uses the original `(mean top-cell Y - original regional membrane Y) * 2` formula.
+That observation is distinct from a clinical OCT segmentation or whole-eye area.
+Additional lattice/EGF images and four-connected fluid access to the original
+basal surface are descriptive measurements, without new acceptance thresholds.
+Population-count return is reported separately from structural re-epithelialization.
+
+The article's S12 explicitly says turnover was used for calibration and injury
+closure for parameter screening. Its thickness/recovery ranges cannot become an
+independent holdout by being copied into Peykar. The previously admitted Rho2015
+scratch monolayer assay has a different context. Independent tissue/clinical
+validation remains a separate, unclosed gate.
+
+Peykar's lifetime repairs and observation wrappers are separate derived work;
+original source and analysis files remain unchanged. The two method excerpts in
+`tests/fixtures/vcornea-*.py.txt` retain the same upstream attribution/CC-BY scope.
+
+## Observed continuation, 2026-10-23
+
+The two later-source `hpc-2.0.0` formation runs actually completed at43,200MCS
+with captured exit0. Their [unchanged frozen comparison](observed-2026-10-23/formation-hpc2-comparison.md)
+is negative: both pass2/4 stable count means and only1/10 regional thickness
+checks. Seed7 passes3/4 hourly trajectories; seed11 passes4/4. Superficial counts
+are47.59/48.01 versus reference50.12; basal counts27.62/28.19 versus30.88.
+The [numeric report](observed-2026-10-23/formation-hpc2-comparison.json) retains
+each seed and failure. This diagnostic subset does not close the full publication gate.
+
+The old outer supervisor ended without capturing four injury exits. Those jobs
+have complete-looking output files but remain **unverified**, retained in the
+[interrupted inventory](interrupted-output-inventory-2026-10-23.json). The new
+`.peykar/cornea-hpc46-resumed-20261023` series reuses only the two genuine completed
+formation runs, retries those four jobs and starts the two previously unstarted
+moderate jobs. Every fresh job copies a pinned guard that independently records
+its actual child exit/source/runtime/output hashes; files alone can never imply success.
+All three follow-on analyses are explicitly scheduled in
+`.peykar/cornea-hpc46-analysis-20261023`, without changing acceptance criteria.
+
+Original DML metadata identifies July15/16 **2024** output directories. The complete
+preceding July14 source commit `b6123adf992e5b48442c0ebedd34ba7cd3162ef2` was
+recovered directly from the original licensed code ZIP's embedded Git objects.
+All50 files are now pristine permanent source in
+[`vendor/models/vcornea-history-b6123adf`](../../../vendor/models/vcornea-history-b6123adf),
+with [original archive/blob evidence](../../../engine_adapters/compucell3d/vcornea-history-b6123adf.json).
+Its full HPC project,95 literal batch controls, Temperature10 and EGF diffusion10
+are a separate `historical-hpc-3.0.0` candidate; later source uses8/12 for the latter
+two controls. Native lifetime repair remains explicit. The original height formula
+is observed on ten bins instead of five to match the existing frozen measurement
+grid; two actual20MCS runs with five/ten bins had identical counts, cells and fields.
+The [AST-normalized mechanism comparison](observed-2026-10-23/mechanism-source-diff.txt)
+also shows changed total-versus-volume-normalized EGF/SLS sensing, stem growth
+multiplier2→1, superficial sloughing probability and tear-volume replacement.
+This is why changing only three parameters in later mechanics cannot represent
+the recovered historical model. Original formation XML requests four CC3D workers;
+BLAS/OpenMP environment1 is not a native CPU cap or bitwise stochastic guarantee.
+Full formation seeds7/11 are running in
+`.peykar/cornea-historical-formation46-20261023`, with diagnostic-only follow-on in
+`.peykar/cornea-historical-formation-analysis-20261023`. No parameters were fitted
+to the failed results. Exact historical per-run source/seed identity remains unknown.
+
+Historical injury is not silently mixed into this candidate: its initial PIFF has
+3/35/132/39 stem/basal/wing/superficial cells, while retained injury data starts
+4/32/127/46. That source/state correspondence must be resolved before an old-source
+injury execution can be called a recovered scenario.
+
+Ten original VTK snapshots and three descriptors were acquired and actually read,
+with [a separate catalog](spatial-source-catalog-1.0.0.json),
+[numeric field inspection](observed-2026-10-23/original-spatial-inspection.json) and
+[an actual injury image](observed-2026-10-23/original-mild-comb0-324h.png).
+MildComb0 is a separate4,620h group with chemical pulse300h; selected MildComb1
+uses5,040h/pulse720h. Moderate spatial files end1,058h (DML identifies Comb3/2),
+and CONTROL images end4,265h (Comb0/9). None establishes a spatial identity for the
+four selected complete scalar cohorts. These are original simulation observations,
+not independent experimental measurements. DML's Version1.0 is its schema version,
+not the engine version. The [dated engineering receipt](observed-2026-10-23/engineering.json)
+retains actual short-probe results and the declared limitations.

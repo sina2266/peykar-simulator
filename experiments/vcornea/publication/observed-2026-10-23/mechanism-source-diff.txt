@@ -1,0 +1,315 @@
+--- July2024:('ConstraintInitializerSteppable', 'step')
+
++++ Aug2025:('ConstraintInitializerSteppable', 'step')
+
+@@ -6,8 +6,8 @@
+
+         else:
+             cell.dict['Pressure'] = abs(cell.pressure)
+             cell.dict['Volume'] = cell.volume
+-            cell.dict['EGF'] = self.EGF_Field.amountSeenByCell(cell)
+-            cell.dict['SLS'] = self.SLS_Field.amountSeenByCell(cell)
++            cell.dict['EGF'] = self.EGF_Field.amountSeenByCell(cell) / cell.volume
++            cell.dict['SLS'] = self.SLS_Field.amountSeenByCell(cell) / cell.volume
+             if cell.type == self.BASAL:
+                 cell.dict['Bias_Uptake'] = self.MovementBias.uptakeInsideCellTotalCount(cell, 100000.0, self.MovementBiasUptake).tot_amount
+                 cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeBASAL).tot_amount)
+--- July2024:('TEARSteppable', 'step')
+
++++ Aug2025:('TEARSteppable', 'step')
+
+@@ -7,12 +7,13 @@
+
+         is_trapped = self.MEDIUM not in NEIGHBOR_DICT and self.TEAR not in NEIGHBOR_DICT or (self.SUPER in NEIGHBOR_DICT and self.STROMA in NEIGHBOR_DICT)
+         if is_trapped:
+             cell.targetVolume = 0
+-        elif not any((neigh_type in NEIGHBOR_DICT for neigh_type in [self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB, self.BM, self.STROMA])):
++        elif not any((neigh_type in NEIGHBOR_DICT for neigh_type in [self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB, self.STROMA])):
+             cell.lambdaVecX = 0
+             cell.lambdaVecY = self.Force_TEAR
+         else:
+             cell.lambdaVecX = 0
+             cell.lambdaVecY = 0
++            cell.targetVolume = cell.dict['Initial_Volume']
+         if flag:
+             cell = np.random.choice(list(self.cell_list_by_type(self.TEAR)))
+-            cell.targetVolume += 10
++            cell.targetVolume = 101
+--- July2024:('DifferentiationSteppable', 'step')
+
++++ Aug2025:('DifferentiationSteppable', 'step')
+
+@@ -4,10 +4,8 @@
+
+             for cell in self.cell_list_by_type(self.WING):
+                 NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
+                 if self.TEAR in NEIGHBOR_DICT.keys() and self.WING in NEIGHBOR_DICT.keys() and (not self.BASAL in NEIGHBOR_DICT.keys()) and (not self.MEMB in NEIGHBOR_DICT.keys()) and (not self.STEM in NEIGHBOR_DICT.keys()):
+-                    self.event_data.append({'Event Type': 'Wing Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                     cell.type = self.SUPER
+                     self.initializeDifferentiatedCell(cell)
+-                    self.event_data.append({'Event Type': 'Superficial After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+             for cell in self.cell_list_by_type(self.BASAL):
+                 boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)
+                 memb_contact_area = 0
+@@ -17,16 +15,12 @@
+
+                         if neighbor_pixel.type == self.MEMB:
+                             memb_contact_area += 1
+                 if memb_contact_area <= 5:
+-                    self.event_data.append({'Event Type': 'Basal Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                     cell.type = self.WING
+                     self.initializeDifferentiatedCell(cell)
+-                    self.event_data.append({'Event Type': 'Wing After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+             for cell in self.cell_list_by_type(self.STEM):
+                 NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
+                 boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)
+                 memb_contact_area = 0
+                 if not self.LIMB in NEIGHBOR_DICT.keys():
+-                    self.event_data.append({'Event Type': 'Stem Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                     cell.type = self.BASAL
+                     self.initializeDifferentiatedCell(cell)
+-                    self.event_data.append({'Event Type': 'Basal After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+--- July2024:('ConstraintInitializerSteppable', 'start')
+
++++ Aug2025:('ConstraintInitializerSteppable', 'start')
+
+@@ -16,35 +16,30 @@
+
+         cell.lambdaVolume = 100000.0
+         cell.lambdaSurface = 0.1
+         cell.targetSurface = 1000.0
+-    self.lineage = np.arange(10, len(self.cell_list_by_type(self.STEM)) + len(self.cell_list_by_type(self.BASAL)) + 10).tolist()
+     for cell in self.cell_list_by_type(self.STEM):
+         cell.targetVolume = self.InitSTEM_TargetVolume
+         cell.lambdaVolume = self.InitSTEM_LambdaVolume
+         cell.lambdaSurface = self.InitSTEM_LambdaSurface
+         cell.targetSurface = self.InitSTEM_TargetSurface
++        cell.dict['Initial_Volume'] = self.InitSTEM_TargetVolume
+         cell.dict['LambdaChemo'] = self.InitSTEM_LambdaChemo
+         ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, 'BASALMVBIAS')
+         ChemotaxisData.setLambda(cell.dict['LambdaChemo'])
+-        random_index = random.randint(0, len(self.lineage) - 1)
+-        element = self.lineage.pop(random_index)
+-        cell.dict['CellLineage'] = element
+     for cell in self.cell_list_by_type(self.BASAL):
+         cell.targetVolume = self.InitBASAL_TargetVolume
+         cell.lambdaVolume = self.InitBASAL_LambdaVolume
+         cell.lambdaSurface = self.InitBASAL_LambdaSurface
+         cell.targetSurface = self.InitBASAL_TargetSurface
+-        cell.dict['DivisionCount'] = self.InitBASAL_Division
++        cell.dict['Initial_Volume'] = self.InitBASAL_TargetVolume
+         cell.dict['LambdaChemo'] = self.InitBASAL_LambdaChemo
+         ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, 'BASALMVBIAS')
+         ChemotaxisData.setLambda(cell.dict['LambdaChemo'])
+-        random_index = random.randint(0, len(self.lineage) - 1)
+-        element = self.lineage.pop(random_index)
+-        cell.dict['CellLineage'] = element
+     for cell in self.cell_list_by_type(self.WING):
+         cell.targetVolume = self.InitWING_TargetVolume
+         cell.lambdaVolume = self.InitWING_LambdaVolume
+         cell.lambdaSurface = self.InitWING_LambdaSurface
+         cell.targetSurface = self.InitWING_TargetSurface
++        cell.dict['Initial_Volume'] = self.InitWING_TargetVolume
+         cell.dict['EGF_LambdaChemo'] = self.InitWING_EGFLambdaChemo
+         ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, 'EGF')
+         ChemotaxisData.setLambda(cell.dict['EGF_LambdaChemo'])
+@@ -53,8 +48,9 @@
+
+         cell.lambdaVolume = self.InitSUPER_LambdaVolume
+         cell.lambdaSurface = self.InitSUPER_LambdaSurface
+         cell.targetSurface = self.InitSUPER_TargetSurface
+-        cell.dict['Slough'] = self.SloughProbability
++        cell.dict['Initial_Volume'] = self.InitSUPER_TargetVolume
+         self.create_links(cell)
+     for cell in self.cell_list_by_type(self.TEAR):
+         cell.targetVolume = 50
+         cell.lambdaVolume = 1
++        cell.dict['Initial_Volume'] = cell.targetVolume
+--- July2024:('TEARSteppable', 'start')
+
++++ Aug2025:('TEARSteppable', 'start')
+
+@@ -1,3 +1,4 @@
+
+ def start(self):
+     self.initialTEARcount = len(self.cell_list_by_type(self.TEAR))
+     self.Force_TEAR = 30
++    self.cell_id = None
+--- July2024:('DeathSteppable', '__init__')
+
++++ Aug2025:('DeathSteppable', '__init__')
+
+@@ -8,8 +8,6 @@
+
+     self.y_center = ConstraintInitializerSteppable.InjuryY_Center
+     self.radius = ConstraintInitializerSteppable.InjuryRadius
+     self.deathTimeScalar = ConstraintInitializerSteppable.DeathTimeScalar
+-    self.deathVolumeScalar = ConstraintInitializerSteppable.DeathVolumeScalar
+-    self.sloughScalar = ConstraintInitializerSteppable.SloughScalar
+     self.SUPER_TargetVolume = ConstraintInitializerSteppable.InitSUPER_TargetVolume
+     self.SUPER_TargetSurface = ConstraintInitializerSteppable.InitSUPER_TargetSurface
+     self.SLS_Injury = ConstraintInitializerSteppable.SLS_Injury
+@@ -18,3 +16,4 @@
+
+     self.SLS_Y_Center = ConstraintInitializerSteppable.SLS_Y_Center
+     self.SLS_Concentration = ConstraintInitializerSteppable.SLS_Concentration
+     self.SLS_Gaussian_pulse = ConstraintInitializerSteppable.SLS_Gaussian_pulse
++    self.SLS_threshold = ConstraintInitializerSteppable.SLS_Threshold
+--- July2024:('GrowthSteppable', '__init__')
+
++++ Aug2025:('GrowthSteppable', '__init__')
+
+@@ -5,13 +5,7 @@
+
+     self.DensitySTEM_HalfMaxValue = ConstraintInitializerSteppable.DensitySTEM_HalfMaxValue
+     self.EGF_BASAL_HalfMaxValue = ConstraintInitializerSteppable.EGF_BASAL_HalfMaxValue
+     self.EGF_STEM_HalfMaxValue = ConstraintInitializerSteppable.EGF_STEM_HalfMaxValue
+-    self.EGF_GrowthScalar_BASAL = ConstraintInitializerSteppable.EGF_GrowthScalar_BASAL
+-    self.EGF_GrowthScalar_STEM = ConstraintInitializerSteppable.EGF_GrowthScalar_STEM
+-    self.DensityGrowthScalar_BASAL = ConstraintInitializerSteppable.DensityGrowthScalar_BASAL
+-    self.DensityGrowthScalar_STEM = ConstraintInitializerSteppable.DensityGrowthScalar_STEM
+     self.BASAL_initial_volume = ConstraintInitializerSteppable.InitBASAL_TargetVolume
+     self.STEM_initial_volume = ConstraintInitializerSteppable.InitSTEM_TargetVolume
+     self.BASAL_doubling = 1 / (HOURtoMCS * 8) * self.BASAL_initial_volume
+-    self.STEM_doubling = 1 / (HOURtoMCS * 8) * self.STEM_initial_volume * 2
+-    self.BASAL_beta_EGF = ConstraintInitializerSteppable.BASAL_beta_EGF
+-    self.STEM_beta_EGF = ConstraintInitializerSteppable.STEM_beta_EGF
++    self.STEM_doubling = 1 / (HOURtoMCS * 8) * self.STEM_initial_volume
+--- July2024:('SecretionSteppable', 'step')
+
++++ Aug2025:('SecretionSteppable', 'step')
+
+@@ -1,5 +1,5 @@
+
+ def step(self, mcs):
+-    for cell in self.cell_list_by_type(self.MEMB, self.BM):
++    for cell in self.cell_list_by_type(self.MEMB):
+         self.MovementBias.secreteOutsideCellAtBoundaryOnContactWith(cell, self.MovementBiasScreteAmount, [self.MEDIUM, self.WING, self.SUPER, self.TEAR])
+     for cell in self.cell_list_by_type(self.TEAR):
+         self.SLS_Field.uptakeInsideCellTotalCount(cell, 0.002, cell.dict['SLS'] / cell.volume).tot_amount
+--- July2024:('DeathSteppable', 'step')
+
++++ Aug2025:('DeathSteppable', 'step')
+
+@@ -17,7 +17,6 @@
+
+                 if mcs == self.injuryTime:
+                     for cellid in cells_to_kill:
+                         cell = self.fetch_cell_by_id(cellid)
+-                        self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                         cell.type = self.TEAR
+                         cell.targetSurface = 0
+                         cell.lambdaSurface = 0
+@@ -39,12 +38,11 @@
+
+                                 if self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] > 0.1:
+                                     self.delete_cell(cell)
+                         elif self.SLS_Threshold_Method:
+-                            if cell.dict['SLS'] > 2:
++                            if cell.dict['SLS'] > self.SLS_threshold / cell.dict['Initial_Volume']:
+                                 cell.dict['DEATH_MARK'] = True
+                                 cell.targetVolume = 0
+                                 cell.lambdaVolume = 20
+-                                cell.dict['SLS_Uptake'] = abs(self.SLS_Field.uptakeInsideCellTotalCount(cell, 100000.0, cell.dict['SLS'] / cell.volume).tot_amount)
+-                                self.event_data.append({'Event Type': 'Threshold_SLS', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
++                                cell.dict['SLS_Uptake'] = abs(self.SLS_Field.uptakeInsideCellTotalCount(cell, 100000.0, cell.dict['SLS']).tot_amount)
+     if self.DeathControl:
+         if mcs > HOURtoMCS:
+             deathsum = 0
+@@ -54,16 +52,11 @@
+
+                     if random.random() <= 1 / 3.0 / DAYtoMCS:
+                         cell.targetVolume = 0
+                         cell.lambdaVolume = 1000
+-                    self.event_data.append({'Event Type': 'Superficial Loss Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                     if cell.volume < 15 or self.SUPER not in NEIGHBOR_DICT.keys():
+-                        cell.dict['Slough'] = 1 - np.exp(1 / (-(HOURtoMCS * self.deathTimeScalar) * (cell.volume * self.deathVolumeScalar)))
+-                        if random.random() < cell.dict['Slough']:
+-                            deathsum += 1
+-                            cell.targetVolume = 0
+-                            cell.lambdaVolume = 1000
+-                            self.event_data.append({'Event Type': 'Superficial Slough Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
++                        deathsum += 1
++                        cell.targetVolume = 0
++                        cell.lambdaVolume = 1000
+             DEATHCOUNT = deathsum
+         for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
+             if cell.volume < 3:
+-                self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+                 self.delete_cell(cell)
+--- July2024:('DifferentiationSteppable', 'initializeDifferentiatedCell')
+
++++ Aug2025:('DifferentiationSteppable', 'initializeDifferentiatedCell')
+
+@@ -3,12 +3,13 @@
+
+         cell.lambdaSurface = ConstraintInitializerSteppable.InitBASAL_LambdaSurface
+         cell.targetSurface = ConstraintInitializerSteppable.InitBASAL_TargetSurface
+         cell.dict['LambdaChemo'] = ConstraintInitializerSteppable.InitBASAL_LambdaChemo
+-        cell.dict['DivisionCount'] = ConstraintInitializerSteppable.InitBASAL_Division
++        cell.dict['Initial_Volume'] = ConstraintInitializerSteppable.InitBASAL_TargetVolume
+         ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, 'BASALMVBIAS')
+         ChemotaxisData.setLambda(cell.dict['LambdaChemo'])
+     elif cell.type == self.STEM:
+         cell.lambdaSurface = ConstraintInitializerSteppable.InitSTEM_LambdaSurface
+         cell.targetSurface = ConstraintInitializerSteppable.InitSTEM_TargetSurface
++        cell.dict['Initial_Volume'] = ConstraintInitializerSteppable.InitSTEM_TargetVolume
+         cell.dict['LambdaChemo'] = ConstraintInitializerSteppable.InitSTEM_LambdaChemo
+         ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, 'BASALMVBIAS')
+         ChemotaxisData.setLambda(cell.dict['LambdaChemo'])
+@@ -17,8 +18,10 @@
+
+         cell.targetSurface = ConstraintInitializerSteppable.InitWING_TargetSurface
+         cell.lamdaVolume = ConstraintInitializerSteppable.InitWING_LambdaVolume
+         cell.targetVolume = ConstraintInitializerSteppable.InitWING_TargetVolume
++        cell.dict['Initial_Volume'] = ConstraintInitializerSteppable.InitWING_TargetVolume
+         cell.dict['LambdaChemo'] = 0
+     elif cell.type == self.SUPER:
+         cell.lambdaSurface = ConstraintInitializerSteppable.InitSUPER_LambdaSurface
+         cell.targetSurface = ConstraintInitializerSteppable.InitSUPER_TargetSurface
++        cell.dict['Initial_Volume'] = ConstraintInitializerSteppable.InitSUPER_TargetVolume
+         cell.dict['LambdaChemo'] = 0
+--- July2024:('GrowthSteppable', 'step')
+
++++ Aug2025:('GrowthSteppable', 'step')
+
+@@ -1,17 +1,15 @@
+
+ def step(self, mcs):
+     if self.GrowthControl:
+         for cell in self.cell_list_by_type(self.BASAL):
+-            cell.dict['EGF_Growth'] = self.BASAL_beta_EGF * (cell.dict['EGF'] ** 4 / (self.EGF_BASAL_HalfMaxValue ** 4 + cell.dict['EGF'] ** 4)) + (1 - self.BASAL_beta_EGF)
++            cell.dict['EGF_Growth'] = cell.dict['EGF'] ** 4 / ((self.EGF_BASAL_HalfMaxValue / cell.dict['Initial_Volume']) ** 4 + cell.dict['EGF'] ** 4)
+             cell.dict['DensityGrowth'] = self.DensityBASAL_HalfMaxValue ** 4 / (self.DensityBASAL_HalfMaxValue ** 4 + cell.dict['Pressure'] ** 4)
+             cell.dict['TotalGrowth'] = self.BASAL_doubling * (cell.dict['DensityGrowth'] * cell.dict['EGF_Growth'])
+             cell.targetVolume += cell.dict['TotalGrowth']
+-            self.event_data.append({'Event Type': 'Basal Growth Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+         for cell in self.cell_list_by_type(self.STEM):
+-            cell.dict['EGF_Growth'] = self.STEM_beta_EGF * (cell.dict['EGF'] ** 4 / (self.EGF_STEM_HalfMaxValue ** 4 + cell.dict['EGF'] ** 4)) + (1 - self.STEM_beta_EGF)
++            cell.dict['EGF_Growth'] = cell.dict['EGF'] ** 4 / ((self.EGF_STEM_HalfMaxValue / cell.dict['Initial_Volume']) ** 4 + cell.dict['EGF'] ** 4)
+             cell.dict['DensityGrowth'] = self.DensitySTEM_HalfMaxValue ** 4 / (self.DensitySTEM_HalfMaxValue ** 4 + cell.dict['Pressure'] ** 4)
+             cell.dict['TotalGrowth'] = self.STEM_doubling * (cell.dict['DensityGrowth'] * cell.dict['EGF_Growth'])
+             cell.targetVolume += cell.dict['TotalGrowth']
+-            self.event_data.append({'Event Type': 'Stem Growth Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume': cell.volume, 'Time': mcs})
+         for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
+             if cell.lambdaSurface == 0:
+                 continue
+--- July2024:('ConstraintInitializerSteppable', '__init__')
+
++++ Aug2025:('ConstraintInitializerSteppable', '__init__')
+
+@@ -2,13 +2,9 @@
+
+     SteppableBasePy.__init__(self, frequency)
+     if self.PressureTracker:
+         self.track_cell_level_scalar_attribute(field_name='Pressure', attribute_name='Pressure')
+-    if self.VolumeTracker:
+-        self.track_cell_level_scalar_attribute(field_name='Volume', attribute_name='Volume')
+     if self.EGF_SeenByCell:
+         self.track_cell_level_scalar_attribute(field_name='EGF_Seen', attribute_name='EGF')
+     if self.SLS_SeenByCell:
+         self.track_cell_level_scalar_attribute(field_name='SLS_Seen', attribute_name='SLS')
+     if self.CenterBias:
+         self.track_cell_level_scalar_attribute(field_name='CenterBias', attribute_name='CenterBias')
+-    if self.DivisionTracker:
+-        self.track_cell_level_scalar_attribute(field_name='CellLineage', attribute_name='CellLineage')

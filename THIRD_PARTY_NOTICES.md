@@ -30,6 +30,34 @@ their pinned directories. [The manifest](vendor/manifest.json) and its linked
 inventories record exact file hashes and materialized dependency commits. No
 blanket license is substituted for these component-specific declarations.
 
+## Corneal original analysis, data and optional publication runtimes
+
+Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen and James A. Glazier:
+V-Cornea, [final article](https://doi.org/10.1371/journal.pcbi.1013410) and
+[Zenodo16884414](https://doi.org/10.5281/zenodo.16884414), CC-BY-4.0 declarations.
+The [publication experiment](experiments/vcornea/publication/README.md) retains
+unchanged original plotting/membrane files and17 final-paper supplements, with
+exact original URLs/hashes. Its selected scalar acquisition is attributed to the
+same archive; complete ZIP verification is not claimed. The two original model
+method excerpts in `tests/fixtures/vcornea-*.py.txt` have the same attribution/terms.
+
+The complete50-file July2024 snapshot at
+[`vendor/models/vcornea-history-b6123adf`](vendor/models/vcornea-history-b6123adf)
+comes directly from Git objects inside the same licensed Zenodo code ZIP, commit
+`b6123adf992e5b48442c0ebedd34ba7cd3162ef2`. Its original bytes and modes are
+retained, with original authors/CC-BY-4.0 attribution and an independent inventory.
+Peykar's private lifetime and observation overlays are separately identified;
+neither downloaded Git hooks/configuration nor batch launchers were executed.
+Peykar's private source overlays and observation/analysis wrappers are separately
+identified modifications; no upstream endorsement or biological validity is inferred.
+
+Optional CC3D4.6.0/4.7.0 ARM64 runtimes retain607 original package-shipped notice
+files under [publication runtime notices](runtime_profiles/vcornea-publication/notices).
+Their [inventory](runtime_profiles/vcornea-publication/notice-inventory.json) pins
+484 distinct package distributions, SHA-256s, declared terms and notice hashes.
+The complete installed environments keep their additional metadata/component files.
+These terms do not replace Peykar's original project license or old source notices.
+
 Runtime Python packages are pinned in each profile's `uv.lock`; native package and
 R package inventories are retained inside the corresponding images. COPASI's
 BasiCO interface and its compatibility bridge are credited in the runtime profile.

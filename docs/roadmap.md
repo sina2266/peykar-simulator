@@ -1,6 +1,6 @@
 # Peykar whole-platform delivery roadmap
 
-Updated 2026-10-17 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
+Updated 2026-10-18 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
 Peykar is a general biological simulation platform. vCornea is one admitted test
 case; completion of its operator workflow is not completion of this product.
 This roadmap supersedes the earlier eye-centered ordering, retained in
@@ -30,8 +30,8 @@ combines them into a misleading overall completion score.
 | S12 | Interactive six-workspace application | S2,S3,S4,S6,S11 | E4 local six-workspace application implemented on current APIs; richer scientific authoring/quality authority/spatial workflows remain open |
 | S13 | Scalable operation and release | S0,S4,S11,S12 | Single-host Docker working; PostgreSQL/object storage/HPC/multi-host open |
 
-Independent engineering work on S1–S4 proceeds without waiting for missing
-published vCornea seeds. Scientific gates remain mandatory before model validity
+The latest user instruction prioritizes full corneal reproduction before further
+S1–S4/model expansion. Scientific gates remain mandatory before model validity
 or a biological coupling is claimed. UI work depends on concrete operations and
 states; an illustrative graph or animation cannot substitute for execution.
 
@@ -211,6 +211,59 @@ or unlabeled illustrative scientific state. Swagger remains developer tooling.
 - [ ] S13.4 SLURM/batch/external runtime agents, aggregate budgets and reproducible worker capabilities.
 - [ ] S13.5 Multi-user permissions/tenant isolation, deployment threat model and data retention.
 - [ ] S13.6 Reproducible releases, compatibility matrix, installed-wheel/client tests and monitored deployment.
+
+## Current delivery priority — user instruction, 2026-10-18
+
+Complete corneal publication reproduction before starting another model/domain.
+Two configuration families are the immediate target: stem-cell tissue formation
+and injury/recovery. Recover original analysis, exact scenario/initial state, full
+horizon and reference cohorts; freeze comparison endpoints before new results.
+A failed comparison remains a failed result requiring investigation. Report full
+completion only after these checks; engineering smoke tests do not close P1/P2.
+The earlier independently advancing workstreams resume after this corneal gate.
+
+- [x] Recover65 original replicates/174 scalar files, unchanged plot/membrane source
+  and17 final-paper supplements; replay the original analysis and retain its figures.
+- [x] Audit71 named table controls against Local and HPC source, preserving conflicts.
+- [x] Restore the source-based HPC formation preset as a separate version; install
+  the paper's stated4.6.0 engine version in an independently pinned environment.
+- [x] Repair two invalid native lifetimes in private versioned overlays; execute
+  actual observer equivalence and membrane-injury probes without editing upstream.
+- [x] Retain two actual completed later-source formation runs and their negative
+  frozen count/thickness findings; do not relax acceptance to force a match.
+- [x] Recover all50 July2024 source files from original licensed archive objects;
+  retain the separate source identity, unchanged HPC mechanics and original controls.
+- [x] Add durable actual-child-exit proofs and resume only verified completed jobs;
+  four old complete-looking injury outputs without exit evidence remain unpromoted.
+- [ ] Finish the six injury retries/unstarted jobs in
+  `.peykar/cornea-hpc46-resumed-20261023` and historical formation seeds7/11 in
+  `.peykar/cornea-historical-formation46-20261023`; inspect current records/PIDs
+  before starting anything. Each job has a24-hour deadline; preserve failed runs.
+- [ ] Apply the unchanged frozen reference comparison to every full run, replay the
+  authors' math on new outputs, inspect actual spatial/EGF/recovery results and retain
+  negative findings. Current source/table disagreements preclude an exact-final-table claim.
+- [x] Inspect10 actual original VTK snapshots/three descriptors, retaining group
+  differences: MildComb0 is4620h/pulse300h, moderate spatial data ends1058h and
+  CONTROL4265h. These are not the selected full scalar cohorts or independent experiments.
+- [ ] Resolve historical injury initial-state correspondence before any old-source
+  injury candidate: July HPC PIFF has3/35/132/39 stem/basal/wing/superficial cells,
+  while selected archived injury trajectories and retained injury VTK start4/32/127/46.
+  Do not silently combine a later initial state with older mechanisms.
+- [ ] Establish independently applicable biological measurements; calibration ranges
+  and the unrelated monolayer assay do not supply independent tissue validation.
+
+See the [source/analysis inventory](../experiments/vcornea/publication/README.md)
+and [operator commands](../runtime_profiles/vcornea-publication/README.md).
+
+### Source reuse backlog (candidates, not implemented claims)
+
+| Retained source family | Potential future use | Evidence/implementation needed after corneal gate |
+|---|---|---|
+| Cellular/tissue mechanics and diffusion engines | Retinal cell organization, epithelial layers and extracellular transport | A retinal-specific original model, cell types/geometry, units and independent endpoints; a corneal model is not transferred automatically |
+| Neuronal/electrophysiology engine | Retinal neurons and circuit activity | Reviewed retinal morphology/channel/synapse model and original electrophysiological benchmarks |
+| Molecular reaction/ODE engines | Retinal/corneal signaling pathways | Applicable pathway/cell context, kinetic parameters, original benchmark and explicit process ownership |
+| Pharmacokinetic models | Ocular/systemic exposure and delivery | Ocular compartments, permeability/exposure data and validated tissue interface |
+| Perturbation/transcriptomic tools | Cell-type-specific corneal or retinal hypotheses | Suitable tissue data, independent splits/accuracy and an evidenced molecular-to-cell bridge |
 
 ## Program acceptance and next concrete sequence
 

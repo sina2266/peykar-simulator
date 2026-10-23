@@ -1,0 +1,29 @@
+class ConstraintInitializerSteppable:
+    def update_wall_links(self, cell):        
+        if cell.xCOM < self.dim.x / 2:
+            closest_neighbor_WALL = self.cell_field[int(0.5), int(cell.yCOM + 0.5), 0]
+        else:
+            closest_neighbor_WALL = self.cell_field[int(self.dim.x - 0.5), int(cell.yCOM + 0.5), 0]
+        existing_link_with_closestWALL = self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)             
+        if existing_link_with_closestWALL:
+            if len(self.get_fpp_links_by_cell(cell)) > 2:
+                for link in self.get_fpp_links_by_cell(cell):
+                    if link.getOtherCell(cell).type == self.WALL:
+                        self.delete_fpp_link(link)
+            elif len(self.get_fpp_links_by_cell(cell)) == 1:                
+                self.delete_fpp_link(existing_link_with_closestWALL) 
+        
+        # update the forces if so defined            
+            if self.AutoAdjustLinks:
+                if self.Lambda_link_adjustment:
+                    self.link_lambda_update(existing_link_with_closestWALL)
+                else:
+                    self.link_target_distance_update(existing_link_with_closestWALL)
+        else:
+            for link in self.get_fpp_links_by_cell(cell):
+                if link.getOtherCell(cell).type == self.WALL:
+                    # [ ] We could have a threshold for the distance between the SUPER and the WALL
+                    # if  link.getTension > SOME_THRESHOLD:
+                    self.delete_fpp_link(link)
+            self.create_links(cell)
+
