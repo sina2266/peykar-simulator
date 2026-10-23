@@ -133,6 +133,21 @@ original mathematics and spatial analysis in sequence, retaining stage logs and
 negative comparisons (exit2). It performs no Git, deployment or API mutation.
 The October23 resumed plan's follow-on is `.peykar/cornea-hpc46-analysis-20261023`.
 
+Newly executed jobs retain a verified failed guard's actual `native_returncode`,
+`native_signal`, completion hash and `partial_outputs` separately. The outer guard
+can return134 while its actual solver died by SIGABRT/-6. Partial hashes remain
+failed-child evidence; `outputs` is not admitted and no comparison can treat the
+job as completed. New driver copies also enable Python fatal-signal stacks in
+the bounded `engine.log`. This improves diagnosis; it does not fix the detected
+native heap corruption. Existing executed/prepared driver copies are unchanged.
+The retry operator now applies the same XML worker budget as first execution,
+counting only newly prepared retry jobs before it starts any child.
+
+Spatial diagnostics1.2 retains the1.1 numeric rows and adds every plotted type to
+the legend, using names from each verified original XML (including tear, medium,
+membrane, limbus and stroma). Original epithelium counts/physical calculations,
+thresholds and source files remain unchanged.
+
 After **every** job actually succeeds, run all three analyses (fresh destinations):
 
 ```bash

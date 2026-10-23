@@ -664,3 +664,24 @@ commands/outcomes in `docs/verification.md`.
   formation as waiting primary and completedinjury6 as additional; directory
   .peykar/cornea-stash-full-analysis-20261024. Recheck ownership/status now.
 - Full publication gate and independent biology still open. Heartbeat stays PAUSED.
+
+## Failed-child diagnosis and original-type legends, October24 local
+
+- Maince4be39afcb103b78660002efd0945bbeaba4ec6 pushed/remote-SHA verified after
+  90exact-byte staged files:older26-file original source +6actualJanuaryinjury
+  outcomes and5success/1abort derived terminal receipt. Do not recreate that work.
+- execute_native now preserves verified failed guard native_returncode/signal,
+  completion hash and partial_outputs separately; failed outputs stay unadmitted.
+  Actual oldabort read-only extraction verified-6/SIGABRT,outer134,25partialhashes,
+  oldrecordbyteunchanged. Diagnosis improvement is NOT a native heapcorruption fix.
+- New prepared driver copies enable faulthandler(all_threads); current running
+  formation copies unchanged. Resume now validates actualXML retryworkerbudget,
+  onlynewpreparedchildren, atmost4multiworker/16requested or6singleworkerjobs.
+- Spatialdiagnostics1.2 includes ALLplotted originalXMLtype names inlegend.
+  Reanalysis6Januaryinjury numericrows/6EGFPNGs EXACTLYunchanged, finalmoderate11
+  updatedfigure visuallychecked. No physical/acceptancechange. Oldfiguresretained.
+- Source4completedfirst4 view got three realstages:comparison2/original0/spatial0;
+  oldnegativecomparisonrowsidentical. One realfailedmoderatejob remains excluded.
+- Targeted29tests0.63s/Ruff/mypy2pass. Finalcheck-docker534tests38.00s86%,mypy99,
+  18frontend/contracts/allbuilds;hostmakebuildpass. Logs cornea-terminal-failure-*.
+  Heartbeat staysPAUSED. Formation95506/fullfollowon95617 continue; recheckactualPIDs.

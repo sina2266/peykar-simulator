@@ -1,5 +1,34 @@
 # Verification record
 
+## Native failed-child diagnosis and retry bounds: 2026-10-24 local
+
+- Targeted completion-guard/operator/publication tests passed29 tests/0.63s.
+  Real subprocess fixtures retained exit9 and actual SIGTERM/-15 (outer143),
+  partial hashes and an unchanged unadmitted outer record; wrong exit/artifact
+  identities are rejected. Six four-worker retries are rejected before any child.
+  Targeted Ruff check/format and mypy on both modified package files passed.
+- The new failed-child extractor was run read-only on the actual source4 native
+  abort. It verified SIGABRT/-6, outer134 and25 partial artifact hashes. Original
+  failed record bytes are unchanged. No native corruption fix is claimed.
+- `analyze_spatial.py` re-read all six complete January injury jobs into fresh
+  output. Diagnostics1.2 adds complete original XML type legends; ALL earlier
+  numeric snapshot rows and all six EGF PNG bytes are identical. Updated final
+  moderate11 structure was visually inspected; scalar acceptance is unchanged.
+- The existing completed four-job source4 view received a three-stage explicit
+  follow-on: comparison2/diagnostic_not_reproduced, original0/spatial0. Every
+  per-job comparison row equals the earlier negative subset report. The failed
+  moderate7 job is not admitted or hidden by this diagnostic.
+- Final `make check-docker` passed534 tests/38.00s/86% coverage, strict mypy99
+  source files,18 frontend tests, current contracts and all wheel/sdist builds.
+  Log `.peykar/cornea-terminal-failure-check-docker-20261024.log`.
+  Host `make build` passed, log `.peykar/cornea-terminal-failure-host-build-20261024.log`.
+  Docker uses the existing task-private anonymous config/Desktop socket; tests
+  never mount/reset the live volume. `/healthz` returned200/ok/version0.3.0.
+- Existing formation jobs retain their original copied driver hashes. New source
+  enables fatal-signal Python stacks only in future private preparations. Neither
+  ongoing inputs, original models/schemas, uv.lock nor frozen acceptance changed.
+
+
 ## Earlier original source and completed injury evidence: 2026-10-24 local
 
 - Whole earlier Code ZIP16764319 downloaded and verified228667541 bytes,

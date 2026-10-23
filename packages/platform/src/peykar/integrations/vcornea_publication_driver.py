@@ -2,6 +2,7 @@
 
 import argparse
 import csv
+import faulthandler
 import importlib
 import json
 import math
@@ -15,6 +16,8 @@ from typing import Any
 
 
 def main() -> None:
+    # Native aborts can leave no Python exception. Preserve their stacks in engine.log.
+    faulthandler.enable(all_threads=True)
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--wall-seconds", type=float, required=True)

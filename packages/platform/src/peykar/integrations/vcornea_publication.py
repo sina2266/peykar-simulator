@@ -304,6 +304,42 @@ def native_command(directory: Path, prefix: Path, wall_seconds: float) -> tuple[
     )
 
 
+def failed_native_details(
+    root: Path, manifest: dict[str, Any], runtime: dict[str, Any], wrapper_returncode: int
+) -> dict[str, Any]:
+    """Retain a verified failed child's actual signal and partial hashes, never a result."""
+    path = root / "completion.json"
+    if not manifest.get("execution_guard_digest") or not path.exists():
+        return {}
+    proof = json.loads(path.read_bytes())
+    code = proof.get("returncode")
+    if (
+        type(code) is not int
+        or code == 0
+        or (code if code > 0 else 128 - code) != wrapper_returncode
+        or proof.get("scope") != "observed_native_child_exit"
+        or proof.get("manifest_digest") != digest(manifest)
+        or proof.get("runtime_digest") != digest(runtime)
+        or bytes_digest((root / "completion_guard.py").read_bytes())
+        != manifest["execution_guard_digest"]
+    ):
+        raise Conflict("Failed native completion proof disagrees")
+    for relative, checksum in proof["outputs"].items():
+        artifact = (root / relative).resolve(strict=True)
+        if (
+            not artifact.is_relative_to(root.resolve())
+            or bytes_digest(artifact.read_bytes()) != checksum
+        ):
+            raise Conflict("Failed native artifact changed or escaped the workspace")
+    return {
+        "native_returncode": code,
+        "native_signal": signal.Signals(-code).name if code < 0 else None,
+        "completion_digest": bytes_digest(path.read_bytes()),
+        "partial_outputs": proof["outputs"],
+        "partial_output_scope": "failed_child_evidence_only_not_a_completed_result",
+    }
+
+
 def execute_native(
     directory: Path, prefix: Path, profile: Path, *, wall_seconds: float = 86400
 ) -> dict[str, Any]:
@@ -396,6 +432,7 @@ def execute_native(
                 time.sleep(1)
         record["returncode"] = process.returncode
         if process.returncode:
+            record.update(failed_native_details(root, manifest, runtime, process.returncode))
             raise InvalidRequest("Native vCornea failed; inspect retained engine.log")
         outputs = {
             p.relative_to(root).as_posix(): bytes_digest(p.read_bytes())

@@ -54,9 +54,36 @@ partial arrays/progress and failed job remain; only relevant sanitized metadata
 and stack symbols are exported in the [terminal receipt](observed-2026-10-24/derived4-terminal-execution-and-abort.json).
 No native bug fix or biological explanation is claimed from that stack.
 
+The new failure extractor was also run read-only against that actual proof:
+it verifies SIGABRT/-6, wrapper134 and all25 retained partial hashes while leaving
+the original failed record byte-identical. [Extracted proof](observed-2026-10-24/derived4-verified-abort-details.json).
+Future executions retain those fields separately and enable fatal-signal stacks;
+partial evidence never becomes a successful result. Retry worker budgets now use
+the same actual XML checks as first execution.
+
 The combined derived full analysis correctly stopped. Its five full jobs cannot
 replace six actual native completions. Existing negative slight/mild diagnostic
 results remain intact. No failed job is silently retried or promoted.
+
+All three stages were subsequently run on the four completed slight/mild jobs
+as an explicit diagnostic subset. The per-job comparison rows are exactly the
+same as the earlier negative report; original math and spatial checks both exit0.
+[Stage exits](observed-2026-10-24/derived4-first-four-stages.json),
+[original math](observed-2026-10-24/derived4-first-four-original-analysis.json) and
+[spatial measurements](observed-2026-10-24/derived4-first-four-spatial-analysis.json)
+retain this completed analysis without concealing the missing moderate7 result.
+
+## Figure interpretation correction
+
+Earlier structure legends labeled only epithelial cells, leaving tear/medium/
+membrane/stroma colors unexplained. Diagnostics1.2 now reads all plotted type
+names from the verified original XML and shows the complete legend. On all six
+completed January jobs, every earlier numeric snapshot row and every EGF PNG is
+identical. The final moderate11 structure figure was visually inspected.
+[Exact equivalence](observed-2026-10-24/january-spatial-labels12-equivalence.json)
+and [updated report](observed-2026-10-24/january-spatial-labels12-report.json) preserve
+old and new figures separately. This is an annotation correction, not a changed
+physical model, measurement or acceptance criterion.
 
 ## Explicit capacity release for never-started formation
 

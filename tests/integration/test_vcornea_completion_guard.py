@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from peykar.integrations.vcornea_publication import recover_native_completion
+from peykar.integrations.vcornea_publication import failed_native_details, recover_native_completion
 from peykar_core.errors import Conflict
 from peykar_core.hashing import bytes_digest, canonical_json, digest
 
@@ -107,3 +107,39 @@ def test_actual_nonzero_exit_remains_a_failure(workspace):
     assert invoke(root).returncode == 9
     recovered = recover_native_completion(root)
     assert recovered["status"] == "failed" and recovered["returncode"] == 9
+
+
+@pytest.mark.parametrize("aborted", [False, True])
+def test_failed_child_keeps_true_signal_and_partial_artifacts_without_admitting_results(
+    workspace, aborted
+):
+    root = workspace
+    driver = root / "driver.py"
+    driver.write_text(
+        "import os, signal\n"
+        "from pathlib import Path\n"
+        "Path('project/cell_count_partial.csv').write_text('incomplete synthetic data')\n"
+        + ("os.kill(os.getpid(), signal.SIGTERM)\n" if aborted else "raise SystemExit(9)\n")
+    )
+    manifest = json.loads((root / "manifest.json").read_bytes())
+    manifest["driver_digest"] = bytes_digest(driver.read_bytes())
+    (root / "manifest.json").write_text(canonical_json(manifest))
+    result = invoke(root)
+    runtime = json.loads((root / "runtime-profile.json").read_bytes())
+    details = failed_native_details(root, manifest, runtime, result.returncode)
+    assert result.returncode == (143 if aborted else 9)
+    assert details["native_returncode"] == (-15 if aborted else 9)
+    assert details["native_signal"] == ("SIGTERM" if aborted else None)
+    assert details["partial_outputs"] == {
+        "project/cell_count_partial.csv": bytes_digest(
+            (root / "project/cell_count_partial.csv").read_bytes()
+        )
+    }
+    # Observing a failed child's evidence must not promote the outer running record.
+    record = json.loads((root / "record.json").read_bytes())
+    assert record["status"] == "running" and record["outputs"] == {}
+    with pytest.raises(Conflict, match="disagrees"):
+        failed_native_details(root, manifest, runtime, 1)
+    (root / "project/cell_count_partial.csv").write_text("replaced partial output")
+    with pytest.raises(Conflict, match="artifact changed"):
+        failed_native_details(root, manifest, runtime, result.returncode)

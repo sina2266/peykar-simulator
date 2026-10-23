@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from peykar_core.hashing import bytes_digest
+from peykar_core.hashing import bytes_digest, digest
 
 
 @pytest.fixture
@@ -168,3 +168,62 @@ def test_parallelism_checks_native_xml_instead_of_blas_environment(
         assert result["maximum_simultaneous_requested_workers"] == sum(
             sorted(workers, reverse=True)[:maximum]
         )
+
+
+def test_resume_rejects_six_multiworker_retries_before_starting_any_child(
+    tmp_path, operators, monkeypatch
+):
+    resume = importlib.import_module("resume_vcornea")
+    previous, output = tmp_path / "previous", tmp_path / "retry"
+    plan = series(previous, "mild-injury")
+    profile = tmp_path / "profile.json"
+    profile.write_text('{"scope":"synthetic capacity fixture"}')
+    plan["jobs"] = [
+        dict(plan["jobs"][0], seed=seed, directory=str(previous / str(seed)))
+        for seed in range(1, 7)
+    ]
+    plan.update(
+        status="execution_failed",
+        profile_digest=digest(json.loads(profile.read_bytes())),
+        parameter_profile="historical-hpc-3.0.0",
+        wall_seconds_per_run=60,
+    )
+    (previous / "plan.json").write_text(json.dumps(plan))
+    monkeypatch.setattr(resume, "verified_completed", lambda *args: False)
+
+    def prepare(_source, _pins, root, *args, **kwargs):
+        simulation = root / "project/Simulation"
+        simulation.mkdir(parents=True)
+        (simulation / "vCornea_v2.xml").write_text(
+            "<CompuCell3D><Metadata><NumberOfProcessors>4</NumberOfProcessors>"
+            "</Metadata></CompuCell3D>"
+        )
+        return {"scope": "synthetic retry preparation"}
+
+    monkeypatch.setattr(resume, "prepare_publication", prepare)
+    monkeypatch.setattr(resume, "execute_native", lambda *a, **kw: pytest.fail("child started"))
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "resume_vcornea.py",
+            "--previous",
+            str(previous),
+            "--source",
+            str(tmp_path),
+            "--pins",
+            str(tmp_path),
+            "--prefix",
+            str(tmp_path),
+            "--profile",
+            str(profile),
+            "--output",
+            str(output),
+            "--max-parallel",
+            "6",
+        ],
+    )
+    with pytest.raises(ValueError, match="multiworker"):
+        resume.main()
+    assert (output / "previous-plan.json").read_bytes() == (previous / "plan.json").read_bytes()
+    assert not list(output.rglob("record.json"))

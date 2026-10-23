@@ -77,7 +77,7 @@ def main():
     parser.add_argument("--prefix", required=True, type=Path)
     parser.add_argument("--profile", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--max-parallel", type=int, choices=range(1, 9), default=4)
+    parser.add_argument("--max-parallel", type=int, choices=range(1, 7), default=4)
     parser.add_argument("--injury-state", type=Path)
     args = parser.parse_args()
     original = (args.previous / "plan.json").read_bytes()
@@ -134,6 +134,13 @@ def main():
                 "status": "prepared",
             }
         )
+    # Reused successful jobs consume no new capacity. Apply the same actual XML
+    # worker budget as first execution before starting any retry child.
+    from reproduce_vcornea import validate_parallelism
+
+    plan["native_worker_budget"] = validate_parallelism(
+        [job for job in plan["jobs"] if job["status"] == "prepared"], args.max_parallel
+    )
     plan["status"] = "running"
     write_operator_json(args.output / "plan.json", plan)
     with ThreadPoolExecutor(max_workers=args.max_parallel) as executor:

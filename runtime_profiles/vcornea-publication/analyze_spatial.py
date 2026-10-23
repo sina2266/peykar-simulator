@@ -4,6 +4,7 @@ import argparse
 import json
 from collections import deque
 from pathlib import Path
+from xml.etree import ElementTree
 
 COLORS = [
     "#101015",
@@ -98,7 +99,7 @@ def analyze(directory, output):
     report = {
         "schema_version": "1.0.0",
         "plan_digest": checksum(directory / "plan.json"),
-        "observation_version": "vcornea.spatial-diagnostics-1.1.0",
+        "observation_version": "vcornea.spatial-diagnostics-1.2.0",
         "spatial_mapping": "x,y lattice order; 200x90 sites; 2 micrometres/site (paper2.2)",
         "scope": "Descriptive endpoints, not preregistered acceptance or clinical validation",
         "independent_biological_validation": False,
@@ -164,6 +165,14 @@ def analyze(directory, output):
         injury = manifest.get("parameter_overrides", {}).get("InjuryTime")
         horizon = manifest["controls"]["steps_mcs"]
         times, field_times = figure_times(snapshots, horizon, injury)
+        cell_types = {
+            int(element.attrib["TypeId"]): element.attrib["TypeName"]
+            for element in ElementTree.parse(root / "project/Simulation/vCornea_v2.xml").findall(
+                "./Plugin[@Name='CellType']/CellType"
+            )
+        }
+        plotted_types = sorted({int(k) for t in times for k in np.unique(snapshots[t][0])})
+        legend = {kind: cell_types[kind] for kind in plotted_types}
         columns = len(times) // 2
         figure, axes = plt.subplots(
             2, columns, figsize=(columns * 4.4, 7), sharex=True, sharey=True
@@ -190,11 +199,14 @@ def analyze(directory, output):
             ax.set_ylabel("Depth position (µm)")
         figure.suptitle(f"{job['case']} · seed {job['seed']} · actual 2D lattice")
         figure.legend(
-            handles=[Patch(color=COLORS[k], label=label) for k, label in LABELS.items()],
+            # Include tear, medium, membrane, limbus, stroma and wall whenever shown.
+            # These names come from the verified original project's CellType declaration.
+            handles=[Patch(color=COLORS[k], label=label) for k, label in legend.items()],
             loc="lower center",
-            ncols=4,
+            ncols=5,
+            fontsize=9,
         )
-        figure.tight_layout(rect=(0, 0.05, 1, 0.96))
+        figure.tight_layout(rect=(0, 0.09, 1, 0.96))
         figure.savefig(output / f"{job['case']}-{job['seed']}-structure.png", dpi=160)
         plt.close(figure)
         if injury is not None:
@@ -230,6 +242,7 @@ def analyze(directory, output):
                 "full_horizon_mcs": horizon,
                 "structure_figure_times_mcs": times,
                 "egf_figure_times_mcs": field_times,
+                "structure_legend_original_type_names": legend,
                 "snapshots": rows,
             }
         )
