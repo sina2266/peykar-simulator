@@ -11,6 +11,11 @@ January injury exits, the mixed frozen subset result and a separate derived
 native abort. Both January formation jobs now run from their frozen prepared
 inputs after an explicit capacity review; failed prerequisite plans remain intact.
 
+The [serial execution derivative](serial-execution-audit-2026-10-24.md) records
+actual native parallel stress failures and an explicit one-worker profile, with
+its own full moderate diagnostic underway. [Original per-run correspondence](original-run-metadata-needed.md)
+still requires evidence; candidate outputs are not used to invent missing inputs.
+
 The [complete January2025 archive source](january-source-family-audit-2026-10-23.md)
 is now separately pinned as `stash-hpc-5.0.0`. Its formation/injury projects have
 different original mechanisms and defaults. Earlier candidates and all negative

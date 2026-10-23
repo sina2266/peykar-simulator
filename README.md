@@ -36,6 +36,9 @@ unstarted formation jobs now run from their original prepared inputs under an
 explicit reviewed capacity release. The earlier failed prerequisite plans remain.
 Original
 figure export now preserves titles/axis labels with identical numerical summaries.
+Actual native parallel stress failures also motivated a separately versioned
+one-worker injury derivative; its two full moderate diagnostics are running.
+This changes execution controls explicitly, without fitting biological parameters.
 The complete January2025 archive snapshot is also retained. A separate fifth
 reconstruction keeps its different formation/injury mechanisms and original
 family defaults; [source correspondence and limits](experiments/vcornea/publication/january-source-family-audit-2026-10-23.md)

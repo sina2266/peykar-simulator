@@ -1,5 +1,39 @@
 # Verification record
 
+## Explicit serial corneal execution control: 2026-10-24 local
+
+- Targeted history/January/operator checks passed37 tests/1.01s. The new recipe
+  retains all source4 biological controls/PIFF; XML differs only in the declared
+  worker count4→1. Old profile3/4 behavior, admission and executed copies remain.
+  Targeted Ruff/mypy passed after correcting two long diagnostic string lines.
+- Explicit bounded native stress probes: same two giant synthetic cells,seed7,
+  200×90,10000MCS. One-worker control exit0/25.06s, last sampled9900MCS/18000volume.
+  Four workers with both trackers SIGSEGV/-11/1.85s. Pixel-only SIGABRT/-6/1.91s;
+  boundary-only SIGSEGV/-11/1.89s; neither tracker SIGABRT/-6/2.09s. Actual exits/
+  XML/PIFF/operator hashes retained. Removing trackers did not eliminate failures;
+  a BoundaryPixelTracker-only corruption-origin claim/patch is not justified.
+- Two earlier probe setups failed before firstMCS (PIF path, observer import scope),
+  retained with actual returncodes. Corrected probes are software stress controls,
+  not corneal biology or full-horizon stability. No installed binary was modified.
+- Exhaustive range-based Data.zip member-kind listing counted78574 entries:
+  242 recognized scalar CSVs,147Parquets,3DML,9946VTK,68217PNG,6MP4,6PDF,6JPG,
+  one original plot_manager.py. No extra parameter/config file was identified by
+  this member inventory; arbitrary embedded content/whole ZIP MD5 remain unverified.
+- New offline `observed-injury-serial-6.0.0` explicitly started moderate7/11 full
+  50400MCS jobs with one worker each,24h/job. Original biology, pulse/doses, units,
+  initial PIFF and acceptance remain fixed; stochastic parallel equivalence unknown.
+  Plan `.peykar/cornea-serial-derived-moderate46-20261024`, finite three-stage
+  moderate-only follow-on in `cornea-serial-derived-moderate-analysis-20261024`.
+  Full native completion/scientific outcome remain pending. January formation2
+  still runs original copied four-worker inputs; no healthy run duplicated/stopped.
+- Final `make check-docker` passed537 tests/39.28s/86% coverage, strict mypy99 files,
+  18frontend tests/current contracts/all package builds. Host `make build` passed.
+  Logs `.peykar/cornea-serial-execution-check-docker-20261024.log` and
+  `.peykar/cornea-serial-execution-host-build-20261024.log`. The previous534-test
+  final gate preceded this separate critical native-concurrency discovery/change.
+  No recurring schedule, deployment or live data mutation; heartbeat remains paused.
+
+
 ## Native failed-child diagnosis and retry bounds: 2026-10-24 local
 
 - Targeted completion-guard/operator/publication tests passed29 tests/0.63s.

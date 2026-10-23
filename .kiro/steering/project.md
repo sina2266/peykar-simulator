@@ -685,3 +685,28 @@ commands/outcomes in `docs/verification.md`.
 - Targeted29tests0.63s/Ruff/mypy2pass. Finalcheck-docker534tests38.00s86%,mypy99,
   18frontend/contracts/allbuilds;hostmakebuildpass. Logs cornea-terminal-failure-*.
   Heartbeat staysPAUSED. Formation95506/fullfollowon95617 continue; recheckactualPIDs.
+
+## Serial derivative after actual native stress failure, October24 local
+
+- Main383fae9499f6c195615990228969956a35270598 pushed/remote-SHA verified after
+  23exact-byte staged files,534tests38.00s/86% and hostbuild. Do not recreate work.
+- Bounded synthetic native4.6 test: two giant cells/200x90/seed7/10000MCS.
+  1worker exit0/25.06s (last9900,totalvolume18000);4withtrackersSIGSEGV1.85s.
+  4pixel-onlySIGABRT1.91s,boundary-onlySIGSEGV1.89s,neitherSIGABRT2.09s.
+  Thus do NOT claimBoundary-onlycause or installspeculativemutexpatch. Original
+  cornealcorruptionorigin stillunknown; reducedworkers is explicitworkaround.
+  Bothinitialsetupproberrorsretained; correctedcontrols arenotbiologicalvalidation.
+- New observed-injury-serial-6.0.0 changes ONLYsource4workerXML4to1, retains
+  biologicalparameters/state/lifetime2/10bins/protocol; newmanifestversion6/control
+  overlaylabelsunknownparallelstochasticequivalence. Existingprofiles/copiesintact.
+- Explicit fullmoderate7/11 newnativeoperator98682, .peykar/cornea-serial-derived-
+  moderate46-20261024.2requestedworkers,24h/job. Boundedfollowon98752 at
+  .peykar/cornea-serial-derived-moderate-analysis-20261024 isdiagnosticmoderateonly.
+  CurrentJanuaryformation95506/fullfollowon95617 remainactiveunchanged,8workers;
+  totalnative requestatmost10. Recheckactualstate/PIDs; NEVER duplicatehealthyjobs.
+- Targeted37tests1.01s/Ruff/mypy2pass. Final537-testcheck-docker and hostbuildpass;
+  logs cornea-serial-execution-*. Publication familygate and independentbiologyopen.
+- Exhaustive78574DataZIPmemberkinds show onlyknownoutputformats/oneplotscript;
+  noextraidentifiedconfigurationfile. FullzipMD5/arbitraryembeddedcontentsunknown.
+  original-run-metadata-needed.md islocalconcreteevidenceinventory; noauthorscontacted.
+- Heartbeat staysPAUSED. Finish/analyze these existingnative jobs beforeanynewmodel.

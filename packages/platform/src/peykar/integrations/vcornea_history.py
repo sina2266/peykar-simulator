@@ -74,6 +74,7 @@ def prepare_historical_publication(
     seed: int,
     *,
     injury_state: Path | None = None,
+    serial_injury: bool = False,
 ) -> dict[str, Any]:
     from peykar.integrations.vcornea_publication import repair_link_lifetime
 
@@ -83,6 +84,8 @@ def prepare_historical_publication(
         raise InvalidRequest("Historical injury correspondence requires a separate source review")
     if not injury and injury_state is not None:
         raise InvalidRequest("Formation retains its own historical initial state")
+    if serial_injury and not injury:
+        raise InvalidRequest("Serial injury execution is a separate injury-only profile")
     state = None if injury_state is None else injury_state.read_bytes()
     if state is not None and bytes_digest(state) != INJURY_STATE_SHA256:
         raise Conflict("Injury state differs from the separately evidenced archived PIFF")
@@ -135,6 +138,11 @@ def prepare_historical_publication(
         raise Conflict("Historical horizon control missing")
     steps.text = str(executed_controls["SimTime"] + 2)  # Original writer at SimTime+1.
     ElementTree.SubElement(potts, "RandomSeed").text = str(seed)
+    if serial_injury:
+        workers = tree.find("./Metadata/NumberOfProcessors")
+        if workers is None or workers.text != "4":
+            raise Conflict("Reviewed original four-worker declaration differs")
+        workers.text = "1"
     tree.write(path, encoding="utf-8", xml_declaration=True)
     manifest: dict[str, Any] = {
         "schema_version": "1.0.0",
@@ -174,6 +182,27 @@ def prepare_historical_publication(
         manifest["limitations"].append(
             "Derived reconstruction: observed injury PIFF, frozen7200/50400MCS and measured dose; "
             "not a claim that the historical Git tree alone generated the selected cohort."
+        )
+    if serial_injury:
+        manifest.update(
+            publication_recipe_version="6.0.0",
+            parameter_profile="observed-injury-serial-6.0.0",
+            native_workers_requested=1,
+            execution_control_overlay={
+                "version": "1.0.0",
+                "source_workers": 4,
+                "requested_workers": 1,
+                "reason": "Separate serial execution after actual parallel native corruption",
+                "scope": (
+                    "Original biological controls unchanged; "
+                    "parallel stochastic equivalence unknown"
+                ),
+            },
+        )
+        manifest["limitations"].append(
+            "One native worker is an explicit execution derivative, not the original HPC XML; "
+            "a short probe alone does not establish full-horizon stability "
+            "or publication agreement."
         )
     (destination / "manifest.json").write_text(canonical_json(manifest) + "\n")
     manifest = repair_link_lifetime(destination, overlay_version="2.0.0")

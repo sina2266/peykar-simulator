@@ -188,3 +188,67 @@ def test_observed_state_requires_explicit_unchanged_data_and_cannot_change_forma
             parameter_profile="historical-hpc-3.0.0",
             injury_state=wrong,
         )
+
+
+def test_serial_execution_is_a_new_profile_without_rewriting_any_biological_control(tmp_path):
+    state = Path("vendor/models/vcornea-16884414/Local/Project/paper_version/Epithelium.piff")
+    original, serial = tmp_path / "parallel", tmp_path / "serial"
+    before = prepare_publication(
+        SOURCE,
+        PINS,
+        original,
+        "moderate-injury",
+        7,
+        parameter_profile="observed-injury-4.0.0",
+        injury_state=state,
+    )
+    after = prepare_publication(
+        SOURCE,
+        PINS,
+        serial,
+        "moderate-injury",
+        7,
+        parameter_profile="observed-injury-serial-6.0.0",
+        injury_state=state,
+    )
+    assert before["publication_recipe_version"] == "4.0.0"
+    assert after["publication_recipe_version"] == "6.0.0"
+    for key in [
+        "historical_batch_controls",
+        "parameter_overrides",
+        "controls",
+        "state_reconstruction",
+        "source_files",
+    ]:
+        assert before[key] == after[key]
+    for name in before["execution_files"]:
+        a, b = original / "project" / name, serial / "project" / name
+        if name == "Simulation/vCornea_v2.xml":
+            left, right = ElementTree.parse(a), ElementTree.parse(b)
+            workers = right.find("./Metadata/NumberOfProcessors")
+            assert workers.text == "1" and left.findtext("./Metadata/NumberOfProcessors") == "4"
+            workers.text = "4"
+            assert ElementTree.tostring(left.getroot()) == ElementTree.tostring(right.getroot())
+        elif name != "Simulation/Parameters.py":
+            assert a.read_bytes() == b.read_bytes()
+        else:
+            # Only the absolute private output directory differs in these controls.
+            assert a.read_text().splitlines()[1:] == b.read_text().splitlines()[1:]
+    assert after["execution_control_overlay"]["source_workers"] == 4
+    assert after["native_workers_requested"] == 1
+    assert not (original / "record.json").exists() and not (serial / "record.json").exists()
+
+
+@pytest.mark.parametrize("recipe,state", [("self-organization", None), ("mild-injury", None)])
+def test_serial_profile_cannot_relax_original_injury_admission(tmp_path, recipe, state):
+    with pytest.raises(InvalidRequest, match="explicit evidenced"):
+        prepare_publication(
+            SOURCE,
+            PINS,
+            tmp_path / "rejected",
+            recipe,
+            7,
+            parameter_profile="observed-injury-serial-6.0.0",
+            injury_state=state,
+        )
+    assert not (tmp_path / "rejected").exists()

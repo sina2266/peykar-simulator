@@ -19,6 +19,13 @@ requests one native worker. Multiworker series remain limited to four jobs/at
 most16 requested workers. This bounds a series, not the operating system or
 concurrent independent series; inspect those before starting additional jobs.
 
+The separate `observed-injury-serial-6.0.0` retains source4's original biological
+controls/state but explicitly changes its XML worker declaration4→1, with a new
+recipe identity and execution-control overlay. This follows a real native abort
+and bounded one/four-worker stress controls, not parameter fitting. Original
+profiles and ongoing copies remain unchanged. See the [actual probes, limits and
+bounded full moderate follow-on](../../experiments/vcornea/publication/serial-execution-audit-2026-10-24.md).
+
 ## Pinned installed environments
 
 `macos-arm64-4.6.0-explicit.txt` contains 400 exact official/conda-forge package

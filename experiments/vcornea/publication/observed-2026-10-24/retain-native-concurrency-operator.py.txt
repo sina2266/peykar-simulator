@@ -1,0 +1,33 @@
+"""Retain real engineering exits, failed setup attempts and original inputs; no execution."""
+import hashlib,json,shutil
+from pathlib import Path
+out=Path('experiments/vcornea/publication/observed-2026-10-24')
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+rows=[]
+for suffix in ['', '-retry1','-retry2']:
+ label=f'cornea-native-boundary-concurrency{suffix}-20261024';p=Path('.peykar')/label
+ raw=(p/'report.json').read_bytes();name=f'native-concurrency{suffix}-report.json'
+ with (out/name).open('xb')as f:f.write(raw)
+ script=Path('.peykar')/f'probe-native-boundary-concurrency{suffix}-20261024.py'
+ shutil.copyfile(script,out/f'native-concurrency{suffix}-operator.py.txt')
+ rows.append({'directory':str(p),'report_sha256':sha(p/'report.json'),'operator_sha256':sha(script),'native_jobs':json.loads(raw)['jobs'],'classification':'setup_failed_before_first_MCS' if suffix!='-retry2' else 'single_worker_completed_multiworker_crashed'})
+p=Path('.peykar/cornea-native-boundary-controls-20261024')
+shutil.copyfile(p/'report.json',out/'native-concurrency-controls-report.json')
+shutil.copyfile('.peykar/probe-native-boundary-controls-20261024.py',out/'native-concurrency-controls-operator.py.txt')
+d=json.loads((p/'report.json').read_text())
+assert [j['returncode']for j in d['jobs']]==[-6,-11,-6]
+first=json.loads(Path('.peykar/cornea-native-boundary-concurrency-retry2-20261024/report.json').read_text())
+assert first['jobs'][0]['returncode']==0 and first['jobs'][0]['last_observation']=='9900,2,18000'
+assert first['jobs'][1]['returncode']==-11
+for root in [Path('.peykar/cornea-native-boundary-concurrency-retry2-20261024'),p]:
+ for job in root.iterdir():
+  if not job.is_dir():continue
+  if (job/'observed-counts.csv').exists():shutil.copyfile(job/'observed-counts.csv',out/f'native-probe-{root.name}-{job.name}-counts.csv')
+report={'scope':'Bounded synthetic engineering controls; observed multiworker failures do not identify the original corneal corruption origin','single_worker':first['jobs'][0],'four_worker':first['jobs'][1],'plugin_controls':d['jobs'],'retained_attempts':rows,'conclusion':'Single-worker control completes10000MCS. Multiworker failures also occur without either tracker, so a BoundaryPixelTracker-only causal claim or patch is not justified. Serial execution is a distinct workaround, with unknown parallel stochastic equivalence.','independent_biological_validation':False}
+with (out/'native-concurrency-observations.json').open('x')as f:json.dump(report,f,indent=2,allow_nan=False);f.write('\n')
+listing=Path('.peykar/cornea-complete-data-member-listing-20261024.json');data=json.loads(listing.read_text())
+from collections import Counter
+inventory={'scope':'Exhaustive published Data.zip member-name/extension inventory; not arbitrary content search or whole-archive MD5 verification','record':'16884414','members':len(data),'extension_counts':dict(Counter(Path(r['path']).suffix.lower()for r in data)),'csv_basename_counts':dict(Counter(Path(r['path']).name for r in data if r['path'].endswith('.csv'))),'all_listing_sha256':sha(listing),'nonstandard_members':[r for r in data if Path(r['path']).suffix.lower()not in {'.png','.vtk','.dml','.csv','.parquet','.mp4','.pdf','.jpg'}],'whole_archive_md5_verified':False}
+with (out/'original-data-member-kind-inventory.json').open('x')as f:json.dump(inventory,f,indent=2);f.write('\n')
+shutil.copyfile(__file__,out/'retain-native-concurrency-operator.py.txt')
+print('Actual1/4-worker exits, three plugin controls, both setup failures and exhaustive member kinds retained')

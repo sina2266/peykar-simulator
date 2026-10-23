@@ -37,6 +37,7 @@ PARAMETER_PROFILES = (
     "historical-hpc-3.0.0",
     "observed-injury-4.0.0",
     "stash-hpc-5.0.0",
+    "observed-injury-serial-6.0.0",
 )
 
 
@@ -128,16 +129,26 @@ def prepare_publication(
         if injury_state is not None:
             raise InvalidRequest("January snapshot retains its own original initial state")
         return prepare_stash_publication(source, pins, destination, recipe, seed)
-    if parameter_profile in ("historical-hpc-3.0.0", "observed-injury-4.0.0"):
+    if parameter_profile in (
+        "historical-hpc-3.0.0",
+        "observed-injury-4.0.0",
+        "observed-injury-serial-6.0.0",
+    ):
         from peykar.integrations.vcornea_history import prepare_historical_publication
 
-        if parameter_profile == "observed-injury-4.0.0":
+        if parameter_profile in ("observed-injury-4.0.0", "observed-injury-serial-6.0.0"):
             if injury_state is None or recipe == "self-organization":
                 raise InvalidRequest("Observed injury requires the explicit evidenced initial PIFF")
         elif injury_state is not None:
             raise InvalidRequest("Historical formation profile does not accept another state")
         return prepare_historical_publication(
-            source, pins, destination, recipe, seed, injury_state=injury_state
+            source,
+            pins,
+            destination,
+            recipe,
+            seed,
+            injury_state=injury_state,
+            serial_injury=parameter_profile == "observed-injury-serial-6.0.0",
         )
     if injury_state is not None:
         raise InvalidRequest("This source profile retains its original initial state")

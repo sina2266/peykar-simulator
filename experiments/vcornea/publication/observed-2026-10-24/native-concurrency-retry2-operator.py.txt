@@ -1,0 +1,35 @@
+"""Explicit bounded engineering probe of giant-cell boundary updates, no biology.
+
+The frozen corneal jobs and installed environment are read-only. Each private
+probe has a 90s wall limit, Seatbelt network/write denial and an actual exit.
+A failure/detection location alone does not prove the corneal corruption origin.
+"""
+import hashlib,json,os,subprocess,time
+from pathlib import Path
+
+base=Path('.peykar/cornea-native-boundary-concurrency-retry2-20261024').resolve();base.mkdir(exist_ok=False)
+prefix=Path('.peykar/cornea-native46').resolve();profile=Path('runtime_profiles/vcornea-publication/macos-arm64-4.6.0-profile.json')
+runtime=json.loads(profile.read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha((prefix/runtime['python_binary']).resolve())==runtime['python_digest']
+for relative,h in runtime['installed_cc3d_hashes'].items():assert sha(prefix/relative)==h
+rows=[]
+for workers in [1,4]:
+ root=base/f'workers-{workers}';root.mkdir();(root/'tmp').mkdir();sim=root/'Simulation';sim.mkdir()
+ (root/'probe.cc3d').write_text('<Simulation version="4.6.0"><XMLScript Type="XMLScript">Simulation/probe.xml</XMLScript><PythonScript Type="PythonScript">Simulation/probe.py</PythonScript></Simulation>')
+ (sim/'state.piff').write_text('1 A 0 199 0 44 0 0\n2 B 0 199 45 89 0 0\n')
+ (sim/'probe.xml').write_text(f'''<CompuCell3D Version="4.6.0"><Potts><Dimensions x="200" y="90" z="1"/><Steps>10000</Steps><Temperature>10</Temperature><RandomSeed>7</RandomSeed><NeighborOrder>1</NeighborOrder><Boundary_x>Periodic</Boundary_x></Potts><Metadata><NumberOfProcessors>{workers}</NumberOfProcessors><DebugOutputFrequency>0</DebugOutputFrequency></Metadata><Plugin Name="CellType"><CellType TypeName="Medium" TypeId="0"/><CellType TypeName="A" TypeId="1"/><CellType TypeName="B" TypeId="2"/></Plugin><Plugin Name="PixelTracker"/><Plugin Name="BoundaryPixelTracker"/><Plugin Name="Contact"><Energy Type1="Medium" Type2="Medium">0</Energy><Energy Type1="Medium" Type2="A">0</Energy><Energy Type1="Medium" Type2="B">0</Energy><Energy Type1="A" Type2="A">0</Energy><Energy Type1="A" Type2="B">0</Energy><Energy Type1="B" Type2="B">0</Energy><NeighborOrder>1</NeighborOrder></Plugin><Steppable Type="PIFInitializer"><PIFName>Simulation/state.piff</PIFName></Steppable></CompuCell3D>''')
+ (sim/'probe.py').write_text('''import faulthandler\nfaulthandler.enable(all_threads=True)\nfrom cc3d import CompuCellSetup\nfrom cc3d.core.PySteppables import SteppableBasePy\nfrom pathlib import Path\nclass Observe(SteppableBasePy):\n def __init__(self): super().__init__(frequency=100)\n def step(self,mcs):\n  from pathlib import Path\n  with Path("observed-counts.csv").open("a")as f:\n   f.write(str(mcs)+","+str(len(self.cell_list))+","+str(sum(c.volume for c in self.cell_list))+"\\n")\nCompuCellSetup.register_steppable(steppable=Observe())\nCompuCellSetup.run()\n''')
+ (sim/'probe.py').write_text((sim/'probe.py').read_text().replace('Path("observed-counts.csv")', 'Path('+repr(str(root/'observed-counts.csv'))+')'))
+ policy=f'(version 1) (allow default) (deny network*) (deny file-write*) (allow file-write* (subpath {json.dumps(str(root))})) (allow file-write* (literal "/dev/null"))'
+ cmd=['/usr/bin/sandbox-exec','-p',policy,str(prefix/'bin/python'),'-m','cc3d.run_script','--input',str(root/'probe.cc3d'),'--output-dir',str(root/'engine')]
+ env={'PATH':str(prefix/'bin')+':/usr/bin:/bin','HOME':str(root/'tmp'),'TMPDIR':str(root/'tmp'),'QT_QPA_PLATFORM':'offscreen','MPLBACKEND':'Agg','MPLCONFIGDIR':str(root/'tmp/mpl'),'PYTHONDONTWRITEBYTECODE':'1','OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','MKL_NUM_THREADS':'1'}
+ start=time.monotonic();timeout=False
+ with (root/'engine.log').open('xb')as log:
+  child=subprocess.Popen(cmd,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+  try:code=child.wait(timeout=90)
+  except subprocess.TimeoutExpired:
+   timeout=True;os.killpg(child.pid,15);code=child.wait(timeout=10)
+ row={'workers_requested':workers,'returncode':code,'timed_out':timeout,'elapsed_seconds':time.monotonic()-start,'files':{p.relative_to(root).as_posix():sha(p)for p in root.rglob('*')if p.is_file()},'last_observation':(root/'observed-counts.csv').read_text().splitlines()[-1] if (root/'observed-counts.csv').exists() else None}
+ rows.append(row);print(row['workers_requested'],row['returncode'],row['last_observation'],flush=True)
+ (base/'report.json').write_text(json.dumps({'scope':'Synthetic giant-cell boundary concurrency engineering probe; no corneal cause or biological validity inferred','runtime_profile_sha256':sha(profile),'operator_sha256':sha(Path(__file__)),'jobs':rows},indent=2)+'\n')
