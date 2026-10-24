@@ -1,5 +1,60 @@
 # Verification record
 
+## Real projected corneal-repair predictions and transfer failure: 2026-10-24
+
+- Inspected primary Crosson1986 abstract/metadata (PMID3957565): reported5.5h lag
+  and64µm/h radius motion after mechanical debridement with basal lamina intact.
+  Exact4575byte metadata SHA retained; full publisher article403, no invented
+  supportive-care detail or SD/SEM interpretation. Implemented separately pinned
+  `cornea.projected_front`1.0.0 and two distinct immutable1.0.0 model contexts.
+  The engine is excluded from the default API/Worker catalog.
+- Froze2017 protocol1.0.0 SHA865f9672… before the new candidate. Explicit
+  `uv run --frozen python scripts/check_corneal_repair_front.py --output
+  .peykar/cornea-repair-front-cross-study-retry1-20261024` completed its actual
+  child exit0 in0.335289s, under60s/network-denied Seatbelt. Full54h/.25h plan
+  gives217samples, using7mm nominal initial diameter and unchanged1986 kinetics.
+  Compared all3actual Control rabbits and all10times; primary excludes baseline:
+  cohort-mean RMSE0.04021732891267079/max0.0586268618400031, passing fixed.05/.10
+  engineering targets. Rabbit2 RMSE0.06646528662119855 remains explicit; no
+  individual guarantee, fitted test data, parameter search or global approval.
+- Acquired exact Chung2021 publisher-deposited XML from EuropePMC PMC8828349:
+ 65161bytes/SHA4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998.
+  Parsed Table1's10numeric aggregates and2categorical healing statements,
+  preserving above-baseline1.02, original reported±, unknown per-time animal count
+  and original attribution/license. No synthetic animals, CIs or measured zeros.
+- Froze the independent6mm removal-method applicability challenge before its
+  candidate. Unexecuted protocol1.0.0 remains;1.0.1 pins pre-execution parser
+  formatting/type corrections only, unchanged data/parameters/criteria.
+  SHA9c70007c0c3e6faba91c5f6914f0adcfb527762b4935159191919a5cf8e2b6b6.
+  `uv run --frozen python scripts/check_corneal_repair_challenge.py --output
+  .peykar/cornea-repair-front-independent-challenge-20261024`: actual child
+  exit0/0.324017s, full50h/201samples, network denied; scientific comparison exit2,
+  correctly negative. Blade/Ocu/Amo RMSE0.2644613/0.2480860/0.2493709, all fail.
+  No failed group removed, criteria relaxed or parameter fitted. Normal saline,
+  irregular/oval geometry and substrate/care differences remain context limits,
+  without claiming an identified cause of failure.
+- `uv run --frozen pytest -q tests/unit/test_corneal_front.py
+  tests/unit/test_cornea_brush_evidence.py tests/unit/test_cornea_evidence.py
+  tests/integration/test_corneal_repair_prediction.py`:39passed/0.17s. Targeted
+  Ruff/format pass; strict mypy on both changed domain modules passes. Tests
+  preserve real negative results and reject changed output/protocol/failed exits.
+- One final `make check-docker` passed **580tests/34.05s/86% coverage**,
+  strict mypy101files, Ruff/format321files,18frontend tests, generated contracts,
+  and all wheel/sdist builds. Separate host `make build` also passed. Actual logs
+  `.peykar/cornea-repair-front-final-check-docker-20261024.log` and
+  `.peykar/cornea-repair-front-build-20261024.log` retained. Checks used the
+  existing task-local anonymous Docker config/socket; live services/volume unchanged.
+- Retained exact actual candidates/protocols/plans/process receipts/executed
+  operators, the failed pre-child byte-writer setup, parser source and plotting
+  script. Standard matplotlib plot/PDF generated with existing native Python and
+  visually inspected. No native runtime packages changed. Read-only tests verify
+  the retained results; no duplicate long/native jobs were started. API health200,
+  original API healthy/Worker up6days. Original source/model/schema/license/lock
+  files, failed publication evidence and paused scheduling preserved.
+- [Detailed scope, original data, actual results and next model gap](../experiments/vcornea/repair-front/README.md).
+  A limited projected-area agreement and failed transfer are distinct from the
+  unresolved original cellular publication gate and independent clinical validation.
+
 ## Real corneal experimental data and observation operator: 2026-10-24
 
 - Searched Hugging Face API for cornea/corneal/wound-healing, inspected all three

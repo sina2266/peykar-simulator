@@ -48,6 +48,17 @@ compared descriptively with the52.5±3.6µm clinical aggregate. Source3 means54.
 so these are not clinical accuracy scores or biological passes. All original
 data/terms and incompatible endpoints remain explicit. [Plain Persian results](experiments/vcornea/experimental/results.fa.md).
 
+A separate offline [rabbit superficial-repair component](experiments/vcornea/repair-front/README.md)
+now predicts projected wound area using independently published 1986 radius-motion
+parameters. Against all three actual 2017 PBS rabbits over 0–54h, the nonbaseline
+cohort-mean RMSE is **4.02 percentage points**, maximum error **5.86 points**, passing
+the frozen 5/10-point engineering targets without fitting. Individual errors remain
+explicit. A second independent 2021 removal-method challenge **fails all three
+groups** (RMSE 24.81–26.45 points); this evidence rules out generalizing the first
+agreement to arbitrary debridement. Both actual executions, raw observations,
+negative results and figures are retained. This is projected surface kinematics,
+not validated cellular/chemical vCornea behavior or clinical approval.
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "id": "cornea.rabbit-6mm-removal-method-challenge",
+  "version": "1.0.1",
+  "frozen_utc": "2026-10-24T12:10:21.166841+00:00",
+  "class": "retrospective_external_study_applicability_challenge",
+  "model_path": "model_packages/cornea/mechanical-challenge/1.0.0/model.json",
+  "model_sha256": "fa9ff6e7670ba5d09859efc73c63d4055428ef07e38e5b52c544d4e8a11614b9",
+  "engine_sha256": "af1f1bf02200906a211b279ff7dcd693013787d71f09d75ccdf82bfaeda3e688",
+  "parameter_evidence_sha256": "9698761cdbc7f6ff0d656b7b51fbc0883eb04be5c93744ecca368e213f129e98",
+  "raw_source_sha256": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998",
+  "observations_sha256": "d566c72dfdb37b05feee4630aa632caba4a506a77408e2d54a3f1bd1ee3d934d",
+  "observation_parser_sha256": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+  "parameters": {
+    "initial_radius_micrometres": 3000.0,
+    "migration_rate_micrometres_per_hour": 64.0,
+    "lag_hours": 5.5
+  },
+  "all_groups": [
+    "Blade",
+    "Ocu",
+    "Amo"
+  ],
+  "all_observation_hours": [
+    4,
+    18,
+    24,
+    50
+  ],
+  "primary_endpoint": "each_group_numeric_published_mean_normalized_open_area",
+  "numeric_observations": 10,
+  "categorical_observations": 2,
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "categorical_policy": "Retain both50h completely-healed statements as categorical; do not invent numeric observations, spread or animal IDs. Report predicted residual and time-to-zero only; no exact detection threshold known.",
+  "passed_policy": "Every group numeric RMSE and maximum error must pass; no averaging away a failing method. Passing would still be scoped to this rounded-aggregate engineering check.",
+  "simulation_duration_hours": 50.0,
+  "simulation_sample_interval_hours": 0.25,
+  "deterministic_plan_seed": 0,
+  "wall_seconds": 60.0,
+  "parameter_search_allowed": false,
+  "calibration_on_test_cohort": false,
+  "limitations": [
+    "Rounded published aggregates only; not a blinded experiment or clinical equivalence margin.",
+    "All groups/times inspected before execution and retained.",
+    "Approximate6mm diameter assumed circular; blade boundary irregular and Amo often oval as reported.",
+    "Unknown per-time sample count and unresolved plus-minus; no fabricated paired samples or CI.",
+    "Supportive care, basal lamina and removal method differ from parameter/test cohorts.",
+    "Radius speed and lag remain1986 point estimates; no fitting to2017 or2021.",
+    "No full cellular vCornea or chemical-injury validation."
+  ],
+  "supersedes_unexecuted_protocol_sha256": "1ed815b8b702d5ae5530ead863ff1b396001356701a0e5c9436513f086d4b0aa",
+  "revision_reason": "Pre-execution parser formatting/type annotation only; all observations, parameters and criteria unchanged; no challenge candidate has executed."
+}

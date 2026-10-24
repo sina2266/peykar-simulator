@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "id": "cornea.rabbit-projected-front-pbs",
+  "version": "1.0.0",
+  "frozen_utc": "2026-10-24T11:54:49.422098+00:00",
+  "class": "retrospective_external_experimental_predictive_check",
+  "engine": "cornea.projected_front",
+  "engine_version": "1.0.0",
+  "parameters": {
+    "initial_radius_micrometres": 3500.0,
+    "migration_rate_micrometres_per_hour": 64.0,
+    "lag_hours": 5.5
+  },
+  "parameter_evidence_sha256": "9698761cdbc7f6ff0d656b7b51fbc0883eb04be5c93744ecca368e213f129e98",
+  "experimental_source_sha256": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763",
+  "experimental_normalized_sha256": "9f39994720212b75e1faf5364ad2de06698b1810c1b104d3f61f53afe77480bb",
+  "group": "Control",
+  "replicate_ids": [
+    "1",
+    "2",
+    "3"
+  ],
+  "all_observation_hours": [
+    0,
+    6,
+    12,
+    18,
+    24,
+    30,
+    36,
+    42,
+    48,
+    54
+  ],
+  "primary_observation_hours": [
+    6,
+    12,
+    18,
+    24,
+    30,
+    36,
+    42,
+    48,
+    54
+  ],
+  "primary_endpoint": "mean_across_rabbits_of_within_rabbit_normalized_projected_open_area",
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "simulation_duration_hours": 54.0,
+  "simulation_sample_interval_hours": 0.25,
+  "deterministic_plan_seed": 0,
+  "seed_scope": "Engine is deterministic; this is a new explicit plan field, not an experimental seed",
+  "wall_seconds": 60.0,
+  "calibration_on_test_cohort": false,
+  "parameter_search_allowed": false,
+  "prospective_clinical_preregistration": false,
+  "limitations": [
+    "Existing raw2017 data were inspected before this prospective candidate execution; retrospective external-study check, not blinded clinical validation.",
+    "n3 measured Control rabbits despite caption n4; no fabricated missing fourth.",
+    "Clinical and experimental individual biological validity is not established by passing a cohort-mean target.",
+    "No confirmed full1986 supportive-care equivalence or independent2017 basement-lamina histology.",
+    "Planar circular projected-area kinematics only; no chemical transport, cell architecture, barrier or drug-response validation.",
+    "Do not promote this result into vCornea publication reproduction or extrapolate beyond54h."
+  ]
+}

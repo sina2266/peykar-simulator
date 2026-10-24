@@ -1,0 +1,220 @@
+"""Explicit offline6mm rabbit challenge; no fitting, no default catalog execution."""
+
+import argparse
+import json
+import os
+import platform
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+from check_corneal_repair_front import completed_result, metrics, write
+
+from peykar.validation.cornea_evidence import rabbit_brush_aggregates
+from peykar_core.contracts import (
+    ExecutionBudget,
+    ModelPackage,
+    Quantity,
+    Reference,
+    SimulationPlan,
+)
+from peykar_core.hashing import bytes_digest
+from peykar_engines.corneal_front import CornealProjectedFrontEngine
+
+BASE = Path("experiments/vcornea/repair-front")
+PROTOCOL_SHA256 = "9c70007c0c3e6faba91c5f6914f0adcfb527762b4935159191919a5cf8e2b6b6"
+
+
+def protocol() -> dict:
+    raw = (BASE / "challenge-protocol-1.0.1.json").read_bytes()
+    if bytes_digest(raw) != PROTOCOL_SHA256:
+        raise ValueError("Frozen challenge protocol changed")
+    data = json.loads(raw)
+    for path, key in [
+        (BASE / "chung2021-manuscript.xml", "raw_source_sha256"),
+        (BASE / "chung2021-observations.json", "observations_sha256"),
+        (BASE / "parameter-evidence-1.0.0.json", "parameter_evidence_sha256"),
+        (Path(data["model_path"]), "model_sha256"),
+        (Path("packages/engines/src/peykar_engines/corneal_front.py"), "engine_sha256"),
+        (
+            Path("packages/platform/src/peykar/validation/cornea_evidence.py"),
+            "observation_parser_sha256",
+        ),
+    ]:
+        if bytes_digest(path.read_bytes()) != data[key]:
+            raise ValueError(f"Frozen challenge input changed: {path}")
+    if data["parameter_search_allowed"] or data["calibration_on_test_cohort"]:
+        raise ValueError("Do not fit challenge observations")
+    return data
+
+
+def child(output: Path) -> None:
+    data = protocol()
+    model = ModelPackage.model_validate_json(Path(data["model_path"]).read_bytes())
+    engine = CornealProjectedFrontEngine()
+    plan = SimulationPlan(
+        model=Reference(id=model.id, version=model.version),
+        context=model.context,
+        duration=Quantity(value=data["simulation_duration_hours"], unit="hour"),
+        sample_interval=Quantity(value=data["simulation_sample_interval_hours"], unit="hour"),
+        seed=data["deterministic_plan_seed"],
+        purpose="Independent2021 removal-method challenge; unchanged1986 kinetics; no fitting",
+        budget=ExecutionBudget(max_samples=1000, wall_seconds=data["wall_seconds"]),
+    )
+    if engine.parameters(model, plan) != {
+        "initial_radius": data["parameters"]["initial_radius_micrometres"],
+        "migration_rate": data["parameters"]["migration_rate_micrometres_per_hour"],
+        "lag": data["parameters"]["lag_hours"],
+    }:
+        raise ValueError("Independent kinetics or declared initial geometry changed")
+    started = time.monotonic()
+
+    def checkpoint() -> None:
+        if time.monotonic() - started > data["wall_seconds"]:
+            raise TimeoutError("Corneal challenge exceeded its explicit wall limit")
+
+    result = engine.execute(model, plan, checkpoint)
+    write(output / "candidate.json", result.model_dump(mode="json"))
+    write(output / "plan.json", plan.model_dump(mode="json"))
+    write(
+        output / "child-execution.json",
+        {
+            "protocol_sha256": PROTOCOL_SHA256,
+            "model_sha256": data["model_sha256"],
+            "engine_sha256": data["engine_sha256"],
+            "candidate_sha256": bytes_digest((output / "candidate.json").read_bytes()),
+            "uv_lock_sha256": bytes_digest(Path("uv.lock").read_bytes()),
+            "python_version": platform.python_version(),
+            "elapsed_seconds": time.monotonic() - started,
+            "pid": os.getpid(),
+        },
+    )
+
+
+def compare(output: Path, data: dict) -> dict:
+    if data != protocol():
+        raise ValueError("Comparison must use the unchanged frozen challenge protocol")
+    result = completed_result(output, PROTOCOL_SHA256, Path(data["model_path"]))
+    area = next(s for s in result.outputs if s.name == "open_area_fraction")
+    if result.time.unit != "second" or area.unit != "dimensionless":
+        raise ValueError("Fixed challenge observation units changed")
+    lookup = dict(zip(result.time.values, area.values, strict=True))
+    observed = rabbit_brush_aggregates((BASE / "chung2021-manuscript.xml").read_bytes())
+    if observed != json.loads((BASE / "chung2021-observations.json").read_bytes()):
+        raise ValueError("Admitted aggregates differ from actual source")
+    rows = observed["observations"]
+    expected = {(g, t) for g in data["all_groups"] for t in data["all_observation_hours"]}
+    pairs = [(r["group"], r["hour"]) for r in rows]
+    if len(set(pairs)) != len(pairs) or set(pairs) != expected:
+        raise ValueError("Retain every declared method/time")
+    numeric = [r for r in rows if r["kind"] == "numeric_aggregate"]
+    if len(numeric) != data["numeric_observations"]:
+        raise ValueError("Do not replace categorical healing with invented numeric data")
+    comparisons = [
+        {
+            **r,
+            "predicted_fraction": lookup[r["hour"] * 3600],
+            "error_fraction": lookup[r["hour"] * 3600] - r["mean_fraction"]
+            if r["kind"] == "numeric_aggregate"
+            else None,
+        }
+        for r in rows
+    ]
+    group_metrics = []
+    for group in data["all_groups"]:
+        residuals = [
+            r["error_fraction"]
+            for r in comparisons
+            if r["group"] == group and r["kind"] == "numeric_aggregate"
+        ]
+        values = metrics(residuals)
+        passed = (
+            values["rmse_fraction"] <= data["maximum_rmse_fraction"]
+            and values["maximum_absolute_error_fraction"] <= data["maximum_absolute_error_fraction"]
+        )
+        group_metrics.append(
+            {"group": group, "numeric_times": len(residuals), **values, "passed": passed}
+        )
+    passed = all(r["passed"] for r in group_metrics)
+    report = {
+        "schema_version": "1.0.0",
+        "class": data["class"],
+        "protocol_sha256": PROTOCOL_SHA256,
+        "operator_sha256": bytes_digest(Path(__file__).read_bytes()),
+        "candidate_sha256": bytes_digest((output / "candidate.json").read_bytes()),
+        "raw_source_sha256": data["raw_source_sha256"],
+        "group_metrics": group_metrics,
+        "observations": comparisons,
+        "predicted_time_to_zero_hours": 5.5 + 3000 / 64,
+        "status": "challenge_passed" if passed else "challenge_failed",
+        "passed": passed,
+        "independent_biological_validation": False,
+        "parameter_search_performed": False,
+        "experimental_data_used_for_fitting": False,
+        "categorical_policy": data["categorical_policy"],
+        "limitations": data["limitations"],
+    }
+    write(output / "report.json", report)
+    return report
+
+
+def run(output: Path) -> int:
+    data = protocol()
+    output.mkdir(parents=True, exist_ok=False)
+    (output / "frozen-protocol.json").write_bytes(
+        (BASE / "challenge-protocol-1.0.1.json").read_bytes()
+    )
+    command = [sys.executable, str(Path(__file__).resolve()), "--child", "--output", str(output)]
+    if sys.platform == "darwin":
+        policy = (
+            "(version 1) (allow default) (deny network*) (deny file-write*) "
+            f"(allow file-write* (subpath {json.dumps(str(output.resolve()))})) "
+            '(allow file-write* (literal "/dev/null"))'
+        )
+        command = ["/usr/bin/sandbox-exec", "-p", policy, *command]
+    environment = {k: v for k, v in os.environ.items() if k in {"PATH", "LANG", "LC_ALL"}}
+    environment.update(PYTHONHASHSEED="0", PYTHONDONTWRITEBYTECODE="1", PYTHONNOUSERSITE="1")
+    started = time.monotonic()
+    with (output / "execution.log").open("xb") as log:
+        try:
+            exitcode = subprocess.run(
+                command,
+                env=environment,
+                stdout=log,
+                stderr=subprocess.STDOUT,
+                timeout=data["wall_seconds"],
+                check=False,
+            ).returncode
+        except subprocess.TimeoutExpired:
+            exitcode = None
+    write(
+        output / "execution-record.json",
+        {
+            "scope": "Observed actual offline challenge child exit",
+            "returncode": exitcode,
+            "command": command,
+            "elapsed_seconds": time.monotonic() - started,
+            "wall_seconds_limit": data["wall_seconds"],
+            "network": "denied_by_seatbelt"
+            if sys.platform == "darwin"
+            else "no_network_operations",
+            "protocol_sha256": PROTOCOL_SHA256,
+        },
+    )
+    if exitcode != 0:
+        return 1
+    report = compare(output, data)
+    print(report["status"], report["group_metrics"])
+    return 0 if report["passed"] else 2
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    if args.child:
+        child(args.output.resolve())
+    else:
+        raise SystemExit(run(args.output.resolve()))

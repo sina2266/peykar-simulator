@@ -1,0 +1,267 @@
+"""Explicit bounded offline corneal prediction; never fits the experimental cohort."""
+
+import argparse
+import json
+import math
+import os
+import platform
+import statistics
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import peykar_engines.corneal_front as implementation
+from peykar.model_registry.catalog import EngineCatalog
+from peykar.validation.cornea_evidence import rabbit_wound_observations
+from peykar_core.contracts import (
+    ExecutionBudget,
+    ModelPackage,
+    Quantity,
+    Reference,
+    SimulationPlan,
+    SimulationResult,
+)
+from peykar_core.hashing import bytes_digest, canonical_json
+from peykar_engines.corneal_front import CornealProjectedFrontEngine
+
+PROTOCOL_SHA256 = "865f9672f71bc69ddb7d639e752eea6a6ed50454f3eff09c9512975902e40031"
+PROTOCOL = Path("experiments/vcornea/repair-front/protocol-1.0.0.json")
+MODEL = Path("model_packages/cornea/projected-repair/1.0.0/model.json")
+EVIDENCE = Path("experiments/data/cornea-evidence-20261024")
+ENGINE = Path("packages/engines/src/peykar_engines/corneal_front.py")
+
+
+def read_protocol() -> dict:
+    raw = PROTOCOL.read_bytes()
+    if bytes_digest(raw) != PROTOCOL_SHA256:
+        raise ValueError("The frozen predictive-check protocol changed")
+    return json.loads(raw)
+
+
+def write(path: Path, value: object) -> None:
+    with path.open("xb") as stream:
+        stream.write(canonical_json(value))
+
+
+def child(output: Path) -> None:
+    protocol = read_protocol()
+    model = ModelPackage.model_validate_json(MODEL.read_bytes())
+    if model.source_digest != bytes_digest(
+        ENGINE.read_bytes()
+    ) or model.source_digest != bytes_digest(Path(implementation.__file__).read_bytes()):
+        raise ValueError("Pinned scientific engine source changed")
+    plan = SimulationPlan(
+        model=Reference(id=model.id, version=model.version),
+        context=model.context,
+        duration=Quantity(value=protocol["simulation_duration_hours"], unit="hour"),
+        sample_interval=Quantity(value=protocol["simulation_sample_interval_hours"], unit="hour"),
+        seed=protocol["deterministic_plan_seed"],
+        budget=ExecutionBudget(max_samples=1000, wall_seconds=protocol["wall_seconds"]),
+        purpose="Frozen external rabbit PBS projected-area prediction; no experimental fitting",
+    )
+    # Registration is private to this explicitly invoked child, never the live catalog.
+    catalog = EngineCatalog()
+    engine = CornealProjectedFrontEngine()
+    catalog.register(engine)
+    values = engine.parameters(model, plan)
+    expected = protocol["parameters"]
+    if values != {
+        "initial_radius": expected["initial_radius_micrometres"],
+        "migration_rate": expected["migration_rate_micrometres_per_hour"],
+        "lag": expected["lag_hours"],
+    }:
+        raise ValueError("The model differs from independently declared parameter evidence")
+    started = time.monotonic()
+
+    def checkpoint() -> None:
+        if time.monotonic() - started > protocol["wall_seconds"]:
+            raise TimeoutError("The explicit corneal run exceeded its wall limit")
+
+    result = catalog.get(model.engine, model.engine_version).execute(model, plan, checkpoint)
+    write(output / "candidate.json", result.model_dump(mode="json"))
+    write(output / "plan.json", plan.model_dump(mode="json"))
+    write(
+        output / "child-execution.json",
+        {
+            "model_sha256": bytes_digest(MODEL.read_bytes()),
+            "engine_sha256": bytes_digest(ENGINE.read_bytes()),
+            "protocol_sha256": PROTOCOL_SHA256,
+            "candidate_sha256": bytes_digest((output / "candidate.json").read_bytes()),
+            "plan_sha256": bytes_digest((output / "plan.json").read_bytes()),
+            "uv_lock_sha256": bytes_digest(Path("uv.lock").read_bytes()),
+            "python_version": platform.python_version(),
+            "pid": os.getpid(),
+            "elapsed_seconds": time.monotonic() - started,
+            "seed_scope": protocol["seed_scope"],
+        },
+    )
+
+
+def metrics(errors: list[float]) -> dict[str, float]:
+    return {
+        "rmse_fraction": math.sqrt(statistics.mean(e * e for e in errors)),
+        "maximum_absolute_error_fraction": max(abs(e) for e in errors),
+        "mean_error_fraction": statistics.mean(errors),
+    }
+
+
+def compare(output: Path, protocol: dict) -> dict:
+    result = SimulationResult.model_validate_json((output / "candidate.json").read_bytes())
+    predicted = next(o for o in result.outputs if o.name == "open_area_fraction")
+    if result.time.unit != "second" or predicted.unit != "dimensionless":
+        raise ValueError("The fixed observational units changed")
+    lookup = dict(zip(result.time.values, predicted.values, strict=True))
+    raw = (EVIDENCE / "raw/rabbit-figure2.xlsx").read_bytes()
+    if (
+        bytes_digest(raw) != protocol["experimental_source_sha256"]
+        or bytes_digest((EVIDENCE / "rabbit-wounds.csv").read_bytes())
+        != protocol["experimental_normalized_sha256"]
+    ):
+        raise ValueError("Original admitted experimental observations changed")
+    observed = [r for r in rabbit_wound_observations(raw) if r["group"] == protocol["group"]]
+    pairs = [(r["replicate"], r["hour"]) for r in observed]
+    expected = {
+        (s, t) for s in protocol["replicate_ids"] for t in protocol["all_observation_hours"]
+    }
+    if len(pairs) != len(set(pairs)) or set(pairs) != expected:
+        raise ValueError(
+            "Preserve every declared animal/time; no missing or duplicate observations"
+        )
+    rows = []
+    individual = []
+    for hour in protocol["all_observation_hours"]:
+        data = [r["wound_area_fraction"] for r in observed if r["hour"] == hour]
+        estimate = lookup[hour * 3600]
+        mean = statistics.mean(data)
+        rows.append(
+            {
+                "hour": hour,
+                "measured_mean_fraction": mean,
+                "measured_sample_sd_fraction": statistics.stdev(data),
+                "measured_animals": len(data),
+                "predicted_fraction": estimate,
+                "error_fraction": estimate - mean,
+                "included_in_primary_endpoint": hour in protocol["primary_observation_hours"],
+            }
+        )
+    for animal in protocol["replicate_ids"]:
+        subset = [r for r in observed if r["replicate"] == animal]
+        residuals = [
+            lookup[r["hour"] * 3600] - r["wound_area_fraction"]
+            for r in subset
+            if r["hour"] in protocol["primary_observation_hours"]
+        ]
+        individual.append(
+            {"replicate": animal, "n_nonbaseline_times": len(residuals), **metrics(residuals)}
+        )
+    primary = metrics([r["error_fraction"] for r in rows if r["included_in_primary_endpoint"]])
+    passed = (
+        primary["rmse_fraction"] <= protocol["maximum_rmse_fraction"]
+        and primary["maximum_absolute_error_fraction"]
+        <= protocol["maximum_absolute_error_fraction"]
+    )
+    report = {
+        "schema_version": "1.0.0",
+        "class": protocol["class"],
+        "protocol_sha256": PROTOCOL_SHA256,
+        "engine_sha256": bytes_digest(ENGINE.read_bytes()),
+        "operator_sha256": bytes_digest(Path(__file__).read_bytes()),
+        "candidate_sha256": bytes_digest((output / "candidate.json").read_bytes()),
+        "experimental_source_sha256": protocol["experimental_source_sha256"],
+        "experimental_data_used_for_fitting": False,
+        "parameter_search_performed": False,
+        "primary_endpoint": protocol["primary_endpoint"],
+        "independent_measured_animals": len(individual),
+        "primary_nonbaseline_times": protocol["primary_observation_hours"],
+        "primary_metrics": primary,
+        "criteria": {
+            k: protocol[k] for k in ["maximum_rmse_fraction", "maximum_absolute_error_fraction"]
+        },
+        "cohort_observations": rows,
+        "individual_diagnostics": individual,
+        "status": "predictive_check_passed" if passed else "predictive_check_failed",
+        "passed": passed,
+        "independent_biological_validation": False,
+        "limitations": protocol["limitations"],
+    }
+    write(output / "report.json", report)
+    return report
+
+
+def run(output: Path) -> int:
+    protocol = read_protocol()
+    facts = Path("experiments/vcornea/repair-front/parameter-evidence-1.0.0.json")
+    if bytes_digest(facts.read_bytes()) != protocol["parameter_evidence_sha256"]:
+        raise ValueError("Independent parameter facts changed")
+    if protocol["parameter_search_allowed"] or protocol["calibration_on_test_cohort"]:
+        raise ValueError("The external test must never be used for parameter fitting")
+    output.mkdir(parents=True, exist_ok=False)
+    write(output / "frozen-protocol.json", protocol)
+    command = [
+        sys.executable,
+        str(Path(__file__).resolve()),
+        "--child",
+        "--output",
+        str(output.resolve()),
+    ]
+    environment = {
+        k: v for k, v in os.environ.items() if k in {"PATH", "SYSTEMROOT", "LANG", "LC_ALL"}
+    }
+    environment.update(PYTHONHASHSEED="0", PYTHONDONTWRITEBYTECODE="1", PYTHONNOUSERSITE="1")
+    if sys.platform == "darwin":
+        policy = (
+            "(version 1) (allow default) (deny network*) (deny file-write*) "
+            f"(allow file-write* (subpath {json.dumps(str(output.resolve()))})) "
+            '(allow file-write* (literal "/dev/null"))'
+        )
+        command = ["/usr/bin/sandbox-exec", "-p", policy, *command]
+    started = time.monotonic()
+    with (output / "execution.log").open("xb") as log:
+        try:
+            completed = subprocess.run(
+                command,
+                env=environment,
+                stdout=log,
+                stderr=subprocess.STDOUT,
+                timeout=protocol["wall_seconds"],
+                check=False,
+            )
+            returncode = completed.returncode
+        except subprocess.TimeoutExpired:
+            returncode = None
+    record = {
+        "scope": "Observed actual child process exit for explicit offline corneal prediction",
+        "command": command,
+        "returncode": returncode,
+        "elapsed_seconds": time.monotonic() - started,
+        "wall_seconds_limit": protocol["wall_seconds"],
+        "network": "denied_by_seatbelt"
+        if sys.platform == "darwin"
+        else "no_network_operations_in_operator",
+        "protocol_sha256": PROTOCOL_SHA256,
+        "status": "execution_completed" if returncode == 0 else "execution_failed",
+    }
+    write(output / "execution-record.json", record)
+    if returncode != 0:
+        print("Actual candidate failed; original log and record retained:", output)
+        return 1
+    report = compare(output, protocol)
+    print(report["status"], report["primary_metrics"])
+    print("All individual diagnostics retained; no fitting or global biological approval.")
+    return 0 if report["passed"] else 2
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    if args.child:
+        child(args.output)
+    else:
+        raise SystemExit(run(args.output))
+
+
+if __name__ == "__main__":
+    main()

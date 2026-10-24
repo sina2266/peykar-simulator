@@ -1,0 +1,108 @@
+{
+  "id": "cornea.rabbit-pbs-projected-front",
+  "version": "1.0.0",
+  "title": "Rabbit superficial epithelial repair: published lag and projected-radius motion",
+  "engine": "cornea.projected_front",
+  "engine_version": "1.0.0",
+  "license": "LicenseRef-Peykar-Noncommercial-1.1.0",
+  "source": "python:peykar_engines.corneal_front",
+  "source_digest": "af1f1bf02200906a211b279ff7dcd693013787d71f09d75ccdf82bfaeda3e688",
+  "capabilities": [
+    "projected_wound_kinematics",
+    "deterministic",
+    "offline_operator"
+  ],
+  "context": {
+    "species": "Oryctolagus cuniculus",
+    "biological_system": "Rabbit corneal epithelial mechanical wound",
+    "conditions": [
+      "mechanical epithelial debridement",
+      "PBS vehicle plus topical moxifloxacin",
+      "nominal initial projected defect diameter7mm"
+    ]
+  },
+  "validity": {
+    "status": "unvalidated",
+    "context": {
+      "species": "Oryctolagus cuniculus",
+      "biological_system": "Rabbit corneal epithelial mechanical wound",
+      "conditions": [
+        "mechanical epithelial debridement",
+        "PBS vehicle plus topical moxifloxacin",
+        "nominal initial projected defect diameter7mm"
+      ]
+    },
+    "endpoints": [
+      "open_area_fraction"
+    ],
+    "evidence": [
+      "https://pubmed.ncbi.nlm.nih.gov/3957565/"
+    ],
+    "limitations": [
+      "Published radius kinetics with separately reviewed projected circular-area observation.",
+      "No experimental predictive-check result exists at preparation.",
+      "No cellular, chemical, stromal, barrier or treatment-effect validity.",
+      "This model is explicitly offline and is not in the default API/Worker catalog."
+    ]
+  },
+  "parameters": [
+    {
+      "name": "initial_radius",
+      "default": {
+        "value": 3500.0,
+        "unit": "micrometer"
+      },
+      "minimum": 1.0,
+      "maximum": 10000.0
+    },
+    {
+      "name": "migration_rate",
+      "default": {
+        "value": 64.0,
+        "unit": "micrometer / hour"
+      },
+      "minimum": 0.0,
+      "maximum": 10000.0
+    },
+    {
+      "name": "lag",
+      "default": {
+        "value": 5.5,
+        "unit": "hour"
+      },
+      "minimum": 0.0,
+      "maximum": 72.0
+    }
+  ],
+  "ports": [
+    {
+      "name": "projected_radius",
+      "direction": "output",
+      "unit": "micrometer",
+      "semantic_id": "cornea.projected_radius",
+      "scale": "tissue"
+    },
+    {
+      "name": "projected_area",
+      "direction": "output",
+      "unit": "micrometer ** 2",
+      "semantic_id": "cornea.projected_area",
+      "scale": "tissue"
+    },
+    {
+      "name": "open_area_fraction",
+      "direction": "output",
+      "unit": "dimensionless",
+      "semantic_id": "cornea.open_area_fraction",
+      "scale": "tissue"
+    },
+    {
+      "name": "closure_fraction",
+      "direction": "output",
+      "unit": "dimensionless",
+      "semantic_id": "cornea.closure_fraction",
+      "scale": "tissue"
+    }
+  ],
+  "dependencies": []
+}

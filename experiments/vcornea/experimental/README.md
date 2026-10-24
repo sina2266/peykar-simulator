@@ -73,7 +73,8 @@ and [exact diagnostic plan](observed-2026-10-24/diagnostic-plan.json) allow insp
 
 ![Actual exploratory geometry comparison; no accuracy or passing claim](observed-2026-10-24/healthy-thickness-diagnostic.png)
 
-The rabbit data are useful for a future matched debridement protocol, but their
+The rabbit data now have a separate [projected repair protocol and component](../repair-front/README.md),
+with actual PBS agreement and an independently failed transfer challenge. Their
 species, mechanical injury, PBS/silk exposure,7mm en-face defect area and
 fluorescein measurement differ from the chemical model's2D basal-exposure proxy.
 The current comparison records every mismatch; it does not convert a2D open-width
@@ -84,8 +85,10 @@ or count-return proxy into a clinical wound-area score.
 1. Establish a homologous model region and validate the thickness observation
    against acquisition geometry before freezing independent human acceptance.
 2. Preserve the original rabbit3-versus-caption4 discrepancy. Recover measurement
-   units and exact subject context before selecting a new matched mechanical
-   debridement model/version; keep PBS controls separate from silk interventions.
+   units and exact subject context; the new component uses within-animal ratios
+   without inventing image calibration. Keep PBS controls separate from silk
+   interventions; its failure on a second study requires an evidenced new variant
+   and new independent test data before broader use.
 3. Keep chemical-specific dose/transport mapping open. Porcine mechlorethamine,
    rabbit debridement and human clinical summaries do not establish it.
 4. Admit additional datasets with exact versions/raw hashes, endpoint/units,

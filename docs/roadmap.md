@@ -53,6 +53,18 @@ lattice-thickness operator and records four exploratory clinical comparisons.
 This advances corneal empirical work while preserving the separate unresolved
 publication gate; it authorizes no unrelated model or biological pass.
 
+The separately versioned [projected wound-repair component](../experiments/vcornea/repair-front/README.md)
+now has a frozen external-study predictive check: independent 1986 parameters give
+2017 PBS cohort-mean RMSE4.02pp/max5.86pp without fitting. A second 2021 6mm
+removal-method challenge fails all three groups (24.81–26.45pp RMSE). This is an
+observed applicability boundary, not universal repair validity. Preserve both
+results; do not fit the failed cohort and relabel it an untouched validation set.
+The next corneal model dependency is an evidenced initial substrate/edge/injury
+context and separately versioned dynamics that can explain the slower early
+closure, with a new independent test cohort selected before fitting. Aggregate
+ratios alone do not identify whether lag, migration, inflammation or geometry is
+responsible. Full publication reproduction and cellular/chemical validation remain open.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
@@ -303,10 +315,21 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [ ] Establish homologous anatomical region and validated observation mapping
   between lattice vertical span and human OCT-normal thickness, then freeze an
   independent acceptance protocol with calibration-use/subject-level review.
-- [ ] Resolve original rabbit sample-count/raw-unit context; define a separately
-  versioned matched mechanical-debridement scenario before comparing wound area.
+- [x] Define a separately versioned projected circular-area mechanical-debridement
+  component and offline protocol; use published initial diameter and independent
+  kinetics, retain all actual PBS animals/times and individual errors. Frozen
+  cohort-mean target passes (RMSE4.02pp/max5.86pp); this does not validate cell layers.
+- [x] Acquire/parse a second independent removal-method study; freeze criteria
+  before candidate execution, retain every method/time and categorical closure.
+  Actual challenge fails all three methods; do not tune it into a passing holdout.
+- [ ] Recover original rabbit sample-count/raw-unit context and 2021 subject-level
+  data/per-time counts; current ratios cancel image scale but do not recover it.
   Keep PBS and silk treatment separate; never equate a2D fluid-access width to
   fluorescein surface area or infer a chemical dose conversion from severity names.
+- [ ] Explain method-specific early migration/lag using independently evidenced
+  initial substrate, wound geometry and injury/care conditions; identify suitable
+  new calibration and untouched study-level validation data before fitting a new
+  variant. The 2021 failure is evidence of a gap, not proof of a particular cause.
 - [x] Recover the complete January2025 archive snapshot and retain its distinct
   HPC formation/injury mechanisms, controls and original initial states as
   `stash-hpc-5.0.0`; no silent state/mechanism mixing or changed acceptance criteria.

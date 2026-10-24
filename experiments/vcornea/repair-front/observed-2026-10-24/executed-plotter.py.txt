@@ -1,0 +1,44 @@
+"""Read only retained actual predictions and observations; no simulation or fit."""
+import json,csv
+from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+base=Path('experiments/vcornea/repair-front/observed-2026-10-24')
+pbs=json.loads((base/'pbs2017/report.json').read_bytes())
+challenge=json.loads((base/'challenge2021/report.json').read_bytes())
+fig,axes=plt.subplots(2,2,figsize=(13,9),gridspec_kw={'height_ratios':[2,1]},constrained_layout=True)
+color='#176c8e'
+for ax,name in zip(axes[0],['pbs2017','challenge2021']):
+ d=json.loads((base/name/'candidate.json').read_bytes())
+ a=next(s for s in d['outputs'] if s['name']=='open_area_fraction')
+ ax.plot([t/3600 for t in d['time']['values']],[100*v for v in a['values']],color='black',lw=2,label='Prediction: 1986 kinetics, no fit')
+ ax.set(xlim=(0,55),ylim=(-2,112),ylabel='Open projected area (% of initial)',xlabel='Hours after debridement')
+ ax.grid(alpha=.15)
+rows=pbs['cohort_observations'];t=[r['hour'] for r in rows];y=[100*r['measured_mean_fraction'] for r in rows];sd=[100*r['measured_sample_sd_fraction'] for r in rows]
+axes[0,0].fill_between(t,[a-b for a,b in zip(y,sd)],[a+b for a,b in zip(y,sd)],color=color,alpha=.15,label='Measured mean ± sample SD (3 rabbits)')
+axes[0,0].plot(t,y,'o',color=color)
+with Path('experiments/data/cornea-evidence-20261024/rabbit-wounds.csv').open() as f: actual=list(csv.DictReader(f))
+for animal in ['1','2','3']:
+ r=[v for v in actual if v['group']=='Control' and v['replicate']==animal]
+ axes[0,0].plot([float(v['hour']) for v in r],[100*float(v['wound_area_fraction']) for v in r],color=color,alpha=.35,lw=.8)
+axes[0,0].set_title('2017 PBS cohort: mean RMSE 4.02 percentage points\nAll 3 actual rabbits and all 10 times retained',loc='left',fontsize=11)
+for group,c,marker in [('Blade','#ad4c32','o'),('Ocu','#286c54','s'),('Amo','#72518d','^')]:
+ r=[r for r in challenge['observations'] if r['group']==group and r['kind']=='numeric_aggregate']
+ m=next(r for r in challenge['group_metrics'] if r['group']==group)
+ axes[0,1].plot([v['hour'] for v in r],[100*v['mean_fraction'] for v in r],marker=marker,color=c,lw=1,label=f"{group}: RMSE {100*m['rmse_fraction']:.2f} pp")
+ axes[1,1].plot([v['hour'] for v in r],[100*v['error_fraction'] for v in r],marker=marker,color=c,lw=1)
+axes[0,1].text(29,100,'50h Ocu/Amo: reported completely healed\nCategorical; no invented numeric point',fontsize=8)
+axes[0,1].set_title('2021 6mm methods challenge: all 3 methods fail\nPublished means only; individual animals unavailable',loc='left',fontsize=11)
+axes[1,0].plot(t[1:],[100*r['error_fraction'] for r in rows[1:]],'o-',color=color)
+for ax in axes[1]:
+ ax.axhline(0,color='gray',lw=.7)
+ for v in [-10,10]: ax.axhline(v,color='gray',ls=':',lw=.8)
+ ax.set(xlim=(0,55),xlabel='Hours after debridement',ylabel='Prediction − observation (pp)')
+ ax.grid(alpha=.15)
+axes[1,0].set_ylim(-42,15);axes[1,1].set_ylim(-42,15)
+for ax in axes[0]: ax.legend(loc='lower left',fontsize=8,frameon=False)
+fig.suptitle('Rabbit superficial corneal repair: limited agreement, failed transfer\nProjected-radius component only; no cellular/chemical or clinical validation',fontsize=14)
+fig.savefig(base/'experimental-prediction.png',dpi=150)
+fig.savefig(base/'experimental-prediction.pdf')

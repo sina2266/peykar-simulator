@@ -817,6 +817,45 @@ commands/outcomes in `docs/verification.md`.
   HFREADME formatting; newrawdirectory excluded, upstream bytes unchanged. Final
  559tests34.35s86%/mypy100/18frontend/contracts/allbuilds,hostbuildpassed.
   Logs cornea-experimental-evidence-final-check-docker/build-20261024 under.peykar.
+
+## Corneal projected repair: actual narrow agreement and transfer failure (2026-10-24)
+
+- User requires actual small-error experimental comparison and model work, not
+  another data-discovery-only report. Stay within cornea; recurring scheduling
+  remains paused. Preserve all original cellular runs/publication criteria.
+- Added optional cornea.projected_front1.0.0 with source digest
+  af1f1bf02200906a211b279ff7dcd693013787d71f09d75ccdf82bfaeda3e688.
+  Crosson1986 PMID3957565 point values: lag5.5h, radius motion64µm/h; fulltext403,
+  full supportive-care equivalence and reported± definition unresolved. Planar
+  circular projection is explicit, not a curved/cellular/chemical model. No
+  default API/Worker registration or global validity promotion.
+- Frozen2017 protocol865f9672… before actual child; original7mm diameter supplies
+  initial radius3500µm. Actual .peykar/cornea-repair-front-cross-study-retry1-
+  20261024: child0/0.335289s,54h/217samples, all3Control rabbits/all10times.
+  Nonbaseline cohort mean RMSE.04021733/max.05862686 passes fixed.05/.10 targets.
+  Rabbit2 RMSE.06646529/max.10314309 remains; no per-animal accuracy guarantee.
+  Retrospective external-study check, no blinded/preregistered clinical claim.
+- Acquired Chung2021 original XML PMC8828349,65161bytes/SHA4e4cf5f5…; Table1
+ 10numeric aggregates/2categorical50h statements across Blade/Ocu/Amo. Preserve
+ 1.02 ratio, unknown± definition/per-time n, no invented measured0 or animals.
+  Original CC Attribution statement/version-unspecified terms retained.
+- Separate6mm model/frozen challenge1.0.1 SHA9c70007c…; unexecuted1.0.0 retained
+  after pre-execution formatting/type-only parser pin corrections. Actual
+  .peykar/cornea-repair-front-independent-challenge-20261024 child0/0.324017s,
+ 50h/201samples; comparison2/challenge_failed, all three group RMSEs~.248–.264.
+  No fitting/criteria relaxation. Substrate, edge, inflammation/care differences
+  are possible gaps, not proven causes. Need new independently evidenced dynamics
+  and new study-level test data before any fitted variant is called validated.
+- Both bounded children Seatbelt network-denied. Failed setup before any first
+  child remains. Portable exact outputs, original executed operators, manifests,
+  plots and plain Persian report: experiments/vcornea/repair-front. Current
+  operators add actual exit/artifact/protocol/grid checks; targeted39tests pass,
+  strict mypy2files. Final make check-docker:580tests/34.05s/86%, mypy101,
+ 18frontend/current contracts/package builds pass. Host make build passes.
+  Logs cornea-repair-front-final-check-docker/build-20261024 under.peykar.
+- Old vCornea is400µm limbal/peripheral radial sagittal slice, not central7mm
+  en-face defect. Do not rename whole-slice thickness as central human OCT or
+  equate the new narrow kinetic result with full publication/cell-layer validation.
 - Read experimental/README.md/results.fa.md and datasetREADME/catalog. Next:
   homologous anatomical ROI/OCT observation mapping, reviewed independent protocol;
   rabbit n3/n4/rawunit context and matched separatelyversioneddebridement scenario.

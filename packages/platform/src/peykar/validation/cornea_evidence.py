@@ -168,6 +168,73 @@ def human_oct_summary(raw: bytes) -> dict[str, Any]:
     }
 
 
+def rabbit_brush_aggregates(raw: bytes) -> dict[str, Any]:
+    """Read Chung2021 Table1 as published aggregates, never invented animals.
+
+    The two 'Completely Healed' cells remain categorical. The reported ± has no
+    resolved SD/SEM definition; it is retained as printed, without a CI. The Ocu
+    ratio1.02 is an actual observation and must not be clamped to1.
+    """
+    root = _xml(raw)
+    if root.findtext(".//article-id[@pub-id-type='doi']") != "10.1155/2021/4668056":
+        raise InvalidRequest("Expected the original Chung2021 article")
+    table = root.find(".//table-wrap[@id='tab1']/table")
+    if table is None:
+        raise InvalidRequest("Original rabbit Table1 is missing")
+    headers = ["".join(c.itertext()).strip() for c in table.findall("./thead/tr/th")]
+    if headers[:4] != ["Time", "Blade group", "Ocu group", "Amo group"]:
+        raise InvalidRequest("Original rabbit group layout differs")
+    rows = table.findall("./tbody/tr")
+    if len(rows) != 5 or any(len(row) != 5 for row in rows):
+        raise InvalidRequest("Original rabbit aggregate layout differs")
+    if ["".join(row[0].itertext()).strip() for row in rows[:4]] != [
+        "4 hours",
+        "18 hours",
+        "24 hours",
+        "50 hours",
+    ]:
+        raise InvalidRequest("Original rabbit observation times differ")
+    observations = []
+    for index, hour in enumerate([4, 18, 24, 50]):
+        for column, group in enumerate(["Blade", "Ocu", "Amo"], start=1):
+            cell = rows[index][column]
+            text = "".join(cell.itertext()).strip()
+            observation: dict[str, Any]
+            if hour == 50 and group in {"Ocu", "Amo"}:
+                if text != "Completely" or "".join(rows[4][column].itertext()) != "Healed":
+                    raise InvalidRequest("Original categorical healing statement differs")
+                observation = {"kind": "categorical", "reported": "Completely Healed"}
+            else:
+                # A direct numeric text node excludes the separate significance superscript.
+                try:
+                    mean, spread = [float(v) for v in (cell.text or "").split("±")]
+                    if not all(math.isfinite(v) and v >= 0 for v in [mean, spread]):
+                        raise ValueError("Nonfinite or negative aggregate")
+                except ValueError as error:
+                    raise InvalidRequest("Expected original numeric rabbit aggregate") from error
+                observation = {
+                    "kind": "numeric_aggregate",
+                    "mean_fraction": mean,
+                    "reported_plus_minus_fraction": spread,
+                    "reported": text,
+                }
+            observations.append(
+                {"hour": hour, "group": group, "source_table": "Table1", **observation}
+            )
+    return {
+        "doi": "10.1155/2021/4668056",
+        "source_sha256": sha256(raw).hexdigest(),
+        "unit": "dimensionless",
+        "observations": observations,
+        "individual_observations_available": False,
+        "plus_minus_definition": "unresolved; do not infer SD, SEM or confidence intervals",
+        "per_time_independent_animal_count": None,
+        "sample_count_note": (
+            "12 rabbits/24 eyes per group in methods; sacrifices at0/24/50h; no per-time IDs"
+        ),
+    }
+
+
 def epithelial_column_geometry(
     lattice: Sequence[Sequence[int]], *, micrometres_per_site: float
 ) -> dict[str, Any]:
