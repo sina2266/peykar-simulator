@@ -1,0 +1,61 @@
+{
+  "id": "cornea.fischak2017.pbs.curve-lower-constraints",
+  "version": "1.0.0",
+  "frozen_utc": "2026-10-24T20:58:09.242570+00:00",
+  "class": "conservative_digitized_one_sided_constraints_not_measured_means",
+  "source_files": {
+    "article.pdf": "17cf0784213d04d5cc3901333b32f1a5a79eb73f4c6be791678a438ef71991bd",
+    "article.xml": "5250f0e47201b8f78bbc4f10a661af8830041cc1179951f55f875f77219a86ad",
+    "ncbi-version-metadata.json": "b5510c7c3d539de697b92fd19190523bf59ae7e1101e67e1e6bdd4e0829b9935",
+    "original-figure1.jpg": "3cf5a7141ec3b1ad878db766e6de47299654dc77f0c4b4f513698139ed03d33f",
+    "fluorescein-pbs.ppm": "e58eed73d9b6fc6acf768b6c143ca2faceaf01d4cba8a84b9f03e8245bb6fceb",
+    "figure-page.svg": "1a46e958c24e1b25a31b2631c81eeef0f55fd3064e831f947705a60ca11d29b7"
+  },
+  "extractor_sha256": "ea02166ba3e687efc1578720f8ce93fde066d931325bcd3295431b10e8075eca",
+  "width": 665,
+  "height": 441,
+  "times_columns": [
+    [
+      12,
+      109
+    ],
+    [
+      24,
+      220
+    ],
+    [
+      36,
+      330
+    ],
+    [
+      48,
+      439
+    ],
+    [
+      72,
+      659
+    ]
+  ],
+  "maximum_study_animals": 20,
+  "world_y_zero": 393.7460934,
+  "world_y_forty": 258.640625,
+  "image_y_origin": 260.24744,
+  "image_y_scale": 0.300072,
+  "area_allowance_mm2": 0.5,
+  "column_half_width_pixels": 1,
+  "black_threshold_rgb_max": 128,
+  "baseline_fluorescein_mean_mm2": 31.4,
+  "nominal_trephine_diameter_mm": 6,
+  "comparison_initial_state_rule": "Equivalent circular radius from published mean baseline fluorescein area31.4mm2; no fitted geometry. Ratio of cohort means, not mean of individual baseline ratios.",
+  "method": "At each actually measured hour, merge overlapping area intervals of all black pixels in3-column band. Each remaining separated cluster implies >=1 observation. Sum lower bounds / entire study20animals. Unseen/overlapping curves contribute zero. No per-arm size, IDs, mean estimate or CI inferred.",
+  "interpretation": "One-sided falsification only: reject if any minimum possible absolute error exceeds0.10 OR lower RMSE bound exceeds0.05 over all5times. Otherwise indeterminate; no passing biological validation from these weak constraints.",
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "limitations": [
+    "Original curve data, exact animal IDs/per-arm counts not recovered.",
+    "Pixel allowance is fixed engineering digitization allowance, not a statistical confidence interval.",
+    "Source nominal6mm and measured fluorescence31.4mm2 differ; use declared observed baseline, never select geometry after candidate.",
+    "Fluorescein and curvature-corrected OCT are distinct measurements; do not combine.",
+    "Source is independent of Abdel-Naby2017 but was inspected before new fit; no blinded-study claim."
+  ]
+}

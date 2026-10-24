@@ -59,6 +59,15 @@ agreement to arbitrary debridement. Both actual executions, raw observations,
 negative results and figures are retained. This is projected surface kinematics,
 not validated cellular/chemical vCornea behavior or clinical approval.
 
+The new [data-driven corneal candidate](experiments/vcornea/repair-front/learned-front/README.md)
+was actually trained on six rabbits, with three entire intermediate-dose animals
+excluded from training. Its heldout mean-area error improves from10.26 to5.96
+percentage points, but **fails** the unchanged5-point RMSE/10-point maximum-error
+targets. Independent2021 comparisons also fail; a newly acquired72h experimental
+study rejects it even using conservative graph-derived lower constraints. All
+frozen splits, original sources, actual outputs and negative results are retained.
+This is an optional offline empirical component, without biological promotion.
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),

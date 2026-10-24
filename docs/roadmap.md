@@ -22,7 +22,7 @@ combines them into a misleading overall completion score.
 | S4 | General experiment orchestration | S0,S3 | Durable reference/native scalar DAGs, COPASI/OSP agent and bounded cohorts/sweeps; remaining native adapters and richer bindings open |
 | S5 | Numerical and biological coupling | S2,S3,S4 | Port/unit checks and exact exchange primitive; continuous feedback/spatial solver open |
 | S6 | Evidence, measurement and independent validation | S2,S3,S4 | Frozen scalar evaluation and declared gaps; independent authority/UQ incomplete |
-| S7 | Controlled model optimization and improvement | S1,S4,S6 | Limited decay calibration only; challenger/promotion workflow open |
+| S7 | Controlled model optimization and improvement | S1,S4,S6 | Decay calibration and explicit bounded corneal empirical learner execute; frozen animal/dose split and independent failures retained; general challenger/promotion workflow open |
 | S8 | Molecular and gene-response execution | S1,S3,S6 | COPASI and GEARS runtimes execute; real perturbation H5AD acquired/read; original learned benchmark and biological bridges open |
 | S9 | Multicellular/tissue execution across engines | S1,S4,S6 | vCornea, PhysiCell/PhysiBoSS, VCell and Chaste native operator paths execute; general queue adapters and validated bridges open |
 | S10 | Organ and multi-organ composition | S5,S6,S8,S9 | NEURON and OSP PK-Sim/MoBi headless models execute; validated organ/system bridges and Windows GUI profile open |
@@ -64,6 +64,39 @@ context and separately versioned dynamics that can explain the slower early
 closure, with a new independent test cohort selected before fitting. Aggregate
 ratios alone do not identify whether lag, migration, inflammation or geometry is
 responsible. Full publication reproduction and cellular/chemical validation remain open.
+
+The user's subsequent authorization includes new learned models. The completed
+[corneal learning experiment](../experiments/vcornea/repair-front/learned-front/README.md)
+fits four constrained parameters on six actual endpoint-dose animals, reserving
+all three intermediate-dose animals from the optimizer. Their retrospective
+mean RMSE improves10.26→5.96pp, but the candidate fails frozen5/10pp targets.
+The2021 transfer also fails; newly acquired Fischak2017 PBS curves reject the
+candidate using one-sided conservative constraints over the full72h horizon.
+All failures are mandatory regression evidence, not datasets for unreported
+test-driven selection. The shared deterministic-front audit has an optimistic
+maximum-error lower bound21.29pp at common times, under declared nominal geometry;
+it does not rule out stochastic/hierarchical alternatives or identify a cause.
+
+Next corneal work, before further model selection:
+
+- [x] Isolate complete calibration/heldout animals; freeze algorithm/criteria and
+  retain actual bounded fitting, predictions and independent negative comparisons.
+- [x] Recover another independent original study, preserve CC BY source/metadata,
+  separate projected fluorescence from curvature-corrected OCT, and quantify
+  conservative graph constraints without invented animal tables.
+- [ ] Acquire matched raw longitudinal wound/edge images or measured initial
+  geometry/substrate/injury/care covariates and an additional **entire independent
+  study** reserved before selection. No identity/time split leakage or post-result
+  threshold relaxation. Existing holdouts are now consumed evaluation evidence.
+- [ ] Resolve original cell-density/EGF model time-scale/source inconsistencies
+  recorded in the learning experiment's mechanism screening before any new
+  mechanistic implementation. Do not infer coefficients from unrelated rat data.
+- [ ] Implement a separately versioned, evidence-supported correction; meet the
+  same small-error targets on selected independent measurements and retain all
+  previous mandatory challenges. No automatic production promotion from fitting.
+
+Original vCornea publication input correspondence remains a separate open
+dependency. No other tissue/model work or automatic scheduling starts here.
 
 ## S0 — preservation and platform contracts
 
@@ -179,6 +212,12 @@ means have a different context and do not close independent tissue validation.
 - [ ] S7.3 Separate runtime performance patches from scientific mechanism/parameter changes.
 - [ ] S7.4 Run historical benchmarks and held-out endpoints; retain negative results, computational cost and applicability limits.
 - [ ] S7.5 Require independent promotion approval with rollback/revalidation impact; never let a candidate certify itself.
+
+Corneal subset delivered: four-parameter bounded calibration, immutable candidate
+descriptors, complete animal/dose exclusion, frozen objective/criteria, actual
+isolated fit/full predictions and negative heldout/independent results. S7.2–S7.5
+remain open for a general registry/promotion workflow; this failed candidate does
+not approve itself or satisfy independent biological accuracy.
 
 Exit: reproducible supported improvement or an interpretable negative result.
 Changing pristine upstream source solely to make it look “optimized” does not pass.
@@ -322,6 +361,10 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Acquire/parse a second independent removal-method study; freeze criteria
   before candidate execution, retain every method/time and categorical closure.
   Actual challenge fails all three methods; do not tune it into a passing holdout.
+- [x] Execute a separately versioned empirical corneal learner with whole-dose/
+  whole-animal exclusion; retain the improved but failed5.96pp heldout result,
+  worse2021 transfer, independent72h conservative graph rejection, all cost/raw
+  evidence and immutable source/algorithm/criteria. No global validity claim.
 - [ ] Recover original rabbit sample-count/raw-unit context and 2021 subject-level
   data/per-time counts; current ratios cancel image scale but do not recover it.
   Keep PBS and silk treatment separate; never equate a2D fluid-access width to

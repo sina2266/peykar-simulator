@@ -1,0 +1,250 @@
+{
+  "id": "cornea.empirical-sdp-front.calibration-and-test",
+  "version": "1.0.0",
+  "frozen_utc": "2026-10-24T21:00:43.775560+00:00",
+  "class": "retrospective_dose_interpolation_and_independent_study_challenges",
+  "learner_sha256": "bc4b5b12bb7e0b46384cdd3d5ae83d44f6a688a483ced04aad7439eb5670afbf",
+  "engine_sha256": "c639d43173f9d48a51da15338a739f7618db5fe42d657363a48d872c3473d263",
+  "experimental_parser_sha256": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+  "template_sha256": "8d1fbacb038cd069500f69d918f944ef55159525c04a8f58a6f6ebd0c4a2be01",
+  "training_sha256": "9cbc04d08377c1ba14037695c8e6696ecca2230914aa2916199a5ba2d826710b",
+  "heldout_sha256": "ae6b8c6c046be55f99cbfed4499439eb1793a84347fde41d24d30f8633a4d493",
+  "experimental_source_sha256": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763",
+  "challenge2021_sha256": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998",
+  "fischak_constraints_sha256": "ceec3766f7a59cba5e887ddd4958f0a9c2516e4222c5a04bdb4d8c11ce458c97",
+  "admitted_inputs": {
+    "training": {
+      "path": "experiments/vcornea/repair-front/learned-front/data/training.json",
+      "sha256": "9cbc04d08377c1ba14037695c8e6696ecca2230914aa2916199a5ba2d826710b"
+    },
+    "heldout": {
+      "path": "experiments/vcornea/repair-front/learned-front/data/heldout.json",
+      "sha256": "ae6b8c6c046be55f99cbfed4499439eb1793a84347fde41d24d30f8633a4d493"
+    },
+    "raw2017": {
+      "path": "experiments/data/cornea-evidence-20261024/raw/rabbit-figure2.xlsx",
+      "sha256": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763"
+    },
+    "challenge2021": {
+      "path": "experiments/vcornea/repair-front/chung2021-manuscript.xml",
+      "sha256": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998"
+    },
+    "fischak_constraints": {
+      "path": "experiments/vcornea/repair-front/learned-front/fischak2017/constraints.json",
+      "sha256": "ceec3766f7a59cba5e887ddd4958f0a9c2516e4222c5a04bdb4d8c11ce458c97"
+    },
+    "extraction_protocol": {
+      "path": "experiments/vcornea/repair-front/learned-front/fischak2017/extraction-protocol-1.0.0.json",
+      "sha256": "f4b2b58247a7f2b430295c64c801095cf327a1d513af1c4d84edf8b8d7eeb7f2"
+    }
+  },
+  "algorithm": {
+    "id": "cornea.dose_conditioned_front.grid_refinement",
+    "version": "1.0.0",
+    "objective": "Mean of per-animal means of squared normalized AREA residuals",
+    "baseline_in_fit": false,
+    "observation_hours": [
+      6,
+      12,
+      18,
+      24,
+      30,
+      36,
+      42,
+      48,
+      54
+    ],
+    "endpoint_fits": "Independent Control and2%SDP endpoint fits; equal animal weights",
+    "coarse_grid": {
+      "rate_um_per_h": {
+        "start": 0,
+        "stop": 200,
+        "step": 1
+      },
+      "lag_h": {
+        "start": 0,
+        "stop": 24,
+        "step": 0.25
+      },
+      "evaluations_per_group": 19497
+    },
+    "refinements": [
+      {
+        "rate_step_um_per_h": 0.1,
+        "lag_step_h": 0.025,
+        "offsets": [
+          -10,
+          -9,
+          -8,
+          -7,
+          -6,
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "rate_step_um_per_h": 0.01,
+        "lag_step_h": 0.0025,
+        "offsets": [
+          -10,
+          -9,
+          -8,
+          -7,
+          -6,
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "rate_step_um_per_h": 0.001,
+        "lag_step_h": 0.00025,
+        "offsets": [
+          -10,
+          -9,
+          -8,
+          -7,
+          -6,
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    ],
+    "refinement_center": "Previous stage best; fixed throughout the next complete stage",
+    "outside_bounds": "Skip outside inclusive bounds; never clip or rescale observations",
+    "order": "Rate outer ascending; lag inner ascending, at every stage",
+    "selection": "Lexicographic minimum of (objective,rate,lag), no tolerance or early stop",
+    "counting": "Count every actual objective evaluation, including repeated grid centers",
+    "maximum_algorithm_evaluations": 41640,
+    "operator_evaluation_cap": 45000,
+    "bounds": {
+      "rate_um_per_h": [
+        0,
+        200
+      ],
+      "lag_h": [
+        0,
+        24
+      ]
+    },
+    "parameter_interpolation": "Linear in reported concentration from0to2wt/volpercent",
+    "no_hyperparameter_search": true
+  },
+  "training_provenance": {
+    "publication": "Abdel-Naby et al.2017; DOI10.1371/journal.pone.0188154; S1Fig2 workbook",
+    "animals": "Exactly Control1/2/3 and2%SDP1/2/3, all0..54h observations",
+    "care": "7mm nominal mechanical debridement; PBS/SDP200uL plus moxifloxacin every6h",
+    "normalization": "Within each actual rabbit baseline raw image area; original area unit unspecified"
+  },
+  "split": {
+    "training_groups": [
+      "Control",
+      "2% SDP"
+    ],
+    "training_actual_animals": 6,
+    "training_rows": 60,
+    "fitted_nonbaseline_values": 54,
+    "heldout_group": "0.5% SDP",
+    "heldout_actual_animals": 3,
+    "heldout_rows": 30,
+    "split_unit": "Entire animal and entire intermediate dose, never individual time rows",
+    "previously_inspected_dataset": true,
+    "blinded": false,
+    "architecture_search_allowed": false,
+    "test_used_for_parameter_selection": false
+  },
+  "cases": {
+    "heldout2017": {
+      "model_id": "cornea.rabbit-sdp-learned-front",
+      "radius_um": 3500,
+      "concentration_percent": 0.5,
+      "duration_h": 54,
+      "context": "0.5%SDP plus moxifloxacin; nominal7mm initial debridement; retrospective within-study test"
+    },
+    "challenge2021": {
+      "model_id": "cornea.rabbit-learned-front-brush-challenge",
+      "radius_um": 3000,
+      "concentration_percent": 0,
+      "duration_h": 50,
+      "context": "2021Blade/Ocu/Amo; nominal6mm; no demonstrated care/substrate equivalence"
+    },
+    "fischak2017": {
+      "model_id": "cornea.rabbit-learned-front-fischak-challenge",
+      "radius_um": 3161.4759885488656,
+      "concentration_percent": 0,
+      "duration_h": 72,
+      "context": "Fischak2017PBS50uL twice daily; initial equivalent radius from measured mean fluorescence31.4mm2; noSDP"
+    }
+  },
+  "primary_endpoint": "2017heldout mean of3within-animal normalized open areas; all9nonbaseline times6..54h",
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "minimum_rmse_improvement": 0.005,
+  "baseline_comparator": "Unchanged Crosson1986v64um/h,lag5.5h; no fitted comparator, ignores treatment",
+  "criteria_scope": "Primary heldout must meet5/10percentage-point targets AND improve baselineRMSEby>=0.5percentagepoint. Report all3individual diagnostics. Independent2021 requires all3groups; no categorical zeros. Fischak one-sided lower constraints may reject or remain indeterminate, never pass. All old failures remain mandatory.",
+  "wall_seconds": 60,
+  "simulation_interval_h": 0.25,
+  "deterministic_seed": 0,
+  "child_denied_paths": [
+    "experiments/vcornea/repair-front/learned-front/data/heldout.json",
+    "experiments/data/cornea-evidence-20261024",
+    "experiments/vcornea/repair-front/chung2021-manuscript.xml",
+    "experiments/vcornea/repair-front/learned-front/fischak2017"
+  ],
+  "isolation_probe_files": [
+    "experiments/vcornea/repair-front/learned-front/data/heldout.json",
+    "experiments/data/cornea-evidence-20261024/raw/rabbit-figure2.xlsx",
+    "experiments/vcornea/repair-front/chung2021-manuscript.xml",
+    "experiments/vcornea/repair-front/learned-front/fischak2017/constraints.json"
+  ],
+  "limitations": [
+    "Retrospective dataset already inspected; heldout refers to optimizer exclusion, not untouched/blinded observations.",
+    "Three heldout animals at one interpolated dose are not independent-study or universal biological validation.",
+    "Four empirical endpoint parameters; no identified causal silk, inflammation or substrate mechanism.",
+    "Training extends54h;72h prediction is extrapolation and separate care/context challenge.",
+    "Study-level context not encoded as a fitted study identifier; no later observed area is a predictor.",
+    "Fischak curve constraints are digitized one-sided bounds with fixed uncertainty, not raw animal records or measured means.",
+    "vCornea full publication reproduction and layer/chemical/barrier validation remain open."
+  ]
+}

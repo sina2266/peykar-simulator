@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "id": "cornea.shared-front-compatibility",
+  "version": "1.0.0",
+  "frozen_utc": "2026-10-24T12:31:31.778394+00:00",
+  "class": "retrospective_inverse_hypothesis_feasibility_not_forward_validation",
+  "experimental_sources": {
+    "pbs2017_raw_xlsx_sha256": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763",
+    "challenge2021_raw_xml_sha256": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998"
+  },
+  "shared_observation_hours": [
+    18,
+    24
+  ],
+  "selection_rule": "Exact intersection of actual nonbaseline observation times in both studies; no interpolation or fabricated timepoints.",
+  "pbs2017_group": "Control",
+  "pbs2017_actual_rabbits": [
+    "1",
+    "2",
+    "3"
+  ],
+  "challenge2021_groups": [
+    "Blade",
+    "Ocu",
+    "Amo"
+  ],
+  "pbs2017_nominal_radius_um": 3500.0,
+  "challenge2021_nominal_radius_um": 3000.0,
+  "published_table_rounding_fraction": 0.005,
+  "rounding_scope": "2021 published mean ratios printed to2decimal places; optimistic rounding interval only, not biological variability, SD, SEM or CI.",
+  "pbs2017_rounding_fraction": 0.0,
+  "maximum_error_fraction": 0.1,
+  "hypothesis": "A/A0=max(0,1-d(t)/R)^2 with one nonnegative inward displacement function shared across studies and removal methods; no time-law restriction.",
+  "method": "Invert every allowed area interval into a displacement interval at each shared time; test intersection. Bisection80iterations yields optimistic smallest maximum error for the inverse diagnostic only.",
+  "diagnostic_inverse_fit": true,
+  "kinetic_parameters_fitted": false,
+  "forward_prediction_or_validation": false,
+  "solver_sha256": "6f55c6f60f43c23f9045d025fd7d5214b737a0e39d02bc46c6be50cb1a955a20",
+  "parser_sha256": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+  "limitations": [
+    "Nominal circular geometry assumption; actual per-eye diameters/curvature unresolved.",
+    "Experimental cohort means differ in species-matched but nonidentical injury/care/substrate context.",
+    "A failed intersection rejects this shared-front hypothesis under the declared observations/geometry; it does not identify a biological cause.",
+    "Inferred displacement and error bounds are inverse diagnostics on already-inspected data, never new independently validated predictions.",
+    "No parameter fitting to either published holdout or changed original simulation protocols."
+  ]
+}

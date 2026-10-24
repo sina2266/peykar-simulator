@@ -1,5 +1,64 @@
 # Verification record
 
+## Isolated corneal learning and new independent constraints: 2026-10-24
+
+- Read-only `scripts/audit_corneal_shared_front.py --output
+  .peykar/cornea-shared-front-audit-20261024` completed with exit0: exact shared
+  18/24h observations reject a common deterministic displacement within10pp;
+  optimistic maximum-error lower bound0.21285781453343008. No new forward
+  simulation, kinetic fit or causal inference; not a bound on hierarchical models.
+  Frozen protocol5a66ae57… and actual solver/operator/report retained.
+- Acquired/inspected Fischak2017 original CC BY article/figure (PMC5485343.1,
+  DOI10.1155/2017/5192924), PDF771631bytes/SHA17cf0784213d04d5cc3901333b32f1a5a79eb73f4c6be791678a438ef71991bd.
+  Its MD5 matches primary NCBI OA metadata. Publisher-deposited JATS and original
+  figure retained; failed HTML-as-PDF attempt remains private, unused. Read and
+  visually inspected the original PDF page3 and native raster. OCT curvature
+  correction and projected fluorescein endpoints remain distinct.
+- Before extraction, froze raster/axis calibration and one-sided constraint
+  protocol f4b2b582…; `uv run --frozen python
+  scripts/extract_corneal_curve_constraints.py --output
+  .peykar/cornea-fischak2017-constraints-20261024.json` passed. All five actual
+  nonbaseline times12/24/36/48/72h retained. Unknown per-arm counts/IDs and
+  overlapping curves yield conservative mean lower constraints only: sum of
+  separated-cluster lower areas divided by the entire study20animals, fixed
+  ±0.5mm² digitization allowance. No fabricated raw records, means, CIs or60hpoint.
+- Implemented bounded empirical learner and optional `cornea.learned_front`1.0.0,
+  preserving existing models/sources. Frozen learning protocol df8a95a4… predates
+  the first actual experimental fit; exact sources, algorithm,60training/30heldout
+  rows, criteria and independent challenges pinned. Six Control/2%SDP animals,
+  54nonbaseline fitted values; all three0.5%SDP animals excluded. Previously
+  inspected data: retrospective dose interpolation, not blinded independent study.
+- `uv run --frozen python scripts/learn_corneal_front.py --output
+  .peykar/cornea-learned-front-20261024`: actual child exit0/0.2255907s, parent
+  0.5710581s;41640objective evaluations within45000cap/60s. Seatbelt denies
+  network/writes outside output and heldout/raw/independent evidence reads;
+  actual read-denial probes retained. Full54/50/72h/.25h predictions written
+  before parent-side evaluation; exact model/plan/source/output checks precede metrics.
+- Fixed primary5ppRMSE/10ppmax targets plus≥0.5ppRMSE improvement unchanged.
+  Heldout meanRMSE0.05958317282881904/max0.12259994406922181: FAIL despite
+  baselineRMSE0.10260416884976953 improving by0.04302099602095049. All3individual
+  diagnostics retained.2021Blade/Ocu/Amo all fail:RMSE0.2945544/0.2828078/0.2837858;
+ 10numeric/2categorical observations retained, no categorical zeros. Independent
+  Fischak2017 one-sided optimisticRMSE lower bound0.05567380580214574 rejects
+  candidate; this is not its measured-studyRMSE. Overall comparison exit2, never
+  biological promotion. Immutable descriptors/calibration/actual receipts/figures
+  and executed source snapshots retained in the learning experiment.
+- Targeted52tests passed0.55s; Ruff full check/format and strict mypy105source
+  files passed. Synthetic fits test engineering only; evidence tests replay
+  actual retained results without new experimental fitting/simulation. Failed
+  child and changed-output evidence are rejected. PNG/PDF plot generated with
+  the existing native profile and visually inspected; no profile mutation.
+- Final `DOCKER_CONFIG="$PWD/.peykar/docker-public-check-20261023"
+  DOCKER_HOST="unix:///Users/sina2266/.docker/run/docker.sock" make check-docker`
+  passed: **632tests/35.41s/87%coverage**, strict mypy105sources,18frontend tests,
+  Ruff/current exported contracts and all3wheel/sdist builds. Host `make build`
+  passed separately; four new source modules verified byte-identical in built
+  wheels. Logs: `.peykar/cornea-learning-final-check-docker-20261024.log` and
+  `.peykar/cornea-learning-final-build-20261024.log`.
+- Live API/Worker remain up; no live-volume/reset/deployment or default-engine
+  registration. Existing source/license/model/data bytes and failures remain.
+  Heartbeat remains paused. Full original publication and biological gates open.
+
 ## Real projected corneal-repair predictions and transfer failure: 2026-10-24
 
 - Inspected primary Crosson1986 abstract/metadata (PMID3957565): reported5.5h lag

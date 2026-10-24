@@ -1,5 +1,38 @@
 # Peykar continuation context
 
+## Latest corneal learned-candidate evidence, 2026-10-24
+
+- The user explicitly authorized new learned models and multiple agents. A small
+  four-parameter corneal learner now actually executes offline; no unrelated model
+  work, automated scheduling or default API registration is authorized by this.
+- Read experiments/vcornea/repair-front/learned-front/README.md and results.fa.md.
+  Protocol1.0.0 SHA df8a95a48f8a43947720e0c7267f6b49a3ff7fc8d46fc0e58bb60a2d4ac7339b
+  froze exact algorithm/source/input hashes and criteria BEFORE first real fit.
+  Train6actual Control/2%SDP rabbits,60rows/54nonbaseline values; exclude entire
+  0.5%SDP group3animals/30rows. Previously inspected data: retrospective, not blind.
+- Actual .peykar/cornea-learned-front-20261024 child exit0/0.2256s,41640evaluations,
+  full54/50/72h outputs. Seatbelt network/write/heldout-read denied; actual forbidden
+  read probes recorded. HeldoutRMSE5.9583pp/max12.2600pp vs baseline10.2604/17.0329:
+  improved but FAILS frozen5/10pp targets. Independent2021 all3groups fail28.28–29.46pp.
+  New independent Fischak2017 CC BY originalPDF/JATS/figure retained; only conservative
+  one-sided graph constraints recovered, no animal IDs/n/means invented. Optimistic
+  RMSE lower bound5.5674pp rejects candidate; this is NOT actual measured-studyRMSE.
+- Immutable learned-front model1.0.0 descriptors and exact calibration/outputs are
+  retained; no biological promotion. Do not refit consumed tests and call them new
+  holdouts. Source/engine/protocol hashes must remain frozen; version changes.
+- Shared-front inverse audit at exact18/24h rejects common deterministic displacement
+  within10pp; optimistic maximum-error bound21.2858pp under nominal circulargeometry.
+  This is not a universal stochastic/hierarchical impossibility result or causal finding.
+- Next corneal dependency: matched raw longitudinal geometry/edge/substrate/injury/care
+  data plus another entire study reserved BEFORE model selection. Dale/EGF primary
+  sources screened, unresolved printed time-scale/coefficient differences documented;
+  do not silently transplant them as a known biological correction. Retinal reuse
+  remains backlog. Existing vCornea publication and biological gates remain open.
+- Live API/Worker and peykar3_peykar-data were not changed. Heartbeat remains PAUSED.
+- Final targeted52tests0.55s; make check-docker632tests35.41s87%/mypy105/18frontend/
+  contracts/allbuilds and hostmakebuild pass. New four module bytes match builtwheels.
+  Logs cornea-learning-final-*. Do not repeat fullsuite without new code/failure.
+
 No `.kiro` directory existed in the delivered checkout. Added on 2026-10-16 to
 retain the requested project context. Root `AGENTS.md`, `README.md`,
 `docs/status.md` and `docs/roadmap.md` remain the authoritative rules/inventory.
