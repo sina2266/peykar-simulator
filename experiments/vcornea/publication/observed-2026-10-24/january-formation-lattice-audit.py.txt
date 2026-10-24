@@ -1,0 +1,19 @@
+"""Read-only mismatch localization on genuinely completed native formation snapshots."""
+import hashlib,json
+from pathlib import Path
+import numpy as np,pandas as pd
+root=Path('.peykar/cornea-stash-prepared-formation46-20261024');d=json.loads((root/'plan.json').read_text());rows=[]
+for j in d['jobs']:
+ p=Path(j['directory']);record=json.loads((p/'record.json').read_text());assert record['status']=='succeeded'and record['returncode']==0
+ for q in sorted(p.glob('lattice-*.npz'),key=lambda q:int(q.stem.split('-')[-1])):
+  mcs=int(q.stem.split('-')[-1]);c=p/f'cells-{mcs}.csv'
+  assert hashlib.sha256(q.read_bytes()).hexdigest()==record['outputs'][q.name]
+  assert hashlib.sha256(c.read_bytes()).hexdigest()==record['outputs'][c.name]
+  with np.load(q,allow_pickle=False)as z:k=z['cell_type'].copy()
+  cells=pd.read_csv(c)
+  for kind in cells.TypeID.unique():
+   lattice=int((k==kind).sum());reported=int(cells[cells.TypeID==kind].Volume_lattice.sum())
+   if lattice!=reported:rows.append({'seed':j['seed'],'mcs':mcs,'type_id':int(kind),'lattice_sites':lattice,'summed_native_cell_volume':reported,'difference':reported-lattice,'snapshot_sha256':record['outputs'][q.name],'cells_sha256':record['outputs'][c.name]})
+report={'scope':'Actual completed native exit0 is insufficient for cell/lattice physical consistency; mismatches retained, no output repaired or threshold changed','plan_sha256':hashlib.sha256((root/'plan.json').read_bytes()).hexdigest(),'mismatches':rows,'all_snapshots_consistent':not rows,'independent_biological_validation':False}
+with Path('.peykar/cornea-january-formation-mismatches-20261024.json').open('x')as f:json.dump(report,f,indent=2);f.write('\n')
+print(json.dumps(report,indent=2))

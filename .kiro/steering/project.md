@@ -710,3 +710,40 @@ commands/outcomes in `docs/verification.md`.
   noextraidentifiedconfigurationfile. FullzipMD5/arbitraryembeddedcontentsunknown.
   original-run-metadata-needed.md islocalconcreteevidenceinventory; noauthorscontacted.
 - Heartbeat staysPAUSED. Finish/analyze these existingnative jobs beforeanynewmodel.
+
+## Actual full January rejection and serial formation7, 2026-10-24 00:28UTC
+
+- Main6163143d22395520bf98f19402728cd25a4fef99 already pushed/remote verified,
+  clean after28exact-byte files/537tests39.28s86%+hostbuild. No source/licensechange.
+- Formation5 native2 completed43200MCS/exit0,4438.35/4461.59s. FullJan8combined
+  .peykar/cornea-stash-full-analysis-20261024:comparison2/not_reproduced,original0,
+  spatial1,overallanalysis_failed. F7means1/4traj3/4height2/10,F11sameheight1/10;
+  oldinjury6:3pass3fail. No full reproduction. Actual raw/receipts nowretained.
+- Actual finalF7tearvolume1974vs1973latticesites (MCS43200/type10); read-onlyall
+  frames/types scan BOTHformationseeds foundonlythisone. Nativeexit0notphysical
+  validity. NEVER repair array/relaxintegercheck. CauseUNDETERMINED; do notclaim
+  scalarfailuresarecausedbyonepixel. Diagnostics1.2.1 adds exacterrorcontextonly.
+- Added stash-formation-serial-7.0.0, originalJanbiology/PIFF/T8/diff12/43200,
+  tenbins/lifetime2unchanged; explicitworkerXML4to1newrecipe7/overlay. Injurycase
+  rejectedfor7; oldprofile5unchanged. Two fulljobs explicitlystartedsupervisor5613
+  .peykar/cornea-stash-serial-formation46-20261024. New fullfollowon5614 at
+  .peykar/cornea-stash-serial-full-analysis-20261024 waitsformation thenreuses
+  ALREADYcomplete/verifiedone-workerJanuaryinjury6 (do NOT duplicate them).
+- Existing source6moderate2 operator98682/diagnosticfollowon98752 stillrunning,
+  .peykar/cornea-serial-derived-moderate46-20261024 (~15000MCSat00:26UTC).
+  Jan7formationjuststarted; totalnative request4workers. Preserveallhealthyjobs.
+- Interim source6fullpulse actual7200MCS[100,75]/2500 verifiedbothseeds:finite
+  fields/lattice-cellvolumes/countsagree. Private cornea-serial-full-pulse-audit-
+  20261024.json hashes awaitmatchingactualcompletion; stillineligibleforfinalgate.
+- Resumer bug fixed: afterverifiedchildexits, newview usesrecordstatussuccess/
+  elapsed, dropsstaleparentfailure; oldparentrawpreserved. Actual OLDfailedJan
+  preparedplan resumed to .peykar/cornea-stash-formation-verified-reuse-20261024,
+  bothactualexitsreused/ZEROnewsolverchildren,oldplanunchanged. Notphysicalapproval.
+- Targeted22tests0.58s +33tests0.83s/Ruff/mypy2pass. Intermediate540tests34.30s
+  beforeactualqualityfailure. FINAL541tests37.66s86%/mypy99/18frontend/contracts/
+  allbuilds,hostbuildpass;logs cornea-serial-formation-*. No furtherfullsuiteunless
+  managedcodechanges/newfailurejustifyit. HeartbeatremainsPAUSED.
+- Read january-full-family-audit-2026-10-24.md, original-run-metadata-needed.md.
+  Finish/analyze current source6/7 nativejobs beforeothermodels. Mainuser wants
+  actual full reconstruction; do NOT call matchedsubsets or softwaretestscompletion.
+  Old read-only watch session95283 covers oldJan5terminal +source6only, NOTnewJan7.

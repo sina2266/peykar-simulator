@@ -41,6 +41,12 @@ one earlier native abort and the original failed prerequisite plans. Two previou
 unstarted formation jobs now execute their frozen inputs under explicit offline
 capacity review. The four-group full gate remains open; no other model work starts.
 
+The [completed January eight-job candidate](../experiments/vcornea/publication/january-full-family-audit-2026-10-24.md)
+is also negative and has a retained one-site final formation volume mismatch.
+Explicit serial derivatives6/7 now run unchanged biological controls; the new
+full comparison reuses all six existing one-worker injuries. Neither a successful
+native exit nor a scalar subset closes the scientific gate.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

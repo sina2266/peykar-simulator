@@ -107,7 +107,15 @@ def main():
     )
     for old in previous["jobs"]:
         if reusable[old["directory"]]:
-            plan["jobs"].append(dict(old, reused_verified_completed=True))
+            record = json.loads((Path(old["directory"]) / "record.json").read_bytes())
+            completed = dict(
+                old,
+                status="succeeded",
+                elapsed_seconds=record["elapsed_seconds"],
+                reused_verified_completed=True,
+            )
+            completed.pop("failure", None)
+            plan["jobs"].append(completed)
             continue
         directory = args.output / f"{old['case']}-seed-{old['seed']}"
         manifest = prepare_publication(

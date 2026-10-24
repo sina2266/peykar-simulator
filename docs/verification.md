@@ -1,5 +1,39 @@
 # Verification record
 
+## Complete January family rejection, serial formation and verified resume: 2026-10-24
+
+- January formation2 genuinely completed43200MCS/exit0,4438.35/4461.59s.
+  Combined with the six existing injury completions, all eight actual exit/source/
+  runtime/output inventories verified. Full frozen comparison exit2/not_reproduced:
+  five failures/three scalar passes. Original mathematics exit0. Spatial stage
+  correctly rejects formation7 at43200MCS: tear native volume1974/lattice sites1973.
+  Read-only scan of every saved formation frame/type found only that one mismatch.
+  Both arrays/cell hashes, original negative report and failed stage are retained.
+- Diagnostics1.2.1 adds exact case/seed/MCS/type/values to the same strict rejection;
+  fresh explicit replay exits1 with those actual values. No output is repaired,
+  gap filled or tolerance changed. Failure is distinct from the scalar mismatches.
+- New stash-formation-serial-7.0.0 preserves original January formation biology,
+  PIFF/T8/diffusion12/43200MCS/ten bins/lifetime2; explicitly changes workerXML4→1.
+  Original profile5/executed files unchanged. Full formation7/11 jobs now run in
+  cornea-stash-serial-formation46-20261024,24h/job/two workers total. Full follow-on
+  reuses the existing verified one-worker injury6 without duplicate simulations.
+  Separate serial source6 moderate2 continues; current native request at most4.
+- Fixed resumer copied stale parent statuses even after true child-exit verification.
+  Three stale-label regression cases pass. The actual original failed/prepared
+  January parent was resumed to a new view with both verified completed children,
+  preserved old bytes, elapsed4438.35/4461.59s and ZERO solver children/workers.
+  This verifies native exit/artifact reuse, not the rejected scientific outputs.
+- Targeted resume/completion22 tests/0.58s, then serial formation/operator/analysis
+  33 tests/0.83s passed; targeted Ruff/mypy2 passed. Intermediate full540 tests/
+  34.30s passed before the separate real spatial-quality failure/profile7 change.
+- Final `make check-docker` passed541 tests/37.66s/86% coverage, strict mypy99
+  source files,18 frontend tests/current contracts/all wheel/sdist builds. Host
+  `make build` passed. Logs cornea-serial-formation-check-docker-20261024.log and
+  cornea-serial-formation-host-build-20261024.log under.peykar. Native stability/
+  publication results for new serial derivatives remain pending; no schedule,
+  live deployment, API scientific-code execution or data-volume mutation occurred.
+
+
 ## Explicit serial corneal execution control: 2026-10-24 local
 
 - Targeted history/January/operator checks passed37 tests/1.01s. The new recipe

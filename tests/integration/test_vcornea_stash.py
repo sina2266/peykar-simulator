@@ -121,3 +121,52 @@ def test_original_injury_state_differs_from_later_archive_only_in_line_endings()
     historical = SOURCE / INJURY_PROJECT / "Epithelium.piff"
     assert archived.read_bytes() != historical.read_bytes()
     assert archived.read_bytes().replace(b"\r\n", b"\n") == historical.read_bytes()
+
+
+def test_serial_formation_preserves_original_biology_and_keeps_old_profile_immutable(tmp_path):
+    a, b = tmp_path / "old", tmp_path / "serial"
+    old = prepare_publication(
+        SOURCE, PINS, a, "self-organization", 7, parameter_profile="stash-hpc-5.0.0"
+    )
+    new = prepare_publication(
+        SOURCE,
+        PINS,
+        b,
+        "self-organization",
+        7,
+        parameter_profile="stash-formation-serial-7.0.0",
+    )
+    for key in [
+        "historical_batch_controls",
+        "controls",
+        "source_files",
+        "initial_state",
+        "parameter_overrides",
+    ]:
+        assert old[key] == new[key]
+    assert old["publication_recipe_version"] == "5.0.0"
+    assert new["publication_recipe_version"] == "7.0.0"
+    assert old["native_workers_requested"] == 4 and new["native_workers_requested"] == 1
+    left, right = (ElementTree.parse(root / "project/Simulation/vCornea_v2.xml") for root in [a, b])
+    workers = right.find("./Metadata/NumberOfProcessors")
+    assert workers.text == "1"
+    workers.text = "4"
+    assert ElementTree.tostring(left.getroot()) == ElementTree.tostring(right.getroot())
+    for name in ["vCornea_v2Steppables.py", "vCornea_v2.py"]:
+        assert (a / "project/Simulation" / name).read_bytes() == (
+            b / "project/Simulation" / name
+        ).read_bytes()
+    assert (a / "project/Epithelium_stem_only.piff").read_bytes() == (
+        b / "project/Epithelium_stem_only.piff"
+    ).read_bytes()
+    assert new["execution_control_overlay"]["source_workers"] == 4
+    with pytest.raises(InvalidRequest, match="formation-only"):
+        prepare_publication(
+            SOURCE,
+            PINS,
+            tmp_path / "rejected",
+            "mild-injury",
+            7,
+            parameter_profile="stash-formation-serial-7.0.0",
+        )
+    assert not (tmp_path / "rejected").exists()

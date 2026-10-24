@@ -99,7 +99,7 @@ def analyze(directory, output):
     report = {
         "schema_version": "1.0.0",
         "plan_digest": checksum(directory / "plan.json"),
-        "observation_version": "vcornea.spatial-diagnostics-1.2.0",
+        "observation_version": "vcornea.spatial-diagnostics-1.2.1",
         "spatial_mapping": "x,y lattice order; 200x90 sites; 2 micrometres/site (paper2.2)",
         "scope": "Descriptive endpoints, not preregistered acceptance or clinical validation",
         "independent_biological_validation": False,
@@ -142,7 +142,12 @@ def analyze(directory, output):
                     raise ValueError("Independent observer and original count tracker disagree")
             for kind in cells.TypeID.unique():
                 if (kinds == kind).sum() != cells[cells.TypeID == kind].Volume_lattice.sum():
-                    raise ValueError("Cell volumes and actual lattice occupancy disagree")
+                    raise ValueError(
+                        "Cell volumes and actual lattice occupancy disagree: "
+                        f"{job['case']} seed{job['seed']} MCS{mcs} type{kind}; "
+                        f"native_volume={cells[cells.TypeID == kind].Volume_lattice.sum()}, "
+                        f"lattice_sites={(kinds == kind).sum()}"
+                    )
             row = {
                 "mcs": mcs,
                 "hour": mcs / 10,

@@ -38,6 +38,7 @@ PARAMETER_PROFILES = (
     "observed-injury-4.0.0",
     "stash-hpc-5.0.0",
     "observed-injury-serial-6.0.0",
+    "stash-formation-serial-7.0.0",
 )
 
 
@@ -123,12 +124,19 @@ def prepare_publication(
     parameter_profile: str = "local-1.0.0",
     injury_state: Path | None = None,
 ) -> dict[str, Any]:
-    if parameter_profile == "stash-hpc-5.0.0":
+    if parameter_profile in ("stash-hpc-5.0.0", "stash-formation-serial-7.0.0"):
         from peykar.integrations.vcornea_stash import prepare_stash_publication
 
         if injury_state is not None:
             raise InvalidRequest("January snapshot retains its own original initial state")
-        return prepare_stash_publication(source, pins, destination, recipe, seed)
+        return prepare_stash_publication(
+            source,
+            pins,
+            destination,
+            recipe,
+            seed,
+            serial_formation=parameter_profile == "stash-formation-serial-7.0.0",
+        )
     if parameter_profile in (
         "historical-hpc-3.0.0",
         "observed-injury-4.0.0",

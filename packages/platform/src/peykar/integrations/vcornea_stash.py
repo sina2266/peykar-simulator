@@ -27,12 +27,20 @@ STASH_INJURY_STATE = "a4da5c3c786581165ff0cf642ea017d242d7bb4d50fe3b573cd7a97627
 
 
 def prepare_stash_publication(
-    source: Path, pins: Path, destination: Path, recipe: str, seed: int
+    source: Path,
+    pins: Path,
+    destination: Path,
+    recipe: str,
+    seed: int,
+    *,
+    serial_formation: bool = False,
 ) -> dict[str, Any]:
     from peykar.integrations.vcornea_publication import RECIPES, repair_link_lifetime
 
     if recipe not in RECIPES:
         raise InvalidRequest("Unknown reviewed publication recipe")
+    if serial_formation and recipe != "self-organization":
+        raise InvalidRequest("Serial January formation is a separate formation-only profile")
     if type(seed) is not int or not 0 <= seed <= 2**32 - 1:
         raise InvalidRequest("Seed must be an unsigned 32-bit integer")
     source = source.resolve(strict=True)
@@ -92,6 +100,11 @@ def prepare_stash_publication(
     (project / "Simulation/Parameters.py").write_text(parameters)
     steps.text = str(executed["SimTime"] + 2)  # Retain the original SimTime+1 writer.
     ElementTree.SubElement(potts, "RandomSeed").text = str(seed)
+    if serial_formation:
+        workers = tree.find("./Metadata/NumberOfProcessors")
+        if workers is None:
+            raise Conflict("Reviewed January worker control missing")
+        workers.text = "1"
     tree.write(project / "Simulation/vCornea_v2.xml", encoding="utf-8", xml_declaration=True)
     manifest: dict[str, Any] = {
         "schema_version": "1.0.0",
@@ -127,6 +140,23 @@ def prepare_stash_publication(
         ],
     }
     initial = manifest["initial_state"]
+    if serial_formation:
+        manifest.update(
+            publication_recipe_version="7.0.0",
+            parameter_profile="stash-formation-serial-7.0.0",
+            native_workers_requested=1,
+            execution_control_overlay={
+                "version": "1.0.0",
+                "source_workers": 4,
+                "requested_workers": 1,
+                "reason": "Separate serial execution after actual cell/lattice volume mismatch",
+                "scope": "Original formation biology unchanged; parallel equivalence unknown",
+            },
+        )
+        manifest["limitations"].append(
+            "Serial execution is a separate control derivative; no output is repaired "
+            "and no full-horizon or publication agreement is assumed."
+        )
     initial["sha256"] = inventory[initial["source"]]
     if injury and initial["sha256"] != STASH_INJURY_STATE:
         raise Conflict("January injury state differs")

@@ -227,3 +227,67 @@ def test_resume_rejects_six_multiworker_retries_before_starting_any_child(
         resume.main()
     assert (output / "previous-plan.json").read_bytes() == (previous / "plan.json").read_bytes()
     assert not list(output.rglob("record.json"))
+
+
+@pytest.mark.parametrize("stale_status", ["prepared", "running", "failed"])
+def test_resume_reuses_verified_exits_even_when_the_old_plan_status_is_stale(
+    tmp_path, operators, monkeypatch, stale_status
+):
+    resume = importlib.import_module("resume_vcornea")
+    previous, output = tmp_path / "old", tmp_path / "resumed"
+    plan = series(previous, "mild-injury")
+    profile = tmp_path / "runtime.json"
+    profile.write_text('{"scope":"synthetic completed-child fixture"}')
+    plan.update(
+        status="execution_failed",
+        profile_digest=digest(json.loads(profile.read_bytes())),
+        parameter_profile="observed-injury-4.0.0",
+        wall_seconds_per_run=60,
+    )
+    for job in plan["jobs"]:
+        job.update(status=stale_status, failure="stale_parent_observation")
+        root = Path(job["directory"])
+        root.mkdir()
+        (root / "record.json").write_text(
+            '{"status":"succeeded","returncode":0,"elapsed_seconds":12.5}'
+        )
+    (previous / "plan.json").write_text(json.dumps(plan))
+    original = (previous / "plan.json").read_bytes()
+    monkeypatch.setattr(resume, "verified_completed", lambda *args: True)
+    monkeypatch.setattr(
+        resume, "prepare_publication", lambda *a, **kw: pytest.fail("verified job prepared again")
+    )
+    monkeypatch.setattr(
+        resume, "execute_native", lambda *a, **kw: pytest.fail("verified child executed again")
+    )
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "resume_vcornea.py",
+            "--previous",
+            str(previous),
+            "--source",
+            str(tmp_path),
+            "--pins",
+            str(tmp_path),
+            "--prefix",
+            str(tmp_path),
+            "--profile",
+            str(profile),
+            "--output",
+            str(output),
+        ],
+    )
+    with pytest.raises(SystemExit) as result:
+        resume.main()
+    assert result.value.code == 0
+    after = json.loads((output / "plan.json").read_bytes())
+    assert after["status"] == "execution_completed"
+    assert all(
+        job["status"] == "succeeded" and job["elapsed_seconds"] == 12.5 for job in after["jobs"]
+    )
+    assert all(job["reused_verified_completed"] and "failure" not in job for job in after["jobs"])
+    assert after["native_worker_budget"]["maximum_simultaneous_requested_workers"] == 0
+    assert (previous / "plan.json").read_bytes() == original
+    assert (output / "previous-plan.json").read_bytes() == original

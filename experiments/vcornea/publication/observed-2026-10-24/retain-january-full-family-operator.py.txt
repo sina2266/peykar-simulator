@@ -1,0 +1,25 @@
+"""Retain all eight true native exits and a rejected spatial-quality stage, not a pass."""
+import hashlib,json,shutil,sys
+from pathlib import Path
+sys.path.insert(0,str(Path('scripts').resolve()))
+from resume_vcornea import verified_completed
+out=Path('experiments/vcornea/publication/observed-2026-10-24')
+analysis=Path('.peykar/cornea-stash-full-analysis-20261024');combined=analysis/'combined-runs';plan=json.loads((combined/'plan.json').read_text());state=json.loads((analysis/'status.json').read_text())
+assert plan['status']=='execution_completed' and state['status']=='analysis_failed'
+assert [(s['name'],s['returncode'])for s in state['stages']]==[('comparison',2),('original-analysis',0),('spatial-analysis',1)]
+jobs=[]
+for j in plan['jobs']:
+ assert verified_completed(j,plan['profile_digest'],plan['protocol_digest'])
+ r=Path(j['directory']);jobs.append({'case':j['case'],'seed':j['seed'],'manifest':json.loads((r/'manifest.json').read_text()),'record':json.loads((r/'record.json').read_text()),'proof':json.loads((r/'completion.json').read_text())})
+report={'scope':'All eight January native exits verified; full frozen comparison NOT reproduced and spatial stage REJECTED on actual one-site volume mismatch','protocol_sha256':plan['protocol_digest'],'plan':plan,'analysis_status':state,'jobs':jobs,'full_reproduction_passed':False,'independent_biological_validation':False}
+with (out/'january-full8-native-and-analysis.json').open('x')as f:json.dump(report,f,indent=2,allow_nan=False);f.write('\n')
+for name,relative in {'january-full8-comparison.json':'comparison/report.json','january-full8-comparison.md':'comparison/report.md','january-full8-original-analysis.json':'original-analysis/receipt.json','january-full8-spatial-rejection.log':'spatial-analysis.log'}.items():shutil.copyfile(analysis/relative,out/name)
+shutil.copyfile('.peykar/cornea-january-formation-mismatches-20261024.json',out/'january-formation-lattice-mismatches.json')
+shutil.copyfile('.peykar/audit-formation-lattice-consistency-20261024.py',out/'january-formation-lattice-audit.py.txt')
+reuse=Path('.peykar/cornea-stash-formation-verified-reuse-20261024');d=json.loads((reuse/'plan.json').read_text())
+assert d['status']=='execution_completed'and d['native_worker_budget']['maximum_simultaneous_requested_workers']==0
+assert all(j['reused_verified_completed']and j['status']=='succeeded'for j in d['jobs'])
+assert (reuse/'previous-plan.json').read_bytes()==Path('.peykar/cornea-stash-formation46-20261023/plan.json').read_bytes()
+with (out/'january-formation-actual-stale-plan-reuse.json').open('x')as f:json.dump({'scope':'Real verified completed children reused from the original failed/prepared parent plan; zero solver children started; old parent bytes preserved','resumed_plan':d,'previous_plan_sha256':hashlib.sha256((reuse/'previous-plan.json').read_bytes()).hexdigest()},f,indent=2);f.write('\n')
+shutil.copyfile(__file__,out/'retain-january-full-family-operator.py.txt')
+print('Eight full exits retained; exact negative comparison and spatial rejection retained; actual zero-child stale-plan reuse verified')

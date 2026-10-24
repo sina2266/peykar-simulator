@@ -29,16 +29,15 @@ including a declared reconstruction based on original observed state constraints
 One original spatial file has truncated optional fields, now explicitly recorded.
 No full publication match or biological validity is claimed.
 The complete later-source baseline retains its failed four-group comparison.
-Five derived injury jobs completed; the sixth aborted inside the native engine,
-with its actual exit and partial outputs retained. All six January injury jobs
-completed: three pass every frozen scalar criterion, three fail. Its two previously
-unstarted formation jobs now run from their original prepared inputs under an
-explicit reviewed capacity release. The earlier failed prerequisite plans remain.
-Original
-figure export now preserves titles/axis labels with identical numerical summaries.
-Actual native parallel stress failures also motivated a separately versioned
-one-worker injury derivative; its two full moderate diagnostics are running.
-This changes execution controls explicitly, without fitting biological parameters.
+Five derived injury jobs completed; the sixth aborted inside the native engine.
+All eight January-family native jobs then completed, but five fail the frozen
+scalar checks and the final formation7 tear volume differs by one lattice site.
+The [full result and rejected spatial stage](experiments/vcornea/publication/january-full-family-audit-2026-10-24.md)
+are retained without repairing outputs or relaxing criteria. Original figure
+exports preserve titles/axis labels and all original cell-type names.
+Separate one-worker injury and formation derivatives now run under explicit
+version6/7 controls, retaining biological parameters and all older attempts.
+No passing full reproduction or parallel stochastic equivalence is assumed.
 The complete January2025 archive snapshot is also retained. A separate fifth
 reconstruction keeps its different formation/injury mechanisms and original
 family defaults; [source correspondence and limits](experiments/vcornea/publication/january-source-family-audit-2026-10-23.md)

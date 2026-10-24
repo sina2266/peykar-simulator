@@ -6,6 +6,11 @@ has slight, mild and moderate severities. Reconstructed formation now passes its
 full-horizon subset; injury execution and the full frozen gate remain pending. See the
 [operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
 
+The [complete January-family outcome](january-full-family-audit-2026-10-24.md)
+now retains all eight actual native exits, five frozen scalar failures and a strict
+one-site volume rejection. The new version7 serial formation derivative will reuse
+all six existing one-worker injuries in its full comparison; no output is repaired.
+
 The [October24 completion audit](completion-audit-2026-10-24.md) retains six full
 January injury exits, the mixed frozen subset result and a separate derived
 native abort. Both January formation jobs now run from their frozen prepared

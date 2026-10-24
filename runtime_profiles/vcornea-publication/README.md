@@ -26,6 +26,15 @@ and bounded one/four-worker stress controls, not parameter fitting. Original
 profiles and ongoing copies remain unchanged. See the [actual probes, limits and
 bounded full moderate follow-on](../../experiments/vcornea/publication/serial-execution-audit-2026-10-24.md).
 
+`stash-formation-serial-7.0.0` separately changes January formation XML4→1 after
+an actual exit0/full-horizon output failed exact cell/lattice volume consistency.
+All biological controls/state remain profile5's originals. Its bounded full
+follow-on reuses the already completed/verified one-worker January injuries; it
+never repairs the inconsistent output. See [actual full-family evidence](../../experiments/vcornea/publication/january-full-family-audit-2026-10-24.md).
+A resumer now derives reused job status/elapsed time from verified actual child
+records, rather than carrying stale parent labels into a new plan. Old plans and
+records are retained; verified reused children reserve zero workers and never run again.
+
 ## Pinned installed environments
 
 `macos-arm64-4.6.0-explicit.txt` contains 400 exact official/conda-forge package

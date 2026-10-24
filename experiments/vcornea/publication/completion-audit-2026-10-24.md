@@ -103,3 +103,11 @@ for all four groups under the original protocol. No recurring automation is
 created/reactivated. Full reconstruction and independent experimental biological
 validation remain open. The original seeds/per-run parameter files are still not
 identified by the published source/object audits.
+
+## Subsequent full-family observation
+
+The two formation jobs completed with real exit0. Their [full eight-job analysis](january-full-family-audit-2026-10-24.md)
+returned not_reproduced and rejected the actual one-site final tear-volume mismatch.
+The prepared-input capacity release above is now historical, not a running job.
+New version7 serial formation2 runs separately with original biology unchanged;
+its full follow-on reuses the already completed January one-worker injury6.
