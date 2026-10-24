@@ -1,5 +1,12 @@
 # Experimental context, separate from simulation reproduction
 
+Update2026-10-24: a separate [experimental-data path](../experimental/README.md)
+now retains original rabbit debridement observations and healthy human OCT
+aggregates, with inspected pinned HF samples. Actual lattice-thickness comparisons
+are exploratory: anatomical region/measurement mappings remain unresolved, and
+rabbit mechanical injury does not validate the human chemical model. The earlier
+source-specific findings below remain preserved; no new biological pass is claimed.
+
 No new acceptance threshold or candidate parameter is introduced by this audit.
 
 The [original model paper, sections2.4–2.5 and4.3](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1013410)

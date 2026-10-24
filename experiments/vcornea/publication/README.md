@@ -14,6 +14,11 @@ fails its trajectory criterion. No native run is active. Read the
 [plain Persian outcome](results-2026-10-24.fa.md) and
 [exact missing original inputs](original-run-metadata-needed.md).
 
+Separate [real experimental evidence and lattice observations](../experimental/README.md)
+now retain Hugging Face sample QC, original rabbit wound measurements and22human
+healthy OCT aggregates. The four-output exploratory thickness comparison does not
+change this frozen publication gate or establish independent injury validation.
+
 The [complete January-family outcome](january-full-family-audit-2026-10-24.md)
 now retains all eight actual native exits, five frozen scalar failures and a strict
 one-site volume rejection. Version7's completed serial formation comparison reused

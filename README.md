@@ -39,6 +39,15 @@ records what is needed. Full publication reproduction and independent biological
 validation remain open. No native simulation is still running at the latest check.
 All source families, negative results, original bytes and failed attempts remain.
 
+The [experimental corneal evidence path](experiments/vcornea/experimental/README.md)
+now retains inspected pinned Hugging Face samples, original rabbit wound data and
+healthy human OCT aggregates from22subjects. A new offline observation operator
+measures actual epithelial lattice spans; four completed formation outputs were
+compared descriptively with the52.5±3.6µm clinical aggregate. Source3 means54.01/
+55.63µm and source7 means61.69/61.40µm; region/measurement mappings remain unresolved,
+so these are not clinical accuracy scores or biological passes. All original
+data/terms and incompatible endpoints remain explicit. [Plain Persian results](experiments/vcornea/experimental/results.fa.md).
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),

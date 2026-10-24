@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "class": "exploratory_cross_context_diagnostic",
+  "scope": "Declared before extracting new physical geometry; existing candidate simulations already completed, so NOT preregistered independent validation",
+  "acceptance_threshold": null,
+  "nominal_micrometres_per_site": 2.0,
+  "candidate_series": [
+    ".peykar/cornea-historical-formation46-20261023",
+    ".peykar/cornea-stash-serial-formation46-20261024"
+  ],
+  "model_context": {
+    "species": "Homo sapiens",
+    "tissue": "corneal epithelium",
+    "condition": "healthy",
+    "exposure": "none",
+    "endpoint": "epithelial thickness",
+    "measurement": "2D vertical lattice span",
+    "region": null
+  },
+  "clinical_context": {
+    "species": "Homo sapiens",
+    "tissue": "corneal epithelium",
+    "condition": "healthy",
+    "exposure": "none",
+    "endpoint": "epithelial thickness",
+    "measurement": "OCT normal epithelial thickness",
+    "region": "central cornea"
+  },
+  "chemical_model_context": {
+    "species": "Homo sapiens",
+    "tissue": "corneal epithelium",
+    "condition": "chemical injury",
+    "exposure": "generic SLS model pulse",
+    "endpoint": "basal exposure",
+    "measurement": "2D top-connected fluid access",
+    "region": "400um model cross-section"
+  },
+  "rabbit_context": {
+    "species": "Oryctolagus cuniculus",
+    "tissue": "corneal epithelium",
+    "condition": "mechanical debridement",
+    "exposure": "PBS after epithelial debridement",
+    "endpoint": "wound area fraction",
+    "measurement": "en face fluorescein area",
+    "region": "central7mm debridement"
+  },
+  "limitations": [
+    "Human central OCT and model whole400um cross-section have no homologous regional/measurement mapping.",
+    "Column span is not top-cell yCOM or OCT-normal optical thickness; gaps and missing columns retained.",
+    "Spatial columns/timepoints are not independent animals or human subjects.",
+    "Clinical mean differences are descriptive, not paired RMSE, equivalence, accuracy percentage or biological pass.",
+    "No acceptance threshold/parameter is fitted after candidate outcomes.",
+    "Rabbit mechanical injury/fluorescein surface area is not chemical-model basal exposure.",
+    "Calibration independence needs external evidence; dataset download does not establish holdout status."
+  ]
+}

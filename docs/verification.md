@@ -1,5 +1,59 @@
 # Verification record
 
+## Real corneal experimental data and observation operator: 2026-10-24
+
+- Searched Hugging Face API for cornea/corneal/wound-healing, inspected all three
+  returned corneal dataset identities/cards/file inventories and pinned their
+  exact commits. These name searches are not an exhaustive full-text inventory.
+  Downloaded complete303826byte human cell metadata Parquet; native PyArrow read
+ 22972rows/12sample prefixes/three columns, contradicting card~19472/viewer141k.
+  File SHA matches its pinned LFS SHA. Downloaded/read the202eye biomechanics CSV;
+  its Git object hash matches the pinned HF tree. Neither contains a matched
+  corneal epithelial healing/thickness endpoint. No HF Python/model code executed.
+- Downloaded actual original PLOS0188154 S1ZIP97548bytes and exact Fig2/3 XLSX
+  members, plus PLOS0239124 publisher JATS. Original terms/credits/raw bytes
+  retained in experiments/data/cornea-evidence-20261024. Normalized90measured
+  rabbit wound rows (three groups ×three rabbits ×ten times0–54h), preserving
+  source-cell IDs, unreported area unit and within-rabbit ratios. No fourth
+  rabbit fabricated despite original caption n4. Clinical Normal group has22
+  subjects/seven aggregate endpoints; central52.5±3.6µm, no individual rows invented.
+- Dryad version467979 all47file metadata entries retained. Six small-file
+  downloads failed API401/public UI403; no experimental measurements/image ZIP
+  acquired from that source. Preserve this negative acquisition observation.
+- New stdlib observation/parser module keeps source formulas inert, bounds input
+  XML/XLSX, measures epithelial span/occupancy/gaps directly from lattice types,
+  leaves empty spans null, rejects unknown context/units and never emits a
+  biological approval. Original height yCOM is not relabeled physical thickness.
+- `uv run pytest tests/unit/test_cornea_evidence.py -q`:18passed/0.05s; targeted
+  Ruff/format checks and strict mypy1file pass. Tests include actual original
+  source interpretation, n3/no synthetic eyes, entity/formula rejection, y-offset
+  invariance, gaps/empty columns, invalid scales/grids and unknown endpoint context.
+- Explicit `scripts/compare_corneal_evidence.py` command in
+  [operator instructions](../experiments/vcornea/experimental/README.md) ran with
+  native Python, final output cornea-experimental-diagnostic-retry1-20261024.
+  Verified all four actual completed43200MCS formation manifests/proofs/outputs;
+  final mean spans54.01010/55.62626/61.68687/61.40404µm, clinical52.5±3.6.
+  Report blocks measurement/region equivalence, preserves descriptive differences,
+  null pass/accuracy and biological-validation false. Plot visually inspected.
+  Initial invocation exposed a Pydantic import absent from frozen native runtime;
+  stdlib SHA-256 removes that management dependency, no runtime package changed.
+- First full check stopped before pytest because Ruff attempted to reformat an
+  original HF README code block. Original bytes preserved; only this new raw-data
+  directory was added to existing upstream formatting exclusions. Final
+  `make check-docker` passed559tests/34.35s/86% coverage, strict mypy100files,
+ 18frontend tests/current contracts/all wheel and sdist builds. Host `make build`
+  also passed. Actual logs .peykar/cornea-experimental-evidence-final-check-docker-
+  20261024.log and cornea-experimental-evidence-build-20261024.log retained;
+  initial formatting-failure log remains separately.
+- Rechecked23admitted evidence-file hashes, preparation-operator digest and both
+  native report code hashes. API health200/ok/version0.3.0; original API/Worker
+  remain up. No new native model execution, parameter fit, original protocol
+  modification, data-volume mutation or recurring schedule activation occurred.
+- Final local Ruff/format checks passed;159 local Markdown links and exact
+  experimental acquisition/operator/report identities verified. `git diff --check`
+  passed. Raw/normalized evidence bundle is745194bytes; original model/license/
+  schema versions, comparison1.0.0 and uv.lock remain unchanged.
+
 ## Terminal serial corneal runs and retained outcomes: 2026-10-24 08:00UTC
 
 - Inspected current plans, actual child records/proofs and both finite follow-on

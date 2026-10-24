@@ -1,0 +1,69 @@
+"""Retain acquired primary data without running any external code."""
+import csv
+import hashlib
+import json
+from pathlib import Path
+
+from peykar.validation.cornea_evidence import human_oct_summary, rabbit_wound_observations
+
+source = Path('.peykar/external/cornea-evidence-20261024')
+dest = Path('experiments/data/cornea-evidence-20261024')
+(dest / 'raw').mkdir(parents=True, exist_ok=False)
+mapping = {
+ 'buffault2020-manuscript.xml':'buffault2020-manuscript.xml',
+ 'rabbit-0188154-s001.zip':'rabbit-0188154-s001.zip',
+ 'Figure 2 data.xlsx':'rabbit-figure2.xlsx', 'Figure 3 data.xlsx':'rabbit-figure3.xlsx',
+ 'hf-human-cornea-cell-metadata.parquet':'hf-human-cornea-cell-metadata.parquet',
+ 'hf-biomechanics-development.csv':'hf-biomechanics-development.csv',
+ 'longevity-db-README.md':'hf-human-cornea-README.md',
+ 'davidm770-README.md':'hf-corneal-h5-README.md',
+ 'usama10-README.md':'hf-biomechanics-README.md',
+ 'longevity-db-tree.json':'hf-human-cornea-files.json',
+ 'davidm770-tree.json':'hf-corneal-h5-files.json',
+ 'usama10-tree.json':'hf-biomechanics-files.json',
+ 'hf-search-cornea.json':'hf-search-cornea.json',
+ 'hf-search-corneal.json':'hf-search-corneal.json',
+ 'hf-search-wound-healing.json':'hf-search-wound-healing.json',
+ 'dryad-metadata.json':'dryad-metadata.json',
+ 'dryad-files.json':'dryad-files-1.json', 'dryad-files-2.json':'dryad-files-2.json',
+ 'dryad-files-3.json':'dryad-files-3.json',
+}
+for original, target in mapping.items():
+ (dest/'raw'/target).write_bytes((source/original).read_bytes())
+
+def write(name, data):
+ with (dest/name).open('x') as stream: json.dump(data,stream,indent=2,allow_nan=False);stream.write('\n')
+
+human=human_oct_summary((dest/'raw/buffault2020-manuscript.xml').read_bytes())
+rabbit=rabbit_wound_observations((dest/'raw/rabbit-figure2.xlsx').read_bytes())
+write('human-healthy-oct.json',human)
+with (dest/'rabbit-wounds.csv').open('x',newline='') as stream:
+ w=csv.DictWriter(stream,fieldnames=list(rabbit[0]));w.writeheader();w.writerows(rabbit)
+catalog={
+ 'checked_utc':'2026-10-24', 'scope':'Corneal epithelial evidence search and actual downloaded samples; not exhaustive or biological approval',
+ 'datasets':[
+  {'id':'longevity-db/human-cornea-snRNAseq','source':'https://huggingface.co/datasets/longevity-db/human-cornea-snRNAseq','revision':'f7cd9aac5015acf555800cce9fd0ebd0a81fd32e','license_declaration':'CC-BY-4.0 mirror; original GEO conditions retained separately','original':'GSE186433','acquired':'complete cell_metadata.parquet,303826bytes','observed_rows':22972,'observed_columns':['original_sample_prefix','n_genes','cell_id'],'sample_prefixes':12,'decision':'not an epithelial repair/thickness endpoint; no cell-type, injury-time or physical observation columns','limitations':['Card states approximately19472cells and viewer141k; actual pinned metadata file22972rows','297176948byte expression and37706305355byte unrelatedH5 not downloaded','Sequencing sampling fractions are not physical tissue cell counts']},
+  {'id':'davidm770/corneal','source':'https://huggingface.co/datasets/davidm770/corneal','revision':'d44956142f38ba94eda73ee53b30250553f82ff3','license_declaration':'MIT in mirror card','acquired':'card/file inventory only','decision':'37.7GB H5 without scientific metadata in its97byte card; no justified epithelial endpoint mapping'},
+  {'id':'usama10/corneal-biomechanical-prediction-model','source':'https://huggingface.co/datasets/usama10/corneal-biomechanical-prediction-model','revision':'ba3fb05e003b5f01c3e5043eadc72db906c1a989','license_declaration':'CC-BY-4.0','acquired':'202eye development CSV,44575bytes; original card','decision':'Cataract incision/astigmatism and whole-cornea biomechanics; CCT is not epithelial thickness','potential_reuse':'Future whole-cornea mechanics/optical surgery model, after corneal priority; no model integration claimed'},
+  {'id':'buffault2020','source':'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0239124','doi':'10.1371/journal.pone.0239124','authors':'Juliette Buffault, Pierre Zeboulon, Hong Liang, Anthony Chiche, Jade Luzu, Mathieu Robin, Ghislaine Rabut, Marc Labetoulle, Antoine Labbe, Christophe Baudouin','license_declaration':'CC-BY-4.0 original permissions in retained XML','acquired':'Original publisher JATS XML; Normal group7 aggregates/22independent subjects','decision':'Human healthy architecture diagnostic only; central OCT region/normal-thickness mapping unresolved','limitations':['Aggregates only, no invented individual eyes','Not an injury timecourse; calibration independence not independently reviewed','Not cited by author name Buffault in retrieved model article; absence of citation is not proof of untouched holdout']},
+  {'id':'abdel-naby2017','source':'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0188154','doi':'10.1371/journal.pone.0188154','authors':'Waleed Abdel-Naby, Brigette Cole, Aihong Liu, Jingbo Liu, Pengxia Wan, Ryan Schreiner, David W. Infanger, Nicholas B. Paulson, Brian D. Lawrence, Mark I. Rosenblatt','license_declaration':'CC-BY-4.0; original PLOS article','acquired':'Full97548byte original S1ZIP plus exact Figure2/3XLSX members','decision':'Real rabbit epithelial debridement wound area; normalize within each rabbit; not matched human chemical exposure or2D fluid-access proxy','limitations':['Three actual measured rabbits/group in Fig2 vs caption n4; no missing fourth invented','Raw image-area unit unreported; only within-rabbit ratios have known units','Measurements within each rabbit are repeated, not independent subjects','Untreated native thickness in Fig3 is distinct from72h PBS injured group']},
+  {'id':'dryad.9cnp5hqw8','source':'https://datadryad.org/dataset/doi:10.5061/dryad.9cnp5hqw8','version':467979,'license_declaration':'CC0-1.0 per original API metadata','acquired':'Complete47file metadata over3pages; no experimental data files acquired','decision':'Ex vivo porcine mechlorethamine injury, different species/toxicant/state','download_observations':['Anonymous API file download401; public UI file stream403 for6selected small files','No access restriction bypass or fabricated measurements','1.27GB image ZIP not downloaded']},
+ ]}
+write('catalog.json',catalog)
+model={'species':'Homo sapiens','tissue':'corneal epithelium','condition':'healthy','exposure':'none','endpoint':'epithelial thickness','measurement':'2D vertical lattice span','region':None}
+clinical={**model,'measurement':'OCT normal epithelial thickness','region':'central cornea'}
+chemical={**model,'condition':'chemical injury','exposure':'generic SLS model pulse','endpoint':'basal exposure','measurement':'2D top-connected fluid access','region':'400um model cross-section'}
+rabbit_context={**model,'species':'Oryctolagus cuniculus','condition':'mechanical debridement','exposure':'PBS after epithelial debridement','endpoint':'wound area fraction','measurement':'en face fluorescein area','region':'central7mm debridement'}
+write('diagnostic-plan-1.0.0.json',{
+ 'schema_version':'1.0.0','class':'exploratory_cross_context_diagnostic',
+ 'scope':'Declared before extracting new physical geometry; existing candidate simulations already completed, so NOT preregistered independent validation',
+ 'acceptance_threshold':None,'nominal_micrometres_per_site':2.0,
+ 'candidate_series':['.peykar/cornea-historical-formation46-20261023','.peykar/cornea-stash-serial-formation46-20261024'],
+ 'model_context':model,'clinical_context':clinical,'chemical_model_context':chemical,'rabbit_context':rabbit_context,
+ 'limitations':['Human central OCT and model whole400um cross-section have no homologous regional/measurement mapping.','Column span is not top-cell yCOM or OCT-normal optical thickness; gaps and missing columns retained.','Spatial columns/timepoints are not independent animals or human subjects.','Clinical mean differences are descriptive, not paired RMSE, equivalence, accuracy percentage or biological pass.','No acceptance threshold/parameter is fitted after candidate outcomes.','Rabbit mechanical injury/fluorescein surface area is not chemical-model basal exposure.','Calibration independence needs external evidence; dataset download does not establish holdout status.']})
+write('acquisition.json',{
+ 'schema_version':'1.0.0','acquired_utc':'2026-10-24','operator_source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+ 'files':{str(f.relative_to(dest)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(dest.rglob('*')) if f.is_file()},
+ 'original_sources':{ 'rabbit-0188154-s001.zip':'https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0188154.s001','buffault2020-manuscript.xml':'https://journals.plos.org/plosone/article/file?type=manuscript&id=10.1371/journal.pone.0239124'},
+ 'scientific_code_executed':False,'independent_biological_validation':False})
+print('Retained',len(mapping),'original source/sample files; normalized',len(rabbit),'measured rabbit rows and',human['independent_subjects'],'human subject aggregates')

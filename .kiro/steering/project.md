@@ -780,3 +780,45 @@ commands/outcomes in `docs/verification.md`.
   inventorywithinrecordedscopehasnotidentifiedit. Do NOTguess/fitorrelaxcriteria,
   cherry-pickmixedsourcepasses orrestartunchangedcompletedruns. Fullpublication
   andindependentbiology gatesremainOPEN; no othermodelwork untilpriorityresolved.
+
+## Real experimental evidence after user's HF direction, 2026-10-24
+
+- Latest user instruction explicitly advances corneal experimental-data search,
+  sample inspection and useful comparison-code updates, including Hugging Face.
+  It expands work beyond waiting for original paper run metadata, while preserving
+  corneal priority and separate publication/biological gates. Do not ask for the
+  same dataset-acquisition permission again or begin another model.
+- Mainaba2afae0aaa441c7aa714f771bab83a3841c582 was pushed/verified/clean.
+  New work: experiments/data/cornea-evidence-20261024 and vcornea/experimental.
+ 23admitted source/normalized/plan files hash-verified, original terms retained.
+- HF three candidate identities pinned; actual human metadata22972rows/12prefixes/
+ 3columns, LFS SHA verified. No cell-type, injury-time or physical-thickness columns.
+  Card~19472/viewer141k differs. Actual202eye biomechanics CSV/Git object checked;
+  CCT is whole cornea, not epithelium. Undocumented37.7GBH5 not downloaded.
+- Original Abdel-Naby2017 S1ZIP97548bytes/Fig2+3XLSX retained;90measured wound
+  rows normalized:3groups×3actualrabbits×10times0–54h. Caption n4 discrepancy
+  retained; rawareaunitunreported, no mm² conversion/fourthrabbit invented.
+- Buffault2020 original publisher JATS/Normal group22subjects/7aggregates retained;
+  central52.5±3.6µm. No synthetic human rows or untouched-holdout assertion.
+  Dryad467979 all47file metadata acquired;6small-file data downloads failed
+  API401/publicUI403. No porcine experimental data or1.27GBimages acquired.
+- peykar.validation.cornea_evidence adds inert bounded source readers and
+  cornea.vertical-epithelial-span-1.0.0:actualtypes1/3/4/5 span/occupancy/gaps/nulls,
+  nominal2µm/site. New explicit scripts/compare_corneal_evidence.py reads verified
+  completed final43200MCS arrays only; no model code or original acceptance changed.
+  Pydantic dependency found absent in nativeenv; use stdlib SHA instead, NO package
+  installed/updated in immutable native runtime. Earlier failed attempt retained.
+- Four actual mean spans:July3seeds7/11=54.01010/55.62626µm;Jan7=61.68687/61.40404.
+  Human central52.5±3.6. Exploratory plan declared before newmetric extraction but
+  AFTER existing simulations; NOT preregistered validation. Region/measurement
+  mismatch blocks independent pass; raw outputs/failedpublicationresults unchanged.
+  Rabbit7mm mechanical fluorescein area is not genericchemical2D fluid access.
+-18targetedtests0.05s/Ruff/format/mypy1pass. First fullcheck stopped on original
+  HFREADME formatting; newrawdirectory excluded, upstream bytes unchanged. Final
+ 559tests34.35s86%/mypy100/18frontend/contracts/allbuilds,hostbuildpassed.
+  Logs cornea-experimental-evidence-final-check-docker/build-20261024 under.peykar.
+- Read experimental/README.md/results.fa.md and datasetREADME/catalog. Next:
+  homologous anatomical ROI/OCT observation mapping, reviewed independent protocol;
+  rabbit n3/n4/rawunit context and matched separatelyversioneddebridement scenario.
+  Do NOTfit missing chemical kinetics or invent woundarea from2D width/countreturn.
+  Existing native runs terminal, no duplicates. Heartbeat staysPAUSED, data preserved.

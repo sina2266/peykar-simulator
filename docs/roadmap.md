@@ -45,6 +45,14 @@ The next scientific dependency is [exact original run correspondence](../experim
 not another unchanged simulation. The four-group gate stays open; no other model
 work starts and recurring scheduling stays paused.
 
+Latest user direction also requires active search for applicable real experimental
+data, including Hugging Face, and useful code to compare it. The completed
+[corneal evidence increment](../experiments/vcornea/experimental/README.md) retains
+real human aggregates/rabbit observations and inspected HF samples, adds an actual
+lattice-thickness operator and records four exploratory clinical comparisons.
+This advances corneal empirical work while preserving the separate unresolved
+publication gate; it authorizes no unrelated model or biological pass.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
@@ -285,6 +293,20 @@ The earlier independently advancing workstreams resume after this corneal gate.
   failed child or mixture of successful source families is promoted to full acceptance.
 - [ ] Establish independently applicable biological measurements; calibration ranges
   and the unrelated monolayer assay do not supply independent tissue validation.
+- [x] Search Hugging Face and primary repositories, inspect actual pinned samples,
+  preserve original experimental sources/terms and reject nonmatching endpoints.
+  Retain90actual rabbit wound rows,22human OCT subject aggregates,HF22972metadata
+  rows/202biomechanics eyes; record missing fourth rabbit and failed Dryad downloads.
+- [x] Implement/test offline inert data normalization and actual lattice epithelial
+  span/occupancy/gap observation; compare all four completed formation outputs
+  descriptively with human clinical thickness without fitting or a passing claim.
+- [ ] Establish homologous anatomical region and validated observation mapping
+  between lattice vertical span and human OCT-normal thickness, then freeze an
+  independent acceptance protocol with calibration-use/subject-level review.
+- [ ] Resolve original rabbit sample-count/raw-unit context; define a separately
+  versioned matched mechanical-debridement scenario before comparing wound area.
+  Keep PBS and silk treatment separate; never equate a2D fluid-access width to
+  fluorescein surface area or infer a chemical dose conversion from severity names.
 - [x] Recover the complete January2025 archive snapshot and retain its distinct
   HPC formation/injury mechanisms, controls and original initial states as
   `stash-hpc-5.0.0`; no silent state/mechanism mixing or changed acceptance criteria.
