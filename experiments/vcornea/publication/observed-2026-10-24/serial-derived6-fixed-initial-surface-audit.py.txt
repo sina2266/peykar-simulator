@@ -1,0 +1,61 @@
+"""Descriptive fixed-initial-surface geometry audit; no acceptance endpoint added."""
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+sys.path.insert(0, str(Path("runtime_profiles/vcornea-publication").resolve()))
+from analyze_spatial import LABELS, membrane_surface
+from compare import checksum, load_run
+
+runs = Path(".peykar/cornea-serial-derived-moderate46-20261024")
+plan = json.loads((runs / "plan.json").read_bytes())
+protocol = json.loads((runs / "comparison.json").read_bytes())
+assert plan["status"] == "execution_completed"
+assert checksum(runs / "comparison.json") == plan["protocol_digest"]
+rows = []
+for job in plan["jobs"]:
+    root, manifest, record, *_ = load_run(plan, job, plan["protocol_digest"], protocol)
+    with np.load(root / "lattice-0.npz", allow_pickle=False) as saved:
+        baseline = membrane_surface(saved["cell_type"].tolist())
+    mask = np.zeros((200, 90), dtype=bool)
+    eligible = np.zeros_like(mask)
+    for x, upper in baseline.items():
+        mask[x, :upper] = True
+        eligible[x, :] = True
+    for mcs in [0, 7200, manifest["controls"]["steps_mcs"]]:
+        path = root / f"lattice-{mcs}.npz"
+        assert record["outputs"][path.name] == checksum(path)
+        with np.load(path, allow_pickle=False) as saved:
+            kinds = saved["cell_type"].copy()
+        rows.append({
+            "case": job["case"], "seed": job["seed"], "mcs": mcs,
+            "manifest_digest": job["manifest_digest"], "snapshot_sha256": checksum(path),
+            "eligible_original_basement_columns": len(baseline),
+            "per_type": {label: {
+                "sites_in_eligible_columns": int(((kinds == kind) & eligible).sum()),
+                "sites_below_fixed_initial_upper_surface": int(((kinds == kind) & mask).sum()),
+                "columns_with_sites_below_fixed_initial_upper_surface": int(np.any((kinds == kind) & mask, axis=1).sum()),
+            } for kind, label in LABELS.items()},
+        })
+report = {
+    "schema_version": "1.0.0", "operator_source_sha256": checksum(Path(__file__)),
+    "scope": "Descriptive original-frame geometry: epithelial sites below fixed initial upper limb/membrane surface in its198 eligible columns",
+    "limitations": [
+        "Fixed original surface is not a moving anatomical boundary or pathological invasion endpoint.",
+        "No corresponding selected published spatial endpoint or new acceptance threshold is asserted.",
+        "Zero top-connected-fluid access does not establish normal layer organization or clinical repair.",
+    ],
+    "preregistered_acceptance_endpoint": False,
+    "independent_biological_validation": False,
+    "observations": rows,
+}
+dest = Path("experiments/vcornea/publication/observed-2026-10-24")
+with (dest / "serial-derived6-fixed-initial-surface.json").open("x") as stream:
+    json.dump(report, stream, indent=2, allow_nan=False)
+    stream.write("\n")
+with (dest / "serial-derived6-fixed-initial-surface-audit.py.txt").open("xb") as stream:
+    stream.write(Path(__file__).read_bytes())
+for row in rows:
+    print(row["seed"], row["mcs"], row["per_type"]["Wing"])

@@ -35,17 +35,15 @@ S1–S4/model expansion. Scientific gates remain mandatory before model validity
 or a biological coupling is claimed. UI work depends on concrete operations and
 states; an illustrative graph or animation cannot substitute for execution.
 
-The [October24 corneal observations](../experiments/vcornea/publication/completion-audit-2026-10-24.md)
-retain six completed January injuries (three full scalar passes, three failures),
-one earlier native abort and the original failed prerequisite plans. Two previously
-unstarted formation jobs now execute their frozen inputs under explicit offline
-capacity review. The four-group full gate remains open; no other model work starts.
-
-The [completed January eight-job candidate](../experiments/vcornea/publication/january-full-family-audit-2026-10-24.md)
-is also negative and has a retained one-site final formation volume mismatch.
-Explicit serial derivatives6/7 now run unchanged biological controls; the new
-full comparison reuses all six existing one-worker injuries. Neither a successful
-native exit nor a scalar subset closes the scientific gate.
+The [terminal serial results](../experiments/vcornea/publication/serial-final-results-2026-10-24.md)
+retain all four new full-horizon exits and completed analyses. Full January serial
+formation2 + reused injury6 remains negative (five failures/three scalar passes);
+the separate July serial moderate2 fails its trajectory criterion. Both new
+original-math/spatial stages pass. Earlier native aborts, the inconsistent
+four-worker output and every negative candidate remain. No native run is active.
+The next scientific dependency is [exact original run correspondence](../experiments/vcornea/publication/original-run-metadata-needed.md),
+not another unchanged simulation. The four-group gate stays open; no other model
+work starts and recurring scheduling stays paused.
 
 ## S0 — preservation and platform contracts
 
@@ -255,9 +253,11 @@ The earlier independently advancing workstreams resume after this corneal gate.
   anything. Each job has a24-hour deadline; preserve failed runs.
   All six genuinely completed; full baseline returns not_reproduced. Original math,
   actual structure/EGF and complete50401-sample chemical traces were inspected.
-- [ ] Apply the unchanged frozen reference comparison to every full run, replay the
+- [x] Apply the unchanged frozen reference comparison to every admitted full run, replay the
   authors' math on new outputs, inspect actual spatial/EGF/recovery results and retain
-  negative findings. Current source/table disagreements preclude an exact-final-table claim.
+  negative findings. Real failed children remain unadmitted; the full scalar gate
+  is negative and earlier spatial rejection is preserved. Analysis completion is
+  not acceptance or an exact-final-table claim.
 - [x] Inspect10 actual original VTK snapshots/three descriptors, retaining group
   differences: MildComb0 is4620h/pulse300h, moderate spatial data ends1058h and
   CONTROL4265h. These are not the selected full scalar cohorts or independent experiments.
@@ -278,12 +278,11 @@ The earlier independently advancing workstreams resume after this corneal gate.
   separately evidenced archived PIFF and declared frozen overrides; actual600MCS
   native grid/pulse/lattice checks pass. Preserve the old-state mismatch and every
   source identity; this is a declared reconstruction, not unchanged old Git execution.
-- [ ] Finish the six prepared derived injury runs after both existing series complete;
-  combine their actual records with historical formation2 for the full unchanged
-  comparison, original math and spatial inspection. Operators wait with explicit
-  deadlines and never duplicate healthy jobs or mutate previous plans.
-  Both prerequisite series are complete; four derived jobs run and two wait for
-  capacity. Preserve the negative baseline and the passing formation subset.
+- [x] Bring all six derived injury jobs to actual terminal states and retain their
+  evidence: five full exits/one native SIGABRT. The full combined analysis correctly
+  stops at the failed child; the four slight/mild completed diagnostic is negative.
+  Separate serial moderate retries completed but fail trajectory coverage. No
+  failed child or mixture of successful source families is promoted to full acceptance.
 - [ ] Establish independently applicable biological measurements; calibration ranges
   and the unrelated monolayer assay do not supply independent tissue validation.
 - [x] Recover the complete January2025 archive snapshot and retain its distinct
@@ -292,13 +291,21 @@ The earlier independently advancing workstreams resume after this corneal gate.
 - [x] Check both published Zenodo versions; verify/materialize all26 earlier
   ordinary source files and compare all238 original object files byte-for-byte.
   No extra numeric controls/history were found; keep its distinct archive identity.
-- [ ] Finish its two full formation and six injury runs under explicit native-worker
+- [x] Finish its two full formation and six injury runs under explicit native-worker
   capacity checks, then retain the complete unchanged comparison/original math/
-  spatial analysis. A newer stash is a separately identified candidate, not proof
-  of the original cohort's exact source version.
-- [ ] Investigate observed long same-numeric-seed divergence under one native
-  worker before claiming bitwise replay or paired pre-injury states. Existing
-  stochastic acceptance/input plans stay frozen; no cause or fix is invented.
+  spatial analysis: full frozen result negative, one-site formation mismatch
+  rejected. New explicit serial formation2 also completed, reused all injury6,
+  and passed saved-state checks; full comparison still five failures/three passes.
+- [x] Finish and analyze the four explicit serial6/7 jobs; verify actual completion
+  proofs, all retained artifact hashes, full chemical traces and interim pulse
+  continuity. Preserve original math/structure/EGF/count figures with negative results.
+- [ ] Recover exact expanded original controls, initial/checkpoint/RNG states,
+  cohort/replicate mapping and native build for the four selected published groups.
+  Both releases/history and all data member names were checked within their
+  recorded scope; no missing original run file has been identified. Keep the
+  observed same-seed divergence unresolved; no bitwise or paired-state claim.
+- [ ] Complete an accepted full four-group reproduction using that recovered
+  evidence and unchanged criteria. Current passing subsets do not close this gate.
 
 See the [source/analysis inventory](../experiments/vcornea/publication/README.md)
 and [operator commands](../runtime_profiles/vcornea-publication/README.md).

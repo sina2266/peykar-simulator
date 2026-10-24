@@ -2,23 +2,31 @@
 
 The immediate target is the two configurations provided by the authors: tissue
 formation from stem cells, then chemical injury/recovery. The injury configuration
-has slight, mild and moderate severities. Reconstructed formation now passes its
-full-horizon subset; injury execution and the full frozen gate remain pending. See the
+has slight, mild and moderate severities. Historical formation passes its
+full-horizon subset; full publication reproduction remains unconfirmed. See the
 [operator instructions](../../../runtime_profiles/vcornea-publication/README.md).
+
+The [terminal serial results](serial-final-results-2026-10-24.md) now retain all
+four remaining actual full-horizon exits, original mathematics and saved-state
+analysis. Full January serial formation2 + reused injury6 remains negative:
+three scalar passes/five failures. The separate July serial moderate pair also
+fails its trajectory criterion. No native run is active. Read the
+[plain Persian outcome](results-2026-10-24.fa.md) and
+[exact missing original inputs](original-run-metadata-needed.md).
 
 The [complete January-family outcome](january-full-family-audit-2026-10-24.md)
 now retains all eight actual native exits, five frozen scalar failures and a strict
-one-site volume rejection. The new version7 serial formation derivative will reuse
-all six existing one-worker injuries in its full comparison; no output is repaired.
+one-site volume rejection. Version7's completed serial formation comparison reused
+all six existing one-worker injuries; no output was repaired.
 
 The [October24 completion audit](completion-audit-2026-10-24.md) retains six full
 January injury exits, the mixed frozen subset result and a separate derived
-native abort. Both January formation jobs now run from their frozen prepared
-inputs after an explicit capacity review; failed prerequisite plans remain intact.
+native abort. Both January formation jobs subsequently completed their frozen
+prepared inputs; failed prerequisite plans remain intact.
 
 The [serial execution derivative](serial-execution-audit-2026-10-24.md) records
 actual native parallel stress failures and an explicit one-worker profile, with
-its own full moderate diagnostic underway. [Original per-run correspondence](original-run-metadata-needed.md)
+its own now-completed negative full moderate diagnostic. [Original per-run correspondence](original-run-metadata-needed.md)
 still requires evidence; candidate outputs are not used to invent missing inputs.
 
 The [complete January2025 archive source](january-source-family-audit-2026-10-23.md)
@@ -36,8 +44,8 @@ parameter-file variants do not establish the selected cohorts' exact controls.
 The [earlier published archive audit](prior-source-audit-2026-10-23.md) retains all
 26 original source files from record16764319. Its physics/numeric controls match
 the later archive; it supplies no missing original run parameters. Four completed
-derived injury jobs fail their unchanged diagnostic comparison. The remaining
-full runs continue, including six January jobs with verified actual720h pulses.
+derived injury jobs fail their unchanged diagnostic comparison. Six January injury
+jobs completed with verified actual720h pulses; all new serial jobs also completed.
 
 Original authors: Joel Vanin, Michael Getz, Catherine Mahony, Thomas B. Knudsen
 and James A. Glazier. Final paper:
@@ -257,7 +265,8 @@ simulation observation, not clinical healing. [Execution/source proofs](observed
 and [spatial numbers](observed-2026-10-23/formation-historical3-spatial.json) are retained.
 
 This is the successful **formation subset**, labelled `diagnostic_passed` by the
-operator. The full four-group gate and injury/recovery remain pending. Old failed
+operator. The full four-group acceptance gate remains open after completed
+injury comparisons; see the terminal serial results above. Old failed
 later-source results, exact source versions, unknown original seeds/build and
 the declared injury reconstruction are preserved. The [additional history audit](source-history-audit-2026-10-23.md)
 records original stash/notebook evidence without replacing current model controls.
@@ -296,11 +305,11 @@ full injury chemical traces have50401 finite/nonnegative samples and actual
 declared pulse sites[100,65]. Original pulse/producer/recovery/structural audits
 remain separate from candidate acceptance and biological validation.
 
-Both prerequisite native series have finished. Four `observed-injury-4.0.0` jobs
-are running and two moderate jobs wait for capacity; the existing combined
-follow-on retains the successful historical formation pair. Do not restart the
-completed baseline or duplicate healthy jobs. Full reconstructed acceptance is
-still pending.
+Both prerequisite native series finished. The six `observed-injury-4.0.0` jobs
+then reached terminal states: five full exits and one actual native abort.
+The combined follow-on correctly stopped at that failed child. The later serial
+moderate pair completed but fails its frozen trajectory criterion. Do not restart
+the completed baseline. Full reconstructed acceptance remains unconfirmed.
 
 Some original-analysis exports clipped titles/axis labels. The display wrapper
 now fits layouts/bounds without changing the authors' code or math. Replaying

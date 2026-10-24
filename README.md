@@ -9,7 +9,7 @@ and cellular models to tissues, organs, and interacting systems.
 **Release 0.3.0 is an executable engineering foundation, not a validated biological
 simulator.** It includes two synthetic reference engines and a working, explicit
 operator workflow for the archived vCornea model in isolated CompuCell3D, plus a
-separate pinned 4.6.0 full-horizon publication replay currently running.
+separate pinned 4.6.0 full-horizon publication replay with retained actual results.
 General multiscale execution and independent biological validation remain future
 work. The local six-workspace [research workbench](docs/epics/E4-research-workbench.md)
 now exposes the implemented scientific workflows.
@@ -24,24 +24,20 @@ now retains 65 original replicates, unchanged original analysis and all 17 final
 paper supplements. Original analysis was actually replayed. Later-source formation
 failed the frozen comparison; both complete180-day runs using recovered July2024
 mechanisms now pass all frozen count/trajectory/thickness checks. Original math and
-actual tissue layers were inspected. Injury execution/comparison remains pending,
-including a declared reconstruction based on original observed state constraints.
-One original spatial file has truncated optional fields, now explicitly recorded.
-No full publication match or biological validity is claimed.
-The complete later-source baseline retains its failed four-group comparison.
-Five derived injury jobs completed; the sixth aborted inside the native engine.
-All eight January-family native jobs then completed, but five fail the frozen
-scalar checks and the final formation7 tear volume differs by one lattice site.
-The [full result and rejected spatial stage](experiments/vcornea/publication/january-full-family-audit-2026-10-24.md)
-are retained without repairing outputs or relaxing criteria. Original figure
-exports preserve titles/axis labels and all original cell-type names.
-Separate one-worker injury and formation derivatives now run under explicit
-version6/7 controls, retaining biological parameters and all older attempts.
-No passing full reproduction or parallel stochastic equivalence is assumed.
-The complete January2025 archive snapshot is also retained. A separate fifth
-reconstruction keeps its different formation/injury mechanisms and original
-family defaults; [source correspondence and limits](experiments/vcornea/publication/january-source-family-audit-2026-10-23.md)
-remain explicit. Existing full runs and frozen acceptance criteria are preserved.
+actual tissue layers were inspected. All four most recent one-worker jobs have
+now also completed their full180/210-day horizons. The new full January comparison
+reuses six already completed injuries: three of eight candidates pass every
+scalar criterion, five fail. The separate July moderate pair fails its trajectory
+criterion. Original mathematics and exact saved-state consistency checks pass for
+both new analyses; the earlier native abort and one-site volume inconsistency
+remain retained as failures. No outputs, parameters or frozen thresholds were
+changed to force agreement. See the [actual terminal results and figures](experiments/vcornea/publication/serial-final-results-2026-10-24.md)
+and [plain Persian report](experiments/vcornea/publication/results-2026-10-24.fa.md).
+The selected published output groups still lack their exact original run inputs;
+the [concrete missing-input inventory](experiments/vcornea/publication/original-run-metadata-needed.md)
+records what is needed. Full publication reproduction and independent biological
+validation remain open. No native simulation is still running at the latest check.
+All source families, negative results, original bytes and failed attempts remain.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

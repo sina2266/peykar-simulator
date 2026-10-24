@@ -1,5 +1,10 @@
 # Complete January family: retained negative comparison and spatial rejection
 
+Update08:00UTC: both new serial formation jobs and their full eight-job analysis
+have finished. Saved-state consistency passes; the full frozen result is still
+negative. See [terminal results and figures](serial-final-results-2026-10-24.md).
+The earlier four-worker rejection below remains preserved.
+
 Both January formation jobs genuinely completed43200MCS, exit0, in4438.35 and
 4461.59 seconds. Together with the already completed injury6, all eight native
 child exits/source/runtime/output inventories were verified. The full comparison
@@ -51,12 +56,14 @@ Parallel stochastic equivalence, stability and matching outputs are not assumed.
 
 Two full seed7/11 jobs were explicitly frozen and started in
 `.peykar/cornea-stash-serial-formation46-20261024`, two requested workers total,
-24h/job. The bounded `.peykar/cornea-stash-serial-full-analysis-20261024` follow-on
-will combine these actual completions with the **existing verified one-worker
-January injury6**; those six jobs are not duplicated. Every source/driver identity
+24h/job. Both completed43200MCS/exit0 in8933.22/8964.58s. The bounded
+`.peykar/cornea-stash-serial-full-analysis-20261024` follow-on combined them with
+the **existing verified one-worker January injury6**; those six jobs were not
+duplicated. Every source/driver identity
 remains in the combined view. This still assesses all four groups and every seed
-under the original criteria. The separate source6 moderate2 diagnostic continues;
-combined native request is at most four workers. No recurring schedule is enabled.
+under the original criteria: five scalar failures/three passes, original math0/
+spatial0. The separate source6 moderate2 diagnostic also finished negatively.
+No native solver remains active and no recurring schedule is enabled.
 
 ## A resumed-record workflow bug also fixed
 

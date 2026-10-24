@@ -4,6 +4,12 @@ This is a local reproducibility input inventory. No message has been sent to the
 authors or another person. It requests original evidence, not fitted replacement
 parameters or a wider acceptance threshold.
 
+The latest [completed serial reconstructions](serial-final-results-2026-10-24.md)
+also remain negative: full January five failures/three passes, July moderate2
+trajectory failures. All four new jobs reached full horizons and their spatial/
+original-math stages passed. No active simulation remains to resolve this input
+gap. A repeated unchanged candidate is not a replacement for original evidence.
+
 The frozen comparison selects these original Data.zip groups:
 
 | Scenario | Original directory | Replicates | Full horizon |

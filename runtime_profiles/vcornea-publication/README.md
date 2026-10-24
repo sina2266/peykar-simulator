@@ -4,7 +4,12 @@ This explicitly invoked offline profile reconstructs the archived formation and
 three chemical-injury cohorts. It never installs/runs scientific code during
 API model admission. Source choices, original data and unresolved paper conflicts
 are documented in the [experiment inventory](../../experiments/vcornea/publication/README.md).
-Full candidate runs remain pending until their actual outputs pass comparison.
+The latest serial candidate runs completed, but full publication agreement remains
+unconfirmed. The [terminal serial results](../../experiments/vcornea/publication/serial-final-results-2026-10-24.md)
+retain real exits, all-stage inventories and negative frozen comparisons. No
+native job remains active at the latest inspection. Recover the original run
+inputs before another scientifically equivalent replay; do not fit missing inputs
+or widen acceptance to obtain a pass.
 
 The separately reviewed `stash-hpc-5.0.0` profile accepts only the complete pinned
 January2025 source at `vendor/models/vcornea-history-c7f95d28` and its matching

@@ -1,5 +1,11 @@
 # Explicit serial native execution derivative
 
+Terminal update08:00UTC: both moderate jobs completed50400MCS/exit0, in10715.82
+and11179.29s. Original math/spatial checks pass; unchanged frozen Wing trajectory
+coverage fails in both. The completed serial January formation comparison is also
+negative. [Actual final outputs and quantitative results](serial-final-results-2026-10-24.md)
+supersede the launch-time pending state below. No native job remains active.
+
 An actual source4 moderate7 corneal job aborted with a retained SIGABRT. Its
 allocation detection stack is not sufficient to locate the original corruption.
 A short separate engineering investigation therefore tested native parallelism

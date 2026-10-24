@@ -1,0 +1,157 @@
+"""Read-only verification and exact-byte retention of terminal serial corneal outputs.
+
+No model code, native child, new seed, parameter fit or acceptance change is executed.
+Run from the repository root with the existing pinned native Python environment.
+"""
+
+import hashlib
+import json
+import shutil
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path.cwd().resolve()
+sys.path.insert(0, str(ROOT / "runtime_profiles/vcornea-publication"))
+from compare import checksum, identity, load_run
+
+DEST = ROOT / "experiments/vcornea/publication/observed-2026-10-24"
+PROTOCOL = "1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43"
+COMPARE = "302b06bc2c72a9f19bdc35e088d1bf74ad2e02a22e9a3f2b42e40b58e8195801"
+assert checksum(ROOT / "experiments/vcornea/publication/comparison-1.0.0.json") == PROTOCOL
+assert checksum(ROOT / "runtime_profiles/vcornea-publication/compare.py") == COMPARE
+
+
+def read(path):
+    return json.loads(path.read_bytes())
+
+
+def write_new(path, data):
+    with path.open("x") as stream:
+        json.dump(data, stream, indent=2, allow_nan=False)
+        stream.write("\n")
+
+
+def retain(source, destination):
+    with destination.open("xb") as stream:
+        stream.write(source.read_bytes())
+    assert checksum(destination) == checksum(source)
+    return checksum(destination)
+
+
+all_results = []
+for name, prefix, expected, waiting_runs in [
+    ("cornea-serial-derived-moderate-analysis-20261024", "serial-derived6-moderate", 2,
+     "cornea-serial-derived-moderate46-20261024"),
+    ("cornea-stash-serial-full-analysis-20261024", "serial-january7-full8", 8,
+     "cornea-stash-serial-formation46-20261024"),
+]:
+    analysis = ROOT / ".peykar" / name
+    status = read(analysis / "status.json")
+    runs = Path(status["runs"])
+    plan = read(runs / "plan.json")
+    protocol = read(runs / "comparison.json")
+    assert plan["status"] == "execution_completed"
+    assert checksum(runs / "comparison.json") == plan["protocol_digest"] == PROTOCOL
+    assert checksum(runs / "plan.json") == status["plan_digest"]
+    assert status["independent_biological_validation"] is False
+    assert [s["returncode"] for s in status["stages"]] == [2, 0, 0]
+    for relative, sha in status["files"].items():
+        path = (analysis / relative).resolve(strict=True)
+        assert path.is_relative_to(analysis)
+        assert checksum(path) == sha, path
+    comparison = read(analysis / "comparison/report.json")
+    spatial = read(analysis / "spatial-analysis/report.json")
+    assert comparison["status"] == status["status"]
+    assert comparison["plan_digest"] == spatial["plan_digest"] == status["plan_digest"]
+    assert len(plan["jobs"]) == len(comparison["jobs"]) == len(spatial["jobs"]) == expected
+    assert checksum(ROOT / "runtime_profiles/vcornea-publication/compare.py") == status["stages"][0]["script_digest"]
+    rows = []
+    portable_jobs = []
+    for job in plan["jobs"]:
+        root, manifest, record, counts, heights, pulse = load_run(plan, job, PROTOCOL, protocol)
+        proof = read(root / "completion.json")
+        assert proof["returncode"] == record["returncode"] == 0
+        assert checksum(root / "completion.json") == record["completion_digest"]
+        match = next(j for j in comparison["jobs"] if (j["case"], j["seed"]) == (job["case"], job["seed"]))
+        shape = next(j for j in spatial["jobs"] if (j["case"], j["seed"]) == (job["case"], job["seed"]))
+        assert match["manifest_digest"] == shape["manifest_digest"] == job["manifest_digest"]
+        assert shape["full_horizon_mcs"] == shape["snapshots"][-1]["mcs"] == manifest["controls"]["steps_mcs"]
+        row = {
+            "case": job["case"], "seed": job["seed"],
+            "manifest_digest": job["manifest_digest"],
+            "native_returncode": record["returncode"], "elapsed_seconds": record["elapsed_seconds"],
+            "full_horizon_mcs": manifest["controls"]["steps_mcs"],
+            "count_samples": len(counts), "saved_spatial_frames": len(shape["snapshots"]),
+            "passed_stable_means": sum(v["stable_mean"]["passed"] for v in match["cell_counts"].values()),
+            "passed_hourly_trajectories": sum(v["full_trajectory"]["passed"] for v in match["cell_counts"].values()),
+            "passed_thickness_bins": sum(v["passed"] for v in match["thickness_um"].values()),
+            "all_frozen_scalar_criteria_passed": match["passed"],
+            "full_final_structure_available": True,
+            "independent_biological_validation": False,
+        }
+        rows.append(row)
+        portable_jobs.append({"job": job, "manifest": manifest, "record": record, "completion": proof})
+    if expected == 8:
+        previous = read(ROOT / ".peykar/cornea-stash-injury-diagnostic-20261024/comparison/report.json")
+        for job in previous["jobs"]:
+            assert job == next(j for j in comparison["jobs"] if (j["case"], j["seed"]) == (job["case"], job["seed"]))
+    # Keep the exact original analysis receipts, figures, means and diagnostic logs.
+    retained = {}
+    for relative, suffix in [
+        ("comparison/report.json", "comparison.json"),
+        ("comparison/report.md", "comparison.md"),
+        ("spatial-analysis/report.json", "spatial.json"),
+        ("original-analysis/receipt.json", "original-analysis.json"),
+        ("original-analysis/original-analysis/receipt.json", "original-math-receipt.json"),
+        ("comparison.log", "comparison.log"),
+        ("original-analysis.log", "original-analysis.log"),
+        ("spatial-analysis.log", "spatial-analysis.log"),
+    ]:
+        target = DEST / f"{prefix}-{suffix}"
+        retained[target.name] = retain(analysis / relative, target)
+    for directory in [analysis / "comparison", analysis / "spatial-analysis", analysis / "original-analysis/original-analysis"]:
+        for source in sorted(directory.rglob("*")):
+            if source.is_file() and source.suffix in {".png", ".pdf", ".csv"}:
+                relative = source.relative_to(directory)
+                suffix = "-".join((directory.name, *relative.parts))
+                target = DEST / f"{prefix}-{suffix}"
+                retained[target.name] = retain(source, target)
+    receipt = {
+        "scope": "Actual completed serial derivatives: verified native exits and all artifacts; negative frozen comparison retained",
+        "verified_utc": datetime.now(timezone.utc).isoformat(),
+        "operator_source_sha256": checksum(Path(__file__)),
+        "protocol_sha256": PROTOCOL, "comparison_source_sha256": COMPARE,
+        "plan": plan, "waiting_series_plan": read(ROOT / ".peykar" / waiting_runs / "plan.json"),
+        "analysis_status": status, "jobs": portable_jobs, "summary": rows,
+        "retained_file_sha256": retained, "independent_biological_validation": False,
+        "full_publication_reproduction_complete": False,
+    }
+    write_new(DEST / f"{prefix}-native-and-analysis.json", receipt)
+    all_results.append({"prefix": prefix, "status": status["status"], "jobs": rows})
+    print(prefix, status["status"], "verified", len(rows), "native jobs; retained", len(retained), "exact-byte analysis files")
+
+interim = read(ROOT / ".peykar/cornea-serial-full-pulse-audit-20261024.json")
+chemical_path = ROOT / ".peykar/cornea-serial-completed-chemical-audit-20261024.json"
+chemical = read(chemical_path)
+continuity = []
+for old in interim["jobs"]:
+    new = next(j for j in chemical["jobs"] if (j["case"], j["seed"]) == (old["case"], old["seed"]))
+    assert old["pulse_field_sha256"] == new["pulse_field_sha256"]
+    assert old["manifest_digest"] == new["manifest_digest"]
+    continuity.append({"case": old["case"], "seed": old["seed"], "pulse_field_sha256": old["pulse_field_sha256"], "matches_verified_actual_completion": True})
+retain(chemical_path, DEST / "serial-derived6-moderate-full-chemical.json")
+retain(ROOT / ".peykar/cornea-serial-full-pulse-audit-20261024.json", DEST / "serial-derived6-moderate-interim-pulse.json")
+retain(ROOT / ".peykar/cornea-serial-full-pulse-audit-20261024.py", DEST / "serial-derived6-moderate-interim-pulse-audit.py.txt")
+write_new(DEST / "serial-derived6-moderate-pulse-continuity.json", {
+    "scope": "Interim actual pulse hashes matched to subsequently verified native completion; no passing scalar or biological claim",
+    "jobs": continuity,
+})
+write_new(DEST / "serial-terminal-result-matrix.json", {
+    "schema_version": "1.0.0", "protocol_sha256": PROTOCOL,
+    "scope": "Declared profiles6 and7; profile7 full comparison reuses six existing January injury completions",
+    "series": all_results, "full_publication_reproduction_complete": False,
+    "independent_biological_validation": False,
+})
+retain(Path(__file__), DEST / "serial-terminal-retention-operator.py.txt")
+print("Pulse continuity verified for both serial injury jobs; no scientific model launched.")

@@ -747,3 +747,36 @@ commands/outcomes in `docs/verification.md`.
   Finish/analyze current source6/7 nativejobs beforeothermodels. Mainuser wants
   actual full reconstruction; do NOT call matchedsubsets or softwaretestscompletion.
   Old read-only watch session95283 covers oldJan5terminal +source6only, NOTnewJan7.
+
+## All outstanding serial jobs terminal, 2026-10-24 08:00UTC
+
+- Main4a81ef338a3ec9e0f7d59a7f0e93caabe8e48780 was pushed/remote verified;
+  managed code unchanged since its541-test/37.66s86%/mypy99/18frontend/build gate.
+- Source6moderate7/11 actual50400MCS/exit0,10715.82/11179.29s. Follow-on
+  cornea-serial-derived-moderate-analysis-20261024 finished02:33UTC:
+  comparison2/diagnostic_not_reproduced, original0/spatial0. Both4/4means,
+  3/4trajectories,10/10height; Wing coverage.899226/.889308 failsfrozen.90.
+- Source7formation7/11 actual43200MCS/exit0,8933.22/8964.58s. Fullfollowon
+  cornea-stash-serial-full-analysis-20261024 finished02:54UTC, reusing existing
+  Januaryinjury6 without anynewsolver: comparison2/not_reproduced,original0/
+  spatial0. F7means1/4,traj3/4,height1/10;F11means2/4,traj3/4,height1/10.
+  Reused6comparisonrows exactsameprior; fullfamilyfivefail/threepass. No fullmatch.
+- Read-only retentionoperator verifiedall10native guards/source/runtime/outputs
+  andbothstagefileinventories;61exactbyteanalysisfiles+receipts/operators/matrix
+  retainedobserved-2026-10-24/serial-*. Originalarrays/failedattempts preserved.
+- Fullnewinjurychemicalaudit:50401finite/nonnegative0.1h samples/5040h,actual
+  720h[100,75]/2500pulse. Bothpriorinterimpulsehashes matchactualcompletion.
+  Allnewspatialsavedframes passstrictcellvolume/lattice/count/finitefieldchecks.
+- Actualfinalmoderate11Wingredistribution belowfixedinitialsurface:3150/5194
+  eligiblesites over176columns;7has45/1333 over12. Initial/pulsezero both.
+  Read-only descriptiveaudit/fighashesretained;NOnewacceptance/invasiondiagnosis.
+  Zeroexposedcolumns doesnotmean normalrepair. Originalmath/count/EGF/structureviewed.
+- No native jobs active; previousread-onlywatchers ended. API/Workerhealthy,
+  /healthz200/version0.3.0,livepeykar3_peykar-datauntouched. No new simulations,
+  modelwork,remote scientificexecution,scheduleror contactmessages. HeartbeatPAUSED.
+- Read serial-final-results-2026-10-24.md and results-2026-10-24.fa.md. Next
+  scientificdependency isoriginal-run-metadata-needed.md: exactexpandedoriginal
+  controls/state/RNG/replicatemapping/nativebuild. Existing releases/history/member
+  inventorywithinrecordedscopehasnotidentifiedit. Do NOTguess/fitorrelaxcriteria,
+  cherry-pickmixedsourcepasses orrestartunchangedcompletedruns. Fullpublication
+  andindependentbiology gatesremainOPEN; no othermodelwork untilpriorityresolved.

@@ -1,5 +1,10 @@
 # Completed injury observations and retained native failure
 
+Subsequent terminal update: all formation and serial jobs described as waiting
+below have now finished. [Final serial results](serial-final-results-2026-10-24.md)
+record both negative comparisons and passing new saved-state consistency checks.
+The following launch/abort chronology and original evidence are retained.
+
 Inspected23:04–23:15UTC October23 (October24 local). No original input,
 frozen acceptance threshold, native runtime or live API volume was changed.
 

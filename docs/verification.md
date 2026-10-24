@@ -1,5 +1,49 @@
 # Verification record
 
+## Terminal serial corneal runs and retained outcomes: 2026-10-24 08:00UTC
+
+- Inspected current plans, actual child records/proofs and both finite follow-on
+  statuses before any new work. Source6 moderate7/11 completed50400MCS/exit0 in
+  10715.82/11179.29s; source7 formation7/11 completed43200MCS/exit0 in
+  8933.22/8964.58s. No native solver/guard is active; no new simulation launched.
+- Both follow-ons finished comparison2/original math0/spatial0. Full January
+  formation2 + reused injury6: not_reproduced, five scalar failures/three passes.
+  All six reused comparison rows exactly equal their earlier diagnostic rows.
+  Separate July moderate2: diagnostic_not_reproduced, Wing hourly coverage
+  0.8992263439793692/0.8893076770482047 below unchanged0.90. No rounding/pass override.
+- Ran `.peykar/cornea-native46/bin/python .peykar/retain_serial_cornea_results_20261024.py`:
+  exit0, verified all ten native records/source/runtime/protocol/guard exits and
+  all artifact hashes, plus both follow-on file inventories. Retained61 exact-byte
+  analysis files, two full native receipts, terminal matrix and executed operator
+  under experiments/vcornea/publication/observed-2026-10-24/serial-*.
+- Ran `.peykar/cornea-native46/bin/python .peykar/audit_completed_cornea_chemical_20261023.py
+  --runs .peykar/cornea-serial-derived-moderate46-20261024
+  --output .peykar/cornea-serial-completed-chemical-audit-20261024.json`: exit0,
+  each50401 finite/nonnegative samples on0.1h grid through5040h; real720h pulse
+  2500 at[100,75]. Both previous interim pulse hashes match actual completion.
+- Both new analyses verify all saved finite200x90 fields, cell counts and exact
+  type-summed cell-volume/lattice occupancy. Old four-worker inconsistent frame
+  remains rejected. Visually inspected final formation/recovery structures, EGF,
+  reference-overlay counts and original authors' count-analysis figure.
+- Ran `.peykar/cornea-native46/bin/python .peykar/audit_serial_basal_geometry_20261024.py`:
+  exit0, read-only fixed original upper limb/membrane-surface audit of actual
+  initial/pulse/final arrays. Wing sites below that reference start atzero in
+  both, finish45/1333 and3150/5194 in198 eligible columns. This descriptive,
+  non-preregistered observation has no new acceptance threshold and diagnoses no
+  pathological invasion. Zero exposed columns is insufficient to claim normal repair.
+- Current unchanged managed code already passed541 tests/37.66s,86% coverage,
+  mypy99,18 frontend/current contracts/all wheel/sdist builds plus host build in
+  the preceding milestone; checked actual retained logs again. No managed code
+  changed in this results/documentation increment; the entire suite was not rerun.
+- Docker API/Worker still up; GET /healthz200, status ok/version0.3.0. No deployment,
+  live volume mutation, original data/source/license change or schedule activation.
+  Full reproduction remains open on exact original run correspondence, independently
+  from biological validation. [Plain outcome](../experiments/vcornea/publication/results-2026-10-24.fa.md).
+- Read-only artifact/document check verified61 retained file hashes, recorded
+  operator hashes, the terminal matrix (eight full-comparison jobs/three passes,
+  two diagnostic failures), then all200 current local Markdown links. Exact-byte
+  staging verified all86 intended files; `git diff --cached --check` passed.
+
 ## Complete January family rejection, serial formation and verified resume: 2026-10-24
 
 - January formation2 genuinely completed43200MCS/exit0,4438.35/4461.59s.

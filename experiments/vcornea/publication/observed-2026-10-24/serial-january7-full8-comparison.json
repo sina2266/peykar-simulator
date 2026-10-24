@@ -1,0 +1,1656 @@
+{
+  "schema_version": "1.0.0",
+  "class": "simulation_reference_comparison",
+  "protocol_digest": "1189fd62ece9d90113e6096c51fa4490e6385901b0390e0a8520cb106c40bb43",
+  "plan_digest": "360ef0f6b32472a97c673dcb86c53ed611e90eac41b7daa41c7286aae1200cf1",
+  "reference_replicates": 65,
+  "candidate_runs": 8,
+  "jobs": [
+    {
+      "case": "self-organization",
+      "seed": 7,
+      "manifest_digest": "131ebc1a4640f8c6631079501325056633918738df5a80c2b5fd1f95eecf9144",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "94eab8904972bf33c02a1bb6fefe516b1754d5d6935f0bfe380c22c97887658c",
+      "outputs": {
+        "cells-0.csv": "788571fdbf452c9078b5b36019b317942c1078b9ce866332142c7c67826480b9",
+        "cells-1680.csv": "36516772af6ff85b17bcf2608efadd7063dc5e38188b9eb0893d09f75ebe713d",
+        "cells-240.csv": "cb5565741fca6a67f6fc2ef97d9cb0581ffb97bccc7899276057bb39afdad0b8",
+        "cells-3600.csv": "7ece33a312ae677181b02f9fcf70c9959caa929c5478b43085342c8c3e33b37b",
+        "cells-43200.csv": "19e93659453087ba2f1f06f371980ceeecc21e7320e36534dd963f427b743a3b",
+        "cells-720.csv": "bd7b5dfaa95f020510e5dce44316e3174c2d8bf32e9a2f81d0002e5fc755b441",
+        "lattice-0.npz": "37fa56c55d00ad0447fb207db5354077eb402d888d923cedd7d83c6b9e75480e",
+        "lattice-1680.npz": "570618a9908d16d816b8180adfb049f08d4fe75256468a80ed57517955fedd85",
+        "lattice-240.npz": "9911d20998e73c17da1145681ba24a29f3da85a7fb44282220263fe77ba5d2e3",
+        "lattice-3600.npz": "266ebc2c7b24120f9daf905c3b6b28e1a7b6b3775531736dd530c7cbd024c4d9",
+        "lattice-43200.npz": "6bb62580a7d0eb8153b1c297c4c89ea9d1f36f9b0ea5aff3c93c2c4cea2e04c1",
+        "lattice-720.npz": "24e6cb4da4a3ee744482314d5bee055765bc46e34e8d98a0aab59650705c42c8",
+        "progress.jsonl": "e2055c7f025763f1b056f8ade9c08cedab34cbfa485d5f64f41fda331ec30c7a",
+        "project/Simulation/cell_count_43201.csv": "d8e9f39c34caeeda5d8d210f641422913457591076763b5a2f50c8e50391dd1c",
+        "project/Simulation/mass_conservation_rep_43201.parquet": "cb4050dd476adfa5c620a9748d11c17793963527351f77ba568e084f7a66364b",
+        "project/Simulation/mitosis_43201.csv": "097eee6aa00a3cae153d346ac0e927c59ec54c60d9f1eb66b5f76bd08ffa01ea",
+        "project/Simulation/single_cell_pres_EGF_rep_43201.parquet": "76ead31301fdbe39693daf848ad1f61303e30819e60493fd1e256feb6192fe2e",
+        "project/Simulation/thickness_rep_43201.parquet": "23ca0dad53754667756f40d835af0acb37ae0b8501ec9a06199f8eb498487175"
+      },
+      "elapsed_seconds": 8933.223626499996,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 48.080868882491494,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -2.0435687491431977,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9946771580652627,
+            "minimum_coverage": 0.9,
+            "rmse": 3.005295602500574,
+            "maximum_absolute_difference": 8.714285714285715,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 170.75006542789845,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": 27.444573223165207,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.12427678778060634,
+            "minimum_coverage": 0.9,
+            "rmse": 27.2946329671836,
+            "maximum_absolute_difference": 46.76190476190476,
+            "passed": false
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 32.31248364302539,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": 1.430079385850128,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.992362878963203,
+            "minimum_coverage": 0.9,
+            "rmse": 1.987935526954969,
+            "maximum_absolute_difference": 6.4761904761904745,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 5.115153101282387,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": 0.35987836642115667,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.999537144179588,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8433581751428799,
+            "maximum_absolute_difference": 3.333333333333333,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 79.05637438497385,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": 5.371323462004327,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": true
+        },
+        "1": {
+          "observed": 68.32392714094456,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": 5.573811519698907,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": false
+        },
+        "2": {
+          "observed": 54.76300223612823,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 5.508033383265584,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": false
+        },
+        "3": {
+          "observed": 50.94441799799661,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 5.598983769719254,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": false
+        },
+        "4": {
+          "observed": 51.258517230601456,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": 5.359987982001236,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": false
+        },
+        "5": {
+          "observed": 49.48202265728733,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": 4.707362273291025,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": false
+        },
+        "6": {
+          "observed": 49.92536060782875,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": 4.354137082589084,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": false
+        },
+        "7": {
+          "observed": 51.31369207371441,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": 5.543849707062066,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": false
+        },
+        "8": {
+          "observed": 52.23463916711408,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": 6.9654491516519315,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": false
+        },
+        "9": {
+          "observed": 49.87412230018691,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 5.318503818853422,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": false
+        }
+      },
+      "chemical_pulse": null,
+      "passed": false
+    },
+    {
+      "case": "self-organization",
+      "seed": 11,
+      "manifest_digest": "553b61fe156bc6e9d54afabe0b31cc0db72b29fc7835255e13760b77aa895f78",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "254de7de7a61324d280ca8290fe4e74557b194eeaf1c151df3d09f195cbb9e01",
+      "outputs": {
+        "cells-0.csv": "20cb3689cb78fb4c1af5e19b6a560655fee7f0931a8fe5d29c0e5eb553cbad97",
+        "cells-1680.csv": "435254c7e0ad3307cee0e4d443808e9ff86a8332f6b151336ff41040fe6d0bb7",
+        "cells-240.csv": "078b0f9d947ffb373bfbaabfc74a06c1994e1daf011e5760afc68ff14b11481d",
+        "cells-3600.csv": "97fad0ad275f44ab82942fc6a2a37140ff2d57e24188c00aa7a928ec2bf34e8c",
+        "cells-43200.csv": "e716163e097e091aa790f604dab96955940c5badc2fd56ddc63985e6567252a9",
+        "cells-720.csv": "c861ef9fb7b3f334e86cdd9bca79769ba5c2d17fb419b0d3cf3eed8fc20f8461",
+        "lattice-0.npz": "5dbb4304188156f9bb9f01fbb399a2b17fce8e3017d0f89220e031493cb7a55d",
+        "lattice-1680.npz": "2a4fcd36ea2baef08025de6dca4c9cfcb5c9457ccbacc0e1cced54413082d20d",
+        "lattice-240.npz": "3ab9bc315b6be39c47239e4f057d5fa10904b7a288045fc4765f9305bcb4c0fd",
+        "lattice-3600.npz": "3ceca740e8b9f75b52080d6b8f1eaa1bf4db141ae4aa9a7df2084b77d852717b",
+        "lattice-43200.npz": "c2d8df034ff4ecf2ac6b497ff652b8ce70b4f91d22e90be7a1a7555e6e29cfed",
+        "lattice-720.npz": "aa146c37dcf86c05c8c14ba3785c03ddf446da060159b58b7ab7e9d14e7cba92",
+        "progress.jsonl": "6d428d31f3f197529b4428d7855cdb0e80403ec0414d7058945f8441de9d1e6c",
+        "project/Simulation/cell_count_43201.csv": "9a285722eb42298340f32b43f7ec7ec2726dde55214ed9b50f2bb93b7262e193",
+        "project/Simulation/mass_conservation_rep_43201.parquet": "625ff60ac0972ec807385a10e3678bcc3f45b5a02bf5a2a32c2b01e311f7b9a5",
+        "project/Simulation/mitosis_43201.csv": "e1969e0b2264a982e316b5d46e2a0c9564d8f5b976bd4c29df96e49994cc5a96",
+        "project/Simulation/single_cell_pres_EGF_rep_43201.parquet": "c1e529b41410ce0391b1d0318ff4893c24700179fe599f22ae330edf7c8e1480",
+        "project/Simulation/thickness_rep_43201.parquet": "efd7285424f7be246e57f45b8066753984912c7440bcf4636178d270d68f168a"
+      },
+      "elapsed_seconds": 8964.579075833317,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.70269562941638,
+            "reference_mean": 50.12443763163469,
+            "reference_sample_sd": 0.19914079757273453,
+            "difference": -2.421742002218309,
+            "absolute_tolerance": 1.5974223927182036,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9891228882203194,
+            "minimum_coverage": 0.9,
+            "rmse": 3.1914147582395294,
+            "maximum_absolute_difference": 9.714285714285715,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 173.69589112797698,
+            "reference_mean": 143.30549220473324,
+            "reference_sample_sd": 0.8388947866484435,
+            "difference": 30.390398923243737,
+            "absolute_tolerance": 3.5166843599453306,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.0738255033557047,
+            "minimum_coverage": 0.9,
+            "rmse": 30.151087596418094,
+            "maximum_absolute_difference": 46.809523809523796,
+            "passed": false
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 32.2638052865742,
+            "reference_mean": 30.88240425717526,
+            "reference_sample_sd": 0.12840970317170042,
+            "difference": 1.381401029398937,
+            "absolute_tolerance": 1.3852291095151013,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9986114325387642,
+            "minimum_coverage": 0.9,
+            "rmse": 1.8865896792811778,
+            "maximum_absolute_difference": 5.714285714285715,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 5.081392305679142,
+            "reference_mean": 4.7552747348612305,
+            "reference_sample_sd": 0.03658274127667461,
+            "difference": 0.32611757081791115,
+            "absolute_tolerance": 1.1097482238300238,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 4321,
+            "coverage": 0.9997685720897941,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8008024975369306,
+            "maximum_absolute_difference": 3.428571428571429,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 79.00005102664225,
+          "reference_mean": 73.68505092296952,
+          "reference_sample_sd": 2.3298917018450203,
+          "difference": 5.31500010367273,
+          "absolute_tolerance": 8.98967510553506,
+          "passed": true
+        },
+        "1": {
+          "observed": 69.88008027950823,
+          "reference_mean": 62.750115621245655,
+          "reference_sample_sd": 0.5956883159789721,
+          "difference": 7.12996465826258,
+          "absolute_tolerance": 3.7870649479369165,
+          "passed": false
+        },
+        "2": {
+          "observed": 57.66226669740293,
+          "reference_mean": 49.254968852862646,
+          "reference_sample_sd": 0.8532723012252029,
+          "difference": 8.407297844540281,
+          "absolute_tolerance": 4.559816903675609,
+          "passed": false
+        },
+        "3": {
+          "observed": 52.857488230081145,
+          "reference_mean": 45.345434228277355,
+          "reference_sample_sd": 0.7611581262946164,
+          "difference": 7.51205400180379,
+          "absolute_tolerance": 4.283474378883849,
+          "passed": false
+        },
+        "4": {
+          "observed": 50.666985795245466,
+          "reference_mean": 45.89852924860022,
+          "reference_sample_sd": 0.5643034800591457,
+          "difference": 4.768456546645247,
+          "absolute_tolerance": 3.692910440177437,
+          "passed": false
+        },
+        "5": {
+          "observed": 49.25160142932654,
+          "reference_mean": 44.774660383996306,
+          "reference_sample_sd": 0.5569687901373862,
+          "difference": 4.476941045330236,
+          "absolute_tolerance": 3.6709063704121587,
+          "passed": false
+        },
+        "6": {
+          "observed": 51.92487338768612,
+          "reference_mean": 45.57122352523967,
+          "reference_sample_sd": 0.6229095941660185,
+          "difference": 6.353649862446453,
+          "absolute_tolerance": 3.8687287824980556,
+          "passed": false
+        },
+        "7": {
+          "observed": 52.65538018403498,
+          "reference_mean": 45.76984236665234,
+          "reference_sample_sd": 0.6978612327729934,
+          "difference": 6.885537817382641,
+          "absolute_tolerance": 4.09358369831898,
+          "passed": false
+        },
+        "8": {
+          "observed": 51.27399363730726,
+          "reference_mean": 45.26919001546215,
+          "reference_sample_sd": 0.5954137160209824,
+          "difference": 6.004803621845106,
+          "absolute_tolerance": 3.786241148062947,
+          "passed": false
+        },
+        "9": {
+          "observed": 49.56582079207854,
+          "reference_mean": 44.55561848133349,
+          "reference_sample_sd": 0.9177502477795264,
+          "difference": 5.010202310745051,
+          "absolute_tolerance": 4.7532507433385796,
+          "passed": false
+        }
+      },
+      "chemical_pulse": null,
+      "passed": false
+    },
+    {
+      "case": "slight-injury",
+      "seed": 7,
+      "manifest_digest": "03d47878226441d22b30f3f5ec4c86f71c28fbfd8f095221464d49505782923e",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "4e6270fc4f1e8cfa7ad9134fceb0061cc5297e7c958461daf71bcca883859524",
+      "outputs": {
+        "cells-0.csv": "34ea307d7e35b7dd4e1d09ef34af2d466c0e65210985e782738241a9b2a51f85",
+        "cells-12000.csv": "c598f73b6fd01032f6bab12da029a74922c79dd0d05d9cb24e719bac817c738e",
+        "cells-1680.csv": "29d80902578be63fd5e3b96624c38c2054cd1808b1a203a044e71e06e3a25052",
+        "cells-240.csv": "9be8aca639d32257b4c9cd5c9698faef53c5b709dd9bc8ff452dd6af247db814",
+        "cells-3600.csv": "9002e7083c147b2a1186d18f81e4483d39d4e7524325d76273d2bfc718651ffa",
+        "cells-50400.csv": "661e039d7a3e4de79f9d60af3d7ebc0d8bcb6759365d28f5918103401accef46",
+        "cells-720.csv": "c5a8c4e00043454fa1578b2d8fdb71bcc8e1fcdb8e9e92115433348568fb6b2d",
+        "cells-7200.csv": "08fab7c3811eb785b0e4ccda7a79248dee0f2dec6f0dc4a2afbfa6df8f44c464",
+        "cells-7210.csv": "af679471318ee306ab4aab38783c1311cf2f091b5856b56cd10cd811bcbfc372",
+        "cells-7440.csv": "46b2d1a52d0ff1cbd0a4d40b926276f26c5e6cd7f2f51658086f4500903c4d61",
+        "cells-7920.csv": "24df74f430fe44cca0cf268e507edfae08fae389042dfde1045d923b66049c56",
+        "cells-8400.csv": "6e7b409bef586e95fdf3bac2ab7ee11121e5b7bc32d45bd12e59d040b872980d",
+        "cells-8880.csv": "3d68cd590fbb7df98272524a04458b8299f39b5f1ec3271bce3326511b79a746",
+        "lattice-0.npz": "fa1a80b20a92ce0c7a8aba63f67381378d2695cfcabba6312f9809b46192179b",
+        "lattice-12000.npz": "105d1b8e186fe26ce5e71410c416c846ab08e035cea6a5ca4400fe3029f08fef",
+        "lattice-1680.npz": "1f7970063d6498241fb0caf52f71a680cb0541833665e60aa142c60b0154cd43",
+        "lattice-240.npz": "d6c3a9740792d72cf8299ed7d783357af4bf34d037c99c50e4cbda330529a205",
+        "lattice-3600.npz": "9414ba7623a7beb8c231cdd1f1f1607e36bbbf285ce8f6d26fc1c730887c2d66",
+        "lattice-50400.npz": "a7059505b0e2505ed6af8c5db05efb78d59d2481d654559f3da2eec436c2782e",
+        "lattice-720.npz": "8cbc360e00153085c885b6f2f616c9f9dabd96f5c834c3d43161d954cb605216",
+        "lattice-7200.npz": "dc29ee57a3bd9903a49f338f0ea88044a656af9d94ee9459db376072bf4b872e",
+        "lattice-7210.npz": "574fe96b3379da21147ad51bca3a71552a08d8fc2c58c3c6c6f1b1f67192fbe7",
+        "lattice-7440.npz": "978c42cb625277aca41ec82d3ac54e1b18155a0bdd05765d0cbb83d4250f6fc0",
+        "lattice-7920.npz": "0dd9d91a6b824a97863bfd4089d6e67a98b10cf18a1a1e7b5bd94b42fd1f2628",
+        "lattice-8400.npz": "3e726f79c45b3b19415a3d8c0efe173bda02ce93158f8c229ba0e3a24e3cff22",
+        "lattice-8880.npz": "6afcd28e14418586b58a216e785b7bd5b431c38344b14a0097f254ad20c40b19",
+        "progress.jsonl": "9f1e795cf7dcd29f7b3d3d8c9c61af2b36a2ca55eb5b903e22766c1b41776718",
+        "project/Simulation/cell_count_50401.csv": "71ef20be0576864372a371bc0d18ee3a203612786082f0e45b3f9a8d2f1c7ab2",
+        "project/Simulation/surfactant_50401.csv": "eaffa217dccd5450e919e52c4091bf8c35029003014b3ca5d3a8756d533f3960",
+        "project/Simulation/thickness_rep_50401.parquet": "6b327ab158f586210d986c34cbb476c3b857827f6b84de9161045690775ecbaf"
+      },
+      "elapsed_seconds": 11438.96172783291,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.65910592380533,
+            "reference_mean": 47.74991953653042,
+            "reference_sample_sd": 0.19687278231220817,
+            "difference": -0.0908136127250927,
+            "absolute_tolerance": 1.5906183469366244,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9960325332275343,
+            "minimum_coverage": 0.9,
+            "rmse": 2.091624988142678,
+            "maximum_absolute_difference": 7.846153846153847,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 128.2926668134772,
+            "reference_mean": 124.44863042704927,
+            "reference_sample_sd": 0.8705697433582438,
+            "difference": 3.8440363864279448,
+            "absolute_tolerance": 3.611709230074731,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9728228526086095,
+            "minimum_coverage": 0.9,
+            "rmse": 6.713917771092807,
+            "maximum_absolute_difference": 24.307692307692307,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 31.209205020920503,
+            "reference_mean": 32.249843307980285,
+            "reference_sample_sd": 0.16382760423462775,
+            "difference": -1.0406382870597817,
+            "absolute_tolerance": 1.4914828127038833,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9934536798254314,
+            "minimum_coverage": 0.9,
+            "rmse": 1.705824253280178,
+            "maximum_absolute_difference": 5.307692307692307,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.774939440651838,
+            "reference_mean": 5.062795385631765,
+            "reference_sample_sd": 0.030844084891594754,
+            "difference": -0.2878559449799267,
+            "absolute_tolerance": 1.0925322546747842,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9988097599682603,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8707174397144019,
+            "maximum_absolute_difference": 3.153846153846154,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 71.41666130809192,
+          "reference_mean": 74.30848320005822,
+          "reference_sample_sd": 0.4826659145229845,
+          "difference": -2.891821891966302,
+          "absolute_tolerance": 3.4479977435689535,
+          "passed": true
+        },
+        "1": {
+          "observed": 62.5936918802238,
+          "reference_mean": 62.092034262496064,
+          "reference_sample_sd": 0.6164432053008595,
+          "difference": 0.5016576177277372,
+          "absolute_tolerance": 3.8493296159025787,
+          "passed": true
+        },
+        "2": {
+          "observed": 48.96406166562166,
+          "reference_mean": 44.80262024102472,
+          "reference_sample_sd": 0.6857248235883731,
+          "difference": 4.161441424596937,
+          "absolute_tolerance": 4.057174470765119,
+          "passed": false
+        },
+        "3": {
+          "observed": 43.6618178412769,
+          "reference_mean": 39.32682134343589,
+          "reference_sample_sd": 0.5809991083989944,
+          "difference": 4.334996497841011,
+          "absolute_tolerance": 3.742997325196983,
+          "passed": false
+        },
+        "4": {
+          "observed": 44.03456527393692,
+          "reference_mean": 40.06676566933524,
+          "reference_sample_sd": 0.32138088049874974,
+          "difference": 3.96779960460168,
+          "absolute_tolerance": 2.9641426414962493,
+          "passed": false
+        },
+        "5": {
+          "observed": 42.61536967845129,
+          "reference_mean": 39.65736602719612,
+          "reference_sample_sd": 0.360170247682977,
+          "difference": 2.9580036512551686,
+          "absolute_tolerance": 3.080510743048931,
+          "passed": true
+        },
+        "6": {
+          "observed": 42.01726967705474,
+          "reference_mean": 40.291283079088984,
+          "reference_sample_sd": 0.4664674367493388,
+          "difference": 1.7259865979657576,
+          "absolute_tolerance": 3.3994023102480164,
+          "passed": true
+        },
+        "7": {
+          "observed": 41.958866555210705,
+          "reference_mean": 39.91710951008407,
+          "reference_sample_sd": 0.7188003522495673,
+          "difference": 2.041757045126637,
+          "absolute_tolerance": 4.156401056748702,
+          "passed": true
+        },
+        "8": {
+          "observed": 41.18257728931036,
+          "reference_mean": 39.27384982268138,
+          "reference_sample_sd": 0.5888882266260623,
+          "difference": 1.9087274666289815,
+          "absolute_tolerance": 3.766664679878187,
+          "passed": true
+        },
+        "9": {
+          "observed": 40.08874753084832,
+          "reference_mean": 38.40418265956954,
+          "reference_sample_sd": 0.7080239721341723,
+          "difference": 1.6845648712787806,
+          "absolute_tolerance": 4.124071916402517,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 750.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 210.08333333333334,
+        "early_5day_nadir_total": 200,
+        "nadir_hours_after_injury": 4,
+        "first_24h_sustained_count_return_hours_after_injury": 58,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": false
+    },
+    {
+      "case": "slight-injury",
+      "seed": 11,
+      "manifest_digest": "665d7a1f8bfe9fb5cec2a43dfd54e1278931531ebce3a151782f285de7c345ee",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "e27df17345fd7d84f394f021f0c30c0c53b4fb98b1b5237a1f84f6964ceb0599",
+      "outputs": {
+        "cells-0.csv": "40a60bf48e3712cee43d4fffb094dd7591e3aa9da05a486a4b305122a16a0e87",
+        "cells-12000.csv": "a70ec7bb6f774b43e831459df2756a80aec379d4b10668f8ca5e729f94bc57ca",
+        "cells-1680.csv": "d7a340bfc529d6efdc53a2e70cffc0216d0a811f575a48dfb0759a452203bc73",
+        "cells-240.csv": "86ac863b9b12309964881aec321c0741aeb00db204a105871bb013a6028a4364",
+        "cells-3600.csv": "471f77b28f6290a71d8bd92273e7858aabc0ea941f8d478cde0e172b7b41d1d8",
+        "cells-50400.csv": "85c11fa993567983251401f751e4c89a344f79329027cfd7165beb527d100227",
+        "cells-720.csv": "846e7094734e8c18a3acecbb1d1a475d078d66b12efabc4f28c6af71982f759a",
+        "cells-7200.csv": "d7caa0add6ec87de7c1e131daa40f7af30a6044003a857a67847cbc09d2ef5af",
+        "cells-7210.csv": "603a5ead51711ad9ac7748c88f6e3d5be613c984a66d0ead0bd099240bb32c34",
+        "cells-7440.csv": "569a074c628630afd4202c1458a8d3c4a1957d2f50c76ea3677e4f5d6e265e83",
+        "cells-7920.csv": "d09388943803713765fa3861e8b03e436a13f5bad5429bafa95ef87bba2c0a5f",
+        "cells-8400.csv": "14efc63ca3b0a4e12dde50d12fae7fb2107560ddde2713af12d89541609176f1",
+        "cells-8880.csv": "25c4433dd3d98cb668d17a44eec7b878e05f05acd50d5ed794ecec1ae1b3eceb",
+        "lattice-0.npz": "7c08b7572c3a36a8eda21d41c4d2ff7bc03542d0e70bc7ad18fa593defa48eb4",
+        "lattice-12000.npz": "2502442a3ddfe3cdb0489d59acd4e7eec5c7ea1046d7e502a489dccc9c357184",
+        "lattice-1680.npz": "69e416d67d0e6796b164fe33e875ceb583339c4143ac70a5eb8ab15e015b867a",
+        "lattice-240.npz": "6215c8d7541dd1a75fe1f6a369e21363521f2cdbd5502a2ed1c2276d777fc6d3",
+        "lattice-3600.npz": "055f94d68010efc01fb5a7c8adbbb5f60e5e8c5a0ad1f5551d63264733179e63",
+        "lattice-50400.npz": "02deb2ed32f1b601c03a1f2cf64c3eb1f0998effc18470a86ec828fd94af69be",
+        "lattice-720.npz": "80d06ebaa99a8a8682957c4df0f4802093567d544a339c71fe4cfc6fbf02d61b",
+        "lattice-7200.npz": "6a15e48663dfc923dc1b5f24e1dbda6c9c11a72f68f8d838e4da89d28d10e775",
+        "lattice-7210.npz": "1b83fcb6758291d2da4134816acaea073c1b0c6f666f8586c984f09af9dc14a6",
+        "lattice-7440.npz": "e26fbb6e20205eebd53130f7c02c0cdbbd71af9f7dee25a76f389df1401e30a1",
+        "lattice-7920.npz": "af05bba93705cea674010069ff5f21d5ecd93ec2367307896cea28670f2e4d1b",
+        "lattice-8400.npz": "13daaafdec8e9f616953b5f6de00277f351cfbd60a88ce85d3ac8ad05c701164",
+        "lattice-8880.npz": "dca72d5d45acbb35996fce3c0db5f3d8e4079b2a44de64eb356314c527dd552d",
+        "progress.jsonl": "d017d3f999b1d30856e6782046991ecc72c6e7bc7d913a1f0bf7d9734e39c352",
+        "project/Simulation/cell_count_50401.csv": "88cddfc5bd976d89db4ab54c72b5f0fa434c10fdcfe3de046db52a05ea365354",
+        "project/Simulation/surfactant_50401.csv": "0dc6ac8461d7564eb061255c5a3d6f911a38abf6e00ddb6d57ca225851ea15c2",
+        "project/Simulation/thickness_rep_50401.parquet": "c20b0ab00e7cf45aa528a209047cdd54b251295cab754ef71b1775ab893a2b04"
+      },
+      "elapsed_seconds": 11336.766252458096,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.83659986787051,
+            "reference_mean": 47.74991953653042,
+            "reference_sample_sd": 0.19687278231220817,
+            "difference": 0.08668033134009079,
+            "absolute_tolerance": 1.5906183469366244,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9942471731799246,
+            "minimum_coverage": 0.9,
+            "rmse": 2.045945032931628,
+            "maximum_absolute_difference": 7.07692307692308,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 126.61946707773618,
+            "reference_mean": 124.44863042704927,
+            "reference_sample_sd": 0.8705697433582438,
+            "difference": 2.1708366506869083,
+            "absolute_tolerance": 3.611709230074731,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9878992263439794,
+            "minimum_coverage": 0.9,
+            "rmse": 6.233079390347065,
+            "maximum_absolute_difference": 22.84615384615384,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 30.917419070689274,
+            "reference_mean": 32.249843307980285,
+            "reference_sample_sd": 0.16382760423462775,
+            "difference": -1.3324242372910113,
+            "absolute_tolerance": 1.4914828127038833,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9867089863122397,
+            "minimum_coverage": 0.9,
+            "rmse": 1.8804604574645432,
+            "maximum_absolute_difference": 5.53846153846154,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.828231667033693,
+            "reference_mean": 5.062795385631765,
+            "reference_sample_sd": 0.030844084891594754,
+            "difference": -0.23456371859807224,
+            "absolute_tolerance": 1.0925322546747842,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9994048799841301,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8884562521233121,
+            "maximum_absolute_difference": 3.0769230769230766,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 73.0005415309027,
+          "reference_mean": 74.30848320005822,
+          "reference_sample_sd": 0.4826659145229845,
+          "difference": -1.3079416691555252,
+          "absolute_tolerance": 3.4479977435689535,
+          "passed": true
+        },
+        "1": {
+          "observed": 61.69210504876244,
+          "reference_mean": 62.092034262496064,
+          "reference_sample_sd": 0.6164432053008595,
+          "difference": -0.3999292137336212,
+          "absolute_tolerance": 3.8493296159025787,
+          "passed": true
+        },
+        "2": {
+          "observed": 46.332433649454984,
+          "reference_mean": 44.80262024102472,
+          "reference_sample_sd": 0.6857248235883731,
+          "difference": 1.5298134084302646,
+          "absolute_tolerance": 4.057174470765119,
+          "passed": true
+        },
+        "3": {
+          "observed": 42.88732263305725,
+          "reference_mean": 39.32682134343589,
+          "reference_sample_sd": 0.5809991083989944,
+          "difference": 3.5605012896213637,
+          "absolute_tolerance": 3.742997325196983,
+          "passed": true
+        },
+        "4": {
+          "observed": 43.236947636059654,
+          "reference_mean": 40.06676566933524,
+          "reference_sample_sd": 0.32138088049874974,
+          "difference": 3.1701819667244138,
+          "absolute_tolerance": 2.9641426414962493,
+          "passed": false
+        },
+        "5": {
+          "observed": 41.169847148853776,
+          "reference_mean": 39.65736602719612,
+          "reference_sample_sd": 0.360170247682977,
+          "difference": 1.5124811216576575,
+          "absolute_tolerance": 3.080510743048931,
+          "passed": true
+        },
+        "6": {
+          "observed": 41.5182721886288,
+          "reference_mean": 40.291283079088984,
+          "reference_sample_sd": 0.4664674367493388,
+          "difference": 1.226989109539815,
+          "absolute_tolerance": 3.3994023102480164,
+          "passed": true
+        },
+        "7": {
+          "observed": 42.099489322292385,
+          "reference_mean": 39.91710951008407,
+          "reference_sample_sd": 0.7188003522495673,
+          "difference": 2.1823798122083176,
+          "absolute_tolerance": 4.156401056748702,
+          "passed": true
+        },
+        "8": {
+          "observed": 41.93170379939747,
+          "reference_mean": 39.27384982268138,
+          "reference_sample_sd": 0.5888882266260623,
+          "difference": 2.6578539767160905,
+          "absolute_tolerance": 3.766664679878187,
+          "passed": true
+        },
+        "9": {
+          "observed": 40.213141877297076,
+          "reference_mean": 38.40418265956954,
+          "reference_sample_sd": 0.7080239721341723,
+          "difference": 1.8089592177275335,
+          "absolute_tolerance": 4.124071916402517,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 750.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 210.16666666666666,
+        "early_5day_nadir_total": 199,
+        "nadir_hours_after_injury": 14,
+        "first_24h_sustained_count_return_hours_after_injury": 358,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": false
+    },
+    {
+      "case": "mild-injury",
+      "seed": 7,
+      "manifest_digest": "f80ba8a58ddaa37b3c64079e6d950bb31024fd17d06face7acdd0b80d90c4b1e",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "ad514eed81a90ffddd078c4f12dd42435ce608d0b437afa27ded87c35cc5bb51",
+      "outputs": {
+        "cells-0.csv": "34ea307d7e35b7dd4e1d09ef34af2d466c0e65210985e782738241a9b2a51f85",
+        "cells-12000.csv": "7fabb16d417b3c0dce15337c3c1cdddeb556e297d1c1c2129611716f3424e6f9",
+        "cells-1680.csv": "29d80902578be63fd5e3b96624c38c2054cd1808b1a203a044e71e06e3a25052",
+        "cells-240.csv": "9be8aca639d32257b4c9cd5c9698faef53c5b709dd9bc8ff452dd6af247db814",
+        "cells-3600.csv": "9002e7083c147b2a1186d18f81e4483d39d4e7524325d76273d2bfc718651ffa",
+        "cells-50400.csv": "022fd6c3af34348870986a8f8f0933bcbebc6967dcaeee47e66b302c113ee9d8",
+        "cells-720.csv": "c5a8c4e00043454fa1578b2d8fdb71bcc8e1fcdb8e9e92115433348568fb6b2d",
+        "cells-7200.csv": "08fab7c3811eb785b0e4ccda7a79248dee0f2dec6f0dc4a2afbfa6df8f44c464",
+        "cells-7210.csv": "129d8c3bf40594f9eedd1148ebe293a06050ab7299a8b48349703b7051bfc50c",
+        "cells-7440.csv": "23e6bcd7f812db2d72cea2c0bde917e672be9d34b480d8e9a32efeb3109947c8",
+        "cells-7920.csv": "0c20c32b743248e6edb1f59360d818f528603306d894324b5ead90b9aca5e446",
+        "cells-8400.csv": "6bc58841728a6287f6aa8be8e7f3c900bf6080e6a75bc54e447448437f759b1b",
+        "cells-8880.csv": "5dab3c5f0944a0478eea3e8ba2f17438fcbf6f140bdd3b990d820dd23b665cb9",
+        "lattice-0.npz": "fa1a80b20a92ce0c7a8aba63f67381378d2695cfcabba6312f9809b46192179b",
+        "lattice-12000.npz": "ec55c0534fccba8219b786a6dd2a6a232fd9da9fdbe7df68c607fecd27f28bb4",
+        "lattice-1680.npz": "1f7970063d6498241fb0caf52f71a680cb0541833665e60aa142c60b0154cd43",
+        "lattice-240.npz": "d6c3a9740792d72cf8299ed7d783357af4bf34d037c99c50e4cbda330529a205",
+        "lattice-3600.npz": "9414ba7623a7beb8c231cdd1f1f1607e36bbbf285ce8f6d26fc1c730887c2d66",
+        "lattice-50400.npz": "03b782e12814709d76d5b311340507d3b3c8ee5f934a2ded73c839e01768faac",
+        "lattice-720.npz": "8cbc360e00153085c885b6f2f616c9f9dabd96f5c834c3d43161d954cb605216",
+        "lattice-7200.npz": "4754e06af0b3c35eb4d94f72f4b42c73d21534ddd5e0e2aaafebd1557b4bf9b9",
+        "lattice-7210.npz": "d7d7bcd970749cd2d0638a3ee78a70bddf75dbf5cbbc53237ff9755aafcd1154",
+        "lattice-7440.npz": "4ba7b9c0bb6bc98793281a8b179e78172283faacb5dc1221c619b7df25bc36b9",
+        "lattice-7920.npz": "4c706bece2d4af4ec8963676bdc9e4b0fcc9127b0600a280c6094ce7845288f6",
+        "lattice-8400.npz": "84c9ab2ffbd5b883bf831a197bafe30a2ddf83c218d7e18bc98e8f5487b165db",
+        "lattice-8880.npz": "95018e781652f4f7a83fe1bc6fbdc5a5d4de0a52055bb83a32a6fd23d4ca9344",
+        "progress.jsonl": "bc3657d363e90abdbe744b5640ca286746b6d293a7b2a78f27e7f8e6a120c24b",
+        "project/Simulation/cell_count_50401.csv": "7104285da6bd78c5fb7fba829b53cd210cb2f848d011cd93a73d6f8695600537",
+        "project/Simulation/surfactant_50401.csv": "81220de46b40389b0c3f62c2afd4b829143aef744f7d3614a8c2a1b495208b77",
+        "project/Simulation/thickness_rep_50401.parquet": "c1598038ac4d2d21eff8e0f79ab9875f3f6ffe123a76ed06ea5b49b897dae573"
+      },
+      "elapsed_seconds": 11557.022005917039,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.48513543272407,
+            "reference_mean": 47.62833076414886,
+            "reference_sample_sd": 0.24450800646836307,
+            "difference": -0.14319533142479202,
+            "absolute_tolerance": 1.7335240194050892,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9966276532434041,
+            "minimum_coverage": 0.9,
+            "rmse": 2.2356233173857003,
+            "maximum_absolute_difference": 9.25,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 128.55274168685312,
+            "reference_mean": 124.3597913455186,
+            "reference_sample_sd": 0.9759583594493434,
+            "difference": 4.192950341334523,
+            "absolute_tolerance": 3.92787507834803,
+            "passed": false
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9734179726244793,
+            "minimum_coverage": 0.9,
+            "rmse": 7.45785796791873,
+            "maximum_absolute_difference": 23.125,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 31.4232547896939,
+            "reference_mean": 32.11715481171548,
+            "reference_sample_sd": 0.12795692107274848,
+            "difference": -0.6939000220215803,
+            "absolute_tolerance": 1.3838707632182454,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.98492362626463,
+            "minimum_coverage": 0.9,
+            "rmse": 1.9021056201015287,
+            "maximum_absolute_difference": 16.0,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.80510900682669,
+            "reference_mean": 5.055053952873816,
+            "reference_sample_sd": 0.030117923964734464,
+            "difference": -0.24994494604712614,
+            "absolute_tolerance": 1.0903537718942033,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9988097599682603,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8907628664126757,
+            "maximum_absolute_difference": 3.5625,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 73.46111692905652,
+          "reference_mean": 74.05958912447245,
+          "reference_sample_sd": 1.0198835605065069,
+          "difference": -0.5984721954159369,
+          "absolute_tolerance": 5.05965068151952,
+          "passed": true
+        },
+        "1": {
+          "observed": 62.42063590348897,
+          "reference_mean": 61.99739249083994,
+          "reference_sample_sd": 0.5896120754299324,
+          "difference": 0.423243412649029,
+          "absolute_tolerance": 3.7688362262897974,
+          "passed": true
+        },
+        "2": {
+          "observed": 48.21967706788516,
+          "reference_mean": 45.15621545399375,
+          "reference_sample_sd": 0.9069815969974221,
+          "difference": 3.0634616138914055,
+          "absolute_tolerance": 4.720944790992267,
+          "passed": true
+        },
+        "3": {
+          "observed": 42.54436816114789,
+          "reference_mean": 39.325265609379784,
+          "reference_sample_sd": 0.6600702561600209,
+          "difference": 3.2191025517681027,
+          "absolute_tolerance": 3.9802107684800627,
+          "passed": true
+        },
+        "4": {
+          "observed": 42.639502781642705,
+          "reference_mean": 39.707885021131844,
+          "reference_sample_sd": 0.5821195895224013,
+          "difference": 2.9316177605108606,
+          "absolute_tolerance": 3.746358768567204,
+          "passed": true
+        },
+        "5": {
+          "observed": 42.121424005547624,
+          "reference_mean": 38.850820414321554,
+          "reference_sample_sd": 0.6935723724567003,
+          "difference": 3.2706035912260703,
+          "absolute_tolerance": 4.080717117370101,
+          "passed": true
+        },
+        "6": {
+          "observed": 42.540863087440144,
+          "reference_mean": 39.81162883811375,
+          "reference_sample_sd": 0.6934651406019091,
+          "difference": 2.729234249326396,
+          "absolute_tolerance": 4.0803954218057275,
+          "passed": true
+        },
+        "7": {
+          "observed": 42.71857485920147,
+          "reference_mean": 40.30091132527679,
+          "reference_sample_sd": 0.6747060737493812,
+          "difference": 2.4176635339246744,
+          "absolute_tolerance": 4.024118221248143,
+          "passed": true
+        },
+        "8": {
+          "observed": 42.315539495200454,
+          "reference_mean": 39.4763783324607,
+          "reference_sample_sd": 0.7334784247402739,
+          "difference": 2.8391611627397566,
+          "absolute_tolerance": 4.200435274220822,
+          "passed": true
+        },
+        "9": {
+          "observed": 40.72636250691737,
+          "reference_mean": 38.525276091102185,
+          "reference_sample_sd": 0.6656055912756852,
+          "difference": 2.2010864158151833,
+          "absolute_tolerance": 3.9968167738270557,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 1500.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 210.08333333333334,
+        "early_5day_nadir_total": 169,
+        "nadir_hours_after_injury": 11,
+        "first_24h_sustained_count_return_hours_after_injury": 145,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": false
+    },
+    {
+      "case": "mild-injury",
+      "seed": 11,
+      "manifest_digest": "32dfc874b376c13a326a13abb1f12ca1cf75c6bef25292b37fc8ea5d3fb3cd4c",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "cb098ed8a909429f63eaefefb2b23f0fb6d38e7a1a76945f9f7519572765da6d",
+      "outputs": {
+        "cells-0.csv": "40a60bf48e3712cee43d4fffb094dd7591e3aa9da05a486a4b305122a16a0e87",
+        "cells-12000.csv": "ff6da7e022b91e91ed7eee13ed9226b224b7ebf20dd270573e0ee45612319dc7",
+        "cells-1680.csv": "d7a340bfc529d6efdc53a2e70cffc0216d0a811f575a48dfb0759a452203bc73",
+        "cells-240.csv": "86ac863b9b12309964881aec321c0741aeb00db204a105871bb013a6028a4364",
+        "cells-3600.csv": "db6eb4c5909dd37a3ad682ed1db145e28176dbf5449d6fe686003368778655e7",
+        "cells-50400.csv": "a80769ded8b339597aee943428d98cecdfb60904df60f8eba3e91c46143c58f4",
+        "cells-720.csv": "846e7094734e8c18a3acecbb1d1a475d078d66b12efabc4f28c6af71982f759a",
+        "cells-7200.csv": "877cd6e7a6e4c9f70006d7f403d5d3ea9a7c3b96ba74cf5f3dd82826484d5f7a",
+        "cells-7210.csv": "133cb75b073f1d308d6475642bac3999f9202cf023144c9395ed7352c64eb3f2",
+        "cells-7440.csv": "458df9625d9a216be5d32c7cdda907e4a10dad093ac986db4d26dd293b3e714e",
+        "cells-7920.csv": "5785b10d344a24c12f571f364d3f53977865e9a1a7e3f6bd1317d62770f57d65",
+        "cells-8400.csv": "20eef4cf3dc63ee29219c96f10e91f671c4b5a5b5f5e36beec8604d75673940d",
+        "cells-8880.csv": "70f28678f7380b5c49e68822e36fa45d8d0af60728b0e9d4615c41e7ade51679",
+        "lattice-0.npz": "7c08b7572c3a36a8eda21d41c4d2ff7bc03542d0e70bc7ad18fa593defa48eb4",
+        "lattice-12000.npz": "c89f62bc2a6242e67d15d495214b895b1a1ff5f8a8772c65b6a886585dd71c4a",
+        "lattice-1680.npz": "69e416d67d0e6796b164fe33e875ceb583339c4143ac70a5eb8ab15e015b867a",
+        "lattice-240.npz": "6215c8d7541dd1a75fe1f6a369e21363521f2cdbd5502a2ed1c2276d777fc6d3",
+        "lattice-3600.npz": "2d1e9ff3e541776a7beb5566e291cb2590e1803def429fa00e5970689db7490a",
+        "lattice-50400.npz": "a237e5b0a6f91a8562e784e5cf82312303a783c08c82315c1123e18e16b04fa7",
+        "lattice-720.npz": "80d06ebaa99a8a8682957c4df0f4802093567d544a339c71fe4cfc6fbf02d61b",
+        "lattice-7200.npz": "60fbe3c4c3e770e3c528c1ab953b4a5e1f86ab21b0bee92420c1e751316539f3",
+        "lattice-7210.npz": "006b35ef95079f4347989981e21056012bb671f055d1192b2ab9e465bf41228a",
+        "lattice-7440.npz": "c91f27f5b322f49e0f4a8e66cf402893a7ecd7942216cd61314ba48852f3de29",
+        "lattice-7920.npz": "86d1dff3c9d606aad78ce33908ba14f9df238836a858f9da4d03cbe889436adf",
+        "lattice-8400.npz": "c6f27cdbcf084ee4e59e96dcc3a51aebe84c8634b577090ca7fc0f921a2c9458",
+        "lattice-8880.npz": "5d680c0606bbf3d863c1d40aef27e67007a023e7b5342dd29e7b8338997d308c",
+        "progress.jsonl": "e22eb6543217f0fd0da5feded703ed50e34643388dbc22f5ce901622d3345152",
+        "project/Simulation/cell_count_50401.csv": "1fd7dcf47182a4ed1aaaf5943b10ad5746a45470baa3d43f27b7eae8cb4e5384",
+        "project/Simulation/surfactant_50401.csv": "5bf7177bf4fea5238920d34825256bbe9cf4f0593920ec51b55f54f1292cca9f",
+        "project/Simulation/thickness_rep_50401.parquet": "af1fc7234e81d5ebbb8a167c00986771b1457c7f7a247346c07fa0597221ba32"
+      },
+      "elapsed_seconds": 11362.193011249881,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.768993613741465,
+            "reference_mean": 47.62833076414886,
+            "reference_sample_sd": 0.24450800646836307,
+            "difference": 0.14066284959260145,
+            "absolute_tolerance": 1.7335240194050892,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9962309065661575,
+            "minimum_coverage": 0.9,
+            "rmse": 2.218102005129094,
+            "maximum_absolute_difference": 12.3125,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 126.79211627394847,
+            "reference_mean": 124.3597913455186,
+            "reference_sample_sd": 0.9759583594493434,
+            "difference": 2.432324928429864,
+            "absolute_tolerance": 3.92787507834803,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9775838127355684,
+            "minimum_coverage": 0.9,
+            "rmse": 6.770596762636054,
+            "maximum_absolute_difference": 21.75,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 31.114292006166043,
+            "reference_mean": 32.11715481171548,
+            "reference_sample_sd": 0.12795692107274848,
+            "difference": -1.0028628055494373,
+            "absolute_tolerance": 1.3838707632182454,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9871057329894862,
+            "minimum_coverage": 0.9,
+            "rmse": 1.9113001537235033,
+            "maximum_absolute_difference": 12.3125,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.8103941863025765,
+            "reference_mean": 5.055053952873816,
+            "reference_sample_sd": 0.030117923964734464,
+            "difference": -0.24465976657123978,
+            "absolute_tolerance": 1.0903537718942033,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9992065066455068,
+            "minimum_coverage": 0.9,
+            "rmse": 0.8920702724048986,
+            "maximum_absolute_difference": 4.1875,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 72.87474841751477,
+          "reference_mean": 74.05958912447245,
+          "reference_sample_sd": 1.0198835605065069,
+          "difference": -1.1848407069576865,
+          "absolute_tolerance": 5.05965068151952,
+          "passed": true
+        },
+        "1": {
+          "observed": 61.93265401170375,
+          "reference_mean": 61.99739249083994,
+          "reference_sample_sd": 0.5896120754299324,
+          "difference": -0.06473847913619579,
+          "absolute_tolerance": 3.7688362262897974,
+          "passed": true
+        },
+        "2": {
+          "observed": 46.89984755795089,
+          "reference_mean": 45.15621545399375,
+          "reference_sample_sd": 0.9069815969974221,
+          "difference": 1.7436321039571396,
+          "absolute_tolerance": 4.720944790992267,
+          "passed": true
+        },
+        "3": {
+          "observed": 42.60443015419743,
+          "reference_mean": 39.325265609379784,
+          "reference_sample_sd": 0.6600702561600209,
+          "difference": 3.2791645448176467,
+          "absolute_tolerance": 3.9802107684800627,
+          "passed": true
+        },
+        "4": {
+          "observed": 43.386296726686666,
+          "reference_mean": 39.707885021131844,
+          "reference_sample_sd": 0.5821195895224013,
+          "difference": 3.678411705554822,
+          "absolute_tolerance": 3.746358768567204,
+          "passed": true
+        },
+        "5": {
+          "observed": 41.72508972117369,
+          "reference_mean": 38.850820414321554,
+          "reference_sample_sd": 0.6935723724567003,
+          "difference": 2.8742693068521348,
+          "absolute_tolerance": 4.080717117370101,
+          "passed": true
+        },
+        "6": {
+          "observed": 41.44069673874647,
+          "reference_mean": 39.81162883811375,
+          "reference_sample_sd": 0.6934651406019091,
+          "difference": 1.6290679006327196,
+          "absolute_tolerance": 4.0803954218057275,
+          "passed": true
+        },
+        "7": {
+          "observed": 41.9580293517932,
+          "reference_mean": 40.30091132527679,
+          "reference_sample_sd": 0.6747060737493812,
+          "difference": 1.6571180265164074,
+          "absolute_tolerance": 4.024118221248143,
+          "passed": true
+        },
+        "8": {
+          "observed": 41.915407669285074,
+          "reference_mean": 39.4763783324607,
+          "reference_sample_sd": 0.7334784247402739,
+          "difference": 2.439029336824376,
+          "absolute_tolerance": 4.200435274220822,
+          "passed": true
+        },
+        "9": {
+          "observed": 40.21405214604533,
+          "reference_mean": 38.525276091102185,
+          "reference_sample_sd": 0.6656055912756852,
+          "difference": 1.6887760549431476,
+          "absolute_tolerance": 3.9968167738270557,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 1500.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 212.33333333333334,
+        "early_5day_nadir_total": 166,
+        "nadir_hours_after_injury": 10,
+        "first_24h_sustained_count_return_hours_after_injury": 367,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": true
+    },
+    {
+      "case": "moderate-injury",
+      "seed": 7,
+      "manifest_digest": "9ebb2a7a7e9b2b81e55b18b405a44d8d629da595690912b7d20aab8cbb9f914d",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "a5c06ef371c86909b94c09c9c033e3a32f8b083b5cdc3c26e0d37e1269607852",
+      "outputs": {
+        "cells-0.csv": "34ea307d7e35b7dd4e1d09ef34af2d466c0e65210985e782738241a9b2a51f85",
+        "cells-12000.csv": "bfcb3429c9e6d30e79c2f57cf618f2a84130d79fb2c830edc70ebe61008a20d5",
+        "cells-1680.csv": "29d80902578be63fd5e3b96624c38c2054cd1808b1a203a044e71e06e3a25052",
+        "cells-240.csv": "9be8aca639d32257b4c9cd5c9698faef53c5b709dd9bc8ff452dd6af247db814",
+        "cells-3600.csv": "9002e7083c147b2a1186d18f81e4483d39d4e7524325d76273d2bfc718651ffa",
+        "cells-50400.csv": "ec738481bd4d84501cc3b48c24a627bec49f2cb102279591cf4818f668c0fd8d",
+        "cells-720.csv": "c5a8c4e00043454fa1578b2d8fdb71bcc8e1fcdb8e9e92115433348568fb6b2d",
+        "cells-7200.csv": "cdaec35dca5c31208e9fa19e0ee4ab9ef58c1797d627bf939d59d79a67dac861",
+        "cells-7210.csv": "56f5c7e807f8226e3d07c975fc1c91abdc31d02813cc99cad200285c855a5723",
+        "cells-7440.csv": "5cefdbc0e8bce6d5438459a90454beb444e80258c258cad4275aa4790f4e668c",
+        "cells-7920.csv": "f6747862bd4f557555ffbb7d643a5b5f9d2dc011f806f7c8803a55ec530d784d",
+        "cells-8400.csv": "a4d4b2df32e6f2bb601e72a8568e3fbff982f823a7f10e55be34eb94e2f68f18",
+        "cells-8880.csv": "7f0abd1bed0226b3f8dddf05252e25859346ac009fe160bf5094849a48654dd3",
+        "lattice-0.npz": "fa1a80b20a92ce0c7a8aba63f67381378d2695cfcabba6312f9809b46192179b",
+        "lattice-12000.npz": "b1b7aafc97aeee0bc34048439594dc5b502f3110a3c346867b77fa058f1457fb",
+        "lattice-1680.npz": "1f7970063d6498241fb0caf52f71a680cb0541833665e60aa142c60b0154cd43",
+        "lattice-240.npz": "d6c3a9740792d72cf8299ed7d783357af4bf34d037c99c50e4cbda330529a205",
+        "lattice-3600.npz": "9414ba7623a7beb8c231cdd1f1f1607e36bbbf285ce8f6d26fc1c730887c2d66",
+        "lattice-50400.npz": "c5b722b3c5b598c48435e8b5a4f5b412b6f5a99fc8658b7550f79fb2e63362bc",
+        "lattice-720.npz": "8cbc360e00153085c885b6f2f616c9f9dabd96f5c834c3d43161d954cb605216",
+        "lattice-7200.npz": "cfaf23a9ebe84f98674e27745d93f4cdcee05b4a5c7f847b6758a9f024faedf0",
+        "lattice-7210.npz": "233333d5206359e132964c91790dcd8e00b6002897ce21e3cdaaad76cab886b1",
+        "lattice-7440.npz": "93167f5b4f57820f1f310663e5f9c5146e539b1729584479b355dff3aea2e3c1",
+        "lattice-7920.npz": "531d7142222203b4c6dec3e6be427ea93bc95142a647e861792c66f81cb61cb4",
+        "lattice-8400.npz": "473a38f1ede0833657c09e97c777cb46e438ed569320d5b7323151d89ca0f149",
+        "lattice-8880.npz": "a38c70dc69a40f13f570eeaf523e312bb8567c90913a12ae8e1f01b6630c9e4d",
+        "progress.jsonl": "70ebc3459f0ba1443c6c1686c5390c6f328eff8a587afa437d0473b4659eaab8",
+        "project/Simulation/cell_count_50401.csv": "abe779e12d0ce0c871dde36a90a020e220b888402f0ff1967bb41c31f7e452b6",
+        "project/Simulation/surfactant_50401.csv": "e05f91dbd352c05075dd4faf92895544ca1e83915fddfba54622ebff2d7ab046",
+        "project/Simulation/thickness_rep_50401.parquet": "9edfffe6cbc9bade2a95ffdaf0196ca9c5edf7aed6b665cf0f7540392b3ae60b"
+      },
+      "elapsed_seconds": 11382.387714125216,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 48.00836820083682,
+            "reference_mean": 44.40694413858914,
+            "reference_sample_sd": 9.74170584148044,
+            "difference": 3.6014240622476805,
+            "absolute_tolerance": 30.225117524441323,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9900813330688355,
+            "minimum_coverage": 0.9,
+            "rmse": 4.3305720122334685,
+            "maximum_absolute_difference": 19.666666666666668,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 123.7817661308082,
+            "reference_mean": 125.99732804815383,
+            "reference_sample_sd": 28.787040836192848,
+            "difference": -2.2155619173456387,
+            "absolute_tolerance": 87.36112250857855,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9912715731005752,
+            "minimum_coverage": 0.9,
+            "rmse": 10.526304135555602,
+            "maximum_absolute_difference": 39.400000000000006,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 29.118916538207444,
+            "reference_mean": 26.9720913161565,
+            "reference_sample_sd": 8.00205020453596,
+            "difference": 2.1468252220509427,
+            "absolute_tolerance": 25.00615061360788,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9906764530847054,
+            "minimum_coverage": 0.9,
+            "rmse": 3.3496556005883913,
+            "maximum_absolute_difference": 23.266666666666666,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.852895837921163,
+            "reference_mean": 4.10049181531234,
+            "reference_sample_sd": 1.9696411226000528,
+            "difference": 0.7524040226088227,
+            "absolute_tolerance": 6.908923367800158,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 1.0,
+            "minimum_coverage": 0.9,
+            "rmse": 1.1032380370986863,
+            "maximum_absolute_difference": 6.2,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 73.60862330016104,
+          "reference_mean": 65.65279213227156,
+          "reference_sample_sd": 19.12852496978129,
+          "difference": 7.955831167889485,
+          "absolute_tolerance": 59.385574909343866,
+          "passed": true
+        },
+        "1": {
+          "observed": 62.52276419976947,
+          "reference_mean": 58.0879021006451,
+          "reference_sample_sd": 6.894647335825356,
+          "difference": 4.434862099124366,
+          "absolute_tolerance": 22.68394200747607,
+          "passed": true
+        },
+        "2": {
+          "observed": 47.48505156024768,
+          "reference_mean": 46.104255423602154,
+          "reference_sample_sd": 1.6613636720004092,
+          "difference": 1.3807961366455288,
+          "absolute_tolerance": 6.984091016001228,
+          "passed": true
+        },
+        "3": {
+          "observed": 39.78118049010634,
+          "reference_mean": 37.44532401038999,
+          "reference_sample_sd": 1.0250466254399857,
+          "difference": 2.335856479716348,
+          "absolute_tolerance": 5.075139876319957,
+          "passed": true
+        },
+        "4": {
+          "observed": 32.61195856055167,
+          "reference_mean": 24.519642962734412,
+          "reference_sample_sd": 4.442482118073201,
+          "difference": 8.092315597817258,
+          "absolute_tolerance": 15.327446354219603,
+          "passed": true
+        },
+        "5": {
+          "observed": 28.501792711780467,
+          "reference_mean": 9.214812504622065,
+          "reference_sample_sd": 13.856759716806744,
+          "difference": 19.2869802071584,
+          "absolute_tolerance": 43.570279150420234,
+          "passed": true
+        },
+        "6": {
+          "observed": 38.32979942416473,
+          "reference_mean": 7.292968344427941,
+          "reference_sample_sd": 35.86411255205052,
+          "difference": 31.036831079736793,
+          "absolute_tolerance": 109.59233765615156,
+          "passed": true
+        },
+        "7": {
+          "observed": 43.7584426665061,
+          "reference_mean": 15.906225024476019,
+          "reference_sample_sd": 35.55321417656432,
+          "difference": 27.85221764203008,
+          "absolute_tolerance": 108.65964252969295,
+          "passed": true
+        },
+        "8": {
+          "observed": 43.221923887486,
+          "reference_mean": 15.06673575214267,
+          "reference_sample_sd": 37.535764604978326,
+          "difference": 28.15518813534333,
+          "absolute_tolerance": 114.60729381493498,
+          "passed": true
+        },
+        "9": {
+          "observed": 40.66774868936854,
+          "reference_mean": 14.97803594126632,
+          "reference_sample_sd": 36.67022408718209,
+          "difference": 25.689712748102217,
+          "absolute_tolerance": 112.01067226154628,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 2500.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 206.33333333333334,
+        "early_5day_nadir_total": 131,
+        "nadir_hours_after_injury": 17,
+        "first_24h_sustained_count_return_hours_after_injury": 131,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": true
+    },
+    {
+      "case": "moderate-injury",
+      "seed": 11,
+      "manifest_digest": "be18d817c6956312a8f6099b249386a00631963c3f478d42f650549ab5e24705",
+      "runtime_digest": "d29865e81e16ca42a063f853033f9d9a57830c3d10ca09c685d1bbbefbc82624",
+      "record_digest": "f07adf3264363cd56ead37d7ba908fd863b3e4e972d2437fe0ad6b6fbb1d8e3a",
+      "outputs": {
+        "cells-0.csv": "40a60bf48e3712cee43d4fffb094dd7591e3aa9da05a486a4b305122a16a0e87",
+        "cells-12000.csv": "0627eb8f20cfcb30b591ef9524907a2408566b1fea4592e91e152b10915d9400",
+        "cells-1680.csv": "d7a340bfc529d6efdc53a2e70cffc0216d0a811f575a48dfb0759a452203bc73",
+        "cells-240.csv": "86ac863b9b12309964881aec321c0741aeb00db204a105871bb013a6028a4364",
+        "cells-3600.csv": "471f77b28f6290a71d8bd92273e7858aabc0ea941f8d478cde0e172b7b41d1d8",
+        "cells-50400.csv": "3150f5f7912bc224640d8ef1b14518109064d21c64839f1e74c38f00a77ae694",
+        "cells-720.csv": "846e7094734e8c18a3acecbb1d1a475d078d66b12efabc4f28c6af71982f759a",
+        "cells-7200.csv": "d7caa0add6ec87de7c1e131daa40f7af30a6044003a857a67847cbc09d2ef5af",
+        "cells-7210.csv": "bd8d52637b69f0103534959ec13ae55a5ca71634e002d4632fe5c21b4d7c9b0e",
+        "cells-7440.csv": "eaa6e076961499ad0a57b44a97f04d30ee80ca8515d6b5d88fe4754f444ce1c7",
+        "cells-7920.csv": "efce5591b9f4694763647f7be9332821563ab05d46f2b7e4d935e98de85c748c",
+        "cells-8400.csv": "8278974303c63e0f1d027de205281600c49711054883e0b3491d245ffd6ab56f",
+        "cells-8880.csv": "1452e20656356530b02cd378cb72c8769df0bc9bbc6e495ee0d7276108a0de74",
+        "lattice-0.npz": "7c08b7572c3a36a8eda21d41c4d2ff7bc03542d0e70bc7ad18fa593defa48eb4",
+        "lattice-12000.npz": "20fe929f9e4be26a5ec05cb068a12b4a1f19f17245cf3462b4200ee2b2558c35",
+        "lattice-1680.npz": "69e416d67d0e6796b164fe33e875ceb583339c4143ac70a5eb8ab15e015b867a",
+        "lattice-240.npz": "6215c8d7541dd1a75fe1f6a369e21363521f2cdbd5502a2ed1c2276d777fc6d3",
+        "lattice-3600.npz": "055f94d68010efc01fb5a7c8adbbb5f60e5e8c5a0ad1f5551d63264733179e63",
+        "lattice-50400.npz": "a0337f4ecedbc53cac07417755b14f8bed4c2b8f16329bde47a70470b231f5ae",
+        "lattice-720.npz": "80d06ebaa99a8a8682957c4df0f4802093567d544a339c71fe4cfc6fbf02d61b",
+        "lattice-7200.npz": "d7dfc3e589a1c672afa07b96ffa91387deb1fb92af60914f830531ad1e3f0fc7",
+        "lattice-7210.npz": "5b0b18cd02947cffad03e30d12c43e592c649a6887d7acb7f91587c8480dd73f",
+        "lattice-7440.npz": "2c0f98c05dea9618bb175adb054f9e987e461ccb26502474b6f5596bc33dde51",
+        "lattice-7920.npz": "2be286a373101ba62ad83597de40284e4ed4363c8277e051d2091efb850da577",
+        "lattice-8400.npz": "73d7923ec11aac08bd255af677db8c61f8a0e556a91311cd5d8e587f1337914f",
+        "lattice-8880.npz": "d40de587f3cb69ebb126ba5dc647c6cbc90a5c34cc0cdcf5f486f208a462392d",
+        "progress.jsonl": "e486330939142dcea0d38b557d84b238b7dd8f033311280f87c147268fe6df16",
+        "project/Simulation/cell_count_50401.csv": "61501b6d9c116baa8d58a47d4e3d32aaf3d14386b84a5034c0db551bffc73df8",
+        "project/Simulation/surfactant_50401.csv": "283abeda81c751b4ffbb20686df6735f6a528ae2352b68350c54bc6b5ce77b32",
+        "project/Simulation/thickness_rep_50401.parquet": "dab949be11447b7e3ed14f0285ad28959a4ec3e7fd11938eb804ebddb9dc90f4"
+      },
+      "elapsed_seconds": 11311.585813374724,
+      "cell_counts": {
+        "Superficial": {
+          "stable_mean": {
+            "observed": 47.855538427659106,
+            "reference_mean": 44.40694413858914,
+            "reference_sample_sd": 9.74170584148044,
+            "difference": 3.448594289069966,
+            "absolute_tolerance": 30.225117524441323,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9890894663757192,
+            "minimum_coverage": 0.9,
+            "rmse": 4.472151726572466,
+            "maximum_absolute_difference": 23.6,
+            "passed": true
+          }
+        },
+        "Wing": {
+          "stable_mean": {
+            "observed": 123.86610878661088,
+            "reference_mean": 125.99732804815383,
+            "reference_sample_sd": 28.787040836192848,
+            "difference": -2.1312192615429524,
+            "absolute_tolerance": 87.36112250857855,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9857171196191232,
+            "minimum_coverage": 0.9,
+            "rmse": 13.10849633086638,
+            "maximum_absolute_difference": 34.133333333333326,
+            "passed": true
+          }
+        },
+        "Basal": {
+          "stable_mean": {
+            "observed": 28.420612199955958,
+            "reference_mean": 26.9720913161565,
+            "reference_sample_sd": 8.00205020453596,
+            "difference": 1.448520883799457,
+            "absolute_tolerance": 25.00615061360788,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9886927196984725,
+            "minimum_coverage": 0.9,
+            "rmse": 3.039617765069922,
+            "maximum_absolute_difference": 25.0,
+            "passed": true
+          }
+        },
+        "Stem": {
+          "stable_mean": {
+            "observed": 4.847390442633781,
+            "reference_mean": 4.10049181531234,
+            "reference_sample_sd": 1.9696411226000528,
+            "difference": 0.7468986273214409,
+            "absolute_tolerance": 6.908923367800158,
+            "passed": true
+          },
+          "full_trajectory": {
+            "samples": 5041,
+            "coverage": 0.9998016266613767,
+            "minimum_coverage": 0.9,
+            "rmse": 1.1664806532168355,
+            "maximum_absolute_difference": 4.733333333333333,
+            "passed": true
+          }
+        }
+      },
+      "thickness_um": {
+        "0": {
+          "observed": 72.35562888835048,
+          "reference_mean": 65.65279213227156,
+          "reference_sample_sd": 19.12852496978129,
+          "difference": 6.7028367560789235,
+          "absolute_tolerance": 59.385574909343866,
+          "passed": true
+        },
+        "1": {
+          "observed": 63.155629518329434,
+          "reference_mean": 58.0879021006451,
+          "reference_sample_sd": 6.894647335825356,
+          "difference": 5.067727417684331,
+          "absolute_tolerance": 22.68394200747607,
+          "passed": true
+        },
+        "2": {
+          "observed": 47.18666866440553,
+          "reference_mean": 46.104255423602154,
+          "reference_sample_sd": 1.6613636720004092,
+          "difference": 1.0824132408033762,
+          "absolute_tolerance": 6.984091016001228,
+          "passed": true
+        },
+        "3": {
+          "observed": 40.21164169501533,
+          "reference_mean": 37.44532401038999,
+          "reference_sample_sd": 1.0250466254399857,
+          "difference": 2.766317684625342,
+          "absolute_tolerance": 5.075139876319957,
+          "passed": true
+        },
+        "4": {
+          "observed": 33.42269134851645,
+          "reference_mean": 24.519642962734412,
+          "reference_sample_sd": 4.442482118073201,
+          "difference": 8.90304838578204,
+          "absolute_tolerance": 15.327446354219603,
+          "passed": true
+        },
+        "5": {
+          "observed": 25.9330411841089,
+          "reference_mean": 9.214812504622065,
+          "reference_sample_sd": 13.856759716806744,
+          "difference": 16.718228679486835,
+          "absolute_tolerance": 43.570279150420234,
+          "passed": true
+        },
+        "6": {
+          "observed": 34.77961966207097,
+          "reference_mean": 7.292968344427941,
+          "reference_sample_sd": 35.86411255205052,
+          "difference": 27.48665131764303,
+          "absolute_tolerance": 109.59233765615156,
+          "passed": true
+        },
+        "7": {
+          "observed": 41.42741468856656,
+          "reference_mean": 15.906225024476019,
+          "reference_sample_sd": 35.55321417656432,
+          "difference": 25.52118966409054,
+          "absolute_tolerance": 108.65964252969295,
+          "passed": true
+        },
+        "8": {
+          "observed": 42.345552143314265,
+          "reference_mean": 15.06673575214267,
+          "reference_sample_sd": 37.535764604978326,
+          "difference": 27.278816391171596,
+          "absolute_tolerance": 114.60729381493498,
+          "passed": true
+        },
+        "9": {
+          "observed": 42.112881114531575,
+          "reference_mean": 14.97803594126632,
+          "reference_sample_sd": 36.67022408718209,
+          "difference": 27.134845173265255,
+          "absolute_tolerance": 112.01067226154628,
+          "passed": true
+        }
+      },
+      "chemical_pulse": {
+        "first_positive_hour": 720.0,
+        "first_positive_total": 2500.0
+      },
+      "descriptive_recovery": {
+        "preinjury_24h_mean_total": 210.16666666666666,
+        "early_5day_nadir_total": 134,
+        "nadir_hours_after_injury": 18,
+        "first_24h_sustained_count_return_hours_after_injury": 518,
+        "classification": "descriptive_population_count_return_not_wound_closure",
+        "pre_registered_acceptance_endpoint": false
+      },
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Thresholds are declared reference-variability checks, not clinical acceptance or a confidence interval.",
+    "Autocorrelated time samples are not independent biological replicates.",
+    "Original archived per-run parameter files and seeds are unavailable.",
+    "The lifetime repair changes undefined memory access; agreement must be measured."
+  ],
+  "independent_biological_validation": false,
+  "diagnostic_subset": null,
+  "all_publication_groups_assessed": true,
+  "status": "not_reproduced",
+  "files": {
+    "self-organization-seed-11-counts.png": "9264f1574d2d26ca7ce7070eb5c4133034a0193ea1bc19569db42b2c9e6e36f5",
+    "slight-injury-seed-11-counts.png": "3000dc178601d624511dd5a8757bf14824e86594bd39eef6cded77e9011e2499",
+    "self-organization-seed-7-counts.png": "8a012b82371901e58474ff98e8cdf8a560e8a9c1bb0e4335c20a7289dfedc2c6",
+    "slight-injury-seed-7-counts.png": "3ffdd49832a7a810aad81b4ae257ecc90a0e24b27979aef3631486dbce7549a2",
+    "moderate-injury-seed-11-counts.png": "ffb49b19e1159b79740ddc5729a1a6fb5cb5eba6358eacbd7478a69a1fe1a96e",
+    "moderate-injury-seed-7-counts.png": "bd7267aadde7f5d2d391f7c5020fbc09d48d81c8c5f954bc4b63153054cd19ba",
+    "mild-injury-seed-7-counts.png": "0408dba302fe1a1a6d885aa0eef5d059d8c04f3c34bfa4c4c4f8377a27fa3cf2",
+    "mild-injury-seed-11-counts.png": "4c48b45332c902af14071da61562b1bdc44e7f0c59cc9395e42e515b7bb021ae"
+  }
+}
