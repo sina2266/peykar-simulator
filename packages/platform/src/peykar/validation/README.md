@@ -22,6 +22,16 @@ means/SDs, source coordinates and unknown eye/animal counts, and isolates Contro
 normalization uses the original injury baseline. Exact observed failures and the
 prefix-only audit are retained in the conditioned-forecast experiment.
 
+`cornea_online_evidence` separately adapts all16 original series from the three
+consumed2017/2019/2021 sources. Actual rabbit ratios, cohort-mean ratios and
+published group aggregates remain distinct, with original units/cells/SD/context.
+The2021 arithmetic0h normalization is not a conditioning measurement; categorical
+closure is never a numeric zero. The explicit online-forecast operator conditions
+each isolated child on only its available prefix and retains all98 next targets
+(96 numeric,2 categorical), per-series comparisons and failure. Regression tests
+replay checked actual outputs without launching scientific jobs. This does not
+certify split independence or authorize default API model execution.
+
 Frozen repeated-seed protocols provide paired scalar regression against imported
 simulation references. They require matching seed sets and time grids, preserve
 per-seed errors and fail unless every sample passes the fixed tolerance. They do

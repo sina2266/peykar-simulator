@@ -13,4 +13,13 @@ establish a causal drug mechanism, independent biological validity or full cellu
 publication reproduction. General surrogate construction, structure refinement,
 optimization and promotion remain future controlled changes.
 
+`corneal_online.forecast_corneal_radius_trend` adds a pure prefix-only observation
+state estimator: exactly two latest actual area fractions define a signed
+normalized-radius slope over real hours. It preserves expansion and later
+observed reopening, rejects future rows and does not train across series or
+register a model. This is observation-informed forecasting, not an initial-state
+simulator or measured cell speed. The explicit offline three-study replay in
+`experiments/vcornea/repair-front/online-forecast/` retains98 real children and the
+failed fixed precision gate (5/16 series pass); no biological promotion follows.
+
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

@@ -1,0 +1,37 @@
+"""Plot retained actual replay metrics only; no fitting or candidate execution."""
+import json
+from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+base = Path(__file__).resolve().parent
+report = json.loads((base / 'report.json').read_bytes())
+series = report['series_reports']
+labels = [s['series_id'].replace('abdel-naby2017/', '2017 ').replace('suarez-barrio2019/', '2019 ').replace('chung2021/', '2021 ').replace('/replicate-', ' #') for s in series]
+methods = [('local_radius_trend', 'Last two (candidate)', '#147d83', 'o'), ('persistence', 'Persistence', '#c57b32', 'x'), ('first_to_current_radius', 'First to current', '#6c64a7', 's'), ('crosson1986_initial_only', '1986 initial-only prior', '#85939c', '^')]
+fig, axes = plt.subplots(1, 2, figsize=(12, 8.5), sharey=True, gridspec_kw={'width_ratios': [2.2, 1]})
+fig.subplots_adjust(left=.23, right=.97, top=.84, bottom=.22, wspace=.09)
+y = list(range(len(series)))
+for key, label, color, marker in methods:
+    axes[0].scatter([100*s['metrics'][key]['rmse_fraction'] for s in series], y, label=label, s=38, c=color, marker=marker, zorder=3)
+axes[0].axvline(5, color='#b13c3c', linewidth=1, linestyle='--')
+axes[0].set_xlabel('Next-observation RMSE (percentage points)')
+axes[0].set_xlim(-.5, 53)
+axes[0].set_yticks(y, labels)
+axes[0].invert_yaxis()
+axes[0].legend(loc='lower right', fontsize=9, frameon=False)
+axes[1].scatter([100*s['metrics']['local_radius_trend']['maximum_absolute_error_fraction'] for s in series], y, s=42, c=['#147d83' if s['passed'] else '#b13c3c' for s in series], zorder=3)
+axes[1].axvline(10, color='#b13c3c', linewidth=1, linestyle='--')
+axes[1].set_xlim(-.5, 30)
+axes[1].set_xlabel('Candidate maximum error\n(percentage points)')
+for ax in axes:
+    ax.grid(axis='y', color='#e1e6e9', linewidth=.6)
+    ax.spines[['top', 'right', 'left']].set_visible(False)
+    ax.tick_params(axis='both', length=0, labelsize=9)
+    for boundary in (8.5, 12.5): ax.axhline(boundary, color='#829199', linewidth=1)
+fig.suptitle('Real observation updates improve persistence, but do not generalize precisely', fontsize=14, x=.05, ha='left', y=.97)
+fig.text(.05, .915, 'Retrospective replay: 16 separate series | 98 real child forecasts | 96 numeric targets | only 5 series meet fixed gates', fontsize=10)
+fig.text(.05, .075, 'Dashed lines: RMSE 5 pp and maximum error 10 pp. Acceptance also requires at least 0.5 pp RMSE gain over persistence.\n2017: individual rabbits, 6h horizons (8 targets each). 2019: cohort means, 12h (5 each). 2021: aggregates, 6h/26h (2/1/1).\nTwo categorical 50h outcomes are retained without numeric substitution. No pooled acceptance or independent biological validation.', fontsize=9, color='#485760', linespacing=1.6)
+fig.savefig(base / 'actual-replay-errors.png', dpi=160)
+fig.savefig(base / 'actual-replay-errors.pdf')

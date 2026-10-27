@@ -77,6 +77,17 @@ assumptions. Additional original images/metadata are retained with incomplete
 cohort/measurement limits. Corneal scope remains insufficient for broad biological
 use; no earlier failure, data/model version or acceptance criterion is replaced.
 
+The separate [causal observation-update replay](experiments/vcornea/repair-front/online-forecast/README.md)
+now updates a radius trend after each real measurement. All98 actual isolated
+children completed;96 numeric next observations across16 separate animal/group
+series were compared with persistence, first-to-current trend and the unchanged
+initial-only prior. All16 improve persistence, but only5 meet the fixed gates;
+the general precision claim is rejected. This is observation-informed forecasting
+on consumed data, not fresh independent validation or initial-state simulation.
+The reusable [Persian continuation prompt](docs/continuation-prompt.fa.md) and
+[current scientific handoff](docs/continuation-state.fa.md) explain the user's
+whole-platform goal, actual tests, open failures and next evidence dependency.
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),

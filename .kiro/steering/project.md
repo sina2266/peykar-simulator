@@ -1,5 +1,45 @@
 # Peykar continuation context
 
+## Observation-update milestone and user handoff, 2026-10-27
+
+- Latest user wants both continued real work and a complete reusable prompt for
+  Kiro/another agent. Read docs/continuation-prompt.fa.md and the current Persian
+  docs/continuation-state.fa.md; retain whole-platform intent and corneal priority.
+  Heartbeat remains PAUSED. No live deployment or model promotion occurred.
+- Base main0001dc29 was clean. New pure corneal_online.py estimates a signed
+  normalized-radius slope from exactly the last two actual prefix observations;
+  cornea_online_evidence.py retains16 original animal/aggregate curves separately.
+  No cross-series training/future-value fitting, no default engine registration.
+  Expansion1.02 and later observed reopening are preserved;2021derived0h cannot
+  provide a conditioning point. First-to-current comparator starts at actual4h.
+- Frozen protocol1.0.1 SHA92d7bb2f717b1122cdd23bd33a4bdc8db3e37fab5d037c793113ee1c57c2a9d5
+  retains original1.0.0/import failure before any prediction; revision only allows
+  Python module-directory listing. Original source/method/criteria are unchanged.
+- Actual .peykar/cornea-online-forecast-retry1-20261027 completed98 children exit0
+  in16.2691s with10s/300s bounds; five denied-read probes plus network/write denial
+  per child. Outcomes entered each job directory only after exit0. Read-only
+  analysis replays frozen arithmetic and rejects changed/failed complete-looking
+  outputs. Full actual archive784members and original sources/hashes retained at
+  experiments/vcornea/repair-front/online-forecast/observed-2026-10-27/.
+- Actual comparison EXIT2/rejected:96numeric targets/2categorical unscored/32warmup
+  rows/16series. All16 beat persistence;5pass accuracy+improvement criteria.
+  RMSE1.8573–18.5612pp/max25.1600pp. No uniformly better result than other simple
+  baselines; no pooling or outcome-driven window/cap change. Same three consumed
+  studies, so retrospective prequential replay is NOT new independent validation.
+  Single-target Ocu/Amo metrics cannot grant a broad group-validity claim.
+- Next dependency is independent reserved matched longitudinal data with stable
+  identity, calibrated wound edge/shape/time and measurement quality; freeze QC
+  before extracting partial2025images. Four2019curves err most at36→48h,Blade2021
+  at24→50h; these are trajectory findings, not evidence of a specific mechanism.
+  Do not select acceleration/ML/RL on these errors and relabel tests untouched.
+- Targeted47tests passed1.58s; Ruff and strictmypy two new modules passed. Final
+  makecheck-docker exit0:766Python tests47.69s/87%, mypy110,18frontend tests,
+  Ruff/format/contracts/allbuilds passed; log cornea-online-final-check-docker-20261027.log.
+  Hostmakebuild exit0; two modules/two domainREADMEs match actual platformwheel.
+  All130old/31new retained inventory entries hash-match. APIhealth200/version0.3.0;
+  original peykar3_peykar-data mount verified, no live service/data reset.
+  Preserve old scientific/module/protocol pins; use new versions for later work.
+
 ## Latest user priority and actual corneal work, 2026-10-27
 
 - User permits moving to another eye component only if current corneal scope is

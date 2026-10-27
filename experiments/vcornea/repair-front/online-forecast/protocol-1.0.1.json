@@ -1,0 +1,102 @@
+{
+  "id": "cornea.causal-radius-trend.three-study-prequential",
+  "version": "1.0.1",
+  "frozen_utc": "2026-10-27T21:39:10.556225+00:00",
+  "class": "retrospective_prequential_observation_informed_forecasting_not_independent_validation",
+  "method_sha256": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+  "child_sha256": "0eecc1226762405cbbb2dd0b9ddbcee887bb93e4074d9ed8e245638946f9bb6c",
+  "operator_template_sha256": "64e6dc53a4deb517229adfb708826e566279de12553a1f317169e4233556f0ff",
+  "operator_template_rule": "Replace only the bound PROTOCOL_SHA256 assignment with its original TO_BE_FROZEN_BEFORE_EXECUTION placeholder; no other normalization.",
+  "source_pins": {
+    "packages/platform/src/peykar/model_learning/corneal_online.py": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+    "packages/platform/src/peykar/validation/cornea_online_evidence.py": "76caa030a3cfba3f576060b7d20387964d8c60403b8b812b408435f4816456e9",
+    "packages/platform/src/peykar/validation/cornea_evidence.py": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+    "packages/platform/src/peykar/validation/cornea_forecast_evidence.py": "e6b93301026d94b1d16a0386d5b8643ae288f87b58b5b6a010225aa2844f41d8",
+    "scripts/corneal_online_child.py": "0eecc1226762405cbbb2dd0b9ddbcee887bb93e4074d9ed8e245638946f9bb6c"
+  },
+  "datasets": {
+    "rabbit2017": {
+      "path": "experiments/data/cornea-evidence-20261024/raw/rabbit-figure2.xlsx",
+      "sha256": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763"
+    },
+    "ijms2019": {
+      "path": "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml",
+      "sha256": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db"
+    },
+    "chung2021": {
+      "path": "experiments/vcornea/repair-front/chung2021-manuscript.xml",
+      "sha256": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998"
+    }
+  },
+  "formula": "At each origin use exactly the last two ACTUAL numeric observations q=A/A0, r=sqrt(q); signed_slope=(r_last-r_previous)/(hour_last-hour_previous); qhat=max(0,r_last+signed_slope*(target-origin))^2.",
+  "conditioning": "Every same-series actual numeric observation no later than origin. Latest two define local slope;2021derived0h normalization never supplies a measurement. No other series or future outcome is supplied to child.",
+  "comparators": {
+    "persistence": "Last available actual q; same prefix and forecast horizon.",
+    "first_to_current_radius": "Signed secant between FIRST ACTUAL numeric observation and current origin, square nonnegative future radius.2021first observation is4h, never the derived0h identity.",
+    "crosson1986_initial_only": "Original source-based64um/h and5.5h lag, injury-clock target and declared initial radius.2017nominal3500um,2021nominal3000um,2019sqrt(reportedbaselinegroupmean_mm2/pi)*1000. Less observation information, not a matched adaptive baseline or a new original-engine execution."
+  },
+  "expected_series_ids": [
+    "abdel-naby2017/control/replicate-1",
+    "abdel-naby2017/control/replicate-2",
+    "abdel-naby2017/control/replicate-3",
+    "abdel-naby2017/sdp-0.5/replicate-1",
+    "abdel-naby2017/sdp-0.5/replicate-2",
+    "abdel-naby2017/sdp-0.5/replicate-3",
+    "abdel-naby2017/sdp-2/replicate-1",
+    "abdel-naby2017/sdp-2/replicate-2",
+    "abdel-naby2017/sdp-2/replicate-3",
+    "suarez-barrio2019/control",
+    "suarez-barrio2019/s-prgf",
+    "suarez-barrio2019/naha",
+    "suarez-barrio2019/s-prgf-naha",
+    "chung2021/blade",
+    "chung2021/ocu",
+    "chung2021/amo"
+  ],
+  "expected_forecast_count": 98,
+  "expected_numeric_forecast_count": 96,
+  "expected_categorical_forecast_count": 2,
+  "expected_warmup_actual_observations": 32,
+  "evaluation_selection": "All next scheduled original numeric and categorical observations after two preceding actual numeric observations. All98forecasts retained,96numericvalues scored,2categorical50h outcomes reported without numerical substitution. No interpolation, skipped hard endpoint or post-result window selection.",
+  "horizons_hours": {
+    "rabbit2017": [
+      6
+    ],
+    "ijms2019": [
+      12
+    ],
+    "chung2021_numeric": [
+      6,
+      26
+    ],
+    "chung2021_categorical": [
+      26
+    ]
+  },
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "minimum_rmse_improvement_over_persistence": 0.005,
+  "acceptance": "Every one of16separateanimal/aggregate series must meet RMSE<=.05 and maximumabsoluteerror<=.10 plus>=.005RMSE improvement over persistence on exactly its eligible numeric targets. No pooled acceptance, confidence interval or clinical validity follows even if retrospective criteria pass.",
+  "child_wall_seconds": 10,
+  "total_wall_seconds": 300,
+  "observed_prefix_slope_estimated": true,
+  "cross_series_training": false,
+  "hyperparameter_search": false,
+  "future_outcome_fitting": false,
+  "previously_consumed_data": true,
+  "prior_data_visibility": "All three studies have already been inspected/evaluated in earlier experiments. This rule is frozen before first execution of this new method, not before investigators saw the studies. No untouched or blinded test is claimed.",
+  "isolation": "Reviewed trusted child receives only its own prefix, target schedule and initial geometry. Seatbelt denies network, writes outside ownjob, repositorydata outside ownjob/reviewedsourcefiles/venv. Actual5readprobes+network+writeprobe verified per child; next outcome copied into ownjob only after exit0. Not an untrusted-model security boundary.",
+  "limitations": [
+    "Only projected corneal epithelial wound-area fraction, not cell layers, stroma, nerves, retinal function or full eye.",
+    "Online observation-informed forecast is a different task from full-horizon initial-state simulation; historical failures stay mandatory evidence.",
+    "2017nine measured individual workbook rabbits; captionn4 conflict and unknown rawimageareaunits retained, treatment groups not pooled.",
+    "2019ratiosofpublishedcohortmeans are not individual-animal ratios or meananimalradii; originalSDmm2 not propagated into ratioSD without covariance/n.",
+    "2021aggregates may include changing sampledeyes/rabbits after sacrifices; no longitudinalindividual identity or per-time n is recovered.",
+    "Abovebaseline1.02/expansion preserved. Forecast radius clipping assumes no unobserved reopening until another actual observation updates state.",
+    "Hours asprinted;2019once-daily methods versus halfdaytable conflict retained. Different horizons are not interchangeable.",
+    "No treatment mechanism is estimated; treatmentgroups separately quantify forecast performance only.",
+    "No ML/RL labels are used for this algebraic state estimator; complexity must earn improvement over simple baselines on new reserved evidence."
+  ],
+  "previous_protocol_sha256": "f801761c9ff9e05479b3562d95ffa2cb736f7f5870cb81741deb0da521ff8398",
+  "revision_reason": "First isolated child exited1 at import before any forecast: directory enumeration was denied. Allow listing only reviewed module parent directories; other repository file contents remain denied. Engineering import-only probe passed. Method/data/eligibility/criteria unchanged; failure and original executed operator retained."
+}

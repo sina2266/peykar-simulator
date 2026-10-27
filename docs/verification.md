@@ -1,5 +1,65 @@
 # Verification record
 
+## Causal observation updates and continuation handoff: 2026-10-27
+
+- Re-read AGENTS/.kiro/README/status/roadmap and domain documentation; main was
+  clean at0001dc292dd7390f361b7bb5546fe2bfe9b4f699. Docker API/Worker were up;
+  no old corneal scientific process was active. Continued corneal work and wrote
+  the user's requested reusable Persian prompt/current handoff, without resuming
+  the paused heartbeat or changing live service/data configuration.
+- `uv run --frozen pytest tests/unit/test_corneal_online.py
+  tests/unit/test_cornea_online_evidence.py tests/unit/test_corneal_online_operator.py
+  tests/integration/test_corneal_online_forecasts.py -q`: **47 passed in1.58s**.
+  Tests check causal prefixes, irregular time, expansion/reopening, source/cell/
+  statistic preservation, derived-baseline exclusion and checked replay of real
+  executions, rejecting failed children and changed/rehashed evidence. No new
+  scientific job is launched by the replay tests.
+- Targeted Ruff and strict mypy on both new source modules passed. Whole-tree
+  host `uv run --frozen ruff check .` and `ruff format --check .` passed before
+  final regression (382 formatted files).
+- Frozen protocol1.0.0 SHA
+  f801761c9ff9e05479b3562d95ffa2cb736f7f5870cb81741deb0da521ff8398:
+  first explicit operator child exited1 at import, **before any forecast**.
+  Original executed sources/logs/protocol remain under setup-failed-2026-10-27.
+  A sandbox import-only probe confirmed the directory-listing correction. No
+  method, source data, eligibility, comparator or threshold was changed.
+- Frozen revision1.0.1 SHA
+  92d7bb2f717b1122cdd23bd33a4bdc8db3e37fab5d037c793113ee1c57c2a9d5;
+  actual command `uv run --frozen python scripts/replay_corneal_online_forecasts.py
+  --output .peykar/cornea-online-forecast-retry1-20261027`: **98 actual child
+  exits0**,16.2690675422s parent elapsed,10s per-child/300s overall limits.
+  Every child actually checked five source/future read denials, network denial
+  and denied writes outside its job. Per-job source outcome appeared only after
+  exit0. Reviewed trusted-code isolation, not a universal hostile-code sandbox.
+- Actual scientific comparison **exit2/rejected**: all16 separate series,
+  96numeric targets,2 categorical50h forecasts without numerical substitution,
+  32 explicit warmup rows. All16 improve on persistence; only5 meet the frozen
+  per-series5/10pp accuracy and0.5pp improvement gates. RMSE1.8573–18.5612pp;
+  largest error25.1600pp. No pooled acceptance; the candidate is not uniformly
+  better than other simple baselines. These previously consumed studies supply
+  retrospective prequential evaluation, not fresh independent biological validity
+  or an initial-state simulator pass.
+- Retained actual children ZIP:784 members/704283bytes. Public report, exact
+  executed sources, source provenance/units, failure, plots and31-file frozen
+  scientific inventory are under experiments/vcornea/repair-front/online-forecast.
+  Ran retained plotting source with existing native46 Python (JSON/Matplotlib
+  only; no package installation), generated PNG/PDF and visually inspected the
+  corrected figure. No simulation, fitting or segmentation occurs in plotting.
+- Verified all130 entries across the three previous retained-file inventories:
+  zero hash mismatches. Original raw sources, scientific versions and licenses
+  were not edited. `curl --fail --silent http://127.0.0.1:8000/healthz` returned
+  statusok/version0.3.0; Docker inspect confirmed original peykar3_peykar-data
+  mounted at/var/lib/peykar. No live redeployment or volume reset was performed.
+- Final command
+  `DOCKER_CONFIG="$PWD/.peykar/docker-public-check-20261023" DOCKER_HOST="unix:///Users/sina2266/.docker/run/docker.sock" make check-docker`
+  **exit0**: **766 Python tests passed in47.69s**,87% coverage, strict mypy110
+  source files,18 frontend tests, Ruff/format/contracts and all three wheel/sdist
+  builds passed. Log `.peykar/cornea-online-final-check-docker-20261027.log`.
+- Host `make build` **exit0**, all three wheels and source distributions built;
+  log `.peykar/cornea-online-final-build-20261027.log`. Both new platform modules
+  and both domain READMEs match the built platform wheel byte for byte. Checked
+  all31 new inventory entries, zero mismatches. `git diff --check` passed.
+
 ## Post-injury corneal forecast and structural precision refusal: 2026-10-27
 
 - Re-read AGENTS/.kiro/README/status/roadmap/domain docs and actual retained

@@ -131,6 +131,33 @@ or a proof against every possible biological mechanism. Latest source search:
   2025 partial cohort; quantify visibility/zoom/glare uncertainty and resolve
   missing eyes/row identity before a complete-cohort accuracy claim.
 
+The next [retrospective online replay](../experiments/vcornea/repair-front/online-forecast/README.md)
+now tests causal updates after every available observation. It is a different
+task from initial-state simulation and uses previously consumed studies. All98
+actual isolated children completed;96 numeric targets across16 separate series
+show improvement over persistence, but only5 series meet the fixed5/10pp accuracy
+and0.5pp improvement gates. Its largest error is25.16pp; it is not uniformly better
+than first-to-current trend or the original initial-only formula. Complexity and
+extra observations have not established general precision.
+
+- [x] Implement a pure prefix-only signed radius state estimator and source adapter
+  preserving individual versus aggregate statistics, expansion, derived baselines,
+  actual irregular horizons and categorical closure.
+- [x] Freeze one method/criteria before its new replay; retain all98 child exits,
+  denied-read/network/write probes,96 scores,2 unscored categorical outcomes and
+  the import-only setup failure. Reject the general claim without threshold changes.
+- [x] Deliver a reusable [Persian transfer prompt](continuation-prompt.fa.md) and
+  [current handoff](continuation-state.fa.md) covering the whole-platform intent,
+  actual scientific results, verification and required documentation updates.
+- [ ] Acquire a new independently reserved, matched longitudinal measurement set
+  with stable eye/animal identity and calibrated geometry/timing; freeze image/
+  measurement quality rules before extraction. Existing2025 partial unlabeled
+  images are not a complete substitute and consumed targets are not new holdouts.
+- [ ] Quantify measurement repeatability and independent dynamics/substrate/care
+  covariates before selecting a new mechanistic, filtered or learned correction.
+  Retain all existing baselines and long-interval failures; evaluate per series
+  and horizon on fresh reserved evidence before a scoped accuracy claim.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
