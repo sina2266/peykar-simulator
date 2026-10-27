@@ -1,0 +1,46 @@
+{
+ "schema": "cornea.population-split-reservation-1.0.0",
+ "utc": "2026-10-27T22:35:20.474404+00:00",
+ "rule": "sha256(SALT + lower(doi)) first 8 hex digits mod 3 == 0 -> sealed_test",
+ "salt": "peykar-cornea-population-holdout-v1:",
+ "consumed_development_dois": [
+  "10.1155/2021/4668056",
+  "10.1371/journal.pone.0188154",
+  "10.3390/ijms20071655"
+ ],
+ "triage_file": "experiments/data/cornea-wound-population-2026-10-27/triage-1.0.0.json",
+ "triage_sha256": "bc9451a14ffd00273990ca7a68aa3a54119f4502b2dc4a5c03ce123cd9cdcdd7",
+ "outcome_values_read_before_reservation": false,
+ "studies": [
+  {
+   "study_key": "zeb1-commun-biol-2023",
+   "doi": "10.1038/s42003-023-04831-0",
+   "split": "sealed_test"
+  },
+  {
+   "study_key": "norepinephrine-commun-biol-2025",
+   "doi": "10.1038/s42003-025-07903-5",
+   "split": "sealed_test"
+  },
+  {
+   "study_key": "lsc-dedifferentiation-nat-commun-2026",
+   "doi": "10.1038/s41467-026-72331-w",
+   "split": "sealed_test"
+  },
+  {
+   "study_key": "dio-mouse-plos-one-2020",
+   "doi": "10.1371/journal.pone.0238750",
+   "split": "development"
+  },
+  {
+   "study_key": "ketamine-rat-sci-rep-2022",
+   "doi": "10.1038/s41598-022-24639-y",
+   "split": "development"
+  },
+  {
+   "study_key": "il10-c-mast-cell-rep-2026",
+   "doi": "10.1016/j.celrep.2026.117064",
+   "split": "sealed_test"
+  }
+ ]
+}

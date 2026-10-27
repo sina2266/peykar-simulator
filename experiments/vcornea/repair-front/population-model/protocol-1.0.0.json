@@ -1,0 +1,131 @@
+{
+ "schema": "cornea.population-sealed-protocol-1.0.0",
+ "frozen_utc": "2026-10-27T23:07:15.919870+00:00",
+ "status": "frozen before any sealed outcome value was read by the model developer",
+ "context_of_use": [
+  "U1 initial-state-only prediction of a new study's control-group mean projected fluorescein wound-area fraction after central epithelial debridement, from species group and initial wound diameter",
+  "U2 causal next-observation forecasting of each animal/eye (own prefix, and cohort prefixes at the same origin hour) for control and treated groups"
+ ],
+ "not_claimed": [
+  "biological mechanism validation",
+  "treatment-effect prediction",
+  "cellular/chemical vCornea validation",
+  "clinical use",
+  "other injury families or species without training data"
+ ],
+ "model": {
+  "id": "cornea.population-radius-lag",
+  "version": "1.0.0",
+  "kinematics": "rho(t)=max(0,1-v*max(0,t-L)/r0), area=rho^2",
+  "grid": {
+   "speed_um_h": "geomspace(2,400,121)",
+   "lag_h": "0..60 step 0.25"
+  },
+  "observation": {
+   "noise": "Gaussian in sqrt(area) with study-level SD, log-normal prior marginalized on 11 levels",
+   "noise_log_sd": 1.0,
+   "noise_level_z": [
+    -2.5,
+    -2.0,
+    -1.5,
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5
+   ],
+   "noise_floor": 0.005,
+   "zero_area": "left-censored below detection radius",
+   "detection_radius_um": 125.0,
+   "noise_center_rule": "median study SD over all training studies unless >=3 individual-data studies"
+  },
+  "population": {
+   "levels": "series within study within species/injury context; diagonal within- and between-study covariances",
+   "fit": "two-stage: grid posterior moments per series, then penalized REML (Nelder-Mead, deterministic restarts)",
+   "penalty_modes": {
+    "log_speed_sd": 0.2,
+    "lag_sd_h": 5.0
+   },
+   "student_df": 4.0,
+   "fallback_sd_factor": 2.0
+  },
+  "development_changes_before_freeze": [
+   "per-study noise and censored zeros after development LOSO showed one coarse study inflated a pooled noise SD",
+   "noise prior widened (log-SD 1.0, z +/-2.5) and centred on the median over all studies",
+   "between-study lag penalty mode 3 h -> 5 h, reflecting reported rabbit latent phases of roughly 4-16 h",
+   "within-study covariance made diagonal; Student-t (df 4) cohort priors; fallback priors with doubled SD",
+   "cohort (concurrent cage-mate) assimilation added as the practical online use"
+  ]
+ },
+ "methods": {
+  "primary_U2": "cohort_assimilation",
+  "secondary_U2": [
+   "population_assimilation_t4",
+   "population_assimilation",
+   "radius_lag_flat_prior",
+   "analog_knn (k=5, shifts +/-12 h)",
+   "last_two_radius_trend",
+   "first_to_current_trend",
+   "crosson1986_fixed",
+   "persistence"
+  ],
+  "primary_U1": "population_initial_state (cohort mean of n animals)",
+  "secondary_U1": [
+   "crosson1986_fixed",
+   "pooled_training_curve"
+  ]
+ },
+ "training": "all development studies: consumed abdel-naby2017, suarez-barrio2019 (all treated: steroid+NSAID care), chung2021, plus dio-mouse-plos-one-2020 and ketamine-rat-sci-rep-2022; controls fit the population, all series supply noise estimates and the analog library",
+ "sealed_test": {
+  "studies": [
+   "zeb1-commun-biol-2023",
+   "lsc-dedifferentiation-nat-commun-2026"
+  ],
+  "reserved_by": "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.0.0.json",
+  "custodian": "separate sub-agent extracted sealed records, reported only structure/hashes",
+  "excluded_by_custodian": {
+   "norepinephrine-commun-biol-2025": "no identifiable observation times / hour-0 values",
+   "il10-c-mast-cell-rep-2026": "deposited sheet lacks hour-0 rows"
+  },
+  "licence_note": "LSC record is CC BY-NC-ND 4.0 derived data and stays private; only metrics are published"
+ },
+ "criteria": {
+  "per_series_U2": "RMSE<=5 pp AND max<=10 pp AND RMSE at least 0.5 pp below persistence",
+  "per_group_U1": "RMSE<=5 pp AND max<=10 pp",
+  "calibration": "pooled 90% interval coverage of cohort_assimilation within [0.80,0.97] and 80% within [0.70,0.90]",
+  "primary_comparison": "pooled RMSE of cohort_assimilation lower than last_two_radius_trend over targets where both exist",
+  "all_points": "every sealed series/target is scored; none removed; thresholds unchanged after unsealing"
+ },
+ "development_result_reference": "experiments/vcornea/repair-front/population-model/development-loso-2026-10-27/tables.md",
+ "frozen_files_sha256": {
+  "packages/platform/src/peykar/model_learning/corneal_population.py": "bc715dc20ee835cc79ac2222332b5ce4843d444c4a045c2bff2b803cf6d79bf5",
+  "packages/platform/src/peykar/model_learning/corneal_analog.py": "93d9b941f34620fb1ca93a9d35b58d04e97358082940e3ce1338eb753ad2bdd8",
+  "packages/platform/src/peykar/model_learning/corneal_online.py": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+  "packages/platform/src/peykar/validation/cornea_population_evaluation.py": "06efe53c73305027249e8abb40c594ec05b6aad3fffdb60f4a5d0034663c58c1",
+  "packages/platform/src/peykar/validation/cornea_population_data.py": "9bf0b53efa3fd7881b07d6b6b84c8d29ba29e6b8a0fc4165c378a2118ec55cde",
+  "packages/platform/src/peykar/validation/cornea_population_sources.py": "e058031feb38c7c0ebdc6928ca40bd0379d6f8f4ca8cb3cfec330f85ba2b4b39",
+  "packages/platform/src/peykar/validation/cornea_online_evidence.py": "76caa030a3cfba3f576060b7d20387964d8c60403b8b812b408435f4816456e9",
+  "packages/platform/src/peykar/validation/cornea_evidence.py": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+  "packages/platform/src/peykar/validation/cornea_forecast_evidence.py": "e6b93301026d94b1d16a0386d5b8643ae288f87b58b5b6a010225aa2844f41d8",
+  "packages/platform/src/peykar/data_fabric/spreadsheet.py": "b7dac93ef04f09551c3af47f149d079a5c768564023b44cb0fffa8d195766efb",
+  "scripts/evaluate_corneal_population.py": "3fcb163de36e914f28e910b6d40c69bd068be37fb7f91d3b0aa84a89c67580f9",
+  "experiments/data/cornea-wound-population-2026-10-27/development/records/dio-mouse-plos-one-2020.json": "15e2704d7f388d858ed0aebc49e1eb90adbd96504abb2ec1acd1fe2ea33bf5c5",
+  "experiments/data/cornea-wound-population-2026-10-27/development/records/ketamine-rat-sci-rep-2022.json": "49f9ac86feed6764b71363ecd467fd1a9ee4d629546d8b01f5be710390b0ad41",
+  "experiments/data/cornea-wound-population-2026-10-27/triage-1.0.0.json": "bc9451a14ffd00273990ca7a68aa3a54119f4502b2dc4a5c03ce123cd9cdcdd7",
+  "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.0.0.json": "1223827b0557bb8aa8989ffd852767781d909d71424eac92e411d2036ecbb72e",
+  "experiments/vcornea/repair-front/population-model/extraction-protocol-1.0.0.md": "b360042aa6aca273ffb9563da307285fb9d8ef3e0d48cabd269f0998a15b01c5",
+  "experiments/data/cornea-evidence-20261024/raw/rabbit-figure2.xlsx": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763",
+  "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db",
+  "experiments/vcornea/repair-front/chung2021-manuscript.xml": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998",
+  "experiments/vcornea/repair-front/population-model/development-loso-2026-10-27/report.json": "f8865204a023015174efcf92a5d48f848d328d0e3c1e0f1cba8afeaba515b092"
+ },
+ "sealed_records_sha256": {
+  "zeb1-commun-biol-2023.json": "a344a42429a213b736d670c3a1616a61071f86e0de480305e430c7bfa9b2c115",
+  "lsc-dedifferentiation-nat-commun-2026.json": "0830ae11140d3515e28e158b50bef0ed591730dcff08aa4d64acbccd54c09607"
+ },
+ "custody_report_sha256": "2bc7766fb17f527e73f997b76607acb27ab2e7a1737e00830f2ec256a517772c",
+ "operator": "uv run --frozen python scripts/evaluate_corneal_population.py --sealed --protocol experiments/vcornea/repair-front/population-model/protocol-1.0.0.json --output <new dir>"
+}
