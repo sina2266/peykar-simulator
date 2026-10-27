@@ -22,4 +22,13 @@ simulator or measured cell speed. The explicit offline three-study replay in
 `experiments/vcornea/repair-front/online-forecast/` retains98 real children and the
 failed fixed precision gate (5/16 series pass); no biological promotion follows.
 
+`corneal_population` adds a numpy-only hierarchical radius-lag model: per-series
+grid posteriors, censored zero areas (125 µm detection radius), study noise SD
+marginalized on a log-normal prior, penalized REML pooling across studies and
+species/injury contexts, initial-state cohort predictions and exact grid
+assimilation of an observed prefix; `cohort_posteriors` updates all animals of a
+group measured up to the same hour together. `corneal_analog` is the declared
+machine-learning comparator (k-nearest physical-displacement trajectories with time
+alignment, fixed hyperparameters). Neither registers a model; their estimates are
+kinematic summaries, not measured cell speeds or mechanisms.
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

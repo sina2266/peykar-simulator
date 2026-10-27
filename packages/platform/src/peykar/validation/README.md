@@ -38,4 +38,16 @@ per-seed errors and fail unless every sample passes the fixed tolerance. They do
 not estimate uncertainty or prove stochastic-distribution equivalence. See
 docs/compucell-output.md.
 
+`cornea_population_data` validates study records of the cross-study wound dataset
+(provenance, licence, every value's source cell, hour-0 normalizer, roles,
+diameter/injury family); `structural_summary` exposes counts/covariates only so a
+sealed custodian can report without outcomes. `cornea_population_sources` builds
+model series from consumed adapters plus records and declares the control rule
+(steroid/NSAID care is treated). `cornea_population_evaluation` runs leave-one-
+study-out and sealed scoring: initial-state group means, per-animal intervals and
+causal next-observation forecasts for every method, with an in-sample radius-lag
+floor per series. The operator is `scripts/evaluate_corneal_population.py`; the
+frozen protocol and one-shot sealed result live in
+experiments/vcornea/repair-front/population-model. A pass there is scoped to mouse
+2 mm central debridement controls; it is not general biological validation.
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

@@ -1,0 +1,55 @@
+{
+ "protocol_criteria": {
+  "per_series_U2": "RMSE<=5 pp AND max<=10 pp AND RMSE at least 0.5 pp below persistence",
+  "per_group_U1": "RMSE<=5 pp AND max<=10 pp",
+  "calibration": "pooled 90% interval coverage of cohort_assimilation within [0.80,0.97] and 80% within [0.70,0.90]",
+  "primary_comparison": "pooled RMSE of cohort_assimilation lower than last_two_radius_trend over targets where both exist",
+  "all_points": "every sealed series/target is scored; none removed; thresholds unchanged after unsealing"
+ },
+ "primary_comparison": {
+  "common_targets": 152,
+  "cohort_assimilation_rmse_pp": 6.118561486860786,
+  "last_two_radius_trend_rmse_pp": 6.733477595363804,
+  "cohort_lower": true
+ },
+ "calibration": {
+  "cohort_80_coverage": 0.7763157894736842,
+  "cohort_80_within_0.70_0.90": true,
+  "cohort_90_coverage": 0.7960526315789473,
+  "cohort_90_within_0.80_0.97": false
+ },
+ "series_passing_next_observation": {
+  "analog_knn": "50/64",
+  "cohort_assimilation": "52/64",
+  "crosson1986_fixed": "46/64",
+  "first_to_current_trend": "42/64",
+  "last_two_radius_trend": "42/64",
+  "persistence": "0/64",
+  "population_assimilation": "52/64",
+  "population_assimilation_t4": "52/64",
+  "radius_lag_flat_prior": "1/64"
+ },
+ "initial_state_groups": [
+  {
+   "study_id": "lsc-dedifferentiation-nat-commun-2026",
+   "group": "Fig.2g Native LSCs",
+   "animals": 12,
+   "population_initial_state": {
+    "rmse_pp": 3.604775467617674,
+    "max_abs_pp": 6.337989072378355,
+    "meets_5_10_pp": true
+   }
+  },
+  {
+   "study_id": "zeb1-commun-biol-2023",
+   "group": "Zeb1 wt",
+   "animals": 8,
+   "population_initial_state": {
+    "rmse_pp": 2.2581559536280187,
+    "max_abs_pp": 2.8318501757583636,
+    "meets_5_10_pp": true
+   }
+  }
+ ],
+ "private_report_sha256": "4f4ccadd359e51bd14e0e33dcc5b1a52702b032f9ae74859cc3fac45c3b36fb6"
+}

@@ -1,5 +1,36 @@
 # Peykar continuation context
 
+## Cross-study corneal population model and sealed test, 2026-10-27 (late)
+
+- User asked for smarter, non-brittle methods, a frank audit and continued work.
+  Read docs/corneal-work-audit-2026-10-27.fa.md and the new continuation-state.
+  vCornea replays are PAUSED until original run inputs/seeds are obtained; keep it
+  as an executable archived reference. Heartbeat/scheduling remains PAUSED.
+- New outcome-blind data pipeline: scripts/screen_corneal_wound_literature.py
+  (Europe PMC, 1,993 OA full texts), acquire_corneal_wound_supplements.py (data
+  members only, masked previews hide all numbers), triage-1.0.0, hash split
+  reserve_corneal_population_split.py (sha256(salt+doi) mod3==0 sealed). Dataset:
+  experiments/data/cornea-wound-population-2026-10-27. Dev new: DIO mouse (CC0,
+  duplicate 18h values flagged), ketamine rat (CC BY, diameter 5mm ASSUMED).
+  Sealed (custodian sub-agent, private .peykar/cornea-sealed-test-2026-10-27):
+  Zeb1 2023 (CC BY) and LSC 2026 (CC BY-NC-ND: NEVER publish data, metrics only);
+  norepinephrine/IL-10 excluded (no times / no hour-0 rows).
+- Model: peykar.model_learning.corneal_population (radius-lag grid, censored zeros
+  125µm, learned study noise, penalized REML, cohort_posteriors) and corneal_analog
+  (k-NN ML comparator); evaluation cornea_population_evaluation/data/sources;
+  operator scripts/evaluate_corneal_population.py; xls via runtime_profiles/xls-reader
+  (.peykar/xls-reader-venv, xlrd 2.0.1 hash-pinned, not in uv.lock).
+- Protocol-1.0.0 SHA de3c010e... pushed in commit de9762a0 BEFORE the one-shot
+  sealed run. Sealed: initial-state control means 2/2 pass (2.26/2.83, 3.60/6.34pp);
+  next observation 52/64 series (last-two 42/64), cohort RMSE 6.12 vs 6.73pp,
+  k-NN 5.86; 90% coverage 79.6% FAILS 80% floor. Dev LOSO mostly fails; rabbit/rat
+  cross-study prediction fails. Scope: mouse 2mm central debridement controls only.
+  Frozen files must not change or the sealed replay check refuses; the sealed set
+  is consumed — use NEW sealed studies for any revised version.
+- Next: calibration fix in a new version, rabbit lag covariates and more rabbit/
+  human data, then the next eye component (stroma haze, nerves, then retina) with
+  the same search→blind split→baseline protocol. RL not justified (no actions).
+
 ## Observation-update milestone and user handoff, 2026-10-27
 
 - Latest user wants both continued real work and a complete reusable prompt for

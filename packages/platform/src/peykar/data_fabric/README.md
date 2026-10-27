@@ -16,4 +16,8 @@ coordinates. Native scalar count extraction pins its original lineage and can
 enter repeated-seed protocols only with recorded seed/runtime evidence. No external
 code executes during import. See docs/vcornea-native-output.md.
 
+`spreadsheet` reads published XLSX/CSV supplements inertly (no formulas, macros or
+external links; cached formula values are flagged) and converted legacy `.xls`
+inventories from the separate `runtime_profiles/xls-reader`. `masked_preview`
+hides every number, including numbers stored as text, for outcome-blind triage.
 See docs/architecture.md, docs/status.md and docs/scientific-contracts.md at repository root.

@@ -1,5 +1,55 @@
 # Verification record
 
+## Cross-study corneal population model and sealed test: 2026-10-27
+
+- Start state: main clean at `1a285045c32f80eb2c5e6400afd1cec31129cc7a` (= origin);
+  API/Worker up 9 days; no corneal/native scientific process running.
+- `scripts/screen_corneal_wound_literature.py`: first sequential run stopped by the
+  operator after 625 full texts for speed (recorded in its `STOPPED.json`); the
+  concurrent rerun with `--workers 6 --reuse-fulltext` screened **1,993/1,993**
+  PMCIDs (9 unavailable), 171 with data-like supplements.
+- `scripts/acquire_corneal_wound_supplements.py`: 87 rule-selected candidates
+  (51 with data members) plus 10 listed extras (5 with data members); repository
+  metadata checked for Figshare/Zenodo/OSF/Mendeley links. Masked previews only.
+  The masking initially showed numbers stored as text in one non-outcome b-actin
+  sheet; fixed to hide them (`#t`) with a unit test.
+- Legacy `.xls`: isolated `uv venv` plus `uv pip install --require-hashes` of
+  xlrd 2.0.1; `convert_xls.py` converted 12 workbooks, 2 files were tab-separated
+  text and were recorded as errors.
+- Triage admitted 6 studies; `reserve_corneal_population_split.py` wrote
+  `split-reservation-1.0.0.json` (SHA `1223827b…`) before any new value was read:
+  4 sealed, 2 development. A custodian sub-agent admitted 2 sealed studies (16 and
+  48 series), excluded 2, re-read all 280 cited cells and reported only structure
+  and hashes. Development records: DIO 16 series, rat 15 series, validated.
+- Targeted tests: `pytest tests/unit/test_corneal_population.py
+  tests/unit/test_spreadsheet_reader.py tests/unit/test_cornea_population_data.py`
+  **17 passed**; whole-tree Ruff, format and strict mypy (116 files) passed on host.
+- `scripts/evaluate_corneal_population.py --development`: exit 0, 15.1 s,
+  5 studies/47 series/168 targets; mostly failing results retained in
+  `development-loso-2026-10-27/`.
+- Protocol `protocol-1.0.0.json` SHA
+  `de3c010ecce9cba4fe9684e9936f2a371e5c26b65d654379b9eccbd696766cce` committed and
+  pushed as `de9762a0`; local and `git ls-remote` SHA equal. GitHub reported the
+  repository moved to `sina2266/peykar-simulator`; the push succeeded.
+- `scripts/evaluate_corneal_population.py --sealed --protocol … --draws 2000`:
+  exit 0, protocol/code/data/sealed hashes all matched. Results: initial-state
+  control means 2/2 pass (2.26/2.83 and 3.60/6.34 pp); next observation 52/64
+  series for cohort assimilation vs 42/64 last-two trend; pooled RMSE 6.12 vs
+  6.73 pp (nearest trajectories 5.86); 80% coverage 77.6% (pass), 90% coverage
+  79.6% (fails the frozen 80% floor). Public artifacts written by
+  `publish_corneal_population_sealed.py`; the CC BY-NC-ND study keeps metrics only.
+- Figure rendered with the existing native Python (Matplotlib, JSON input only)
+  and visually inspected; one clipped panel title was fixed and re-rendered.
+- First `make check-docker` stopped at `ruff format --check` (unformatted plot
+  script); log kept as `.peykar/cornea-population-check-docker-attempt1-format-fail-20261027.log`.
+  After formatting, `make check-docker` **exit 0**: **783 Python tests passed in
+  63.58 s**, 87% coverage, strict mypy 116 files, 18 frontend tests, contracts
+  current and all package builds. Log `.peykar/cornea-population-final-check-docker-20261027.log`.
+- Host `make build` exit 0; six new/changed platform modules and three domain
+  READMEs match the built wheel byte for byte. `check_protocol` on the frozen
+  protocol reports no changed file. `/healthz` returned ok/0.3.0 and the API still
+  mounts `peykar3_peykar-data`; no service or volume was changed.
+
 ## Causal observation updates and continuation handoff: 2026-10-27
 
 - Re-read AGENTS/.kiro/README/status/roadmap and domain documentation; main was

@@ -33,7 +33,9 @@ combines them into a misleading overall completion score.
 The latest2026-10-27 user instruction allows another eye component once the
 present corneal scope is acceptably useful; otherwise continue corneal evidence,
 sources and model work, including ML/RL only when supported by the task/data.
-Current independent failures remain material, so corneal work continues.
+After the sealed population-model test one scoped use is defensible (mouse 2 mm
+central debridement controls); rabbit/rat transfer and interval calibration remain
+open. RL is not used: these observational data contain no actions or rewards.
 Original publication reproduction remains a separate open gate. Scientific gates
 remain mandatory before validity or biological coupling is claimed. UI work
 depends on concrete operations and states; an illustration cannot replace execution.
@@ -157,6 +159,38 @@ extra observations have not established general precision.
   covariates before selecting a new mechanistic, filtered or learned correction.
   Retain all existing baselines and long-interval failures; evaluate per series
   and horizon on fresh reserved evidence before a scoped accuracy claim.
+
+### 2026-10-27 cross-study population model and decisions
+
+The [audit](corneal-work-audit-2026-10-27.fa.md) found the earlier corneal work
+rigorous but narrow: single-study rules, the same three consumed studies, no
+noise/between-study model and keyword-only repository searches. The new
+[population model](../experiments/vcornea/repair-front/population-model/README.md)
+was frozen (commit `de9762a0`) before a one-shot sealed test.
+
+- [x] Screen 1,993 open-access full texts, acquire data-like supplements, triage
+  with all numbers hidden, freeze an outcome-blind hash split and let a separate
+  custodian extract sealed records (pinned by SHA-256 only).
+- [x] Implement the hierarchical radius–lag model with censored zeros, learned
+  study noise, penalized REML pooling and cohort assimilation; add the
+  nearest-trajectory ML comparator and an in-sample floor diagnostic.
+- [x] Retain the failing development LOSO and the sealed result: initial-state
+  mouse control curves 2/2 pass; next observation 52/64 series; 90% coverage 79.6%
+  (fails its 80% floor). Scope is mouse 2 mm central debridement controls.
+- [x] Pause unchanged vCornea replays until original run inputs are obtained; keep
+  it as an executable archived reference.
+- [ ] Fix interval calibration (e.g. horizon-dependent noise) in a new version and
+  test it on **new** sealed studies; the current sealed set is consumed.
+- [ ] Explain the rabbit latent-phase spread (≈1–17 h) with recorded injury-method,
+  care and measurement covariates; acquire more rabbit and human (e.g. post-PRK
+  epithelial closure) longitudinal data with the same outcome-blind protocol.
+- [ ] Extend the screen beyond fluorescein full-text matches (figure-only data
+  needs a validated digitization protocol; author data requests need the user).
+- [ ] Next eye component, per the user's rule now that one corneal use is
+  defensible: choose by data availability with the same search → blind split →
+  simple-baseline protocol. Candidates in order: corneal stroma/keratocyte haze
+  after keratectomy, corneal nerve regeneration (density over weeks), then retina
+  using the backlog below. No component is declared validated by this ordering.
 
 ## S0 — preservation and platform contracts
 

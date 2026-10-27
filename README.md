@@ -88,6 +88,20 @@ The reusable [Persian continuation prompt](docs/continuation-prompt.fa.md) and
 [current scientific handoff](docs/continuation-state.fa.md) explain the user's
 whole-platform goal, actual tests, open failures and next evidence dependency.
 
+The [2026-10-27 cross-study population model](experiments/vcornea/repair-front/population-model/README.md)
+replaces single-study rules with a hierarchical radius–lag model (learned study
+noise, censored zero areas, cohort assimilation) and an instance-based ML
+comparator, trained on a new [outcome-blind literature dataset](experiments/data/cornea-wound-population-2026-10-27/README.md)
+built from 1,993 screened open-access papers. Its protocol was frozen and pushed
+before a one-shot **sealed test on two independent mouse studies**: initial-state
+prediction of both control-group mean curves passed 5/10 pp (2.26/2.83 and
+3.60/6.34 pp), and 52/64 animal series passed the next-observation criterion
+(42/64 for the previous last-two trend). The 90% interval covered 79.6%, below its
+frozen 80% floor. Development cross-study prediction for rabbits and rats fails,
+so the supported scope is mouse 2 mm central debridement controls. The
+[Persian audit](docs/corneal-work-audit-2026-10-27.fa.md) reviews the earlier work
+and pauses further unchanged vCornea replays until original run inputs exist.
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),
