@@ -1,5 +1,45 @@
 # Peykar continuation context
 
+## Latest user priority and actual corneal work, 2026-10-27
+
+- User permits moving to another eye component only if current corneal scope is
+  acceptably useful; otherwise continue sources/data/methods, ML/RL if warranted.
+  Current cross-study failures remain material, so cornea continues. Do not
+  relabel a narrow agreement as universal biology; heartbeat remains PAUSED.
+- Main4904d9bd was clean at continuation. Read the new conditioned-forecast
+  experiment and cornea-evidence-20261027 README. Original Suárez-Barrio2019
+  XML/PDF match primaryNCBI MD5; CC BY4 terms preserved. Reader retains28Table1
+  mean/SD/mm² entries and separates only Control0/24h from future36/48/60/72/84h.
+  PBS also receivesDex/chloramphenicol/diclofenac.33eyes/17rabbits, perarmn/IDs
+  unknown; daily-method versus halfday-table conflict retained, no inventedn.
+- Single no-lag conditioned radius method frozen BEFORE actual candidate/future
+  evaluation: protocolSHA2c8d7f806b01a440c5af4831d7b67d7386301436b5e89e4c73cc37c2124c72cd.
+  Input72.32mm²at0h/47.02mm²at24h implies effective38.7176µm/h, NOT instantaneous
+  measured cell velocity. Actual .peykar/cornea-conditioned-forecast-20261027
+  child0/0.005393s, parent0.504081s, deniedfutureXML/PDF/JSON reads, full241samples
+  from elapsed0..60h, explicittime_since_injury24..84h. Future-onlycomparison
+  FAIL14.9882ppRMSE/19.6560ppmax vs fixed5/10pp. All oldfailedmodels/thresholds
+  preserved; optional engine1.0.0/model1.0.0 unvalidated and defaultcatalogabsent.
+- Prefix-only structural diagnostic (explicitly RETROSPECTIVE afterfailure) under
+  engineeringlag0..24h/rate0..200µm/h yields compatible38.7176..200µm/h and
+  lag0..19.3539h. OptimisticminimaxRMSE14.5104pp/max20.4837pp: abstainfromclaiming
+  targetprecision. No futureoutcomeread/fit/statisticalCI/biologicalguarantee.
+  Retainedprotocol/actualreport under conditioned-forecast; never treat midpoint
+  envelope as validated forwardtrajectory. Need additional motion/independent
+  kinetics plus separately tested futuredata, not refit consumed2019holdout.
+- New2025AungSI originalCC BY-NC4 source retained unsegmented:4unlabeledrows vs
+  PBSn6EYES, unknownIDs/calibration/pairedanimals, ~242x182JPEGs. No completecohort
+  accuracy claim.2021Ankara12eyes/6rabbits saline0/72/96h is a separateunfitlead,
+  reportedSEnotSD/depthunknown.2019OCTDOI10.1111/aos.14053 reuses Fischak2017
+  rabbitcohort; do not doublecount independent evidence. Rawcomplete data needed.
+- No liveAPI/Worker redeploy, data-volume reset, upstream/license modification,
+  remote model-codeexecution, authorscontact or automationresume.
+- Targeted87tests0.19s. Finalmakecheck-docker719tests41.03s87%/mypy108/
+ 18frontend/contracts/allbuilds and hostmakebuild pass; three new modules match
+  exactwheelbytes. APIhealth200/version0.3.0. Logs cornea-conditioned-final-*;
+  no repeatfullsuite without newcode/failure. Pending work is scientific evidence,
+  not another unchanged simulation or threshold adjustment.
+
 ## Latest corneal learned-candidate evidence, 2026-10-24
 
 - The user explicitly authorized new learned models and multiple agents. A small

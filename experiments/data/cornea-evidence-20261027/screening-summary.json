@@ -1,0 +1,117 @@
+{
+  "screened_utc": "2026-10-27T12:39:08.759915+00:00",
+  "scope": "Targeted public primary-source search for additional in-vivo rabbit mechanical corneal epithelial wound datasets. Not exhaustive. No scientific fitting, segmentation, simulation, or candidate ranking by accuracy.",
+  "repository_queries": [
+    {
+      "source": "HuggingFace",
+      "file": "hf-corneal.json",
+      "query": "corneal",
+      "result_count": 2,
+      "decision": "Existing biomechanics/undocumentedimagecandidates;neithermatchedlongitudinalrabbitwounddataset"
+    },
+    {
+      "source": "HuggingFace",
+      "file": "hf-rabbit-cornea.json",
+      "query": "rabbit cornea",
+      "result_count": 0
+    },
+    {
+      "source": "Dryad",
+      "file": "dryad-cornea.json",
+      "query": "cornea",
+      "result_count": 24,
+      "decision": "No matchedrabbitmechanicallongitudinalwounddatasetadmitted;porcinenitrogenmustardalreadyknown;PDMSstiffnesshumancellline/Vangl2human-mouse distinctcontexts"
+    },
+    {
+      "source": "DataCite",
+      "files": [
+        "datacite-corneal-wound.json",
+        "datacite-corneal-wound-page2.json"
+      ],
+      "query": "titles.title:(corneal AND (wound OR healing OR epithelial)) AND types.resourceTypeGeneral:Dataset",
+      "result_count": 121,
+      "all_pages_retained": true,
+      "decision": "Mostgene/microbiology/clinicaldatasets;Biologicalmodulation2019isreviewTable1notrawcohort"
+    },
+    {
+      "source": "DataCite",
+      "file": "datacite-rabbit-wound-alltypes.json",
+      "query": "(corneal OR cornea) AND (wound OR debridement) AND (rabbit OR rabbits)",
+      "result_count": 54,
+      "all_results_retained": true,
+      "decision": "Mostlydissertations/chemical/stromal/omics;noadditionalmatchedcompletecohortadmitted"
+    },
+    {
+      "source": "Zenodo",
+      "query": "corneal wound",
+      "observed": "directAPI400;usedpublicDataCitemetadataandtargetedprimaryrecordsearch,noinferredsuccess"
+    },
+    {
+      "source": "Figshare",
+      "file": "epsilon-lysine2025-figshare-metadata.json",
+      "query": "resource_doi=10.1021/acs.biomac.5c00907",
+      "decision": "ActualSIacquired;partialPBSimagesonly,notcomplete6eyecohort"
+    }
+  ],
+  "primary_results": [
+    {
+      "doi": "10.3390/ijms20071655",
+      "decision": "new explicit care-context cohort-mean forecasting evidence",
+      "acquisition": "ijms2019-acquisition.json",
+      "conditioning_input": "ijms2019-control-prefix.json",
+      "reserved_future": "ijms2019-control-future-reserved.json",
+      "source_full_table": "ijms2019-full-table1.json",
+      "critical_limits": [
+        "PBSplusDex/chloramphenicol/diclofenacBID",
+        "17rabbits33operatedeyes,noperarmn/IDs",
+        "Tablehalfdaytimesversusmethoddailyphotography",
+        "retrospectiveaggregateconditionalforecastnotblindedpatientvalidation"
+      ]
+    },
+    {
+      "doi": "10.1021/acs.biomac.5c00907",
+      "decision": "reserve future observation-QC/partial-cohort constraint;fullcohortaccuracyunsupported",
+      "acquisition": "epsilon-lysine2025-acquisition.json",
+      "critical_limits": [
+        "4unlabeledimagerowsvsprimaryPBSn6eyes",
+        "242x182JPEG/noindependentphysicalcalibration",
+        "dailypre-dosefluorescein,notchemicalinjury",
+        "noareaorspeedderived",
+        "allimageoutcomesviewedonlybyacquisitionagent;notwhole-teamblindtest"
+      ]
+    },
+    {
+      "doi": "10.33988/auvfd.724013",
+      "decision": "new limited saline-applicability challenge,notselectedcurrentfit",
+      "context": "ankara2021-source-context.json",
+      "critical_limits": [
+        "0/72/96honly",
+        "12eyes6rabbits",
+        "superficialkeratectomydepth/basallaminaunknown",
+        "reporteduncertaintystandarderrornotSD"
+      ]
+    },
+    {
+      "doi": "10.1016/j.ajpath.2025.10.006",
+      "decision": "reject as new matched full-disc rabbit closuredataset",
+      "critical_limits": [
+        "S4closureUS16/US16.1ismouse",
+        "rabbit6mmdemarcationlightScratchUS09/US09.1safetynotquantifiedwoundareatrajectory"
+      ]
+    },
+    {
+      "doi": "10.1136/bjo-2026-329771",
+      "decision": "notadmitted;samerelevant2025lab/protocolandcopyright/publisher403",
+      "critical_limits": [
+        "8eyePBSgroupbutnoindividualrawdatabytesacquired",
+        "sharedlab/new7.5mmgeometrycohortindependencenotaudited",
+        "noauthorscontacted"
+      ]
+    }
+  ],
+  "all_existing_sources_models_protocols_and_data_preserved": true,
+  "tracked_files_edited": false,
+  "git_operations_performed": false,
+  "author_contacted": false,
+  "scientific_execution_performed": false
+}

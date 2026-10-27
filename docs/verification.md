@@ -1,5 +1,72 @@
 # Verification record
 
+## Post-injury corneal forecast and structural precision refusal: 2026-10-27
+
+- Re-read AGENTS/.kiro/README/status/roadmap/domain docs and actual retained
+  corneal failures. Main4904d9bd was clean. Latest user permits another eye
+  component only when current scope is useful/accepted; independent failures
+  still justify corneal work. Re-audited all60training/30heldout rows against
+  original2017 source,2021 ratio/time/categorical meaning and Fischak raster
+  constraints. No material mapping bug found; no old candidate was rerun.
+- Targeted HF/Dryad/DataCite/Figshare primary-source search retained actual
+  responses/failures. Acquired Suárez-Barrio2019 DOI10.3390/ijms20071655 original
+ 152084byteXML SHA4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db
+  and3058228bytePDF SHAb32b1c4ddb4559bf94ab83d6da3afb5438252af5afb854d8a7b7dab78a3c77d8;
+  both MD5match primaryNCBIversion metadata, CC BY4 attribution retained. New
+  inert reader preserves all28Table1 means/SD/sourcecells/mm² and separates
+  only Control0/24h from future36/48/60/72/84h. No unknown subject count/ID,
+  ratio uncertainty or missing SD invented.33eyes/17rabbits, paired-eye/care/time
+  conflicts retained. Acquisition agent inspected full source before masking;
+  not a whole-team blinded validation or initial-state-only prediction.
+- New optional engine `cornea.conditioned_front`1.0.0/model1.0.0 estimates
+  effective radius speed from actual0h72.32/24h47.02mm² only. No lag, window,
+  architecture search or future assimilation. Frozen protocol
+ 2c8d7f806b01a440c5af4831d7b67d7386301436b5e89e4c73cc37c2124c72cd predates
+  candidate and parent-side future evaluation. `uv run --frozen python
+  scripts/check_corneal_conditioned_forecast.py --output
+  .peykar/cornea-conditioned-forecast-20261027`: actual child0/0.00539325s,
+  parent0.50408058s under60s. Seatbelt network/write denial and actual future
+  JSON/fullXML/PDF read-denial probes retained.241samples/.25h cover forecast
+  elapsed0..60h, explicitly mapped to injury24..84h by checked extra time output.
+- Every future Control point retained,0/24h excluded from score. Actual
+  future-onlyRMSE0.14988200098795731/max0.1965603072519207 fails fixed.05/.10;
+  persistenceRMSE0.5316027811424765 remains. Initial1986 analytic-law comparator
+  at the same future times:RMSE0.04888050726290779/max0.10834031185092868, also
+  misses max criterion; different information, no claim of84h execution of the
+  older bounded engine. Comparisonexit2/actualchild0; all results/model/plan/
+  source/receipt bytes retained, unvalidated/default-catalog absent.
+- Separate prefix-only inverse diagnostic, expressly retrospective after the
+  failure: fixed engineeringfamilylag0..24h/speed0..200µm/h admits coupled
+ 38.7176..200µm/h/0..19.3539h. `uv run --frozen python
+  scripts/audit_corneal_forecast_identifiability.py --output
+  .peykar/cornea-forecast-identifiability-20261027` exit0; optimistic minimax
+  pointRMSE0.14510388870513824/max0.20483746614935372 implies abstention from
+  claiming5/10pp precision WITHIN the assumed family. No future observations,
+  statistical coverage or biological guarantee; file-access regression test
+  permits only prefix/protocol/source reads. Bounds and midpoint are not a
+  newly validated trajectory or a change to the rejected candidate.
+- Acquired actual Aung2025 original SI1307165bytes/SHAde5153060b6e19e48ba4c7f0423604e753cccbfcc4fc6617f8da7f8e7ee35278,
+  primaryFigshare MD5matched, separateCC BY-NC4 terms. Four unlabeled PBS rows
+  versus six reported eyes/~242x182pixels/unknowncalibration; no segmentation,
+  complete-cohort score or invented subjects.2021 saline aggregate lead retains
+  SE/paired-eye/depth limits, unused in current fit/comparison. Primary2019OCT
+  fulltext confirms reanalysis of the Fischak2017 experiment; sourcehash52ac034f…
+  and explicit no-additional-independent-animal link retained. No author contacts.
+- Targeted87tests passed0.19s; Ruff full check/format and strict new-source mypy
+  passed. Final `DOCKER_CONFIG="$PWD/.peykar/docker-public-check-20261023"
+  DOCKER_HOST="unix:///Users/sina2266/.docker/run/docker.sock" make check-docker`
+  passed **719tests/41.03s/87%coverage**, strict mypy108sources,18frontend tests,
+  current exported contracts and all3wheel/sdist builds. Host `make build` passed;
+  three new module bytes match built wheels. PNG/PDF comparison regenerated from
+  retained results only, visually inspected. No extra experimental fitting/run.
+- Logs `.peykar/cornea-conditioned-final-check-docker-20261027.log` and
+  `.peykar/cornea-conditioned-final-build-20261027.log`; after package README
+  updates, final host rebuild also passed in
+  `.peykar/cornea-conditioned-final-build-docs-20261027.log`. Existing APIhealth200/
+  version0.3.0, API/Worker up9days. No live deployment, volume/schema/source/license
+  reset or automation change; heartbeat remains paused. Original publication
+  and general biological validity remain open.
+
 ## Isolated corneal learning and new independent constraints: 2026-10-24
 
 - Read-only `scripts/audit_corneal_shared_front.py --output

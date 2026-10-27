@@ -1,0 +1,35 @@
+"""Read retained actual results only, no state fitting or simulation."""
+import json
+from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+base=Path('experiments/vcornea/repair-front/conditioned-forecast')
+observed=base/'observed-2026-10-27'
+r=json.loads((observed/'report.json').read_bytes())
+audit=json.loads((base/'identifiability-observed-2026-10-27/report.json').read_bytes())
+candidate=json.loads((observed/'candidate.json').read_bytes())
+series={s['name']:s['values'] for s in candidate['outputs']}
+rows=r['rows'];t=[v['hour'] for v in rows];measured=[100*v['measured_ratio_of_cohort_mean_areas'] for v in rows]
+fig,axes=plt.subplots(1,2,figsize=(12,5.2),constrained_layout=True)
+axes[0].plot(series['time_since_injury'],[100*v for v in series['open_area_fraction']],color='#ad4c32',lw=2,label='Forecast conditioned on 0 h / 24 h')
+axes[0].plot(t,[100*v['persistence_fraction'] for v in rows],'--',color='#999999',label='24 h persistence comparator')
+axes[0].plot(t,[100*v['initial_state1986_formula_fraction'] for v in rows],':',color='#222222',label='1986 formula; initial state only')
+axes[0].scatter(t,measured,color='#176c8e',s=35,zorder=4,label='Actual future published cohort means')
+axes[0].scatter([24],[100*47.02/72.32],s=65,marker='D',color='black',zorder=4,label='Conditioning observation (not scored)')
+axes[0].set_title('New 24 h conditioned forecast: FAILED\nFuture-only RMSE 14.99 pp / maximum 19.66 pp',loc='left',fontsize=11)
+bounds=audit['future_bounds'];times=[v['hour_since_injury'] for v in bounds]
+lo=[100*v['open_area_fraction_lower'] for v in bounds];hi=[100*v['open_area_fraction_upper'] for v in bounds]
+axes[1].fill_between(times,lo,hi,color='#c18b53',alpha=.25,label='Admissible front-family envelope')
+axes[1].plot(times,lo,color='#996837',lw=1)
+axes[1].plot(times,hi,color='#996837',lw=1)
+axes[1].scatter(t,measured,color='#176c8e',s=35,zorder=4,label='Future means (overlay after audit)')
+axes[1].set_title('Prefix-only ambiguity: precision claim withheld\nOptimistic minimax RMSE bound 14.51 pp',loc='left',fontsize=11)
+axes[1].text(36,67,'Declared engineering assumptions:\nlag 0–24 h; speed 0–200 µm/h.\nEnvelope is NOT a confidence interval\nor a guaranteed biological bound.',fontsize=8,va='top')
+for ax in axes:
+ ax.set(xlim=(23,85),ylim=(-2,100),xlabel='Absolute hours since injury',ylabel='Projected open area (% of baseline cohort mean)')
+ ax.grid(alpha=.15)
+ ax.legend(loc='upper right',fontsize=7,frameon=False)
+fig.suptitle('Cohort means, not individual animals — targets: RMSE 5 pp; maximum error 10 pp',fontsize=12)
+fig.savefig(observed/'forecast-and-ambiguity.png',dpi=170)
+fig.savefig(observed/'forecast-and-ambiguity.pdf')

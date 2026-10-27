@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0.0",
+  "id": "cornea.rabbit-24h-conditioned-front",
+  "version": "1.0.0",
+  "title": "Rabbit projected wound forecast conditioned on baseline and24h observed areas",
+  "engine": "cornea.conditioned_front",
+  "engine_version": "1.0.0",
+  "license": "LicenseRef-Peykar-Noncommercial-1.1.0",
+  "source": "python:peykar_engines.corneal_conditioned_front",
+  "source_digest": "727953c5918e40275851429f9198f9b75c889bc437014492cefb8637bb773c7f",
+  "capabilities": [
+    "postinjury_conditioned_forecast",
+    "deterministic",
+    "offline_operator"
+  ],
+  "context": {
+    "schema_version": "1.0.0",
+    "species": "Oryctolagus cuniculus",
+    "biological_system": "Rabbit corneal epithelial mechanical wound",
+    "conditions": [
+      "mechanical epithelial debridement",
+      "Observed cohort mean projected wound area at0h and24h required",
+      "PBS plus dexamethasone/chloramphenicol and diclofenac twice daily",
+      "Nominal9mm wound; actual observed baseline72.32mm2 defines equivalent radius",
+      "Forecast elapsed time starts at injury24h; full injury horizon84h"
+    ]
+  },
+  "validity": {
+    "schema_version": "1.0.0",
+    "status": "unvalidated",
+    "context": {
+      "schema_version": "1.0.0",
+      "species": "Oryctolagus cuniculus",
+      "biological_system": "Rabbit corneal epithelial mechanical wound",
+      "conditions": [
+        "mechanical epithelial debridement",
+        "Observed cohort mean projected wound area at0h and24h required",
+        "PBS plus dexamethasone/chloramphenicol and diclofenac twice daily",
+        "Nominal9mm wound; actual observed baseline72.32mm2 defines equivalent radius",
+        "Forecast elapsed time starts at injury24h; full injury horizon84h"
+      ]
+    },
+    "endpoints": [
+      "open_area_fraction"
+    ],
+    "evidence": [
+      "https://doi.org/10.3390/ijms20071655"
+    ],
+    "limitations": [
+      "Postinjury conditionedforecast, not a prediction from initial injury state alone.",
+      "Equivalent circular cohort mean state, not mean animal radius or individual records.",
+      "Effective0..24h average speed, no fitted lag or future observations.",
+      "OriginalSD is not a confidence interval; unknownperarmn and repeated eyes.",
+      "No cell-layer,chemical,barrier,drug-effect or universalclinical validity.",
+      "Frozen future comparison has not run at model preparation; later evidence stays separate.",
+      "Explicit offline registration only; excluded from defaultAPI/Worker catalog."
+    ]
+  },
+  "parameters": [
+    {
+      "schema_version": "1.0.0",
+      "name": "baseline_area",
+      "default": {
+        "schema_version": "1.0.0",
+        "value": 72.32,
+        "unit": "millimeter ** 2"
+      },
+      "minimum": 1e-09,
+      "maximum": 400.0
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "anchor_area",
+      "default": {
+        "schema_version": "1.0.0",
+        "value": 47.02,
+        "unit": "millimeter ** 2"
+      },
+      "minimum": 0.0,
+      "maximum": 400.0
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "anchor_time",
+      "default": {
+        "schema_version": "1.0.0",
+        "value": 24.0,
+        "unit": "hour"
+      },
+      "minimum": 1e-09,
+      "maximum": 96.0
+    }
+  ],
+  "ports": [
+    {
+      "schema_version": "1.0.0",
+      "name": "time_since_injury",
+      "direction": "output",
+      "unit": "hour",
+      "semantic_id": "cornea.time_since_injury",
+      "scale": "tissue",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "projected_radius",
+      "direction": "output",
+      "unit": "micrometer",
+      "semantic_id": "cornea.projected_radius",
+      "scale": "tissue",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "projected_area",
+      "direction": "output",
+      "unit": "millimeter ** 2",
+      "semantic_id": "cornea.projected_area",
+      "scale": "tissue",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "open_area_fraction",
+      "direction": "output",
+      "unit": "dimensionless",
+      "semantic_id": "cornea.open_area_fraction",
+      "scale": "tissue",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    },
+    {
+      "schema_version": "1.0.0",
+      "name": "closure_fraction",
+      "direction": "output",
+      "unit": "dimensionless",
+      "semantic_id": "cornea.closure_fraction",
+      "scale": "tissue",
+      "shape": "scalar",
+      "frame": null,
+      "ownership": "read"
+    }
+  ],
+  "dependencies": []
+}

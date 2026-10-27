@@ -68,6 +68,15 @@ study rejects it even using conservative graph-derived lower constraints. All
 frozen splits, original sources, actual outputs and negative results are retained.
 This is an optional offline empirical component, without biological promotion.
 
+The [2026-10-27 corneal continuation](experiments/vcornea/repair-front/conditioned-forecast/README.md)
+adds a separately versioned forecast using actual0h/24h wound areas, a new original
+2019 table reader and an executable prefix-only precision audit. Its full84h
+future comparison fails (RMSE14.99pp/max19.66pp). Two early areas leave lag/speed
+ambiguous; the audit withholds a5/10pp precision claim under its explicit model
+assumptions. Additional original images/metadata are retained with incomplete
+cohort/measurement limits. Corneal scope remains insufficient for broad biological
+use; no earlier failure, data/model version or acceptance criterion is replaced.
+
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
 [source-library registry](docs/library-ecosystem.md),

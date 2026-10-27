@@ -1,0 +1,30 @@
+{
+  "selected_utc": "2026-10-27T12:34:37.627542+00:00",
+  "task": "Causal24h-conditioned cohort-equivalent projected front, not initial-state-only simulation",
+  "rule": "R0=sqrt(A0/pi);Ra=sqrt(A24/pi);v=(R0-Ra)/24;R(24+dt)=max(0,Ra-v*dt);A=piR\u00b2;A/A0. No lag/hyperparameters/futureassimilation.",
+  "selection_inputs": "Only2019baseline72.32mm2/24h47.02mm2 and publishedmethods/times. AcquisitionagentpreviouslyreadfullTable; rootanddesignagenthaveNOTreadlaterControlnumericvalues atselection. This is retrospective, notblindwhole-teamtest.",
+  "source_xml_sha256": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db",
+  "prefix_sha256": "5e54ff28f8bf75407d38920e6d4cf24708db59ac8e3e488ee34f4ae83282a405",
+  "future_sha256": "5d2bc9a7636fc10cd6a25ac5333a13894a6c7452b202024ca9499752a9415148",
+  "future_hours": [
+    36,
+    48,
+    60,
+    72,
+    84
+  ],
+  "criteria": {
+    "rmse_fraction_max": 0.05,
+    "absolute_error_fraction_max": 0.1,
+    "rmse_improvement_over24hpersistence_min": 0.005
+  },
+  "comparators": "24h persistence atA24/A0; unchanged1986v64um/h/lag5.5h disclosedseparately. No testfuturefit.",
+  "duration": "60h afterconditioning, correspondingtooriginalinjury24..84h, .25h samples",
+  "limitations": [
+    "Fixedmethodselectedbeforefutureunmask, sourcespreadsheetnotblindtoacquisitionagent.",
+    "Ratioofcohortmeanareas, notmeanindividualratios. Effectivecircularcohortradius, notmeancellradius.",
+    "Observation24h is required; a passdoesnotrepairinitialstateuniversalmodel orold2021/Fischakfailures.",
+    "17rabbits33eyeswithdelayedcontralateraleyes; unknownperarmn/IDs; noindependent33animalclaim.",
+    "SDvaluesremainSD, notCI; no inventedindividualmeasurements."
+  ]
+}

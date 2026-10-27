@@ -23,3 +23,11 @@ unvalidated model bytes are retained; later failed heldout/independent evidence
 is appended in [the learning experiment](../../experiments/vcornea/repair-front/learned-front/README.md).
 They are optional offline candidates, absent from the default catalog, and do
 not replace the earlier independently parameterized models or cellular vCornea.
+
+`conditioned-front/1.0.0` pins the optional `cornea.conditioned_front`1.0.0 engine.
+It requires actual baseline/24h cohort areas; forecast time zero is the later
+observation and a separate output retains hours since injury. This is a different
+task from initial-state-only simulation. The actual new study comparison fails
+fixed future-only targets, and a prefix-only ambiguity audit withholds unsupported
+precision. [Observed evidence](../../experiments/vcornea/repair-front/conditioned-forecast/README.md)
+remains separate from immutable unvalidated model metadata and the default catalog.

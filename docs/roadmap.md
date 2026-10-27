@@ -1,6 +1,6 @@
 # Peykar whole-platform delivery roadmap
 
-Updated 2026-10-18 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
+Updated 2026-10-27 against the complete [55-section architecture and 24 scenarios](blueprint-v3-coverage.md).
 Peykar is a general biological simulation platform. vCornea is one admitted test
 case; completion of its operator workflow is not completion of this product.
 This roadmap supersedes the earlier eye-centered ordering, retained in
@@ -30,10 +30,13 @@ combines them into a misleading overall completion score.
 | S12 | Interactive six-workspace application | S2,S3,S4,S6,S11 | E4 local six-workspace application implemented on current APIs; richer scientific authoring/quality authority/spatial workflows remain open |
 | S13 | Scalable operation and release | S0,S4,S11,S12 | Single-host Docker working; PostgreSQL/object storage/HPC/multi-host open |
 
-The latest user instruction prioritizes full corneal reproduction before further
-S1–S4/model expansion. Scientific gates remain mandatory before model validity
-or a biological coupling is claimed. UI work depends on concrete operations and
-states; an illustrative graph or animation cannot substitute for execution.
+The latest2026-10-27 user instruction allows another eye component once the
+present corneal scope is acceptably useful; otherwise continue corneal evidence,
+sources and model work, including ML/RL only when supported by the task/data.
+Current independent failures remain material, so corneal work continues.
+Original publication reproduction remains a separate open gate. Scientific gates
+remain mandatory before validity or biological coupling is claimed. UI work
+depends on concrete operations and states; an illustration cannot replace execution.
 
 The [terminal serial results](../experiments/vcornea/publication/serial-final-results-2026-10-24.md)
 retain all four new full-horizon exits and completed analyses. Full January serial
@@ -97,6 +100,36 @@ Next corneal work, before further model selection:
 
 Original vCornea publication input correspondence remains a separate open
 dependency. No other tissue/model work or automatic scheduling starts here.
+
+The [2026-10-27 conditioned-forecast experiment](../experiments/vcornea/repair-front/conditioned-forecast/README.md)
+now tests another useful task: input real0h/24h areas, predict all later36–84h
+means with one preselected no-lag radius law. Actual complete output fails
+14.99ppRMSE/19.66ppmax; no future-dependent lag/window/architecture retuning.
+A separate retrospective prefix-only structural audit reports an optimistic
+minimax14.51ppRMSE/20.48ppmax across its explicitly assumed lag/rate family, so
+the requested5/10pp precision claim is withheld. This is not statistical coverage
+or a proof against every possible biological mechanism. Latest source search:
+[admission/screening](../experiments/data/cornea-evidence-20261027/README.md).
+
+- [x] Preserve a new CC BY4.0 original study and all28 table aggregates; separate
+  only0/24h conditioning from every future outcome and preserve the actual failed
+  full84h comparison, paired-eye/time/care inconsistencies and source identities.
+- [x] Implement exact lag/rate compatibility envelopes and precision abstention
+  from the prefix alone; prove it does not read future outcome files. No midpoint
+  envelope, SD or inferred trajectory is relabeled clinical confidence.
+- [x] Acquire2025 original PBS image supplement with separate CC BY-NC4 terms;
+  preserve four unlabeled rows versus six reported eyes, resolution/calibration
+  limits and absence of segmentation. Retain2021 saline aggregate lead separately.
+- [x] Flag reanalysis of the same2017 rabbit cohort by the2019 OCT paper so it is
+  not counted as a new independent validation cohort.
+- [ ] Recover complete calibrated longitudinal areas/images, stable eye/animal
+  identities, exact acquisition times and injury/supportive-care context. More
+  post-injury motion observations or independently measured kinetic constraints
+  are needed before claiming precise conditioned forecasts. The consumed2019
+  future table cannot become a fresh holdout after changing assumptions.
+- [ ] Freeze any image observation/quality protocol before extracting the reserved
+  2025 partial cohort; quantify visibility/zoom/glare uncertainty and resolve
+  missing eyes/row identity before a complete-cohort accuracy claim.
 
 ## S0 — preservation and platform contracts
 

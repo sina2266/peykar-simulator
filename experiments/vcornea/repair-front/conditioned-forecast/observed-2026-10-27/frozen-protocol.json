@@ -1,0 +1,71 @@
+{
+  "id": "cornea.rabbit24h-conditioned-forecast.ijms2019",
+  "version": "1.0.0",
+  "frozen_utc": "2026-10-27T12:39:22.704470+00:00",
+  "class": "retrospective24h_observation_conditioned_cohort_forecast_not_initial_state_validation",
+  "study_doi": "10.3390/ijms20071655",
+  "source_xml_sha256": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db",
+  "prefix_sha256": "5e54ff28f8bf75407d38920e6d4cf24708db59ac8e3e488ee34f4ae83282a405",
+  "future_sha256": "5d2bc9a7636fc10cd6a25ac5333a13894a6c7452b202024ca9499752a9415148",
+  "model_sha256": "2ad15a8506ab5c4cffe0f30bf81c4c337dd1d4ae09bc74b70d4ae953c2fdebb0",
+  "engine_sha256": "727953c5918e40275851429f9198f9b75c889bc437014492cefb8637bb773c7f",
+  "parser_sha256": "e6b93301026d94b1d16a0386d5b8643ae288f87b58b5b6a010225aa2844f41d8",
+  "admitted_files": {
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-control-prefix.json": "5e54ff28f8bf75407d38920e6d4cf24708db59ac8e3e488ee34f4ae83282a405",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.pdf": "b32b1c4ddb4559bf94ab83d6da3afb5438252af5afb854d8a7b7dab78a3c77d8",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-control-future-reserved.json": "5d2bc9a7636fc10cd6a25ac5333a13894a6c7452b202024ca9499752a9415148",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-acquisition.json": "3e9ed658ab22b7fc8bcf71726fd67df5f3d2ade2e6716758693158aa3a1000e9",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-ncbi-metadata.json": "341d32eb4899a6118320381e64cc4d3e79e0e6b766e0861f14ad63e6554d9afe",
+    "experiments/vcornea/repair-front/conditioned-forecast/design-selection-before-evaluation.json": "f6b0266f00b696f03f2be35c40176aaf011ab754164ef491eff6ee3b36c21003"
+  },
+  "state_estimation_rule": "R0=sqrt(A0/pi);Ra=sqrt(A24/pi);v=(R0-Ra)/24;R(24+dt)=max(0,Ra-v*dt);projectedA=piR^2;fraction=A/A0. No lag, no adjustable kinetics/hyperparameter search, no future assimilation.",
+  "conditioning_hours_since_injury": [
+    0,
+    24
+  ],
+  "evaluation_hours_since_injury": [
+    36,
+    48,
+    60,
+    72,
+    84
+  ],
+  "forecast_elapsed_horizon_hours": 60,
+  "absolute_injury_horizon_hours": 84,
+  "sample_interval_hours": 0.25,
+  "maximum_rmse_fraction": 0.05,
+  "maximum_absolute_error_fraction": 0.1,
+  "minimum_rmse_improvement_over_persistence": 0.005,
+  "primary_endpoint": "Every actual future Control mean projected wound area divided by actual reported baseline mean; excludes0/24h. Ratioofmeans, notmeanofindividualratios.",
+  "comparators": [
+    "24h persistence uses sameconditioninginformation; improvementcriterionapplieshere.",
+    "Unchanged1986v64um/h,lag5.5h analyticlawwithobservedbaselineequivalentradius; initialstateonlydifferentinformation. Not an84h old-engineexecution or approvedcaretransfer."
+  ],
+  "wall_seconds": 60,
+  "deterministic_seed": 0,
+  "seed_scope": "New deterministic bookkeeping, not a recovered experimental seed.",
+  "forbidden_read_paths": [
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-control-future-reserved.json",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.pdf",
+    ".peykar/external/cornea-evidence-20261027"
+  ],
+  "forbidden_read_probes": [
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-control-future-reserved.json",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml",
+    "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.pdf"
+  ],
+  "future_parameter_selection_allowed": false,
+  "limitations": [
+    "Requires actual24h postinjuryobservation; a pass does not validate initialstate-onlysimulation or previouslyfailedmodels.",
+    "AcquisitionagentinspectedfullTablebeforemasking; retrospective, notblindwhole-teamtest. RootanddesignagentselectedsinglemethodwithoutlaterControlnumericvalues; no subsequentlag/window/modelselection.",
+    "Publishedcohortmeanareas implyequivalentcohortstate, notindividualanimalrecords ormeanindividualradii.",
+    "17rabbits33eyes withcontralateraleye2-3weeksafterrecovery; perarmn/IDsunreported, correlationunrecoverable.",
+    "ControlPBSplusDex/chloramphenicol/diclofenacBID isnotuntreatedPBS. Initialbasallaminastatusunknown.",
+    "9mm nominalinitialdiameter differsfrom reportedbaseline72.32mm\u00b2; retainboth,useactualbaselinefornormalization,no fittedscale.",
+    "Methodsphotographsoncedaily butTablehashalfdaytimes; evaluateasprintedtimesanddiscloseconflict.",
+    "ReportedSDnotCI; no propagateduncertaintyorindependent33animalclaim.",
+    "No cellular,chemical,barrier,causaldrugorclinicalvalidity. Allhistoricalnegativeevidenceretained."
+  ]
+}
