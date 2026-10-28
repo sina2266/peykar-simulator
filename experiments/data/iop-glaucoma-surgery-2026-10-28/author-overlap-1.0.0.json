@@ -1,0 +1,221 @@
+{
+ "schema": "eye.iop-author-overlap-1.0.0",
+ "utc": "2026-10-28T11:33:19.136160+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/iop-glaucoma-surgery-2026-10-28/split-reservation-1.0.0.json",
+   "sha256": "07fe230e87d78ff0a692aae7999689ac3d1dfc652362203aa8a0f74491706dbc"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-iop_surgery_open-0.json",
+    "sha256": "9484cb2756bce09a3809eb7de7a63c7631e246574f727f3ed6dda59fcf7e1e4c"
+   },
+   {
+    "file": "search-iop_surgery_open-1.json",
+    "sha256": "66f1f34ecc8fa81c42e9b1b4079137d0bc2df9f0df63a6aab6365f9433455aa5"
+   },
+   {
+    "file": "search-iop_surgery_open-2.json",
+    "sha256": "eaee4a1c96ea044946b6ec291dba7c80cafc6f2c25011a830ce26265bac6a448"
+   },
+   {
+    "file": "search-iop_surgery_open-3.json",
+    "sha256": "403d7571e02d77d3aebc85e8b7aa00306e6f9bbb518000bf596988d9eadffe0e"
+   },
+   {
+    "file": "search-iop_title_open-0.json",
+    "sha256": "08aaf34c4389caff758ff907b209c68e207df8a0b4aa8160bc62810d0a175d37"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "iop-pmc10471744",
+    "iop-pmc11434365"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "iop-pmc10491040",
+    "iop-pmc12013308"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc10570824",
+    "iop-pmc10771786"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 6
+  },
+  {
+   "studies": [
+    "iop-pmc11491083",
+    "iop-pmc11687135"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "iop-pmc12178406",
+    "iop-pmc13667881"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc12206618",
+    "iop-pmc9880568"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc12675725",
+    "iop-pmc12888937"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "iop-pmc12858626",
+    "iop-pmc12948905"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc12927784",
+    "iop-pmc5892968"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc12927784",
+    "iop-pmc6886553"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc13059178",
+    "iop-pmc5892968"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc5892968",
+    "iop-pmc6886553"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "iop-pmc8745353",
+    "iop-pmc8763744"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  }
+ ],
+ "development_clusters": [
+  [
+   "iop-pmc10570824",
+   "iop-pmc10771786"
+  ],
+  [
+   "iop-pmc12675725",
+   "iop-pmc12888937"
+  ],
+  [
+   "iop-pmc12927784",
+   "iop-pmc5892968",
+   "iop-pmc6886553"
+  ],
+  [
+   "iop-pmc8745353",
+   "iop-pmc8763744"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "iop-pmc10471744": [
+   "iop-pmc11434365"
+  ],
+  "iop-pmc10491040": [
+   "iop-pmc12013308"
+  ],
+  "iop-pmc11687135": [
+   "iop-pmc11491083"
+  ],
+  "iop-pmc12178406": [
+   "iop-pmc13667881"
+  ],
+  "iop-pmc12858626": [
+   "iop-pmc12948905"
+  ],
+  "iop-pmc13059178": [
+   "iop-pmc5892968"
+  ],
+  "iop-pmc9880568": [
+   "iop-pmc12206618"
+  ]
+ }
+}
