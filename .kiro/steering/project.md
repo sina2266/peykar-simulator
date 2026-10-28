@@ -1,5 +1,44 @@
 # Peykar continuation context
 
+## Corneal thickness (CCT) model 1.0.0 and its sealed test, 2026-10-28
+
+- Third corneal component: CCT after surgery (hydration). Dataset
+  experiments/data/cornea-thickness-2026-10-28. It was built from 1,179 screened
+  OA papers with masked triage (56 admitted) and a salted split (37/19) at
+  `b34838cf`. There are 33 development records: CC BY public in
+  development/records, NC/ND/SA private in .peykar/thickness-development-private.
+  Two outcome-selected DMEK analysis sets were excluded by the rule the custodians
+  also applied. Two custodians produced 15 sealed records
+  (.peykar/thickness-sealed-2026-10-28). Extraction commit `dc59a42c`.
+- Generic `scripts/link_study_authors.py` wrote author-overlap-1.0.0.json. Never
+  edit the pinned `link_endothelium_authors.py`.
+- Model `peykar.model_learning.thickness_population` 1.0.0:
+  - law: ln f = ell + e·r(t), r = (1+t1/tau)/(1+t/tau), t1 = 1 day;
+  - host family is relative to the preoperative CCT;
+  - graft family pools the long-term level as absolute thickness,
+    ell = L − ln(CCT0/550);
+  - posteriors are exact Gaussian mixtures on an 80-point tau grid;
+  - REML runs on likelihood-information summaries (round 2);
+  - primary forecaster is population_assimilation_robust.
+- Code and records:
+  - harness: validation/cornea_thickness_evaluation;
+  - operator: scripts/evaluate_thickness_population.py;
+  - publisher: scripts/publish_thickness_population.py;
+  - log: experiments/vcornea/thickness/development-log.md.
+- Protocol experiments/vcornea/thickness/protocol-1.0.0.json, SHA a97db853…,
+  frozen at commit `deef7664`. The sealed set was run once (28 s). Results:
+  - next observation 1.60 vs persistence 2.06 pp;
+  - coverage 0.892/0.969, inside both windows near the upper edge;
+  - landmark 2.31 vs 4.01;
+  - 28/29 series within 5/10 pp;
+  - initial state 18/21.
+- Failures:
+  - YAG capsulotomy, extracted as `other`, got the graft-family prior (17–19 pp);
+  - late DMEK thickening is not modelled. The same cohort (PMC9156484) shows late
+    ECD loss, so coupling ECD and CCT is the next idea.
+- Both thickness sets are now consumed. Pre-freeze make check-docker: 825 tests,
+  94.87 s, 88% coverage, mypy 125 files. Heartbeat stays PAUSED.
+
 ## Corneal endothelium model 1.0.0 and its sealed test, 2026-10-28
 
 - Second eye component: ECD after surgery. Dataset

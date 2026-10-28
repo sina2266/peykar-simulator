@@ -1,5 +1,55 @@
 # Verification record
 
+## Corneal thickness dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
+
+- Start state: main at `b34838cf` (= origin, thickness split committed), with
+  uncommitted development extraction and the builder's thousands-separator fix.
+- An in-memory rebuild of all 35 development specs from their hash-checked sources
+  matched the stored records byte for byte (35/35). `ruff format`/`ruff check`/strict
+  `mypy` on the changed files passed; `pytest tests/unit/test_cornea_thickness_data.py`
+  **4 passed** (0.09 s). Commit `dc59a42c` pushed; local `HEAD` equals `origin/main`.
+- `scripts/link_study_authors.py --dataset experiments/data/cornea-thickness-2026-10-28
+  --raw .peykar/thickness-literature-screen-2026-10-28/raw --prefix cct- --schema
+  cornea.thickness-author-overlap-1.0.0 --output .../author-overlap-1.0.0.json`:
+  4 linked pairs, 1 development cluster, 2 sealed training exclusions, 1 sealed–sealed
+  pair (file SHA `0882e5a8…`).
+- `experiments/vcornea/thickness/round0_law_comparison.py` (development only):
+  hyperbolic return host group-mean log-SD 0.0094 versus exponential 0.0120, power
+  0.5 0.0123, power 2 0.0105 (rerun from the published script gave the same values).
+- `scripts/evaluate_thickness_population.py --development`, each exit 0: round 1
+  59.0 s (report `5145a91e…`; robust next observation 4.70 pp); round 2 61.8 s
+  (report `b7a5c08f3b7527dab71bd0ca16176774ceb1766b977ae42901f5463943758ea9`; robust
+  4.67 pp next observation, 4.75 landmark, initial state 4.28); a repeat of round 2
+  (63.5 s) produced the identical report SHA.
+- `pytest tests/unit/test_thickness_population.py` **14 passed** (2.25 s);
+  `ruff check .`, `ruff format --check .` (458 files) and strict `mypy` (125 files) passed.
+- `make check-docker` **exit 0: 825 Python tests passed in 94.87 s**, 88% coverage,
+  strict mypy 125 files, 18 frontend tests, contracts and all builds
+  (`.peykar/thickness-prefreeze-check-docker-2026-10-28.log`).
+- `scripts/publish_thickness_population.py --development`: 16 studies with NC/ND/SA
+  licences reduced to metrics; a scan found no observed values, predictions,
+  reference thicknesses or signed errors in redacted studies.
+- `experiments/vcornea/thickness/protocol-1.0.0.json` written exclusively, SHA
+  `a97db853b9d6fdc75f25ddd8f4f2357a0f13e69373967c4206164a49b82c9601` (27 frozen
+  files, 33 development and 15 sealed record hashes); `check_protocol` reported no
+  problem. Commit `deef7664` pushed; local `HEAD` equals `origin/main`.
+- `scripts/evaluate_thickness_population.py --sealed --protocol
+  experiments/vcornea/thickness/protocol-1.0.0.json`: run once, exit 0, 28.2 s, all
+  pins matched, report SHA `62bf7c9654843e0ed6700edae8ccfd0ac3f561d2b96e3d5cc49542fa951350df`.
+  15 studies, 29 forecast series, 65 next-observation targets. H1: 58/65 = 0.892
+  (80%) and 63/65 = 0.969 (90%), both inside the frozen windows. H2: robust 1.60 pp
+  versus persistence 2.06 and last-two trend 22.70. H3: landmark 2.31 versus 4.01 pp,
+  coverage 0.815/0.892. H4: 18/21 control group means within 5/10 pp, 5.17 pp versus
+  pooled curve 6.82. 28/29 series within 5/10 pp, 14/29 also ≥0.5 pp better than
+  persistence.
+- `scripts/publish_thickness_population.py --sealed`: six studies without CC BY/CC0
+  terms reduced to metrics. The plot script ran with `.peykar/cornea-native47/bin/python`;
+  the PNG was inspected and the legends were made per group before the final render.
+- After the result documents and plot script: `ruff format --check .` (462 files)
+  and `ruff check .` passed; `make check-docker` **exit 0, 825 Python tests passed
+  in 127.39 s**, 88% coverage, strict mypy 125 files, 18 frontend tests, contracts
+  and all builds (`.peykar/thickness-results-check-docker-2026-10-28.log`).
+
 ## Corneal endothelial density model 1.0.0 and protocol freeze: 2026-10-28
 
 - Start state: main at `b0c2b043` (= origin, outcome-blind split committed). The

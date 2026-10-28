@@ -121,6 +121,25 @@ forecasts 6.85 versus 12.41 pp, and 23/30 series within 5/10 pp. Initial-state
 prediction of new control groups reached 13/29 within criteria, and a late
 post-60-month drop in a 10-year DMEK series was followed slowly
 ([Persian results](experiments/vcornea/endothelium/results.fa.md)).
+The third corneal component is [central corneal thickness after surgery](experiments/vcornea/thickness/README.md):
+swelling and return after cataract and other intraocular surgery, and thinning of
+an edematous cornea after keratoplasty. It is built from an
+[outcome-blind dataset](experiments/data/cornea-thickness-2026-10-28/README.md) of
+1,179 screened open-access papers, with 33 development and 15 custodian-extracted
+sealed records. **Model 1.0.0** uses a hyperbolic return from the day-1 swelling,
+exact Gaussian-mixture posteriors, and a graft family that pools the long-term level
+as absolute thickness, so the preoperative CCT sets the expected fraction. It was
+frozen and pushed (`deef7664`) before a one-shot sealed test (15 studies, 29
+series, mostly cataract), with these results:
+
+- next-follow-up forecasts 1.60 pp versus 2.06 for persistence;
+- intervals inside both windows (89.2%/96.9%);
+- landmark forecasts 2.31 versus 4.01 pp;
+- 28/29 series within 5/10 pp.
+
+Laser capsulotomy groups extracted as `other` were wrongly given the graft-family
+swelling prior. A 10-year DMEK series thickened late, which the model does not
+represent ([Persian results](experiments/vcornea/thickness/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

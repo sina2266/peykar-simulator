@@ -226,9 +226,34 @@ was frozen (commit `de9762a0`) before a one-shot sealed test.
   storage, device, nucleus grade, tamponade such as silicone oil).
 - [ ] Single-eye prediction needs per-eye data and its own calibration; it is not
   claimed. Rabbit/other species need their own studies.
-- [ ] Next candidates after endothelium: intraocular pressure after glaucoma
-  surgery (488 papers in the earlier screen), corneal thickness after cataract
-  surgery (269), corneal nerves (159), stromal haze (115).
+- [x] Next candidate after endothelium: corneal thickness (hydration) after
+  surgery, chosen as the third corneal component; see the section below.
+### 2026-10-28 central corneal thickness (third corneal component)
+[Model 1.0.0](../experiments/vcornea/thickness/README.md) was frozen (commit
+`deef7664`, protocol `a97db853`) before a one-shot sealed test.
+- [x] Screen 1,179 open-access full texts and 631 tables with masked previews,
+  triage 56 studies, freeze an outcome-blind split (37 development/19 sealed);
+  development extraction (33 records) and two custodians (15 sealed records);
+  outcome-selected analysis sets excluded by a rule shared with the custodians.
+- [x] Generic author-overlap operator (`scripts/link_study_authors.py`); the
+  endothelium operator stays pinned and unchanged.
+- [x] Hyperbolic return from the day-1 excess; host family relative to the
+  preoperative CCT, graft family pooling the long-term level as absolute thickness;
+  exact Gaussian-mixture posteriors; REML on likelihood-information summaries;
+  development log with every declaration written before its run.
+- [x] Sealed result: next observation 1.60 vs persistence 2.06 pp (H2 pass),
+  coverage 89.2%/96.9% inside both windows (H1 pass, near the upper edges), landmark
+  2.31 vs 4.01 pp (H3 pass); 28/29 series within 5/10 pp; initial state 18/21 control
+  groups. Development and sealed sets are now consumed.
+- [ ] Assign `other` procedures to a family by mechanism (endothelial replacement or
+  edema clearing versus minor laser procedures such as YAG capsulotomy) or by a
+  preoperative-CCT rule; test on newly reserved studies.
+- [ ] Couple thickness to endothelial density: late endothelial loss after DMEK
+  (seen in the same 10-year cohort in both components) should raise CCT.
+- [ ] Graft forecasting and single eyes remain too sparse to claim; more keratoplasty
+  studies with early follow-ups are needed.
+- [ ] Next candidates: intraocular pressure after glaucoma surgery (488 papers in the
+  earlier screen), corneal nerves (159), stromal haze (115), then retina.
 
 ## S0 — preservation and platform contracts
 
