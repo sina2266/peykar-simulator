@@ -1,0 +1,133 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc10114485",
+ "doi": "10.1186/s12886-023-02918-0",
+ "pmcid": "PMC10114485",
+ "title": "Mechanical protective effect of lens anterior capsule disc on corneal endothelial cells during femtosecond laser-assisted cataract surgery in a rabbit model",
+ "species": "rabbit",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'licensed under a Creative Commons Attribution 4.0 International License', link https://creativecommons.org/licenses/by/4.0/; CC0 waiver for data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10114485.xml",
+   "sha256": "0db32a9cf9c77f7391aba46085c95ca10b7995f855f42c574a2261a9a981069d",
+   "bytes": 55731,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10114485/fullTextXML"
+  }
+ ],
+ "indication": "Healthy adult New Zealand white rabbits (right eyes, 2.5-3.0 kg, free of ocular disease); experimental model of ultrasound endothelial injury during femtosecond laser-assisted lens surgery, not a clinical cataract population",
+ "groups": [
+  {
+   "group": "lacd",
+   "role": "treated",
+   "n_reported": 20,
+   "procedure": "cataract",
+   "description": "Experimental (LACD) group: LenSx femtosecond capsulotomy (6 mm), the isolated lens anterior capsule disc lifted against the endothelium with DisCoVisc OVD, then 1 min of 80% longitudinal phaco ultrasound (10-s bursts, tip 1.5-2.0 mm from the endothelium, I/A 12 cc/min, vacuum 300 mmHg, intracameral heparin), followed by I/A removal of disc, OVD and lens material; eyes whose disc separated from the endothelium during the ultrasound exposure were excluded (Methods). Topical tobramycin/dexamethasone 4x/day for 7 days."
+  },
+  {
+   "group": "conventional-flacs",
+   "role": "control",
+   "n_reported": 20,
+   "procedure": "cataract",
+   "description": "Control (conventional FLACS) group: the same femtosecond capsulotomy, ultrasound exposure and aftercare, except that the isolated disc was removed once the main corneal incision was created (no endothelial protection by the disc)."
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 row 'P Value'",
+   "reason": "p-values are not admissible values"
+  },
+  {
+   "what": "Table 1 (endothelial cell count and endothelial cell loss)",
+   "reason": "Not central corneal thickness"
+  },
+  {
+   "what": "Slit-lamp corneal edema descriptions in Results (diffuse/focal edema counts and resolution days)",
+   "reason": "Counts and qualitative grades, not CCT values"
+  }
+ ],
+ "notes": [
+  "Species rabbit: LACD (isolated capsulotomy disc protection) is the investigational technique (treated); conventional FLACS without the disc is the standard arm (control).",
+  "Non-clinical injury model: deliberate 1-min 80% longitudinal ultrasound aimed at the endothelium with altered fluidics (I/A 12 cc/min, vacuum 300 mmHg, heparin); rabbit lenses are soft and clear; animals were sacrificed after day 7.",
+  "Experimental-group eyes whose disc detached during the ultrasound exposure were excluded by an intraoperative criterion (Methods, Discussion), not by a postoperative outcome; two eyes with decentered attached discs remained in the experimental group (Results).",
+  "Group sizes are 20 rabbits (right eyes) per group from Methods; Table 2 gives no per-visit n."
+ ],
+ "series": [
+  {
+   "series_id": "lacd/cct-oct",
+   "group": "lacd",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.0986,
+    0.23
+   ],
+   "baseline_label": "Preop CCT (Table 2 row 'Experimental group', column 'Preop')",
+   "notes": "Table 2 columns Preop, 1 day, 3 day, 7 day postop (days converted as days/30.4375); mean ± SD in µm; anterior-segment OCT (RTVue XR, Optovue); per-visit n not reported, n = 20 right eyes from Methods",
+   "values": [
+    337.0,
+    372.0,
+    352.0,
+    344.0
+   ],
+   "source_cells": [
+    "PMC10114485.xml::Tab2!R3C2",
+    "PMC10114485.xml::Tab2!R3C3",
+    "PMC10114485.xml::Tab2!R3C4",
+    "PMC10114485.xml::Tab2!R3C5"
+   ],
+   "source_cell_texts": [
+    "337 ± 23",
+    "372 ± 40",
+    "352 ± 29",
+    "344 ± 23"
+   ]
+  },
+  {
+   "series_id": "conventional-flacs/cct-oct",
+   "group": "conventional-flacs",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.0986,
+    0.23
+   ],
+   "baseline_label": "Preop CCT (Table 2 row 'Control group', column 'Preop')",
+   "notes": "Table 2 columns Preop, 1 day, 3 day, 7 day postop (days converted as days/30.4375); mean ± SD in µm; anterior-segment OCT (RTVue XR, Optovue); per-visit n not reported, n = 20 right eyes from Methods",
+   "values": [
+    328.0,
+    434.0,
+    357.0,
+    345.0
+   ],
+   "source_cells": [
+    "PMC10114485.xml::Tab2!R4C2",
+    "PMC10114485.xml::Tab2!R4C3",
+    "PMC10114485.xml::Tab2!R4C4",
+    "PMC10114485.xml::Tab2!R4C5"
+   ],
+   "source_cell_texts": [
+    "328 ± 22",
+    "434 ± 106",
+    "357 ± 26",
+    "345 ± 33"
+   ]
+  }
+ ]
+}

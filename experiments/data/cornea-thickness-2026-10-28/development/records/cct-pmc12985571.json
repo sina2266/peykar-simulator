@@ -1,0 +1,125 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc12985571",
+ "doi": "10.3390/jcm15051992",
+ "pmcid": "PMC12985571",
+ "title": "Intraoperative Use of a Topical Anesthetic Gel Versus Balanced Salt Solution During Cataract Surgery: Effects on Corneal Structure and Ocular Surface",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: ali:license_ref https://creativecommons.org/licenses/by/4.0/; Creative Commons Attribution (CC BY) license, MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12985571.xml",
+   "sha256": "6b6c11c6148268c31fad2eb81d23a7dc570d3be1f5139e9a62b476995884fd22",
+   "bytes": 105459,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12985571/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related cataract, standardized temporal phacoemulsification with foldable posterior chamber IOL by one surgeon; exclusions: dry eye disease, previous ocular surgery, contact lens wear, diabetes, glaucoma, corneal dystrophies",
+ "groups": [
+  {
+   "group": "anesthetic-gel",
+   "role": "treated",
+   "n_reported": 15,
+   "description": "Ophtesic 20 mg/g topical anesthetic gel (Horus Pharma), 1 g applied to the corneal surface after disinfection and speculum insertion; no intraoperative BSS irrigation except a 2 mL rinse at the end of surgery; same lidocaine drops, surgeon and postoperative regimen (dexamethasone/netilmicin, bromfenac) as the BSS group; 15 eyes of 15 patients"
+  },
+  {
+   "group": "bss",
+   "role": "control",
+   "n_reported": 9,
+   "description": "Balanced salt solution applied repeatedly to the cornea during surgery (maximum 15 mL); standard care; 9 eyes of 9 patients"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 'p Value' columns",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 epithelial thickness, BEC density, NI-BUT, Schirmer and OSDI rows",
+   "reason": "Not central corneal thickness"
+  }
+ ],
+ "notes": [
+  "Role: the topical anesthetic gel applied to the cornea is the study's investigational intraoperative agent (treated); repeated BSS irrigation is the standard comparator (control).",
+  "Allocation: 15 patients assigned to the gel group and 9 to the BSS observation group (Results); randomization is not described.",
+  "Dispersion in Table 2 is the standard error of the mean (caption and Methods 2.5)."
+ ],
+ "series": [
+  {
+   "series_id": "anesthetic-gel/cct",
+   "group": "anesthetic-gel",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.1643,
+    0.4928
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye, measured 3 days before surgery (Table 2 column 'Pre-Op'); AS-OCT MS-39, CSO (Methods 2.4)",
+   "notes": "Table 2 row 'CCT (µm)' / 'GEL group'; mean ± SEM (not SD); postoperative days 1, 5 and 15 converted with days/30.4375; per-visit n not reported (15 eyes enrolled)",
+   "values": [
+    551.6,
+    629.27,
+    573.27,
+    552.13
+   ],
+   "source_cells": [
+    "PMC12985571.xml::jcm-15-01992-t002!R4C2",
+    "PMC12985571.xml::jcm-15-01992-t002!R4C4",
+    "PMC12985571.xml::jcm-15-01992-t002!R4C6",
+    "PMC12985571.xml::jcm-15-01992-t002!R4C8"
+   ],
+   "source_cell_texts": [
+    "551.60 ± 4.34",
+    "629.27 ± 8.40",
+    "573.27 ± 4.65",
+    "552.13 ± 4.58"
+   ]
+  },
+  {
+   "series_id": "bss/cct",
+   "group": "bss",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.1643,
+    0.4928
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye, measured 3 days before surgery (Table 2 column 'Pre-Op'); AS-OCT MS-39, CSO (Methods 2.4)",
+   "notes": "Table 2 row 'CCT (µm)' / 'BSS group'; mean ± SEM (not SD); postoperative days 1, 5 and 15 converted with days/30.4375; per-visit n not reported (9 eyes enrolled)",
+   "values": [
+    551.67,
+    655.56,
+    625.11,
+    592.33
+   ],
+   "source_cells": [
+    "PMC12985571.xml::jcm-15-01992-t002!R5C2",
+    "PMC12985571.xml::jcm-15-01992-t002!R5C4",
+    "PMC12985571.xml::jcm-15-01992-t002!R5C6",
+    "PMC12985571.xml::jcm-15-01992-t002!R5C8"
+   ],
+   "source_cell_texts": [
+    "551.67 ± 6.24",
+    "655.56 ± 31.53",
+    "625.11 ± 20.96",
+    "592.33 ± 7.68"
+   ]
+  }
+ ]
+}

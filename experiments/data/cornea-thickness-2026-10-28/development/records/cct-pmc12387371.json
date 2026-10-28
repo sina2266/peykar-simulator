@@ -1,0 +1,138 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc12387371",
+ "doi": "10.3390/jcm14165887",
+ "pmcid": "PMC12387371",
+ "title": "“Ultrasound-Assisted High-Fluidics Phacoaspiration”: An Efficient and Safe Technique for Nucleus Quadrant Workup Through 2.2 mm Mini- and 1.6 mm Micro-Incisions Following Manual or Femtosecond Laser Sectorial Lens Fragmentation",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'Creative Commons Attribution (CC BY) license', link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12387371.xml",
+   "sha256": "c103cb255f0b53715b30d2013bccf55f7497fbb5dfee4d7e208a4fb3bc86d439",
+   "bytes": 98316,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12387371/fullTextXML"
+  }
+ ],
+ "indication": "Bilateral age-related cataract (LOCS III nuclear hardness, medians 2-3), immediate sequential bilateral cataract surgery; prior intraocular surgery, glaucoma, inflammatory eye disease, any corneal disease and severe retinal pathology excluded",
+ "groups": [
+  {
+   "group": "easytip-2.2",
+   "role": "control",
+   "n_reported": 77,
+   "procedure": "cataract",
+   "description": "eT2.2 HF: high-fluidics coaxial phaco (Oertli OS3, peristaltic, bottle 100 cm, conquer flow 45 mL/min, vacuum 500 mmHg) with the easyTip 2.2 slim-shaft-strong-bevel needle through a 2.2 mm posterolimbal incision, manual direct-crack divide and conquer, methylcellulose OVD, intracameral cefuroxime; prednisolone and ketorolac 3x/day for 3 weeks; one randomized eye per patient, one surgeon (NCT01936727)"
+  },
+  {
+   "group": "easytip-comics-1.6",
+   "role": "control",
+   "n_reported": 77,
+   "procedure": "cataract",
+   "description": "eT1.6 iaCOMICS HF: high-fluidics infusion-assisted coaxial phaco with the easyTip COMICS micro-needle through a 1.6 mm incision plus sideport infusion handpiece (flow 50 mL/min, vacuum 600 mmHg), biaxial cortex aspiration; same surgeon, technique and aftercare; the operated fellow eye"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "jcm-14-05887-t003 C4 (p-values)",
+   "reason": "p-values are not admissible values"
+  },
+  {
+   "what": "jcm-14-05887-t003 ECC and ECL rows; Tables 1, 2 and 4 (machine settings, operative medians, comparisons)",
+   "reason": "Not central corneal thickness"
+  },
+  {
+   "what": "Comparison groups CMP 2.8 mm low-fluidics and eT2.2 enhanced-fluidics (Table 4, Figures 3-5)",
+   "reason": "Historical groups from earlier publications without CCT values in this article"
+  },
+  {
+   "what": "Figure 6 (CCT and ECL box plots)",
+   "reason": "Figure, not a table cell"
+  }
+ ],
+ "notes": [
+  "Prospective randomized intraindividual comparison with immediate sequential bilateral surgery: both eyes of each patient were operated, so the fellow eye is an operated arm, not an unoperated control, and the arms are not independent samples.",
+  "Role: both arms are variants of the article's high-fluidics technique compared with each other and neither is declared experimental relative to the other; both recorded as control (consistent with the endothelium-dataset extraction of the same article).",
+  "Series n: 77 patients were randomized and 50 completed the 6-month follow-up; Table 3 does not state whether the preop, day-1 and 1-week means include all 77 or only the 50 completers, so n is set to the 50 completers.",
+  "Method 'unstated': Methods say CCT was measured preoperatively and at each visit but do not name the device.",
+  "Statistics: data are means ± SD if normally distributed, otherwise medians [min; max]; the CCT cells are reported as mean ± SD."
+ ],
+ "series": [
+  {
+   "series_id": "easytip-2.2/cct",
+   "group": "easytip-2.2",
+   "kind": "group_mean",
+   "n": 50,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    6
+   ],
+   "baseline_label": "Preoperative CCT measured 1 week before surgery (Table 3 'Central Corneal Thickness (CCT)' row 'preop', column 'eT2.2 HF')",
+   "notes": "Table 3 CCT rows preop, day 1 postop (1/30.4375 months), 1 week postop (7/30.4375 months), 6 months postop; mean ± SD in µm (units in the Abstract); CCT device not named in the article; table gives no n, n = 50 completers of the 6-month follow-up (77 randomized)",
+   "values": [
+    538.0,
+    561.0,
+    539.0,
+    536.0
+   ],
+   "source_cells": [
+    "PMC12387371.xml::jcm-14-05887-t003!R3C2",
+    "PMC12387371.xml::jcm-14-05887-t003!R4C2",
+    "PMC12387371.xml::jcm-14-05887-t003!R5C2",
+    "PMC12387371.xml::jcm-14-05887-t003!R6C2"
+   ],
+   "source_cell_texts": [
+    "538 ± 30",
+    "561 ± 42",
+    "539 ± 33",
+    "536 ±31"
+   ]
+  },
+  {
+   "series_id": "easytip-comics-1.6/cct",
+   "group": "easytip-comics-1.6",
+   "kind": "group_mean",
+   "n": 50,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    6
+   ],
+   "baseline_label": "Preoperative CCT measured 1 week before surgery (Table 3 'Central Corneal Thickness (CCT)' row 'preop', column 'eT1.6 iaCOMICS HF')",
+   "notes": "Table 3 CCT rows preop, day 1 postop (1/30.4375 months), 1 week postop (7/30.4375 months), 6 months postop; mean ± SD in µm (units in the Abstract); CCT device not named in the article; table gives no n, n = 50 completers of the 6-month follow-up (77 randomized)",
+   "values": [
+    540.0,
+    563.0,
+    542.0,
+    541.0
+   ],
+   "source_cells": [
+    "PMC12387371.xml::jcm-14-05887-t003!R3C3",
+    "PMC12387371.xml::jcm-14-05887-t003!R4C3",
+    "PMC12387371.xml::jcm-14-05887-t003!R5C3",
+    "PMC12387371.xml::jcm-14-05887-t003!R6C3"
+   ],
+   "source_cell_texts": [
+    "540 ± 32",
+    "563 ± 45",
+    "542 ± 34",
+    "541 ± 33"
+   ]
+  }
+ ]
+}

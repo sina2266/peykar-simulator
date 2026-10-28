@@ -1,0 +1,92 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc11765653",
+ "doi": "10.3390/jcm14020343",
+ "pmcid": "PMC11765653",
+ "title": "A Pilot Case Series on the Use of a Large Mushroom-Shaped Corneal Graft for the Surgical Management of Post-Penetrating Keratoplasty Ectasia and Endothelial Failure",
+ "species": "human",
+ "procedure": "pk",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'Creative Commons Attribution (CC BY) license', link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11765653.xml",
+   "sha256": "0824ca2a22db352593bb549f118274926567eb2c4be0db28f0d88eb7d91782f0",
+   "bytes": 127336,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11765653/fullTextXML"
+  }
+ ],
+ "indication": "Ectasia after a previous penetrating keratoplasty (AvK >= 48 D or irregular astigmatism >= 8 D) combined with late endothelial failure of that graft (CCT > 600 µm or corneal edema without rejection); primary PK for keratoconus in 13/15, post-traumatic leukoma 1, infectious keratitis 1; other prior ocular surgery, glaucoma, retinal disease, advanced cataract and active rejection excluded",
+ "groups": [
+  {
+   "group": "mushroom-pk",
+   "role": "control",
+   "n_reported": 15,
+   "procedure": "pk",
+   "description": "Manual two-piece mushroom-shaped PK (after Busin et al.): one donor cornea split with a microkeratome into a large anterior lamella (9.0-9.5 mm) and a posterior lamella (~250 µm, 7.5-8.5 mm, sized to the previous graft) placed into a 9.0-9.5 mm partial-thickness recipient trephination with a central full-thickness opening; anterior lamella sutured (10-0 nylon), air in the AC when needed; chloramphenicol/betamethasone 4x/day for 1 month, 2x/day months 2-3, then hydrocortisone 0.3% 2x/day; 15 consecutive eyes of 15 patients, 2022-2023, retrospective, single centre"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "CCT at 1 month in the Results text ('corneal thickness at the pupil center ... at 1 month')",
+   "reason": "Text value only, not a table cell"
+  },
+  {
+   "what": "jcm-14-00343-t002 C3 and C5 (p values)",
+   "reason": "p-values are not admissible values"
+  },
+  {
+   "what": "Figure 9 box plots of CCT",
+   "reason": "Figure, not a table cell; medians/IQR are not admissible"
+  },
+  {
+   "what": "Tables 1 and 2 rows BCVA, ECD, KMIN, KMAX, AVK and other baseline characteristics",
+   "reason": "Not central corneal thickness"
+  }
+ ],
+ "notes": [
+  "Role control: single-arm retrospective case series of consecutive patients treated with a two-piece mushroom PK (a technique introduced by Busin et al., applied here to post-PK ectasia with endothelial failure); no comparator and no arm declared experimental relative to a standard. The article calls it a pilot series of a surgical technique, so a treated role could be argued.",
+  "The preoperative reference is the edematous failing previous PK graft; postoperative CCT is of the new two-piece graft.",
+  "CCT method recorded as 'unstated': Methods list three devices that can measure thickness at every visit without saying which gave CCT; Results call it 'corneal thickness at the pupil center'.",
+  "All sutures were removed within a year; Results state that topometric parameters and BCVA at 12 months were measured after suture removal (not stated for CCT). Data were collected at 1 year in all patients (Methods), so n = 15 at each table time is expected but not stated.",
+  "Table 2 CCT cells are rounded forms of the Results-text means; the table cells are cited. One mild stromal rejection episode at 8 months resolved with topical steroids."
+ ],
+ "series": [
+  {
+   "series_id": "mushroom-pk/cct",
+   "group": "mushroom-pk",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative CCT of the operated eyes (Table 1 'Baseline characteristics', row 'CCT (µm)')",
+   "notes": "Table 1 row CCT (preoperative) and Table 2 row CCT at 6 and 12 months; mean ± SD in µm; the article does not name the CCT device (Methods list specular microscopy (Tomey), Oculus corneal topography and AS-OCT Casia II at every visit); per-visit n not reported",
+   "values": [
+    629.0,
+    528.0,
+    532.0
+   ],
+   "source_cells": [
+    "PMC11765653.xml::jcm-14-00343-t001!R6C2",
+    "PMC11765653.xml::jcm-14-00343-t002!R3C2",
+    "PMC11765653.xml::jcm-14-00343-t002!R3C4"
+   ],
+   "source_cell_texts": [
+    "629 ± 39",
+    "528 ± 46",
+    "532 ± 45"
+   ]
+  }
+ ]
+}

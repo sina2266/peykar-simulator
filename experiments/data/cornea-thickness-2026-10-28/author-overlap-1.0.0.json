@@ -1,0 +1,90 @@
+{
+ "schema": "cornea.thickness-author-overlap-1.0.0",
+ "utc": "2026-10-28T09:03:11.306132+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/cornea-thickness-2026-10-28/split-reservation-1.0.0.json",
+   "sha256": "e787696031b597ded5de44640022bd2a210548b8f8e7a4d6966256bbc8b65ace"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-cct_followup_title_open-0.json",
+    "sha256": "a3035d35bcfc8a747b8a4f3a058ba49db660c716461ffa2605efef46c45665f9"
+   },
+   {
+    "file": "search-cct_surgery_open-0.json",
+    "sha256": "737166f9371f9eb122b67a5bb4c01d354fbddc6eea8f07028e4daba65f142ad9"
+   },
+   {
+    "file": "search-cct_surgery_open-1.json",
+    "sha256": "72837394097ba72fe7dad6f648011f1bb8d0feff3f5cacc3181337b46e8832a5"
+   },
+   {
+    "file": "search-cct_surgery_open-2.json",
+    "sha256": "cf56556dd7a22b490991000a8ce37cf20d1bfd66832281ec06d42ba3d1bb4ced"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "cct-pmc12952605",
+    "cct-pmc9119399"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "cct-pmc12994532",
+    "cct-pmc13006302"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "cct-pmc6157994",
+    "cct-pmc8890902"
+   ],
+   "splits": [
+    "sealed_test",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "cct-pmc6438261",
+    "cct-pmc8786756"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 4
+  }
+ ],
+ "development_clusters": [
+  [
+   "cct-pmc6438261",
+   "cct-pmc8786756"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "cct-pmc13006302": [
+   "cct-pmc12994532"
+  ],
+  "cct-pmc9119399": [
+   "cct-pmc12952605"
+  ]
+ }
+}

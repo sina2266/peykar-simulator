@@ -1,0 +1,69 @@
+{
+ "study_id": "cct-pmc4310271",
+ "doi": "10.2147/OPTH.S75580",
+ "pmcid": "PMC4310271",
+ "title": "Central corneal thickness changes following manual small incision cataract surgery",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 unported via Dove Medical Press (article <permissions>: copyright statement and <license> ext-link http://creativecommons.org/licenses/by-nc/3.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4310271.xml",
+   "sha256": "066520c0b0946dbb943e2e6090900337ff292e9050808b66509fc78072fbc94f",
+   "bytes": 52651,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4310271/fullTextXML)"
+  }
+ ],
+ "indication": "Cataract (bilateral mature cataract in 47%) in consecutive adult patients at Lagos University Teaching Hospital, Nigeria; corneal opacity or endothelial disease (including guttata), other ocular disease, traumatic or complicated cataract, previous refractive surgery, one-eyed patients and operative complications such as vitreous loss excluded",
+ "groups": [
+  {
+   "group": "msics",
+   "role": "control",
+   "n_reported": 200,
+   "procedure": "cataract",
+   "description": "Manual small incision cataract surgery (superior 6-7 mm sclerocorneal tunnel, nucleus delivery with viscoelastic or irrigating Simcoe cannula, Ringer's lactate or saline irrigation, PMMA posterior chamber IOL), single surgeon, local anaesthesia; operated eyes of 200 consecutive patients, 2012-2013"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "msics/cct",
+   "group": "msics",
+   "kind": "group_mean",
+   "n": 200,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "ultrasound",
+   "months": [0, 0.0329, 0.46, 0.9199, 1.8398, 2.7598],
+   "cells": [
+    "PMC4310271.xml::t2-opth-9-151!R2C2",
+    "PMC4310271.xml::t2-opth-9-151!R3C2",
+    "PMC4310271.xml::t2-opth-9-151!R4C2",
+    "PMC4310271.xml::t2-opth-9-151!R5C2",
+    "PMC4310271.xml::t2-opth-9-151!R6C2",
+    "PMC4310271.xml::t2-opth-9-151!R7C2"
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye measured the day before surgery (Table 2 row 'Day 0', column 'Mean CCTo'; Methods and Results: 'CCT measurements a day before cataract surgery'); ultrasonic SUOER SW 100 A-scan pachymeter, mean of three readings",
+   "notes": "Table 2 column 'Mean CCTo' (operated eye), mean ± SD in µm; rows Day 0 (preoperative), Day 1 (a day after surgery, days/30.4375), 2, 4, 8 and 12 weeks (weeks×7/30.4375). Per-visit n not reported (200 operated eyes analysed)."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 (CCTu, unoperated contralateral eye)",
+   "reason": "Unoperated fellow eye used as within-patient control"
+  },
+  {
+   "what": "Table 2 column 'CCTo (day 0–various time sets)' and the 'P-value' and 'Confidence interval (95%)' columns",
+   "reason": "Paired differences (day 0 minus follow-up) of the same series whose absolute CCT is tabulated, and p-values/intervals, are not used or not admissible"
+  }
+ ],
+ "notes": [
+  "Single standard-procedure cohort (MSICS without an investigational agent): control role. The study's 'controls' are the unoperated contralateral eyes, which are excluded.",
+  "Table 2 labels the preoperative measurement 'Day 0'; Methods state it was taken a day before surgery, so it is the preoperative reference, not a postoperative day 0.",
+  "At 8 and 12 weeks the tabulated paired difference does not equal the difference of the tabulated means; per-visit n is not reported, so the absolute means are used as tabulated."
+ ]
+}

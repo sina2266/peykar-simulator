@@ -1,0 +1,95 @@
+{
+ "study_id": "cct-pmc13457278",
+ "doi": "10.1007/s10561-026-10247-x",
+ "pmcid": "PMC13457278",
+ "title": "Influence of dextran deswelling on graft preparation and clinical outcomes in DMEK",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License, ext-link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13457278.xml",
+   "sha256": "278312ec327354f5a42abca39ff7b92d0bd7dc8e5b8aa64366fcda212368a9e1",
+   "bytes": 71147,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13457278/fullTextXML)"
+  }
+ ],
+ "indication": "DMEK for corneal endothelial disease (recipient diagnoses not reported); eyes with vision-limiting comorbidity, previous vitrectomy, glaucoma-filtering or corneal surgery, or follow-up under 12 months excluded; organ-cultured donor corneas from the Cologne eye bank (donor age 52-74 years)",
+ "groups": [
+  {
+   "group": "dextran-deswelled",
+   "role": "control",
+   "n_reported": 16,
+   "procedure": "dmek",
+   "description": "Group A: organ-cultured donor cornea moved to 6% dextran T-500 deswelling medium at least 24 h before surgery (tissue kept as potential PK/DALK backup); DMEK graft prepared by the surgeon directly before transplantation; SF6 20% tamponade; retrospective 2018-2022"
+  },
+  {
+   "group": "dextran-free",
+   "role": "control",
+   "n_reported": 15,
+   "procedure": "dmek",
+   "description": "Group B: organ-cultured donor cornea with a final medium exchange into dextran-free medium (swollen tissue) at least 24 h before surgery; DMEK graft prepared by the surgeon directly before transplantation; SF6 20% tamponade; retrospective 2018-2022"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dextran-deswelled/cct",
+   "group": "dextran-deswelled",
+   "kind": "group_mean",
+   "n": 16,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC13457278.xml::Tab2!R3C2",
+    "PMC13457278.xml::Tab2!R5C2",
+    "PMC13457278.xml::Tab2!R6C2"
+   ],
+   "baseline_label": "Pre-operative CCT of the operated eye (Table 2 'Central corneal thickness, CCT [µm]' row 'Pre-operative'); measuring device not stated",
+   "notes": "Table 2 column 'Group A'; mean ± SD (Methods: data presented as mean ± SD). Rows Pre-operative, 6 months, 12 months; the '1–3 months' row is a range and excluded. Per-visit n not reported."
+  },
+  {
+   "series_id": "dextran-free/cct",
+   "group": "dextran-free",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC13457278.xml::Tab2!R3C3",
+    "PMC13457278.xml::Tab2!R5C3",
+    "PMC13457278.xml::Tab2!R6C3"
+   ],
+   "baseline_label": "Pre-operative CCT of the operated eye (Table 2 'Central corneal thickness, CCT [µm]' row 'Pre-operative'); measuring device not stated",
+   "notes": "Table 2 column 'Group B'; mean ± SD (Methods: data presented as mean ± SD). Rows Pre-operative, 6 months, 12 months; the '1–3 months' row is a range and excluded. Per-visit n not reported."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 CCT row '1–3 months' (both groups)",
+   "reason": "Follow-up time given as a range"
+  },
+  {
+   "what": "Table 2 peripheral corneal thickness (PCT) rows",
+   "reason": "Peripheral, not central, corneal thickness"
+  },
+  {
+   "what": "Table 2 ECC and BSCVA rows and the 'p-value 12 months after DMEK' column",
+   "reason": "Not central corneal thickness; p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Both groups differ only in the donor-cornea storage medium of the final culture step (dextran deswelling versus dextran-free), allocated by logistical and surgical-scheduling considerations in a retrospective series, without an investigational agent declared as an experimental arm: both are control-role groups.",
+  "Group sizes conflict within the article: abstract and Results give group A n = 16 and group B n = 15 (consistent with re-bubbling 4/16 = 25.0% and 5/15 = 33.3%), whereas Table 1 lists npatients 15 (A) and 16 (B); n follows the abstract/Results.",
+  "The CCT measuring device is not stated in the article (method 'unstated').",
+  "Results text gives the 12-month CCT SD with slightly different rounding than Table 2; the Table 2 cells are cited."
+ ]
+}

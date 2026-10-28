@@ -7,6 +7,7 @@ import pytest
 from peykar.validation.cornea_thickness_data import (
     ThicknessSeries,
     build_record,
+    cell_number,
     structural_summary,
     to_thickness_series,
     validate_record,
@@ -127,3 +128,13 @@ def test_builder_reads_cited_cells_and_checks_hashes():
     assert record["series"][0]["values"] == [680.0, 610.0, 530.0]
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
+
+
+def test_cell_numbers_accept_thin_space_thousands_separators():
+    assert cell_number("1\u200a087") == 1087.0
+    assert cell_number("1\u2009135 \u00b1 40") == 1135.0
+    assert cell_number("1,250 \u00b1 30") == 1250.0
+    assert cell_number("540 30") == 540.0
+    assert cell_number("1 087") == 1087.0
+    assert cell_number("1 135 \u00b1 40") == 1135.0
+    assert cell_number("610 \u00b1 50") == 610.0

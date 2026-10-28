@@ -1,0 +1,94 @@
+{
+ "study_id": "cct-pmc4888734",
+ "doi": "10.2147/OPTH.S103540",
+ "pmcid": "PMC4888734",
+ "title": "Long-term follow-up for bimanual microincision cataract surgery: comparison of results obtained by surgeons in training and experienced surgeons",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 via Dove Medical Press terms (article <license>: https://www.dovepress.com/terms.php incorporating Creative Commons Attribution - Non Commercial (unported, v3.0) License, http://creativecommons.org/licenses/by-nc/3.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4888734.xml",
+   "sha256": "89d4bfae30e841a97c1ae6b955c17a5994f9de8bc9a6c59a6685387c030f7fce",
+   "bytes": 80155,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4888734/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related cataract LOCS III grade 2-3; previous surgery, complicated cataract, uveitis, glaucoma, corneal opacity, mydriasis below 4 mm, ECD below 1500 cells/mm2 and one-eyed patients excluded; some patients contributed both eyes",
+ "groups": [
+  {
+   "group": "trainee-surgeons",
+   "role": "control",
+   "n_reported": 80,
+   "procedure": "cataract",
+   "description": "Group A: bimanual microincision cataract surgery (B-MICS, Stellaris, Akreos MI60 IOL) by three surgeons in training on their first B-MICS cases under expert supervision; 80 eyes of 62 patients; tobramycin/dexamethasone then flurbiprofen"
+  },
+  {
+   "group": "experienced-surgeons",
+   "role": "control",
+   "n_reported": 80,
+   "procedure": "cataract",
+   "description": "Group B: the same B-MICS technique by three experienced surgeons (the article's comparison group); 80 eyes of 59 patients; same postoperative regimen"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "trainee-surgeons/cct",
+   "group": "trainee-surgeons",
+   "kind": "group_mean",
+   "n": 80,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "ultrasound",
+   "months": [0, 1, 18],
+   "cells": [
+    "PMC4888734.xml::t1-opth-10-979!R4C2",
+    "PMC4888734.xml::t1-opth-10-979!R4C3",
+    "PMC4888734.xml::t1-opth-10-979!R4C4"
+   ],
+   "baseline_label": "Preoperative corneal pachymetry of the operated eye (Table 1 column 'Preoperative'); IOPac pachymeter, Heidelberg Engineering (Methods)",
+   "notes": "Table 1 (Group A) row 'Corneal pachymetry (µm)', columns Preoperative, 1 month, 18 months; footnote: mean ± standard deviation. Methods state the first postoperative visit as 30 days; the table label '1 month' is used. All Group A surgeries had an 18-month follow-up (Methods); per-visit n not tabulated."
+  },
+  {
+   "series_id": "experienced-surgeons/cct",
+   "group": "experienced-surgeons",
+   "kind": "group_mean",
+   "n": 80,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "ultrasound",
+   "months": [0, 1, 18],
+   "cells": [
+    "PMC4888734.xml::t2-opth-10-979!R4C2",
+    "PMC4888734.xml::t2-opth-10-979!R4C3",
+    "PMC4888734.xml::t2-opth-10-979!R4C4"
+   ],
+   "baseline_label": "Preoperative corneal pachymetry of the operated eye (Table 2 column 'Preoperative'); IOPac pachymeter, Heidelberg Engineering (Methods)",
+   "notes": "Table 2 (Group B) row 'Corneal pachymetry (µm)', columns Preoperative, 1 month, 18 months; footnote: mean ± standard deviation. Methods state the first postoperative visit as 30 days; the table label '1 month' is used. Per-visit n not tabulated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Tables 1 and 2 BCVA, astigmatism and endothelial count rows",
+   "reason": "Not central corneal thickness"
+  },
+  {
+   "what": "Mean pachymetry increase at 18 months (Results text)",
+   "reason": "Text values of a change; the tabulated absolute series are used"
+  },
+  {
+   "what": "Tables 4-6 incision length/angle and morphology (AS-OCT of the clear corneal incisions), including the iris-prolapse subgroups of Group A",
+   "reason": "Incision architecture, not central corneal thickness; subgroups defined by an intraoperative event"
+  }
+ ],
+ "notes": [
+  "The groups differ by surgeon experience with the same standard technique, not by an investigational agent, device or technique variant: both are control-role, separate groups (same decision as the endothelium record ecd-pmc4888734).",
+  "Method: the article names the pachymeter (IOPac; Heidelberg Engineering) without its principle; the IOPac is a handheld ultrasound pachymeter, so method = ultrasound. The tables label the row 'Corneal pachymetry' and the measurement location is not stated; it is taken as central corneal thickness (standard for this handheld pachymetry), which is an extraction assumption.",
+  "Patients with ocular pathology during follow-up not related to surgery were excluded from the cohort (Methods); two Group A IOLs were placed in the sulcus after intraoperative complications."
+ ]
+}

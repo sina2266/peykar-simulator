@@ -1,0 +1,93 @@
+{
+ "study_id": "cct-pmc6398396",
+ "doi": "10.2147/IMCRJ.S192650",
+ "pmcid": "PMC6398396",
+ "title": "Different graft thicknesses after Descemet stripping endothelial keratoplasty for bullous keratopathy in the two eyes of the same patient",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: ali:license_ref https://creativecommons.org/licenses/by-nc/3.0/; Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License); not CC BY, record kept private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6398396.xml",
+   "sha256": "6f8a1967c964c24fa0a4a69c72a7aaf193a822e9f14639ba4cdd373cb47522af",
+   "bytes": 39667,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6398396/fullTextXML"
+  }
+ ],
+ "indication": "Bilateral bullous keratopathy after cataract surgery in a 75-year-old woman with bilateral Fuchs dystrophy (pseudophakic; total corneal decompensation, endothelial cell density not detectable preoperatively)",
+ "groups": [
+  {
+   "group": "all",
+   "role": "control",
+   "n_reported": 2,
+   "procedure": "dsaek",
+   "description": "Case report: DSAEK in both eyes of one patient by one experienced surgeon, right eye first and left eye 6 months later; peribulbar anesthesia, 4.5-mm temporal clear corneal incision, 8.0-mm descemetorhexis, precut eye-bank grafts (single microkeratome pass, trephined 8.0 mm) pulled in with a Busin glide, air tamponade partly exchanged for BSS after 20 min; tobramycin, dexamethasone and diclofenac for 2 weeks, then clobetasone for 3 months; no intraoperative or postoperative complications"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "right-eye/cct-oct",
+   "group": "all",
+   "kind": "individual",
+   "n": 1,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [0, 1, 6, 12, 24],
+   "cells": [
+    "PMC6398396.xml::t1-imcrj-12-055!R3C4",
+    "PMC6398396.xml::t1-imcrj-12-055!R4C4",
+    "PMC6398396.xml::t1-imcrj-12-055!R5C4",
+    "PMC6398396.xml::t1-imcrj-12-055!R6C4",
+    "PMC6398396.xml::t1-imcrj-12-055!R7C4"
+   ],
+   "baseline_label": "Right eye corneal thickness before surgery (Table 1 row 'Before surgery', column 'Corneal thickness (µm)' RE); AS-OCT (RTVue, Optovue)",
+   "notes": "Table 1 rows Before surgery, 1, 6, 12 and 24 months after this eye's DSAEK; total corneal thickness including the DSAEK lenticule (Abstract 'overall corneal thickness'; Case report gives corneal thickness 'with a lenticule thickness of' the graft); single measurement per visit"
+  },
+  {
+   "series_id": "left-eye/cct-oct",
+   "group": "all",
+   "kind": "individual",
+   "n": 1,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [0, 1, 6, 12, 24],
+   "cells": [
+    "PMC6398396.xml::t1-imcrj-12-055!R3C5",
+    "PMC6398396.xml::t1-imcrj-12-055!R4C5",
+    "PMC6398396.xml::t1-imcrj-12-055!R5C5",
+    "PMC6398396.xml::t1-imcrj-12-055!R6C5",
+    "PMC6398396.xml::t1-imcrj-12-055!R7C5"
+   ],
+   "baseline_label": "Left eye corneal thickness before surgery (Table 1 row 'Before surgery', column 'Corneal thickness (µm)' LE); AS-OCT (RTVue, Optovue)",
+   "notes": "Table 1 rows Before surgery, 1, 6, 12 and 24 months after this eye's DSAEK (operated 6 months after the right eye); total corneal thickness including the DSAEK lenticule; single measurement per visit"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 columns 'Graft thickness (µm)' RE and LE (C6, C7)",
+   "reason": "Graft-only thickness; protocol uses the total corneal thickness for DSAEK"
+  },
+  {
+   "what": "Eye-bank estimated precut donor graft thickness (Abstract)",
+   "reason": "Donor graft-only value, not the patient's corneal thickness"
+  },
+  {
+   "what": "Table 1 columns CDVA (Snellen), RMS and Endothelial count",
+   "reason": "Not corneal thickness"
+  }
+ ],
+ "notes": [
+  "Per-eye rows of a two-eye case report: kind individual, one series per eye; both eyes belong to the same patient and are not independent.",
+  "Role: standard DSAEK with eye-bank precut grafts and no investigational agent; the different graft thicknesses were unplanned (Conclusion): control.",
+  "The article reports 'corneal thickness' by AS-OCT without stating the measurement location; it is taken as the central corneal thickness admitted by triage. Flagged for review.",
+  "Follow-up times are relative to each eye's own DSAEK (Case report: examination before each surgery and at 1, 6, 12 and 24 months after each DSAEK)."
+ ]
+}

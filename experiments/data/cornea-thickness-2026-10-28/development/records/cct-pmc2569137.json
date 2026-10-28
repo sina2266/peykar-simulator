@@ -1,0 +1,175 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc2569137",
+ "doi": "10.1136/bjo.2007.128504",
+ "pmcid": "PMC2569137",
+ "title": "Torsional ultrasound modality for hard nucleus phacoemulsification cataract extraction",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: 'open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited'); no licence URL in the article",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC2569137.xml",
+   "sha256": "98876ee03ed7a53593d8578836acd2ee015737f0253f817d9c26dfef3ad67394",
+   "bytes": 63123,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2569137/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related cataract with Emery-Little nuclear hardness grade IV (hard nucleus); pupil at least 7 mm, ECD above 1200 cells/mm2; diabetic retinopathy, glaucoma, AMD, uveitis and previous intraocular surgery excluded",
+ "groups": [
+  {
+   "group": "linear-torsional-plus-us",
+   "role": "treated",
+   "n_reported": 66,
+   "description": "Linear torsional combined with longitudinal ultrasound power (Lin Tor+US, Alcon Infiniti OZil), quick chop, 3.2 mm temporal clear corneal incision, DuoVisc soft-shell; randomized; single surgeon"
+  },
+  {
+   "group": "fixed-torsional",
+   "role": "treated",
+   "n_reported": 65,
+   "description": "100% fixed torsional amplitude (Fixed Tor, Alcon Infiniti OZil), quick chop, 3.2 mm temporal clear corneal incision, DuoVisc soft-shell; randomized; single surgeon"
+  },
+  {
+   "group": "us-burst",
+   "role": "control",
+   "n_reported": 67,
+   "description": "Conventional longitudinal ultrasound burst mode (US group, the study's control group; max power 60%, burst width 40 ms, off time 30 ms), quick chop, 3.2 mm temporal clear corneal incision, DuoVisc soft-shell; randomized; single surgeon"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 'Change, %' columns (µm change (SD), percent)",
+   "reason": "The same table gives absolute CCT; the absolute series are used"
+  },
+  {
+   "what": "Table 4 'F*' and 'p Value' columns",
+   "reason": "Test statistics and p-values are not admissible"
+  },
+  {
+   "what": "Table 5 incisional corneal thickness",
+   "reason": "Thickness at the incision, not central corneal thickness"
+  },
+  {
+   "what": "Tables 2, 3 and 6 (UST/CDE, BCVA, endothelial cell counts)",
+   "reason": "Not central corneal thickness"
+  }
+ ],
+ "notes": [
+  "Roles: the article randomizes two torsional (OZil) modalities against 'the control group using Ultrasound burst mode'; the torsional arms are the evaluated experimental modality (treated) and conventional US burst is the control.",
+  "Source inconsistency: in Table 4 the µm 'Change' entries do not equal the difference between the tabulated postoperative and preoperative means (same offset in all three groups at days 1 and 7, and at day 30 in the Lin Tor+US and Fixed Tor groups); the percent entries follow the µm change entries. The absolute means are cited as tabulated, per protocol.",
+  "CCT measured on a 180° single Visante OCT scan through the central light reflex (Methods, postoperative outcomes paragraph); the preoperative measuring device is not stated separately.",
+  "One incisional burn occurred in the US group; no posterior capsule rupture in any group."
+ ],
+ "series": [
+  {
+   "series_id": "linear-torsional-plus-us/cct",
+   "group": "linear-torsional-plus-us",
+   "kind": "group_mean",
+   "n": 66,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    0.9856
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye (Table 4 row 'Preop (SD)', 'Corneal thickness' column); Visante OCT 1000 (Methods)",
+   "notes": "Table 4 'Lin Tor+US' corneal-thickness column; mean (SD) in µm; post-op days 1, 7 and 30 (days/30.4375). Per-visit n not reported (66 eyes randomized).",
+   "values": [
+    531.0,
+    617.0,
+    565.0,
+    534.0
+   ],
+   "source_cells": [
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R3C2",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R4C2",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R5C2",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R6C2"
+   ],
+   "source_cell_texts": [
+    "531 (21)",
+    "617 (48)",
+    "565 (25)",
+    "534 (22)"
+   ]
+  },
+  {
+   "series_id": "fixed-torsional/cct",
+   "group": "fixed-torsional",
+   "kind": "group_mean",
+   "n": 65,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    0.9856
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye (Table 4 row 'Preop (SD)', 'Corneal thickness' column); Visante OCT 1000 (Methods)",
+   "notes": "Table 4 'Fixed Tor' corneal-thickness column; mean (SD) in µm; post-op days 1, 7 and 30 (days/30.4375). Per-visit n not reported (65 eyes randomized).",
+   "values": [
+    535.0,
+    621.0,
+    568.0,
+    535.0
+   ],
+   "source_cells": [
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R3C4",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R4C4",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R5C4",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R6C4"
+   ],
+   "source_cell_texts": [
+    "535 (26)",
+    "621 (54)",
+    "568 (32)",
+    "535 (26)"
+   ]
+  },
+  {
+   "series_id": "us-burst/cct",
+   "group": "us-burst",
+   "kind": "group_mean",
+   "n": 67,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    0.9856
+   ],
+   "baseline_label": "Preoperative CCT of the operated eye (Table 4 row 'Preop (SD)', 'Corneal thickness' column); Visante OCT 1000 (Methods)",
+   "notes": "Table 4 'US' corneal-thickness column; mean (SD) in µm; post-op days 1, 7 and 30 (days/30.4375). Per-visit n not reported (67 eyes randomized).",
+   "values": [
+    539.0,
+    633.0,
+    587.0,
+    532.0
+   ],
+   "source_cells": [
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R3C6",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R4C6",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R5C6",
+    "PMC2569137.xml::BJ1-92-08-1092-t04!R6C6"
+   ],
+   "source_cell_texts": [
+    "539 (34)",
+    "633 (60)",
+    "587 (38)",
+    "532 (20)"
+   ]
+  }
+ ]
+}

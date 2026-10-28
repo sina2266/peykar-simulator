@@ -1,0 +1,77 @@
+{
+ "study_id": "cct-pmc7556451",
+ "doi": "10.1371/journal.pone.0240458",
+ "pmcid": "PMC7556451",
+ "title": "Optical characteristics after Descemet membrane endothelial keratoplasty: 1-year results",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'distributed under the terms of the Creative Commons Attribution License', ext-link http://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7556451.xml",
+   "sha256": "f6c6bdff09b694bdfb6b0c93de3ecd2742423548986c5785020b5f525d000771",
+   "bytes": 209875,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7556451/fullTextXML"
+  }
+ ],
+ "indication": "Pseudophakic eyes with stromal edema and without stromal scarring: pseudophakic bullous keratopathy 21, Fuchs endothelial corneal dystrophy 9 (Table 1); phakic or triple DMEK, DMEK for failed PKP, amblyopia, glaucoma and macular disease excluded; all eyes had preoperative epithelial bullae or microcystic changes",
+ "groups": [
+  {
+   "group": "dmek",
+   "role": "control",
+   "n_reported": 30,
+   "procedure": "dmek",
+   "description": "DMEK by a single surgeon, Yokohama Minami Kyosai Hospital, July 2017 to March 2018: descemetorhexis of about 9.0 mm under air, under-sized pre-stripped CorneaGen grafts (7.75, 8.0 or 8.25 mm) inserted with an IOL inserter (WJ-60M), unfolded and fixed with 20% SF6 (80% fill); epithelial debridement for erosion or bullae; rebubbling for large progressive detachments (2 eyes within 2 weeks); 30 eyes of 30 patients"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dmek/cct-oct",
+   "group": "dmek",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [0, 1, 3, 6, 12],
+   "cells": [
+    "PMC7556451.xml::pone.0240458.t002!R9C2",
+    "PMC7556451.xml::pone.0240458.t002!R10C2",
+    "PMC7556451.xml::pone.0240458.t002!R11C2",
+    "PMC7556451.xml::pone.0240458.t002!R12C2",
+    "PMC7556451.xml::pone.0240458.t002!R13C2"
+   ],
+   "baseline_label": "Preoperative CCT of the DMEK eyes (Table 2 block 'CCT (μm) (mean ± SD)', row 'Preoperative', column 'DMEK eyes'); AS-OCT (CASIA, Tomey)",
+   "notes": "Table 2 rows Preoperative and Post-op month 1, 3, 6, 12, column 'DMEK eyes'; mean ± SD in µm; CCT by anterior segment OCT (CASIA) per Methods; per-visit n not tabulated (30 patients followed throughout, Results)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 column 'Control eyes' (31 age-matched phakic healthy eyes without ocular surgery)",
+   "reason": "Healthy unoperated control eyes are not admissible"
+  },
+  {
+   "what": "Table 2 block 'Peripheral CT at 9.0 mm (μm)'",
+   "reason": "Peripheral, not central, corneal thickness"
+  },
+  {
+   "what": "Table 2 column 'P-Value' and Table 2 BCVA block; Table 3 keratometric values; aberration data (Fig 1, S1 File)",
+   "reason": "p-values are not admissible; other quantities are not corneal thickness"
+  },
+  {
+   "what": "Supplementary 'S2 Table Dataset (XLSX)'",
+   "reason": "Not part of the extraction inputs (article JATS XML only) and not acquired; may contain per-eye values"
+  }
+ ],
+ "notes": [
+  "Role: standard DMEK without an investigational agent; single control-role group (the healthy comparison eyes are excluded).",
+  "Prospective study; 30 DMEK eyes of 30 patients compared with 31 healthy controls; Japanese patients only.",
+  "Flagged for review: the article lists a supplementary dataset (S2 Table, XLSX) that may hold per-eye values. The protocol prefers per-eye rows over group means when they exist; it was not acquired under the article-XML-only brief, so the Table 2 group means are used."
+ ]
+}

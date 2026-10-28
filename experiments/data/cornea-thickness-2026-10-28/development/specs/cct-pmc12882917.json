@@ -1,0 +1,83 @@
+{
+ "study_id": "cct-pmc12882917",
+ "doi": "10.1007/s40123-025-01260-6",
+ "pmcid": "PMC12882917",
+ "title": "Tomographic Differences in Thin Corneas Following DMEK in Fuchs Dystrophy: A Case–Control Study",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: 'Creative Commons Attribution-NonCommercial 4.0 International License', link https://creativecommons.org/licenses/by-nc/4.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12882917.xml",
+   "sha256": "d9f7f174ed84304e3f1ced6d2984bd786145fab6f36fe16b5d1bbb24bb81e006",
+   "bytes": 93347,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12882917/fullTextXML"
+  }
+ ],
+ "indication": "Fuchs endothelial corneal dystrophy treated by DMEK (88 eyes of 61 Caucasian patients, 2019-2022; 8 combined with phacoemulsification, 7 with repeat DMEK); inclusion required confirmed graft integration without failure at 1 year and complete graft attachment; prior refractive surgery and keratoconus excluded",
+ "groups": [
+  {
+   "group": "dmek",
+   "role": "control",
+   "n_reported": 88,
+   "procedure": "dmek",
+   "description": "Descemet membrane endothelial keratoplasty with pre-dissected eye-bank donor tissue (7.5-8.25 mm grafts, donor ECD > 2200 cells/mm2) by three surgeons, Hospital Clinic de Barcelona; retrospective; both eyes included when eligible (27 bilateral, non-simultaneous)"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dmek/cct-scheimpflug",
+   "group": "dmek",
+   "kind": "group_mean",
+   "n": 88,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "scheimpflug",
+   "months": [0, 12],
+   "cells": [
+    "PMC12882917.xml::Tab1!R9C2",
+    "PMC12882917.xml::Tab1!R15C2"
+   ],
+   "baseline_label": "Preoperative CCT of the DMEK eyes (Table 1 'At baseline (preoperative)' row 'CCT, mean (SD) µm', column 'DMEK'; footnote: baseline CCT is the preoperative measurement)",
+   "notes": "Table 1 DMEK column at baseline (preoperative) and 'At 1 year (postoperative)'; mean (SD) in µm; Scheimpflug tomography (Pentacam HR), good-quality examinations only; n = 88 eyes (Table 1 'Number of cases')"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Tab1 R12 'At 3-6 months (postoperative)' CCT of the DMEK group",
+   "reason": "Time given as a range (3-6 months)"
+  },
+  {
+   "what": "Tab1 C3 'Control' group CCT (R9, R12, R15)",
+   "reason": "Unoperated control eyes (age- and sex-matched cataract surgery candidates imaged before surgery, one averaged value per patient)"
+  },
+  {
+   "what": "Tab1 rows 'CCT < 500 µm, n (%)' and C4 p-values",
+   "reason": "Counts and p-values are not admissible values"
+  },
+  {
+   "what": "Tab2 (DMEK subgroups by 1-year CCT) and Tab3 (comparisons by sex)",
+   "reason": "Tables are images without cell XML, so no cell can be cited; Tab2 subgroups are also selected by a postoperative outcome (1-year CCT)"
+  },
+  {
+   "what": "Tab4 correlations and Results-text absolute/relative CCT change and regression results",
+   "reason": "Correlation coefficients, regression estimates and text values are not admissible table values"
+  },
+  {
+   "what": "Tab1 Pentacam indices (BAD, PPIavg, ARTmax, IHA, IHD), age and sex",
+   "reason": "Not central corneal thickness"
+  }
+ ],
+ "notes": [
+  "Outcome-conditioned cohort: the DMEK group includes only eyes with confirmed graft integration without failure at 1 year, defined as improved visual symptoms, resolution of corneal edema and normal endothelial morphology, and only completely attached grafts; eyes with graft failure or incomplete follow-up data were excluded (88 of 135 FECD DMEKs). Recorded as one standard-procedure (control) group, following the dataset's handling of cohorts that exclude graft failures; follow-up values are conditional on graft success.",
+  "For the 7 eyes that needed repeat DMEK, the article does not say whether the baseline CCT precedes the first or the final graft; 8 eyes had combined phaco-DMEK; both are pooled in the Table 1 DMEK column.",
+  "88 eyes of 61 patients (27 bilateral), so eyes are not all independent.",
+  "Endothelial cell density was not measured preoperatively in the DMEK group (Methods)."
+ ]
+}

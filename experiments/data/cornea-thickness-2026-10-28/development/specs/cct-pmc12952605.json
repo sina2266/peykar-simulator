@@ -1,0 +1,100 @@
+{
+ "study_id": "cct-pmc12952605",
+ "doi": "10.1371/journal.pone.0344183",
+ "pmcid": "PMC12952605",
+ "title": "Comparative outcomes of DSAEK and DMEK in eyes with prior Ahmed glaucoma valve implantation",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, ext-link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12952605.xml",
+   "sha256": "9dcbbbac6cf26178255265f21515c99ff9fc9cd46ee9385471d6d72bc3aaef47",
+   "bytes": 172859,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12952605/fullTextXML)"
+  }
+ ],
+ "indication": "Endothelial keratoplasty in eyes with a prior Ahmed glaucoma valve (single or multiple AGV, some with prior trabeculectomy/MIGS; POAG, secondary, uveitic, pseudoexfoliative, neovascular glaucoma, ICE syndrome; Table 1); no previous corneal transplantation; mostly pseudophakic",
+ "groups": [
+  {
+   "group": "dsaek",
+   "role": "control",
+   "n_reported": 16,
+   "procedure": "dsaek",
+   "description": "Ultrathin DSAEK (precut eye-bank tissue, graft thickness under 100 um, pull-through insertion with Endoglide or Macaluso inserter, filtered-air tamponade); technique chosen by surgeon preference; retrospective consecutive series 2020-2022"
+  },
+  {
+   "group": "dmek",
+   "role": "control",
+   "n_reported": 11,
+   "procedure": "dmek",
+   "description": "DMEK (precut, preloaded eye-bank grafts in bent-pipette glass tubes, filtered-air tamponade); technique chosen by surgeon preference; retrospective consecutive series 2020-2022"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dsaek/cct",
+   "group": "dsaek",
+   "kind": "group_mean",
+   "n": 16,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "ultrasound",
+   "months": [0, 1, 3, 6, 12],
+   "cells": [
+    "PMC12952605.xml::pone.0344183.t005!R3C2",
+    "PMC12952605.xml::pone.0344183.t005!R4C2",
+    "PMC12952605.xml::pone.0344183.t005!R5C2",
+    "PMC12952605.xml::pone.0344183.t005!R6C2",
+    "PMC12952605.xml::pone.0344183.t005!R7C2"
+   ],
+   "n_by_time": [16, 16, 16, 16, 14],
+   "baseline_label": "Preoperative CCT of the operated eye (Table 5 row 'Preoperative'); ultrasound pachymeter SP-3000, Tomey (Methods)",
+   "notes": "Table 5 column 'DSAEK (n = 16)'; mean ± standard deviation of CCT (total corneal thickness by ultrasound; host and graft are not separated). n_by_time: header n for the preoperative, 1- and 3-month rows; footnotes ‡ (6 months, n = 16) and § (12 months, n = 14); Results: eyes with graft failure by a visit were excluded from that visit's analysis."
+  },
+  {
+   "series_id": "dmek/cct",
+   "group": "dmek",
+   "kind": "group_mean",
+   "n": 11,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "ultrasound",
+   "months": [0, 1, 3, 6, 12],
+   "cells": [
+    "PMC12952605.xml::pone.0344183.t005!R3C3",
+    "PMC12952605.xml::pone.0344183.t005!R4C3",
+    "PMC12952605.xml::pone.0344183.t005!R5C3",
+    "PMC12952605.xml::pone.0344183.t005!R6C3",
+    "PMC12952605.xml::pone.0344183.t005!R7C3"
+   ],
+   "n_by_time": [11, 11, 11, 10, 10],
+   "baseline_label": "Preoperative CCT of the operated eye (Table 5 row 'Preoperative'); ultrasound pachymeter SP-3000, Tomey (Methods)",
+   "notes": "Table 5 column 'DMEK (n = 11)'; mean ± standard deviation of CCT by ultrasound. n_by_time: header n for the preoperative, 1- and 3-month rows; footnotes ‡ (6 months, n = 10) and § (12 months, n = 10); Results: eyes with graft failure by a visit were excluded from that visit's analysis."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 5 'Mean Difference (95% CI)' and 'P value' columns",
+   "reason": "Between-group differences and p-values are not admissible"
+  },
+  {
+   "what": "Table 1 'Graft thickness (µm)' (DSAEK donor graft)",
+   "reason": "Graft-only thickness of the donor tissue, not central corneal thickness of the operated eye"
+  },
+  {
+   "what": "1-week visit mentioned in Results",
+   "reason": "No 1-week CCT value is tabulated"
+  }
+ ],
+ "notes": [
+  "DSAEK and DMEK are two standard techniques chosen by surgeon preference, no investigational agent: both control-role groups with per-group procedure contexts (dsaek, dmek).",
+  "Failed grafts were removed from later visits (5/16 DSAEK and 3/11 DMEK secondary failures overall); the groups are defined by procedure, not by a postoperative outcome, so they are kept and the attrition is shown in n_by_time.",
+  "CCT was assessed by ultrasound pachymetry (SP-3000; Tomey) at follow-up visits; graft attachment by AS-OCT (ANTERION) is not a CCT source in Table 5."
+ ]
+}

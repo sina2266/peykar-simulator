@@ -1,0 +1,99 @@
+{
+ "study_id": "cct-pmc11569703",
+ "doi": "10.2147/OPTH.S488581",
+ "pmcid": "PMC11569703",
+ "title": "The Cutting Efficiency of a Hybrid Phacoemulsification Tip Using High and Low Intraocular Pressure Settings in Different Grades of Cataract",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11569703.xml",
+   "sha256": "733c03f94f09b841062dcbb1cdeb390fd659155ce53b1d8219508ad506aabe59",
+   "bytes": 43337,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11569703/fullTextXML"
+  }
+ ],
+ "indication": "Bilateral age-related cataract, LOCS III grade 3 or 4 (31 patients grade 3, 20 grade 4), adults aged 50 years or older; pseudoexfoliation, zonular dehiscence, eye trauma, rheumatoid arthritis and prior refractive surgery excluded",
+ "groups": [
+  {
+   "group": "high-iop",
+   "role": "control",
+   "n_reported": 51,
+   "procedure": "cataract",
+   "description": "Phacoemulsification with the Centurion Vision System, Active Sentry handpiece and Intrepid hybrid tip at high IOP settings (target IOP 50-65 mmHg by step, higher vacuum and aspiration; Table 1); one randomized eye of each patient, one surgeon"
+  },
+  {
+   "group": "low-iop",
+   "role": "control",
+   "n_reported": 51,
+   "procedure": "cataract",
+   "description": "Same platform, handpiece, tip and surgeon at low IOP settings (target IOP 20 mmHg, lower vacuum and aspiration in quadrant removal; Table 1); the operated contralateral eye of the same patients"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "high-iop/cct-change",
+   "group": "high-iop",
+   "kind": "group_mean",
+   "n": 51,
+   "value_kind": "cct_change",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [0, 0.0329, 0.23],
+   "cells": [
+    {"definition": "definition:Table 4 row label 'CCT Change from Preop (µm)': change from the preoperative CCT, 0 at the preoperative reference", "value": 0},
+    "PMC11569703.xml::t0004!R3C3",
+    "PMC11569703.xml::t0004!R11C3"
+   ],
+   "reference_cell": "PMC11569703.xml::t0002!R9C2",
+   "baseline_label": "Preoperative CCT of the high-IOP arm (Table 2 row 'CCT (µm)', column 'High IOP Settings')",
+   "notes": "Table 4 'Overall' rows of 'CCT Change from Preop (µm)' under POSTOPERATIVE DAY 1 and POSTOPERATIVE DAY 7 (days/30.4375); mean ± SD (range) in µm, the leading mean is used; CCT device not stated in the article; per-visit n not reported (51 eyes completed the study)"
+  },
+  {
+   "series_id": "low-iop/cct-change",
+   "group": "low-iop",
+   "kind": "group_mean",
+   "n": 51,
+   "value_kind": "cct_change",
+   "reference_kind": "patient_preoperative",
+   "method": "unstated",
+   "months": [0, 0.0329, 0.23],
+   "cells": [
+    {"definition": "definition:Table 4 row label 'CCT Change from Preop (µm)': change from the preoperative CCT, 0 at the preoperative reference", "value": 0},
+    "PMC11569703.xml::t0004!R3C4",
+    "PMC11569703.xml::t0004!R11C4"
+   ],
+   "reference_cell": "PMC11569703.xml::t0002!R9C3",
+   "baseline_label": "Preoperative CCT of the low-IOP arm (Table 2 row 'CCT (µm)', column 'Low IOP Settings')",
+   "notes": "Table 4 'Overall' rows of 'CCT Change from Preop (µm)' under POSTOPERATIVE DAY 1 and POSTOPERATIVE DAY 7 (days/30.4375); mean ± SD (range) in µm, the leading mean is used; CCT device not stated in the article; per-visit n not reported (51 eyes completed the study)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "t0004 R4, R5, R12, R13: CCT change from preop by cataract grade 3 and 4 within each arm",
+   "reason": "No grade-specific preoperative CCT is reported (Table 2 gives preoperative CCT per arm only), so these change series have no cited reference CCT"
+  },
+  {
+   "what": "Ranges in parentheses in t0002 R9 and t0004 CCT cells",
+   "reason": "Ranges are not admissible values; only the leading mean is used"
+  },
+  {
+   "what": "t0004 IOP rows, t0002 IOP, age and sex rows, t0001 and t0003 (machine settings and operative data)",
+   "reason": "Not central corneal thickness"
+  }
+ ],
+ "notes": [
+  "Prospective randomized contralateral-eye study (NCT05868772): one eye at high and the fellow eye at low IOP settings, 51 patients / 102 eyes completed; both eyes were operated, so the arms are not independent samples and neither is an unoperated fellow eye.",
+  "Role: both arms use the same commercially available platform, handpiece and hybrid tip at two fluidic settings; the article does not declare an experimental arm (Introduction frames lower IOP settings as potentially reducing postoperative complications), so both arms are recorded as control (separate groups).",
+  "CCT measurement method is not stated anywhere in the article; method recorded as 'unstated'.",
+  "Value kind cct_change: Table 4 reports only the change from the preoperative CCT; the preoperative CCT of the same arm is cited from Table 2 as the reference.",
+  "Three IOP-related adverse events resolved within a week (Results); not used. Study supported by an Alcon investigator-initiated grant."
+ ]
+}

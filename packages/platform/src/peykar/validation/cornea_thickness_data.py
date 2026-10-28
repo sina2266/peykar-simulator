@@ -44,6 +44,11 @@ MAX_MONTHS = 600.0
 MIN_CCT_UM = 300.0
 MAX_CCT_UM = 1300.0
 _ID = re.compile(r"^[a-z0-9][a-z0-9._/-]{2,120}$")
+# Thousands separators: thin, hair, narrow no-break and no-break spaces anywhere, and
+# single spaces when the whole leading token is digit groups (cell text normalizes
+# Unicode spaces to " ", so "1 087" stays 1087 while "540 30" stays 540).
+_DIGIT_GROUP = re.compile(r"(?<=\d)[\u00a0\u2009\u200a\u202f](?=\d{3}(?!\d))")
+_SPACED_GROUPS = re.compile(r"^(\d{1,3}(?: \d{3})+)(?=$|\s*[^\d\s])")
 
 
 @dataclass(frozen=True)
@@ -251,6 +256,13 @@ def structural_summary(records: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     return {"schema": f"{SCHEMA_ID}-{SCHEMA_VERSION}", "studies": studies}
 
 
+def cell_number(text: str) -> float:
+    """Leading number of a cell; comma and space thousands separators are removed."""
+    cleaned = _DIGIT_GROUP.sub("", text.strip())
+    cleaned = _SPACED_GROUPS.sub(lambda m: m.group(1).replace(" ", ""), cleaned)
+    return leading_number(cleaned.replace(",", ""))
+
+
 def build_record(spec: Mapping[str, Any], sources: Mapping[str, bytes]) -> dict[str, Any]:
     """Assemble and validate a record from a spec citing ``file::table!RrCc`` cells.
 
@@ -281,7 +293,7 @@ def build_record(spec: Mapping[str, Any], sources: Mapping[str, bytes]) -> dict[
             if name not in files:
                 raise InvalidRequest(f"Series cites unknown source {name!r}")
             text = cell_text(sources[name], location)
-            values.append(leading_number(text.replace(",", "")))
+            values.append(cell_number(text))
             cited.append(f"{name}::{location}")
             texts.append(text)
         item = {k: v for k, v in series.items() if k != "cells"}
@@ -291,7 +303,7 @@ def build_record(spec: Mapping[str, Any], sources: Mapping[str, bytes]) -> dict[
             if name not in files:
                 raise InvalidRequest(f"Reference cites unknown source {name!r}")
             reference_text = cell_text(sources[name], location)
-            item["reference_cct"] = leading_number(reference_text.replace(",", ""))
+            item["reference_cct"] = cell_number(reference_text)
             item["reference_cell_text"] = reference_text
         series_out.append(item)
     record = {

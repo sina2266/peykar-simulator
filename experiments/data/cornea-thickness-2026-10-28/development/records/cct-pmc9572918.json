@@ -1,0 +1,136 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc9572918",
+ "doi": "10.3390/jcm11195601",
+ "pmcid": "PMC9572918",
+ "title": "Descemet Stripping Automated Endothelial Keratoplasty in Thick Corneas",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'Creative Commons Attribution (CC BY) license', ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9572918.xml",
+   "sha256": "601200013d87b5cdd0151ff0d66c66b2baab8d243eeb8dd6fefd911d9c9c2cea",
+   "bytes": 49869,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9572918/fullTextXML"
+  }
+ ],
+ "indication": "Corneal endothelial dysfunction: pseudophakic bullous keratopathy 21/30, Fuchs endothelial dystrophy 4/30, blunt ocular trauma 3/30, CHED 2/30 (Table 1); triple-DSAEK in 6/30; previous corneal transplantation, glaucoma drainage valve and active infection or inflammation excluded",
+ "groups": [
+  {
+   "group": "preop-thickness-le-median",
+   "role": "control",
+   "n_reported": 15,
+   "procedure": "dsaek",
+   "indication": "baseline condition subgroup: preoperative corneal thickness at or below the cohort median (Group 1; split value stated in Results)",
+   "description": "Group 1: DSAEK with Moria ALTK-prepared lenticules (7-8 mm punch) inserted with a Busin glide, two corneal specialists, retrobulbar or general anesthesia; ofloxacin 1 month and prednisolone acetate 1%; triple-DSAEK in 3"
+  },
+  {
+   "group": "preop-thickness-gt-median",
+   "role": "control",
+   "n_reported": 15,
+   "procedure": "dsaek",
+   "indication": "baseline condition subgroup: preoperative corneal thickness above the cohort median (Group 2)",
+   "description": "Group 2: same DSAEK technique and aftercare; triple-DSAEK in 3"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 block 'Recipient corneal thickness, RCT (μm)' (R8-R10)",
+   "reason": "Recipient-only thickness; protocol uses the total central corneal thickness for DSAEK"
+  },
+  {
+   "what": "Table 2 block 'Graft thickness, GT (μm)' (R11-R13)",
+   "reason": "Graft-only thickness"
+  },
+  {
+   "what": "Table 1 and Table 2 'p-Value' columns",
+   "reason": "p-values are not admissible values"
+  },
+  {
+   "what": "Table 2 BCVA and ECD blocks; Table 1 donor ECD",
+   "reason": "Not corneal thickness"
+  },
+  {
+   "what": "Results text values for eyes with and without bullous keratopathy (preoperative, 1 and 12 months)",
+   "reason": "Given in text only (no table cell) and grouped differently from the tabulated groups"
+  }
+ ],
+ "notes": [
+  "Retrospective study of 30 eyes of 30 patients (January 2017 to December 2018), two corneal surgeons; groups are split at the cohort median preoperative corneal thickness, a baseline patient condition, so both are control (group naming follows the median split; the endothelium dataset names the same groups by the stated value).",
+  "The groups are defined by the reference value itself (median split of preoperative thickness).",
+  "Table 1 labels the reference 'Preoperative corneal thickness' without 'central'; Methods: preoperative corneal thickness, recipient corneal thickness and graft thickness were assessed with AS-OCT (Carl Zeiss Meditec). The postoperative total is labelled 'Central cornea thickness'. Flagged for review.",
+  "Table 1 reference cells contain the literal text '(range)' after mean ± SD without range numbers; only the leading mean is read.",
+  "Triple-DSAEK (combined phacoemulsification and IOL) in 3 eyes per group; procedure context dsaek."
+ ],
+ "series": [
+  {
+   "series_id": "preop-thickness-le-median/cct-oct",
+   "group": "preop-thickness-le-median",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    1,
+    12
+   ],
+   "baseline_label": "Preoperative corneal thickness (Table 1 row 'Preoperative corneal thickness (μm)', column Group 1); AS-OCT (Carl Zeiss Meditec)",
+   "notes": "Reference from Table 1; follow-ups from Table 2 block 'Central cornea thickness (μm)' rows 1 month and 12 months, the total thickness distinct from the recipient and graft rows; mean ± SD; per-visit n not reported",
+   "values": [
+    707.6,
+    625.0,
+    638.0
+   ],
+   "source_cells": [
+    "PMC9572918.xml::jcm-11-05601-t001!R11C2",
+    "PMC9572918.xml::jcm-11-05601-t002!R15C2",
+    "PMC9572918.xml::jcm-11-05601-t002!R16C2"
+   ],
+   "source_cell_texts": [
+    "707.6 ± 63.6 (range)",
+    "625 ± 60",
+    "638 ± 53"
+   ]
+  },
+  {
+   "series_id": "preop-thickness-gt-median/cct-oct",
+   "group": "preop-thickness-gt-median",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "oct",
+   "months": [
+    0,
+    1,
+    12
+   ],
+   "baseline_label": "Preoperative corneal thickness (Table 1 row 'Preoperative corneal thickness (μm)', column Group 2); AS-OCT (Carl Zeiss Meditec)",
+   "notes": "Reference from Table 1; follow-ups from Table 2 block 'Central cornea thickness (μm)' rows 1 month and 12 months, the total thickness distinct from the recipient and graft rows; mean ± SD; per-visit n not reported",
+   "values": [
+    924.0,
+    742.0,
+    648.0
+   ],
+   "source_cells": [
+    "PMC9572918.xml::jcm-11-05601-t001!R11C3",
+    "PMC9572918.xml::jcm-11-05601-t002!R15C3",
+    "PMC9572918.xml::jcm-11-05601-t002!R16C3"
+   ],
+   "source_cell_texts": [
+    "924.0 ± 80.7 (range)",
+    "742 ± 143",
+    "648 ± 75"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "schema": "cornea.central-thickness-record-1.0.0",
+ "study_id": "cct-pmc6302480",
+ "doi": "10.1186/s12886-018-0998-5",
+ "pmcid": "PMC6302480",
+ "title": "Quantitative evaluation of corneal epithelial edema after cataract surgery using corneal densitometry: a prospective study",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'distributed under the terms of the Creative Commons Attribution 4.0 International License', link http://creativecommons.org/licenses/by/4.0/; CC0 waiver for data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6302480.xml",
+   "sha256": "604d4c281d5c3360349d00bc85bbcad9be6b0809b7e3aee88ac6ac729975227c",
+   "bytes": 69911,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6302480/fullTextXML"
+  }
+ ],
+ "indication": "Nuclear cataract of grade 2 or above (Results: posterior subcapsular opacity in 16, cortical opacity in 34 and mature cataract in 4 of 54 eyes); eyes with ocular surface disease (dry eye, superficial punctate keratopathy) excluded",
+ "groups": [
+  {
+   "group": "all",
+   "role": "control",
+   "n_reported": 54,
+   "procedure": "cataract",
+   "description": "Phacoemulsification and aspiration through a 2.4-mm small incision (Infiniti, Alcon), single surgeon, topical anesthesia; 54 eyes of 34 patients, National Defense Medical College, July 2012 to October 2013; all surgeries uneventful (Results)"
+  }
+ ],
+ "extraction_protocol": "thickness-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 1 rows 'BVCA (LogMAR)' and 'Intraocular pressure(mmHg)'",
+   "reason": "Not central corneal thickness"
+  },
+  {
+   "what": "Results text, Abstract and Fig. 3 'total corneal thickness at the corneal apex' before surgery and on days 1, 3 and 7",
+   "reason": "Values given in text and figure only (no table cell); Table 1 'Central corneal thickness' is cited instead"
+  },
+  {
+   "what": "Corneal densitometry readings (Fig. 1, Additional file 1, Results text)",
+   "reason": "Light-scatter scores, not corneal thickness"
+  },
+  {
+   "what": "Significance markers (* and **) in Table 1 cells",
+   "reason": "p-value annotations are not admissible values; only the leading mean of each cell is read"
+  }
+ ],
+ "notes": [
+  "Single cohort with standard phacoemulsification and no investigational arm: role control.",
+  "The Results text, Abstract and Fig. 3 report 'total corneal thickness at the corneal apex' with numbers that differ slightly from Table 1 'Central corneal thickness (μm)'; the protocol requires table cells, so Table 1 is cited. The reason for the difference is not stated.",
+  "54 eyes of 34 patients: both eyes of some patients are included, so eyes are not independent.",
+  "Statistics used Friedman's test with Bonferroni correction, but Table 1 reports mean ± SD."
+ ],
+ "series": [
+  {
+   "series_id": "all/cct-scheimpflug",
+   "group": "all",
+   "kind": "group_mean",
+   "n": 54,
+   "value_kind": "cct_absolute",
+   "reference_kind": "patient_preoperative",
+   "method": "scheimpflug",
+   "months": [
+    0,
+    0.0329,
+    0.0986,
+    0.23
+   ],
+   "baseline_label": "Preoperative CCT (Table 1 row 'Central corneal thickness (μm)', column 'Preoperative'); Pentacam measurement before cataract surgery (Methods)",
+   "notes": "Table 1 columns Preoperative and Postoperative Day1, Day3, Day7 (days converted as days/30.4375); mean ± SD in µm; corneal thickness by Pentacam rotating Scheimpflug camera (Methods); per-visit n not reported (54 eyes enrolled, no perioperative complications)",
+   "values": [
+    550.1,
+    588.3,
+    567.8,
+    561.1
+   ],
+   "source_cells": [
+    "PMC6302480.xml::Tab1!R4C2",
+    "PMC6302480.xml::Tab1!R4C3",
+    "PMC6302480.xml::Tab1!R4C4",
+    "PMC6302480.xml::Tab1!R4C5"
+   ],
+   "source_cell_texts": [
+    "550.1 ± 32.4",
+    "588.3 ± 53.9**",
+    "567.8 ± 29.9",
+    "561.1 ± 31.9"
+   ]
+  }
+ ]
+}
