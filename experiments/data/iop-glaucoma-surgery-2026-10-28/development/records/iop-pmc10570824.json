@@ -1,0 +1,140 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc10570824",
+ "doi": "10.3389/fmed.2023.1266532",
+ "pmcid": "PMC10570824",
+ "title": "Comparison of surgical outcomes between iStent inject W implantation and microhook ab interno trabeculotomy in combination with phacoemulsification in primary open-angle glaucoma patients",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY (article <license>: 'Creative Commons Attribution License (CC BY)'; no version number or licence URL given in the XML)"
+ },
+ "source_files": [
+  {
+   "name": "PMC10570824.xml",
+   "sha256": "acd6c23e2068fa57ef1a757976f12a59660cf34aabc0049a653d24130011c8d6",
+   "bytes": 58815,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "primary open-angle glaucoma (including normal-tension glaucoma eyes) without previous ocular surgery, adults >= 18 years; phacoemulsification combined with an angle procedure; retrospective multicenter comparative case series (Japan)",
+ "groups": [
+  {
+   "group": "ulot-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 39,
+   "description": "microhook ab interno trabeculotomy (Tanito microhook, about 4 clock hours nasal) combined with phacoemulsification (muLOT-Phaco); n eyes from Table 1 (tab1!R2C2)"
+  },
+  {
+   "group": "istent-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 55,
+   "description": "iStent inject W (two stents, nasal quadrant) combined with phacoemulsification (iStent-Phaco); n eyes from Table 1 (tab1!R2C3)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 'Change from baseline (%)' columns (tab2 C3 and C6)",
+   "reason": "the same table gives absolute IOP; absolute series used (brief rule)"
+  },
+  {
+   "what": "Table 2 P value columns (C4, C7, C8 with 95% CI)",
+   "reason": "p-values and confidence intervals are not admissible values"
+  },
+  {
+   "what": "Kaplan-Meier success probabilities (Figure 1, text)",
+   "reason": "success proportions / Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Table 3 and Table 4 (number and classes of glaucoma medications)",
+   "reason": "medication counts are not IOP series in schema 1.0.0; mentioned in notes only"
+  },
+  {
+   "what": "Table 5 postoperative complications (including transient IOP elevation counts)",
+   "reason": "counts are not admissible"
+  }
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': Methods state that all glaucoma medications were stopped at the time of surgery (and re-added postoperatively at the surgeon's discretion); Table 1 tabulates the preoperative number of IOP-lowering medications (tab1!R6C2, tab1!R6C3); no washout described.",
+  "Tonometer not stated in the article (no Goldmann, rebound or other tonometer named), so method 'unstated'.",
+  "Glaucoma medication numbers are tabulated preoperatively (Table 1) and at 3/6/12 months (Table 3); not extracted (schema 1.0.0 has no medication series).",
+  "Only the first operated eye per patient was analyzed; surgeon chose the procedure; both arms are standard techniques compared without an investigational agent, so both are 'control' groups.",
+  "Surgical failure definition used only for Kaplan-Meier analysis; no outcome-defined analysis set applied to the Table 2 means as far as stated."
+ ],
+ "series": [
+  {
+   "series_id": "ulot-phaco/iop",
+   "group": "ulot-phaco",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline row of Table 2 (same cell text as 'Preoperative IOP (mmHg)' in Table 1, tab1!R5C2)",
+   "notes": "Table 2 column 'IOP (mmHg)' under muLOT-Phaco; mean ± SD (Methods: all data expressed as mean ± SD); rows Baseline, Month 3, Month 6, Month 12; per-visit n not tabulated (a minimum 6-month follow-up was an inclusion criterion; the text gives 12-month medication-free eye counts implying fewer eyes at 12 months, ordinary attrition)",
+   "values": [
+    16.2,
+    12.7,
+    12.5,
+    13.2
+   ],
+   "source_cells": [
+    "PMC10570824.xml::tab2!R3C2",
+    "PMC10570824.xml::tab2!R4C2",
+    "PMC10570824.xml::tab2!R5C2",
+    "PMC10570824.xml::tab2!R6C2"
+   ],
+   "source_cell_texts": [
+    "16.2 ± 4.4",
+    "12.7 ± 2.9",
+    "12.5 ± 2.6",
+    "13.2 ± 3.2"
+   ]
+  },
+  {
+   "series_id": "istent-phaco/iop",
+   "group": "istent-phaco",
+   "kind": "group_mean",
+   "n": 55,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline row of Table 2 (same cell text as 'Preoperative IOP (mmHg)' in Table 1, tab1!R5C3)",
+   "notes": "Table 2 column 'IOP (mmHg)' under iStent-Phaco; mean ± SD; rows Baseline, Month 3, Month 6, Month 12; per-visit n not tabulated (minimum 6-month follow-up inclusion criterion; fewer eyes at 12 months per text, ordinary attrition)",
+   "values": [
+    15.0,
+    12.4,
+    12.5,
+    13.2
+   ],
+   "source_cells": [
+    "PMC10570824.xml::tab2!R3C5",
+    "PMC10570824.xml::tab2!R4C5",
+    "PMC10570824.xml::tab2!R5C5",
+    "PMC10570824.xml::tab2!R6C5"
+   ],
+   "source_cell_texts": [
+    "15.0 ± 3.8",
+    "12.4 ± 2.6",
+    "12.5 ± 2.3",
+    "13.2 ± 2.4"
+   ]
+  }
+ ]
+}

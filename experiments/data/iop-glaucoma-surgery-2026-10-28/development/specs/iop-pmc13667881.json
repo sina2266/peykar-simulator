@@ -1,0 +1,100 @@
+{
+ "study_id": "iop-pmc13667881",
+ "doi": "10.4103/IJO.IJO_3349_25",
+ "pmcid": "PMC13667881",
+ "title": "Gonioscopy-assisted transluminal trabeculotomy with phacoemulsification in high myopia versus non-high myopia with open-angle glaucoma—A comparative study",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license> and ali:license_ref); not CC BY, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13667881.xml",
+   "sha256": "cc02134658e2922ca438734cdbace570f53a1fa4da066cdc26a1b6e565ebd1ad",
+   "bytes": 88688,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "open-angle glaucoma with significant cataract, stratified by axial length into high myopia and non-high myopia (secondary OAG and prior ocular surgery excluded)",
+ "design": "retrospective comparative study at one tertiary centre, minimum follow-up 12 months",
+ "groups": [
+  {
+   "group": "high-myopia",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 36,
+   "indication": "open-angle glaucoma with high myopia (axial length and spherical equivalent criteria; Table 2 'Group1')",
+   "description": "360-degree GATT combined with phacoemulsification"
+  },
+  {
+   "group": "non-high-myopia",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 40,
+   "indication": "open-angle glaucoma without high myopia (Table 2 'Group2')",
+   "description": "360-degree GATT combined with phacoemulsification"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "high-myopia/iop",
+   "group": "high-myopia",
+   "kind": "group_mean",
+   "n": 36,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.46, 1, 3, 6, 12],
+   "cells": [
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R4C3",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R5C3",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R6C3",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R7C3",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R8C3",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R9C3"
+   ],
+   "baseline_label": "Pre-op IOP (Table 2, Group1 Mean (SD))",
+   "notes": "mean (SD); per-visit n not reported (inclusion required at least 12 months of follow-up)"
+  },
+  {
+   "series_id": "non-high-myopia/iop",
+   "group": "non-high-myopia",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.46, 1, 3, 6, 12],
+   "cells": [
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R4C9",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R5C9",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R6C9",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R7C9",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R8C9",
+    "PMC13667881.xml::IJO.IJO_3349_25-T2!R9C9"
+   ],
+   "baseline_label": "Pre-op IOP (Table 2, Group2 Mean (SD))",
+   "notes": "mean (SD); per-visit n not reported (inclusion required at least 12 months of follow-up)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 'Reduction %' columns (C5, C11)", "reason": "percent change duplicates the absolute IOP series of the same eyes"},
+  {"what": "Table 2 P a and P b columns", "reason": "p-values (mixed-effect model) are not admissible"},
+  {"what": "Table 1 preoperative IOP (mean (SD) with min-max)", "reason": "same baseline as Table 2 (duplicate); ranges are not admissible"},
+  {"what": "Table 5 cumulative probability of success", "reason": "Kaplan-Meier estimates and success proportions are not admissible"},
+  {"what": "Tables 3 and 4 (medications, BCVA)", "reason": "not IOP"}
+ ],
+ "notes": [
+  "Week 2 = 14/30.4375 months = 0.46 (4 decimals).",
+  "Both groups are patient subgroups defined by a preoperative condition (axial length); role control with the condition in the group indication.",
+  "Preoperative IOP on the usual anti-glaucoma medications (preoperative AGM tabulated in Tables 1 and 3); tonometer Goldmann applanation (Methods).",
+  "Medication: mean (SD) AGM per visit is tabulated in Table 3; not extracted.",
+  "Topical pilocarpine twice daily for 2 months after surgery (postoperative regimen).",
+  "Five eyes required anterior chamber washout for hyphema in the first week; the article does not state any exclusion of these eyes from the IOP means.",
+  "Right and left eyes are tabulated; the mixed-effect model treats the patient as a random effect."
+ ]
+}

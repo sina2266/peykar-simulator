@@ -1,0 +1,98 @@
+{
+ "study_id": "iop-pmc10488869",
+ "doi": "10.3390/jcm12175711",
+ "pmcid": "PMC10488869",
+ "title": "First-Generation iStent Bypass Implantation versus ab Externo Canaloplasty Combined with Phacoemulsification in Patients with Primary Open Angle Glaucoma\u201412-Month Follow-Up",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10488869.xml",
+   "sha256": "8c443b54519716efc23567c8abc032c2fe36b60d824780e7c4fa39c9c510c108",
+   "bytes": 137629,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "mild-to-moderate primary open-angle glaucoma with visually significant cataract, target IOP not reached on maximum tolerated medication; no previous glaucoma surgery (prospective, non-randomized, single surgeon)",
+ "groups": [
+  {
+   "group": "phaco-istent",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 69,
+   "description": "phacoemulsification combined with first-generation iStent trabecular micro-bypass implantation (ab interno, inferonasal quadrant); one eye per patient"
+  },
+  {
+   "group": "phaco-canaloplasty",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 69,
+   "description": "phacoemulsification combined with 360-degree ab externo canaloplasty (microcatheter and tensioning suture under two scleral flaps); one eye per patient"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "phaco-istent/iop",
+   "group": "phaco-istent",
+   "kind": "group_mean",
+   "n": 69,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.46, 1, 3, 6, 12],
+   "cells": [
+    "PMC10488869.xml::jcm-12-05711-t002!R2C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R3C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R4C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R5C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R6C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R7C2",
+    "PMC10488869.xml::jcm-12-05711-t002!R8C2"
+   ],
+   "baseline_label": "Baseline (Table 2, row 'Baseline')",
+   "notes": "mean \u00b1 SD (table footnote); rows 1 day, 14 days, 1, 3, 6, 12 months; per-visit n not reported (n = eyes in group, Table 1)"
+  },
+  {
+   "series_id": "phaco-canaloplasty/iop",
+   "group": "phaco-canaloplasty",
+   "kind": "group_mean",
+   "n": 69,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.46, 1, 3, 6, 12],
+   "cells": [
+    "PMC10488869.xml::jcm-12-05711-t002!R2C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R3C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R4C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R5C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R6C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R7C3",
+    "PMC10488869.xml::jcm-12-05711-t002!R8C3"
+   ],
+   "baseline_label": "Baseline (Table 2, row 'Baseline')",
+   "notes": "mean \u00b1 SD (table footnote); rows 1 day, 14 days, 1, 3, 6, 12 months; per-visit n not reported (n = eyes in group, Table 1)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 columns C4 (mean or median difference with 95% CI) and C5 (p)", "reason": "between-group differences and p-values are not admissible (protocol inclusion 3)"},
+  {"what": "Table 1 'Median (Q1; Q3)' columns, including the baseline IOP median", "reason": "medians/IQR are not admissible; the baseline mean is taken from Table 2"},
+  {"what": "Table 3 (proportion with >20% IOP reduction at 12 months)", "reason": "success proportions/counts are not admissible"},
+  {"what": "Table 5 (complete/qualified surgical success and failure)", "reason": "success proportions/counts are not admissible"},
+  {"what": "Figure 1 (IOP over time)", "reason": "graphical only; the tabulated values in Table 2 are used"},
+  {"what": "day-7 visit described in Methods 2.3", "reason": "not tabulated; no cell to cite"}
+ ],
+ "notes": [
+  "Reference: Discussion states patients had no washout before surgery and baseline IOP was at maximum tolerated therapy; antiglaucoma drops were stopped on the day of surgery and resumed postoperatively if target IOP was not reached.",
+  "Tonometry: Goldmann by an experienced operator; two readings averaged, a third taken and the median recorded if the two differed by more than 2 mmHg (Methods 2.1).",
+  "Both arms are standard angle procedures combined with phacoemulsification without an investigational agent, so both are control groups (protocol: two standard techniques compared).",
+  "Number of antiglaucoma medications is tabulated in Table 4 and baseline in Table 1 R11 (not extracted; schema 1.0.0 has no medication series).",
+  "Day conversions: 1 day = 0.0329 months, 14 days = 0.46 months (days/30.4375, 4 decimals)."
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "study_id": "iop-pmc11853766",
+ "doi": "10.2147/OPTH.S498940",
+ "pmcid": "PMC11853766",
+ "title": "Comparing the Effectiveness of Propensity Score-Matched Ab Interno Trabeculotomy Between Two Types of Trabecular Hooks",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 unported, incorporated in Dove Medical Press terms (article <license>); non-commercial, therefore private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11853766.xml",
+   "sha256": "9a4016531a630bf3e78676f3ccd9a991b00bf46fa5f590808785b985cbdd36a7",
+   "bytes": 84553,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "glaucoma with concurrent cataract, progression not controlled by medication alone, no previous glaucoma surgery: POAG, NTG, PXG, secondary open-angle and chronic angle-closure glaucoma; KDB and TMH eyes propensity-score matched 1:1 on preoperative medication score and disease type; minimum follow-up 6 months; retrospective single-center (Japan)",
+ "groups": [
+  {
+   "group": "kdb-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 24,
+   "description": "ab interno trabeculotomy with the Kahook Dual Blade (about 3-6 clock hours) after phacoemulsification; 24 eyes of 19 patients (t0001!R2C2)"
+  },
+  {
+   "group": "tmh-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 24,
+   "description": "ab interno trabeculotomy with the Tanito microhook (about 3-8 clock hours) after phacoemulsification; 24 eyes of 17 patients (t0001!R2C3)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "kdb-phaco/iop",
+   "group": "kdb-phaco",
+   "kind": "group_mean",
+   "n": 24,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC11853766.xml::t0002!R3C2",
+    "PMC11853766.xml::t0002!R4C2",
+    "PMC11853766.xml::t0002!R5C2",
+    "PMC11853766.xml::t0002!R6C2"
+   ],
+   "baseline_label": "Table 2 row 'Baseline' (Methods: baseline IOP = final IOP measured preoperatively; same cell text as Table 1 'IOP (mmHg), mean ± SD', t0001!R7C2)",
+   "notes": "column 'IOP at each time point (mmHg), mean ± SD' under 'KDB Group (n=24)'; rows 1 month, 3 months (± 2 weeks), 6 months (± 4 weeks); per-visit n not tabulated; Table 6 reports additional glaucoma filtration surgery in 1 KDB eye, and the article does not state whether that eye's IOP was censored or kept in the Table 2 means"
+  },
+  {
+   "series_id": "tmh-phaco/iop",
+   "group": "tmh-phaco",
+   "kind": "group_mean",
+   "n": 24,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC11853766.xml::t0002!R3C5",
+    "PMC11853766.xml::t0002!R4C5",
+    "PMC11853766.xml::t0002!R5C5",
+    "PMC11853766.xml::t0002!R6C5"
+   ],
+   "baseline_label": "Table 2 row 'Baseline' (same cell text as Table 1 'IOP (mmHg), mean ± SD', t0001!R7C3)",
+   "notes": "column 'IOP at each time point (mmHg), mean ± SD' under 'TMH Group (n=24)'; rows 1 month, 3 months (± 2 weeks), 6 months (± 4 weeks); per-visit n not tabulated; Table 6 reports additional glaucoma filtration surgery in 4 TMH eyes, and the article does not state whether their IOP was censored or kept in the Table 2 means"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 '% change from the baseline' columns (C3, C6)", "reason": "the same table gives absolute IOP; absolute series used (brief rule)"},
+  {"what": "Table 2 p-value columns (C4, C7, C8)", "reason": "p-values are not admissible"},
+  {"what": "Table 3 medication scores", "reason": "medication numbers are not IOP series in schema 1.0.0; noted only"},
+  {"what": "Table 4 regression associations", "reason": "coefficients and p-values are not admissible series"},
+  {"what": "Table 5 survival rates and 95% confidence intervals (Figure 1)", "reason": "success proportions / Kaplan-Meier estimates are not admissible"},
+  {"what": "Table 6 complications (transient IOP spike, additional filtration surgery, hyphema counts)", "reason": "counts are not admissible"}
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': surgery was indicated for progression not controlled with medication alone, preoperative medication scores are tabulated (t0001!R6C2, t0001!R6C3), the baseline IOP is the last preoperative IOP, IOP-lowering medications were re-administered postoperatively on the surgeon's recommendation; no washout described.",
+  "Tonometer not stated in the article, so method 'unstated'.",
+  "Both arms are standard ab interno trabeculotomy instruments chosen at the surgeon's discretion, compared without an investigational agent, so both are 'control' groups; both eyes of some patients are included (24 eyes of 19 and of 17 patients).",
+  "Selection: propensity matching on preoperative covariates (medication score, disease type) and a minimum 6-month follow-up; no postoperative-outcome selection of the Table 2 analysis set is stated.",
+  "Medication scores (combination drops = 2, oral acetazolamide = 1) are tabulated in Table 3 (not extracted)."
+ ]
+}

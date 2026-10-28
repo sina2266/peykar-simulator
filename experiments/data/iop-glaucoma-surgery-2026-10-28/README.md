@@ -47,3 +47,54 @@ had been read. Records use schema `eye.iop-record-1.0.0`
 (`peykar.validation.eye_iop_data`) and are built from cell-citing specs by
 `scripts/build_iop_record.py`. Sealed studies are extracted by separate custodians
 and stay private until the evaluation protocol is frozen.
+
+## Extraction outcome (2026-10-28)
+
+Four development extractors and three sealed custodians (sub-agents) worked from
+`.peykar/iop-extraction-brief.md` and protocol 1.0.0.
+
+**Development:** 54 specs (`development/specs/`; cells cited, no values copied)
+and **47 records with 101 series**:
+
+- 95 control and 6 treated series;
+- 82 group means and 19 single eyes.
+
+The 23 CC BY records are in `development/records/`, with their source XML in
+`development/raw/`. The 24 non-commercial, share-alike, no-derivatives or
+publisher-licensed records are private. Seven studies have no record:
+
+- `iop-pmc11897240`: medians only.
+- `iop-pmc12206618`, `iop-pmc4417344`, `iop-pmc5892968`, `iop-pmc9328986`: means
+  computed after removing eyes with reoperation or repeat laser, or an inclusion
+  rule requiring no additional procedure. These are outcome-selected sets.
+- `iop-pmc12611114` (rabbits): the implant-extrusion eye was left out, and the
+  control eyes are unoperated fellow eyes.
+- `iop-pmc9641924`: only percent *reductions*, whose sign is opposite to schema
+  1.0.0's `percent_change`; the builder does not transform values.
+
+**Sealed:** the custodians built **25 records with 68 series** (44 group means and
+24 single eyes) and reported only structure and hashes. Seven studies were
+excluded:
+
+- five were censored at additional surgery or outcome-selected (`iop-pmc10471744`,
+  `iop-pmc6680218`, `iop-pmc12858626`, `iop-pmc13059178`, `iop-pmc12932313`);
+- `iop-pmc9880568`: values limited to eyes that needed no further intervention;
+- `iop-pmc8544104`: medians only.
+
+How the rules were applied, the same way in both splits:
+
+- **Censoring.** Censoring IOP at additional glaucoma surgery makes later visits an
+  outcome-selected set (inclusion 4). When censoring starts after some visits that
+  still have the full baseline number of eyes, those visits are kept and later ones
+  excluded (development `iop-pmc6886553`, `iop-pmc8745353`; sealed
+  `iop-pmc13262184`). Otherwise the study has no record.
+- **Subgroups.** A whole cohort tabulated with its preoperative subgroups is
+  extracted as subgroups, so no eye is counted twice.
+- **Imputed values.** An arm whose follow-up means were LOCF-imputed, including
+  reoperated eyes, was excluded (`iop-pmc12325217`, kept for the other arm).
+
+Builder correction: `iop_number` in `eye_iop_data` reads decimal commas ("15,3 ±
+4,2" is 15.3 mmHg). A comma before three digits stays a thousands separator.
+After the correction, all 46 development records built so far and all 25 sealed
+records rebuilt byte-identical; sealed records were compared by SHA-256 only.
+`iop-pmc7125472`, which uses decimal commas throughout, was then built.

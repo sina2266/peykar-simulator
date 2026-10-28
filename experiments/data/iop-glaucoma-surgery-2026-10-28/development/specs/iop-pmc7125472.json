@@ -1,0 +1,91 @@
+{
+ "study_id": "iop-pmc7125472",
+ "doi": "10.1155/2020/4796548",
+ "pmcid": "PMC7125472",
+ "title": "Comparing Medium-Term Clinical Outcomes following XEN\u00ae 45 and XEN\u00ae 63 Device Implantation",
+ "species": "human",
+ "procedure": "subconjunctival_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7125472.xml",
+   "sha256": "e48176e0157f790d4e9cb539ec9073868e16c85ad3350d6b9c37a43f712fd71d",
+   "bytes": 62436,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "primary open-angle glaucoma, poor IOP control or progression on medication; no eye surgery other than cataract (retrospective, single surgeon, one eye per patient, at least 12 months follow-up)",
+ "groups": [
+  {
+   "group": "xen45",
+   "role": "control",
+   "procedure": "subconjunctival_mims",
+   "n_reported": 40,
+   "description": "ab interno XEN 45 gel stent with subconjunctival mitomycin C (0.1 ml of 0.02 mg/ml); standalone or combined with cataract surgery (combined in most eyes, Table 1)"
+  },
+  {
+   "group": "xen63",
+   "role": "control",
+   "procedure": "subconjunctival_mims",
+   "n_reported": 34,
+   "description": "ab interno XEN 63 gel stent (earlier commercial model) with subconjunctival mitomycin C (0.1 ml of 0.02 mg/ml); standalone or combined with cataract surgery (combined in most eyes, Table 1)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "extraction_decision": "series admissible under the protocol, but the record was not built: Table 2 cells use decimal commas, which the current builder's cell parser strips as thousands separators, so the build is refused (reference outside 5..80 mmHg). No value was entered by hand; a builder change is the owner's decision.",
+ "series": [
+  {
+   "series_id": "xen45/iop",
+   "group": "xen45",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 12, 24, 36],
+   "cells": [
+    "PMC7125472.xml::tab2!R3C3",
+    "PMC7125472.xml::tab2!R4C3",
+    "PMC7125472.xml::tab2!R5C3",
+    "PMC7125472.xml::tab2!R6C3"
+   ],
+   "baseline_label": "Preop (baseline) (Table 2 R3)",
+   "notes": "cells 'mean \u00b1 SD (range)' with decimal commas under header 'mean value (range)'; ranges not used; per-visit N (number of eyes) in Table 2 column C2 (ordinary attrition at 24 and 36 months)"
+  },
+  {
+   "series_id": "xen63/iop",
+   "group": "xen63",
+   "kind": "group_mean",
+   "n": 34,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 12, 24, 36],
+   "cells": [
+    "PMC7125472.xml::tab2!R3C5",
+    "PMC7125472.xml::tab2!R4C5",
+    "PMC7125472.xml::tab2!R5C5",
+    "PMC7125472.xml::tab2!R6C5"
+   ],
+   "baseline_label": "Preop (baseline) (Table 2 R3)",
+   "notes": "cells 'mean \u00b1 SD (range)' with decimal commas under header 'Mean value (range)'; ranges not used; per-visit N (number of eyes) in Table 2 column C2 (ordinary attrition at 24 and 36 months)"
+  }
+ ],
+ "exclusions": [
+  {"what": "ranges in parentheses in Table 2 columns C3 and C5", "reason": "ranges are not admissible"},
+  {"what": "Table 2 columns C4, C6 and C7 (p values)", "reason": "p-values are not admissible"},
+  {"what": "Table 2 visual field, RNFL and medication blocks (R8-R24)", "reason": "not IOP; medication counts are notes only"},
+  {"what": "Results/Abstract percent medication reductions", "reason": "not IOP; medication data are notes only"}
+ ],
+ "notes": [
+  "Reference kind: surgery was indicated for poor IOP control or progression on medication; patients used glaucoma medications preoperatively (Table 2 R21, range includes eyes on none) and no washout is described.",
+  "Tonometry: Goldmann (Methods).",
+  "Roles: the two stent models were allocated by commercial availability (XEN 63 first, then XEN 45) and neither is declared experimental; both are control groups.",
+  "Bleb needling was required in two XEN 45 eyes; the article does not state that they were removed from the visit means, so no outcome-defined exclusion applies.",
+  "Mean number of glaucoma medications per visit is tabulated in Table 2 R21-R24 (not extracted)."
+ ]
+}

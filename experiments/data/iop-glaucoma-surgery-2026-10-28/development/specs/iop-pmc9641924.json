@@ -1,0 +1,80 @@
+{
+ "study_id": "iop-pmc9641924",
+ "doi": "10.1186/s12886-022-02668-5",
+ "pmcid": "PMC9641924",
+ "title": "Comparison of surgical outcomes with and without Ologen collagen matrix augmentation during XEN gel stent implantation",
+ "species": "human",
+ "procedure": "subconjunctival_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9641924.xml",
+   "sha256": "6c94bc5312f9fbe9f236a0a5bee5215d12278dd2355bceb8bc9e1ae65de72ac8",
+   "bytes": 95814,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9641924/fullTextXML)"
+  }
+ ],
+ "indication": "open-angle glaucoma (primary and secondary open-angle glaucoma) progressing or uncontrolled on maximum tolerated medical therapy, some eyes after previous trabeculectomy; ab externo XEN gel stent with 0.04% mitomycin C, standalone or combined with phacoemulsification, with or without Ologen collagen matrix augmentation (allocation by period of device availability); retrospective, one eye per patient",
+ "groups": [
+  {
+   "group": "oloxen",
+   "role": "treated",
+   "n_reported": 42,
+   "description": "Standalone XEN with Ologen augmentation (Table 3 column C2 'Oloxen')"
+  },
+  {
+   "group": "xen",
+   "role": "control",
+   "n_reported": 30,
+   "description": "Standalone XEN without Ologen (Table 3 column C3 'Xen')"
+  },
+  {
+   "group": "phaco-oloxen",
+   "role": "treated",
+   "n_reported": 19,
+   "description": "XEN combined with phacoemulsification, with Ologen augmentation (Table 3 column C5 'Phaco-Oloxen')"
+  },
+  {
+   "group": "phacoxen",
+   "role": "control",
+   "n_reported": 12,
+   "description": "XEN combined with phacoemulsification, without Ologen (Table 3 column C6 'PhacoXen')"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "decision": "no admissible series; no record written",
+ "series": [],
+ "exclusions": [
+  {
+   "what": "Table 3 (Tab3) rows R3 to R8 (1 day, 1 week, 3 weeks, 6 weeks, 3 months, 6 months), columns C2, C3, C5 and C6",
+   "reason": "the cells report 'IOP reduction (%) from baseline' (caption; positive values mean a lower IOP), which is the negative of the protocol value kind percent_change = 100 × (IOP − reference)/reference. Protocol 1.0.0 and its record builder store the cited cell numbers without any sign transformation, so these cells cannot be recorded faithfully under any admissible value kind; no absolute or signed IOP series is tabulated for any group"
+  },
+  {
+   "what": "Table 3 columns C4 and C7",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Tables 1 and 2 (Tab1, Tab2) preoperative IOP",
+   "reason": "reference values without an admissible tabulated follow-up series"
+  },
+  {
+   "what": "Figures 1 and 2 (IOP profiles)",
+   "reason": "graphical only, no citable cells"
+  },
+  {
+   "what": "Surgical success rates and Table 4 (Tab4) hypotony, 5-FU injections, needling, medications and additional surgery",
+   "reason": "success proportions and counts are not admissible; medication counts are mentioned in notes only"
+  }
+ ],
+ "notes": [
+  "Tonometer: Goldmann applanation tonometry (Methods, baseline examination).",
+  "Reference: all anti-glaucoma medications were continued until surgery (Methods), so a reference would be preoperative_medicated.",
+  "Some Table 3 cells carry parenthetical counts of additional surgery (trabeculectomy, repeat XEN implantation, Ologen removal) at that visit (footnote 'Parenthesis; additional surgery'); the article does not state whether those eyes remain in the later means.",
+  "The triage owner override admitted the study on the basis that percent_change needs no reference value; the blocking issue found at extraction is the opposite sign convention of the tabulated percent reduction, which would need a declared sign-negation transform in a later protocol version.",
+  "Role: Ologen collagen matrix augmentation is the adjunct compared against non-augmented XEN, recorded as treated; non-augmented arms as control."
+ ]
+}

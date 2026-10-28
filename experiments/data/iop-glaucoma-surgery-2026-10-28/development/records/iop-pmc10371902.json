@@ -1,0 +1,144 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc10371902",
+ "doi": "10.1007/s10792-023-02659-5",
+ "pmcid": "PMC10371902",
+ "title": "12-month outcomes of ab interno excisional goniotomy combined with cataract surgery in primary open-angle glaucoma and normal tension glaucoma",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10371902.xml",
+   "sha256": "05977da0c53145033762646497b2f54427d26116b526992f4077d41601d63d40",
+   "bytes": 64299,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10371902/fullTextXML)"
+  }
+ ],
+ "indication": "open-angle glaucoma (primary open-angle glaucoma or normal tension glaucoma) with visually significant cataract, on topical IOP-lowering medication; adults; phacoemulsification combined with Kahook Dual Blade excisional goniotomy (90 or 120 degrees); prospective case series, one eye per patient",
+ "groups": [
+  {
+   "group": "poag",
+   "role": "control",
+   "n_reported": 55,
+   "description": "Primary open-angle glaucoma eyes after phacoemulsification + Kahook Dual Blade goniotomy (Table 1 row label 'POAG (n = 55)')"
+  },
+  {
+   "group": "ntg",
+   "role": "control",
+   "n_reported": 14,
+   "description": "Normal tension glaucoma eyes after phacoemulsification + Kahook Dual Blade goniotomy (Table 1 row label 'NTG (n = 14)')"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 (Tab2) all cases, 90° Kahook and 120° Kahook columns",
+   "reason": "IOP at 12 months only, without a preoperative reference in the table; the all-cases column also duplicates the eyes of the Table 1 subgroups and the 90°/120° sub-analysis omits eyes treated between 100 and 110 degrees"
+  },
+  {
+   "what": "Table 2 column 5",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 rows R3 and R5 (number of IOP-lowering medications)",
+   "reason": "medication counts are mentioned in notes only (no medication series in schema 1.0.0)"
+  },
+  {
+   "what": "Table 3 (Tab3)",
+   "reason": "complications, not an IOP series"
+  },
+  {
+   "what": "IOP reductions, percent reductions and success proportions given in the Results text",
+   "reason": "not table cells; changes and success proportions are not extracted when the absolute IOP series is tabulated"
+  },
+  {
+   "what": "16 patients lost to the 12-month follow-up",
+   "reason": "excluded from the analysis by the authors (not an outcome-defined exclusion); the remaining completers set is kept as ordinary attrition"
+  }
+ ],
+ "notes": [
+  "Tonometer: Goldmann applanation tonometry (Methods).",
+  "Reference: preoperative visit about 4 weeks before surgery; all patients were using IOP-lowering medication before surgery, so the reference is recorded as preoperative_medicated.",
+  "Table 1 also tabulates the number of IOP-lowering medications at each visit (rows R3 and R5); not extracted.",
+  "The Abstract reports a different SD for the POAG preoperative IOP than Table 1; the Table 1 cells are cited.",
+  "Inclusion required uneventful cataract surgery (intraoperative criterion); the authors state that no eye needed another glaucoma surgery within 12 months.",
+  "Figures 1 and 2 show IOP and medication data graphically; not used."
+ ],
+ "series": [
+  {
+   "series_id": "poag/iop",
+   "group": "poag",
+   "kind": "group_mean",
+   "n": 55,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    2,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative (Table 1 column 3)",
+   "notes": "mean ± SD; columns 'Preoperative', '2 months postoperative', '6 months postoperative', '12 months postoperative'; analysis set restricted by the authors to eyes that completed the 12-month follow-up, so the same eyes contribute at every visit",
+   "values": [
+    19.7,
+    15.1,
+    15.8,
+    16.1
+   ],
+   "source_cells": [
+    "PMC10371902.xml::Tab1!R2C3",
+    "PMC10371902.xml::Tab1!R2C4",
+    "PMC10371902.xml::Tab1!R2C5",
+    "PMC10371902.xml::Tab1!R2C6"
+   ],
+   "source_cell_texts": [
+    "19.7 ± 4.5",
+    "15.1 ± 2.7",
+    "15.8 ± 2.3",
+    "16.1 ± 3.2"
+   ]
+  },
+  {
+   "series_id": "ntg/iop",
+   "group": "ntg",
+   "kind": "group_mean",
+   "n": 14,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    2,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative (Table 1 column 3)",
+   "notes": "mean ± SD; columns 'Preoperative', '2 months postoperative', '6 months postoperative', '12 months postoperative'; analysis set restricted by the authors to eyes that completed the 12-month follow-up",
+   "values": [
+    15.1,
+    14.1,
+    14.1,
+    13.6
+   ],
+   "source_cells": [
+    "PMC10371902.xml::Tab1!R4C3",
+    "PMC10371902.xml::Tab1!R4C4",
+    "PMC10371902.xml::Tab1!R4C5",
+    "PMC10371902.xml::Tab1!R4C6"
+   ],
+   "source_cell_texts": [
+    "15.1 ± 2.5",
+    "14.1 ± 2.4",
+    "14.1 ± 3.1",
+    "13.6 ± 1.8"
+   ]
+  }
+ ]
+}

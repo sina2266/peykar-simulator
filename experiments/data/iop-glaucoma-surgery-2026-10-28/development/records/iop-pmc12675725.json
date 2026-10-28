@@ -1,0 +1,112 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc12675725",
+ "doi": "10.1007/s00417-025-06933-3",
+ "pmcid": "PMC12675725",
+ "title": "Clinical outcomes of the PAUL Glaucoma implant for neovascular glaucoma",
+ "species": "human",
+ "procedure": "tube",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12675725.xml",
+   "sha256": "3bb9f7b96ed472299aa33df1f4ffad8af212ec71e1cdf04805d2825539ea6535",
+   "bytes": 94734,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "neovascular glaucoma (mainly proliferative diabetic retinopathy and central retinal vein occlusion), refractory; some eyes with prior glaucoma surgery (mostly cyclophotocoagulation) and prior vitreoretinal surgery; mostly pseudophakic (retrospective cohort, single centre, minimum 12 months follow-up; 23 eyes of 22 patients)",
+ "groups": [
+  {
+   "group": "paul-implant",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 23,
+   "description": "PAUL Glaucoma Implant with mitomycin C (0.5 mg/mL, 2 min) at the plate site, intraluminal 6-0 polypropylene stent (removed postoperatively when IOP exceeded target), pericardial or fascia lata patch graft"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 row R2 'Maximum IOP'",
+   "reason": "preoperative maximum, not the preoperative reference IOP of the series"
+  },
+  {
+   "what": "Table 3 ranges in parentheses (column C2)",
+   "reason": "ranges are not admissible"
+  },
+  {
+   "what": "Table 3 column C3 'Percentage reduction' (mean and range)",
+   "reason": "the same table gives absolute IOP, which is used (brief: use the absolute series)"
+  },
+  {
+   "what": "Kaplan-Meier complete/qualified success rates (Fig. 1, Results)",
+   "reason": "success proportions and Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Fig. 2 scatterplot of preoperative vs 12-month IOP per eye",
+   "reason": "graphical only, no tabulated per-eye rows to cite"
+  },
+  {
+   "what": "IOP before and after prolene stent removal in 12 eyes (Results text)",
+   "reason": "subgroup defined by a postoperative event (stent removal when IOP exceeded target) and untimed; not a series"
+  }
+ ],
+ "notes": [
+  "Reference kind: patients used on average more than three glaucoma drops preoperatively and most took oral acetazolamide (Results), so the preoperative IOP was measured on medication.",
+  "Tonometry: Goldmann applanation tonometry (Methods).",
+  "Role: the PAUL implant is a standard glaucoma drainage device in the protocol's tube context and is the centre's standard implant for NVG; this observational cohort has no experimental arm, so it is recorded as control.",
+  "Inclusion required at least 12 months of follow-up (selection by follow-up length). Re-interventions occurred (tube revisions, one explantation with Ahmed valve replacement at 11 months, one cyclophotocoagulation); the article does not state that these eyes were removed from the visit means, so no outcome-defined exclusion applies.",
+  "Glaucoma medication use is described in the text (not extracted).",
+  "Time conversion: Day 1 = 0.0329 months."
+ ],
+ "series": [
+  {
+   "series_id": "paul-implant/iop",
+   "group": "paul-implant",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative (Table 3, row R3)",
+   "notes": "cells are 'value (range)' under header 'IOP (range)'; the Results text and Abstract describe the preoperative, month 3, 6 and 12 values as average/mean IOP, so the leading numbers are means; ranges not used; per-visit n not reported",
+   "values": [
+    27.22,
+    11.96,
+    11.39,
+    14.26,
+    12.27,
+    12.95
+   ],
+   "source_cells": [
+    "PMC12675725.xml::Tab3!R3C2",
+    "PMC12675725.xml::Tab3!R4C2",
+    "PMC12675725.xml::Tab3!R5C2",
+    "PMC12675725.xml::Tab3!R6C2",
+    "PMC12675725.xml::Tab3!R7C2",
+    "PMC12675725.xml::Tab3!R8C2"
+   ],
+   "source_cell_texts": [
+    "27.22 (10–44)",
+    "11.96 (6–24)",
+    "11.39 (6–25)",
+    "14.26 (7–22)",
+    "12.27 (0–22)",
+    "12.95 (8–19)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,186 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc12888937",
+ "doi": "10.1111/aos.17581",
+ "pmcid": "PMC12888937",
+ "title": "Clinical outcomes of the PAUL glaucoma implant in primary open-angle and pseudoexfoliative glaucoma eyes after failed glaucoma surgeries",
+ "species": "human",
+ "procedure": "tube",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12888937.xml",
+   "sha256": "272d756e01b8ce6200f4e97b857f22f8a34abe9a3a9ca7511868c5d0eec4a71a",
+   "bytes": 81102,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "refractory glaucoma after failed previous glaucoma surgery (all eyes: trabeculectomy, cyclophotocoagulation, XEN, canaloplasty, Trabectome, PreserFlo, deep sclerectomy, iStent, needling), subgroups primary open-angle glaucoma (POAG) and pseudoexfoliative glaucoma (PEXG); Caucasian patients; retrospective cohort from a prospectively collected database (Bonn, Germany)",
+ "groups": [
+  {
+   "group": "poag",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 29,
+   "description": "POAG eyes receiving the PAUL glaucoma implant (superotemporal plate, MMC 0.5 mg/mL for 2 min, 6-0 polypropylene intraluminal stent, double-layered patch graft); n from Table 1 (tbl-0001!R9C2) and Table 6 gender counts"
+  },
+  {
+   "group": "pexg",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 19,
+   "description": "PEXG eyes receiving the PAUL glaucoma implant (same technique); n from Table 1 (tbl-0001!R10C2) and Table 6 gender counts"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 whole-cohort IOP series (n = 48, column 'IOP (range)')",
+   "reason": "whole cohort duplicates the POAG and PEXG subgroups tabulated in Table 6 (brief rule: extract subgroups, not the whole cohort)"
+  },
+  {
+   "what": "Table 2 row 'Maximum IOP'",
+   "reason": "historical maximum, not the preoperative reference IOP"
+  },
+  {
+   "what": "Table 2 'Percentage reduction' column",
+   "reason": "absolute IOP is available; whole-cohort series not used"
+  },
+  {
+   "what": "ranges in parentheses (Tables 1, 2, 6)",
+   "reason": "ranges are not admissible values"
+  },
+  {
+   "what": "Table 6 p-Value column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 6 / Table 3 numbers of IOP-lowering drops",
+   "reason": "medication numbers are not IOP series in schema 1.0.0; noted only"
+  },
+  {
+   "what": "Table 3 and Table 6 BCVA",
+   "reason": "not IOP"
+  },
+  {
+   "what": "complete and qualified success rates (Figure 1, text) and Kaplan-Meier analyses",
+   "reason": "success proportions / Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Table 4 complications, Table 5 additional glaucoma surgeries, Table 6 complication/revision/failure counts",
+   "reason": "counts are not admissible"
+  },
+  {
+   "what": "IOP before and after intraluminal stent removal (text, 10 eyes)",
+   "reason": "analysis set selected by a postoperative event and reported in text only, not in a timed table"
+  }
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': all patients were using topical IOP-lowering therapy preoperatively (Table 1 'Number of glaucoma drops', 22.9% also on acetazolamide).",
+  "Tonometer: Goldmann applanation tonometry (Methods), method 'goldmann'.",
+  "Subgroup sizes: Table 1 and the Table 6 gender counts give 29 POAG and 19 PEXG eyes; one Results sentence states the reverse (typographical inconsistency in the text).",
+  "Day 1 and Week 1 converted as 1/30.4375 and 7/30.4375 months (rounded to 4 decimals).",
+  "Per-visit numbers are not reported; the whole-cohort Table 2 means and the subgroup Table 6 means are not exactly reconcilable with the subgroup sizes at every visit, which suggests varying per-visit numbers.",
+  "The polypropylene intraluminal stent was removed during follow-up in 10 eyes when IOP exceeded target (standard postoperative care of this technique); the PGI is a standard drainage device in this cohort, so the subgroups are 'control' groups."
+ ],
+ "series": [
+  {
+   "series_id": "poag/iop",
+   "group": "poag",
+   "kind": "group_mean",
+   "n": 29,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Table 6 'IOP development', row 'Preoperative', POAG column",
+   "notes": "cells are 'mean (range)' (the Results text quotes these subgroup values as mean IOP); rows Preoperative, Day 1, Week 1, Month 1, Month 3, Month 6, Month 12; per-visit n not reported; Table 6 R41 reports failure due to additional glaucoma surgery (PGI explantation) in 2 POAG eyes, and the article does not state whether their later IOP was censored",
+   "values": [
+    23.52,
+    10.17,
+    13.11,
+    13.0,
+    13.04,
+    12.74,
+    11.79
+   ],
+   "source_cells": [
+    "PMC12888937.xml::aos17581-tbl-0006!R15C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R16C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R17C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R18C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R19C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R20C2",
+    "PMC12888937.xml::aos17581-tbl-0006!R21C2"
+   ],
+   "source_cell_texts": [
+    "23.52 (7–45)",
+    "10.17 (4–25)",
+    "13.11 (5–26)",
+    "13.00 (5–21)",
+    "13.04 (4–20)",
+    "12.74 (3–23)",
+    "11.79 (3–20)"
+   ]
+  },
+  {
+   "series_id": "pexg/iop",
+   "group": "pexg",
+   "kind": "group_mean",
+   "n": 19,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Table 6 'IOP development', row 'Preoperative', PEXG column",
+   "notes": "cells are 'mean (range)'; rows Preoperative, Day 1, Week 1, Month 1, Month 3, Month 6, Month 12; per-visit n not reported; Table 6 R41 reports failure due to additional glaucoma surgery in 1 PEXG eye, censoring not stated",
+   "values": [
+    23.53,
+    10.0,
+    10.67,
+    11.78,
+    11.78,
+    12.76,
+    11.42
+   ],
+   "source_cells": [
+    "PMC12888937.xml::aos17581-tbl-0006!R15C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R16C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R17C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R18C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R19C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R20C3",
+    "PMC12888937.xml::aos17581-tbl-0006!R21C3"
+   ],
+   "source_cell_texts": [
+    "23.53 (12–38)",
+    "10.0 (6–20)",
+    "10.67 (5–14)",
+    "11.78 (4–20)",
+    "11.78 (6–21)",
+    "12.76 (6–18)",
+    "11.42 (5–20)"
+   ]
+  }
+ ]
+}

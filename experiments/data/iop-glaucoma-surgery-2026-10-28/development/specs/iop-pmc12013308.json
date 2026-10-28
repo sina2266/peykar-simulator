@@ -1,0 +1,67 @@
+{
+ "study_id": "iop-pmc12013308",
+ "doi": "10.4103/IJO.IJO_1066_24",
+ "pmcid": "PMC12013308",
+ "title": "Safety and efficacy of micropulse in pediatric eyes with refractory glaucoma",
+ "species": "human",
+ "procedure": "cyclodestruction",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license>, ali:license_ref); non-commercial share-alike, therefore private",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12013308.xml",
+   "sha256": "da8bf4d6237d19b1361a8df265da44048fedaa369e8ab84ba01b52c22050866f",
+   "bytes": 73372,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "pediatric (< 18 years) refractory glaucoma: primary congenital, juvenile, glaucoma after vitreoretinal surgery, after congenital cataract surgery and other secondary childhood glaucoma; 18 of 23 eyes had previous glaucoma interventions; hospital-based prospective interventional single-arm study (Southern India)",
+ "groups": [
+  {
+   "group": "mp-tscpc",
+   "role": "control",
+   "procedure": "cyclodestruction",
+   "n_reported": 23,
+   "description": "micropulse transscleral cyclophotocoagulation (Iridex Cyclo G6, MP3 probe, 2000 mW, 31.33% duty cycle, 360 degrees for 160 s) under general anesthesia; 23 eyes of 23 patients"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "mp-tscpc/iop",
+   "group": "mp-tscpc",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "rebound",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC12013308.xml::IJO.IJO_1066_24-T2!R2C3",
+    "PMC12013308.xml::IJO.IJO_1066_24-T2!R3C3",
+    "PMC12013308.xml::IJO.IJO_1066_24-T2!R4C3",
+    "PMC12013308.xml::IJO.IJO_1066_24-T2!R5C3"
+   ],
+   "baseline_label": "Table 2 row 'Baseline', column 'IOP (mmHg) (n=23)'",
+   "notes": "mean ± SD (Methods: continuous variables presented as mean and SD; the W/T footnote marks the test of each comparison, not the summary statistic); follow-up cells also contain the comparison p-value in parentheses (not used); column header gives n=23 for all rows; 11 eyes received additional IOP-lowering interventions during follow-up (9 tubes, 2 repeat MP-TSCPC; 2 within 1 month, 6 between 1-3 months, 3 between 3-6 months) and the Results state the tabulated IOP reduction is not entirely attributable to MP-TSCPC, i.e. these eyes were not censored"
+  }
+ ],
+ "exclusions": [
+  {"what": "Day-1 IOP", "reason": "measured but not tabulated (only plotted in Figure 1); figure values are not cited cells"},
+  {"what": "Figure 1 dotted line: eyes without additional IOP-lowering interventions", "reason": "analysis set selected by a postoperative outcome (no additional intervention) and figure-only"},
+  {"what": "Table 2 p-values (in parentheses within the follow-up cells)", "reason": "p-values are not admissible"},
+  {"what": "Table 2 'IOP-lowering agents' column", "reason": "medication numbers are not IOP series in schema 1.0.0; noted only"},
+  {"what": "Table 2 BCVA column", "reason": "not IOP"},
+  {"what": "Table 3 complete/partial success, failure and additional-intervention counts; Figure 2 Kaplan-Meier", "reason": "success proportions, counts and Kaplan-Meier estimates are not admissible"}
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': patients were advised to continue the anti-glaucoma medications prescribed preoperatively, and the baseline number of IOP-lowering agents is tabulated (t2!R2C4); no washout described.",
+  "Tonometer: ICARE 200 rebound tonometer before and after the laser, without anesthesia or sedation, average of six readings (method 'rebound').",
+  "Inclusion required at least three follow-up visits within 6 months; exclusion of eyes with intraocular surgery or laser within 2 months before MP-TSCPC or any prior cyclophotocoagulation.",
+  "Single-arm study of a standard laser procedure without an investigational agent, so the group is 'control'.",
+  "Number of IOP-lowering agents at baseline and 1/3/6 months is tabulated in Table 2 (not extracted)."
+ ]
+}

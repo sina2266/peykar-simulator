@@ -16,7 +16,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from peykar.validation.cornea_table_records import cell_text
+from peykar.validation.cornea_table_records import cell_text, leading_number
 from peykar.validation.cornea_thickness_data import cell_number
 from peykar_core.errors import InvalidRequest
 
@@ -46,6 +46,16 @@ MAX_REFERENCE_MMHG = 80.0
 MIN_FRACTION = 0.05
 MAX_FRACTION = 3.0
 _ID = re.compile(r"^[a-z0-9][a-z0-9._/-]{2,120}$")
+# A leading number whose comma is followed by one or two digits uses a decimal comma
+# ("15,3 ± 4,2" is 15.3 mmHg); a comma before three digits stays a thousands separator.
+_DECIMAL_COMMA = re.compile(r"^\s*[-+\u2212\u2013]?\d+,\d{1,2}(?!\d)")
+
+
+def iop_number(text: str) -> float:
+    """Leading number of a cell, accepting decimal commas (IOP values are below 100)."""
+    if _DECIMAL_COMMA.match(text):
+        return leading_number(text)
+    return cell_number(text)
 
 
 @dataclass(frozen=True)
@@ -292,7 +302,7 @@ def build_record(spec: Mapping[str, Any], sources: Mapping[str, bytes]) -> dict[
             if name not in files:
                 raise InvalidRequest(f"Series cites unknown source {name!r}")
             text = cell_text(sources[name], location)
-            values.append(cell_number(text))
+            values.append(iop_number(text))
             cited.append(f"{name}::{location}")
             texts.append(text)
         item = {k: v for k, v in series.items() if k != "cells"}
@@ -302,7 +312,7 @@ def build_record(spec: Mapping[str, Any], sources: Mapping[str, bytes]) -> dict[
             if name not in files:
                 raise InvalidRequest(f"Reference cites unknown source {name!r}")
             reference_text = cell_text(sources[name], location)
-            item["reference_iop"] = cell_number(reference_text)
+            item["reference_iop"] = iop_number(reference_text)
             item["reference_cell_text"] = reference_text
         series_out.append(item)
     record = {

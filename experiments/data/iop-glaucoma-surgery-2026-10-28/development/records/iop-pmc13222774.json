@@ -1,0 +1,157 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc13222774",
+ "doi": "10.3389/fmed.2026.1842636",
+ "pmcid": "PMC13222774",
+ "title": "Phacoemulsification with IOL implantation combined with goniosynechialysis and goniotomy in primary angle-closure glaucoma following failed trabeculectomy: short-term effectiveness and safety outcomes",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License (CC BY), link to the 4.0 licence)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13222774.xml",
+   "sha256": "5473e1ad1902830611c7b7d0296629631670170aa196c52ac75536bd01750bf2",
+   "bytes": 101451,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "moderate to advanced primary angle-closure glaucoma with PAS > 180 degrees and visually significant cataract, medically uncontrolled on maximal tolerated therapy, age >= 40 years; subgroups by surgical history: surgically naive eyes and eyes after failed trabeculectomy (flat/encapsulated non-functioning bleb); retrospective comparative case series (Nanjing, China)",
+ "groups": [
+  {
+   "group": "naive",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 22,
+   "description": "surgically naive PACG eyes undergoing phacoemulsification with IOL implantation, goniosynechialysis and about 120-degree goniotomy with the LAN microhook (PEI-GSL-GT); n from Table 1/2 headers (T2!R1C2)"
+  },
+  {
+   "group": "failed-trabeculectomy",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 17,
+   "description": "PACG eyes after at least one failed trabeculectomy undergoing the same PEI-GSL-GT procedure; n from Table 1/2 headers (T2!R1C3)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 'Absolute reduction of IOP (mmHg)' and 'Percentage reduction of IOP (%)' rows (R19, R20)",
+   "reason": "the same table gives absolute IOP; absolute series used (brief rule)"
+  },
+  {
+   "what": "Table 2 P-value columns and rows (C4, R21, R22)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 'Meds (n)' rows (median with IQR)",
+   "reason": "medians and medication numbers are not admissible IOP series; noted only"
+  },
+  {
+   "what": "Table 2 BCVA rows",
+   "reason": "not IOP"
+  },
+  {
+   "what": "qualified/complete success counts and Kaplan-Meier analysis (Figure 5)",
+   "reason": "success proportions / Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Figure 3 waterfall plots of per-eye percentage IOP reduction",
+   "reason": "figure-only percentage changes, not cited table cells"
+  },
+  {
+   "what": "Table 3 complications",
+   "reason": "counts are not admissible"
+  }
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': inclusion required medically uncontrolled IOP despite maximal tolerated medical therapy; preoperative medication numbers are tabulated (T2!R4C2, T2!R4C3, medians); no washout described.",
+  "Tonometer: non-contact tonometer, average of three consecutive readings by the same ophthalmologist, preoperatively and at every follow-up (method 'noncontact').",
+  "Day 1 and Week 1 converted as 1/30.4375 and 7/30.4375 months (rounded to 4 decimals).",
+  "Both groups received the same standard combined procedure; the groups are defined by preoperative surgical history, so both are 'control' groups. Both eyes of some patients are included (39 eyes of 33 patients).",
+  "Postoperative transient IOP elevation was managed by resuming anti-glaucoma medications or anterior chamber paracentesis (standard care); no outcome-defined exclusion of eyes from the Table 2 means is stated."
+ ],
+ "series": [
+  {
+   "series_id": "naive/iop",
+   "group": "naive",
+   "kind": "group_mean",
+   "n": 22,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "noncontact",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Table 2 'Preoperative' block, row 'IOP (mmHg)' (same mean as Table 1 'Baseline IOP (mmHg)', T1!R4C2)",
+   "notes": "IOP cells are mean ± SD (the footnote allows mean ± SD or median (IQR); IOP rows are formatted 'mean ± SD' and the Results quote them as mean IOP); blocks Preoperative, 1 Day, 1 week, 1 month, 3 months postop; n = 22 in the header for all time points; eyes lost to follow-up before 3 months were excluded from the cohort (ordinary attrition)",
+   "values": [
+    22.05,
+    13.73,
+    15.82,
+    15.55,
+    14.62
+   ],
+   "source_cells": [
+    "PMC13222774.xml::T2!R3C2",
+    "PMC13222774.xml::T2!R7C2",
+    "PMC13222774.xml::T2!R10C2",
+    "PMC13222774.xml::T2!R13C2",
+    "PMC13222774.xml::T2!R16C2"
+   ],
+   "source_cell_texts": [
+    "22.05 ± 11.35",
+    "13.73 ± 4.99",
+    "15.82 ± 3.40",
+    "15.55 ± 4.17",
+    "14.62 ± 2.99"
+   ]
+  },
+  {
+   "series_id": "failed-trabeculectomy/iop",
+   "group": "failed-trabeculectomy",
+   "kind": "group_mean",
+   "n": 17,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "noncontact",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Table 2 'Preoperative' block, row 'IOP (mmHg)' (Table 1 'Baseline IOP (mmHg)', T1!R4C3, gives the same mean with one more SD decimal)",
+   "notes": "IOP cells are mean ± SD; blocks Preoperative, 1 Day, 1 week, 1 month, 3 months postop; n = 17 in the header for all time points; two eyes had day-1 IOP spikes treated by anterior chamber paracentesis (standard postoperative care)",
+   "values": [
+    24.53,
+    15.29,
+    18.0,
+    18.41,
+    17.0
+   ],
+   "source_cells": [
+    "PMC13222774.xml::T2!R3C3",
+    "PMC13222774.xml::T2!R7C3",
+    "PMC13222774.xml::T2!R10C3",
+    "PMC13222774.xml::T2!R13C3",
+    "PMC13222774.xml::T2!R16C3"
+   ],
+   "source_cell_texts": [
+    "24.53 ± 13.19",
+    "15.29 ± 6.17",
+    "18.00 ± 4.17",
+    "18.41 ± 7.38",
+    "17.00 ± 6.09"
+   ]
+  }
+ ]
+}

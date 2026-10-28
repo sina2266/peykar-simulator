@@ -1,0 +1,142 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc6590574",
+ "doi": "10.1155/2019/9390586",
+ "pmcid": "PMC6590574",
+ "title": "Intraocular Pressure and Anterior Segment Morphometry Changes after Uneventful Phacoemulsification in Type 2 Diabetic and Nondiabetic Patients",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: distributed under the Creative Commons Attribution License)",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC6590574.xml",
+   "sha256": "bc1db952ca8dd67b920ff1fae1ea218f1e5b7a34ed1747145bc541fd2a763bd9",
+   "bytes": 114220,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "normal eyes: nonglaucomatous open-angle eyes with age-related cataract, preoperative IOP not above 25 mmHg, no prior eye surgery; groups by type 2 diabetes (diabetic, without severe NPDR, PDR or macular edema) versus age- and sex-matched nondiabetic patients (prospective observational, one eye per patient)",
+ "groups": [
+  {
+   "group": "type2-diabetes",
+   "role": "control",
+   "procedure": "cataract",
+   "n_reported": 45,
+   "description": "uneventful coaxial clear-cornea phacoemulsification with in-the-bag IOL in patients with type 2 diabetes"
+  },
+  {
+   "group": "nondiabetic",
+   "role": "control",
+   "procedure": "cataract",
+   "n_reported": 44,
+   "description": "uneventful coaxial clear-cornea phacoemulsification with in-the-bag IOL in nondiabetic patients"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 column C4 (p)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 3 strata by preoperative IOP (10-14, 15-16, 17-18, 19-20, 21-25 mmHg) within each group, preoperative IOP and 6-month change",
+   "reason": "the strata partition the same eyes as the Table 2 group series (would duplicate them); they are defined by binning the series' own reference IOP and carry only the 6-month follow-up, so the study's design groups with the 1- and 6-month time course are extracted instead (extraction ambiguity: brief's subgroup rule addresses a table reporting both a cohort and its subgroups)"
+  },
+  {
+   "what": "Results text: eyes with IOP reduction/no change/increase and their means",
+   "reason": "subsets defined by the postoperative outcome"
+  },
+  {
+   "what": "Table 4 regression analyses",
+   "reason": "model estimates are not admissible"
+  },
+  {
+   "what": "Table 5 (review of other studies)",
+   "reason": "values of other studies, not this cohort"
+  },
+  {
+   "what": "Figure 1 (correlation of preoperative IOP with 6-month change)",
+   "reason": "graphical, no tabulated per-eye rows"
+  }
+ ],
+ "notes": [
+  "Reference kind: nonglaucomatous eyes; no glaucoma medication or washout is described, so the preoperative IOP is recorded as measured in untreated eyes.",
+  "Tonometry: Goldmann applanation tonometry, average of two readings (median of three if they differed by more than 2 mmHg), measured at the same time of day as the baseline visit (Methods 2.3).",
+  "Both groups are patient-condition subgroups (diabetes status) receiving the same standard cataract surgery, so both are control groups.",
+  "Postoperative care: topical dexamethasone, flurbiprofen and levofloxacin for 1 week then tapered over 3 weeks (both groups)."
+ ],
+ "series": [
+  {
+   "series_id": "type2-diabetes/iop-change",
+   "group": "type2-diabetes",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "iop_change",
+   "reference_kind": "preoperative_unmedicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    1,
+    6
+   ],
+   "reference_cell": "PMC6590574.xml::tab2!R8C2",
+   "baseline_label": "IOP-GAT Preoperatively (Table 2 R8)",
+   "notes": "mean ± SD (footnote); change in mmHg from the preoperative value at 1 and 6 months; per-visit n not reported (group n in header)",
+   "values": [
+    0.0,
+    -1.7,
+    -2.9
+   ],
+   "source_cells": [
+    "definition:protocol iop_change is 0 at the reference; Table 2 rows 'Δ1 mo' and 'Δ6 mo' are variations (footnote: Δ, variation) from the 'Preoperatively' row",
+    "PMC6590574.xml::tab2!R9C2",
+    "PMC6590574.xml::tab2!R10C2"
+   ],
+   "source_cell_texts": [
+    "",
+    "−1.7 ± 2.9",
+    "−2.9 ± 2.9"
+   ],
+   "reference_iop": 17.8,
+   "reference_cell_text": "17.8 ± 3.1"
+  },
+  {
+   "series_id": "nondiabetic/iop-change",
+   "group": "nondiabetic",
+   "kind": "group_mean",
+   "n": 44,
+   "value_kind": "iop_change",
+   "reference_kind": "preoperative_unmedicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    1,
+    6
+   ],
+   "reference_cell": "PMC6590574.xml::tab2!R8C3",
+   "baseline_label": "IOP-GAT Preoperatively (Table 2 R8)",
+   "notes": "mean ± SD (footnote); change in mmHg from the preoperative value at 1 and 6 months; per-visit n not reported (group n in header)",
+   "values": [
+    0.0,
+    -2.2,
+    -2.4
+   ],
+   "source_cells": [
+    "definition:protocol iop_change is 0 at the reference; Table 2 rows 'Δ1 mo' and 'Δ6 mo' are variations (footnote: Δ, variation) from the 'Preoperatively' row",
+    "PMC6590574.xml::tab2!R9C3",
+    "PMC6590574.xml::tab2!R10C3"
+   ],
+   "source_cell_texts": [
+    "",
+    "−2.2 ± 2.5",
+    "−2.4 ± 2.8"
+   ],
+   "reference_iop": 16.9,
+   "reference_cell_text": "16.9 ± 2.9"
+  }
+ ]
+}

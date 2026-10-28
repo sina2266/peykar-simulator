@@ -1,0 +1,247 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc8745353",
+ "doi": "10.3390/jcm11010046",
+ "pmcid": "PMC8745353",
+ "title": "Conventional Trabeculotomy versus Gonioscopy-Assisted Transluminal Trabeculotomy: A Retrospective Cohort Study",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8745353.xml",
+   "sha256": "75b5c8fc92f3d0cb0658a8c2ef5ce293d57b7ae10dcc32503ae2499aa8dfb400",
+   "bytes": 122627,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "medically uncontrolled open-angle glaucoma (IOP 21 mmHg or more; POAG, exfoliative, steroid-induced and other) without prior glaucoma surgery",
+ "design": "retrospective single-centre cohort, one eye per patient; CT eyes operated 2014-2016, GATT eyes 2016-2018; follow-up of at least 3 months required",
+ "groups": [
+  {
+   "group": "ct-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 13,
+   "indication": "as study",
+   "description": "conventional ab externo trabeculotomy with metal probes under a scleral flap (at most 120 degrees of Schlemm's canal) combined with phacoemulsification (Table 2 row 5)"
+  },
+  {
+   "group": "gatt-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 30,
+   "indication": "as study",
+   "description": "gonioscopy-assisted transluminal trabeculotomy (suture, up to 360 degrees) combined with phacoemulsification (Table 2 row 6)"
+  },
+  {
+   "group": "ct-alone",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 14,
+   "indication": "as study",
+   "description": "conventional ab externo trabeculotomy without phacoemulsification (Table 2 row 8)"
+  },
+  {
+   "group": "gatt-alone",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 23,
+   "indication": "as study",
+   "description": "gonioscopy-assisted transluminal trabeculotomy without phacoemulsification (Table 2 row 9)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 visits after the per-visit n first falls below the preoperative n: CT with phaco 6/12/24 months (R5C7-C9), GATT with phaco 12/24 months (R6C8-C9), CT without phaco 6/12/24 months (R8C7-C9), GATT without phaco 1/3/6/12/24 months (R9C5-C9)",
+   "reason": "the Discussion states that the eyes completing follow-up fell by about half because of additional glaucoma surgery, loss to follow-up and referral; means at visits with fewer eyes are therefore partly censored at additional glaucoma surgery (outcome-defined exclusion, protocol inclusion 4). Visits where every eye is still present are kept."
+  },
+  {
+   "what": "Table 2 rows 2-3 (all CT, all GATT)",
+   "reason": "whole-group rows duplicate the with/without phacoemulsification subgroups, which are extracted instead"
+  },
+  {
+   "what": "median values in parentheses inside the Table 2 cells",
+   "reason": "medians are not admissible; only the leading mean is read"
+  },
+  {
+   "what": "Table 2 p-value rows",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 preoperative IOP (Total, CT, GATT)",
+   "reason": "duplicates of the Table 2 baselines at group level"
+  },
+  {
+   "what": "Table 4 medication-free rates, Tables 5-6 logistic regression, Figures 1-2 Kaplan-Meier success",
+   "reason": "proportions, model estimates and Kaplan-Meier estimates are not admissible"
+  }
+ ],
+ "notes": [
+  "Day 1 = 0.0329 months, week 1 = 7/30.4375 = 0.23 months.",
+  "Per-visit eye counts are printed in each Table 2 cell; the included visits all have the full preoperative n.",
+  "Additional glaucoma surgery was required in seven CT eyes and seven GATT eyes (Results).",
+  "Conventional ab externo trabeculotomy is extracted as angle_mims ('other angle procedures', like ab externo canaloplasty); it is not a bleb-forming or penetrating filtering procedure.",
+  "Preoperative IOP on medication (medically uncontrolled glaucoma); medication counts per visit are in Table 3; not extracted.",
+  "Group roles: CT and GATT are two standard techniques, phacoemulsification is a procedure variant; all role control. CT and GATT were operated in consecutive periods (non-randomized)."
+ ],
+ "series": [
+  {
+   "series_id": "ct-phaco/iop",
+   "group": "ct-phaco",
+   "kind": "group_mean",
+   "n": 13,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Preoperative (Table 2, CT with phacoemulsification)",
+   "notes": "mean (median) ± SD (n) cells, leading mean read; n = 13 at every included visit; 6/12/24-month cells excluded (fewer eyes after dropout that included additional glaucoma surgery)",
+   "values": [
+    27.69,
+    28.0,
+    18.31,
+    16.31,
+    16.08
+   ],
+   "source_cells": [
+    "PMC8745353.xml::jcm-11-00046-t002!R5C2",
+    "PMC8745353.xml::jcm-11-00046-t002!R5C3",
+    "PMC8745353.xml::jcm-11-00046-t002!R5C4",
+    "PMC8745353.xml::jcm-11-00046-t002!R5C5",
+    "PMC8745353.xml::jcm-11-00046-t002!R5C6"
+   ],
+   "source_cell_texts": [
+    "27.69 (26) ± 5.03(n = 13)",
+    "28.00 (26) ± 8.38(n = 13)",
+    "18.31 (16) ± 3.93(n = 13)",
+    "16.31 (16) ± 2.52(n = 13)",
+    "16.08 (17) ± 1.90(n = 13)"
+   ]
+  },
+  {
+   "series_id": "gatt-phaco/iop",
+   "group": "gatt-phaco",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Preoperative (Table 2, GATT with phacoemulsification)",
+   "notes": "mean (median) ± SD (n) cells, leading mean read; n = 30 at every included visit; 12/24-month cells excluded (fewer eyes after dropout that included additional glaucoma surgery)",
+   "values": [
+    28.6,
+    19.33,
+    17.3,
+    13.67,
+    13.3,
+    13.8
+   ],
+   "source_cells": [
+    "PMC8745353.xml::jcm-11-00046-t002!R6C2",
+    "PMC8745353.xml::jcm-11-00046-t002!R6C3",
+    "PMC8745353.xml::jcm-11-00046-t002!R6C4",
+    "PMC8745353.xml::jcm-11-00046-t002!R6C5",
+    "PMC8745353.xml::jcm-11-00046-t002!R6C6",
+    "PMC8745353.xml::jcm-11-00046-t002!R6C7"
+   ],
+   "source_cell_texts": [
+    "28.60 (26.5) ± 7.14(n = 30)",
+    "19.33 (16) ± 9.28(n = 30)",
+    "17.30 (15.5) ± 7.40(n = 30)",
+    "13.67 (14) ± 3.06(n = 30)",
+    "13.30 (13) ± 2.97(n = 30)",
+    "13.80 (13) ± 3.39(n = 30)"
+   ]
+  },
+  {
+   "series_id": "ct-alone/iop",
+   "group": "ct-alone",
+   "kind": "group_mean",
+   "n": 14,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Preoperative (Table 2, CT without phacoemulsification)",
+   "notes": "mean (median) ± SD (n) cells, leading mean read; n = 14 at every included visit; 6/12/24-month cells excluded (fewer eyes after dropout that included additional glaucoma surgery)",
+   "values": [
+    32.21,
+    25.64,
+    17.71,
+    15.86,
+    16.57
+   ],
+   "source_cells": [
+    "PMC8745353.xml::jcm-11-00046-t002!R8C2",
+    "PMC8745353.xml::jcm-11-00046-t002!R8C3",
+    "PMC8745353.xml::jcm-11-00046-t002!R8C4",
+    "PMC8745353.xml::jcm-11-00046-t002!R8C5",
+    "PMC8745353.xml::jcm-11-00046-t002!R8C6"
+   ],
+   "source_cell_texts": [
+    "32.21 (30) ± 10.11(n = 14)",
+    "25.64 (26) ± 9.66(n = 14)",
+    "17.71 (18) ± 4.40(n = 14)",
+    "15.86 (16.5) ± 4.26(n = 14)",
+    "16.57 (17) ± 4.45(n = 14)"
+   ]
+  },
+  {
+   "series_id": "gatt-alone/iop",
+   "group": "gatt-alone",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0329,
+    0.23
+   ],
+   "baseline_label": "Preoperative (Table 2, GATT without phacoemulsification)",
+   "notes": "mean (median) ± SD (n) cells, leading mean read; n = 23 at every included visit; 1/3/6/12/24-month cells excluded (fewer eyes after dropout that included additional glaucoma surgery, although every eye had at least 3 months of follow-up)",
+   "values": [
+    34.04,
+    16.87,
+    17.78
+   ],
+   "source_cells": [
+    "PMC8745353.xml::jcm-11-00046-t002!R9C2",
+    "PMC8745353.xml::jcm-11-00046-t002!R9C3",
+    "PMC8745353.xml::jcm-11-00046-t002!R9C4"
+   ],
+   "source_cell_texts": [
+    "34.04 (30) ± 9.62(n = 23)",
+    "16.87 (14) ± 8.46(n = 23)",
+    "17.78 (16) ± 8.58(n = 23)"
+   ]
+  }
+ ]
+}

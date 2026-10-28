@@ -1,0 +1,70 @@
+{
+ "study_id": "iop-pmc9148669",
+ "doi": "10.1097/IJG.0000000000001998",
+ "pmcid": "PMC9148669",
+ "title": "Two-Year Outcomes of the Paul Glaucoma Implant for Treatment of Glaucoma",
+ "species": "human",
+ "procedure": "tube",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>); non-commercial no-derivatives, therefore private",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9148669.xml",
+   "sha256": "eca553a46f7914b19cb8a76fa5cbdaaae1e39d3345fbc2813606cbf10408b56f",
+   "bytes": 61095,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "refractory glaucoma uncontrolled on maximal tolerated medical therapy, with or without previous failed glaucoma surgery: POAG 19, PACG 11, neovascular 4 and other secondary or juvenile glaucoma 11 eyes; 11 eyes with previous trabeculectomy or tube; ages 21-80 years; retrospective single-center review including patients of a prospective interventional study (Singapore)",
+ "groups": [
+  {
+   "group": "pgi",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 45,
+   "description": "PAUL Glaucoma Implant (non-valved), plate under the recti 9 mm from the limbus, pericardial patch, 'stability system' with cross-linked viscoelastic beneath the patch; no mitomycin C, ligature or intraluminal stent; 28 eyes had combined phacoemulsification and 6 another concurrent procedure; 45 eyes of 45 patients"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "pgi/iop",
+   "group": "pgi",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 1, 6, 12, 18, 24],
+   "cells": [
+    "PMC9148669.xml::T2!R7C2",
+    "PMC9148669.xml::T2!R8C2",
+    "PMC9148669.xml::T2!R9C2",
+    "PMC9148669.xml::T2!R10C2",
+    "PMC9148669.xml::T2!R11C2",
+    "PMC9148669.xml::T2!R12C2"
+   ],
+   "baseline_label": "Table 2 'Mean intraocular pressure (mm Hg)' block, row 'Preoperative' = mean medicated preoperative IOP (same cell text as Table 1 'Mean medicated intraocular pressure', T1!R11C2)",
+   "notes": "mean ± SD (column header 'Data (Mean±SD)'); rows Preoperative, 1 mo, 6 mo, 12 mo, 18 mo, 24 mo; follow-up cells carry a significance asterisk (not used); no patient was lost to follow-up and none needed additional glaucoma surgery or explantation, so no eye was censored (Results)"
+  }
+ ],
+ "exclusions": [
+  {"what": "mean highest preoperative IOP (Results text)", "reason": "historical maximum, not the preoperative reference (medicated preoperative IOP used)"},
+  {"what": "subgroup with preoperative medicated IOP <= 21 mmHg (n = 29; Results text)", "reason": "text-only values, not cited table cells; it would also duplicate eyes of the whole-cohort series"},
+  {"what": "percentage reductions (text)", "reason": "absolute IOP is tabulated; absolute series used"},
+  {"what": "Table 2 visual acuity and medication-class rows", "reason": "not IOP / medication numbers noted only"},
+  {"what": "Table 3 comparison with ABC and AVB study arms (AGV, BGI)", "reason": "values from other published studies, not eyes of this study, and a single time point"},
+  {"what": "Kaplan-Meier survival (Figure 2), failure and success counts", "reason": "success proportions / Kaplan-Meier estimates and counts are not admissible"},
+  {"what": "Figure 3 and Figure 4", "reason": "figure-only values, not cited cells"}
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': the tabulated preoperative IOP is the mean medicated preoperative IOP; all patients were on IOP-lowering medications (mean classes in Table 1 R21).",
+  "Tonometer: Goldmann applanation, two readings averaged (third if they differed by > 2 mmHg), method 'goldmann'.",
+  "The cohort mixes PGI alone and PGI combined with phacoemulsification (28 of 45) or other concurrent procedures (6 of 45); no per-subgroup IOP is tabulated, so the whole cohort is extracted with procedure 'tube' (the drainage device defines the arm).",
+  "Slit-lamp procedures (laser suture lysis, iridoplasty, needling, anterior chamber viscoelastic injection) were not counted as reoperations; four eyes had viscoelastic injection for hypotony and four tube occlusions were treated (standard postoperative management).",
+  "Number of classes of IOP-lowering medications preoperatively and at 12/18/24 months is tabulated in Table 2 (not extracted)."
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "study_id": "iop-pmc12927784",
+ "doi": "10.2147/OPTH.S586125",
+ "pmcid": "PMC12927784",
+ "title": "Effectiveness of Trabeculectomy in Primary Open-Angle Glaucoma with Low Preoperative Intraocular Pressure",
+ "species": "human",
+ "procedure": "trabeculectomy",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press terms incorporating CC BY-NC 4.0 (article <license>); not CC BY, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12927784.xml",
+   "sha256": "7b051a35d31fab4bb9923c5c5e61e98ee322cf60da389be87dddbe1eedaee746",
+   "bytes": 72795,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "POAG with low preoperative IOP (12 mmHg or less on maximally tolerated medication) and progressing visual field defects",
+ "design": "retrospective single-surgeon, single-centre, non-randomized observational study; 11 eyes followed for at least 3 years",
+ "groups": [
+  {
+   "group": "trab-mmc",
+   "role": "control",
+   "procedure": "trabeculectomy",
+   "n_reported": 11,
+   "indication": "low-pressure POAG with visual field progression",
+   "description": "fornix-based trabeculectomy with mitomycin C; 6 of 11 eyes had simultaneous phacoemulsification with IOL (triple surgery)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "trab-mmc/iop",
+   "group": "trab-mmc",
+   "kind": "group_mean",
+   "n": 11,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 6, 12, 18, 24, 30, 36],
+   "cells": [
+    "PMC12927784.xml::t0002!R1C3",
+    "PMC12927784.xml::t0002!R3C3",
+    "PMC12927784.xml::t0002!R5C3",
+    "PMC12927784.xml::t0002!R7C3",
+    "PMC12927784.xml::t0002!R9C3",
+    "PMC12927784.xml::t0002!R11C3",
+    "PMC12927784.xml::t0002!R13C3"
+   ],
+   "baseline_label": "Preoperative IOP, mmHg (Table 2); defined as the mean of the IOPs at the two visits before surgery on glaucoma medication",
+   "notes": "mean ± SD (abstract and Results describe means); follow-up cells also hold the reduction ratio in parentheses, not used; per-visit n not shown, all 11 eyes were followed at least 3 years"
+  }
+ ],
+ "exclusions": [
+  {"what": "reduction ratio (mean ± SD %) in parentheses in the Table 2 follow-up cells", "reason": "percent change duplicates the absolute IOP series of the same cells"},
+  {"what": "Table 2 p-value column", "reason": "p-values are not admissible"},
+  {"what": "Table 1 preoperative IOP", "reason": "same baseline as Table 2 (duplicate)"},
+  {"what": "Figure 1 Kaplan-Meier success", "reason": "Kaplan-Meier estimates are not admissible"},
+  {"what": "Tables 3 and 4 (visual acuity, complications)", "reason": "not IOP"}
+ ],
+ "notes": [
+  "The Table 2 footnote says numbers in parentheses are eye counts, but the parentheses of the IOP cells hold reduction ratios in percent; no per-visit eye count is tabulated.",
+  "Inclusion required at least 3 years of follow-up and at least five visual field tests before and after surgery (completeness criteria, not outcome-defined); the Results state that no eye had additional glaucoma surgery within 3 years. The exclusion of 'patients who had undergone filtration glaucoma surgeries' is read as prior filtration surgery.",
+  "Phaco combined with trabeculectomy is extracted as trabeculectomy (6 of 11 eyes); the table does not separate the two.",
+  "Glaucoma medications were discontinued after surgery and added as needed; medication counts are tabulated in Table 2 (Medications rows); not extracted.",
+  "Laser suture lysis was intentionally performed earlier than usual to reach a lower target IOP (Discussion).",
+  "Tonometer: Goldmann applanation; time of day not standardized (Methods)."
+ ]
+}

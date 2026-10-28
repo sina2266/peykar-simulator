@@ -1,0 +1,257 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc7745382",
+ "doi": "10.1186/s12886-020-01764-8",
+ "pmcid": "PMC7745382",
+ "title": "Outcome of a single XEN microstent implant for glaucoma patients with different types of glaucoma",
+ "species": "human",
+ "procedure": "subconjunctival_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7745382.xml",
+   "sha256": "e0fbc1555be609428b9786cfe83e65727379d8b6e2cfcc6f285cafc42d18b82b",
+   "bytes": 105659,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7745382/fullTextXML)"
+  }
+ ],
+ "indication": "open-angle glaucoma with progression or medically uncontrolled IOP, patients aged 40 years or older without narrow angles; single ab interno XEN 45 microstent with subconjunctival mitomycin C, not combined with phacoemulsification; retrospective, first operated eye per patient; subgroups by glaucoma type (primary open-angle, normal-tension, pseudoexfoliation, secondary)",
+ "groups": [
+  {
+   "group": "poag",
+   "role": "control",
+   "n_reported": 113,
+   "description": "Primary open-angle glaucoma eyes (Table 2 row 'POAG')"
+  },
+  {
+   "group": "ntg",
+   "role": "control",
+   "n_reported": 5,
+   "description": "Normal-tension glaucoma eyes, operated for progression (Table 2 row 'NTG')"
+  },
+  {
+   "group": "pex",
+   "role": "control",
+   "n_reported": 22,
+   "description": "Pseudoexfoliation glaucoma eyes (Table 2 row 'PEX')"
+  },
+  {
+   "group": "secondary",
+   "role": "control",
+   "n_reported": 13,
+   "description": "Secondary glaucoma eyes: post-traumatic (4), neovascular in a stable phase (4), uveitic (3) and steroid-induced (2) (Table 2 row 'secondary glaucoma'; Results)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 row R2 'complete group'",
+   "reason": "whole cohort whose eyes are the four glaucoma-type subgroups extracted separately (would duplicate the same eyes)"
+  },
+  {
+   "what": "Table 2 columns C8 (p-values) and C9 (mean reduction in %)",
+   "reason": "p-values are not admissible; the absolute IOP series of the same table is used"
+  },
+  {
+   "what": "Table 3 (Tab3) clinical success rates",
+   "reason": "success proportions are not admissible"
+  },
+  {
+   "what": "Table 4 (Tab4) IOP-lowering agents",
+   "reason": "medication counts are mentioned in notes only"
+  },
+  {
+   "what": "Tables 1, 5 and 6 (demographics, visual field, needling and complications)",
+   "reason": "not IOP series; counts are not admissible"
+  },
+  {
+   "what": "Day-1 postoperative visit",
+   "reason": "examined according to Methods but not tabulated"
+  }
+ ],
+ "notes": [
+  "Tonometer: Goldmann applanation tonometry (Methods).",
+  "Reference: baseline examination 4 weeks before surgery under the usual topical anti-glaucomatous medication (Methods), recorded as preoperative_medicated. Topical drops were then stopped and oral acetazolamide was given for the 4 weeks before surgery; no IOP from that interval is tabulated.",
+  "Postoperatively all glaucoma medications were stopped and restarted when needed; needling with 5-fluorouracil was performed in about a third of eyes during the first year (Table 6) and is not stated to be excluded from the means.",
+  "Table 4 tabulates the number of IOP-lowering agents for the same groups and visits; not extracted.",
+  "The Results text attributes 13 eyes to the PEX group in the visual acuity paragraph, whereas Table 2 and the Methods/Results elsewhere give 22 PEX eyes; 22 is used."
+ ],
+ "series": [
+  {
+   "series_id": "poag/iop",
+   "group": "poag",
+   "kind": "group_mean",
+   "n": 113,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0657,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "baseline (Table 2 column 2)",
+   "notes": "mean ± SD; columns 'baseline', '2 days', '1 month', '3 months', '6 months', '12 months'; 2 days = 2/30.4375 months; all patients were examined at all visits (Methods)",
+   "values": [
+    22.8,
+    8.9,
+    15.3,
+    15.9,
+    15.3,
+    15.1
+   ],
+   "source_cells": [
+    "PMC7745382.xml::Tab2!R3C2",
+    "PMC7745382.xml::Tab2!R3C3",
+    "PMC7745382.xml::Tab2!R3C4",
+    "PMC7745382.xml::Tab2!R3C5",
+    "PMC7745382.xml::Tab2!R3C6",
+    "PMC7745382.xml::Tab2!R3C7"
+   ],
+   "source_cell_texts": [
+    "22.8 ± 6.5",
+    "8.9 ± 5.1",
+    "15.3 ± 7.6",
+    "15.9 ± 6.0",
+    "15.3 ± 6.2",
+    "15.1 ± 4.6"
+   ]
+  },
+  {
+   "series_id": "ntg/iop",
+   "group": "ntg",
+   "kind": "group_mean",
+   "n": 5,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0657,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "baseline (Table 2 column 2)",
+   "notes": "mean ± SD; same columns as the POAG series",
+   "values": [
+    16.6,
+    5.6,
+    10.0,
+    13.4,
+    10.8,
+    11.6
+   ],
+   "source_cells": [
+    "PMC7745382.xml::Tab2!R4C2",
+    "PMC7745382.xml::Tab2!R4C3",
+    "PMC7745382.xml::Tab2!R4C4",
+    "PMC7745382.xml::Tab2!R4C5",
+    "PMC7745382.xml::Tab2!R4C6",
+    "PMC7745382.xml::Tab2!R4C7"
+   ],
+   "source_cell_texts": [
+    "16.6 ± 3.4",
+    "5.6 ± 2.7",
+    "10.0 ± 3.0",
+    "13.4 ± 2.9",
+    "10.8 ± 4.6",
+    "11.6 ± 2.2"
+   ]
+  },
+  {
+   "series_id": "pex/iop",
+   "group": "pex",
+   "kind": "group_mean",
+   "n": 22,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0657,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "baseline (Table 2 column 2)",
+   "notes": "mean ± SD; same columns as the POAG series",
+   "values": [
+    28.0,
+    11.9,
+    16.5,
+    15.7,
+    17.1,
+    17.1
+   ],
+   "source_cells": [
+    "PMC7745382.xml::Tab2!R5C2",
+    "PMC7745382.xml::Tab2!R5C3",
+    "PMC7745382.xml::Tab2!R5C4",
+    "PMC7745382.xml::Tab2!R5C5",
+    "PMC7745382.xml::Tab2!R5C6",
+    "PMC7745382.xml::Tab2!R5C7"
+   ],
+   "source_cell_texts": [
+    "28.0 ± 7.9",
+    "11.9 ± 6.4",
+    "16.5 ± 8.0",
+    "15.7 ± 6.2",
+    "17.1 ± 7.2",
+    "17.1 ± 6.6"
+   ]
+  },
+  {
+   "series_id": "secondary/iop",
+   "group": "secondary",
+   "kind": "group_mean",
+   "n": 13,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.0657,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "baseline (Table 2 column 2)",
+   "notes": "mean ± SD; same columns as the POAG series; heterogeneous secondary glaucoma aetiologies",
+   "values": [
+    28.9,
+    8.7,
+    16.7,
+    17.7,
+    17.0,
+    15.5
+   ],
+   "source_cells": [
+    "PMC7745382.xml::Tab2!R6C2",
+    "PMC7745382.xml::Tab2!R6C3",
+    "PMC7745382.xml::Tab2!R6C4",
+    "PMC7745382.xml::Tab2!R6C5",
+    "PMC7745382.xml::Tab2!R6C6",
+    "PMC7745382.xml::Tab2!R6C7"
+   ],
+   "source_cell_texts": [
+    "28.9 ± 13.9",
+    "8.7 ± 4.6",
+    "16.7 ± 10.6",
+    "17.7 ± 10.3",
+    "17.0 ± 10.4",
+    "15.5 ± 6.9"
+   ]
+  }
+ ]
+}

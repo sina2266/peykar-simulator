@@ -1,0 +1,70 @@
+{
+ "study_id": "iop-pmc8610789",
+ "doi": "10.1007/s00417-021-05497-2",
+ "pmcid": "PMC8610789",
+ "title": "Long-term outcomes of viscocanalostomy and phaco-viscocanalostomy in patients with narrow angle glaucoma",
+ "species": "human",
+ "procedure": "nonpenetrating",
+ "split": "development",
+ "license": {
+  "statement": "Publisher licence (copyright under exclusive licence to Springer-Verlag GmbH Germany); made available via the PMC Open Access Subset for research re-use for the duration of the WHO COVID-19 pandemic declaration - not CC BY, record kept private",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC8610789.xml",
+   "sha256": "3bcd4db60180e67c04b0694b1f5fe1288ac2e9ec2129279973e8feb6ed5e1087",
+   "bytes": 77556,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "narrow-angle glaucoma: mostly chronic narrow-angle glaucoma, also acute angle closure, ocular hypertension or normal tension glaucoma with narrow angles and nanophthalmos; most eyes had a prior laser peripheral iridotomy (prospectively maintained database, single surgical team, minimum 12 months follow-up; 70 eyes of 46 patients)",
+ "groups": [
+  {
+   "group": "viscocanalostomy-cohort",
+   "role": "control",
+   "procedure": "nonpenetrating",
+   "n_reported": 70,
+   "description": "un-augmented viscocanalostomy (no antimetabolite) with trabeculo-Descemet window, alone or combined with phacoemulsification (phaco-viscocanalostomy in about two thirds of eyes); intentional peripheral iridectomy when peripheral anterior synechiae blocked the window; Nd:YAG goniopuncture as postoperative intervention"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "viscocanalostomy-cohort/iop",
+   "group": "viscocanalostomy-cohort",
+   "kind": "group_mean",
+   "n": 70,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 12, 24, 36, 48, 60],
+   "cells": [
+    "PMC8610789.xml::Tab2!R2C2",
+    "PMC8610789.xml::Tab2!R2C3",
+    "PMC8610789.xml::Tab2!R2C4",
+    "PMC8610789.xml::Tab2!R2C5",
+    "PMC8610789.xml::Tab2!R2C6",
+    "PMC8610789.xml::Tab2!R2C7"
+   ],
+   "baseline_label": "Pre-op (Table 2)",
+   "notes": "mean \u00b1 SD (caption: mean IOP); per-visit patient/eye numbers in the Table 2 header (fewer at later years: ordinary attrition; one patient missed year 1 and returned at year 2)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 5 per-eye rows of the four failed eyes (pre-op IOP, IOP at failure, IOP at final follow-up)", "reason": "eyes selected by a postoperative outcome (failure); final follow-up untimed"},
+  {"what": "Table 3 and Fig. 2 (complete/qualified success, Kaplan-Meier)", "reason": "success proportions and Kaplan-Meier estimates are not admissible"},
+  {"what": "Abstract/Results percent IOP reductions per year", "reason": "derived summaries; the tabulated absolute means are used"},
+  {"what": "Table 2 R3 (number of drops)", "reason": "medication data are notes only"},
+  {"what": "viscocanalostomy alone vs phaco-viscocanalostomy subgroups", "reason": "the article reports a subgroup comparison only as a Kaplan-Meier p-value; no subgroup IOP is tabulated, so the whole cohort is extracted"}
+ ],
+ "notes": [
+  "Context: viscocanalostomy alone or combined with phacoemulsification is recorded as nonpenetrating; the cohort mixes both variants and they are not tabulated separately.",
+  "Role: single cohort of the centre's standard un-augmented procedure, no experimental arm, so recorded as control.",
+  "Reference kind: patients used glaucoma drops before surgery (Table 1 R6, Table 2 R3) and no washout is described.",
+  "Method: the article does not name a tonometer.",
+  "Analysis set: 15 eyes without 12 months of data were excluded before analysis (selection by follow-up length, not by an outcome). Three eyes had further glaucoma surgery during follow-up; the article does not state that they were removed from later visit means.",
+  "Some patients contributed both eyes (70 eyes, 46 patients).",
+  "Mean number of drops per year is tabulated in Table 2 R3 (not extracted)."
+ ]
+}

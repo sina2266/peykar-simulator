@@ -1,0 +1,97 @@
+{
+ "study_id": "iop-pmc12033595",
+ "doi": "10.1177/25158414241287421",
+ "pmcid": "PMC12033595",
+ "title": "Clinical outcomes of PRESERFLO® Microshunt procedure with mitomycin C alone versus with mitomycin C and bevacizumab",
+ "species": "human",
+ "procedure": "subconjunctival_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>); not CC BY, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12033595.xml",
+   "sha256": "7b4f439c6ee4202fa6e6b4fa531195c1a3f6aa06b1f9ef1a4ed2e311924f7961",
+   "bytes": 90851,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "glaucoma uncontrolled or progressing despite maximum tolerated medical therapy: mostly POAG, also secondary OAG (pseudoexfoliation, pigment dispersion), PACG, NTG and juvenile OAG (Table 1)",
+ "design": "retrospective single-surgeon cohort; MMC-alone eyes operated 2018-2020, MMC plus bevacizumab eyes 2020-2022 (sequential, non-randomized)",
+ "groups": [
+  {
+   "group": "mmc-bevacizumab",
+   "role": "treated",
+   "procedure": "subconjunctival_mims",
+   "n_reported": 37,
+   "indication": "as study",
+   "description": "PreserFlo MicroShunt with sub-Tenon mitomycin C plus intracameral bevacizumab at the end of surgery (investigational adjunct)"
+  },
+  {
+   "group": "mmc-control",
+   "role": "control",
+   "procedure": "subconjunctival_mims",
+   "n_reported": 38,
+   "indication": "as study",
+   "description": "PreserFlo MicroShunt with sub-Tenon mitomycin C alone (study control group)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "mmc-bevacizumab/iop",
+   "group": "mmc-bevacizumab",
+   "kind": "group_mean",
+   "n": 37,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC12033595.xml::table2-25158414241287421!R3C2",
+    "PMC12033595.xml::table2-25158414241287421!R7C2",
+    "PMC12033595.xml::table2-25158414241287421!R11C2",
+    "PMC12033595.xml::table2-25158414241287421!R15C2",
+    "PMC12033595.xml::table2-25158414241287421!R19C2"
+   ],
+   "baseline_label": "Baseline IOP (Table 2)",
+   "notes": "mean (SD); per-visit n not reported (analysis limited to eyes completing 6 months of follow-up); eyes that received 5-FU injections, needling or bleb revision remain in the means"
+  },
+  {
+   "series_id": "mmc-control/iop",
+   "group": "mmc-control",
+   "kind": "group_mean",
+   "n": 38,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC12033595.xml::table2-25158414241287421!R3C3",
+    "PMC12033595.xml::table2-25158414241287421!R7C3",
+    "PMC12033595.xml::table2-25158414241287421!R11C3",
+    "PMC12033595.xml::table2-25158414241287421!R15C3",
+    "PMC12033595.xml::table2-25158414241287421!R19C3"
+   ],
+   "baseline_label": "Baseline IOP (Table 2)",
+   "notes": "mean (SD); per-visit n not reported (analysis limited to eyes completing 6 months of follow-up); eyes that received 5-FU injections, needling or bleb revision remain in the means"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 VA rows", "reason": "not IOP"},
+  {"what": "Table 2 p column", "reason": "p-values are not admissible"},
+  {"what": "Table 3 complications and Table 4 postoperative interventions", "reason": "counts, not IOP"},
+  {"what": "Figures 2 and 3 Kaplan-Meier success and intervention-free curves; complete/qualified success proportions", "reason": "Kaplan-Meier estimates and success proportions are not admissible"},
+  {"what": "Figure 1 IOP over time", "reason": "figure, no table cells; the same time points are cited from Table 2"}
+ ],
+ "notes": [
+  "Day 7 = 7/30.4375 months, rounded to 4 decimals.",
+  "Completers analysis: patients who did not complete 6 months of follow-up were excluded (one patient in the bevacizumab group lost to relocation); this is loss to follow-up, not an outcome-defined selection.",
+  "Preoperative IOP on glaucoma medication (maximum tolerated medical therapy; some patients switched to preservative-free drops or oral acetazolamide while awaiting surgery).",
+  "Medication: mean (SD) number of medications at each time point is tabulated in Table 2; not extracted.",
+  "MMC concentration was titrated by risk (Methods); 30 bevacizumab and 31 control eyes received the same concentration (Results).",
+  "Tonometer: Goldmann applanation at all visits (Methods)."
+ ]
+}

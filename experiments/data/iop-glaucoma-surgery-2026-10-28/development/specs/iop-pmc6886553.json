@@ -1,0 +1,91 @@
+{
+ "study_id": "iop-pmc6886553",
+ "doi": "10.2147/OPTH.S231780",
+ "pmcid": "PMC6886553",
+ "title": "Effects of Baerveldt Glaucoma Implant Surgery on Corneal Endothelial Cells of Patients with No History of Trabeculectomy",
+ "species": "human",
+ "procedure": "tube",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press terms incorporating CC BY-NC 3.0 unported (article <license> and ali:license_ref); not CC BY, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6886553.xml",
+   "sha256": "ed519af9a094096086dee895e269461476858518a4e202b5c7029ae0c4fdada8",
+   "bytes": 78364,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "POAG, pseudoexfoliation, neovascular and other secondary glaucoma without prior trabeculectomy (refractory; Baerveldt implant)",
+ "design": "retrospective single-centre study, one eye per patient, follow-up of more than 12 months required",
+ "groups": [
+  {
+   "group": "baerveldt-anterior-chamber",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 23,
+   "indication": "glaucoma without prior trabeculectomy (AC group)",
+   "description": "Baerveldt glaucoma implant with the tube inserted into the anterior chamber (Table 4 'AC')"
+  },
+  {
+   "group": "baerveldt-vitreous-cavity",
+   "role": "control",
+   "procedure": "tube",
+   "n_reported": 62,
+   "indication": "glaucoma without prior trabeculectomy (VC group; more neovascular glaucoma)",
+   "description": "Baerveldt glaucoma implant with the tube inserted into the vitreous cavity with pars plana vitrectomy (Table 4 'VC')"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "baerveldt-anterior-chamber/iop",
+   "group": "baerveldt-anterior-chamber",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 12],
+   "cells": [
+    "PMC6886553.xml::T0004!R3C2",
+    "PMC6886553.xml::T0004!R4C2"
+   ],
+   "baseline_label": "Pre-operative IOP (Table 4, AC)",
+   "notes": "mean ± SD (n); n = 23 at the pre-operative and 1-year cells; years 2-5 excluded (censored at additional glaucoma surgery)"
+  },
+  {
+   "series_id": "baerveldt-vitreous-cavity/iop",
+   "group": "baerveldt-vitreous-cavity",
+   "kind": "group_mean",
+   "n": 62,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 12],
+   "cells": [
+    "PMC6886553.xml::T0004!R3C4",
+    "PMC6886553.xml::T0004!R4C4"
+   ],
+   "baseline_label": "Pre-operative IOP (Table 4, VC)",
+   "notes": "mean ± SD (n); n = 62 at the pre-operative and 1-year cells; years 2-5 excluded (censored at additional glaucoma surgery)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 4 IOP at 2, 3, 4 and 5 years for AC and VC (T0004!R5C2-R8C2 and R5C4-R8C4)", "reason": "Methods: for eyes that underwent additional glaucoma surgery only the IOP data before that surgery were used, so means at visits with fewer eyes are censored at additional surgery (outcome-defined, protocol inclusion 4). The 1-year cells still include every eye (n equals the pre-operative n) and are kept."},
+  {"what": "Table 1 pre-operative IOP", "reason": "duplicate of the Table 4 baselines"},
+  {"what": "Table 4 medication columns and p-value columns", "reason": "medications are not IOP; p-values are not admissible"},
+  {"what": "Tables 2 and 3 multivariate analyses; Figures 1-3 Kaplan-Meier success", "reason": "model estimates and Kaplan-Meier estimates are not admissible"},
+  {"what": "Tables 5-7 endothelial cell density", "reason": "not IOP"}
+ ],
+ "notes": [
+  "Tonometer is not stated in the article; method unstated.",
+  "Preoperative IOP on glaucoma medication (pre-operative medications tabulated in Tables 1 and 4).",
+  "Additional glaucoma surgery was reported in five eyes and tube repositioning from the anterior chamber to the vitreous cavity in four AC eyes; their timing is not reported. The 1-year n equals the pre-operative n in both groups, so no eye had been censored by then.",
+  "Medication: mean number of glaucoma medications per visit is tabulated in Table 4; not extracted.",
+  "The abstract gives the VC group as n=63 while Tables 1 and 4 give 62 eyes; the table counts are used.",
+  "Group roles: anterior-chamber and vitreous-cavity tube placement are two standard techniques chosen by the surgeons, no experimental arm; both role control."
+ ]
+}

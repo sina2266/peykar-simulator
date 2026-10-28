@@ -9,6 +9,7 @@ import pytest
 from peykar.validation.eye_iop_data import (
     PressureSeries,
     build_record,
+    iop_number,
     structural_summary,
     to_pressure_series,
     validate_record,
@@ -144,3 +145,11 @@ def test_builder_reads_cited_cells_and_checks_hashes() -> None:
     assert record["series"][0]["values"] == [25.0, 10.0, 14.0]
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
+
+
+def test_iop_numbers_accept_decimal_commas() -> None:
+    assert iop_number("15,3 \u00b1 4,2") == pytest.approx(15.3)
+    assert iop_number("\u22122,5") == pytest.approx(-2.5)
+    assert iop_number("14.0 \u00b1 3.1") == pytest.approx(14.0)
+    assert iop_number("1,250") == 1250.0
+    assert iop_number("21 (15\u201328)") == 21.0

@@ -1,0 +1,95 @@
+{
+ "study_id": "iop-pmc11633301",
+ "doi": "10.2147/OPTH.S480485",
+ "pmcid": "PMC11633301",
+ "title": "Combined Phacoemulsification and 360-Degree Suture Trabeculotomy Ab Externo in Primary Chronic Angle Closure Glaucoma: A Modified Technique",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 unported (article <license>: Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License) - non-commercial, record kept private",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11633301.xml",
+   "sha256": "142589c96f26f8ca71f1aecefc2ff807b206d4a5871a14dc387cd4af0828f824",
+   "bytes": 73137,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "primary chronic angle-closure glaucoma with cataract; no previous intraocular surgery (retrospective, single surgeon, one eye per patient, all patients completed at least 12 months of follow-up)",
+ "groups": [
+  {
+   "group": "phaco-trabeculotomy-standard",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 30,
+   "description": "phacoemulsification combined with standard 360-degree suture trabeculotomy ab externo (prolene suture pulled ab externo; deep scleral flap with trabeculo-Descemet window; subconjunctival 5-fluorouracil)"
+  },
+  {
+   "group": "phaco-trabeculotomy-modified",
+   "role": "treated",
+   "procedure": "angle_mims",
+   "n_reported": 30,
+   "description": "phacoemulsification combined with the authors' modified 360-degree suture trabeculotomy ab externo (120-degree trabeculotome from the nasal end, suture pulled ab interno through a temporal limbal incision); otherwise as the standard group"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "phaco-trabeculotomy-standard/iop",
+   "group": "phaco-trabeculotomy-standard",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6, 9, 12],
+   "cells": [
+    "PMC11633301.xml::t0003!R2C2",
+    "PMC11633301.xml::t0003!R3C2",
+    "PMC11633301.xml::t0003!R4C2",
+    "PMC11633301.xml::t0003!R5C2",
+    "PMC11633301.xml::t0003!R6C2",
+    "PMC11633301.xml::t0003!R7C2"
+   ],
+   "baseline_label": "Preoperative (Table 3)",
+   "notes": "header '(mean + SD)', cells written 'mean + SD'; group n = 30 in header, per-visit n not reported"
+  },
+  {
+   "series_id": "phaco-trabeculotomy-modified/iop",
+   "group": "phaco-trabeculotomy-modified",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6, 9, 12],
+   "cells": [
+    "PMC11633301.xml::t0003!R2C3",
+    "PMC11633301.xml::t0003!R3C3",
+    "PMC11633301.xml::t0003!R4C3",
+    "PMC11633301.xml::t0003!R5C3",
+    "PMC11633301.xml::t0003!R6C3",
+    "PMC11633301.xml::t0003!R7C3"
+   ],
+   "baseline_label": "Preoperative (Table 3)",
+   "notes": "header '(mean + SD)', cells written 'mean + SD'; group n = 30 in header, per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 column C4 (p value)", "reason": "p-values are not admissible"},
+  {"what": "Results text: percent IOP reduction per group", "reason": "derived summary without a tabulated series; the tabulated absolute means are used"},
+  {"what": "complete/qualified success rates and Kaplan-Meier survival (Figures 6 and 7)", "reason": "success proportions and Kaplan-Meier estimates are not admissible"},
+  {"what": "Table 2 R2 (preoperative IOP)", "reason": "duplicate of the Table 3 preoperative row, which is cited instead"}
+ ],
+ "notes": [
+  "Role: the modified technique is the variant the article was written to assess (title and Purpose), so it is the treated arm; the standard ab externo technique is the control.",
+  "Context: 360-degree suture trabeculotomy combined with phacoemulsification is recorded as angle_mims (protocol: trabeculotomy and other angle procedures combined with cataract surgery). Both arms also include a trabeculo-Descemet window and subconjunctival 5-fluorouracil.",
+  "Method: the article does not name a tonometer.",
+  "Reference kind: patients were on topical antiglaucoma medications before surgery (Table 2 R3 and Table 4 R2) and no washout is described; the medication status at the preoperative measurement is not stated explicitly.",
+  "Postoperative re-interventions (ab interno revision, diode cyclophotocoagulation, Ahmed valve) occurred in a few eyes; the article does not state that these eyes were removed from the visit means, so no outcome-defined exclusion applies.",
+  "Mean number of antiglaucoma medications per visit is tabulated in Table 4 (not extracted)."
+ ]
+}

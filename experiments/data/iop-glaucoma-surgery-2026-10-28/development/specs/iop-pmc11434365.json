@@ -1,0 +1,69 @@
+{
+ "study_id": "iop-pmc11434365",
+ "doi": "10.3390/medicina60091440",
+ "pmcid": "PMC11434365",
+ "title": "Intraocular Pressure-Lowering Effect of Intraocular Lens Refixation in Patients with Elevated Intraocular Pressure Due to Intraocular Lens Subluxation",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11434365.xml",
+   "sha256": "bcbdfe5d1429265788d59c2ea5f4871579271d8073ac8067cc1c90c491111714",
+   "bytes": 94391,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "elevated IOP (> 21 mmHg) due to intraocular lens subluxation; ocular hypertension (OH) group = eyes without glaucoma (diagnosis from funduscopic optic nerve observation), six with exfoliation syndrome; lens surgery alone: IOL exchange with refixation (flanged, T- or sulcus fixation) through 25-gauge pars plana vitrectomy, no glaucoma surgery; retrospective single-center cohort (Japan)",
+ "groups": [
+  {
+   "group": "oh",
+   "role": "control",
+   "procedure": "cataract",
+   "n_reported": 11,
+   "description": "ocular hypertension group (no glaucoma) undergoing IOL refixation with vitrectomy; n from Table 1 header and Table 2 preoperative 'Eyes, n' (t002!R5C4)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "oh/iop",
+   "group": "oh",
+   "kind": "group_mean",
+   "n": 11,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6, 12],
+   "cells": [
+    "PMC11434365.xml::medicina-60-01440-t002!R3C4",
+    "PMC11434365.xml::medicina-60-01440-t002!R7C4",
+    "PMC11434365.xml::medicina-60-01440-t002!R11C4",
+    "PMC11434365.xml::medicina-60-01440-t002!R15C4",
+    "PMC11434365.xml::medicina-60-01440-t002!R19C4"
+   ],
+   "baseline_label": "Table 2 'Preoperative' block, row 'IOP, mmHg', OH Group column",
+   "notes": "mean ± SD (Table 2 footnote); rows 'At 1 month', 'At 3 months', 'At 6 months', 'At 12 months'; eyes per visit 11, 11, 9, 7, 6 (t002!R5C4, R9C4, R13C4, R17C4, R21C4): ordinary attrition with variable follow-up (no additional glaucoma surgery occurred in the OH group per Results)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Glaucoma Group IOP series (Table 2 column C3)", "reason": "analysis set censored at a postoperative outcome: Results state that patients who underwent additional glaucoma surgery after the reoperation were excluded from the analysis, and all four additional glaucoma surgeries occurred in the glaucoma group (censoring at additional surgery, protocol rule 4 / brief)"},
+  {"what": "Total column IOP series (Table 2 column C2)", "reason": "whole cohort duplicates the preoperative-condition subgroups (brief rule) and contains the glaucoma-group eyes censored at additional glaucoma surgery"},
+  {"what": "Table 2 'Final follow-up visit' rows (R22-R25)", "reason": "untimed final visit"},
+  {"what": "Table 2 p-Value column (C5)", "reason": "p-values are not admissible"},
+  {"what": "Table 2 'Medications, n' rows", "reason": "medication numbers are not IOP series in schema 1.0.0; noted only"},
+  {"what": "Kaplan-Meier success probabilities (Figures 1-2, text)", "reason": "success proportions / Kaplan-Meier estimates are not admissible"},
+  {"what": "Table 3 postoperative complications", "reason": "counts are not admissible"}
+ ],
+ "notes": [
+  "Procedure context 'cataract' (lens surgery alone, per triage hint): IOL exchange and scleral or sulcus refixation performed through a 25-gauge four-port pars plana vitrectomy; no glaucoma surgery combined.",
+  "Reference kind 'preoperative_medicated': the preoperative IOP is tabulated together with the preoperative number of glaucoma medications (t002!R4C4, OH group mean above zero); Methods state that glaucoma medications were stopped before surgery and resumed at the surgeon's discretion; no washout before the preoperative measurement is described (individual OH eyes may have been on no medication).",
+  "Tonometer not stated in the article, so method 'unstated'.",
+  "Inclusion required postoperative follow-up >= 1 month; first-treated eye per patient; one OH eye had endophthalmitis at postoperative day 2 treated by vitrectomy (not a glaucoma surgery; not excluded by the article).",
+  "Glaucoma medication numbers per visit are tabulated in Table 2 (not extracted)."
+ ]
+}

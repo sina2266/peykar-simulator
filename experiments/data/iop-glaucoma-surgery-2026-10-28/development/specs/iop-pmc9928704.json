@@ -1,0 +1,98 @@
+{
+ "study_id": "iop-pmc9928704",
+ "doi": "10.12998/wjcc.v11.i4.780",
+ "pmcid": "PMC9928704",
+ "title": "Selective laser trabeculoplasty as adjunctive treatment for open-angle glaucoma vs following incisional glaucoma surgery in Chinese eyes",
+ "species": "human",
+ "procedure": "laser_trabeculoplasty",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution NonCommercial (CC BY-NC 4.0) license) - non-commercial, record kept private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9928704.xml",
+   "sha256": "969d75cc3d5f0cce45ac9d5a433119cd39f6bc83e172b92287ba9a5779e928a3",
+   "bytes": 61731,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "open-angle glaucoma with IOP above 21 mmHg on maximum tolerated medication, with or without prior incisional glaucoma surgery (trabeculectomy, drainage nail, Ahmed valve, or trabeculectomy with cataract extraction at least 1 year earlier); adult Chinese patients (retrospective, single centre; 75 eyes of 70 patients)",
+ "groups": [
+  {
+   "group": "oag-no-prior-surgery",
+   "role": "control",
+   "procedure": "laser_trabeculoplasty",
+   "n_reported": 36,
+   "description": "360-degree selective laser trabeculoplasty (532 nm Q-switched Nd:YAG) as adjunct to medication in open-angle glaucoma eyes without prior glaucoma surgery"
+  },
+  {
+   "group": "prior-glaucoma-surgery",
+   "role": "control",
+   "procedure": "laser_trabeculoplasty",
+   "n_reported": 39,
+   "description": "360-degree selective laser trabeculoplasty as adjunct to medication in open-angle glaucoma eyes with prior incisional glaucoma surgery more than 1 year earlier"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "oag-no-prior-surgery/iop",
+   "group": "oag-no-prior-surgery",
+   "kind": "group_mean",
+   "n": 36,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC9928704.xml::T3!R3C2",
+    "PMC9928704.xml::T3!R3C3",
+    "PMC9928704.xml::T3!R3C4",
+    "PMC9928704.xml::T3!R3C5",
+    "PMC9928704.xml::T3!R3C6",
+    "PMC9928704.xml::T3!R3C7"
+   ],
+   "baseline_label": "Baseline (Table 3)",
+   "notes": "mean \u00b1 SD (Methods); Table 3 R2 gives the same eye count at every visit from baseline to 6 mo; 12 and 36 mo excluded (see exclusions)"
+  },
+  {
+   "series_id": "prior-glaucoma-surgery/iop",
+   "group": "prior-glaucoma-surgery",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC9928704.xml::T3!R7C2",
+    "PMC9928704.xml::T3!R7C3",
+    "PMC9928704.xml::T3!R7C4",
+    "PMC9928704.xml::T3!R7C5",
+    "PMC9928704.xml::T3!R7C6",
+    "PMC9928704.xml::T3!R7C7"
+   ],
+   "baseline_label": "Baseline (Table 3)",
+   "notes": "mean \u00b1 SD (Methods); Table 3 R6 gives the same eye count at every visit from baseline to 6 mo; 12 and 36 mo excluded (see exclusions)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 12-month and 36-month IOP cells of both groups (R3C8, R3C9, R7C8, R7C9) and their eye counts", "reason": "outcome-selected analysis sets (protocol inclusion 4): the Results state that two prior-surgery patients were excluded at 6 months because of visual field progression and repeat glaucoma surgery, and the eye counts at 12 months are lower than at baseline although all 75 eyes were followed for more than 1 year; later means are therefore computed over eyes free of additional surgery. Visits up to 6 months include every eye of each group."},
+  {"what": "Table 3 'P1 value' and 'P2 value' rows", "reason": "p-values are not admissible"},
+  {"what": "Table 3 'Cumulative proportion of SLT success' rows and Fig. 1 (Kaplan-Meier)", "reason": "success proportions and Kaplan-Meier estimates are not admissible"},
+  {"what": "Table 4 (number of glaucoma medications)", "reason": "medication data are notes only"},
+  {"what": "IOP spikes 1 h after SLT (Results)", "reason": "counts of eyes, not a series"}
+ ],
+ "notes": [
+  "Reference kind: all eyes were on 1 to 4 glaucoma medications before SLT (Results) and no washout is described.",
+  "Tonometry: Goldmann applanation in all patients (Methods).",
+  "Roles: both groups are patient-condition subgroups (prior incisional glaucoma surgery or not) receiving the same standard SLT, so both are control groups.",
+  "From the 6-month visit some eyes received repeat SLT or more medication; the 6-month value is the last one before these decisions.",
+  "The Results text and Table 3 disagree for the prior-surgery 3-month mean and its between-group p-value; the Table 3 cell is cited.",
+  "Five patients contributed both eyes (75 eyes, 70 patients).",
+  "Mean number of medications per visit is tabulated in Table 4 (not extracted).",
+  "Time conversions: 1 day = 0.0329 months, 1 week = 0.23 months."
+ ]
+}

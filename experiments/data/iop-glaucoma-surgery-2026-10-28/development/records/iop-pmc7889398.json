@@ -1,0 +1,169 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc7889398",
+ "doi": "10.1155/2021/6639583",
+ "pmcid": "PMC7889398",
+ "title": "CO2 Laser-Assisted Deep Sclerectomy Surgery Compared with Trabeculectomy in Primary Open-Angle Glaucoma: Two-Year Results",
+ "species": "human",
+ "procedure": "other",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7889398.xml",
+   "sha256": "bf644beb4b796ea1b19b0502208059aef3967ee6e066525932fc09f9cb795de3",
+   "bytes": 83361,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "primary open-angle glaucoma with medically uncontrolled IOP, no previous intraocular surgery, adults (retrospective comparative, two surgeons; 77 eyes of 62 patients)",
+ "groups": [
+  {
+   "group": "class",
+   "role": "control",
+   "procedure": "nonpenetrating",
+   "n_reported": 30,
+   "description": "CO2 laser-assisted deep sclerectomy (IOPtiMate) with mitomycin C under the conjunctiva and scleral flap; preoperative laser iridoplasty/iridotomy for narrow angles at the site, postoperative pilocarpine for 3 months, laser goniopuncture or iridoplasty for peripheral anterior synechiae as routine care"
+  },
+  {
+   "group": "trabeculectomy-mmc",
+   "role": "control",
+   "procedure": "trabeculectomy",
+   "n_reported": 47,
+   "description": "superior trabeculectomy with mitomycin C under a half-thickness scleral flap, sclerostomy and peripheral iridectomy"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 columns C9-C14 of R5 (repeated-measures ANOVA F and P)",
+   "reason": "test statistics and p-values are not admissible"
+  },
+  {
+   "what": "Table 3 medication rows R8-R9",
+   "reason": "medication counts are notes only"
+  },
+  {
+   "what": "Table 1 preoperative IOP (R3C6, R5C6)",
+   "reason": "duplicate of the Table 3 preoperative cells, which are cited instead"
+  },
+  {
+   "what": "Table 4 and Fig. 1 (complete/qualified success, Kaplan-Meier)",
+   "reason": "success proportions and Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Results text IOP before/after laser goniopuncture, iridoplasty or needling in subsets of eyes",
+   "reason": "subsets defined by a postoperative event; not tabulated series"
+  }
+ ],
+ "notes": [
+  "Study procedure is 'other' because the two arms are in different contexts; each group declares its own procedure (CLASS = nonpenetrating; trabeculectomy with MMC = trabeculectomy).",
+  "Roles: two established procedures compared retrospectively, neither declared experimental, so both are control groups.",
+  "Reference kind: inclusion required medically uncontrolled IOP and patients used several medications preoperatively (Table 1, Table 3 R8-R9); no washout is described.",
+  "Tonometry: calibrated Goldmann applanation tonometer (Methods 2.3).",
+  "Additional glaucoma surgery (GATT in some CLASS eyes, trabeculectomy with or without cataract surgery in some Trab eyes) and bleb needling occurred during follow-up; the article does not state that these eyes were removed from the visit means, so no outcome-defined exclusion applies.",
+  "The Results text and Table 3 disagree in the last decimal place for the CLASS 24-month mean; the Table 3 cell is cited.",
+  "Some patients contributed both eyes (77 eyes, 62 patients).",
+  "Mean number of medications per visit is tabulated in Table 3 R8-R9 (not extracted).",
+  "Time conversion: 1 week = 0.23 months."
+ ],
+ "series": [
+  {
+   "series_id": "class/iop",
+   "group": "class",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.23,
+    1,
+    3,
+    6,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperation (Table 3)",
+   "notes": "cells 'value ± value' without a stated statistic; the Results text describes them as mean IOP; columns Preoperation, after 1 wk, 1, 3, 6, 12, 24 mo; per-visit n not reported (one eye lost after 3 months)",
+   "values": [
+    36.43,
+    11.94,
+    13.97,
+    14.83,
+    15.1,
+    15.24,
+    15.38
+   ],
+   "source_cells": [
+    "PMC7889398.xml::tab3!R4C2",
+    "PMC7889398.xml::tab3!R4C3",
+    "PMC7889398.xml::tab3!R4C4",
+    "PMC7889398.xml::tab3!R4C5",
+    "PMC7889398.xml::tab3!R4C6",
+    "PMC7889398.xml::tab3!R4C7",
+    "PMC7889398.xml::tab3!R4C8"
+   ],
+   "source_cell_texts": [
+    "36.43 ± 6.62",
+    "11.94 ± 3.09",
+    "13.97 ± 3.33",
+    "14.83 ± 3.68",
+    "15.10 ± 3.38",
+    "15.24 ± 3.37",
+    "15.38 ± 3.74"
+   ]
+  },
+  {
+   "series_id": "trabeculectomy-mmc/iop",
+   "group": "trabeculectomy-mmc",
+   "kind": "group_mean",
+   "n": 47,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    0.23,
+    1,
+    3,
+    6,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperation (Table 3)",
+   "notes": "cells 'value ± value' without a stated statistic; the Results text describes them as mean IOP; columns Preoperation, after 1 wk, 1, 3, 6, 12, 24 mo; per-visit n not reported (three patients lost after 6 months, 1 year and 2 years)",
+   "values": [
+    37.87,
+    12.87,
+    15.21,
+    15.74,
+    15.83,
+    15.93,
+    16.34
+   ],
+   "source_cells": [
+    "PMC7889398.xml::tab3!R5C2",
+    "PMC7889398.xml::tab3!R5C3",
+    "PMC7889398.xml::tab3!R5C4",
+    "PMC7889398.xml::tab3!R5C5",
+    "PMC7889398.xml::tab3!R5C6",
+    "PMC7889398.xml::tab3!R5C7",
+    "PMC7889398.xml::tab3!R5C8"
+   ],
+   "source_cell_texts": [
+    "37.87 ± 5.74",
+    "12.87 ± 3.11",
+    "15.21 ± 2.75",
+    "15.74 ± 2.47",
+    "15.83 ± 2.69",
+    "15.93 ± 3.36",
+    "16.34 ± 3.25"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+{
+ "study_id": "iop-pmc9087941",
+ "doi": "10.1186/s12886-022-02438-3",
+ "pmcid": "PMC9087941",
+ "title": "Phacoemulsification after trabeculectomy in uveitis associated with Vogt-Koyanagi-Harada disease: intermediate-term visual outcome, IOP control and trabeculectomy survival",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9087941.xml",
+   "sha256": "feecefc1a7878bb812579c814d8f351f16bbea2dd26ebc38fda30e1d447d1cd8",
+   "bytes": 82699,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "uveitic glaucoma associated with Vogt-Koyanagi-Harada disease after a single mitomycin C-enhanced trabeculectomy, IOP controlled with or without medication, phakic eyes, uveitis quiescent for at least 3 months; young adults (retrospective matched comparative study)",
+ "groups": [
+  {
+   "group": "phaco-after-trabeculectomy",
+   "role": "control",
+   "procedure": "cataract",
+   "n_reported": 19,
+   "description": "the article's 'study group': phacoemulsification with in-the-bag foldable IOL through a temporal corneal incision (synechiolysis or iris hooks when needed) in eyes with a prior MMC trabeculectomy; intensive topical and systemic anti-inflammatory treatment afterwards"
+  },
+  {
+   "group": "trabeculectomy-no-phaco",
+   "role": "control",
+   "procedure": "other",
+   "n_reported": 19,
+   "description": "the article's 'control group': matched eyes with a prior MMC trabeculectomy that did not undergo cataract surgery; follow-up counted from a matched study-entry time (declared for documentation; no series extracted)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "phaco-after-trabeculectomy/iop",
+   "group": "phaco-after-trabeculectomy",
+   "kind": "group_mean",
+   "n": 19,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 3, 12, 24, 36],
+   "cells": [
+    "PMC9087941.xml::Tab2!R3C2",
+    "PMC9087941.xml::Tab2!R10C2",
+    "PMC9087941.xml::Tab2!R20C2",
+    "PMC9087941.xml::Tab2!R30C2",
+    "PMC9087941.xml::Tab2!R40C2"
+   ],
+   "baseline_label": "Baseline (Table 2 R2-R3, before phacoemulsification)",
+   "notes": "mean (\u00b1SD) (footnote); per-visit number of eyes in Table 2 'No. of eyes' rows R18, R28, R38, R48 (decreasing with follow-up length: ordinary attrition, no outcome-defined exclusion stated)"
+  }
+ ],
+ "exclusions": [
+  {"what": "control group IOP series (Table 2 column C3)", "reason": "eyes without a procedure at the reference time: follow-up starts at a matched study-entry time years after trabeculectomy, so there is no preoperative reference of an operated eye (protocol inclusion 1-2); declared as a group for documentation only"},
+  {"what": "Table 2 rows R49-R50 'Last visit'", "reason": "final visit without a stated time"},
+  {"what": "Table 2 '(P-value)' rows and column C4", "reason": "p-values are not admissible"},
+  {"what": "Table 1 R8 (mean IOP before trabeculectomy)", "reason": "reference of the earlier trabeculectomy, not of the phacoemulsification; follow-up times are not counted from the trabeculectomy"},
+  {"what": "Table 3, Table 4 and Fig. 1 (success status, repeat surgery, Kaplan-Meier trabeculectomy survival)", "reason": "success proportions, counts and Kaplan-Meier estimates are not admissible"},
+  {"what": "Table 2 medication, LogMAR and BCVA rows", "reason": "not IOP; medication counts are notes only"}
+ ],
+ "notes": [
+  "Role: phacoemulsification is a standard procedure without an investigational agent, so the article's 'study group' is recorded with role control.",
+  "Reference kind: baseline IOP before phacoemulsification on the usual regimen (inclusion: IOP controlled with or without antiglaucoma medications; mean number of medications at baseline is tabulated in Table 2 R4 and many eyes used none); no washout is described.",
+  "Method: the article does not name a tonometer.",
+  "Some eyes needed additional glaucoma surgery during follow-up (Table 4); the article does not state that they were removed from later visit means.",
+  "Some patients contributed both eyes."
+ ]
+}

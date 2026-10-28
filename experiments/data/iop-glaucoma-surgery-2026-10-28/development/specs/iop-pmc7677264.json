@@ -1,0 +1,99 @@
+{
+ "study_id": "iop-pmc7677264",
+ "doi": "10.1007/s00417-020-04933-z",
+ "pmcid": "PMC7677264",
+ "title": "Comparison of a second-generation trabecular bypass (iStent inject) to ab interno trabeculectomy (Trabectome) by exact matching",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7677264.xml",
+   "sha256": "95909605aadb0c186758a379c6774741b112b5e779da940c23beb380b56b5a73",
+   "bytes": 71552,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "open-angle glaucoma (POAG, pseudoexfoliation, some angle-closure and normal-tension glaucoma; Table 1) at the time of cataract surgery, on topical medication; neovascular/uveitic glaucoma and prior ocular surgery excluded",
+ "design": "retrospective comparison; 39 iStent inject eyes matched one-to-one to Trabectome eyes (single centre plus Trabectome Study Group database) by exact matching on baseline IOP, number of medications and glaucoma type, nearest-neighbour matching on age",
+ "groups": [
+  {
+   "group": "trabectome-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 39,
+   "indication": "as study",
+   "description": "Trabectome ab interno trabeculectomy combined with phacoemulsification (Table 2 'T'); matched controls drawn from 3446 Trabectome eyes"
+  },
+  {
+   "group": "istent-inject-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 39,
+   "indication": "as study",
+   "description": "iStent inject (two trabecular bypass stents) combined with phacoemulsification (Table 2 'IS2'); 39 of 53 eyes could be matched"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "trabectome-phaco/iop",
+   "group": "trabectome-phaco",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6, 12, 18, 24],
+   "cells": [
+    "PMC7677264.xml::Tab2!R3C2",
+    "PMC7677264.xml::Tab2!R4C2",
+    "PMC7677264.xml::Tab2!R5C2",
+    "PMC7677264.xml::Tab2!R6C2",
+    "PMC7677264.xml::Tab2!R7C2",
+    "PMC7677264.xml::Tab2!R8C2",
+    "PMC7677264.xml::Tab2!R9C2"
+   ],
+   "baseline_label": "Baseline (Table 2, IOP mean ± SD, T)",
+   "notes": "mean ± SD; per-visit n not reported"
+  },
+  {
+   "series_id": "istent-inject-phaco/iop",
+   "group": "istent-inject-phaco",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 1, 3, 6, 12, 18, 24],
+   "cells": [
+    "PMC7677264.xml::Tab2!R3C3",
+    "PMC7677264.xml::Tab2!R4C3",
+    "PMC7677264.xml::Tab2!R5C3",
+    "PMC7677264.xml::Tab2!R6C3",
+    "PMC7677264.xml::Tab2!R7C3",
+    "PMC7677264.xml::Tab2!R8C3",
+    "PMC7677264.xml::Tab2!R9C3"
+   ],
+   "baseline_label": "Baseline (Table 2, IOP mean ± SD, IS2)",
+   "notes": "mean ± SD; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 p-value columns (C4, C7)", "reason": "p-values are not admissible"},
+  {"what": "unmatched iStent inject eyes (14 of 53) and unmatched Trabectome eyes", "reason": "not tabulated; the matched analysis set is defined by preoperative covariates only"},
+  {"what": "Figure 1 IOP and medication curves", "reason": "figure only; the same time points are cited from Table 2"}
+ ],
+ "notes": [
+  "Matching used only preoperative variables (baseline IOP, medications, glaucoma type, age), so the analysis set is not outcome-selected.",
+  "Tonometer is not stated in the article; method unstated.",
+  "Preoperative IOP on topical glaucoma medication (indication: stable IOP with a wish to reduce medications at cataract surgery, or above-target IOP on maximally tolerated topical treatment).",
+  "Medication: mean ± SD number of medications (Rx) per visit is tabulated in Table 2 (C5, C6); not extracted.",
+  "Group roles: two established angle procedures compared, no arm declared experimental; both role control.",
+  "Part of the Trabectome eyes come from the multicentre Trabectome Study Group database."
+ ]
+}

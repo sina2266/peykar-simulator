@@ -1,0 +1,173 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc10628136",
+ "doi": "10.1038/s41598-023-46709-5",
+ "pmcid": "PMC10628136",
+ "title": "Comparing corneal biomechanic changes among solo cataract surgery, microhook ab interno trabeculotomy and iStent implantation",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10628136.xml",
+   "sha256": "fcf6f2173b67a5562fd6e772ff75dc3d061ce66d8d25cd92cdf3a5a3c70b3159",
+   "bytes": 158356,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "open-angle glaucoma (mostly POAG; some exfoliation and one steroid-induced glaucoma) for the combined angle-surgery groups; cataract in eyes without glaucoma for the solo-cataract group",
+ "design": "retrospective case-control study, single surgeon (Methods)",
+ "groups": [
+  {
+   "group": "mulot-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 53,
+   "indication": "open-angle glaucoma (51 POAG, 1 exfoliation glaucoma, 1 steroid-induced glaucoma; Results)",
+   "description": "cataract surgery combined with microhook ab interno trabeculotomy (two quadrants); 53 eyes of 36 patients"
+  },
+  {
+   "group": "istent-phaco",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 59,
+   "indication": "open-angle glaucoma (56 POAG, 3 exfoliation glaucoma; Results)",
+   "description": "cataract surgery combined with iStent implantation into the nasal angle; 59 eyes of 37 patients"
+  },
+  {
+   "group": "solo-cataract",
+   "role": "control",
+   "procedure": "cataract",
+   "n_reported": 62,
+   "indication": "cataract in eyes without glaucoma or other ocular disease (normal eyes)",
+   "description": "phacoemulsification with intraocular lens implantation alone; 62 eyes of 42 patients"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 and Table 4 GAT-IOP changes (Δ 3M−preop, Δ 6M−preop, Δ 6M−3M)",
+   "reason": "change values estimated with linear mixed models for the same eyes; the absolute GAT-IOP series of Table 2 is used instead"
+  },
+  {
+   "what": "bIOP (Corvis ST biomechanically corrected IOP): Table 2 baseline row and Table 3/4 changes",
+   "reason": "no absolute follow-up values (baseline only, follow-up only as model-estimated changes); same eyes as the GAT series"
+  },
+  {
+   "what": "p-value columns of Tables 2-4",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "[min to max] ranges inside the Table 2 cells",
+   "reason": "ranges are not admissible; only the leading mean is read"
+  },
+  {
+   "what": "Corvis ST and ORA biomechanical parameters (CH, CCT, A1/A2, SP-A1, SSI and others)",
+   "reason": "not IOP"
+  }
+ ],
+ "notes": [
+  "Medication: eye drop score at baseline, 3 and 6 months is tabulated for the two glaucoma groups (Table 2 rows 4-6); not extracted (no medication series in schema 1.0.0).",
+  "Group roles: microhook trabeculotomy and iStent are two standard techniques compared without an investigational arm; solo cataract surgery in non-glaucoma eyes is the study's control group; all are role control.",
+  "Patients contributed one or two eyes; the study's p-values come from linear mixed models with the patient as a random effect."
+ ],
+ "series": [
+  {
+   "series_id": "mulot-phaco/gat-iop",
+   "group": "mulot-phaco",
+   "kind": "group_mean",
+   "n": 53,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "GAT-IOP (baseline) (Table 2)",
+   "notes": "mean ± SD [min to max]; per-visit n not reported; preoperative IOP on topical glaucoma medication (all glaucoma patients used prostaglandin analogues preoperatively; medications stopped after surgery and resumed at the physician's discretion)",
+   "values": [
+    16.42,
+    12.55,
+    13.3
+   ],
+   "source_cells": [
+    "PMC10628136.xml::Tab2!R7C2",
+    "PMC10628136.xml::Tab2!R8C2",
+    "PMC10628136.xml::Tab2!R9C2"
+   ],
+   "source_cell_texts": [
+    "16.42 ± 3.73 [10.00 to 25.00]",
+    "12.55 ± 2.87 [8.00 to 20.00]",
+    "13.30 ± 3.22 [8.00 to 20.00]"
+   ]
+  },
+  {
+   "series_id": "istent-phaco/gat-iop",
+   "group": "istent-phaco",
+   "kind": "group_mean",
+   "n": 59,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "GAT-IOP (baseline) (Table 2)",
+   "notes": "mean ± SD [min to max]; per-visit n not reported; preoperative IOP on topical glaucoma medication (all glaucoma patients used prostaglandin analogues preoperatively; medications stopped after surgery and resumed at the physician's discretion)",
+   "values": [
+    14.66,
+    13.14,
+    13.27
+   ],
+   "source_cells": [
+    "PMC10628136.xml::Tab2!R7C3",
+    "PMC10628136.xml::Tab2!R8C3",
+    "PMC10628136.xml::Tab2!R9C3"
+   ],
+   "source_cell_texts": [
+    "14.66 ± 3.18 [9.00 to 23.00]",
+    "13.14 ± 2.96 [8.00 to 23.00]",
+    "13.27 ± 2.78 [8.00 to 23.00]"
+   ]
+  },
+  {
+   "series_id": "solo-cataract/gat-iop",
+   "group": "solo-cataract",
+   "kind": "group_mean",
+   "n": 62,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_unmedicated",
+   "method": "goldmann",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "GAT-IOP (baseline) (Table 2)",
+   "notes": "mean ± SD [min to max]; per-visit n not reported; eyes without glaucoma, so the preoperative IOP was untreated",
+   "values": [
+    13.93,
+    11.72,
+    12.4
+   ],
+   "source_cells": [
+    "PMC10628136.xml::Tab2!R7C4",
+    "PMC10628136.xml::Tab2!R8C4",
+    "PMC10628136.xml::Tab2!R9C4"
+   ],
+   "source_cell_texts": [
+    "13.93 ± 3.19 [8.00 to 22.00]",
+    "11.72 ± 2.59 [7.00 to 19.00]",
+    "12.40 ± 2.22 [8.00 to 18.00]"
+   ]
+  }
+ ]
+}

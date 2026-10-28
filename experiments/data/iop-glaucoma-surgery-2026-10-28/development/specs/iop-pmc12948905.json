@@ -1,0 +1,111 @@
+{
+ "study_id": "iop-pmc12948905",
+ "doi": "10.1007/s10384-025-01265-5",
+ "pmcid": "PMC12948905",
+ "title": "Short-term outcomes of the PreserFlo MicroShunt in Japanese patients with exfoliation glaucoma: a comparison with primary open-angle glaucoma using propensity score matching",
+ "species": "human",
+ "procedure": "subconjunctival_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12948905.xml",
+   "sha256": "ef2c277c8a6dd47bc6395d42fead155ee8a212e6e3c622afd3d414e5faf5c79e",
+   "bytes": 126670,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12948905/fullTextXML)"
+  }
+ ],
+ "indication": "exfoliation glaucoma and primary open-angle glaucoma, Japanese patients; first PreserFlo MicroShunt implantation with mitomycin C (one matched exfoliation eye with combined cataract surgery); propensity-score-matched groups (matching on age, sex, combined cataract surgery, preoperative IOP and medication score); retrospective, one eye per patient, at least 6 months of follow-up",
+ "groups": [
+  {
+   "group": "xfg-matched",
+   "role": "control",
+   "n_reported": 24,
+   "description": "Exfoliation glaucoma eyes after PreserFlo MicroShunt with MMC, propensity-score-matched subset of the 31-eye exfoliation cohort (Table 4 column 'XFG (n = 24)'); eligible eyes could have had previous surgery without conjunctival manipulation (cataract surgery, ab interno outflow surgery, SLT, laser iridotomy)"
+  },
+  {
+   "group": "poag-matched",
+   "role": "control",
+   "n_reported": 24,
+   "description": "Primary open-angle glaucoma eyes after PreserFlo MicroShunt with MMC during the same period, propensity-score-matched (Table 4 column 'POAG (n = 24)'); no previous glaucoma surgery or laser"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "xfg-matched/iop",
+   "group": "xfg-matched",
+   "kind": "group_mean",
+   "n": 24,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC12948905.xml::Tab4!R3C2",
+    "PMC12948905.xml::Tab4!R4C2",
+    "PMC12948905.xml::Tab4!R5C2",
+    "PMC12948905.xml::Tab4!R6C2",
+    "PMC12948905.xml::Tab4!R7C2"
+   ],
+   "baseline_label": "Pre operation (Table 4 row 3)",
+   "notes": "mean ± SD; rows 'Pre operation', 'Post operation 1W', '1M', '3M', '6M'; visit windows 1 week ± 2 days, 1 month ± 7 days, 3 months ± 28 days, 6 months ± 56 days (Methods), nominal times used; 1 week = 7/30.4375 months; per-visit n not reported"
+  },
+  {
+   "series_id": "poag-matched/iop",
+   "group": "poag-matched",
+   "kind": "group_mean",
+   "n": 24,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": [
+    "PMC12948905.xml::Tab4!R3C3",
+    "PMC12948905.xml::Tab4!R4C3",
+    "PMC12948905.xml::Tab4!R5C3",
+    "PMC12948905.xml::Tab4!R6C3",
+    "PMC12948905.xml::Tab4!R7C3"
+   ],
+   "baseline_label": "Pre operation (Table 4 row 3)",
+   "notes": "mean ± SD; same rows and visit windows as the exfoliation series; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "IOP of the full 31-eye exfoliation cohort at 1 week and 1, 3 and 6 months (Results text and Figure 1 box plots)",
+   "reason": "not tabulated (text and figure only); the matched exfoliation subset of Table 4 is extracted instead"
+  },
+  {
+   "what": "Table 1 (Tab1) preoperative IOP of the full exfoliation cohort",
+   "reason": "reference without a tabulated follow-up series for the same group"
+  },
+  {
+   "what": "Table 3 (Tab3) preoperative IOP of the matched groups",
+   "reason": "duplicate of the Table 4 'Pre operation' row; Table 4 cells are cited"
+  },
+  {
+   "what": "Table 4 columns C4 and C7 (p-values) and C5 to C6 (medication scores)",
+   "reason": "p-values are not admissible; medication scores are mentioned in notes only"
+  },
+  {
+   "what": "Kaplan-Meier complete and qualified success (Figures 3 to 6) and success percentages",
+   "reason": "Kaplan-Meier estimates and success proportions are not admissible"
+  },
+  {
+   "what": "Tables 2 and 5 (complications and interventions) and Table 6 (previous studies)",
+   "reason": "counts and literature values, not series of this study"
+  }
+ ],
+ "notes": [
+  "Tonometer: Goldmann applanation tonometer under topical anaesthesia, sitting position (Methods).",
+  "Reference: preoperative IOP tabulated with the preoperative glaucoma medication score (Tables 3 and 4), recorded as preoperative_medicated.",
+  "Needling (9 of 31 exfoliation eyes) and additional surgery (5 of 31) occurred during follow-up; the article states no outcome-defined exclusion from the mean IOP table, so the matched series are kept.",
+  "Propensity score matching used preoperative covariates only; it is not an outcome-defined selection.",
+  "Table 4 also tabulates the glaucoma medication score at each visit; not extracted.",
+  "Postoperative betamethasone drops were continued for 6 months (Methods)."
+ ]
+}

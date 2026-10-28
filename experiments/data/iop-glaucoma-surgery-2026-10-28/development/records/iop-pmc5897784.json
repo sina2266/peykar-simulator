@@ -1,0 +1,169 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc5897784",
+ "doi": "10.12688/f1000research.13756.1",
+ "pmcid": "PMC5897784",
+ "title": "Extended pharmacological miosis is superfluous after glaucoma angle surgery: A retrospective study",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> and ali:license_ref); associated data CC0",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5897784.xml",
+   "sha256": "8e81e4324b76033193f68f36cef5e67e6df2660e003b76d0e6f98556d96075a5",
+   "bytes": 82072,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "phakic eyes with glaucoma (mostly POAG; also chronic angle-closure, exfoliation and other glaucomas; Table 1) without prior incisional or angle surgery",
+ "design": "retrospective comparative study of all Trabectome surgeries 2012-2017 at one institute; not randomized or matched",
+ "groups": [
+  {
+   "group": "trabectome-no-pilocarpine",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 86,
+   "indication": "as study",
+   "description": "Trabectome ab interno trabeculectomy (about 160 degrees), alone or with same-session phacoemulsification (79% of all eyes combined), without postoperative pilocarpine (P-)"
+  },
+  {
+   "group": "trabectome-pilocarpine",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 101,
+   "indication": "as study",
+   "description": "Trabectome ab interno trabeculectomy, alone or with same-session phacoemulsification, with pilocarpine 1% four times daily for one month then three times daily for a second month (P+)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 p-value column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 preoperative IOP (All, P-, P+)",
+   "reason": "same baselines as Table 3 (the 'All' column would duplicate both groups)"
+  },
+  {
+   "what": "Figure 2 B/C subgroup IOP (Trabectome alone vs with phacoemulsification)",
+   "reason": "figure only, no table cells"
+  },
+  {
+   "what": "Figure 1 Kaplan-Meier survival and Table 2 hazard ratios",
+   "reason": "Kaplan-Meier estimates and model hazard ratios are not admissible"
+  },
+  {
+   "what": "peer-review report sub-articles in the XML",
+   "reason": "not study data"
+  }
+ ],
+ "notes": [
+  "Day 1 = 0.0329 months, week 1 = 7/30.4375 = 0.23 months.",
+  "Tonometer is not stated in the article; method unstated.",
+  "Preoperative IOP on glaucoma medication (baseline medications tabulated in Tables 1 and 4); all glaucoma medications were stopped after surgery and resumed if IOP was above target.",
+  "Medication: mean number of glaucoma medications at baseline and months 1/3/6/12 is tabulated in Table 4; not extracted.",
+  "Role ambiguity: the Introduction states that most surgeons give pilocarpine for two months after angle surgery, and the authors later stopped using it; neither arm is declared experimental and pilocarpine is not investigational, so both groups are role control (two postoperative-care variants) with the regimen in the group description.",
+  "Both groups mix Trabectome alone and Trabectome combined with phacoemulsification; the tables do not separate them."
+ ],
+ "series": [
+  {
+   "series_id": "trabectome-no-pilocarpine/iop",
+   "group": "trabectome-no-pilocarpine",
+   "kind": "group_mean",
+   "n": 86,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (Table 3, P-)",
+   "notes": "mean ± SD; per-visit n not reported (eyes with less than 3 months of follow-up were excluded, later attrition not stated)",
+   "values": [
+    20.2,
+    15.1,
+    13.7,
+    14.9,
+    13.9,
+    14.3,
+    15.0
+   ],
+   "source_cells": [
+    "PMC5897784.xml::T3!R2C2",
+    "PMC5897784.xml::T3!R3C2",
+    "PMC5897784.xml::T3!R4C2",
+    "PMC5897784.xml::T3!R5C2",
+    "PMC5897784.xml::T3!R6C2",
+    "PMC5897784.xml::T3!R7C2",
+    "PMC5897784.xml::T3!R8C2"
+   ],
+   "source_cell_texts": [
+    "20.2±6.8",
+    "15.1±9.0",
+    "13.7±6.7",
+    "14.9±5.4",
+    "13.9±3.7",
+    "14.3±4.0",
+    "15.0±4.8"
+   ]
+  },
+  {
+   "series_id": "trabectome-pilocarpine/iop",
+   "group": "trabectome-pilocarpine",
+   "kind": "group_mean",
+   "n": 101,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    0.0329,
+    0.23,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (Table 3, P+)",
+   "notes": "mean ± SD; per-visit n not reported (eyes with less than 3 months of follow-up were excluded, later attrition not stated)",
+   "values": [
+    18.8,
+    15.0,
+    13.0,
+    14.0,
+    13.6,
+    13.9,
+    14.7
+   ],
+   "source_cells": [
+    "PMC5897784.xml::T3!R2C3",
+    "PMC5897784.xml::T3!R3C3",
+    "PMC5897784.xml::T3!R4C3",
+    "PMC5897784.xml::T3!R5C3",
+    "PMC5897784.xml::T3!R6C3",
+    "PMC5897784.xml::T3!R7C3",
+    "PMC5897784.xml::T3!R8C3"
+   ],
+   "source_cell_texts": [
+    "18.8±5.3",
+    "15.0±7.0",
+    "13.0±4.0",
+    "14.0±5.1",
+    "13.6±3.7",
+    "13.9±3.6",
+    "14.7±4.0"
+   ]
+  }
+ ]
+}

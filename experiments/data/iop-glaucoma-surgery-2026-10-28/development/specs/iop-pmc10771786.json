@@ -1,0 +1,90 @@
+{
+ "study_id": "iop-pmc10771786",
+ "doi": "10.2147/OPTH.S446168",
+ "pmcid": "PMC10771786",
+ "title": "Surgical Outcomes of Ab Interno Trabeculotomy Without Phacoemulsification",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press licence incorporating CC BY-NC 3.0 (unported) (article <license>); non-commercial, therefore private",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10771786.xml",
+   "sha256": "242ae28c6bed4d152444b31e002d5612c9879fe1bd7d88cb0346066a89b7b768",
+   "bytes": 58492,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10771786/fullTextXML)"
+  }
+ ],
+ "indication": "mixed adult glaucoma (primary open-angle, exfoliation, steroid, chronic angle-closure, juvenile open-angle and other secondary glaucoma; neovascular glaucoma not treated with this procedure); standalone ab interno trabeculotomy with Tanito microhook or Kahook Dual Blade, without phacoemulsification (phakic and pseudophakic eyes); retrospective, first operated eye per patient, at least 6 months of follow-up",
+ "groups": [
+  {
+   "group": "all-eyes",
+   "role": "control",
+   "n_reported": 118,
+   "description": "All eyes after standalone ab interno trabeculotomy (microhook or KDB); only the whole cohort is tabulated over time (Table 2)"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "all-eyes/iop",
+   "group": "all-eyes",
+   "kind": "group_mean",
+   "n": 118,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 1, 6, 12, 24, 36],
+   "cells": [
+    "PMC10771786.xml::t0002!R2C3",
+    "PMC10771786.xml::t0002!R3C3",
+    "PMC10771786.xml::t0002!R4C3",
+    "PMC10771786.xml::t0002!R5C3",
+    "PMC10771786.xml::t0002!R6C3",
+    "PMC10771786.xml::t0002!R7C3"
+   ],
+   "baseline_label": "Preoperative (Table 2 row 2)",
+   "notes": "mean ± SD; rows 'Preoperative', '1 month', '6 months', '12 months', '24 months', '36 months'; the number of eyes declines over follow-up (per-visit eye counts in Table 2 column 2, cells t0002!R3C2..R7C2); the article does not state whether IOP values after additional glaucoma surgery were removed from the later means"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 column 4",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 3 (t0003) number of IOP-lowering medications",
+   "reason": "medication counts are mentioned in notes only (no medication series in schema 1.0.0)"
+  },
+  {
+   "what": "Tables 4 and 5 (t0004, t0005) Cox proportional hazards models",
+   "reason": "risk ratios and p-values, not IOP series"
+  },
+  {
+   "what": "Table 6 (t0006) complications",
+   "reason": "counts, not an IOP series"
+  },
+  {
+   "what": "Kaplan-Meier survival rates (Figure 2 and Results text)",
+   "reason": "Kaplan-Meier estimates and success proportions are not admissible"
+  },
+  {
+   "what": "Table 1 (t0001) preoperative IOP of the whole cohort",
+   "reason": "duplicate of the Table 2 preoperative row; the Table 2 cell is cited as the reference"
+  },
+  {
+   "what": "IOP of glaucoma subtypes or devices",
+   "reason": "not tabulated over time; only the whole cohort is available"
+  }
+ ],
+ "notes": [
+  "Tonometer: Goldmann applanation tonometer (Methods).",
+  "Reference: preoperative IOP tabulated together with the preoperative number of IOP-lowering medications (Tables 1 and 3), so recorded as preoperative_medicated; Methods state that previously used glaucoma eye drops were discontinued before the surgery without stating when relative to the preoperative IOP measurement.",
+  "27 eyes underwent additional glaucoma surgery during follow-up (Results); the article defines reoperation as failure for the Kaplan-Meier analysis but does not state a censoring rule for the mean IOP table. The number of eyes falls already at 6 months although inclusion required at least 6 months of follow-up; kept as attrition under the protocol because no outcome-defined exclusion is stated.",
+  "Table 3 tabulates the number of IOP-lowering medications at the same visits; not extracted.",
+  "Mixed glaucoma subtypes and two instruments (microhook or Kahook Dual Blade) are pooled in the tabulated series."
+ ]
+}

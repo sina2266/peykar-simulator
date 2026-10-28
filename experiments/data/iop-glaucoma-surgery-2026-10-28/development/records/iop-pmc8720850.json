@@ -1,0 +1,152 @@
+{
+ "schema": "eye.iop-record-1.0.0",
+ "study_id": "iop-pmc8720850",
+ "doi": "10.3389/fmed.2021.795172",
+ "pmcid": "PMC8720850",
+ "title": "Ab Interno vs. Ab Externo Microcatheter-Assisted Circumferential Trabeculotomy in Treating Patients With Primary Open-Angle Glaucoma",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY (article <license>: 'Creative Commons Attribution License (CC BY)'; no version number or licence URL given in the XML)"
+ },
+ "source_files": [
+  {
+   "name": "PMC8720850.xml",
+   "sha256": "67574c9eb8eab86b90bb5ff7dab86d13df85645ae83db287ac9afae8a273ac39",
+   "bytes": 82516,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "primary open-angle glaucoma (mean age about 35 years) with uncontrolled IOP, progressive visual field loss on maximum medication or medication intolerance; about half of the eyes had prior failed filtration surgery (trabeculectomy, Ex-PRESS, Ahmed); one eye per patient; retrospective comparative case series, single surgeon (Beijing Tongren, China)",
+ "groups": [
+  {
+   "group": "ab-interno",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 40,
+   "description": "Group 1: microcatheter-assisted (iTrack) ab interno circumferential trabeculotomy through a 1-2 mm nasal goniotomy (GATT-type); 40 eyes of 40 patients (T1!R2C2)"
+  },
+  {
+   "group": "ab-externo",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 54,
+   "description": "Group 2: microcatheter-assisted ab externo circumferential trabeculotomy via a superficial scleral flap and scleral cut-down into Schlemm's canal; 54 eyes of 54 patients (T1!R2C3); classed 'angle_mims' as an angle (trabeculotomy) procedure like canaloplasty in the protocol list"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 P-value rows",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 'Number of medications' block",
+   "reason": "medication numbers are not IOP series in schema 1.0.0; noted only"
+  },
+  {
+   "what": "Figure 2 subgroups with and without prior filtration surgery",
+   "reason": "figure-only; the text gives only percent reductions without the subgroup reference IOP"
+  },
+  {
+   "what": "percent IOP reduction and medication reduction (text)",
+   "reason": "changes reported in text without tabulated per-visit values; absolute series used"
+  },
+  {
+   "what": "Kaplan-Meier complete and qualified success (Figure 1)",
+   "reason": "success proportions / Kaplan-Meier estimates are not admissible"
+  },
+  {
+   "what": "Table 3 complications and subsequent surgeries",
+   "reason": "counts are not admissible"
+  }
+ ],
+ "notes": [
+  "Reference kind 'preoperative_medicated': patients had uncontrolled IOP or progression on maximum medication (or intolerance), and the preoperative number of medications is tabulated (T1!R14C2, T1!R14C3); no washout described.",
+  "Tonometer not stated in the article, so method 'unstated'.",
+  "Postoperative pilocarpine 2% four times daily for 3 months was part of standard care and not counted as anti-glaucoma medication by the authors; IOP elevations in the first month were treated only above 25 mmHg; anterior chamber irrigation for massive hyphema with IOP spike.",
+  "Seven patients lost to follow-up after the first week were not included in the analysed 94 eyes (ordinary attrition, not outcome-defined).",
+  "Both arms are standard circumferential trabeculotomy approaches compared without an investigational agent, so both are 'control' groups."
+ ],
+ "series": [
+  {
+   "series_id": "ab-interno/iop",
+   "group": "ab-interno",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Table 2 'IOP (mmHg)' block, row 'Baseline' (same cell text as Table 1 'Pre-operative IOP', T1!R13C2)",
+   "notes": "mean ± SD (Table 2 footnote); rows Baseline, 1 m, 3 m, 6 m, 12 m; per-visit n not reported (median follow-up 12 months); 5 eyes of this group underwent additional glaucoma surgery (Table 3), mostly within 6 months, and the article does not state whether their later IOP was censored",
+   "values": [
+    26.0,
+    14.2,
+    15.8,
+    16.2,
+    14.8
+   ],
+   "source_cells": [
+    "PMC8720850.xml::T2!R3C2",
+    "PMC8720850.xml::T2!R4C2",
+    "PMC8720850.xml::T2!R5C2",
+    "PMC8720850.xml::T2!R6C2",
+    "PMC8720850.xml::T2!R7C2"
+   ],
+   "source_cell_texts": [
+    "26.0 ± 9.3",
+    "14.2 ± 3.9",
+    "15.8 ± 4.0",
+    "16.2 ± 4.0",
+    "14.8 ± 3.5"
+   ]
+  },
+  {
+   "series_id": "ab-externo/iop",
+   "group": "ab-externo",
+   "kind": "group_mean",
+   "n": 54,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Table 2 'IOP (mmHg)' block, row 'Baseline' (same cell text as Table 1 'Pre-operative IOP', T1!R13C3)",
+   "notes": "mean ± SD; rows Baseline, 1 m, 3 m, 6 m, 12 m; per-visit n not reported; 4 eyes underwent additional glaucoma surgery (Table 3), censoring not stated",
+   "values": [
+    28.5,
+    14.5,
+    13.8,
+    14.5,
+    15.1
+   ],
+   "source_cells": [
+    "PMC8720850.xml::T2!R3C3",
+    "PMC8720850.xml::T2!R4C3",
+    "PMC8720850.xml::T2!R5C3",
+    "PMC8720850.xml::T2!R6C3",
+    "PMC8720850.xml::T2!R7C3"
+   ],
+   "source_cell_texts": [
+    "28.5 ± 10.7",
+    "14.5 ± 4.1",
+    "13.8 ± 3.6",
+    "14.5 ± 4.2",
+    "15.1 ± 2.8"
+   ]
+  }
+ ]
+}

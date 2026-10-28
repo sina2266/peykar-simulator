@@ -1,0 +1,112 @@
+{
+ "study_id": "iop-pmc8597511",
+ "doi": "10.4103/ijo.IJO_3310_20",
+ "pmcid": "PMC8597511",
+ "title": "Retrospective analysis of the comparison between carbon dioxide laser-assisted deep sclerectomy combined with phacoemulsification and conventional trabeculectomy with phacoemulsification",
+ "species": "human",
+ "procedure": "trabeculectomy",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license>: Creative Commons Attribution-Noncommercial-Share Alike); non-commercial and share-alike, therefore private",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8597511.xml",
+   "sha256": "1051b1d2e6f022e7504ab31957dcb2c62f968500694f560d95164225df20ed23",
+   "bytes": 66636,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8597511/fullTextXML)"
+  }
+ ],
+ "indication": "medically uncontrolled open-angle glaucoma (primary open-angle glaucoma in 15 patients, pseudoexfoliation glaucoma in 3) with cataract, adults without previous ocular surgery; each patient had phaco-trabeculectomy in one eye and phaco combined with CO2 laser-assisted deep sclerectomy (LADS) in the other; no antimetabolite mentioned; retrospective, follow-up of at least 1 year required",
+ "groups": [
+  {
+   "group": "phaco-trab",
+   "role": "control",
+   "procedure": "trabeculectomy",
+   "n_reported": 18,
+   "description": "Phacoemulsification with conventional trabeculectomy, one eye per patient (Table 2 column 'PHACO + TRAB (n=18)')"
+  },
+  {
+   "group": "phaco-lads",
+   "role": "control",
+   "procedure": "nonpenetrating",
+   "n_reported": 18,
+   "description": "Phacoemulsification with CO2 laser-assisted deep sclerectomy, fellow eye of the same patients (Table 2 column 'PHACO + LADS (n=18)')"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "phaco-trab/iop",
+   "group": "phaco-trab",
+   "kind": "group_mean",
+   "n": 18,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 6, 12, 24, 36, 48],
+   "cells": [
+    "PMC8597511.xml::IJO_3310_20-t002!R3C2",
+    "PMC8597511.xml::IJO_3310_20-t002!R8C2",
+    "PMC8597511.xml::IJO_3310_20-t002!R13C2",
+    "PMC8597511.xml::IJO_3310_20-t002!R18C2",
+    "PMC8597511.xml::IJO_3310_20-t002!R23C2",
+    "PMC8597511.xml::IJO_3310_20-t002!R28C2"
+   ],
+   "baseline_label": "Baseline IOP (Table 2 row R3)",
+   "notes": "mean ± SD (the Results text labels these values mean ± SD; asterisks ignored); blocks 'Baseline', '6 months', '1 year', '2 years', '3 years', '4 years'; per-visit number of patients in Table 2 rows R6, R11, R16, R21, R26, R31 (column C2); strong attrition in year 4 (Results)"
+  },
+  {
+   "series_id": "phaco-lads/iop",
+   "group": "phaco-lads",
+   "kind": "group_mean",
+   "n": 18,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "unstated",
+   "months": [0, 6, 12, 24, 36, 48],
+   "cells": [
+    "PMC8597511.xml::IJO_3310_20-t002!R3C3",
+    "PMC8597511.xml::IJO_3310_20-t002!R8C3",
+    "PMC8597511.xml::IJO_3310_20-t002!R13C3",
+    "PMC8597511.xml::IJO_3310_20-t002!R18C3",
+    "PMC8597511.xml::IJO_3310_20-t002!R23C3",
+    "PMC8597511.xml::IJO_3310_20-t002!R28C3"
+   ],
+   "baseline_label": "Baseline IOP (Table 2 row R3)",
+   "notes": "mean ± SD; same blocks as the trabeculectomy series; per-visit number of patients in Table 2 rows R6, R11, R16, R21, R26, R31 (column C3)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 rows 'No. of AGM' and 'BCVA'",
+   "reason": "medication counts are mentioned in notes only; BCVA is not IOP"
+  },
+  {
+   "what": "Table 2 column C4 and Table 3 (IJO_3310_20-t003)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Tables 4 and 5 (IJO_3310_20-t004, -t005) and Figures 3 and 4",
+   "reason": "Kaplan-Meier success estimates are not admissible"
+  },
+  {
+   "what": "Day 1 and months 1, 3 and 9 visits listed in the Methods/Abstract",
+   "reason": "not tabulated"
+  },
+  {
+   "what": "Table 1 (IJO_3310_20-t001)",
+   "reason": "baseline characteristics, not IOP series"
+  }
+ ],
+ "notes": [
+  "Tonometer: not stated in the article.",
+  "Reference: baseline IOP with the baseline number of anti-glaucoma medications (Table 2 row R4), recorded as preoperative_medicated.",
+  "Statistic: the statistical methods mention mean (SD) or median (IQR) for continuous variables; the Results text reports the Table 2 IOP values explicitly as mean ± SD, so they are taken as means.",
+  "Role: two clinical techniques compared retrospectively without an arm declared experimental; both groups are recorded as control with their own procedure context (trabeculectomy, nonpenetrating).",
+  "Paired design: the two groups are the two eyes of the same 18 patients.",
+  "Goniopuncture and bleb needling were used as routine postoperative interventions and not counted as failure (Methods); no outcome-defined exclusion from the means is stated.",
+  "Table 2 tabulates the number of anti-glaucoma medications at each visit; not extracted."
+ ]
+}

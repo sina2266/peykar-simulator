@@ -1,0 +1,101 @@
+{
+ "study_id": "iop-pmc12470787",
+ "doi": "10.3390/jcm14186524",
+ "pmcid": "PMC12470787",
+ "title": "Clinical Outcomes of Gonioscopy-Assisted Transluminal Trabeculotomy in Eyes After Failed Trabeculectomy",
+ "species": "human",
+ "procedure": "angle_mims",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12470787.xml",
+   "sha256": "8b8c86ea556542474800b2bf5e0bf759093478ebc76b880a3449f80122bc3c6b",
+   "bytes": 111406,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "refractory open-angle glaucoma after failed trabeculectomy (40 POAG, 22 pseudoexfoliative glaucoma), target IOP not reached on maximal tolerated drops",
+ "design": "prospective case series of 62 patients (one eye each), two surgeons, at least 12 months of follow-up",
+ "groups": [
+  {
+   "group": "gatt-standalone",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 44,
+   "indication": "open-angle glaucoma after failed trabeculectomy",
+   "description": "gonioscopy-assisted transluminal trabeculotomy alone (Table 9 'GATT')"
+  },
+  {
+   "group": "phaco-gatt",
+   "role": "control",
+   "procedure": "angle_mims",
+   "n_reported": 18,
+   "indication": "open-angle glaucoma after failed trabeculectomy, with cataract",
+   "description": "phacoemulsification with IOL followed by GATT in the same session (Table 9 'Phaco-GATT')"
+  }
+ ],
+ "extraction_protocol": "iop-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "gatt-standalone/iop",
+   "group": "gatt-standalone",
+   "kind": "group_mean",
+   "n": 44,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.3285, 1, 3, 6, 12],
+   "cells": [
+    "PMC12470787.xml::jcm-14-06524-t009!R3C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R4C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R5C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R6C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R7C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R8C2",
+    "PMC12470787.xml::jcm-14-06524-t009!R9C2"
+   ],
+   "baseline_label": "IOP preoperatively (Table 9)",
+   "notes": "mean ± SD; per-visit n not reported (all patients had at least 12 months of follow-up)"
+  },
+  {
+   "series_id": "phaco-gatt/iop",
+   "group": "phaco-gatt",
+   "kind": "group_mean",
+   "n": 18,
+   "value_kind": "iop_absolute",
+   "reference_kind": "preoperative_medicated",
+   "method": "goldmann",
+   "months": [0, 0.0329, 0.3285, 1, 3, 6, 12],
+   "cells": [
+    "PMC12470787.xml::jcm-14-06524-t009!R3C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R4C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R5C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R6C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R7C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R8C3",
+    "PMC12470787.xml::jcm-14-06524-t009!R9C3"
+   ],
+   "baseline_label": "IOP preoperatively (Table 9)",
+   "notes": "mean ± SD; per-visit n not reported (all patients had at least 12 months of follow-up)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 whole-cohort IOP (62 eyes) and Table 1 cohort preoperative IOP", "reason": "the same eyes are tabulated as subgroups (brief: extract subgroups, not the whole cohort)"},
+  {"what": "Table 7 IOP by extent of Schlemm's canal deroofing (90-180 vs 190-360 degrees)", "reason": "alternative partition of the same 62 eyes; only one partition can be used without duplicating eyes. The procedure-variant partition of Table 9 (standalone vs combined with phaco) is used because it maps to the group procedure; the deroofing extent was an intraoperative result. One Table 7 cell also uses a decimal comma."},
+  {"what": "Table 8 IOP by number of previous glaucoma surgeries (one vs more than one)", "reason": "alternative partition of the same 62 eyes (preoperative condition); not used to avoid duplicating eyes (see Table 7 entry)"},
+  {"what": "Tables 3 and 4 success criteria", "reason": "success proportions are not admissible"},
+  {"what": "p-value columns of Tables 7-9 and the Table 2 significance footnote", "reason": "p-values are not admissible"},
+  {"what": "Table 5 BCVA", "reason": "not IOP"}
+ ],
+ "notes": [
+  "Time ambiguity: the tables label the second postoperative visit '10 D'/'Day 10' and the Methods and Results mention a 10 D visit, while the abstract and the Methods visit list say 7 days; the table label (10 days = 10/30.4375 months = 0.3285) is used. Day 1 = 0.0329 months.",
+  "Preoperative IOP on maximal tolerated medical therapy (Discussion); all antiglaucoma medications were withdrawn after surgery and drops were reintroduced when success criteria were not met.",
+  "Six patients required additional surgery (two Ahmed valves, two cyclophotocoagulation, one needling revision, one trabeculectomy); the article does not state whether their later IOP values were kept or censored.",
+  "Medication: number of antiglaucoma medications per visit is tabulated in Table 6 (whole cohort); not extracted.",
+  "Group roles: standalone GATT and Phaco-GATT are standard variants chosen by lens status, no experimental arm; both role control."
+ ]
+}
