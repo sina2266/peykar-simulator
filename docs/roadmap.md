@@ -199,11 +199,36 @@ was frozen (commit `de9762a0`) before a one-shot sealed test.
   epithelial closure) longitudinal data with the same outcome-blind protocol.
 - [ ] Extend the screen beyond fluorescein full-text matches (figure-only data
   needs a validated digitization protocol; author data requests need the user).
-- [ ] Next eye component, per the user's rule now that one corneal use is
-  defensible: choose by data availability with the same search → blind split →
-  simple-baseline protocol. Candidates in order: corneal stroma/keratocyte haze
-  after keratectomy, corneal nerve regeneration (density over weeks), then retina
-  using the backlog below. No component is declared validated by this ordering.
+- [x] Next eye component, per the user's rule now that one corneal use is
+  defensible: chosen by data availability with the same search → blind split →
+  simple-baseline protocol. Endothelial cell density after surgery had the most
+  open-access tables (843 papers screened; nerve, haze and post-cataract
+  thickness had fewer); see the section below.
+### 2026-10-28 corneal endothelial cell density (second eye component)
+[Model 1.0.0](../experiments/vcornea/endothelium/README.md) was frozen (commit
+`00d2cd09`, protocol `fdec8d89`) before a one-shot sealed test.
+- [x] Screen 843 open-access full texts and 679 tables with masked previews,
+  triage 87 studies, freeze an outcome-blind split (66 development/21 sealed) and
+  let separate custodians extract 17 sealed records (4 excluded with reasons).
+- [x] Hierarchical power-law model per tissue family (host/graft), recipient-
+  referenced grafts as their own context, family fallback for unseen procedures,
+  offset-anchored Student-t forecasting; author-overlap rule for possibly shared
+  cohorts; NC/ND/SA records kept private and redacted from public reports.
+- [x] Sealed result: next observation 5.60 vs persistence 7.36 pp (H2 pass),
+  coverage 71.1%/82.9% inside both windows (H1 pass), landmark 6.85 vs 12.41 pp
+  (H3 pass); 23/30 series within 5/10 pp; initial-state 13/29 control groups.
+  Development and sealed sets are now consumed.
+- [ ] Handle late level shifts (a 10-year DMEK group dropped between 60 and 84
+  months and was followed slowly): test a local-level/random-walk offset in a new
+  version on newly reserved studies.
+- [ ] Improve initial-state transfer with covariates that the dataset already
+  records but the model ignores (indication such as Fuchs dystrophy, donor age or
+  storage, device, nucleus grade, tamponade such as silicone oil).
+- [ ] Single-eye prediction needs per-eye data and its own calibration; it is not
+  claimed. Rabbit/other species need their own studies.
+- [ ] Next candidates after endothelium: intraocular pressure after glaucoma
+  surgery (488 papers in the earlier screen), corneal thickness after cataract
+  surgery (269), corneal nerves (159), stromal haze (115).
 
 ## S0 — preservation and platform contracts
 

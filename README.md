@@ -109,6 +109,18 @@ the last-two trend (13.1 vs 16.3 pp), but accuracy did not improve over 1.0.0 an
 initial-state prediction failed for both new control groups (18.0 and 25.0 pp). The
 [Persian audit](docs/corneal-work-audit-2026-10-27.fa.md) reviews the earlier work
 and pauses further unchanged vCornea replays until original run inputs exist.
+The next eye component is [corneal endothelial cell density after surgery](experiments/vcornea/endothelium/README.md)
+(keratoplasty, cataract, glaucoma, phakic-lens and vitreoretinal surgery), built
+from an [outcome-blind dataset](experiments/data/cornea-endothelium-2026-10-28/README.md)
+of 843 screened open-access papers (59 development and 17 custodian-extracted sealed
+records). **Model 1.0.0** (hierarchical power-law decline per tissue family, with
+Student-t, offset-anchored forecasting) was frozen and pushed (`00d2cd09`) before a
+one-shot sealed test: next-follow-up forecasts 5.60 pp versus 7.36 pp for
+persistence, intervals inside both calibration windows (71.1%/82.9%), landmark
+forecasts 6.85 versus 12.41 pp, and 23/30 series within 5/10 pp. Initial-state
+prediction of new control groups reached 13/29 within criteria, and a late
+post-60-month drop in a 10-year DMEK series was followed slowly
+([Persian results](experiments/vcornea/endothelium/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

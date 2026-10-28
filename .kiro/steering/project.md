@@ -1,5 +1,29 @@
 # Peykar continuation context
 
+## Corneal endothelium model 1.0.0 and its sealed test, 2026-10-28
+
+- Second eye component: ECD after surgery. Dataset
+  experiments/data/cornea-endothelium-2026-10-28 (843 screened OA papers, masked
+  triage, salted split 66/21 at `b0c2b043`), 59 development records (public CC BY
+  in development/records, NC/ND/SA in .peykar/endothelium-development-private),
+  17 sealed records by three custodians (.peykar/endothelium-sealed-2026-10-28).
+  author-overlap-1.0.0.json (>=2 shared Europe PMC authors) clusters development
+  studies and removes linked studies from sealed training.
+- Model `peykar.model_learning.endothelial_population` 1.0.0: f=(1-A)(1+t/tau)^-p
+  on a (ln(1-A), ln tau, ln p) grid, per tissue family (host/graft), REML hierarchy,
+  family fallback, recipient-referenced grafts separate, noise log-SD 0.5, primary
+  forecaster population_anchored_t4. Harness validation/cornea_endothelium_evaluation;
+  operator scripts/evaluate_endothelial_population.py; publisher
+  scripts/publish_endothelial_population.py. Development rounds r1-r3 in .peykar.
+- Protocol experiments/vcornea/endothelium/protocol-1.0.0.json SHA fdec8d89…,
+  frozen commit `00d2cd09` (pushed, remote equal). Sealed run once (141.1 s):
+  next observation 5.60 vs persistence 7.36 pp, coverage 0.711/0.829 inside both
+  windows, landmark 6.85 vs 12.41, 23/30 within 5/10 pp, initial state 13/29.
+  Worst public series: 10-year DMEK late drop (constant-offset anchor lags).
+  Both endothelium sets are consumed; a new version needs newly reserved studies.
+- Final make check-docker before freeze: 807 tests 97.70 s, 87%, mypy 122 files.
+  Heartbeat stays PAUSED; volume peykar3_peykar-data untouched.
+
 ## Corneal model 2.0.0, dataset 1.1.0 and second sealed test, 2026-10-28
 
 - User: "continue and do not stop", may search/acquire reliable data. Heartbeat

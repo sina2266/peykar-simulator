@@ -33,6 +33,28 @@
   `fdec8d89a0d62f4edbae7f0106c941cd98f47a71a47a5a2675d0e229880715dc` (26 frozen
   files, 59 development and 17 sealed record hashes); the operator's
   `check_protocol` reports no problem before and after the full check.
+- Commit `00d2cd09ff0762439b9277a1d84e705653d20acb` pushed; local `HEAD` and
+  `git ls-remote origin refs/heads/main` equal (the remote reported a moved
+  repository URL and accepted the push).
+- `scripts/evaluate_endothelial_population.py --sealed --protocol
+  experiments/vcornea/endothelium/protocol-1.0.0.json`: run once, exit 0, 141.1 s,
+  all pins matched, report SHA `a9de39ad0690abf0b422f2eeec9a3bd72a7e3622ed204ddcdbc5083844c460da`.
+  17 studies, 30 group-mean series, 76 next-observation targets; three sealed
+  studies trained without their author-linked development study. H1: coverage
+  54/76 = 0.711 (80%) and 63/76 = 0.829 (90%), both inside the frozen windows. H2:
+  `population_anchored_t4` 5.60 pp versus persistence 7.36 and last-two trend 15.50.
+  H3: landmark 6.85 versus 12.41 pp, coverage 0.724/0.908. H4: control group means
+  7.05 pp (pooled curve 8.16), 13/29 within 5/10 pp. 23/30 series within 5/10 pp,
+  14/30 also ≥0.5 pp better than persistence.
+- `scripts/publish_endothelial_population.py --sealed`: declared analysis, public
+  report and tables in `experiments/vcornea/endothelium/sealed-test-2026-10-28/`;
+  five studies without CC BY/CC0 terms reduced to metrics. The plot script ran with
+  `.peykar/cornea-native47/bin/python`; the PNG was inspected and its legend moved
+  off the bars before the final render.
+- After the result documents and plot script: `make check-docker` **exit 0, 807
+  Python tests passed in 92.04 s**, 87% coverage, strict mypy 122 files, Ruff
+  format/lint, 18 frontend tests, contracts and all builds
+  (`.peykar/endothelium-results-check-docker-20261028.log`).
 
 ## Corneal dataset 1.1.0, closure-tail model 2.0.0 and protocol freeze: 2026-10-28
 

@@ -66,3 +66,45 @@ are poorly predicted from context alone (1/26 within criteria, under-covered); t
 are not claimed.
 
 The frozen sealed-test protocol is [protocol-1.0.0.json](protocol-1.0.0.json).
+
+## One-shot sealed test (2026-10-28)
+
+Run once after commit `00d2cd09` with every pinned hash matching:
+`scripts/evaluate_endothelial_population.py --sealed --protocol protocol-1.0.0.json`
+(exit 0, 141.1 s, report SHA `a9de39ad…`). 17 studies, 30 group-mean series, 76
+next-observation targets; three sealed studies trained without their
+author-linked development study. Public artifacts:
+[`sealed-test-2026-10-28/`](sealed-test-2026-10-28/tables.md) (values of five
+studies without CC BY/CC0 terms redacted), figure `sealed-results.png`, declared analysis
+`sealed-analysis.json`.
+
+| declared check | result |
+|---|---|
+| H1 calibration, next observation (80% in [0.70, 0.90]; 90% in [0.80, 0.97]) | 54/76 = 0.711 and 63/76 = 0.829: **both inside**, both near the lower edge (development 0.820/0.897) |
+| H2 accuracy, next observation | **pass**: 5.60 pp versus persistence 7.36 and last-two trend 15.50 (analog kNN 5.35 on its 73 targets, model 5.28 there) |
+| H3 landmark (from the first follow-up) | **pass**: 6.85 versus persistence 12.41 pp; coverage 0.724/0.908 inside both windows |
+| H4 initial state, 29 control groups | 7.05 pp versus pooled curve 8.16; 13/29 within 5/10 pp; coverage 0.848/0.919 |
+| per series, next observation | 23/30 within 5/10 pp; 14/30 also ≥0.5 pp better than persistence |
+
+By context (next observation, model versus persistence RMSE): cataract 2.06/3.00
+(10/10 within), DSAEK 5.37/10.47 (6/9), vitreoretinal 5.04/5.94 (4/6; no training
+study, host-family fallback), DMEK 8.69/5.73 (1/2), PK with a recipient-referenced
+label 14.44/22.65 (0/1, graft-family fallback).
+
+Failures and limits seen after unsealing (not used to change the frozen model):
+
+- The worst public series (10-year DMEK group, PMC9156484) dropped from 53% to 29%
+  of the donor count between 60 and 84 months and then stayed flat. The forecaster
+  anchors to the mean offset of the whole prefix, so it followed the late drop
+  slowly (9.05 versus persistence 5.36 pp). A local-level (random-walk) offset
+  would address this but needs a new version and new sealed data.
+- Long gaps (12 → 36 → 60 months in a DSAEK cohort with FECD, non-FECD and
+  glaucoma-bleb groups) stay above 5 pp even though the model roughly halves the
+  persistence error.
+- Silicone-oil vitreoretinal groups and a PK group whose reference label was the
+  recipient's preoperative count fail; both contexts had no training study.
+- Initial-state prediction of a new study's group means is within 5/10 pp for 13
+  of 29 groups; between-study differences remain larger than the criterion.
+
+Both the development and the sealed sets are now consumed. A further version must
+be tested on newly reserved studies.

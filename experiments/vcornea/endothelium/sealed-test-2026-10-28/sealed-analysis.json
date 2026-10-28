@@ -1,0 +1,3700 @@
+{
+ "mode": "sealed",
+ "status": "declared sealed-test analysis",
+ "source_report_sha256": "a9de39ad0690abf0b422f2eeec9a3bd72a7e3622ed204ddcdbc5083844c460da",
+ "studies_with_redacted_values": [
+  "ecd-pmc10850681",
+  "ecd-pmc11821893",
+  "ecd-pmc3585506",
+  "ecd-pmc7045206",
+  "ecd-pmc8881962"
+ ],
+ "primary_methods": {
+  "next_observation": "population_anchored_t4",
+  "landmark": "population_anchored_t4",
+  "initial_state": "population_initial_state"
+ },
+ "H1_calibration_next_observation": {
+  "80": {
+   "inside": 54,
+   "n": 76,
+   "coverage": 0.7105263157894737,
+   "within_0.70_0.90": true
+  },
+  "90": {
+   "inside": 63,
+   "n": 76,
+   "coverage": 0.8289473684210527,
+   "within_0.80_0.97": true
+  }
+ },
+ "H2_accuracy_next_observation": {
+  "persistence": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 5.595567141687621,
+   "persistence_rmse_pp": 7.361363707178129,
+   "population_anchored_t4_lower": true
+  },
+  "last_two_log_linear": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 5.595567141687621,
+   "last_two_log_linear_rmse_pp": 15.50078926330221,
+   "population_anchored_t4_lower": true
+  },
+  "pooled_curve_ratio": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 5.595567141687621,
+   "pooled_curve_ratio_rmse_pp": 6.996052164277442,
+   "population_anchored_t4_lower": true
+  },
+  "analog_knn": {
+   "common_targets": 73,
+   "population_anchored_t4_rmse_pp": 5.284413701737993,
+   "analog_knn_rmse_pp": 5.345851484068348,
+   "population_anchored_t4_lower": true
+  }
+ },
+ "H3_landmark": {
+  "calibration": {
+   "80": {
+    "inside": 55,
+    "n": 76,
+    "coverage": 0.7236842105263158,
+    "within_0.70_0.90": true
+   },
+   "90": {
+    "inside": 69,
+    "n": 76,
+    "coverage": 0.9078947368421053,
+    "within_0.80_0.97": true
+   }
+  },
+  "persistence": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 6.8506452664395345,
+   "persistence_rmse_pp": 12.41268965259976,
+   "population_anchored_t4_lower": true
+  },
+  "last_two_log_linear": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 6.8506452664395345,
+   "last_two_log_linear_rmse_pp": 37.50216504054508,
+   "population_anchored_t4_lower": true
+  },
+  "pooled_curve_ratio": {
+   "common_targets": 76,
+   "population_anchored_t4_rmse_pp": 6.8506452664395345,
+   "pooled_curve_ratio_rmse_pp": 9.398661248590004,
+   "population_anchored_t4_lower": true
+  },
+  "analog_knn": {
+   "common_targets": 73,
+   "population_anchored_t4_rmse_pp": 6.95125243471951,
+   "analog_knn_rmse_pp": 7.303837707456064,
+   "population_anchored_t4_lower": true
+  }
+ },
+ "H4_initial_state_group_means": {
+  "summary": {
+   "pooled_training_curve": {
+    "series": 29,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 13,
+    "pooled_rmse_pp": 8.159169253101107,
+    "pooled_max_abs_pp": 22.715591601814534,
+    "targets": 99
+   },
+   "population_initial_state": {
+    "series": 29,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 13,
+    "pooled_rmse_pp": 7.049051429776458,
+    "pooled_max_abs_pp": 23.299200921636164,
+    "targets": 99
+   },
+   "population_initial_state_t4": {
+    "series": 29,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 14,
+    "pooled_rmse_pp": 7.227973012202713,
+    "pooled_max_abs_pp": 24.22415121239566,
+    "targets": 99
+   }
+  },
+  "calibration": {
+   "80": {
+    "inside": 84,
+    "n": 99,
+    "window": [
+     0.7,
+     0.9
+    ]
+   },
+   "90": {
+    "inside": 91,
+    "n": 99,
+    "window": [
+     0.8,
+     0.97
+    ]
+   }
+  }
+ },
+ "pass_counts": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 30,
+    "series_within_5_10_pp": 21,
+    "series_meeting_criteria": 13,
+    "pooled_rmse_pp": 5.345851484068349,
+    "pooled_max_abs_pp": 16.13651250110114,
+    "targets": 73
+   },
+   "flat_prior_grid": {
+    "series": 30,
+    "series_within_5_10_pp": 19,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 6.980985280369016,
+    "pooled_max_abs_pp": 20.917302354191484,
+    "targets": 76
+   },
+   "last_two_log_linear": {
+    "series": 30,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 15.50078926330221,
+    "pooled_max_abs_pp": 54.54569643251875,
+    "targets": 76
+   },
+   "persistence": {
+    "series": 30,
+    "series_within_5_10_pp": 17,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 7.3613637071781275,
+    "pooled_max_abs_pp": 22.65023610841581,
+    "targets": 76
+   },
+   "pooled_curve_ratio": {
+    "series": 30,
+    "series_within_5_10_pp": 22,
+    "series_meeting_criteria": 13,
+    "pooled_rmse_pp": 6.996052164277441,
+    "pooled_max_abs_pp": 21.563976696297427,
+    "targets": 76
+   },
+   "population_anchored": {
+    "series": 30,
+    "series_within_5_10_pp": 23,
+    "series_meeting_criteria": 14,
+    "pooled_rmse_pp": 5.579789919416854,
+    "pooled_max_abs_pp": 19.41575002046447,
+    "targets": 76
+   },
+   "population_anchored_t4": {
+    "series": 30,
+    "series_within_5_10_pp": 23,
+    "series_meeting_criteria": 14,
+    "pooled_rmse_pp": 5.595567141687621,
+    "pooled_max_abs_pp": 19.50898471796791,
+    "targets": 76
+   },
+   "population_assimilation": {
+    "series": 30,
+    "series_within_5_10_pp": 23,
+    "series_meeting_criteria": 15,
+    "pooled_rmse_pp": 6.061441897919614,
+    "pooled_max_abs_pp": 19.37823841418645,
+    "targets": 76
+   },
+   "population_assimilation_robust": {
+    "series": 30,
+    "series_within_5_10_pp": 23,
+    "series_meeting_criteria": 15,
+    "pooled_rmse_pp": 6.094924069238336,
+    "pooled_max_abs_pp": 19.450679321203417,
+    "targets": 76
+   },
+   "population_assimilation_t4": {
+    "series": 30,
+    "series_within_5_10_pp": 23,
+    "series_meeting_criteria": 15,
+    "pooled_rmse_pp": 6.082695116844126,
+    "pooled_max_abs_pp": 19.41489682859275,
+    "targets": 76
+   },
+   "reference_to_last_log_linear": {
+    "series": 30,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 17.800611964073852,
+    "pooled_max_abs_pp": 54.54569643251875,
+    "targets": 76
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 30,
+    "series_within_5_10_pp": 18,
+    "series_meeting_criteria": 12,
+    "pooled_rmse_pp": 7.303837707456064,
+    "pooled_max_abs_pp": 20.177590493405972,
+    "targets": 73
+   },
+   "flat_prior_grid": {
+    "series": 30,
+    "series_within_5_10_pp": 17,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 9.421270991317988,
+    "pooled_max_abs_pp": 30.58186971758669,
+    "targets": 76
+   },
+   "last_two_log_linear": {
+    "series": 30,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 37.50216504054508,
+    "pooled_max_abs_pp": 76.62291165128876,
+    "targets": 76
+   },
+   "persistence": {
+    "series": 30,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 12.412689652599761,
+    "pooled_max_abs_pp": 34.51882845188285,
+    "targets": 76
+   },
+   "pooled_curve_ratio": {
+    "series": 30,
+    "series_within_5_10_pp": 22,
+    "series_meeting_criteria": 12,
+    "pooled_rmse_pp": 9.398661248590003,
+    "pooled_max_abs_pp": 29.685531422057217,
+    "targets": 76
+   },
+   "population_anchored": {
+    "series": 30,
+    "series_within_5_10_pp": 18,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 6.8910749229403745,
+    "pooled_max_abs_pp": 18.700987337479713,
+    "targets": 76
+   },
+   "population_anchored_t4": {
+    "series": 30,
+    "series_within_5_10_pp": 19,
+    "series_meeting_criteria": 10,
+    "pooled_rmse_pp": 6.850645266439534,
+    "pooled_max_abs_pp": 18.23003158888738,
+    "targets": 76
+   },
+   "population_assimilation": {
+    "series": 30,
+    "series_within_5_10_pp": 17,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 7.8363167223175685,
+    "pooled_max_abs_pp": 23.35977812439451,
+    "targets": 76
+   },
+   "population_assimilation_robust": {
+    "series": 30,
+    "series_within_5_10_pp": 17,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 7.855697270948113,
+    "pooled_max_abs_pp": 23.86883478156597,
+    "targets": 76
+   },
+   "population_assimilation_t4": {
+    "series": 30,
+    "series_within_5_10_pp": 17,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 7.808744310600245,
+    "pooled_max_abs_pp": 23.678640879720774,
+    "targets": 76
+   },
+   "reference_to_last_log_linear": {
+    "series": 30,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 37.50216504054508,
+    "pooled_max_abs_pp": 76.62291165128876,
+    "targets": 76
+   }
+  }
+ },
+ "by_family": {
+  "human/graft": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 11,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 10.863633313856248,
+     "pooled_max_abs_pp": 22.715591601814534,
+     "targets": 39
+    },
+    "population_initial_state": {
+     "series": 11,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 8.925182792640275,
+     "pooled_max_abs_pp": 23.299200921636164,
+     "targets": 39
+    },
+    "population_initial_state_t4": {
+     "series": 11,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 9.069569683180504,
+     "pooled_max_abs_pp": 24.22415121239566,
+     "targets": 39
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 12,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 6.101323653412314,
+     "pooled_max_abs_pp": 14.633862930535013,
+     "targets": 30
+    },
+    "flat_prior_grid": {
+     "series": 12,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 9.490361382824261,
+     "pooled_max_abs_pp": 20.917302354191484,
+     "targets": 33
+    },
+    "last_two_log_linear": {
+     "series": 12,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.388489061709864,
+     "pooled_max_abs_pp": 37.3275501372129,
+     "targets": 33
+    },
+    "persistence": {
+     "series": 12,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.694733165021177,
+     "pooled_max_abs_pp": 22.65023610841581,
+     "targets": 33
+    },
+    "pooled_curve_ratio": {
+     "series": 12,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 9.218854473102237,
+     "pooled_max_abs_pp": 21.563976696297427,
+     "targets": 33
+    },
+    "population_anchored": {
+     "series": 12,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 7.129139595286791,
+     "pooled_max_abs_pp": 19.41575002046447,
+     "targets": 33
+    },
+    "population_anchored_t4": {
+     "series": 12,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 7.160757973466959,
+     "pooled_max_abs_pp": 19.50898471796791,
+     "targets": 33
+    },
+    "population_assimilation": {
+     "series": 12,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 7.957793536759213,
+     "pooled_max_abs_pp": 19.37823841418645,
+     "targets": 33
+    },
+    "population_assimilation_robust": {
+     "series": 12,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 8.015156900859198,
+     "pooled_max_abs_pp": 19.450679321203417,
+     "targets": 33
+    },
+    "population_assimilation_t4": {
+     "series": 12,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 7.99118661065701,
+     "pooled_max_abs_pp": 19.41489682859275,
+     "targets": 33
+    },
+    "reference_to_last_log_linear": {
+     "series": 12,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 19.844855582668064,
+     "pooled_max_abs_pp": 48.137803526315075,
+     "targets": 33
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 12,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 10.125903122833357,
+     "pooled_max_abs_pp": 20.177590493405972,
+     "targets": 30
+    },
+    "flat_prior_grid": {
+     "series": 12,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 13.146521234739122,
+     "pooled_max_abs_pp": 30.58186971758669,
+     "targets": 33
+    },
+    "last_two_log_linear": {
+     "series": 12,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 36.18591923523681,
+     "pooled_max_abs_pp": 58.117365268714394,
+     "targets": 33
+    },
+    "persistence": {
+     "series": 12,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.639692045961755,
+     "pooled_max_abs_pp": 34.51882845188285,
+     "targets": 33
+    },
+    "pooled_curve_ratio": {
+     "series": 12,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 13.191925777478074,
+     "pooled_max_abs_pp": 29.685531422057217,
+     "targets": 33
+    },
+    "population_anchored": {
+     "series": 12,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 8.916447718923108,
+     "pooled_max_abs_pp": 18.700987337479713,
+     "targets": 33
+    },
+    "population_anchored_t4": {
+     "series": 12,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 8.904391997990087,
+     "pooled_max_abs_pp": 18.23003158888738,
+     "targets": 33
+    },
+    "population_assimilation": {
+     "series": 12,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 10.523010473973859,
+     "pooled_max_abs_pp": 23.35977812439451,
+     "targets": 33
+    },
+    "population_assimilation_robust": {
+     "series": 12,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 10.555199345567877,
+     "pooled_max_abs_pp": 23.86883478156597,
+     "targets": 33
+    },
+    "population_assimilation_t4": {
+     "series": 12,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 10.474850022797819,
+     "pooled_max_abs_pp": 23.678640879720774,
+     "targets": 33
+    },
+    "reference_to_last_log_linear": {
+     "series": 12,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 36.18591923523681,
+     "pooled_max_abs_pp": 58.117365268714394,
+     "targets": 33
+    }
+   }
+  },
+  "human/host": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 18,
+     "series_within_5_10_pp": 10,
+     "series_meeting_criteria": 10,
+     "pooled_rmse_pp": 5.756025284915407,
+     "pooled_max_abs_pp": 16.23126717148622,
+     "targets": 60
+    },
+    "population_initial_state": {
+     "series": 18,
+     "series_within_5_10_pp": 10,
+     "series_meeting_criteria": 10,
+     "pooled_rmse_pp": 5.496251529457872,
+     "pooled_max_abs_pp": 12.333204896664329,
+     "targets": 60
+    },
+    "population_initial_state_t4": {
+     "series": 18,
+     "series_within_5_10_pp": 9,
+     "series_meeting_criteria": 9,
+     "pooled_rmse_pp": 5.721435014288133,
+     "pooled_max_abs_pp": 12.455344028612592,
+     "targets": 60
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 18,
+     "series_within_5_10_pp": 15,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 4.748117964578036,
+     "pooled_max_abs_pp": 16.13651250110114,
+     "targets": 43
+    },
+    "flat_prior_grid": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 4.124758383372088,
+     "pooled_max_abs_pp": 12.830273476454312,
+     "targets": 43
+    },
+    "last_two_log_linear": {
+     "series": 18,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 15.586424397760279,
+     "pooled_max_abs_pp": 54.54569643251875,
+     "targets": 43
+    },
+    "persistence": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.862806779177857,
+     "pooled_max_abs_pp": 15.600000000000003,
+     "targets": 43
+    },
+    "pooled_curve_ratio": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 4.613480046524675,
+     "pooled_max_abs_pp": 16.076190997926687,
+     "targets": 43
+    },
+    "population_anchored": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 4.00283442083562,
+     "pooled_max_abs_pp": 12.535527591241324,
+     "targets": 43
+    },
+    "population_anchored_t4": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 3.9984451557183567,
+     "pooled_max_abs_pp": 12.535844130122298,
+     "targets": 43
+    },
+    "population_assimilation": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 4.042069887343709,
+     "pooled_max_abs_pp": 12.628857695953965,
+     "targets": 43
+    },
+    "population_assimilation_robust": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 4.044074420063298,
+     "pooled_max_abs_pp": 12.630047818322632,
+     "targets": 43
+    },
+    "population_assimilation_t4": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 4.0479353838575145,
+     "pooled_max_abs_pp": 12.605218928796813,
+     "targets": 43
+    },
+    "reference_to_last_log_linear": {
+     "series": 18,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 16.056218158113975,
+     "pooled_max_abs_pp": 54.54569643251875,
+     "targets": 43
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 4.362215892422307,
+     "pooled_max_abs_pp": 8.815798548989196,
+     "targets": 43
+    },
+    "flat_prior_grid": {
+     "series": 18,
+     "series_within_5_10_pp": 15,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 4.923514296012856,
+     "pooled_max_abs_pp": 13.114942244141448,
+     "targets": 43
+    },
+    "last_two_log_linear": {
+     "series": 18,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 38.48178557589072,
+     "pooled_max_abs_pp": 76.62291165128876,
+     "targets": 43
+    },
+    "persistence": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.78982954437097,
+     "pooled_max_abs_pp": 15.027110766847407,
+     "targets": 43
+    },
+    "pooled_curve_ratio": {
+     "series": 18,
+     "series_within_5_10_pp": 16,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 4.750910413331608,
+     "pooled_max_abs_pp": 15.37553029848554,
+     "targets": 43
+    },
+    "population_anchored": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.787107481292885,
+     "pooled_max_abs_pp": 11.94263713674527,
+     "targets": 43
+    },
+    "population_anchored_t4": {
+     "series": 18,
+     "series_within_5_10_pp": 14,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 4.700992935399737,
+     "pooled_max_abs_pp": 11.390385383664114,
+     "targets": 43
+    },
+    "population_assimilation": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.85315435984566,
+     "pooled_max_abs_pp": 12.159469632509323,
+     "targets": 43
+    },
+    "population_assimilation_robust": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.854886663484627,
+     "pooled_max_abs_pp": 12.156843088318425,
+     "targets": 43
+    },
+    "population_assimilation_t4": {
+     "series": 18,
+     "series_within_5_10_pp": 13,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.854561812500431,
+     "pooled_max_abs_pp": 12.114230389079317,
+     "targets": 43
+    },
+    "reference_to_last_log_linear": {
+     "series": 18,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 38.48178557589072,
+     "pooled_max_abs_pp": 76.62291165128876,
+     "targets": 43
+    }
+   }
+  }
+ },
+ "per_series": {
+  "next_observation": [
+   {
+    "study_id": "ecd-pmc10003726",
+    "series_id": "ecd-pmc10003726/injector/graft-ecd",
+    "context": "human/dsaek",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.308627374316968,
+     "max_abs_pp": 4.928520878954046,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.694733935478309,
+     "max_abs_pp": 10.05661005661006,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 13.764514466748233,
+     "max_abs_pp": 20.524965471128194,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 5.564847816176047,
+     "max_abs_pp": 9.036075093834771,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 6.132268981885801,
+     "max_abs_pp": 7.963380244378437,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc10003726",
+    "series_id": "ecd-pmc10003726/busin/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.0688201030490663,
+     "max_abs_pp": 2.954123231521233,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 6.166711420191005,
+     "max_abs_pp": 7.029262086513999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 17.771689469600798,
+     "max_abs_pp": 30.018356925783333,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.620302196021384,
+     "max_abs_pp": 6.15692708917106,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.163456934124135,
+     "max_abs_pp": 5.364449053876297,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/iris-hooks/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.2025227632839317,
+     "max_abs_pp": 2.2025227632839317,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.4553443042019545,
+     "max_abs_pp": 0.4553443042019545,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.826407255515819,
+     "max_abs_pp": 4.826407255515819,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.442335542758578,
+     "max_abs_pp": 2.442335542758578,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.3113689528580292,
+     "max_abs_pp": 3.3113689528580292,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/control/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.7724863152457027,
+     "max_abs_pp": 1.7724863152457027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 2.0800009009444564,
+     "max_abs_pp": 2.0800009009444564,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.0157727795621083,
+     "max_abs_pp": 2.0157727795621083,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.7116103961394624,
+     "max_abs_pp": 1.7116103961394624,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/air/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.365923269906515,
+     "max_abs_pp": 3.8232055741916793,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.4161495067851835,
+     "max_abs_pp": 4.048582995951411,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.50706844721456,
+     "max_abs_pp": 15.560170385729643,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.5442517780400715,
+     "max_abs_pp": 3.4639690341478957,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.531332889397573,
+     "max_abs_pp": 3.888320830168779,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 3.1878921044888653,
+     "max_abs_pp": 4.2823077077606015,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.9173650338119574,
+     "max_abs_pp": 5.65012676566462,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.2119883743137665,
+     "max_abs_pp": 10.318036667307995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.126066108916915,
+     "max_abs_pp": 4.383929574159639,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.0290018949868545,
+     "max_abs_pp": 4.296039836091192,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 7.225823740668126,
+     "max_abs_pp": 12.535844130122298,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 6.581251971263023,
+     "max_abs_pp": 13.090627420604184,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.489474104482014,
+     "max_abs_pp": 12.89736346139595,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.51815415328569,
+     "max_abs_pp": 12.763339556392484,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.85313884436868,
+     "max_abs_pp": 11.519321212322753,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.493467349611224,
+     "max_abs_pp": 6.911891455295526,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 4.553500642513166,
+     "max_abs_pp": 6.666666666666665,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.919944921985251,
+     "max_abs_pp": 12.819248664797843,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.316680307602622,
+     "max_abs_pp": 4.374358840378212,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.124758021010923,
+     "max_abs_pp": 6.807381820261648,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-iol-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 7.776839778229242,
+     "max_abs_pp": 10.907781714742947,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 10.988997022274402,
+     "max_abs_pp": 15.600000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 21.022581669626202,
+     "max_abs_pp": 28.04950042133142,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 11.055140365081552,
+     "max_abs_pp": 16.076190997926687,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 10.962957533296596,
+     "max_abs_pp": 16.13651250110114,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.9789216199227253,
+     "max_abs_pp": 2.7418992498277395,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.378731661502878,
+     "max_abs_pp": 3.507271171941828,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.344835924554705,
+     "max_abs_pp": 21.460168949735692,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.911691895087021,
+     "max_abs_pp": 3.598557082366216,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.4783884366159428,
+     "max_abs_pp": 5.147774655075132,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.5109419004950109,
+     "max_abs_pp": 1.5109419004950109,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.12126245847175,
+     "max_abs_pp": 1.12126245847175,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 45.44554144813044,
+     "max_abs_pp": 45.44554144813044,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.4314340788579738,
+     "max_abs_pp": 1.4314340788579738,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.5048054802820889,
+     "max_abs_pp": 0.5048054802820889,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/non-dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.5250396731114955,
+     "max_abs_pp": 2.5250396731114955,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.08261049153243105,
+     "max_abs_pp": 0.08261049153243105,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 54.54569643251875,
+     "max_abs_pp": 54.54569643251875,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.451264161317146,
+     "max_abs_pp": 2.451264161317146,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.8770217920823886,
+     "max_abs_pp": 0.8770217920823886,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12129991",
+    "series_id": "ecd-pmc12129991/ndsek/graft-ecd",
+    "context": "human/dsaek",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 3.9024259317729193,
+     "max_abs_pp": 4.15686238425414,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.82338851618393,
+     "max_abs_pp": 9.239516702203264,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.417488215771641,
+     "max_abs_pp": 15.5947973605422,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.008103933037645,
+     "max_abs_pp": 4.193747102667761,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.964794535220748,
+     "max_abs_pp": 5.546809944565845,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12129991",
+    "series_id": "ecd-pmc12129991/dsek/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.8519511211552424,
+     "max_abs_pp": 3.4657268438596844,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.600681793938971,
+     "max_abs_pp": 8.134302526825898,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 12.129781327043263,
+     "max_abs_pp": 16.05887192692444,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.5209619867611537,
+     "max_abs_pp": 2.0645841580890445,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 0.9763648602285964,
+     "max_abs_pp": 1.2533834832443302,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc13457278",
+    "series_id": "ecd-pmc13457278/dextran-free/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.326352896975614,
+     "max_abs_pp": 2.326352896975614,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.868299139642621,
+     "max_abs_pp": 8.868299139642621,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 13.924185358550861,
+     "max_abs_pp": 13.924185358550861,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.0715011842859279,
+     "max_abs_pp": 1.0715011842859279,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 2.6483629259161257,
+     "max_abs_pp": 2.6483629259161257,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/gravity-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.4107835846835357,
+     "max_abs_pp": 2.5741697713014378,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.178178995707002,
+     "max_abs_pp": 4.588632750397458,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 10.81551048113695,
+     "max_abs_pp": 18.046716038481534,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.1037280874884607,
+     "max_abs_pp": 4.637083863232128,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.07321898966018,
+     "max_abs_pp": 4.005901122867139,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.3748294854840495,
+     "max_abs_pp": 2.592429881471403,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.125646360943357,
+     "max_abs_pp": 4.566768361447792,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.241826191086203,
+     "max_abs_pp": 18.800656615181786,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.06025029536397,
+     "max_abs_pp": 4.61511417222682,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 2.9679624037372982,
+     "max_abs_pp": 3.9853032236775277,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-balanced/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.095453994896366,
+     "max_abs_pp": 2.4425616431437924,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.8023033432995335,
+     "max_abs_pp": 3.9958304378040377,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.858224448251585,
+     "max_abs_pp": 19.87944604802837,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.6536558806753785,
+     "max_abs_pp": 3.8079593406821544,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 2.622245620026191,
+     "max_abs_pp": 3.1805108347691347,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.4696287338098852,
+     "max_abs_pp": 0.5831174637106695,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 5.3102420918820465,
+     "max_abs_pp": 6.182795698924737,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.76296455690983,
+     "max_abs_pp": 31.957251046025924,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.7902653556397117,
+     "max_abs_pp": 4.531669615189848,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.700910359508175,
+     "max_abs_pp": 1.8965183105226435,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/no-temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 3.399781731061429,
+     "max_abs_pp": 4.24853053569374,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.706140770307805,
+     "max_abs_pp": 6.445533358462119,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 25.41541189631225,
+     "max_abs_pp": 35.71549140012523,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.1965359531826032,
+     "max_abs_pp": 1.690108166474591,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 6.683217029532286,
+     "max_abs_pp": 8.68528460766208,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 9.812721912010634,
+     "max_abs_pp": 13.634718989222078,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 17.333778906694192,
+     "max_abs_pp": 18.863319386331938,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 14.510021443752048,
+     "max_abs_pp": 19.41394622223412,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 17.12965156165389,
+     "max_abs_pp": 21.499874867216395,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 7.918964668813031,
+     "max_abs_pp": 11.162674676858591,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/non-fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 5.148456815345309,
+     "max_abs_pp": 6.080833013690179,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 13.932807262928247,
+     "max_abs_pp": 16.138917262512777,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 14.907423527804003,
+     "max_abs_pp": 21.063158034362278,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 15.559162800938791,
+     "max_abs_pp": 21.563976696297427,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.5458018187135267,
+     "max_abs_pp": 4.3783562182372116,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/glaucoma-bleb/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 9.821131681429005,
+     "max_abs_pp": 13.276430259141852,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 16.450860435056985,
+     "max_abs_pp": 17.998656816655473,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 17.50443048881939,
+     "max_abs_pp": 23.745923627329933,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 16.191888669156928,
+     "max_abs_pp": 19.508029656702096,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 8.54702349236973,
+     "max_abs_pp": 11.991300857787563,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/dalk/host-ecd",
+    "context": "human/dalk",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.193370098303493,
+     "max_abs_pp": 2.193370098303493,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.7100238506239447,
+     "max_abs_pp": 3.7100238506239447,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 0.07303477629575506,
+     "max_abs_pp": 0.07303477629575506,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.8896015613836017,
+     "max_abs_pp": 0.8896015613836017,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.4535028224803903,
+     "max_abs_pp": 1.4535028224803903,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/pk/ecd",
+    "context": "human/pk~recipient-reference",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 14.441580840333735,
+     "max_abs_pp": 14.441580840333735,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 22.65023610841581,
+     "max_abs_pp": 22.65023610841581,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.317449807794295,
+     "max_abs_pp": 6.317449807794295,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.478044239740518,
+     "max_abs_pp": 14.478044239740518,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.633862930535013,
+     "max_abs_pp": 14.633862930535013,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8881962",
+    "series_id": "ecd-pmc8881962/modified-prechop/central-ecd",
+    "context": "human/cataract",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.9683696660651173,
+     "max_abs_pp": 1.9683696660651173,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.373273609555802,
+     "max_abs_pp": 0.373273609555802,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.39947637373163,
+     "max_abs_pp": 20.39947637373163,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.8526920506571676,
+     "max_abs_pp": 1.8526920506571676,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.905299460739699,
+     "max_abs_pp": 5.905299460739699,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc8881962",
+    "series_id": "ecd-pmc8881962/phaco-chop/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.8671131707021837,
+     "max_abs_pp": 1.8671131707021837,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.30154542027892584,
+     "max_abs_pp": 0.30154542027892584,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.399495518892852,
+     "max_abs_pp": 22.399495518892852,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.753576971180204,
+     "max_abs_pp": 1.753576971180204,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.5576501613344775,
+     "max_abs_pp": 0.5576501613344775,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc9129979",
+    "series_id": "ecd-pmc9129979/all/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.5417676249306543,
+     "max_abs_pp": 0.6464167404456655,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 1.5420387744927453,
+     "max_abs_pp": 1.8203344081589856,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.5685914047996325,
+     "max_abs_pp": 6.342743059409028,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.23626136988083,
+     "max_abs_pp": 3.156419192827842,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.709158022923984,
+     "max_abs_pp": 5.887517326812097,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9156484",
+    "series_id": "ecd-pmc9156484/all/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 9.049531575409006,
+     "max_abs_pp": 19.50898471796791,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 5.358440951693622,
+     "max_abs_pp": 13.477924089852827,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 12.443984527309947,
+     "max_abs_pp": 37.3275501372129,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.591204510467469,
+     "max_abs_pp": 15.090089572905525,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.181343550550013,
+     "max_abs_pp": 10.438686559879578,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9572056",
+    "series_id": "ecd-pmc9572056/ex-press/central-ecd",
+    "context": "human/glaucoma",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.5382638302437015,
+     "max_abs_pp": 0.5382638302437015,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 1.788531484662359,
+     "max_abs_pp": 1.788531484662359,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 0.9718951331558756,
+     "max_abs_pp": 0.9718951331558756,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.090899976951897,
+     "max_abs_pp": 0.090899976951897,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 0.9479659968779086,
+     "max_abs_pp": 0.9479659968779086,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   }
+  ],
+  "landmark": [
+   {
+    "study_id": "ecd-pmc10003726",
+    "series_id": "ecd-pmc10003726/injector/graft-ecd",
+    "context": "human/dsaek",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 5.127675306143193,
+     "max_abs_pp": 7.103551202440483,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 17.115310087386263,
+     "max_abs_pp": 20.912420912420913,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 38.728480116743796,
+     "max_abs_pp": 52.0061770879801,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.114993735327867,
+     "max_abs_pp": 9.036075093834771,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.861810563630415,
+     "max_abs_pp": 8.832175853250067,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc10003726",
+    "series_id": "ecd-pmc10003726/busin/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 3.1595404649947763,
+     "max_abs_pp": 3.8524000648150647,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 13.739488566466575,
+     "max_abs_pp": 18.256997455470742,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 41.365098625131864,
+     "max_abs_pp": 47.611528975047996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.75129395145114,
+     "max_abs_pp": 6.15692708917106,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.8961744645921343,
+     "max_abs_pp": 4.325388608221386,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/iris-hooks/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.2025227632839317,
+     "max_abs_pp": 2.2025227632839317,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.4553443042019545,
+     "max_abs_pp": 0.4553443042019545,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.826407255515819,
+     "max_abs_pp": 4.826407255515819,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.442335542758578,
+     "max_abs_pp": 2.442335542758578,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.3113689528580292,
+     "max_abs_pp": 3.3113689528580292,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/control/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.7724863152457027,
+     "max_abs_pp": 1.7724863152457027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 2.0800009009444564,
+     "max_abs_pp": 2.0800009009444564,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.0157727795621083,
+     "max_abs_pp": 2.0157727795621083,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.7116103961394624,
+     "max_abs_pp": 1.7116103961394624,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/air/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.13860127861343,
+     "max_abs_pp": 6.61457321852218,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.9604653188698606,
+     "max_abs_pp": 3.6805299963194704,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 42.44065459668279,
+     "max_abs_pp": 56.95717124002064,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.732324161509409,
+     "max_abs_pp": 2.92834992133687,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.8184284506856634,
+     "max_abs_pp": 6.587845634971745,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.5945724921296582,
+     "max_abs_pp": 4.282307707760625,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.385948434217318,
+     "max_abs_pp": 5.7587830496197085,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.573588233967097,
+     "max_abs_pp": 31.682424246791307,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.401764475754736,
+     "max_abs_pp": 5.952787337692788,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.3632769937831872,
+     "max_abs_pp": 3.012242235011797,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 8.058115983582057,
+     "max_abs_pp": 11.390385383664114,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 10.508040987607613,
+     "max_abs_pp": 15.027110766847407,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 3.896161163440897,
+     "max_abs_pp": 5.740281786394941,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 10.899096048581635,
+     "max_abs_pp": 15.37553029848554,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.204270683521472,
+     "max_abs_pp": 8.815798548989196,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.334714963935613,
+     "max_abs_pp": 6.204762454083202,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.9843842559631493,
+     "max_abs_pp": 4.347826086956519,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 27.960427078902455,
+     "max_abs_pp": 38.103713521294246,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.1514864687628807,
+     "max_abs_pp": 3.085627045871131,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 5.20689818650951,
+     "max_abs_pp": 7.449486977987663,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-iol-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 7.568707336445849,
+     "max_abs_pp": 10.229786943330964,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 6.564424321040399,
+     "max_abs_pp": 8.566666666666666,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 54.47278821114996,
+     "max_abs_pp": 76.62291165128876,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.701211860666374,
+     "max_abs_pp": 9.27449284670978,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.813171826050115,
+     "max_abs_pp": 8.317031545926334,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.396234423232294,
+     "max_abs_pp": 3.333707887789905,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.578498039969712,
+     "max_abs_pp": 2.9940119760479056,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 49.70293943108453,
+     "max_abs_pp": 67.57475759448144,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.1274863026587814,
+     "max_abs_pp": 3.713289113811624,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.8594865604576443,
+     "max_abs_pp": 5.147774655075132,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.5109419004950109,
+     "max_abs_pp": 1.5109419004950109,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.12126245847175,
+     "max_abs_pp": 1.12126245847175,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 45.44554144813044,
+     "max_abs_pp": 45.44554144813044,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.4314340788579738,
+     "max_abs_pp": 1.4314340788579738,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.5048054802820889,
+     "max_abs_pp": 0.5048054802820889,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/non-dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.5250396731114955,
+     "max_abs_pp": 2.5250396731114955,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.08261049153243105,
+     "max_abs_pp": 0.08261049153243105,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 54.54569643251875,
+     "max_abs_pp": 54.54569643251875,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.451264161317146,
+     "max_abs_pp": 2.451264161317146,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.8770217920823886,
+     "max_abs_pp": 0.8770217920823886,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12129991",
+    "series_id": "ecd-pmc12129991/ndsek/graft-ecd",
+    "context": "human/dsaek",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 5.938947114354033,
+     "max_abs_pp": 7.573891617251172,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 13.802482365123929,
+     "max_abs_pp": 17.626154939587767,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 23.548890569573516,
+     "max_abs_pp": 29.42622621742589,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.4581212226711484,
+     "max_abs_pp": 4.838113371821534,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.884429531658437,
+     "max_abs_pp": 5.546809944565845,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12129991",
+    "series_id": "ecd-pmc12129991/dsek/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.4744683061055985,
+     "max_abs_pp": 5.294381048662572,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 12.165965737623788,
+     "max_abs_pp": 15.16095534787124,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 25.13913563092293,
+     "max_abs_pp": 31.718526336740737,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.893640638834088,
+     "max_abs_pp": 2.609139082834666,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 0.7241327364403941,
+     "max_abs_pp": 0.8444701980890645,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc13457278",
+    "series_id": "ecd-pmc13457278/dextran-free/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.326352896975614,
+     "max_abs_pp": 2.326352896975614,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.868299139642621,
+     "max_abs_pp": 8.868299139642621,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 13.924185358550861,
+     "max_abs_pp": 13.924185358550861,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.0715011842859279,
+     "max_abs_pp": 1.0715011842859279,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 2.6483629259161257,
+     "max_abs_pp": 2.6483629259161257,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/gravity-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 5.372559425474886,
+     "max_abs_pp": 7.883961279629914,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.80269063331011,
+     "max_abs_pp": 12.491255961844194,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 49.395167807738574,
+     "max_abs_pp": 67.51681119677045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.252252042480384,
+     "max_abs_pp": 6.975099098725302,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.5404721462945945,
+     "max_abs_pp": 5.907204196148097,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 5.266626580352483,
+     "max_abs_pp": 7.741450532375738,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.684427853600319,
+     "max_abs_pp": 12.3327674829948,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 50.35467409276184,
+     "max_abs_pp": 68.41770595166734,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.15483726339151,
+     "max_abs_pp": 6.835740213243602,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.0894404619723055,
+     "max_abs_pp": 5.11050231520912,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-balanced/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 4.784634065553632,
+     "max_abs_pp": 6.829212614212954,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.196374353311349,
+     "max_abs_pp": 11.398400869058179,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 51.89340707755124,
+     "max_abs_pp": 70.23513669454229,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.642825868250801,
+     "max_abs_pp": 5.927867532403141,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.603009168160025,
+     "max_abs_pp": 4.715659930141647,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.41322026415775287,
+     "max_abs_pp": 0.5831174637107028,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.582970786613545,
+     "max_abs_pp": 10.445468509984646,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 39.578103475925474,
+     "max_abs_pp": 45.952003820109994,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.296104772553127,
+     "max_abs_pp": 4.531669615189848,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.1503140919192867,
+     "max_abs_pp": 4.2023264218137175,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/no-temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 3.627066856423365,
+     "max_abs_pp": 4.248530535693751,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 5.849186919788853,
+     "max_abs_pp": 8.104033169996239,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 43.1746966400767,
+     "max_abs_pp": 49.52284860519315,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.2478528461698954,
+     "max_abs_pp": 1.7627655803468367,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 9.096361781890929,
+     "max_abs_pp": 9.489648392748807,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 11.559252492421614,
+     "max_abs_pp": 16.141845484245483,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 26.801534301155815,
+     "max_abs_pp": 34.51882845188285,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 18.895994699575787,
+     "max_abs_pp": 19.41394622223412,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 25.91790303164889,
+     "max_abs_pp": 29.685531422057217,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 10.244496956864532,
+     "max_abs_pp": 14.45976275351623,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/non-fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 7.8699900911239435,
+     "max_abs_pp": 10.384450060075935,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 22.51201011482003,
+     "max_abs_pp": 27.442969016002728,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 23.683224330438332,
+     "max_abs_pp": 26.040998502192885,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 22.27109308315313,
+     "max_abs_pp": 22.956438819609716,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.473855577453552,
+     "max_abs_pp": 8.823049029334761,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/glaucoma-bleb/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 12.879850104329766,
+     "max_abs_pp": 17.75205404560067,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 25.389207623788952,
+     "max_abs_pp": 32.740094022834114,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 21.39466154298161,
+     "max_abs_pp": 23.745923627329933,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 24.595677971310675,
+     "max_abs_pp": 28.798116755268317,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 11.632322090888097,
+     "max_abs_pp": 16.380168178503634,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/dalk/host-ecd",
+    "context": "human/dalk",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 2.193370098303493,
+     "max_abs_pp": 2.193370098303493,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.7100238506239447,
+     "max_abs_pp": 3.7100238506239447,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 0.07303477629575506,
+     "max_abs_pp": 0.07303477629575506,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.8896015613836017,
+     "max_abs_pp": 0.8896015613836017,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.4535028224803903,
+     "max_abs_pp": 1.4535028224803903,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/pk/ecd",
+    "context": "human/pk~recipient-reference",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 14.441580840333735,
+     "max_abs_pp": 14.441580840333735,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 22.65023610841581,
+     "max_abs_pp": 22.65023610841581,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.317449807794295,
+     "max_abs_pp": 6.317449807794295,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.478044239740518,
+     "max_abs_pp": 14.478044239740518,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.633862930535013,
+     "max_abs_pp": 14.633862930535013,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8881962",
+    "series_id": "ecd-pmc8881962/modified-prechop/central-ecd",
+    "context": "human/cataract",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.9683696660651173,
+     "max_abs_pp": 1.9683696660651173,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.373273609555802,
+     "max_abs_pp": 0.373273609555802,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.39947637373163,
+     "max_abs_pp": 20.39947637373163,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.8526920506571676,
+     "max_abs_pp": 1.8526920506571676,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.905299460739699,
+     "max_abs_pp": 5.905299460739699,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc8881962",
+    "series_id": "ecd-pmc8881962/phaco-chop/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 1.8671131707021837,
+     "max_abs_pp": 1.8671131707021837,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.30154542027892584,
+     "max_abs_pp": 0.30154542027892584,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.399495518892852,
+     "max_abs_pp": 22.399495518892852,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.753576971180204,
+     "max_abs_pp": 1.753576971180204,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.5576501613344775,
+     "max_abs_pp": 0.5576501613344775,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc9129979",
+    "series_id": "ecd-pmc9129979/all/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.34267611405840676,
+     "max_abs_pp": 0.4113024635442941,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 2.298910554261669,
+     "max_abs_pp": 3.0212298268156856,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 15.853094551935442,
+     "max_abs_pp": 21.50373977306108,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.0340009757582296,
+     "max_abs_pp": 3.156419192827842,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.133330541075359,
+     "max_abs_pp": 5.887517326812097,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9156484",
+    "series_id": "ecd-pmc9156484/all/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 11.41605018676024,
+     "max_abs_pp": 18.23003158888738,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 18.088639194475565,
+     "max_abs_pp": 29.31835786212238,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 44.06483577487308,
+     "max_abs_pp": 58.117365268714394,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 12.472613848347864,
+     "max_abs_pp": 20.197308710552797,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 15.105650652930617,
+     "max_abs_pp": 20.177590493405972,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9572056",
+    "series_id": "ecd-pmc9572056/ex-press/central-ecd",
+    "context": "human/glaucoma",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": null,
+    "population_anchored_t4": {
+     "rmse_pp": 0.5382638302437015,
+     "max_abs_pp": 0.5382638302437015,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 1.788531484662359,
+     "max_abs_pp": 1.788531484662359,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 0.9718951331558756,
+     "max_abs_pp": 0.9718951331558756,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.090899976951897,
+     "max_abs_pp": 0.090899976951897,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 0.9479659968779086,
+     "max_abs_pp": 0.9479659968779086,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   }
+  ],
+  "initial_state": [
+   {
+    "study_id": "ecd-pmc10003726",
+    "series_id": "ecd-pmc10003726/busin/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 2.540789740748842,
+     "max_abs_pp": 3.557647409982556,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.443097550829072,
+     "max_abs_pp": 5.232739786295215,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/iris-hooks/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 9.540791879113888,
+     "max_abs_pp": 10.385972883241202,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 10.244052122633708,
+     "max_abs_pp": 11.31045713581409,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11641855",
+    "series_id": "ecd-pmc11641855/control/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 10.702341875919428,
+     "max_abs_pp": 11.34082612558841,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 11.399868018321504,
+     "max_abs_pp": 12.265310378161299,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/air/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 2.7303173295515646,
+     "max_abs_pp": 5.305023541564113,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 1.4554660952226532,
+     "max_abs_pp": 2.0656564200259964,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 2.730099203760684,
+     "max_abs_pp": 4.477564148367675,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.1906395054997483,
+     "max_abs_pp": 3.29944045942967,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 6.251773535632205,
+     "max_abs_pp": 7.023029075520504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 7.153889188249193,
+     "max_abs_pp": 9.422178609647847,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 5.628053861347928,
+     "max_abs_pp": 8.626629471865698,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.9058807987324435,
+     "max_abs_pp": 4.728567197043809,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-iol-c3f8/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 6.504655790492226,
+     "max_abs_pp": 12.333204896664329,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.001252480809233,
+     "max_abs_pp": 16.23126717148622,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11821893",
+    "series_id": "ecd-pmc11821893/phaco-sio2/ecd",
+    "context": "human/vitreoretinal",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/host",
+    "population_initial_state": {
+     "rmse_pp": 3.7316593546991417,
+     "max_abs_pp": 5.368733838780093,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.266097947637208,
+     "max_abs_pp": 9.266796113601982,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 3.322722802847216,
+     "max_abs_pp": 3.8659846106882667,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.052549301162368,
+     "max_abs_pp": 3.7248513872871203,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc11878423",
+    "series_id": "ecd-pmc11878423/non-dm/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 8.906581356080506,
+     "max_abs_pp": 10.024806025193955,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.620457274789,
+     "max_abs_pp": 9.883672801792809,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12129991",
+    "series_id": "ecd-pmc12129991/dsek/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 5.718287756432121,
+     "max_abs_pp": 7.79190429663158,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.298933371529191,
+     "max_abs_pp": 7.218938114516337,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc12621321",
+    "series_id": "ecd-pmc12621321/pei-gsl/central-ecd",
+    "context": "human/glaucoma",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/glaucoma",
+    "population_initial_state": {
+     "rmse_pp": 3.0028705064725214,
+     "max_abs_pp": 3.0028705064725214,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 7.914458627110821,
+     "max_abs_pp": 7.914458627110821,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc13457278",
+    "series_id": "ecd-pmc13457278/dextran/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "population_initial_state": {
+     "rmse_pp": 1.9466547387344657,
+     "max_abs_pp": 1.9466547387344657,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 0.6361268397019504,
+     "max_abs_pp": 0.6361268397019504,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc13457278",
+    "series_id": "ecd-pmc13457278/dextran-free/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "population_initial_state": {
+     "rmse_pp": 8.321537120342969,
+     "max_abs_pp": 10.153594730958805,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 9.797286087654317,
+     "max_abs_pp": 10.916417598077032,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/gravity-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 4.145535322195982,
+     "max_abs_pp": 7.224352157581082,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.7503994210291856,
+     "max_abs_pp": 8.469624434489853,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-miniflared/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 4.251794909357165,
+     "max_abs_pp": 7.385849638884334,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.908544229987448,
+     "max_abs_pp": 8.631121915793106,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc5602781",
+    "series_id": "ecd-pmc5602781/iop-balanced/ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 4.124797835365482,
+     "max_abs_pp": 6.894654317564363,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.843951898622298,
+     "max_abs_pp": 8.139926594473135,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 5.7391157935977075,
+     "max_abs_pp": 6.1917526576315325,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 9.179582325536819,
+     "max_abs_pp": 11.84838545318957,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc6970996",
+    "series_id": "ecd-pmc6970996/no-temperature-reversal/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 1.6516493252801698,
+     "max_abs_pp": 2.230642872874644,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.4211125630159325,
+     "max_abs_pp": 4.103774937943882,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 14.757621651301791,
+     "max_abs_pp": 21.556623082054966,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 14.117400935549503,
+     "max_abs_pp": 22.715591601814534,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/non-fecd/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 10.55954581003433,
+     "max_abs_pp": 16.443387391977566,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 10.940111584285118,
+     "max_abs_pp": 17.602355911737135,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc7045206",
+    "series_id": "ecd-pmc7045206/glaucoma-bleb/graft-ecd",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "population_initial_state": {
+     "rmse_pp": 9.101834593839628,
+     "max_abs_pp": 13.260763566208855,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 13.788477656644291,
+     "max_abs_pp": 19.87463779288437,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/dalk/host-ecd",
+    "context": "human/dalk",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dalk",
+    "population_initial_state": {
+     "rmse_pp": 4.17260671111573,
+     "max_abs_pp": 5.250257141311976,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.324665225519809,
+     "max_abs_pp": 3.6782723213891755,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8199119",
+    "series_id": "ecd-pmc8199119/pk/ecd",
+    "context": "human/pk~recipient-reference",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "family:human/graft",
+    "population_initial_state": {
+     "rmse_pp": 16.927471558759375,
+     "max_abs_pp": 23.299200921636164,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 15.081077749997398,
+     "max_abs_pp": 20.89632979478191,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc8881962",
+    "series_id": "ecd-pmc8881962/phaco-chop/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 2.371415175803928,
+     "max_abs_pp": 3.0475824507815275,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.198422669748592,
+     "max_abs_pp": 2.906449227380381,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ecd-pmc9129979",
+    "series_id": "ecd-pmc9129979/all/central-ecd",
+    "context": "human/cataract",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cataract",
+    "population_initial_state": {
+     "rmse_pp": 6.97122193797112,
+     "max_abs_pp": 7.136025978839832,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.323818546671839,
+     "max_abs_pp": 7.277159202241046,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9156484",
+    "series_id": "ecd-pmc9156484/all/graft-ecd",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "population_initial_state": {
+     "rmse_pp": 8.775026790266637,
+     "max_abs_pp": 13.423178358238014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 12.825051744013983,
+     "max_abs_pp": 19.640099511985902,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ecd-pmc9572056",
+    "series_id": "ecd-pmc9572056/ex-press/central-ecd",
+    "context": "human/glaucoma",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/glaucoma",
+    "population_initial_state": {
+     "rmse_pp": 7.11167119419473,
+     "max_abs_pp": 7.5221697269987065,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 1.851531960851427,
+     "max_abs_pp": 1.9123165388981511,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   }
+  ]
+ }
+}
