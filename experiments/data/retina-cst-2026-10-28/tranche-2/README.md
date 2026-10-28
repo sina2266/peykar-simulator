@@ -58,3 +58,39 @@ admits as `sealed_test`.
 linked pairs: 11 tranche-2 studies lose linked training studies, 9 pairs link two
 tranche-2 studies, and 3 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-28)
+
+**Custodians.** Seven custodian sub-agents (C1–C7) extracted the 85 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and a tranche-2 addendum
+(`.peykar/retina-tranche2-extraction-brief.md`, SHA-256 c4c3010d…). Assignments are in
+`.peykar/retina-tranche2-extraction-assignments.json` (SHA-256 6f2f01de…; C1 13
+studies, C2–C7 12 each). Records, specs, raw copies and one custody report per
+custodian are private in `.peykar/retina-tranche2-sealed-2026-10-28/`. Reports state
+`contains_outcome_values: false`.
+
+**Result.** 63 records with 135 series (93 group means, 42 individual eyes); 22
+studies excluded. Most exclusions are analysis sets selected after the baseline
+(responders, completers defined by outcome) or tables of medians; one statistic could
+not be established. C4 left out two visits of one study because their table cells are
+malformed (a missing parenthesis), so the value could not be read without guessing.
+
+**Blind custody check.** `.peykar/verify_retina_tranche2_custody.py` rebuilt every
+record from the screened full text: 63 of 63 are identical byte for byte. Every
+record is declared `sealed_test` and is a reserved study; every reserved study was
+assigned exactly once and reported; every raw copy equals its screened source; each
+report's record hash equals the stored record. The check prints structure only.
+
+Structure (series per treatment): anti-VEGF 46, steroid implant 46, combination 17,
+other 8, vitrectomy 7, steroid injection 6, laser 5. Indications: DME, nAMD, RVO,
+CSC, myopic CNV, uveitic and postoperative macular oedema, other. Fifteen sealed
+series fall in five contexts that have no training series (RVO laser, other
+anti-VEGF, other steroid injection, other/other, postoperative CME laser). By the
+custodians' classification 34 records carry a CC BY or CC0 licence and 29 do not;
+the publisher classifies every licence again before anything is published.
+
+**Process notes.** The reports use slightly different layouts; the check script reads
+each one. C1 deleted and rewrote its own spec and record for two studies (three
+times in total) and rewrote its report once; only the final files count, and they
+rebuild. C3 kept raw copies of its two excluded studies. The brief told each
+custodian to open only its own files, by exact name.
