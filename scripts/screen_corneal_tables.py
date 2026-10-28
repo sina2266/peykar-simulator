@@ -76,9 +76,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fulltext", type=Path, action="append", required=True)
     parser.add_argument("--screen", type=Path, action="append", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--topic", help="regex replacing the wound-area topic pattern")
+    parser.add_argument("--time", help="regex replacing the time-unit pattern")
+    parser.add_argument("--context", help="regex replacing the cornea context pattern")
     args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("--output must not exist")
+    topic = re.compile(args.topic, re.I) if args.topic else TOPIC
+    time_pattern = re.compile(args.time, re.I) if args.time else TIME
+    context = re.compile(args.context, re.I) if args.context else CORNEA
     metadata: dict[str, dict[str, Any]] = {}
     for screen in args.screen:
         for item in json.loads(screen.read_text()):
@@ -104,7 +110,11 @@ def main(argv: list[str] | None = None) -> int:
                 header = " ".join(_text(th) for th in table_wrap.iter("th"))
                 body = " ".join(_text(td) for td in list(table_wrap.iter("td"))[:40])
                 text = f"{caption} {header} {body}"
-                if TOPIC.search(text) and TIME.search(text) and CORNEA.search(f"{text} {title}"):
+                if (
+                    topic.search(text)
+                    and time_pattern.search(text)
+                    and context.search(f"{text} {title}")
+                ):
                     flagged.append(masked_table(table_wrap))
             if not flagged:
                 continue
@@ -132,7 +142,10 @@ def main(argv: list[str] | None = None) -> int:
         "fulltexts_screened": len(seen),
         "articles_flagged": sum(r["outcome"] == "tables_flagged" for r in receipts),
         "tables_flagged": sum(r.get("tables", 0) for r in receipts),
-        "rule": "caption/header/first cells match wound-area topic + time unit + cornea",
+        "rule": "caption/header/first cells match topic + time unit + cornea",
+        "topic_pattern": topic.pattern,
+        "time_pattern": time_pattern.pattern,
+        "context_pattern": context.pattern,
         "scope": "Masked table previews only; no outcome value has been read or scored.",
     }
     (args.output / "receipts.json").write_text(json.dumps(receipts, indent=1))
