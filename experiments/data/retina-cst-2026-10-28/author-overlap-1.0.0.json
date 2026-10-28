@@ -1,0 +1,159 @@
+{
+ "schema": "eye.retina-author-overlap-1.0.0",
+ "utc": "2026-10-28T16:10:28.348666+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/retina-cst-2026-10-28/split-reservation-1.0.0.json",
+   "sha256": "c731804d625dc9b855b7eef5cb130cae662010f5778f5f953e45b7c80aaa1e9d"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-cst_treatment_open-0.json",
+    "sha256": "1d7194cfb9fa8705cf769091686322a6db109272e80b4fa08ccccbc0e1c81a10"
+   },
+   {
+    "file": "search-cst_treatment_open-1.json",
+    "sha256": "5d48a8b5f778d6c4c4132d4e2c5233d3a0e8939f852f82931a42931c79932f85"
+   },
+   {
+    "file": "search-cst_treatment_open-2.json",
+    "sha256": "28193c899b8db0799d02bea8e3d0ac5591dd3dbc9dffab9fcbedc25503652675"
+   },
+   {
+    "file": "search-macular_edema_title_open-0.json",
+    "sha256": "ffbd4f07302c2639e68f1e3ffd63025c942bbacc6d1e2a95edaf35ea40860586"
+   },
+   {
+    "file": "search-macular_edema_title_open-1.json",
+    "sha256": "8bb0ff391a665520ab162e095e0d6e8a7fa8dc6ad614f774a6795a1f21412d0f"
+   },
+   {
+    "file": "search-macular_edema_title_open-2.json",
+    "sha256": "6b3f261f3624abb1bfd269e8f9550a218761a059c83ccbf803e1d46235afce20"
+   },
+   {
+    "file": "search-macular_edema_title_open-3.json",
+    "sha256": "201a60c0e3258d8bca93a936df83cd9b1d57bfa2713b8335473d26c8935e3f79"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "ret-pmc10034169",
+    "ret-pmc10485612"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "ret-pmc10034169",
+    "ret-pmc13553420"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "ret-pmc10485612",
+    "ret-pmc13553420"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "ret-pmc11564717",
+    "ret-pmc8078110"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "ret-pmc12520007",
+    "ret-pmc13210171"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 7
+  },
+  {
+   "studies": [
+    "ret-pmc12520007",
+    "ret-pmc9793787"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "ret-pmc13210171",
+    "ret-pmc9793787"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "ret-pmc6558052",
+    "ret-pmc7093402"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 3
+  }
+ ],
+ "development_clusters": [
+  [
+   "ret-pmc10034169",
+   "ret-pmc13553420"
+  ],
+  [
+   "ret-pmc11564717",
+   "ret-pmc8078110"
+  ],
+  [
+   "ret-pmc12520007",
+   "ret-pmc9793787"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "ret-pmc10485612": [
+   "ret-pmc10034169",
+   "ret-pmc13553420"
+  ],
+  "ret-pmc13210171": [
+   "ret-pmc12520007",
+   "ret-pmc9793787"
+  ],
+  "ret-pmc7093402": [
+   "ret-pmc6558052"
+  ]
+ }
+}

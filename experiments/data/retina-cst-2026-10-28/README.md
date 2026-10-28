@@ -34,13 +34,32 @@ corneal nerve regeneration and 181 for retinal nerve fibre layer thinning.
    **untriaged and unread**, reserved for testing later model versions on studies
    no model has seen.
 
-Next, before any thickness value is read: blind triage of tranche 1 from masked
-previews, then a split frozen with its own salt (`peykar-retina-holdout-v1:`) into
-development and sealed-test studies. Records use schema
-`eye.retina-thickness-record-1.0.0` (`peykar.validation.eye_retina_data`) and are
-built from cell-citing specs by `scripts/build_retina_record.py`. Sealed studies are
-extracted by separate custodians and stay private until the evaluation protocol is
-frozen.
+5. [Triage 1.0.0](triage-1.0.0.json) reviewed the masked structure of tranche 1
+   (`screening/triage_chunks.py`, three chunks of 40). Three reviewer sub-agents
+   followed `.peykar/retina-triage-brief.md`, saw only masked previews and gave a
+   reason for every decision; there was no owner override. **78 admitted, 42
+   excluded.** The exclusions were reviews and meta-analyses, medians only,
+   model-adjusted or regression results, change without a baseline, a single
+   follow-up time, baseline-only tables, groups selected by a post-baseline event,
+   and thickness after cataract surgery in eyes without treated retinal disease.
+6. Before any thickness value was read, [the split was frozen](split-reservation-1.0.0.json)
+   by `scripts/reserve_retina_split.py` with its own salt
+   (`peykar-retina-holdout-v1:`): **54 development, 24 sealed test**.
+7. [Author overlap](author-overlap-1.0.0.json) (`scripts/link_study_authors.py`,
+   at least two shared Europe PMC author names) found 8 pairs. Three development
+   clusters leave training together in leave-one-study-out, and three sealed
+   studies have linked development studies removed from their training set.
 
-No thickness value of these articles had been read by the model developer when this
-file, the rule, the tranche order and the extraction protocol were committed.
+Reviewer notes kept for extraction: `ret-pmc6079526` is a corrigendum reproducing a
+corrected table (its original article was not in tranche 1); several admits need
+the statistic (mean or median), the time origin or the group definition checked in
+the full text, and are excluded at extraction if they fail protocol 1.0.0.
+
+Records use schema `eye.retina-thickness-record-1.0.0`
+(`peykar.validation.eye_retina_data`) and are built from cell-citing specs by
+`scripts/build_retina_record.py`. Sealed studies are extracted by separate
+custodians and stay private until the evaluation protocol is frozen.
+
+No thickness value of these articles had been read by the model developer when the
+rule, the tranche order, the extraction protocol, the triage and the split were
+committed.
