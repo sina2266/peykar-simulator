@@ -1,0 +1,66 @@
+{
+ "schema": "cornea.population-split-reservation-1.0.0",
+ "utc": "2026-10-28T04:55:12.609288+00:00",
+ "rule": "sha256(SALT + lower(doi)) first 8 hex digits mod 3 == 0 -> sealed_test",
+ "salt": "peykar-cornea-population-holdout-v1:",
+ "consumed_development_dois": [
+  "10.1155/2021/4668056",
+  "10.1371/journal.pone.0188154",
+  "10.3390/ijms20071655"
+ ],
+ "triage_file": "experiments/data/cornea-wound-population-2026-10-27/triage-1.1.0.json",
+ "triage_sha256": "727c74dca68c5035b9e7856fa360fbeedcc0fe6c5b7789260f0a25ee2357fd35",
+ "outcome_values_read_before_reservation": false,
+ "studies": [
+  {
+   "study_key": "pje-bluelight-rat-antioxidants-2023",
+   "doi": "10.3390/antiox12061171",
+   "split": "development"
+  },
+  {
+   "study_key": "epo-rabbit-alkali-jovr-2023",
+   "doi": "10.18502/jovr.v18i3.13772",
+   "split": "development"
+  },
+  {
+   "study_key": "insulin-cxl-human-medicina-2025",
+   "doi": "10.3390/medicina61122101",
+   "split": "development"
+  },
+  {
+   "study_key": "iprf-cxl-human-arq-bras-oftalmol-2025",
+   "doi": "10.5935/0004-2749.2024-0326",
+   "split": "sealed_test"
+  },
+  {
+   "study_key": "propolis-rat-alkali-bmc-cam-2013",
+   "doi": "10.1186/1472-6882-13-337",
+   "split": "development"
+  },
+  {
+   "study_key": "aloe-vera-rabbit-alkali-jovr-2020",
+   "doi": "10.18502/jovr.v15i1.5932",
+   "split": "development"
+  },
+  {
+   "study_key": "fl2-mouse-alkali-tvst-2021",
+   "doi": "10.1167/tvst.10.1.17",
+   "split": "development"
+  },
+  {
+   "study_key": "nicergoline-diabetic-rat-bmc-ophthalmol-2021",
+   "doi": "10.1186/s12886-021-01835-4",
+   "split": "development"
+  },
+  {
+   "study_key": "pje-upm-rat-antioxidants-2021",
+   "doi": "10.3390/antiox10111717",
+   "split": "development"
+  },
+  {
+   "study_key": "tprk-human-bmc-ophthalmol-2022",
+   "doi": "10.1186/s12886-022-02293-2",
+   "split": "development"
+  }
+ ]
+}

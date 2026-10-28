@@ -128,7 +128,10 @@ def _receipt(url: str, status: int, path: Path, body: bytes) -> dict[str, Any]:
     }
 
 
-def _screen(pmcid: str, body: bytes) -> dict[str, Any]:
+FIGURE_TERMS = r"fluorescein|wound|defect|re-?epitheliali"
+
+
+def _screen(pmcid: str, body: bytes, figure_terms: str = FIGURE_TERMS) -> dict[str, Any]:
     text = body.decode("utf-8", "replace")
     if "<!ENTITY" in text.upper():
         return {"pmcid": pmcid, "parse_error": "entity declarations are not parsed"}
@@ -165,7 +168,7 @@ def _screen(pmcid: str, body: bytes) -> dict[str, Any]:
     wound_figures = []
     for figure in root.iter("fig"):
         caption = _text(figure.find("caption"))
-        if re.search(r"fluorescein|wound|defect|re-?epitheliali", caption, re.I) and re.search(
+        if re.search(figure_terms, caption, re.I) and re.search(
             r"\b(\d+|0)\s?h\b|hour|day", caption, re.I
         ):
             wound_figures.append({"label": _text(figure.find("label")), "caption": caption[:300]})
@@ -203,7 +206,16 @@ def _screen(pmcid: str, body: bytes) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--limit", type=int, default=2000)
+    parser.add_argument("--limit", type=int, default=10000)
+    parser.add_argument("--queries", type=Path, help="JSON object {name: Europe PMC query}")
+    parser.add_argument(
+        "--exclude-screen",
+        type=Path,
+        action="append",
+        default=[],
+        help="Earlier screen.json whose PMCIDs are skipped (already screened)",
+    )
+    parser.add_argument("--figure-terms", default=FIGURE_TERMS)
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument(
         "--reuse-fulltext",
@@ -219,7 +231,11 @@ def main(argv: list[str] | None = None) -> int:
     (raw / "fulltext").mkdir(parents=True, exist_ok=True)
     receipts: list[dict[str, Any]] = []
     union: dict[str, dict[str, Any]] = {}
-    for name, query in QUERIES.items():
+    queries = json.loads(args.queries.read_text()) if args.queries else QUERIES
+    already: set[str] = set()
+    for earlier in args.exclude_screen:
+        already |= {row["pmcid"] for row in json.loads(earlier.read_text())}
+    for name, query in queries.items():
         for item in _search(query, receipts, raw, name):
             pmcid = item.get("pmcid")
             if pmcid:
@@ -242,7 +258,10 @@ def main(argv: list[str] | None = None) -> int:
         return pmcid, _receipt(url, status, path, body), body if status == 200 else b""
 
     screened = []
-    ordered = sorted(union)[: args.limit]
+    candidates = sorted(set(union) - already)
+    if len(candidates) > args.limit:
+        parser.error(f"{len(candidates)} PMCIDs exceed --limit {args.limit}; raise it explicitly")
+    ordered = candidates
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         results = {}
         for index, (pmcid, receipt, body) in enumerate(pool.map(fetch, ordered)):
@@ -252,7 +271,11 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"{index}/{len(ordered)} {pmcid}", flush=True)
     for pmcid in ordered:
         body = results[pmcid]
-        row = _screen(pmcid, body) if body else {"pmcid": pmcid, "http": "unavailable"}
+        row = (
+            _screen(pmcid, body, args.figure_terms)
+            if body
+            else {"pmcid": pmcid, "http": "unavailable"}
+        )
         row["queries"] = union[pmcid]["queries"]
         row["pub_year"] = union[pmcid].get("pubYear")
         screened.append(row)
@@ -260,8 +283,11 @@ def main(argv: list[str] | None = None) -> int:
     (args.output / "screen.json").write_text(json.dumps(screened, indent=1) + "\n")
     summary = {
         "utc": datetime.now(UTC).isoformat(),
-        "queries": QUERIES,
+        "queries": queries,
         "union_pmcids": len(union),
+        "skipped_already_screened": len(set(union) & already),
+        "excluded_screens": [str(path) for path in args.exclude_screen],
+        "figure_terms": args.figure_terms,
         "screened": len(screened),
         "with_data_like_supplements": sum(1 for r in screened if r.get("data_like_supplements")),
         "scope": "Metadata/full-text screening only; no supplementary data or outcomes read.",

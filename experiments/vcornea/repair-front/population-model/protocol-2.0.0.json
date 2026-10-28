@@ -1,0 +1,139 @@
+{
+ "schema": "cornea.population-sealed-protocol-2.0.0",
+ "frozen_utc": "2026-10-28T05:48:48.551312+00:00",
+ "status": "frozen before any sealed outcome value was read by the model developer",
+ "context_of_use": [
+  "U1 initial-state-only prediction of a new study's control-group mean projected fluorescein wound-area fraction, from species/injury context and initial wound diameter",
+  "U2 causal next-observation forecasting of each animal/eye/group (own prefix, and cohort prefixes at the same origin hour) for control and treated groups"
+ ],
+ "not_claimed": [
+  "biological mechanism validation",
+  "treatment-effect prediction",
+  "cellular/chemical vCornea validation",
+  "clinical use",
+  "contexts with no training study except through the declared all-context fallback"
+ ],
+ "model": {
+  "id": "cornea.population-radius-lag-tail",
+  "version": "2.0.0",
+  "kinematics": "after lag L: dr/dt = -v r/(r + r_c); r = r_c W((r0/r_c) exp((r0 - v(t-L))/r_c)); r_c = 0 recovers 1.0.0; area = (r/r0)^2",
+  "tail_radius_um": "one r_c per species/injury context (and one pooled) chosen from {0,100,200,300,500,800} by flat-prior grid marginal likelihood of all training series (controls and treated), using 1.0.0 study-noise centres",
+  "unchanged_from_1_0_0": "grid, observation/noise model and censoring below 125 um, hierarchy, penalties, Student-t df 4, fallback SD x2, cohort assimilation",
+  "development_changes_before_freeze": [
+   "closure tail added after the consumed 1.0.0 sealed test: all 31 interval misses were residual defects above the upper bound near closure",
+   "an equal-weight forecast ensemble (cohort/population + analog kNN) was tested on development data and not adopted"
+  ]
+ },
+ "methods": {
+  "primary_U2": "cohort_assimilation (model 2.0.0)",
+  "secondary_U2": [
+   "population_assimilation_t4",
+   "population_assimilation",
+   "radius_lag_flat_prior",
+   "analog_knn (k=5, shifts +/-12 h)",
+   "last_two_radius_trend",
+   "first_to_current_trend",
+   "crosson1986_fixed",
+   "persistence",
+   "version 1.0.0 trained on the same data (reference)"
+  ],
+  "primary_U1": "population_initial_state (cohort mean of n animals)",
+  "secondary_U1": [
+   "crosson1986_fixed",
+   "pooled_training_curve",
+   "version 1.0.0"
+  ]
+ },
+ "training": "all 16 development studies: consumed rabbit 2017/2019/2021, development 1.0.0 (DIO mouse, ketamine rat), consumed 1.0.0 sealed (Zeb1, LSC), development 1.1.0 (9 studies: rabbit/rat alkali, rat debridement/cautery, human PRK and CXL); controls fit the population, all series give noise, tail and analog-library inputs",
+ "development_result_reference": "experiments/vcornea/repair-front/population-model/development-loso-2026-10-28/development-analysis.json",
+ "sealed_test": {
+  "studies": [
+   "il10-c-mast-cell-rep-2026",
+   "iprf-cxl-human-arq-bras-oftalmol-2025"
+  ],
+  "reserved_by": [
+   "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.1.0.json (iprf-cxl-human-arq-bras-oftalmol-2025)",
+   "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.0.0.json (il10-c-mast-cell-rep-2026: excluded under extraction protocol 1.0.0 before any evaluation; re-examined by the custodian under 1.1.1, whose definitional baseline admits percent-of-T0 values)"
+  ],
+  "still_excluded": {
+   "norepinephrine-commun-biol-2025": "no time labels on the assigned sheet; other sheets have no measured 0 h and an undefined percentage denominator"
+  },
+  "custodian": "separate sub-agent extracted sealed records and reported only structure and hashes",
+  "notes": [
+   "IL-10 authors state an outcome-dependent inclusion threshold (wounds healing at least 15% by 19 h); deposited rows were not filtered by the extractor",
+   "iprf has only group means, so cohort assimilation cannot be scored on it"
+  ]
+ },
+ "criteria": {
+  "per_series_U2": "RMSE<=5 pp AND max<=10 pp AND RMSE at least 0.5 pp below persistence",
+  "per_group_U1": "RMSE<=5 pp AND max<=10 pp",
+  "H1_calibration": "pooled cohort_assimilation (2.0.0) coverage: 90% interval within [0.80,0.97] AND 80% interval within [0.70,0.90]",
+  "H2_accuracy": "pooled RMSE of cohort_assimilation (2.0.0) lower than last_two_radius_trend over targets where both exist",
+  "H3_version": "reported: 2.0.0 versus 1.0.0 cohort_assimilation pooled RMSE, pass counts and calibration on the same targets",
+  "H4_initial_state": "reported per control group with the per-group criterion",
+  "all_points": "every sealed series/target is scored; none removed; thresholds unchanged after unsealing"
+ },
+ "frozen_files_sha256": {
+  "packages/platform/src/peykar/model_learning/corneal_population.py": "bc715dc20ee835cc79ac2222332b5ce4843d444c4a045c2bff2b803cf6d79bf5",
+  "packages/platform/src/peykar/model_learning/corneal_analog.py": "93d9b941f34620fb1ca93a9d35b58d04e97358082940e3ce1338eb753ad2bdd8",
+  "packages/platform/src/peykar/model_learning/corneal_online.py": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+  "packages/platform/src/peykar/validation/cornea_population_evaluation.py": "06efe53c73305027249e8abb40c594ec05b6aad3fffdb60f4a5d0034663c58c1",
+  "packages/platform/src/peykar/validation/cornea_population_data.py": "9bf0b53efa3fd7881b07d6b6b84c8d29ba29e6b8a0fc4165c378a2118ec55cde",
+  "packages/platform/src/peykar/validation/cornea_population_sources.py": "e058031feb38c7c0ebdc6928ca40bd0379d6f8f4ca8cb3cfec330f85ba2b4b39",
+  "packages/platform/src/peykar/validation/cornea_online_evidence.py": "76caa030a3cfba3f576060b7d20387964d8c60403b8b812b408435f4816456e9",
+  "packages/platform/src/peykar/validation/cornea_evidence.py": "0e5e5801dcf096d46921d54f17f7e9c43ecad9ba1d314ecf8553b201e92306fa",
+  "packages/platform/src/peykar/validation/cornea_forecast_evidence.py": "e6b93301026d94b1d16a0386d5b8643ae288f87b58b5b6a010225aa2844f41d8",
+  "packages/platform/src/peykar/data_fabric/spreadsheet.py": "b7dac93ef04f09551c3af47f149d079a5c768564023b44cb0fffa8d195766efb",
+  "packages/platform/src/peykar/model_learning/corneal_population2.py": "95cda6055937f0cf05cf18eddc383bb8bacfca8c6099f055d469dd0a36394bac",
+  "packages/platform/src/peykar/validation/cornea_population_evaluation2.py": "504ffe55c68ff9d208e7baae25619333e89bbead7096743b884756e6e0f60df1",
+  "packages/platform/src/peykar/validation/cornea_table_records.py": "0b872e97e327173ffdaead38c519c926757cf4a22a0485a852c13a515b74cf34",
+  "scripts/evaluate_corneal_population2.py": "f06c3818a4453eb834e2c663ebb9868c8913e2c4b89ad0f4ae47f60258945853",
+  "scripts/publish_corneal_population2.py": "a6b73db767e01aee9e1af85f1a9fba52c98c28d0e998eea9e06a09ef1de40c3c",
+  "scripts/build_corneal_table_record.py": "c7e3f3293a385cf514180fbd98ff038d497baafc10f977ada0404f853740ab73",
+  "experiments/data/cornea-wound-population-2026-10-27/development/records/dio-mouse-plos-one-2020.json": "15e2704d7f388d858ed0aebc49e1eb90adbd96504abb2ec1acd1fe2ea33bf5c5",
+  "experiments/data/cornea-wound-population-2026-10-27/development/records/ketamine-rat-sci-rep-2022.json": "49f9ac86feed6764b71363ecd467fd1a9ee4d629546d8b01f5be710390b0ad41",
+  "experiments/data/cornea-wound-population-2026-10-27/triage-1.0.0.json": "bc9451a14ffd00273990ca7a68aa3a54119f4502b2dc4a5c03ce123cd9cdcdd7",
+  "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.0.0.json": "1223827b0557bb8aa8989ffd852767781d909d71424eac92e411d2036ecbb72e",
+  "experiments/data/cornea-wound-population-2026-10-27/triage-1.1.0.json": "727c74dca68c5035b9e7856fa360fbeedcc0fe6c5b7789260f0a25ee2357fd35",
+  "experiments/data/cornea-wound-population-2026-10-27/split-reservation-1.1.0.json": "356f8a9c6bc2c01b4e3c2e896114668ea9768d186f0d50bcaec26472728bc9be",
+  "experiments/data/cornea-wound-population-2026-10-27/triage-1.2.0.json": "1d048af0620a263e4b689fbdabb11e795c35b8bd79613ed5fd2fe5aafd629e1c",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/make_specs.py": "813b616bcbd4df8b5eac8c4fa30b4e6e6d0672a1460ae1450ea7917935d5671d",
+  "experiments/vcornea/repair-front/population-model/extraction-protocol-1.0.0.md": "b360042aa6aca273ffb9563da307285fb9d8ef3e0d48cabd269f0998a15b01c5",
+  "experiments/vcornea/repair-front/population-model/extraction-protocol-1.1.0.md": "b67c20febea752be494a8f1d123c61b7567010c7aa15cce6098432a1d1505c13",
+  "experiments/vcornea/repair-front/population-model/extraction-protocol-1.1.1.md": "dadcfad60b8dc61f3e5c360c1880623ffc6b6f2cbd3d69d03367ab43e9b45318",
+  "experiments/vcornea/repair-front/population-model/protocol-1.0.0.json": "de3c010ecce9cba4fe9684e9936f2a371e5c26b65d654379b9eccbd696766cce",
+  "experiments/data/cornea-evidence-20261024/raw/rabbit-figure2.xlsx": "f35f9f8e288477a7ed10054caed07f1a1fb88196e8c00e113c9884d8000a1763",
+  "experiments/vcornea/repair-front/conditioned-forecast/ijms2019-original.xml": "4c2d3b588f040797ecb5967504349e563eeb76fae9ec8fa890edbc05b76504db",
+  "experiments/vcornea/repair-front/chung2021-manuscript.xml": "4e4cf5f510d88ebc0c5692431c3f668e11e40b8434a62c13b4d3955c60822998",
+  ".peykar/cornea-sealed-test-2026-10-27/records/zeb1-commun-biol-2023.json": "a344a42429a213b736d670c3a1616a61071f86e0de480305e430c7bfa9b2c115",
+  ".peykar/cornea-sealed-test-2026-10-27/records/lsc-dedifferentiation-nat-commun-2026.json": "0830ae11140d3515e28e158b50bef0ed591730dcff08aa4d64acbccd54c09607",
+  ".peykar/cornea-population2-development-2026-10-28/report.json": "61bf793e0d983e74a72d3c096d98fa4bfd4743c08e788eec00b980ed38fc93d4",
+  ".peykar/cornea-sealed-test-2026-10-28/custody-report.json": "6dbbbe3e91a0746ee49c4d766d6fd701ffb71034d1b392d66f675d879d764289",
+  ".peykar/cornea-sealed-test-2026-10-28/custody-report-1.0.0-reexamination.json": "02c8bed7c8bb8ca28e8e8bf21c12598bb9e0234b255fde717e9c61e540d6a01b",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/aloe-vera-rabbit-alkali-jovr-2020.json": "849efd1d7c2f2b71fd3ecfcc104946b989335ca80781b4279f45ddb2cbd92c59",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/epo-rabbit-alkali-jovr-2023.json": "55381f33e6a2fcedebae846c9a593dadb0998bbe72ee1cd4914b1c34d7b0083e",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/fl2-rat-alkali-tvst-2021.json": "95d5ab9e400bfd7b7d10d5af8cc1a98685a589bf8b2808a9ac835a875696a0e0",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/insulin-cxl-human-medicina-2025.json": "1dcffeffd2b41ef6948af7712d4d3da923b2a2db008eece3772fc507a148d742",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/nicergoline-diabetic-rat-bmc-ophthalmol-2021.json": "a234bcd83b64774a74152a57ebd1cf4e98a0d183e1c866196cefb9288ba222e3",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/pje-bluelight-rat-antioxidants-2023.json": "e51d8d6fd3884a7617dfe64a9be555ec865aba7cfcfedba396da1e1a2464a43b",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/pje-upm-rat-antioxidants-2021.json": "614809f8d2b58745a4ebbcb180eef0b104bbd62186b27bb7bf87ee696bded1aa",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/propolis-rat-alkali-bmc-cam-2013.json": "1d0b627e9cebb7368b1f9cc6fab41214934b624e3a3e4b82fbabc77c9c63923f",
+  "experiments/data/cornea-wound-population-2026-10-27/development/specs-1.1.0/tprk-human-bmc-ophthalmol-2022.json": "b16f187449b85f1a5373998963da7e2a05dcb1d6eb1f6c7f2d65ee793a589122"
+ },
+ "development_records_1_1_0_sha256": {
+  "fl2-rat-alkali-tvst-2021.json": "331781fd5e3bf5f752484b3009366ba59a4d2eec717686b0d9da2b1e9a8ca05b",
+  "aloe-vera-rabbit-alkali-jovr-2020.json": "a134eaa5bc7081148bba418254aff3530315b4c7d4a315d82ec9e873c08a160b",
+  "epo-rabbit-alkali-jovr-2023.json": "21c6e90b1893a98bb1802717eb1d351b32bd737589f35d8e04c4d191e40b12a3",
+  "insulin-cxl-human-medicina-2025.json": "bd9b7e7d9e461c7f21a2cafca51283fb976060ce5423db4479bb510210715144",
+  "nicergoline-diabetic-rat-bmc-ophthalmol-2021.json": "5fae1fca0ad7f89bbdd15cf837df621cc0fbd21062b6b9eb2323cef30e5e4842",
+  "pje-bluelight-rat-antioxidants-2023.json": "9760e3d494397ad602221f8bce0522aeec7a9414b7529c62821dea5cb35e8f25",
+  "pje-upm-rat-antioxidants-2021.json": "713bcacf81cb16b0bcb610efcb4b8c141bf514ed981098105d79e3566edc3e57",
+  "propolis-rat-alkali-bmc-cam-2013.json": "9de5adcaf6ca1a6ee52fb6f64ca5269bb457e4101ec7fb2c0f7ef2792d64f9e8",
+  "tprk-human-bmc-ophthalmol-2022.json": "cfb968ab3fe1143504b565b1b10b13513adfb60f9111d3eb6e94016a29b010ad"
+ },
+ "sealed_records_sha256": {
+  "il10-c-mast-cell-rep-2026.json": "a153b1bb08dbff6ba044a571b157cd419d656f71ba39bf5c7ebc56aaedc318f8",
+  "iprf-cxl-human-arq-bras-oftalmol-2025.json": "3ca59a817ee0f943f0a4b9ea1127cd1c8b4a5dcadec97a4db899364ce6c823d4"
+ },
+ "operator": "uv run --frozen python scripts/evaluate_corneal_population2.py --sealed --protocol experiments/vcornea/repair-front/population-model/protocol-2.0.0.json --output <new dir>"
+}

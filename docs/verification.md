@@ -1,5 +1,49 @@
 # Verification record
 
+## Corneal dataset 1.1.0, closure-tail model 2.0.0 and protocol freeze: 2026-10-28
+
+- Start state: main at `39f4c134` (= origin) with uncommitted v2 model/harness and
+  screen-script options; no scientific process running.
+- `scripts/screen_corneal_wound_literature.py --queries round2/queries.json
+  --exclude-screen <round 1>`: 2,015 new full texts; supplement acquisition of 167
+  candidates (78 with data members, 11 archives unavailable). Round 3
+  (`round3/queries.json`, two excluded screens): 772 new full texts, 5 supplement
+  candidates. No supplement study was admissible.
+- `scripts/screen_corneal_tables.py`: 3,996 full texts → 143 articles/162 masked
+  tables; round 3: 768 → 31/35. Masked display `scripts/show_masked_previews.py`
+  additionally hides decimals, ±, % and equations in labels. One key-points box
+  (non-wound outcome count) displayed an n/N fraction before n/N masking was added;
+  recorded in triage.
+- Triage 1.1.0 (310 entries) admitted 10 table studies; `reserve_corneal_population_split.py`
+  wrote `split-reservation-1.1.0.json` (9 development, 1 sealed). Triage 1.2.0 (36
+  entries) admitted none.
+- Development records: 9 specs built and validated by `scripts/build_corneal_table_record.py`;
+  the first build loop stopped on `Hour-0 value must normalize to one` (PJE tables),
+  which led to extraction protocol 1.1.1 (written after those development values
+  were read) and a clean rebuild of all nine. Eight public source XMLs copied and
+  hash-checked against their specs.
+- Custodian sub-agents: i-PRF sealed record (2 group means) and re-examination of
+  the two excluded 1.0.0 sealed studies (IL-10 admitted with 55 per-mouse series
+  under the definitional baseline; norepinephrine still excluded). Reports contain
+  structure and hashes only.
+- `pytest tests/unit/test_corneal_population2.py` **8 passed** (32.4 s);
+  `pytest tests/unit/test_cornea_table_records.py` first failed on a malformed
+  synthetic XML in the test itself, then **3 passed**.
+- `scripts/evaluate_corneal_population2.py --development`: exit 0, 542.9 s, 16
+  studies/147 series/462 targets, both versions. Model 2.0.0 cohort pooled RMSE
+  9.23 pp (1.0.0: 10.27), cohort coverage 82.9%/90.8% (1.0.0: 79.9%/86.7%).
+  Public metrics in `development-loso-2026-10-28/` (no-derivative sources reduced to
+  metrics and verified free of observed values).
+- First `make check-docker` stopped at `ruff format --check` (two files reformatted
+  by the editor); log `.peykar/cornea-population2-check-docker-20261028.log`. After
+  `ruff format`, `make check-docker` **exit 0: 794 Python tests passed in 72.79 s**,
+  87% coverage, strict mypy 119 files, 18 frontend tests, contracts and all builds.
+  Log `.peykar/cornea-population2-check-docker-20261028-attempt2.log`.
+- `protocol-2.0.0.json` written exclusively, SHA
+  `68ef4771bf31eef0afd3983f61c04c257e47eac1c878138dfa707607b6cd83ae`; the 2.0.0
+  operator's `check_protocol` reports no problem, and the 1.0.0 operator's check
+  still reports no changed file.
+
 ## Cross-study corneal population model and sealed test: 2026-10-27
 
 - Start state: main clean at `1a285045c32f80eb2c5e6400afd1cec31129cc7a` (= origin);

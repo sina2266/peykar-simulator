@@ -63,6 +63,65 @@ saline/PBS or sham, including prophylactic antibiotic-only care. Steroid/NSAID
 care (so all 2019 groups), drugs, genotype changes, diet/disease and bacterial
 colonization are `treated`. See `peykar.validation.cornea_population_sources`.
 
+## Release 1.1.0 (2026-10-28): article tables, more species and injuries
+
+Supplementary spreadsheets were nearly exhausted after round 1, so two more
+outcome-blind rounds were run:
+
+1. **Round 2** (`screening/round2/queries.json`): broad wound-area terms and
+   human surgical closure terms, supplements only. 2,015 new full texts, 167
+   candidates, 78 with spreadsheet members — none admissible (mostly skin
+   wounds, omics or in vitro).
+2. **Article-body tables** (`scripts/screen_corneal_tables.py`): every table of
+   all 3,996 full texts whose caption/header mentions wound area or closure and a
+   time unit was written as a masked preview (data cells hidden).
+3. **Round 3** (`screening/round3/queries.json`): title/abstract queries without
+   a supplement filter, 772 new full texts; no admission.
+
+[Triage 1.1.0](triage-1.1.0.json) (rounds 2 and table route, 310 entries) admitted
+10 studies; [triage 1.2.0](triage-1.2.0.json) (round 3, 36 entries) admitted
+none. The [1.1.0 split](split-reservation-1.1.0.json) uses the same salted hash
+rule as 1.0.0 and reserved one of the ten for the sealed test.
+
+| Study | Context | Split | Notes |
+|---|---|---|---|
+| [Propolis rat 2013](development/records-1.1.0/propolis-rat-alkali-bmc-cam-2013.json) | rat, 1 mm silver-nitrate cautery (`other`) | development | vehicle vs propolis, means, CC BY 2.0 |
+| [Aloe vera rabbit 2020](development/records-1.1.0/aloe-vera-rabbit-alkali-jovr-2020.json) | rabbit alkali burn, 6 mm | development | saline control, steroid therapy, aloe |
+| [EPO rabbit 2023](development/records-1.1.0/epo-rabbit-alkali-jovr-2023.json) | rabbit alkali burn, 8 mm | development | saline control vs erythropoietin, 60 days |
+| FL2 rat 2021 | rat alkali burn, whole cornea (5 mm **assumed**) | development | CC BY-NC-ND: record private; triage key says "mouse", Methods say rats |
+| [PJE blue-light rat 2023](development/records-1.1.0/pje-bluelight-rat-antioxidants-2023.json) | rat debridement (4 mm **assumed**) | development | normal control vs blue light + extract |
+| [PJE particulate rat 2021](development/records-1.1.0/pje-upm-rat-antioxidants-2021.json) | rat debridement, 4 mm | development | normal control vs particulate matter + extract |
+| [Nicergoline diabetic rat 2021](development/records-1.1.0/nicergoline-diabetic-rat-bmc-ophthalmol-2021.json) | rat debridement, 3 mm | development | all diabetic, so all treated |
+| [tPRK human 2022](development/records-1.1.0/tprk-human-bmc-ophthalmol-2022.json) | human PRK (`keratectomy`) | development | four standard-care technique groups, 33–39 eyes each |
+| [Insulin CXL human 2025](development/records-1.1.0/insulin-cxl-human-medicina-2025.json) | human epithelium-off CXL (`other`), 8.5 mm | development | standard care vs insulin, 4 patients each |
+| i-PRF CXL human 2025 | human CXL, 8 mm | **sealed test** | custodian record, private until unsealed |
+
+Records are built from **cell-citing specs** in `development/specs-1.1.0/`
+(`table-id!R<row>C<col>` of the article's JATS XML, copied byte-for-byte under
+`development/raw/`) by `scripts/build_corneal_table_record.py`. The rules are
+[extraction protocol 1.1.0](../../vcornea/repair-front/population-model/extraction-protocol-1.1.0.md)
+(tables, group means only, definitional baseline for values defined relative to
+the initial defect, human standard-care controls) and its amendment
+[1.1.1](../../vcornea/repair-front/population-model/extraction-protocol-1.1.1.md),
+written **after** the two PJE tables failed validation: their "healed %" has a
+measured non-zero hour 0, so they are stored as `100 − healed` and normalized by
+their own hour 0. The human control rule differs from the animal one on purpose
+(patients always get standard post-operative steroid/antibiotic care); human
+records stay in the `human` context.
+
+Under the new definitional-baseline rule the custodian also re-examined the two
+1.0.0 sealed studies that had been excluded before any evaluation. The IL-10
+mouse study (per-mouse % of each mouse's own T0 area, 55 series) became
+admissible and joins the 1.1.0 sealed test; the norepinephrine study stays
+excluded (no time labels on the assigned sheet; other sheets have an undefined
+percentage denominator and no 0 h). An earlier repository check of the nicotine
+alkali study (Dryad `mk4r5`) found only neovascular length and qPCR, so it is not
+a wound-area source.
+
+Known disclosures: while reading Methods of development studies before the
+round-3 decisions, the developer saw day-1/day-2 values of the insulin-CXL
+development study, and later the PJE tables; no sealed value was read.
+
 ## Legacy `.xls` files
 
 Some supplements are BIFF `.xls`. They are converted offline by the separately

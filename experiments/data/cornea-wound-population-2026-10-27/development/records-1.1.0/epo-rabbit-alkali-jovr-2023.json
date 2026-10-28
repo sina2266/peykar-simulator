@@ -1,0 +1,128 @@
+{
+ "schema": "cornea.wound-study-record-1.0.0",
+ "study_id": "epo-rabbit-alkali-jovr-2023",
+ "doi": "10.18502/jovr.v18i3.13772",
+ "pmcid": "PMC11082528",
+ "title": "Risk of Induction of Corneal Neovascularization with Topical Erythropoietin",
+ "context": "rabbit",
+ "split": "development",
+ "license": {
+  "statement": "Creative Commons Attribution License (article statement)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11082528.xml",
+   "sha256": "39fec92eaf35f18b2eaf8dc3e9223c10416a34aa417f6a15801c30859a40103b",
+   "bytes": 62544,
+   "origin": "Europe PMC fullTextXML for PMC11082528"
+  }
+ ],
+ "species": "New Zealand albino rabbits, male, 12-18 months",
+ "wound": {
+  "diameter_mm": 8.0,
+  "diameter_basis": "stated: 8 mm filter paper disc",
+  "basement_membrane": "unknown",
+  "method": "8 mm filter paper soaked 10 s in 1 M NaOH, applied 60 s, PBS irrigation",
+  "injury_family": "alkali_burn"
+ },
+ "extraction_protocol": "extraction-protocol-1.1.1",
+ "groups": [
+  {
+   "group": "saline",
+   "role": "control",
+   "n_reported": 5,
+   "description": "normal saline every 8 h; ciprofloxacin until re-epithelialization"
+  },
+  {
+   "group": "erythropoietin",
+   "role": "treated",
+   "n_reported": 5,
+   "description": "topical erythropoietin 3000 IU/mL every 8 h; ciprofloxacin"
+  }
+ ],
+ "series": [
+  {
+   "series_id": "erythropoietin/mean",
+   "group": "erythropoietin",
+   "kind": "group_mean",
+   "n": 5,
+   "value_kind": "area_absolute",
+   "hours": [
+    0.0,
+    72.0,
+    168.0,
+    336.0,
+    720.0,
+    1440.0
+   ],
+   "baseline_observed": true,
+   "notes": "mean ± SD, mm2",
+   "values": [
+    135.1,
+    73.0,
+    43.3,
+    15.4,
+    10.2,
+    2.1
+   ],
+   "source_cells": [
+    "PMC11082528.xml::T1!R4C2",
+    "PMC11082528.xml::T1!R5C2",
+    "PMC11082528.xml::T1!R6C2",
+    "PMC11082528.xml::T1!R7C2",
+    "PMC11082528.xml::T1!R8C2",
+    "PMC11082528.xml::T1!R9C2"
+   ],
+   "source_cell_texts": [
+    "135.1 ± 20.3",
+    "73.0 ± 13.4",
+    "43.3 ± 14.2",
+    "15.4 ± 20.2",
+    "10.2 ± 20.6",
+    "2.1 ± 4.7"
+   ]
+  },
+  {
+   "series_id": "saline/mean",
+   "group": "saline",
+   "kind": "group_mean",
+   "n": 5,
+   "value_kind": "area_absolute",
+   "hours": [
+    0.0,
+    72.0,
+    168.0,
+    336.0,
+    720.0,
+    1440.0
+   ],
+   "baseline_observed": true,
+   "notes": "mean ± SD, mm2",
+   "values": [
+    106.9,
+    61.9,
+    33.3,
+    24.1,
+    16.7,
+    4.1
+   ],
+   "source_cells": [
+    "PMC11082528.xml::T1!R4C3",
+    "PMC11082528.xml::T1!R5C3",
+    "PMC11082528.xml::T1!R6C3",
+    "PMC11082528.xml::T1!R7C3",
+    "PMC11082528.xml::T1!R8C3",
+    "PMC11082528.xml::T1!R9C3"
+   ],
+   "source_cell_texts": [
+    "106.9 ± 21.4",
+    "61.9 ± 16.1",
+    "33.3 ± 28.7",
+    "24.1 ± 31.8",
+    "16.7 ± 20.7",
+    "4.1 ± 5.2"
+   ]
+  }
+ ]
+}

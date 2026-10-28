@@ -99,3 +99,51 @@ uv run --frozen python scripts/evaluate_corneal_population.py --sealed \
 
 The operator refuses to run if any pinned hash changed. A second run of an
 unchanged sealed set is a replay, not a new test.
+
+## Model 2.0.0: closure tail (frozen 2026-10-28, protocol 2.0.0)
+
+**Why.** Every one of the 31 interval misses of the 1.0.0 sealed test was a
+residual defect larger than the upper bound near closure: a constant-speed front
+closes too abruptly. Model 2.0.0 lets the front slow down when the defect is
+small, `dr/dt = −v·r/(r + r_c)` after the lag (`r_c = 0` is model 1.0.0). The
+closed form uses the Lambert W function. One tail radius `r_c` per
+species/injury context is chosen from {0, 100, 200, 300, 500, 800} µm by the
+training series' marginal likelihood; everything else is unchanged
+(`peykar.model_learning.corneal_population2`,
+`peykar.validation.cornea_population_evaluation2`,
+`scripts/evaluate_corneal_population2.py`).
+
+**More data.** Dataset release 1.1.0 adds article-table studies (rabbit and rat
+alkali burns, rat debridement under environmental insults, diabetic rats, human
+PRK and epithelium-off cross-linking): 16 development studies and 147 series in
+total. See the [dataset README](../../../data/cornea-wound-population-2026-10-27/README.md).
+
+**Development result** (leave one study out, all 16 studies; development
+reference only, [analysis](development-loso-2026-10-28/development-analysis.json),
+[tables](development-loso-2026-10-28/tables.md)):
+
+| | Model 2.0.0 | Model 1.0.0 (same data) |
+|---|---|---|
+| Cohort assimilation, pooled RMSE (293 targets) | **9.23 pp** | 10.27 pp |
+| Cohort 80% / 90% interval coverage | **82.9% / 90.8%** | 79.9% / 86.7% |
+| Zeb1 mice (consumed 1.0.0 sealed study) cohort coverage 80/90% | **84% / 84%** | 62% / 69% |
+| Series passing 5/10 pp (cohort) | 57/104 | 62/104 |
+| Nearest-trajectory forecaster, pooled RMSE (462 targets) | 9.87 pp | 9.87 pp |
+
+- The tail mainly fixes calibration; accuracy gains are small, and the
+  nearest-trajectory forecaster stays as accurate overall.
+- Initial-state prediction (U1) still fails outside mouse debridement: rabbit
+  groups 20–55 pp RMSE, rat and human groups 8–33 pp (the human, rat alkali and
+  cautery contexts only through the all-context fallback). Only the Zeb1 and
+  LSC mouse groups pass.
+- The radius–lag kinematics cannot fit alkali-burn curves even in-sample (0/13
+  series of three alkali studies within 5/10 pp). Alkali burns need a different
+  model; they are not covered by this one.
+
+**Sealed test 2.0.0.** Two studies no developer has read: the IL-10 mouse study
+(55 per-mouse series; excluded in 1.0.0 because its deposit lacks the T0 row,
+admitted under extraction protocol 1.1.1 by the custodian) and the i-PRF human
+cross-linking study (two group means). Frozen hypotheses:
+[protocol-2.0.0.json](protocol-2.0.0.json) — H1 cohort calibration (90% interval
+in [0.80, 0.97] and 80% in [0.70, 0.90]), H2 cohort RMSE below the last-two
+trend, H3 2.0.0 versus 1.0.0, H4 initial state per control group.
