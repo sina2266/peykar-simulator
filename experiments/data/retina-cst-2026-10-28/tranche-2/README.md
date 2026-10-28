@@ -34,3 +34,27 @@ While checking the mechanical rule's printed output on 2026-10-28, the developer
 the masked previews (titles, captions and row labels; every data cell hidden) of
 three tranche-2 articles: PMC10025720, PMC10051192 and PMC10054468. No value of any
 tranche-2 article has been seen.
+
+## Triage outcome (2026-10-28)
+
+**Triage.** The unchanged chunk script rebuilt the three tranche-1 chunks byte for
+byte, then built the tranche-2 chunks (no decimal, ± or other data value outside
+identifier lines). Three reviewer sub-agents followed
+`.peykar/retina-tranche2-triage-brief.md` (the tranche-1 brief with tranche-2 paths)
+and saw masked previews only ([`triage-1.0.0.json`](triage-1.0.0.json)). There was no
+owner override. **85 admitted, 35 excluded.** The exclusions were medians only,
+model-adjusted estimates, changes without a baseline, one follow-up time,
+baseline-only or regression tables, outcome-defined groups, reviews and
+meta-analyses, out-of-scope surgery, and four articles without a DOI. One reviewer
+reported that a first-column label of PMC7592807 showed a thickness interval that the
+masking had missed; the article was excluded (medians layout), and the developer has
+not seen it.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 65 tranche-1 record studies as development (training of model 1.1) and all 85
+admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) found 30
+linked pairs: 11 tranche-2 studies lose linked training studies, 9 pairs link two
+tranche-2 studies, and 3 development clusters leave training together in
+leave-one-study-out.

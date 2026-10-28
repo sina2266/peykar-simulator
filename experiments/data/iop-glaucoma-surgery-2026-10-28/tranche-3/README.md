@@ -31,3 +31,27 @@ read for values by then.
 7. Tranches 4–5 (139 articles) stay untriaged and unread for later versions. The IOP
    medians that the developer saw earlier in one table (PMC11852638, a medians-only
    micro-shunt study) are in tranche 4.
+
+## Triage outcome (2026-10-28)
+
+**Triage.** `screening/triage_chunks.py --check-tranche-1` confirmed that the three
+tranche-1 chunks still rebuild byte for byte; the tranche-3 chunks contain no decimal,
+± or other data value outside identifier lines. Three reviewer sub-agents followed
+`.peykar/iop-tranche3-triage-brief.md` (the tranche-2 brief with tranche-3 paths) and
+saw masked previews only ([`triage-1.0.0.json`](triage-1.0.0.json)). They admitted 96
+articles and excluded 24. The owner applied the tranche-1 rule for percent-change
+tables to one exclusion whose reason states percent IOP change from baseline at every
+follow-up (PMC7127814); the custodian decides whether it is extractable. **97
+admitted, 23 excluded.** The exclusions were medians only, model estimates, reviews
+and meta-analyses, success counts, correlation or p-value tables, changes without a
+baseline, one follow-up time, keratoplasty and intravitreal injection (out of scope).
+One admit is a canine study.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 146 record studies of tranches 1 and 2 as development (training of model 1.2) and
+all 97 admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) found 72
+linked pairs: 25 tranche-3 studies lose linked training studies, 8 pairs link two
+tranche-3 studies, and 24 development clusters leave training together in
+leave-one-study-out.
