@@ -1,0 +1,1062 @@
+{
+ "schema": "eye.iop-triage-1.0.0",
+ "utc": "2026-10-28T12:27:25.908696+00:00",
+ "tranche": 2,
+ "basis": "Masked article-table previews only (data cells hidden; decimals, ±, %, n/N and equations hidden in labels), captions, footnotes and titles; no IOP value read.",
+ "chunks": "experiments/data/iop-glaucoma-surgery-2026-10-28/screening/triage_chunks.py --tranche 2 (3 chunks of 40, round-robin by rank)",
+ "tranche_order": "experiments/data/iop-glaucoma-surgery-2026-10-28/tranche-order-1.0.0.json",
+ "reviewers": "three sub-agents (T2-R1..R3) following .peykar/iop-tranche2-triage-brief.md (the tranche-1 brief with tranche-2 paths); owner overrides listed per entry",
+ "extraction_protocol": "experiments/data/iop-glaucoma-surgery-2026-10-28/extraction-protocol-1.0.0.md",
+ "studies": [
+  {
+   "pmcid": "PMC7229790",
+   "doi": "10.2147/OPTH.S253689",
+   "study_key": "iop-pmc7229790",
+   "fulltext_sha256": "e535e38a6fcd4da26b9af77df04b62a51cdbabba23abb88363c426e1fd2b72f4",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop, 1 wk, 1/3/6/12/24/36 mo, deep sclerectomy vs trabeculectomy (congenital glaucoma)",
+   "context_hint": "nonpenetrating,trabeculectomy"
+  },
+  {
+   "pmcid": "PMC8186654",
+   "doi": "10.4103/ijo.IJO_2462_20",
+   "study_key": "iop-pmc8186654",
+   "fulltext_sha256": "fa106040b9d115849e793e945d10ae0b5246e70678322f1258a7e5db97d74262",
+   "decision": "admit",
+   "reason": "owner override (tranche-1 rule): the masked table shows percent IOP change or reduction from baseline at follow-up times; percent_change is admissible without a reference value under protocol 1.0.0 (the custodian decides extractability)",
+   "reviewer_decision": "exclude",
+   "reviewer_reason": "Tab2: HealaFlow vs MMC trabeculectomy, IOP and % reduction from pre-op at day 1/week 1 to month 12, but no preoperative IOP row is shown (first row is labelled post-operative); change without baseline in the shown table"
+  },
+  {
+   "pmcid": "PMC9139499",
+   "doi": "10.3390/diagnostics12051143",
+   "study_key": null,
+   "fulltext_sha256": "56b7bad9f29d22069a2b868ff0a3f1327774005fa666109cd2d07fe5e141b68f",
+   "decision": "exclude",
+   "reason": "Tab2 IOP reported as median (IQR) only (micropulse TSCPC after keratoplasty)"
+  },
+  {
+   "pmcid": "PMC3038109",
+   "doi": "10.4103/0974-9233.51993",
+   "study_key": null,
+   "fulltext_sha256": "e615ea2924233a9df65deace0fe10b1a877423dad5d7a728b098377d11165736",
+   "decision": "exclude",
+   "reason": "Tab1 gives only counts of eyes per IOP range and success rates; no means or per-eye values"
+  },
+  {
+   "pmcid": "PMC12748536",
+   "doi": "10.1038/s41598-025-28423-6",
+   "study_key": "iop-pmc12748536",
+   "fulltext_sha256": "66a80fdabc1ebe2fb7d7fe6d4b60d8f656266f2f16631a2e7419ec6af0d29b97",
+   "decision": "admit",
+   "reason": "owner override (tranche-1 rule): the masked table shows percent IOP change or reduction from baseline at follow-up times; percent_change is admissible without a reference value under protocol 1.0.0 (the custodian decides extractability)",
+   "reviewer_decision": "exclude",
+   "reviewer_reason": "Tab3: MP-TSCPC IOP, change and % reduction from baseline at months 1/3/6, mean (CI), but no baseline IOP row in the shown table (change without baseline)"
+  },
+  {
+   "pmcid": "PMC13002015",
+   "doi": "10.4103/IJO.IJO_2176_25",
+   "study_key": "iop-pmc13002015",
+   "fulltext_sha256": "fcb707e17532b057947856759613a234306cd2e49afc6e9038811af1f8d882ed",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD baseline, week 1, months 1/3/6/12 (+last visit); GATT combined with IOL extraction and Yamane fixation",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC11152606",
+   "doi": "10.1016/j.ajoc.2024.102072",
+   "study_key": "iop-pmc11152606",
+   "fulltext_sha256": "1c930017d4fbf8872ccecec16a87f2628428f1873bc8460dd467beddeda1439d",
+   "decision": "admit",
+   "reason": "Tab3: IOP mean ± SD baseline, 1 wk, 1/3/6/12 mo after slow-coagulation TSCPC, total and phakic/pseudophakic",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC12802136",
+   "doi": "10.1186/s12886-025-04542-6",
+   "study_key": "iop-pmc12802136",
+   "fulltext_sha256": "328785283278f62259fb7a597b6c72d0c6d225bc4b4f144414a8c5e7bb4233c1",
+   "decision": "admit",
+   "reason": "Tab2: IOP preoperative and 1/3/6/12 months, phaco+goniotomy vs phaco+trabeculectomy in pseudoexfoliative glaucoma",
+   "context_hint": "angle_mims,trabeculectomy"
+  },
+  {
+   "pmcid": "PMC12010148",
+   "doi": "10.7759/cureus.80979",
+   "study_key": "iop-pmc12010148",
+   "fulltext_sha256": "d6ddfd087ab99aec8298fe3b81213d7f3da52bccc36f541014232a36f9f10a8a",
+   "decision": "admit",
+   "reason": "Tab3/Tab6: IOP mean±SD baseline and 1/3/6/12 months, phaco+iStent inject W vs phaco+microhook trabeculotomy (Tab6 propensity-matched)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC2664114",
+   "doi": "10.1590/S1807-59322008000400002",
+   "study_key": "iop-pmc2664114",
+   "fulltext_sha256": "7d0bbae0285ea90f99a97150920634397487267471e1e8b3ecdeb559ad356e63",
+   "decision": "admit",
+   "reason": "Tab1 Total row: IOP mean SD preop, 1 mo, 1 y, 2 y after trabeculectomy with MMC (childhood glaucoma); Success/Failure rows are outcome-selected and the final visit is untimed",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC8087560",
+   "doi": "10.1007/s10792-020-01459-5",
+   "study_key": "iop-pmc8087560",
+   "fulltext_sha256": "f31d34a63cae495755d52254a5abdeeb9afcae6c88d665414d4b0e56af3f4726",
+   "decision": "admit",
+   "reason": "Tab2: Goniowash with cataract surgery, pre-op and post-op IOP [mmHg] with N at 1 day/1/3/5 years for 'liberal' and 'conservative' sets; pre-op is given per time-point subset and the set definitions are not shown, so outcome selection must be checked at extraction",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC6939413",
+   "doi": "10.1155/2019/5134190",
+   "study_key": "iop-pmc6939413",
+   "fulltext_sha256": "a33153ba5217fbe1cb4075d3280c4a4743d4bd627ed50e4360628914e3fcd842",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP baseline, week 1, months 3 and 6, low-cost implant vs Baerveldt, paediatric",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC8842034",
+   "doi": "10.14744/bej.2019.94830",
+   "study_key": "iop-pmc8842034",
+   "fulltext_sha256": "1fab0a99b0656192a991d7cdb337880fd0105889febfc5164dc1bfdbcaca241b",
+   "decision": "admit",
+   "reason": "Tab3: IOP preop, 1 d, 1 wk, 1 mo after phaco, BSS- vs OVD-assisted IOL implantation (t-tests); the end-of-surgery row is not a follow-up",
+   "context_hint": "cataract"
+  },
+  {
+   "pmcid": "PMC6822852",
+   "doi": "10.1007/s12325-019-01025-1",
+   "study_key": "iop-pmc6822852",
+   "fulltext_sha256": "a4e3f1f7a5a3596bc5e7f3e38d42cd262b1750a19a12a8b024848135d79310a6",
+   "decision": "admit",
+   "reason": "Tab3: mean (SE) IOP with N at baseline, week 1, months 1/3/6/12 and change from baseline, phaco-KDB vs phaco-iStent (plus baseline-IOP subgroups)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC13087917",
+   "doi": "10.3389/fmed.2026.1828249",
+   "study_key": "iop-pmc13087917",
+   "fulltext_sha256": "cb90fbfbc291e5b327e9edcb37b0ae98ea1b858329180b674a5e3afa31945be3",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD preop and day 1 to month 24, standalone GATT in NTG",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC10843132",
+   "doi": "10.1371/journal.pone.0297514",
+   "study_key": "iop-pmc10843132",
+   "fulltext_sha256": "1bcde0a52dfd4f971f33adaac5c8869bc2c19063a6e1fce168aaf4ad86546ef0",
+   "decision": "admit",
+   "reason": "Tab2: IOP preop, 1 wk, 1/3/6/12 mo, iStent vs iStent inject W with phaco; summary statistic not labelled in the preview (Friedman/Wilcoxon tests in footnote)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12320469",
+   "doi": "10.18502/jovr.v20.15249",
+   "study_key": "iop-pmc12320469",
+   "fulltext_sha256": "d68f45fc57b53e536a584391d9ca8056554ff5f59ad11ee3537aeb6b52e7afca",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD at baseline, day 7, months 1/6 in two groups (with/without intraoperative trabeculo-Descemet microperforation) after phaco-deep sclerectomy",
+   "context_hint": "nonpenetrating"
+  },
+  {
+   "pmcid": "PMC11150400",
+   "doi": "10.1038/s41598-024-61811-y",
+   "study_key": "iop-pmc11150400",
+   "fulltext_sha256": "ae315005dd26dcb39b41985e3e5365f4579d06fe69f6bc7cf77f73a99a9bb054",
+   "decision": "admit",
+   "reason": "Tab2/Tab3: IOP n, mean±SD (and median) baseline, 6 and 12 months, PreserFlo vs iStent",
+   "context_hint": "subconjunctival_mims,angle_mims"
+  },
+  {
+   "pmcid": "PMC7513393",
+   "doi": "10.1177/0300060520957447",
+   "study_key": "iop-pmc7513393",
+   "fulltext_sha256": "29c3f17737fbe6ef7bc94bf7583ef5eb9b9ebe32d68d567113f7b73338354097",
+   "decision": "admit",
+   "reason": "Tab1: IOP mean and SD preop, 1 wk, 1/3/6 mo, 1/2 y after ab interno trabeculotomy with cataract surgery",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12013288",
+   "doi": "10.4103/IJO.IJO_2595_24",
+   "study_key": "iop-pmc12013288",
+   "fulltext_sha256": "252ff730236a1481c3d01db8679e21ec7120c57816a5070dc481e2d6ae62c988",
+   "decision": "admit",
+   "reason": "Tab2: IOP with N pre-op and 1/3/6/12 months, Baerveldt vs Paul implant; caption says the comparison is adjusted, but the pre-op row with a between-group P suggests observed group means (not confirmable from the preview)",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC3065574",
+   "doi": "10.2147/OPTH.S15025",
+   "study_key": "iop-pmc3065574",
+   "fulltext_sha256": "420767670a05473c9d28d1fd9fcd2f6552300f1e29fb7f256d30e6539a8e4a67",
+   "decision": "admit",
+   "reason": "Tab2 per-patient IOP preop and day 1 to month 12 (one later trabeculectomy, one lost to follow-up); Tab3 mean±SD; iStent in secondary glaucoma",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC8727312",
+   "doi": "10.1167/tvst.10.14.30",
+   "study_key": null,
+   "fulltext_sha256": "51ecd12ac101fae756e28af750e05b0a9db5f8408cc6c180217f5fa55fb47ead",
+   "decision": "exclude",
+   "reason": "postoperative IOP shown as mixed-model estimated marginal means ± SE per footnote (model estimates only)"
+  },
+  {
+   "pmcid": "PMC10856597",
+   "doi": "10.3390/jcm13030887",
+   "study_key": null,
+   "fulltext_sha256": "30cf62b47ab9b96712890108577ace9af44eeab7054a92582c7f3462a11f31d2",
+   "decision": "exclude",
+   "reason": "Tab2 IOP values are constrained linear mixed-model estimates with baseline adjustment (footnote *): model estimates only"
+  },
+  {
+   "pmcid": "PMC4352261",
+   "doi": "10.1186/s12886-015-0007-1",
+   "study_key": "iop-pmc4352261",
+   "fulltext_sha256": "f7bf641e784bfb329d7b491abfa3611802bd0c8bd035a10a407671ea1a657d77",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD baseline, 3 and 6 months, 1 and 2 years with N, trabeculectomy",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11678808",
+   "doi": "10.3390/jcm13247660",
+   "study_key": "iop-pmc11678808",
+   "fulltext_sha256": "e23472e97fda921107c668de838cbf1006066c07722e275c1bfe9996ec694362",
+   "decision": "admit",
+   "reason": "Tab2: IOP pre-op, 3/6/12 mo, 2/3/4 y with n, diabetic vs non-diabetic eyes after Schlemm canal MIGS (ANOVA; statistic not labelled)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC7327584",
+   "doi": "10.1155/2020/1251203",
+   "study_key": "iop-pmc7327584",
+   "fulltext_sha256": "8826d72f8332e5162b865afcdcf3ebd04331316e653ee7ed842e7bcee2bce5e1",
+   "decision": "admit",
+   "reason": "Tab3: single-group IOP at baseline and 1/3/6 months, 1/2 years with a difference row after a triple procedure for neovascular glaucoma with cataract; the procedure components are not shown in the preview",
+   "context_hint": "other"
+  },
+  {
+   "pmcid": "PMC9289452",
+   "doi": "10.2147/OPTH.S368634",
+   "study_key": "iop-pmc9289452",
+   "fulltext_sha256": "253e08cb428c854bdcf600e2994a522c002f3bf89ddfdfa3baca3316a574019b",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (SD) with n baseline and day 1 to month 24, Ahmed ClearPath",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC4745960",
+   "doi": "10.2147/OPTH.S94850",
+   "study_key": "iop-pmc4745960",
+   "fulltext_sha256": "4010c6651a968abf5c6b3c74b632e540c2354ae9abe26c1d24294b12a77b14d1",
+   "decision": "admit",
+   "reason": "Tab3: mean IOP and SD baseline, 1 d, 1 wk, 1/3/6/12 mo, trabeculectomy vs EX-PRESS shunt under a flap (extractor to confirm the EX-PRESS context)",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11414631",
+   "doi": "10.2147/OPTH.S473303",
+   "study_key": "iop-pmc11414631",
+   "fulltext_sha256": "8fc5bab03660dc9411a42f4d7a792f83b915efd0687d67f106c4a9da6b31b94d",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (SD) with N preop and months 1/3/6/12/24/36, KDB goniotomy vs XEN gel stent",
+   "context_hint": "angle_mims,subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC5726364",
+   "doi": "10.2147/OPTH.S143756",
+   "study_key": "iop-pmc5726364",
+   "fulltext_sha256": "be57baf72cdd04dd202ab1a1b50bea69af0dae93c3b12695e5fb50d8cefc8502",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD preop, 3, 6 and 12 months, combined phaco-canaloplasty",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC8770782",
+   "doi": "10.1007/s40123-021-00413-7",
+   "study_key": "iop-pmc8770782",
+   "fulltext_sha256": "5760d8be36329ca0e3b15ec999cafbcb6ff8b24e96a74af4d1fb2cdda59b9841",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop, 1 wk, 3/6/12/24/36 mo, CO2 laser-assisted deep sclerectomy vs trabeculectomy",
+   "context_hint": "nonpenetrating,trabeculectomy"
+  },
+  {
+   "pmcid": "PMC7585388",
+   "doi": "10.1167/tvst.9.11.23",
+   "study_key": "iop-pmc7585388",
+   "fulltext_sha256": "2eb9cd2b18f55fa2edf9eed473791833fa877f81f1fe2b84f92219409bce3b80",
+   "decision": "admit",
+   "reason": "Tab1: per-eye rabbit IOP pre-op and weeks 1-4 after modified trabeculectomy, injected vs sponge-applied MMC with BSS control eyes",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC13605410",
+   "doi": "10.3390/diagnostics16183049",
+   "study_key": "iop-pmc13605410",
+   "fulltext_sha256": "bf56ba391415a711d09a4fe8f4a6c065b7d35ccdeb49af780921253bd3ff24a8",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD preop, week 1, months 1/3/6 after GATT",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC10258919",
+   "doi": "10.1186/s12886-023-03000-5",
+   "study_key": "iop-pmc10258919",
+   "fulltext_sha256": "0de7aae9cb3736733a27ddb34a1c652d3c647195fea76c7376606c28a5f5a1e8",
+   "decision": "admit",
+   "reason": "Tab2: IOP baseline, 1/3/6/12/18/24/36 mo after standalone ab interno trabeculotomy, high-myopia vs non-high-myopia eyes (paired t-tests)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12533720",
+   "doi": "10.5005/jp-journals-10078-1490",
+   "study_key": "iop-pmc12533720",
+   "fulltext_sha256": "e2f336eaa0c049f3231f8f315fe4c7a0b7f45d44d3ef390357e9991359113f09",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preoperative and 1/6/12 months after XEN with primary trimming",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC9672752",
+   "doi": "10.4103/ijo.IJO_3071_21",
+   "study_key": null,
+   "fulltext_sha256": "b41289eae1123e7b4de67817259c4eda47a8b309a714d7031aa836317f1c0859",
+   "decision": "exclude",
+   "reason": "Tab2 shows postoperative times only (no preoperative IOP row); cases/controls defined by postoperative shallow anterior chamber after AGV (outcome-defined)"
+  },
+  {
+   "pmcid": "PMC9981320",
+   "doi": "10.1097/IJG.0000000000002137",
+   "study_key": "iop-pmc9981320",
+   "fulltext_sha256": "7ddd5afdac46a877a7d951bbe5ff59b915954a84c991d43a818e5ae4d4ff6dfe",
+   "decision": "admit",
+   "reason": "Tab1: mean IOP ± SD preop, 1 d, 1 wk, 1/3/6/9/12 mo after deep sclerectomy with Esnoper clip",
+   "context_hint": "nonpenetrating"
+  },
+  {
+   "pmcid": "PMC13615904",
+   "doi": "10.1007/s10384-026-01374-9",
+   "study_key": null,
+   "fulltext_sha256": "7e868c7270f9b15cc2f5017433eaaf6a89b90cdaec05a5e7f0f5b64d3cfef259",
+   "decision": "exclude",
+   "reason": "Tab2 shows estimated marginal means from a linear mixed-effects model only"
+  },
+  {
+   "pmcid": "PMC9959075",
+   "doi": "10.3390/jcm12041677",
+   "study_key": null,
+   "fulltext_sha256": "4610f3a4566e9ec069f50015de71ab4d9f4c579b8b6f8c35cd8d8d15c374dac5",
+   "decision": "exclude",
+   "reason": "Tab3 postoperative IOP and reduction from baseline only; no baseline IOP in shown table (change without baseline)"
+  },
+  {
+   "pmcid": "PMC12089333",
+   "doi": "10.1038/s41433-025-03707-3",
+   "study_key": "iop-pmc12089333",
+   "fulltext_sha256": "d6f9bbc7fde21fa972023d7b9f0b563ab5c97540254f879e9fde95c341e1ced4",
+   "decision": "admit",
+   "reason": "Tab2: observed mean (SD) IOP baseline and years 1-5 after PreserFlo; footnote says data were censored after additional glaucoma intervention (extractor to apply the outcome-selection rule)",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC7920213",
+   "doi": "10.7759/cureus.12950",
+   "study_key": null,
+   "fulltext_sha256": "e718d76bf5293e75f97abc17ef8cea540658c60e3872d0fdf5466101fa8aa56f",
+   "decision": "exclude",
+   "reason": "Tab2 follow-up means use eligible patients with repeat-glaucoma-surgery cases excluded (footnote *): outcome-selected analysis set"
+  },
+  {
+   "pmcid": "PMC8237193",
+   "doi": "10.1136/bjophthalmol-2020-315954",
+   "study_key": "iop-pmc8237193",
+   "fulltext_sha256": "2edfb6c6d6b1ca59b9e73f8472aa6b6c63d4491213dd1f0dcecc236f1c2fe41a",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (95% CI) preop and postop per visit, day 1 to month 24, all cases and GATT-only, PXG",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC2992926",
+   "doi": "10.4103/0301-4738.67068",
+   "study_key": "iop-pmc2992926",
+   "fulltext_sha256": "ed2b3d835802e531628e34edc6c96088185bceed4161eb247c0111de088b1041",
+   "decision": "admit",
+   "reason": "Tab1: per-eye IOP preop, 6 and 12 mo after pars plana Ahmed valve with vitrectomy in refractory glaucoma; cells also carry drug counts",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC13330093",
+   "doi": "10.1186/s12886-026-04884-9",
+   "study_key": "iop-pmc13330093",
+   "fulltext_sha256": "aa0b6592a4d76e14fd331bc4837cccc41b29cfa988b6356750183b6e8be2ba74",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preoperative and day 1 to 36 months, total/POAG/PXFG after KDB goniotomy with phaco",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC5932795",
+   "doi": "10.1186/s12886-018-0773-7",
+   "study_key": "iop-pmc5932795",
+   "fulltext_sha256": "7cc2fbe2daf1d888390ae6c20f02de4a5efdbdbd9fa3de75aa5de5ed8e81ed8a",
+   "decision": "admit",
+   "reason": "Tab1/Tab2: mean IOP preop to 36 months, viscocanalostomy and phaco-viscocanalostomy (Tab3 complicated-cases series is outcome-defined)",
+   "context_hint": "nonpenetrating"
+  },
+  {
+   "pmcid": "PMC11660675",
+   "doi": "10.1186/s12886-024-03798-8",
+   "study_key": "iop-pmc11660675",
+   "fulltext_sha256": "f648175d040e72f94a8dc0979cdeb5fb62afd64d89bddb2ec6ca9e934ce4731c",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop, 1 d, 1 wk, 1/2/3/6/12 mo, GATT vs trabeculectomy",
+   "context_hint": "angle_mims,trabeculectomy"
+  },
+  {
+   "pmcid": "PMC13475254",
+   "doi": "10.1136/bmjophth-2026-002987",
+   "study_key": "iop-pmc13475254",
+   "fulltext_sha256": "75e3b43b0aa58138c0dc579aa9bb3061112d987e3b72728d6fa38769ce432045",
+   "decision": "admit",
+   "reason": "Tab2: IOP with n pre and at three postoperative months (labels masked) after trabeculectomy",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC13678429",
+   "doi": "10.2147/OPTH.S625216",
+   "study_key": "iop-pmc13678429",
+   "fulltext_sha256": "55eff35ad54b11758ea6b2b25e74f5870105f81580c837512fc9bbed99ac84a9",
+   "decision": "admit",
+   "reason": "Tab2: IOP with n preop and day 1 to month 12, endoscopic CPC; footnote cites a linear mixed model, statistic of the IOP row not shown",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC7653954",
+   "doi": "10.1038/s41598-020-76551-y",
+   "study_key": "iop-pmc7653954",
+   "fulltext_sha256": "c82a87b2f5ecd7fe3737300ad83c1cdaf4f9c32b107f7c9ed88e8834d0dd5dad",
+   "decision": "admit",
+   "reason": "Tab2/Tab3: IOP mean ± SD pre, 2 d, 1/3/6/9/12 mo, trabeculectomy vs XEN, with XEN+phaco and XEN stand-alone subgroups",
+   "context_hint": "trabeculectomy,subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC2684434",
+   "doi": "10.4103/0301-4738.45502",
+   "study_key": "iop-pmc2684434",
+   "fulltext_sha256": "2f8bb6335969c44f94da1f6c69d39a3f866bdd7c6f12ddb33cc60f69fdec3ecb",
+   "decision": "admit",
+   "reason": "Tab3: IOP mean ± SD with number of eyes, preoperative and day 1 to month 21 after endoscopic cyclophotocoagulation",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC12897585",
+   "doi": "10.3390/jcm15031265",
+   "study_key": "iop-pmc12897585",
+   "fulltext_sha256": "5d1e4259bfc8ff73eafd10c4d27014df3101aea37a4f2fb56cde0bb16d079a21",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP baseline and months 1-24, overall/non-HM/HM, iStent inject W combined with cataract surgery",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC8764422",
+   "doi": "10.22336/rjo.2021.72",
+   "study_key": "iop-pmc8764422",
+   "fulltext_sha256": "362df32120d7a2fc34407ca927001d8819586f9ce3499afd589856401f3f1725",
+   "decision": "admit",
+   "reason": "Tab1: IOP mean ± SD (also median) preop, 1 d, 1 wk, 30 d, 3/6/9 mo after XEN following failed filtering surgery",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC13073034",
+   "doi": "10.3390/jcm15072570",
+   "study_key": "iop-pmc13073034",
+   "fulltext_sha256": "518055fa594e34a3586912b0e1cf3641f8baea9a9972ac7624f7911877431722",
+   "decision": "admit",
+   "reason": "Tab2: IOP pre-op and 1/3/6/12 months, EverPatch vs control glaucoma drainage device groups (ANOVA)",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC11758089",
+   "doi": "10.1038/s41598-025-87259-2",
+   "study_key": "iop-pmc11758089",
+   "fulltext_sha256": "71c0a4aef9e9582de4bf934db55e9bfe7bd4e130523fe97455586e0913646cfe",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD baseline and day 1 to month 6, PreserFlo with vs without intrastent",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC6707293",
+   "doi": "10.1038/s41433-019-0375-5",
+   "study_key": null,
+   "fulltext_sha256": "2497265a9f463333eac121d68bc47d7c9048e7f21dc8c6bb3860a5664dc584fe",
+   "decision": "exclude",
+   "reason": "only table shown is a regression of postoperative IOP (beta coefficients, p values)"
+  },
+  {
+   "pmcid": "PMC13533686",
+   "doi": "10.3389/fopht.2026.1910636",
+   "study_key": null,
+   "fulltext_sha256": "2e863938249e3a6704755c038d4daf989c485f8b4e7f68cb1fdcba33c6fa4a8a",
+   "decision": "exclude",
+   "reason": "Tab3 only mean IOP differences from baseline with CI; no baseline IOP value shown (change without baseline)"
+  },
+  {
+   "pmcid": "PMC11193400",
+   "doi": "10.2147/OPTH.S467894",
+   "study_key": "iop-pmc11193400",
+   "fulltext_sha256": "3600ae8c10b0618f1d81a330c536dc0f7dd90ded5e722282bf8f08dff3de7da3",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (SD) with n baseline and day 1 to month 36, Ahmed ClearPath",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC12903568",
+   "doi": "10.1186/s12886-026-04643-w",
+   "study_key": null,
+   "fulltext_sha256": "da9d53ef934a7f2b1431cb4bfd5f010a9a4b72306deff2cb359f44c5c2e55485",
+   "decision": "exclude",
+   "reason": "only delta IOP (preop to 24/48 mo) shown; no baseline IOP in the table"
+  },
+  {
+   "pmcid": "PMC8857613",
+   "doi": "10.1167/tvst.11.2.26",
+   "study_key": null,
+   "fulltext_sha256": "1cc8d2daa0f2a460b6cd2548b40c87db019ed42a45f17449c5e3933bcb673473",
+   "decision": "exclude",
+   "reason": "Tab2 IOP only by qualified/complete success yes/no groups: outcome-selected subgroups"
+  },
+  {
+   "pmcid": "PMC12533712",
+   "doi": "10.5005/jp-journals-10078-1491",
+   "study_key": "iop-pmc12533712",
+   "fulltext_sha256": "e24c9cea780a4d4f76937eb4784377a6c818b444d730fc81116965ef6c3aa558",
+   "decision": "admit",
+   "reason": "Table S1 (T5): mean IOP preop and day 1 to month 6, AGV with vs without sub-Tenon triamcinolone in NVG (Tab4 is change only)",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC6134405",
+   "doi": "10.2147/OPTH.S172400",
+   "study_key": "iop-pmc6134405",
+   "fulltext_sha256": "7924737fa7dcadb3d3df990fe233fa388ae0228823e07866da56801f21bb25b9",
+   "decision": "admit",
+   "reason": "Tab1 (characteristics, mean ± SD): pre-IOP and post-IOP at 1 and 2 y after trabeculectomy with Ex-PRESS, alone or with phaco",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11826650",
+   "doi": "10.5935/0004-2749.20200060",
+   "study_key": "iop-pmc11826650",
+   "fulltext_sha256": "304e6890529a0994f672bfe060acd3956f15728cd2c68843d850c7f7cd2e2590",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD at baseline and 1/3/6/12 months, Baerveldt vs trabeculectomy in primary congenital glaucoma",
+   "context_hint": "tube,trabeculectomy"
+  },
+  {
+   "pmcid": "PMC12452353",
+   "doi": "10.3390/vision9030073",
+   "study_key": "iop-pmc12452353",
+   "fulltext_sha256": "3c1a40d70c803aab9df744e5f26e8e2095e0f366611b685b140c77015033be26",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD preop, day 1 and day 7, phacoemulsification control vs acetazolamide",
+   "context_hint": "cataract"
+  },
+  {
+   "pmcid": "PMC10478966",
+   "doi": "10.2147/OPTH.S422132",
+   "study_key": "iop-pmc10478966",
+   "fulltext_sha256": "37f752ee228800c3026da8293ff7aaa15e9fb371551d84a5882909f5fd72f86f",
+   "decision": "admit",
+   "reason": "owner override (tranche-1 rule): the masked table shows percent IOP change or reduction from baseline at follow-up times; percent_change is admissible without a reference value under protocol 1.0.0 (the custodian decides extractability)",
+   "reviewer_decision": "exclude",
+   "reviewer_reason": "only mean percent IOP change from baseline; baseline IOP not in the table"
+  },
+  {
+   "pmcid": "PMC11829638",
+   "doi": "10.2147/OPTH.S504247",
+   "study_key": "iop-pmc11829638",
+   "fulltext_sha256": "a2cc9f8c1378156d713cac361e31ee4dbd2c9d634f2c8ca18f2979eb4d55bb16",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD with N at baseline and 12/24/36 months, all eyes plus preoperative subgroups, phaco with ab interno canaloplasty and trabecular bypass stent",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC11594855",
+   "doi": "10.3390/jcm13226774",
+   "study_key": null,
+   "fulltext_sha256": "7e3e95f03735d2ed329395f382781ca1a5b6a8a9dd859c04122dad8308ecc26e",
+   "decision": "exclude",
+   "reason": "systematic review/meta-analysis"
+  },
+  {
+   "pmcid": "PMC8910915",
+   "doi": "10.3390/jcm11051354",
+   "study_key": "iop-pmc8910915",
+   "fulltext_sha256": "6e1d5c3121848c3e32d3c1eed0723169f39ab8cc4c888f4860db4daff5030621",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop, 1/6/12/24/36 mo, total, POAG and exfoliation eyes after KDB with phaco",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC10676688",
+   "doi": "10.2147/OPTH.S436594",
+   "study_key": "iop-pmc10676688",
+   "fulltext_sha256": "0e8879eac61a45a0babf9f87e6ce29ff209bf9652fcaa2eeaf1b2da4b7ebd49c",
+   "decision": "admit",
+   "reason": "Tab2: IOP with number of eyes at baseline and months 6-48 (paired t-test) after ab interno trabeculotomy/goniotomy with phaco",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12644157",
+   "doi": "10.1007/s10792-025-03862-2",
+   "study_key": "iop-pmc12644157",
+   "fulltext_sha256": "30050caa83457161e68b85691560e173bb2568c8410d5bc3db19e7b0014eef84",
+   "decision": "admit",
+   "reason": "Tab3: IOP baseline, 2 weeks and 1 month in operated eyes after MP-TSCPC (statistic not shown)",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC6980562",
+   "doi": "10.1371/journal.pone.0227389",
+   "study_key": "iop-pmc6980562",
+   "fulltext_sha256": "c93da56d048400f3d46aede7d3e3a5d2a17af050b1a7ecc060f4714a3642e0b4",
+   "decision": "admit",
+   "reason": "Tab2 All patients: IOP mean (SD) baseline, D1, D8, M1, M3, M6 after ultrasound cyclocoagulation; Success/Failure columns are outcome-selected; M6 omits retreated eyes per footnote",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC8917025",
+   "doi": "10.1007/s10792-021-02039-x",
+   "study_key": null,
+   "fulltext_sha256": "ce0238d9ff4fa588a94ab13ec52fd9740128ecb5af129ab3d93eaf9a27ef88d6",
+   "decision": "exclude",
+   "reason": "Tab2 only delta IOP vs baseline (Wilcoxon) after SLT; no baseline IOP shown (change without baseline)"
+  },
+  {
+   "pmcid": "PMC9987149",
+   "doi": "10.1186/s12886-023-02830-7",
+   "study_key": "iop-pmc9987149",
+   "fulltext_sha256": "d5161afb18e76ebb176b9bcd12521de520c7e2c8b8cedc206533630509af76fe",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD with eye counts preop and months 1-24, GATT after failed incisional surgery",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC9453024",
+   "doi": "10.1155/2022/8011745",
+   "study_key": "iop-pmc9453024",
+   "fulltext_sha256": "a10b121a8a4121e76b68e8a853785e1a0baf1c83ae4f66fa662fe71ef4e354f6",
+   "decision": "admit",
+   "reason": "Tab2-4: IOP N and mean ± SD preop, day 1, 1/3/6 mo, 1 y after clear lensectomy with Hydrus; severity and angle-type subgroups",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC9533624",
+   "doi": "10.1186/s12886-022-02618-1",
+   "study_key": null,
+   "fulltext_sha256": "f6aa6a70e37e7d6e262ee15d6982debc706f9abbe3526393aad8ee9755fd647e",
+   "decision": "exclude",
+   "reason": "Tab1 preoperative visual acuity counts only; no IOP follow-up table (cataract outreach screening)"
+  },
+  {
+   "pmcid": "PMC8594178",
+   "doi": "10.1186/s12886-021-02159-z",
+   "study_key": "iop-pmc8594178",
+   "fulltext_sha256": "79f6efeaf2c0f594cd69cc0799ea44c8db401bde3127a0727c4b3364650b1ac7",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (95% CI) preop and postop per visit, GATT vs KDB goniotomy in JOAG",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC3280101",
+   "doi": "10.2147/OPTH.S27187",
+   "study_key": null,
+   "fulltext_sha256": "8f376ecde17d4984d72b0c1cff4f13c19c6f79d6624e845313b835c93c41d9b1",
+   "decision": "exclude",
+   "reason": "medians (IQR) of IOP reduction only, with no preoperative row"
+  },
+  {
+   "pmcid": "PMC12801984",
+   "doi": "10.1186/s12886-025-04458-1",
+   "study_key": "iop-pmc12801984",
+   "fulltext_sha256": "57e9bce97817d8fff8d72d21adcc3848c349e86b77d54985d1d7fd4d18c685e8",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD (also median/IQR) preoperative and 1/6 months after trabeculectomy",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11574313",
+   "doi": "10.1038/s41598-024-80093-y",
+   "study_key": null,
+   "fulltext_sha256": "94903455a8d901441dd19186ff1e7b8b8253408f3c4788e861cdb97420aaff34",
+   "decision": "exclude",
+   "reason": "Tab2 per-patient IOP only for eyes with hyphema, followed until hyphema resolved (postoperative-event-selected subset, days only)"
+  },
+  {
+   "pmcid": "PMC8899033",
+   "doi": "10.3389/fmed.2022.847660",
+   "study_key": null,
+   "fulltext_sha256": "dc72a3ead64a77848583f1ed7ff77b5151f723c6ecc3786ecd71707a59f20c17",
+   "decision": "exclude",
+   "reason": "out of scope: IOP course after vitreous surgery (pre-MIVS reference) in eyes with a prior filtering bleb; case report"
+  },
+  {
+   "pmcid": "PMC11989742",
+   "doi": "10.3390/jcm14072481",
+   "study_key": null,
+   "fulltext_sha256": "c196c01bf34bfaa049d60e1109abd84073baafce2bc352d3cbe6f347645d7946",
+   "decision": "exclude",
+   "reason": "Tab2 IOP values are linear mixed-model adjusted means ± SE (also adjusted for reoperation exclusion): model estimates only; caption points to raw data in a supplementary table that is not shown"
+  },
+  {
+   "pmcid": "PMC13428249",
+   "doi": "10.2147/OPTH.S555409",
+   "study_key": null,
+   "fulltext_sha256": "3c4fa042bc6b617e827dd7302413620c80d49be3e492826090849065e56cb4f6",
+   "decision": "exclude",
+   "reason": "Tab2 footnote: eyes excluded from calculations if they received additional laser or surgery (outcome-defined exclusion); SLT after anti-VEGF"
+  },
+  {
+   "pmcid": "PMC6133141",
+   "doi": "10.1007/s12325-018-0755-4",
+   "study_key": null,
+   "fulltext_sha256": "2e37827745c194a24016a6cd00ec2b0429c5ded3e6f3b575806c3766b79c3e9e",
+   "decision": "exclude",
+   "reason": "IOP shown as mixed-model least-squares means ± SE per footnote (model estimates only)"
+  },
+  {
+   "pmcid": "PMC13331293",
+   "doi": "10.4103/joco.joco_226_25",
+   "study_key": "iop-pmc13331293",
+   "fulltext_sha256": "e02501bcf57e4ecfe764c6af16095d5360e81fad2cc9c7399c45f5c88b51762b",
+   "decision": "admit",
+   "reason": "Tab3: mean IOP at baseline and 1/6/12/24/>=36 months, Trabectome+trabecular aspiration vs triple (with phaco) groups",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC7323794",
+   "doi": "10.2147/OPTH.S247595",
+   "study_key": "iop-pmc7323794",
+   "fulltext_sha256": "25a0abb9bb359043cade2eee7b81a54cfe52509a48c70a31f802a92f36e3840e",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean±SD preop, 1, 3, 6 and 12 months after CO2 laser-assisted deep sclerectomy",
+   "context_hint": "nonpenetrating"
+  },
+  {
+   "pmcid": "PMC8108397",
+   "doi": "10.2147/OPTH.S302684",
+   "study_key": "iop-pmc8108397",
+   "fulltext_sha256": "22aca54bd7627125524425fdba227897264b70b7562c4fb455e7e0a67c4d83a1",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP baseline, day 1/15, months 1/3/6/9/12/18/24, iStent vs iStent inject with cataract surgery (t-tests)",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC3691987",
+   "doi": "",
+   "study_key": null,
+   "fulltext_sha256": "651a705f323dff1252ec0987dec39e949ec7509b44953c80b676e6b22eae5a63",
+   "decision": "exclude",
+   "reason": "no DOI (doi field empty)"
+  },
+  {
+   "pmcid": "PMC10898054",
+   "doi": "10.1186/s12886-024-03351-7",
+   "study_key": "iop-pmc10898054",
+   "fulltext_sha256": "c8e3e66968d98379d199c1c915d9bef49c47576b5e7e1815bfe1431194feb6da",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean (95% CI) preop and postop per visit, week 1 to month 36, GATT in primary congenital glaucoma",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC7347710",
+   "doi": "10.1007/s10633-020-09753-4",
+   "study_key": "iop-pmc7347710",
+   "fulltext_sha256": "632a0ae64121c1d2a61fd3795b4d56572ccbd502b5e8997dc902abb0f03ec5fb",
+   "decision": "admit",
+   "reason": "Tab1: IOP n, mean, SD baseline, 1/3/6/9/12 mo after XEN in POAG (species tag lists pig; title indicates patients)",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC13416948",
+   "doi": "10.3389/fmed.2026.1883138",
+   "study_key": "iop-pmc13416948",
+   "fulltext_sha256": "3461022ce775633e99fc7ac5c34a26b8e42d7d3bf1c4ed7061023fadec280df3",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD at baseline and 1 week to 2 years after trabeculo-canalectomy (trabeculectomy variant) in ICE syndrome",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11569703",
+   "doi": "10.2147/OPTH.S488581",
+   "study_key": null,
+   "fulltext_sha256": "733c03f94f09b841062dcbb1cdeb390fd659155ce53b1d8219508ad506aabe59",
+   "decision": "exclude",
+   "reason": "Tab4 postoperative day 1 and day 7 IOP only; no preoperative IOP in shown table (phaco fluidics study)"
+  },
+  {
+   "pmcid": "PMC7537843",
+   "doi": "10.2147/OPTH.S272298",
+   "study_key": "iop-pmc7537843",
+   "fulltext_sha256": "f26866dfae51fc5377427a7b1a0d5bc185d55a9dca856d68e16b03e5d7205152",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD (also median) baseline, day 1/7, months 1/3/6/12 after GATT with phaco",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC3245191",
+   "doi": "10.2147/OPTH.S25611",
+   "study_key": "iop-pmc3245191",
+   "fulltext_sha256": "b1bf8658ca10fccab0855269f3e957d6b7d71075b865a90e96de6804c04c8839",
+   "decision": "admit",
+   "reason": "Tab3: IOP mean (SD) preoperative and 2 weeks to 2 years, trabeculectomy with double vs single low-dose MMC",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC7804433",
+   "doi": "10.1038/s41598-020-80736-w",
+   "study_key": "iop-pmc7804433",
+   "fulltext_sha256": "b0cc316585d5cf8f72c849d36a7f4a6aaa78da96f821e810848a7e102d325176",
+   "decision": "admit",
+   "reason": "Tab1: IOP mean±SD preop, 1 week and 3 months, steroid vs non-steroid after cataract surgery + microhook trabeculotomy",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC3367146",
+   "doi": "10.1136/bmjopen-2011-000578",
+   "study_key": "iop-pmc3367146",
+   "fulltext_sha256": "375c6ed8b0236485e2b940a24fd1b0111e79b2932b0ffd6d1bcbecafae7cbb1e",
+   "decision": "admit",
+   "reason": "Tab1: mean IOP with CI and n, pre, 1 d, 1 wk, 1/3/6/12/18/24 mo after phaco-ECP",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC11616415",
+   "doi": "10.2147/OPTH.S487384",
+   "study_key": "iop-pmc11616415",
+   "fulltext_sha256": "e9db5c26012e5a2638274f3582a1d2a40c25815be78391217350a7e5350b72a5",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD (n) preop and months 1/6/12/24/36 after ab interno canaloplasty in post-keratoplasty eyes",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC3613091",
+   "doi": "10.1155/2013/784709",
+   "study_key": "iop-pmc3613091",
+   "fulltext_sha256": "49f3326bdc952bd85b877581cb3316cc5fd8796ce55fc6ee2e09fd9860cc5475",
+   "decision": "admit",
+   "reason": "Tab2: IOP with eye counts baseline, week 1, months 1/3/6/12, glaucoma drainage device with KeraSys patch graft",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC4637500",
+   "doi": "10.1155/2015/795357",
+   "study_key": "iop-pmc4637500",
+   "fulltext_sha256": "6154ce35eb68c52ec6ac5db9c6d9c5f313896261c6fda627eb44ed8d14b39d61",
+   "decision": "admit",
+   "reason": "Tab1: mean IOP (SD) baseline, 12 and 48 mo (plus washout values), iStent with phaco vs phaco alone; species not tagged",
+   "context_hint": "angle_mims,cataract"
+  },
+  {
+   "pmcid": "PMC10024434",
+   "doi": "10.1186/s12886-023-02860-1",
+   "study_key": "iop-pmc10024434",
+   "fulltext_sha256": "35c30a29e592c2272d7ffa1d438f906b76ffd1e6a9a2517cc43f1128eb787d0d",
+   "decision": "admit",
+   "reason": "Tab2: Total-column IOP at baseline and months 1/3/6/9 onward after trabeculectomy; the with/without choroidal detachment subgroups are postoperative-outcome groups",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC5504928",
+   "doi": "10.1155/2017/2965725",
+   "study_key": null,
+   "fulltext_sha256": "a5d9c2bce68b4cae131bd468d4710d027a7c12515d3e9bc405e22316c4d716d3",
+   "decision": "exclude",
+   "reason": "systematic review/meta-analysis"
+  },
+  {
+   "pmcid": "PMC11418913",
+   "doi": "10.2147/OPTH.S476076",
+   "study_key": "iop-pmc11418913",
+   "fulltext_sha256": "69b44cfcac156e12f7fa48ceca6fdf1f9ab9c0fec01ab03667cc45d819e1e36e",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP (SE) with eyes n, preop, day 1, week 1, months 1/3/6 after dual-blade goniotomy with cataract surgery",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC9081969",
+   "doi": "10.3389/fmed.2022.883435",
+   "study_key": "iop-pmc9081969",
+   "fulltext_sha256": "60fd55a222d4953df51d484b142ff781db8c2105c94c4aacf9649984f0478f33",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD (n) pre-AGV and 1 day to 6 months after pars plana Ahmed valve",
+   "context_hint": "tube"
+  },
+  {
+   "pmcid": "PMC9859240",
+   "doi": "10.3390/ijerph20021365",
+   "study_key": "iop-pmc9859240",
+   "fulltext_sha256": "e2aab3e2a15bb743fc4131872cb53a38ac8f38547e4bb068dc7dd833131a2925",
+   "decision": "admit",
+   "reason": "Tab4: IOP baseline, 3 and 6 months, phaco-canaloplasty vs phaco-iStent; footnote mentions median difference, group statistic not shown",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC5747341",
+   "doi": "10.12688/f1000research.12904.2",
+   "study_key": null,
+   "fulltext_sha256": "dbd676665791396674fb4183844ae67b07441ff8a90d37992d84567bfdc33bf6",
+   "decision": "exclude",
+   "reason": "IOP shown only for success vs no-success groups (outcome-selected); no all-eyes series"
+  },
+  {
+   "pmcid": "PMC6896923",
+   "doi": "10.2147/OPTH.S226554",
+   "study_key": null,
+   "fulltext_sha256": "8fbb8ffcb8604959eb0555e84d7e767aae7f3f8498ef75c5e9d2849d98536aae",
+   "decision": "exclude",
+   "reason": "Tab5 IOP medians (min-max) only"
+  },
+  {
+   "pmcid": "PMC9135266",
+   "doi": "10.1371/journal.pone.0268623",
+   "study_key": "iop-pmc9135266",
+   "fulltext_sha256": "f089f73bb2d8dca4881ecf99933b7620a9b6866ce8128b1c853515ef9d51d985",
+   "decision": "admit",
+   "reason": "Tab2: IOP baseline, 6/12/18/24 months, MMC trabeculectomy with vs without sub-Tenon triamcinolone",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC8846995",
+   "doi": "10.1155/2022/8566044",
+   "study_key": "iop-pmc8846995",
+   "fulltext_sha256": "7ffe22d0a18533c603e2fceff1dc5577e091554fdee64be2ed1bce5beb3a3b51",
+   "decision": "admit",
+   "reason": "Tab2: IOP baseline, 1 d, 1 wk, 1/3/6/9/12 mo, continuous-wave TSCPC vs MicroPulse TLT; statistic not labelled in the preview",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC10661243",
+   "doi": "10.3390/vision7040071",
+   "study_key": "iop-pmc10661243",
+   "fulltext_sha256": "a5bf441eb376e839e730e4449f83767a1f19987e1bfafcf26d4b00e27c717414",
+   "decision": "admit",
+   "reason": "Tab2: per-eye IOP preoperative and day 1 to month 12 after XEN implantation (air and visco technique)",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC3392916",
+   "doi": "10.2147/OPTH.S32282",
+   "study_key": null,
+   "fulltext_sha256": "008244a7627fbf03a5c484441c55b7a2afab0a7c5758a1592c33ae4b94ee9ced",
+   "decision": "exclude",
+   "reason": "Tab2 change from baseline IOP only; no baseline IOP row (change without baseline)"
+  },
+  {
+   "pmcid": "PMC10149466",
+   "doi": "10.1007/s10792-022-02563-4",
+   "study_key": null,
+   "fulltext_sha256": "9e08a3c7b17aeeac2991eadd6f609a7e286665c9bfd9a66ad92baff624511633",
+   "decision": "exclude",
+   "reason": "only categorical proportions of eyes below IOP thresholds; no mean IOP table in the preview"
+  },
+  {
+   "pmcid": "PMC12882872",
+   "doi": "10.1007/s40123-025-01266-0",
+   "study_key": "iop-pmc12882872",
+   "fulltext_sha256": "b4db59943a53f7dbfdb35bb1dfcc934f8193e1cab51c78e83b2d4479721ef1ad",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP retreatment-pre and retreatment months 1/3 for groups defined by response to the first micropulse CPC (a pre-retreatment condition); the first-treatment series are outcome-defined and must be excluded",
+   "context_hint": "cyclodestruction"
+  },
+  {
+   "pmcid": "PMC10648008",
+   "doi": "10.3390/jcm12216740",
+   "study_key": null,
+   "fulltext_sha256": "bf831a66e8eef35e042c5a75dca7d590d202c12da3675998ff0c8b79bd20782f",
+   "decision": "exclude",
+   "reason": "Tab1 baseline IOP only (follow-up rows are medications); groups defined by postoperative bleb morphology"
+  },
+  {
+   "pmcid": "PMC6333157",
+   "doi": "10.2147/OPTH.S189260",
+   "study_key": null,
+   "fulltext_sha256": "8ca24aa1d22bb2f2c0cc6db97bade2d68955ce19cc8a9733e83245395a7f410c",
+   "decision": "exclude",
+   "reason": "success proportions only"
+  },
+  {
+   "pmcid": "PMC9826637",
+   "doi": "10.2147/OPTH.S396330",
+   "study_key": null,
+   "fulltext_sha256": "cfdeaf3649abbe1d12ffeb8f66bf4e1414d50cbd30ab59f40a6396c05e2a8907",
+   "decision": "exclude",
+   "reason": "Tab2 only preoperative and day 180 IOP: single follow-up time"
+  },
+  {
+   "pmcid": "PMC13536621",
+   "doi": "10.1186/s12886-026-05000-7",
+   "study_key": null,
+   "fulltext_sha256": "a5bd570788d968148bb88767742bff07199ab3345d4c8d2d89fed00073924f01",
+   "decision": "exclude",
+   "reason": "shown Tab3 has medications and pain scores only, no IOP rows; IOP table not in preview"
+  },
+  {
+   "pmcid": "PMC10640541",
+   "doi": "10.1007/s40123-023-00819-5",
+   "study_key": "iop-pmc10640541",
+   "fulltext_sha256": "08df774a95d90ffda6c4c7fd04a1466970ce6fbc132082ec6153e007b893fc77",
+   "decision": "admit",
+   "reason": "Tab2/Tab4: IOP n and mean ± SD preop, 3/6/12 mo, iStent inject vs Hydrus with phaco, with and without ab interno canaloplasty",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC11482709",
+   "doi": "10.1371/journal.pone.0312236",
+   "study_key": "iop-pmc11482709",
+   "fulltext_sha256": "1702db98c844d76d1a2cfb0c995d97fba14a567a2b0389717cfcd6749d30e158",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD (n) at baseline and 180/360 days/3 years after ab externo canaloplasty",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12965071",
+   "doi": "10.7150/ijms.125193",
+   "study_key": "iop-pmc12965071",
+   "fulltext_sha256": "b6c34bec3aa3361932e633b2dcbb404320f678ab0a00cac08471493df0b98c70",
+   "decision": "admit",
+   "reason": "Tab3: IOP mean±SD baseline and 1/3/6/9 months (+last visit), phaco-trabeculectomy vs phaco-KDB in PACG",
+   "context_hint": "trabeculectomy,angle_mims"
+  },
+  {
+   "pmcid": "PMC8057832",
+   "doi": "10.2147/OPTH.S272506",
+   "study_key": "iop-pmc8057832",
+   "fulltext_sha256": "9a34f06000de9b3555fbfffaaebf797197fc72e16f52f7dbcc38ebe29de2d0a3",
+   "decision": "admit",
+   "reason": "Tab2: mean IOP ± SD preop, 12 and 24 mo after ab interno canaloplasty, mild/moderate vs severe",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC11952685",
+   "doi": "10.1097/IJG.0000000000002527",
+   "study_key": "iop-pmc11952685",
+   "fulltext_sha256": "fb6166adc372dfabc18ec7d7e23ee0922460869207fa5c396ecd1db053d8274f",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD before and 1/3 months after trabeculectomy",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC11856118",
+   "doi": "10.4103/joco.joco_245_23",
+   "study_key": null,
+   "fulltext_sha256": "26789e7ff1f9d7157785492d37e2623a5c29dc57883f2ef4679cfda984623ee9",
+   "decision": "exclude",
+   "reason": "Tab6 subgroups defined by postoperative choroidal detachment management (choroidal tap vs medical), outcome-defined"
+  }
+ ]
+}
