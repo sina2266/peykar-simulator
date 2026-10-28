@@ -74,8 +74,7 @@ def times(text: str) -> set[str]:
 
 def labels(table: dict) -> tuple[str, list[str]]:
     heads = [r.split(":", 1)[1] for r in table["rows"] if r.startswith("head")]
-    firsts = [r.split(":", 1)[1].split(" | ")[0]
-              for r in table["rows"] if r.startswith("body")]
+    firsts = [r.split(":", 1)[1].split(" | ")[0] for r in table["rows"] if r.startswith("body")]
     return " ".join(heads), firsts
 
 
@@ -104,8 +103,7 @@ def main() -> None:
     for preview, tables in hits:
         title = strict(preview.get("title", ""))[:150]
         print(f"=== {preview['pmcid']} doi={preview.get('doi')} | {title}")
-        print(
-            f"    species={preview.get('species')} licence={str(preview.get('license'))[:60]}")
+        print(f"    species={preview.get('species')} licence={str(preview.get('license'))[:60]}")
         for table in tables[:3]:
             caption = strict(table.get("caption", ""))[:200]
             print(f"  [{table['id']}] {strict(table.get('label', ''))} {caption}")

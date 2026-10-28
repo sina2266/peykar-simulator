@@ -62,8 +62,7 @@ def main(argv: list[str] | None = None) -> int:
     }
     with args.output.open("x", encoding="utf-8") as handle:
         handle.write(json.dumps(output, indent=1) + "\n")
-    print(len(flagged), "flagged;", sum(
-        1 for a in flagged if a["tranche"] == 1), "in tranche 1")
+    print(len(flagged), "flagged;", sum(1 for a in flagged if a["tranche"] == 1), "in tranche 1")
     return 0
 
 
