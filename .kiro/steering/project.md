@@ -1,5 +1,38 @@
 # Peykar continuation context
 
+## Retinal-thickness model 1.0.0 and its sealed test, 2026-10-28
+
+- Fifth eye component, chosen by data availability. Dataset
+  experiments/data/retina-cst-2026-10-28: 3,128 screened OA papers; 395 passed the
+  masked-table rule; salted tranches (`peykar-retina-tranche-v1:`, size 120); tranche
+  1 triaged blind (78 admitted); **tranches 2–4 (275 articles) stay unread** for the
+  next version. Split salt `peykar-retina-holdout-v1:`: 54 development, 24 sealed.
+  46 development records (26 CC BY public, 20 private in
+  `.peykar/retina-development-private`) and 19 sealed records (private,
+  `.peykar/retina-sealed-2026-10-28`, custody reports C1–C3). Schema
+  `eye.retina-thickness-record-1.0.0`; `thickness_number` skips a leading Δ sign.
+- New GENERIC model `peykar.model_learning.eye_recovery_population` (IOP 1.1 law
+  and hierarchy with a `RecoveryConfig`; equals `iop_population_1_1` to 1e-9 on
+  synthetic data) and harness `peykar.validation.eye_recovery_evaluation`. Reuse
+  them for later components instead of copying. Options: grouping
+  `("treatment", "context")`, Ornstein–Uhlenbeck deviations
+  (`deviation_fraction`, `deviation_months`, `deviation_in_population_fit`).
+- Retina configurations: `retina_thickness_population.DEVELOPMENT_CANDIDATES`
+  (never change a declared candidate). Adopted r3: 14-day transient, covariate
+  ln(CST0/300 µm), deviations 0.8 / 12 months in forecasting only. Rejected by the
+  declared rule: r1 (treatment grouping, initial state +0.07 pp) and r2d
+  (fit-coupled deviations, +0.36 pp).
+- Protocol experiments/eye/retina/model-1.0/protocol-1.0.0.json, SHA 64b0ad17…,
+  freeze commit `d40b6ed2`. Sealed run once (146.6 s), r0 scored as reference. All
+  five hypotheses passed on 40 group means: next observation 5.75 vs persistence
+  6.34 and r0 6.14; coverage 0.816/0.918; landmark 7.50 vs 9.50; initial state
+  11.35 vs 17.09. Anti-VEGF 1.1–3.7 pp; gain only before month 3; single
+  dexamethasone implant wear-off rebound missed (15–30 pp); 5/40 meet every
+  per-series criterion. Pre-freeze make check-docker: 870 tests, 89% coverage, mypy
+  134 files.
+- Tool quirk: an identical execute_bash command string can return a stale earlier
+  result; vary the command text when re-running a check.
+
 ## IOP model 1.1 and its tranche-2 sealed test, 2026-10-28
 
 - Tranche 2 (ranks 120–239) was reserved for the 1.1 test BEFORE triage

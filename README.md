@@ -178,6 +178,31 @@ passed on 113 human group-mean series:
 The gain is confined to the first postoperative month. Early and long-horizon
 intervals were too narrow, and 58/113 group means were within 5/10 pp
 ([Persian results](experiments/eye/iop/model-1.1/results.fa.md)).
+The fifth eye component is
+[central retinal thickness after treatment](experiments/eye/retina/README.md): the
+OCT thickness of the macula after anti-VEGF injections, steroid implants or
+injections, laser, photodynamic therapy or vitrectomy for macular edema, neovascular
+AMD and related conditions. It is built from an
+[outcome-blind dataset](experiments/data/retina-cst-2026-10-28/README.md) of 3,128
+screened open-access papers (tranche 1 of 120 used, 275 papers unread). There are 46
+development and 19 custodian-extracted sealed records. Its model is the generic
+[eye recovery population model](packages/platform/src/peykar/model_learning/eye_recovery_population.py),
+the IOP 1.1 law and hierarchy written once for every component (it reproduces IOP
+1.1 to 1e-9). Development showed that a series stays above or below the smooth law
+for months, so **model 1.0.0** adds persistent (Ornstein–Uhlenbeck) deviations that
+forecasts carry forward. It was frozen and pushed (`d40b6ed2`) before a one-shot
+sealed test. All five declared hypotheses passed on 40 group-mean series:
+
+- next-follow-up forecasts 5.75 pp versus 6.34 for persistence and 6.14 for the same
+  model without deviations;
+- intervals inside both windows (81.6%/91.8%);
+- landmark forecasts 7.50 versus 9.50 pp;
+- initial state 11.35 versus 17.09 pp for the pooled curve.
+
+Anti-VEGF series were forecast within 1.1–3.7 pp. The gain is in the first three
+months. The rebound after a single dexamethasone implant wears off is missed, and
+only 5/40 group means met every per-series criterion
+([Persian results](experiments/eye/retina/model-1.0/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

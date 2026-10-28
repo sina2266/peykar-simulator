@@ -1,5 +1,60 @@
 # Verification record
 
+## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
+
+Commands run from the repository root; outcomes observed.
+
+- `uv run --frozen python scripts/screen_corneal_wound_literature.py --queries
+  experiments/data/retina-cst-2026-10-28/screening/queries.json --output
+  .peykar/retina-literature-screen-2026-10-28 --workers 6`: 3,128 articles screened,
+  3,124 full texts (four HTTP 500: PMC11238598, PMC11764373, PMC8005793, PMC8898177).
+- `scripts/screen_corneal_tables.py` with a central-thickness topic, time and
+  retinal-treatment context pattern: 1,638 articles and 2,548 tables flagged, masked.
+- `screening/triage_rule.py`: 395 articles qualify; `screening/tranche_order.py`:
+  tranches of 120/120/120/35 (6 without DOI). Commit `176c82d1` before triage.
+- Three triage sub-agents on masked chunks (`screening/triage_chunks.py`): 78 admit,
+  42 exclude; `scripts/reserve_retina_split.py`: 54 development, 24 sealed test;
+  `scripts/link_study_authors.py`: 8 pairs, 3 development clusters, 3 sealed training
+  exclusions. Commit `421e88cf`, pushed.
+- Seven extraction sub-agents: 45 development records and 19 sealed records first;
+  after the change-sign fix in `thickness_number`, `.peykar/rebuild_retina_records.py`
+  rebuilt all 64 records byte-identical (sealed by SHA-256 only), and the 46th
+  development record was built. Commit `e7475e44`.
+- `tests/unit/test_eye_recovery_population.py` (7 tests, including the IOP 1.1
+  equivalence to 1e-9 and the exact joint-Gaussian check of the deviation forecast)
+  and `tests/unit/test_eye_recovery_evaluation.py` (2 tests): pass.
+- `uv run --frozen python scripts/evaluate_retina_population.py --development
+  --candidate <r0|r1|r2a|r2b|r2c|r2d|r3> --output .peykar/retina-dev-<c>-2026-10-28`:
+  seven LOSO runs over 46 studies (r0 160.8 s). Group-mean next observation /
+  landmark / initial state (pp): r0 8.76/10.35/13.89, r1 8.65/10.05/13.96, r2d
+  8.20/10.11/14.25, r3 8.23/10.31/13.89; persistence 8.67/13.20. r3 adopted by the
+  declared rule.
+- `make check-docker` before the freeze: 870 tests passed in 141.88 s, 89% coverage,
+  mypy 134 source files, 18 frontend tests, package builds; EXIT=0
+  (`.peykar/retina-freeze-check-docker-20261028.log`).
+- `.peykar/write_retina_protocol.py .peykar/retina-dev-r3-2026-10-28 r3
+  population_assimilation r0`: protocol SHA-256 `64b0ad17…` (40 frozen files, 46
+  training and 19 sealed record hashes). Freeze commit `d40b6ed2`, pushed; HEAD =
+  origin.
+- `uv run --frozen python scripts/evaluate_retina_population.py --sealed --protocol
+  experiments/eye/retina/model-1.0/protocol-1.0.0.json --output
+  .peykar/retina-sealed-test-2026-10-28`: hashes verified, 146.6 s, EXIT=0; report
+  SHA-256 `03917257…`, reference r0 `0c3dabbc…`.
+- `uv run --frozen python scripts/publish_retina_population.py --sealed --report …
+  --reference … --output experiments/eye/retina/model-1.0/sealed-test-2026-10-28`:
+  H1–H5 pass (next observation 5.75 vs persistence 6.34 and r0 6.14 pp; coverage
+  0.816/0.918; landmark 7.50 vs 9.50; initial state 11.35 vs 17.09). The redaction
+  check found no value in the 7 non-CC-BY sealed studies; 12 CC BY studies keep
+  values.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/retina/model-1.0/sealed-test-2026-10-28/plot-results.py`: figure
+  written.
+- After the results and documentation: every protocol-pinned file still matches its
+  frozen hash (`.peykar/check_retina_frozen.py`); `make check-docker`: 870 tests
+  passed in 124.15 s, 89% coverage, mypy 134 source files, 18 frontend tests, package
+  builds, EXIT=0 (`.peykar/retina-results-check-docker-20261028.log`); host
+  `make build`: EXIT=0.
+
 ## IOP tranche 2 and model 1.1: blind triage, custody, freeze and sealed test: 2026-10-28
 
 - Start state: main at `c93d5018` (= origin, IOP 1.0.0 results committed).

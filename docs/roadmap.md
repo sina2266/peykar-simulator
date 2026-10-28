@@ -289,8 +289,38 @@ protocol `f13238a2`) before a one-shot sealed test.
   0.652 in the sealed set).
 - [ ] Use postoperative medication and medicated/unmedicated references as
   covariates; surgical success/failure endpoints are not claimed.
-- [ ] Next candidates: corneal nerves (159 papers in the earlier screen), stromal
-  haze (115), then retina.
+- [x] Next candidate chosen by data availability: central retinal thickness after
+  treatment (1,938 and 2,250 query hits against 67 for corneal nerves and 181 for
+  retinal nerve fibre layer); see the section below. Corneal nerves and stromal haze
+  remain candidates.
+
+### 2026-10-28 central retinal thickness after treatment (fifth eye component)
+[Model 1.0.0](../experiments/eye/retina/model-1.0/README.md) was frozen (commit
+`d40b6ed2`, protocol `64b0ad17`) before a one-shot sealed test.
+- [x] Screen 3,128 open-access articles and 2,548 masked tables; a mechanical rule
+  kept 395; salted tranches keep 275 untriaged and unread; blind triage of tranche 1
+  (78 admitted); outcome-blind split (54/24); four development extractors (46 records,
+  98 series) and three custodians (19 sealed records, 82 series).
+- [x] Generic eye recovery population model and harness (`eye_recovery_population`,
+  `eye_recovery_evaluation`): the IOP 1.1 law and hierarchy in a `RecoveryConfig`,
+  equal to `iop_population_1_1` to 1e-9 on synthetic data, so later components reuse
+  one implementation.
+- [x] Persistent Ornstein–Uhlenbeck deviations in forecasting (exact, checked against
+  the joint Gaussian); three declared LOSO rounds, two candidates rejected by the
+  adoption rule.
+- [x] Sealed result on group means: all five hypotheses pass; next observation 5.75
+  vs 6.34 pp for persistence and 6.14 for the same model without deviations;
+  coverage 81.6%/91.8%; landmark 7.50 vs 9.50; initial state 11.35 vs 17.09.
+- [ ] Represent drug wear-off after a single implant or injection (dexamethasone
+  rebound at 3–4 months, missed by 15–30 pp), for example with a dose-response term
+  whose duration depends on the agent; test on tranches 2–4 (275 unread articles).
+- [ ] Contexts without development studies (postoperative cystoid edema, uveitic
+  edema, observation arms) fall back to the species mean (initial state 17.2 vs
+  10.3 pp in trained contexts); later tranches should add them.
+- [ ] Single-eye noise: no single-eye series has five follow-ups, so single-eye
+  intervals were too narrow in development (80% coverage 0.49); reported only.
+- [ ] Late follow-ups (after month 3) tie with persistence; retreatment timing is
+  not an input.
 
 ## S0 — preservation and platform contracts
 

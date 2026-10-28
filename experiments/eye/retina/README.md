@@ -13,4 +13,10 @@ vitrectomy, and it reflects fluid in and under the retina.
   82 series; tranches 2–4 with 275 articles stay unread).
 - Model 1.0: [`model-1.0/`](model-1.0/README.md), the generic eye recovery
   population model (`peykar.model_learning.eye_recovery_population`, the generic form
-  of IOP model 1.1) with persistent deviations from the law in forecasting.
+  of IOP model 1.1) with persistent deviations from the law in forecasting. Its
+  one-shot sealed test passed all five declared hypotheses on 40 group-mean series
+  (next observation 5.75 vs persistence 6.34 pp; [Persian results](model-1.0/results.fa.md)).
+
+The tranche-1 development and sealed sets are now spent for testing (the dataset
+README is pinned by protocol 1.0.0 and stays unchanged). A later version must
+reserve one of the unread tranches 2–4 before triage and be tested on it.
