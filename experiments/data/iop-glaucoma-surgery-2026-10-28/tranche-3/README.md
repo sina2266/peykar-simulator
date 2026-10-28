@@ -55,3 +55,39 @@ all 97 admits as `sealed_test`.
 linked pairs: 25 tranche-3 studies lose linked training studies, 8 pairs link two
 tranche-3 studies, and 24 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-28)
+
+**Custodians.** Eight custodian sub-agents (C1–C8) extracted the 97 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and the tranche-3 brief
+(`.peykar/iop-tranche3-extraction-brief.md`, SHA-256 2123ab8f…). The tranche-3 brief
+adds no new ruling: it restates the tranche-1 and tranche-2 rulings and the
+tranche-2 clarifications (own files by exact name, rebuild check after an
+interrupted run, censoring ruled out by design, species groups). Assignments are in
+`.peykar/iop-tranche3-extraction-assignments.json` (SHA-256 e0ec2676…; C1 13
+studies, C2–C8 12 each). Records, specs, raw copies and one custody report per
+custodian are private in `.peykar/iop-tranche3-sealed-2026-10-28/`; every report
+states `contains_outcome_values: false`. All eight were fresh runs.
+
+**Result.** 83 records with 196 series (133 group means, 63 individual eyes); 14
+studies excluded. Exclusion reasons: IOP censored at reoperation or another
+postoperative outcome with no visit that keeps the full baseline eye count (6),
+analysis sets selected by a postoperative outcome (5), follow-up means imputed by
+last observation carried forward (2), and model-adjusted means only (1). The study
+added by the owner's triage override (PMC7127814) turned out to have an absolute
+baseline and absolute follow-up means, and has a record.
+
+**Blind custody check.** `.peykar/verify_iop_tranche3_custody.py` rebuilt every
+record from the screened full text: 83 of 83 are identical byte for byte. Every
+record is declared `sealed_test` and is a reserved study; every reserved study was
+assigned exactly once and reported once; no excluded study has a record; all 97 raw
+copies equal their screened sources; each report's record hash equals the stored
+record. The check prints structure only.
+
+Structure (series per context): angle MIGS 79, tube 37, other 18, trabeculectomy
+17, cyclodestruction 14, non-penetrating 11, subconjunctival MIGS 10, cataract 8,
+and two canine series (cataract, cyclodestruction) in a species without training
+data. References: preoperative medicated 168, unmedicated 13, unstated 15. Methods:
+Goldmann 107, unstated 69, Tono-Pen 15, rebound 4, other 1. By the custodians'
+classification 30 records carry a CC BY or CC0 licence and 53 do not; the publisher
+classifies every licence again before anything is published.
