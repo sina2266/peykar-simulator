@@ -33,9 +33,13 @@ combines them into a misleading overall completion score.
 The latest2026-10-27 user instruction allows another eye component once the
 present corneal scope is acceptably useful; otherwise continue corneal evidence,
 sources and model work, including ML/RL only when supported by the task/data.
-After the sealed population-model test one scoped use is defensible (mouse 2 mm
-central debridement controls); rabbit/rat transfer and interval calibration remain
-open. RL is not used: these observational data contain no actions or rewards.
+After the sealed population-model tests two scoped uses are defensible: the 1.0.0
+initial-state prediction for mouse 2 mm central debridement controls, and the
+2.0.0 calibrated online forecast intervals (sealed IL-10 coverage within both
+windows). Cross-study initial-state transfer (rabbit, rat, human, IL-10 early
+hours) and 5/10 pp accuracy on noisy data remain open, so further corneal work
+waits for new data while the next eye component starts with the same protocol.
+RL is not used: these observational data contain no actions or rewards.
 Original publication reproduction remains a separate open gate. Scientific gates
 remain mandatory before validity or biological coupling is claimed. UI work
 depends on concrete operations and states; an illustration cannot replace execution.
@@ -179,8 +183,17 @@ was frozen (commit `de9762a0`) before a one-shot sealed test.
   (fails its 80% floor). Scope is mouse 2 mm central debridement controls.
 - [x] Pause unchanged vCornea replays until original run inputs are obtained; keep
   it as an executable archived reference.
-- [ ] Fix interval calibration (e.g. horizon-dependent noise) in a new version and
-  test it on **new** sealed studies; the current sealed set is consumed.
+- [x] Fix interval calibration in a new version and test it on **new** sealed
+  studies: model 2.0.0 (closure tail) with dataset 1.1.0 (article tables, 16
+  development studies) was frozen at `2cee1b01`; on sealed IL-10/i-PRF data its
+  cohort intervals met both windows (70.3%/82.4%, the 80% one by one target) and
+  beat the last-two trend (13.1 vs 16.3 pp); accuracy equalled 1.0.0 and both
+  initial-state groups failed. Both sealed sets are now consumed.
+- [ ] Initial-state transfer needs per-context data with covariates (onset time
+  of measurements, inoculation/anaesthesia, measurement method) and more human
+  surgical studies; the human/other context has one 4-patient training study.
+- [ ] Alkali burns: the radius–lag kinematics fails even in-sample (0/13
+  series); a separate limbal-damage/re-erosion model would be needed.
 - [ ] Explain the rabbit latent-phase spread (≈1–17 h) with recorded injury-method,
   care and measurement covariates; acquire more rabbit and human (e.g. post-PRK
   epithelial closure) longitudinal data with the same outcome-blind protocol.

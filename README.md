@@ -98,7 +98,15 @@ prediction of both control-group mean curves passed 5/10 pp (2.26/2.83 and
 3.60/6.34 pp), and 52/64 animal series passed the next-observation criterion
 (42/64 for the previous last-two trend). The 90% interval covered 79.6%, below its
 frozen 80% floor. Development cross-study prediction for rabbits and rats fails,
-so the supported scope is mouse 2 mm central debridement controls. The
+so the supported scope is mouse 2 mm central debridement controls.
+On 2026-10-28 dataset release 1.1.0 added article-table studies (rabbit/rat alkali
+burns, rat debridement under insults, human PRK and cross-linking; 16 development
+studies), and **model 2.0.0** added a slowing closure tail. Its protocol was frozen
+and pushed (`2cee1b01`) before a second one-shot sealed test (IL-10 mice, 55
+series; i-PRF patients): cohort intervals were calibrated within both frozen
+windows (80%: 70.3%, 90%: 82.4%; 1.0.0 missed the 80% window), cohort RMSE beat
+the last-two trend (13.1 vs 16.3 pp), but accuracy did not improve over 1.0.0 and
+initial-state prediction failed for both new control groups (18.0 and 25.0 pp). The
 [Persian audit](docs/corneal-work-audit-2026-10-27.fa.md) reviews the earlier work
 and pauses further unchanged vCornea replays until original run inputs exist.
 

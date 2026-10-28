@@ -147,3 +147,36 @@ cross-linking study (two group means). Frozen hypotheses:
 [protocol-2.0.0.json](protocol-2.0.0.json) — H1 cohort calibration (90% interval
 in [0.80, 0.97] and 80% in [0.70, 0.90]), H2 cohort RMSE below the last-two
 trend, H3 2.0.0 versus 1.0.0, H4 initial state per control group.
+
+### Sealed result 2.0.0 (run once on 2026-10-28, after commit `2cee1b01`)
+
+[Primary analysis](sealed-test-2026-10-28/primary-analysis.json),
+[tables](sealed-test-2026-10-28/tables.md),
+[public report](sealed-test-2026-10-28/report-public.json),
+[execution record](sealed-test-2026-10-28/execution-record.json). Both sealed
+studies are CC BY 4.0; their records are now published as consumed data under
+[`consumed-sealed/`](../../../data/cornea-wound-population-2026-10-27/consumed-sealed/README.md).
+
+| Frozen question | Model 2.0.0 | Model 1.0.0, same data |
+|---|---|---|
+| H1 cohort 80% / 90% coverage (165 IL-10 targets) | **70.3% / 82.4%: pass** (80% by one target) | 69.7% / 84.2%: 80% window missed |
+| H2 cohort vs last-two trend, pooled RMSE | **13.10 vs 16.27 pp: pass** | 13.01 pp |
+| Series meeting 5/10 pp (cohort) | 3/55 | 4/55 |
+| H4 IL-10 PBS controls, initial state | 18.0 / 24.6 pp: fail | 15.8 / 22.7 pp |
+| H4 i-PRF standard-care patients, initial state | 25.0 / 41.7 pp: fail | 25.1 / 42.3 pp |
+
+![Sealed test 2.0.0](sealed-test-2026-10-28/sealed-results.png)
+
+- The closure tail did what it was built for on new data: cohort intervals are
+  calibrated within both frozen windows, where 1.0.0 missed one. The margin is
+  small, so this is evidence, not proof, of better calibration.
+- Accuracy did not improve: 2.0.0 and 1.0.0 are within 0.1 pp. On IL-10 the
+  individual population prior (11.4 pp) beat cohort assimilation (13.1 pp); the
+  nearest-trajectory forecaster gave 13.1 pp. IL-10 measurements 3 h apart are
+  noisy: the best possible in-sample fit meets 5/10 pp in only 30/55 series.
+- Initial-state transfer failed in both new studies. The IL-10 PBS mice healed
+  more slowly in the first 19 h than the 2 mm mouse studies implied. The i-PRF
+  patients healed faster than the only similar training study (4 insulin-trial
+  controls); Crosson's fixed rabbit kinematics came closest (5.3 / 7.7 pp).
+- For i-PRF group means, next-observation errors were small for all prefix-based
+  methods (2.5–3.2 pp) and large for persistence (24.8 pp).

@@ -43,6 +43,22 @@
   `68ef4771bf31eef0afd3983f61c04c257e47eac1c878138dfa707607b6cd83ae`; the 2.0.0
   operator's `check_protocol` reports no problem, and the 1.0.0 operator's check
   still reports no changed file.
+- Commit `2cee1b019b8b512cb72d110484bcff522c19ee5c` pushed; local `HEAD` and
+  `git ls-remote origin refs/heads/main` equal.
+- `scripts/evaluate_corneal_population2.py --sealed --protocol protocol-2.0.0.json`:
+  exit 0, 126.9 s, all hashes matched, report SHA `6525c342…`. Results (both
+  versions trained on the same 16 studies): 2.0.0 cohort coverage 116/165 (70.3%)
+  and 136/165 (82.4%), both inside the frozen windows; 1.0.0 115/165 (69.7%,
+  outside) and 139/165 (84.2%). Cohort RMSE 13.10 vs 16.27 pp last-two trend
+  (1.0.0 cohort 13.01). Cohort series passing 5/10 pp: 3/55. Initial-state control
+  groups: IL-10 18.0/24.6 pp, i-PRF 25.0/41.7 pp (both fail).
+- `scripts/publish_corneal_population2.py --sealed` wrote the primary analysis and
+  the public report; the figure script ran with the existing native Python and the
+  PNG was inspected. Consumed CC BY sealed records and sources copied to
+  `consumed-sealed/` and every record source hash re-checked (all OK).
+- After the result documents and plot script: host `ruff format --check .` and
+  `ruff check .` passed; `make check-docker` **exit 0, 794 tests in 73.93 s**, 87%,
+  mypy 119 files. Log `.peykar/cornea-population2-results-check-docker-20261028.log`.
 
 ## Cross-study corneal population model and sealed test: 2026-10-27
 

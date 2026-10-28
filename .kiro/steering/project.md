@@ -1,5 +1,34 @@
 # Peykar continuation context
 
+## Corneal model 2.0.0, dataset 1.1.0 and second sealed test, 2026-10-28
+
+- User: "continue and do not stop", may search/acquire reliable data. Heartbeat
+  stays PAUSED. Main after this milestone: freeze commit `2cee1b01` (pushed,
+  remote SHA equal) plus a results commit; check `git log` before acting.
+- Data: rounds 2-3 screens (2,015 + 772 new OA full texts), no supplement
+  admissions; new masked article-table route (`scripts/screen_corneal_tables.py`,
+  `show_masked_previews.py` hides decimals/±/%/n-N/equations). triage-1.1.0 (10
+  admitted) + split-reservation-1.1.0 (same salted rule; 1 sealed) + triage-1.2.0
+  (none). Cell-citing records via `peykar.validation.cornea_table_records` and
+  `scripts/build_corneal_table_record.py` (`table!RrCc`, definitional baseline,
+  `transform:100-minus`). Extraction protocols 1.1.0 and 1.1.1 (1.1.1 written AFTER
+  PJE dev values were read). FL2 rat (CC BY-NC-ND) record private at
+  `.peykar/cornea-development-1.1.0-private/`; its triage key wrongly says mouse.
+- Custodian: i-PRF human CXL sealed (2 group means) + IL-10 mice re-admitted
+  under 1.1.1 definitional baseline (55 per-mouse series); norepinephrine still
+  excluded. Records `.peykar/cornea-sealed-test-2026-10-28/records/`; now consumed
+  and published (CC BY) under dataset `consumed-sealed/`.
+- Model 2.0.0 (`corneal_population2`, harness `cornea_population_evaluation2`,
+  operator `evaluate_corneal_population2.py`, publisher `publish_corneal_population2.py`):
+  closure tail r_c per context. Dev LOSO 16 studies: cohort 9.23 pp, coverage
+  82.9/90.8%. Protocol-2.0.0 SHA 68ef4771…; sealed once: cohort coverage 70.3/82.4%
+  (both windows, 80% by ONE target; 1.0.0 69.7% misses), cohort 13.1 vs last-two
+  16.3 pp, 3/55 series pass 5/10, initial-state IL-10 18.0 and i-PRF 25.0 pp fail.
+  Alkali burns are not fitted even in-sample. Both sealed sets are CONSUMED.
+- Frozen files must not change (v1 and v2 protocols list SHA-256 pins). Editor
+  re-wraps edited files; always run `ruff format` before `make check-docker`.
+- `make check-docker` exit 0 on 2026-10-28: 794 tests, 87%, mypy 119 files.
+
 ## Cross-study corneal population model and sealed test, 2026-10-27 (late)
 
 - User asked for smarter, non-brittle methods, a frank audit and continued work.
