@@ -1,0 +1,53 @@
+{
+ "study_id": "ecd-pmc9240574",
+ "doi": "10.4103/ijo.IJO_2163_21",
+ "pmcid": "PMC9240574",
+ "title": "Comparison of effective phacoemulsification time and corneal endothelial cell loss using three different ultrasound frequencies: A randomized controlled trial",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {"statement": "CC BY-NC-SA 4.0 (article <license>); not CC BY, record kept private", "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"},
+ "source_files": [{"name": "PMC9240574.xml", "sha256": "4a48f83ae9440229a248ed3beb9584bae24d2b210f10b37be1e2779e9847975d", "bytes": 72148, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9240574/fullTextXML"}],
+ "indication": "Hard senile cataract (LOCS III nuclear colour 5.6-6.9); eyes below the ECD inclusion minimum, with raised IOP, corneal dystrophy or scars, or previous intraocular surgery excluded",
+ "groups": [
+  {"group": "us-28khz", "role": "control", "n_reported": 69, "description": "Phacoemulsification with a 28-kHz sonotrode (Geuder Megatron S4 HPS; 40% US power, cool flash, identical fluidics)"},
+  {"group": "us-42khz", "role": "control", "n_reported": 69, "description": "Phacoemulsification with a 42-kHz sonotrode, otherwise identical settings"},
+  {"group": "us-53khz", "role": "treated", "n_reported": 69, "description": "Phacoemulsification with a 53-kHz sonotrode, otherwise identical settings; the arm the trial was designed to evaluate against the 28- and 42-kHz sonotrodes"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "us-28khz/ecd", "group": "us-28khz", "kind": "group_mean", "n": 69,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": ["PMC9240574.xml::IJO_2163_21-t002!R2C2", "PMC9240574.xml::IJO_2163_21-t002!R3C2", "PMC9240574.xml::IJO_2163_21-t002!R4C2", "PMC9240574.xml::IJO_2163_21-t002!R5C2", "PMC9240574.xml::IJO_2163_21-t002!R6C2"],
+   "baseline_label": "ECD Pre-op = preoperative ECD of the operated eye (EM-3000 specular microscope)",
+   "notes": "mean ± SD; 1 week = 7 days; all patients completed follow-up (Results)"
+  },
+  {
+   "series_id": "us-42khz/ecd", "group": "us-42khz", "kind": "group_mean", "n": 69,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": ["PMC9240574.xml::IJO_2163_21-t002!R2C3", "PMC9240574.xml::IJO_2163_21-t002!R3C3", "PMC9240574.xml::IJO_2163_21-t002!R4C3", "PMC9240574.xml::IJO_2163_21-t002!R5C3", "PMC9240574.xml::IJO_2163_21-t002!R6C3"],
+   "baseline_label": "ECD Pre-op = preoperative ECD of the operated eye (EM-3000 specular microscope)",
+   "notes": "mean ± SD; 1 week = 7 days; all patients completed follow-up (Results)"
+  },
+  {
+   "series_id": "us-53khz/ecd", "group": "us-53khz", "kind": "group_mean", "n": 69,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 0.23, 1, 3, 6],
+   "cells": ["PMC9240574.xml::IJO_2163_21-t002!R2C4", "PMC9240574.xml::IJO_2163_21-t002!R3C4", "PMC9240574.xml::IJO_2163_21-t002!R4C4", "PMC9240574.xml::IJO_2163_21-t002!R5C4", "PMC9240574.xml::IJO_2163_21-t002!R6C4"],
+   "baseline_label": "ECD Pre-op = preoperative ECD of the operated eye (EM-3000 specular microscope)",
+   "notes": "mean ± SD; 1 week = 7 days; all patients completed follow-up (Results)"
+  }
+ ],
+ "exclusions": [
+  {"what": "IJO_2163_21-t003 percentage change in ECD (mean, median, range, IQR)", "reason": "changes of the same series; medians/IQR/ranges are not admissible; the absolute ECD series is used"},
+  {"what": "IJO_2163_21-t002 'P' column (C5)", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Randomized parallel three-arm trial (block randomization, masked participants and outcome assessor), 207 eyes of 207 patients, 69 per arm; two surgeons.",
+  "Role assignment: the Introduction states the trial compared a 53-kHz sonotrode with 28- and 42-kHz sonotrodes, and the authors declare a pending sonotrode patent, so the 53-kHz arm is recorded as treated and the 28- and 42-kHz arms as control.",
+  "Specular microscopy at 1 week and 1, 3 and 6 months after surgery."
+ ]
+}

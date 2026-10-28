@@ -1,0 +1,142 @@
+{
+ "schema": "cornea.endothelium-author-overlap-1.0.0",
+ "utc": "2026-10-28T07:57:20.820047+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/cornea-endothelium-2026-10-28/split-reservation-1.0.0.json",
+   "sha256": "bdbcf8117ad74550a8016d4a2bca6bbf6a6d25112d15b26da2f7e0eaf00c0125"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-ecd_followup_title_open-0.json",
+    "sha256": "93a5659c1adb943eccef7dab6e956134ab0eb3f987e58fa54cf19d17134b0bc1"
+   },
+   {
+    "file": "search-ecd_surgery_open-0.json",
+    "sha256": "ede8c5d9ece9a411026c67e155b088271395378a02596c8b635e7d7817dcd5e4"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "ecd-pmc10735023",
+    "ecd-pmc9098022"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc11512528",
+    "ecd-pmc6886553"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc12994532",
+    "ecd-pmc13006302"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "ecd-pmc3396288",
+    "ecd-pmc6970996"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc5602781",
+    "ecd-pmc9240574"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc6157994",
+    "ecd-pmc6766098"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc6157994",
+    "ecd-pmc8890902"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ecd-pmc7045206",
+    "ecd-pmc9944567"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 3
+  }
+ ],
+ "development_clusters": [
+  [
+   "ecd-pmc10735023",
+   "ecd-pmc9098022"
+  ],
+  [
+   "ecd-pmc11512528",
+   "ecd-pmc6886553"
+  ],
+  [
+   "ecd-pmc12994532",
+   "ecd-pmc13006302"
+  ],
+  [
+   "ecd-pmc6157994",
+   "ecd-pmc6766098",
+   "ecd-pmc8890902"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "ecd-pmc5602781": [
+   "ecd-pmc9240574"
+  ],
+  "ecd-pmc6970996": [
+   "ecd-pmc3396288"
+  ],
+  "ecd-pmc7045206": [
+   "ecd-pmc9944567"
+  ]
+ }
+}

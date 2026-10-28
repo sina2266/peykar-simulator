@@ -1,0 +1,96 @@
+{
+ "study_id": "ecd-pmc7867300",
+ "doi": "10.3390/s21030996",
+ "pmcid": "PMC7867300",
+ "title": "Comparison of Femtosecond Laser-Assisted and Ultrasound-Assisted Cataract Surgery with Focus on Endothelial Analysis",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, http://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7867300.xml",
+   "sha256": "e94ed4c2cff7ab91cfec0aa112a6d03ac891decc1b00cf4e8f608ff91312277e",
+   "bytes": 143055,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7867300/fullTextXML)"
+  }
+ ],
+ "indication": "Senile cataract with clear cornea, age 50 years or more (LOCS III: FLACS grade 2 in 29, grade 3 in 33, grade 4 in 3; conventional grade 2 in 50, grade 3 in 15); glaucoma, ocular hypertension, pseudoexfoliation, corneal disease and previous corneal or lens surgery excluded",
+ "groups": [
+  {
+   "group": "flacs",
+   "role": "control",
+   "n_reported": 65,
+   "procedure": "cataract",
+   "description": "Low-energy femtosecond laser-assisted cataract surgery (Ziemer FEMTO LDV Z8: lens fragmentation and 5 mm capsulotomy) followed by phacoemulsification and NS-60YG IOL; randomized, single-centre, same surgeon; 63 completed"
+  },
+  {
+   "group": "cucs",
+   "role": "control",
+   "n_reported": 65,
+   "procedure": "cataract",
+   "description": "Conventional ultrasound cataract surgery (CataRhex 3 easyPhaco, 2.2 mm main incision, manual capsulorhexis, stop and chop) with NS-60YG IOL; 63 completed"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "flacs/central-ecd",
+   "group": "flacs",
+   "kind": "group_mean",
+   "n": 63,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.9199,
+    2.7598
+   ],
+   "cells": [
+    "PMC7867300.xml::sensors-21-00996-t002!R3C2",
+    "PMC7867300.xml::sensors-21-00996-t002!R4C2",
+    "PMC7867300.xml::sensors-21-00996-t002!R5C2"
+   ],
+   "baseline_label": "Pre-operative (Table 2, 'All grades' block) = preoperative central ECD of the operated eye",
+   "notes": "Table 2 'Femtosecond Laser Group' column, 'All grades' rows Pre-operative, 4 weeks postop and 12 weeks postop (mean ± SD); 4 weeks = 28/30.4375 and 12 weeks = 84/30.4375 months. Tomey EM-3000 specular microscopy (best of 15 images). Per-visit n not tabulated."
+  },
+  {
+   "series_id": "cucs/central-ecd",
+   "group": "cucs",
+   "kind": "group_mean",
+   "n": 63,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.9199,
+    2.7598
+   ],
+   "cells": [
+    "PMC7867300.xml::sensors-21-00996-t002!R3C3",
+    "PMC7867300.xml::sensors-21-00996-t002!R4C3",
+    "PMC7867300.xml::sensors-21-00996-t002!R5C3"
+   ],
+   "baseline_label": "Pre-operative (Table 2, 'All grades' block) = preoperative central ECD of the operated eye",
+   "notes": "Table 2 'Conventional Group' column, 'All grades' rows Pre-operative, 4 weeks postop and 12 weeks postop (mean ± SD); 4 weeks = 28/30.4375 and 12 weeks = 84/30.4375 months. Per-visit n not tabulated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 'Grade 2', 'Grade 3' and 'Grades 2 and 3' blocks",
+   "reason": "Subsets of the same eyes as the all-grades series (grade-4 eyes appear only in 'All grades'); the analysed subgroup n are not reported"
+  },
+  {
+   "what": "Table 2 age and ACD rows; p-value column; Tables 3-5",
+   "reason": "Not endothelial cell density; p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: two established cataract techniques randomized against each other without an investigational agent (femtosecond-assisted surgery is listed under the protocol's cataract context); both control-role, separate groups.",
+  "The second follow-up is labelled '12 weeks postop' in Table 2 and the Results text, whereas Methods 2.2 states specular measurements at 4 and 8 weeks; the table label is used.",
+  "Of 65 randomized eyes per arm, 2 per arm missed postoperative examinations and were excluded (126 of 130 completed); n = 63 per arm, but the n behind each Table 2 value is not stated."
+ ]
+}

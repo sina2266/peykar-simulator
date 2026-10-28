@@ -1,0 +1,251 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc6131764",
+ "doi": "10.1186/s12886-018-0913-0",
+ "pmcid": "PMC6131764",
+ "title": "Changes in corneal endothelial cells after trabeculectomy and EX-PRESS shunt: 2-year follow-up",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> and ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6131764.xml",
+   "sha256": "4b6081c6d0ddfe90c0789a143d9ff2315bec1b4c43a8475cd04d8cfeb1f762fb",
+   "bytes": 52045,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6131764/fullTextXML)"
+  }
+ ],
+ "indication": "Glaucoma with uncontrolled IOP on maximum tolerated medical therapy (Table 1): trabeculectomy POAG 24, normal-tension 24, secondary 11, exfoliation 5; EX-PRESS POAG 30, normal-tension 12, secondary 8; with or without combined cataract surgery",
+ "groups": [
+  {
+   "group": "trab-combined",
+   "role": "control",
+   "n_reported": 29,
+   "procedure": "glaucoma",
+   "description": "Fornix-based trabeculectomy with mitomycin C combined with phacoemulsification and IOL (superior one-site approach); single surgeon, Kagawa 2014-2016; prospective observational"
+  },
+  {
+   "group": "trab-alone",
+   "role": "control",
+   "n_reported": 35,
+   "procedure": "glaucoma",
+   "description": "Fornix-based trabeculectomy with mitomycin C alone"
+  },
+  {
+   "group": "express-combined",
+   "role": "control",
+   "n_reported": 22,
+   "procedure": "glaucoma",
+   "description": "EX-PRESS P50 glaucoma filtration device under a scleral flap combined with phacoemulsification (2.4 mm temporal clear corneal incision) and IOL"
+  },
+  {
+   "group": "express-alone",
+   "role": "control",
+   "n_reported": 28,
+   "procedure": "glaucoma",
+   "description": "EX-PRESS P50 glaucoma filtration device alone"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 (trabeculectomy and EX-PRESS means without per-visit n)",
+   "reason": "Each column pools the two Table 3 subgroups of the same procedure (same eyes); the Table 3 subgroups, which separate combined cataract surgery and give per-visit n, are used"
+  },
+  {
+   "what": "P value rows of Tables 2 and 3",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: trabeculectomy and EX-PRESS implantation are two established filtration procedures compared without an investigational agent; all four groups are control-role. Allocation was not random: the EX-PRESS procedure was used for eyes with previous vitreous surgery or severe vision loss in the fellow eye, and trabeculectomy eyes were age- and sex-matched from a larger series.",
+  "Combined-surgery subgroups are separate groups because the added cataract surgery changes the procedure; all keep the glaucoma context.",
+  "The abstract states 60 trabeculectomy eyes of 60 patients; Tables 1 and 3 count 64 (29 combined + 35 alone). Table 3 n are used."
+ ],
+ "series": [
+  {
+   "series_id": "trab-combined/central-ecd",
+   "group": "trab-combined",
+   "kind": "group_mean",
+   "n": 29,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24
+   ],
+   "n_by_time": [
+    29,
+    29,
+    29,
+    26,
+    10
+   ],
+   "baseline_label": "Baseline (Table 3) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 'Trabeculectomy / Combined cataract surgery' column, rows Baseline, 6, 12, 18 and 24 months. Tomey EM-3000 non-contact specular microscope, central cornea, automatic count; data presented as mean ± SD with per-visit n in the cell text.",
+   "values": [
+    2539.0,
+    2429.0,
+    2373.0,
+    2344.0,
+    2218.0
+   ],
+   "source_cells": [
+    "PMC6131764.xml::Tab3!R3C2",
+    "PMC6131764.xml::Tab3!R4C2",
+    "PMC6131764.xml::Tab3!R6C2",
+    "PMC6131764.xml::Tab3!R8C2",
+    "PMC6131764.xml::Tab3!R10C2"
+   ],
+   "source_cell_texts": [
+    "2539 ± 264 (n = 29)",
+    "2429 ± 286 (n = 29)",
+    "2373 ± 344 (n = 29)",
+    "2344 ± 256 (n = 26)",
+    "2218 ± 393 (n = 10)"
+   ]
+  },
+  {
+   "series_id": "trab-alone/central-ecd",
+   "group": "trab-alone",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24
+   ],
+   "n_by_time": [
+    35,
+    35,
+    35,
+    27,
+    15
+   ],
+   "baseline_label": "Baseline (Table 3) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 'Trabeculectomy / Trabeculectomy alone' column, rows Baseline, 6, 12, 18 and 24 months. Tomey EM-3000 non-contact specular microscope, central cornea, automatic count; data presented as mean ± SD with per-visit n in the cell text.",
+   "values": [
+    2462.0,
+    2387.0,
+    2338.0,
+    2225.0,
+    2272.0
+   ],
+   "source_cells": [
+    "PMC6131764.xml::Tab3!R3C3",
+    "PMC6131764.xml::Tab3!R4C3",
+    "PMC6131764.xml::Tab3!R6C3",
+    "PMC6131764.xml::Tab3!R8C3",
+    "PMC6131764.xml::Tab3!R10C3"
+   ],
+   "source_cell_texts": [
+    "2462 ± 281 (n = 35)",
+    "2387 ± 253 (n = 35)",
+    "2338 ± 288 (n = 35)",
+    "2225 ± 393 (n = 27)",
+    "2272 ± 398 (n = 15)"
+   ]
+  },
+  {
+   "series_id": "express-combined/central-ecd",
+   "group": "express-combined",
+   "kind": "group_mean",
+   "n": 22,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24
+   ],
+   "n_by_time": [
+    22,
+    21,
+    19,
+    15,
+    8
+   ],
+   "baseline_label": "Baseline (Table 3) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 'EX-PRESS / Combined cataract surgery' column, rows Baseline, 6, 12, 18 and 24 months. Tomey EM-3000 non-contact specular microscope, central cornea, automatic count; data presented as mean ± SD with per-visit n in the cell text.",
+   "values": [
+    2512.0,
+    2309.0,
+    2399.0,
+    2429.0,
+    2379.0
+   ],
+   "source_cells": [
+    "PMC6131764.xml::Tab3!R3C4",
+    "PMC6131764.xml::Tab3!R4C4",
+    "PMC6131764.xml::Tab3!R6C4",
+    "PMC6131764.xml::Tab3!R8C4",
+    "PMC6131764.xml::Tab3!R10C4"
+   ],
+   "source_cell_texts": [
+    "2512 ± 329 (n = 22)",
+    "2309 ± 410 (n = 21)",
+    "2399 ± 333 (n = 19)",
+    "2429 ± 319 (n = 15)",
+    "2379 ± 416 (n = 8)"
+   ]
+  },
+  {
+   "series_id": "express-alone/central-ecd",
+   "group": "express-alone",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24
+   ],
+   "n_by_time": [
+    28,
+    27,
+    27,
+    19,
+    15
+   ],
+   "baseline_label": "Baseline (Table 3) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 'EX-PRESS / EX-PRESS alone' column, rows Baseline, 6, 12, 18 and 24 months. Tomey EM-3000 non-contact specular microscope, central cornea, automatic count; data presented as mean ± SD with per-visit n in the cell text.",
+   "values": [
+    2279.0,
+    2236.0,
+    2216.0,
+    2339.0,
+    2284.0
+   ],
+   "source_cells": [
+    "PMC6131764.xml::Tab3!R3C5",
+    "PMC6131764.xml::Tab3!R4C5",
+    "PMC6131764.xml::Tab3!R6C5",
+    "PMC6131764.xml::Tab3!R8C5",
+    "PMC6131764.xml::Tab3!R10C5"
+   ],
+   "source_cell_texts": [
+    "2279 ± 415 (n = 28)",
+    "2236 ± 413 (n = 27)",
+    "2216 ± 512 (n = 27)",
+    "2339 ± 419 (n = 19)",
+    "2284 ± 477 (n = 15)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "study_id": "ecd-pmc11512528",
+ "doi": "10.2147/OPTH.S494422",
+ "pmcid": "PMC11512528",
+ "title": "Compared to Trabeculectomy, Ex-Press® Surgery Significantly Decreased the Loss of Corneal Endothelial Cell Density in Low-Intraocular-Pressure Glaucoma: 3-Year Follow-Up",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {"statement": "Dove Medical Press terms incorporating CC BY-NC 3.0 unported (article <license>); not CC BY, record kept private", "url": "https://creativecommons.org/licenses/by-nc/3.0/"},
+ "source_files": [
+  {"name": "PMC11512528.xml", "sha256": "eac4a7b9cc777e3a2eaa087b78d8e0efae79b40462083cfe88c0e5da4043c3b8", "bytes": 68344, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11512528/fullTextXML"}
+ ],
+ "indication": "Primary open-angle glaucoma with preoperative IOP of 21 mmHg or less under medication (low-IOP glaucoma), first filtration surgery with mitomycin C by one surgeon; simultaneous phacoemulsification in 24/39 trabeculectomy and 15/36 Ex-Press eyes; prior cataract surgery, trabeculotomy, SLT or vitrectomy allowed; pseudoexfoliation and secondary glaucoma excluded",
+ "groups": [
+  {"group": "trabeculectomy", "role": "control", "n_reported": 39, "description": "Trabeculectomy with MMC (operated May 2018 to January 2020), 39 eyes of 36 patients"},
+  {"group": "ex-press", "role": "control", "n_reported": 36, "description": "Ex-Press P50 shunt under a scleral flap with MMC (operated May 2013 to April 2018), 36 eyes of 34 patients"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "trabeculectomy/central-ced",
+   "group": "trabeculectomy",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 12, 24, 36],
+   "cells": [
+    "PMC11512528.xml::t0001!R7C2",
+    "PMC11512528.xml::t0004!R3C2",
+    "PMC11512528.xml::t0004!R4C2",
+    "PMC11512528.xml::t0004!R5C2"
+   ],
+   "baseline_label": "Preoperative central CED (Tomey EM-3000) of the operated eye, Table 1 'Preoperative CED' for the Trab group",
+   "notes": "Follow-up means from Table 4 (12, 24, 36 mos CED, mean ± SD); the reference cites Table 1 R7C2 because Table 4 R2C2 gives a conflicting duplicate (see record notes)"
+  },
+  {
+   "series_id": "ex-press/central-ced",
+   "group": "ex-press",
+   "kind": "group_mean",
+   "n": 36,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 12, 24, 36],
+   "cells": [
+    "PMC11512528.xml::t0004!R2C3",
+    "PMC11512528.xml::t0004!R3C3",
+    "PMC11512528.xml::t0004!R4C3",
+    "PMC11512528.xml::t0004!R5C3"
+   ],
+   "baseline_label": "Preoperative central CED (Tomey EM-3000) of the operated eye, Table 4 'Preoperative CED' for the EXP group (identical to Table 1 R7C3)",
+   "notes": "Table 4 EXP column, mean ± SD at preoperative, 12, 24 and 36 months"
+  }
+ ],
+ "exclusions": [
+  {"what": "t0004 R2C2 (trabeculectomy preoperative CED in Table 4)", "reason": "conflicts with Table 1 R7C2 and with the Abstract for the same group and statistic (one digit of the mean differs; SD and p-value identical); the Table 1 cell, which agrees with the Abstract, is cited as the reference"},
+  {"what": "t0004 R6-R8 survival ratio rows", "reason": "ratio of postoperative to preoperative CED (%), not an admissible value kind; the absolute CED series of the same groups is used"},
+  {"what": "t0005 survival ratios by glaucoma surgery alone vs simultaneous cataract surgery", "reason": "ratios only, without a reference ECD per subgroup; subgroups nested within the arms"},
+  {"what": "t0004 C4 and t0001 C4 p-values", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Retrospective single-centre comparison of two established filtration surgeries performed in different calendar periods; neither arm is declared experimental, so both are recorded as control (procedure context glaucoma, with simultaneous cataract surgery in part of each arm).",
+  "CED was measured once preoperatively and every 12 months postoperatively; all eyes were followed for more than 3 years; tables give no per-visit n. Binocular data were used for patients operated in both eyes.",
+  "The Abstract's 3-year survival ratio for the Trab group also differs from Table 4; not used.",
+  "Licence is CC BY-NC 3.0 (Dove terms): the record is private; this spec contains no values."
+ ]
+}

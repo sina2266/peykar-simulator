@@ -1,0 +1,96 @@
+{
+ "study_id": "ecd-pmc12867309",
+ "doi": "10.4103/IJO.IJO_18_25",
+ "pmcid": "PMC12867309",
+ "title": "Comparing the surgical outcomes of femto laser-assisted cataract surgery (FLACS) versus conventional phacoemulsification (CP) in nanophthalmic eyes",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12867309.xml",
+   "sha256": "390919b576ef734ce65bb04c3e460844e0d8029349d475ca30b5da8678850920",
+   "bytes": 141613,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12867309/fullTextXML)"
+  }
+ ],
+ "indication": "Nanophthalmos (axial length 18.5-20.5 mm, RCS thickness at most 2 mm) with visually significant cataract (LOCS III up to NC2-NC4); all eyes primary angle-closure suspects treated with prophylactic Nd:YAG laser peripheral iridotomy 2 weeks before cataract surgery; pre-existing corneal or retinal pathology excluded",
+ "groups": [
+  {
+   "group": "flacs",
+   "role": "control",
+   "n_reported": 10,
+   "procedure": "cataract",
+   "description": "Femtosecond laser-assisted cataract surgery (LenSx capsulotomy, lens fragmentation and corneal incisions, then phacoemulsification and in-the-bag IOL); randomized, one eye per patient, same surgeon"
+  },
+  {
+   "group": "conventional-phaco",
+   "role": "control",
+   "n_reported": 10,
+   "procedure": "cataract",
+   "description": "Conventional phacoemulsification (2.8 mm clear corneal incision, manual capsulorrhexis, direct chop, in-the-bag IOL); randomized, one eye per patient, same surgeon"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "flacs/ecd",
+   "group": "flacs",
+   "kind": "group_mean",
+   "n": 10,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3],
+   "cells": [
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R4C3",
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R6C3",
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R8C3"
+   ],
+   "baseline_label": "Baseline = preoperative central ECD of the operated eye (Table 5 'Baseline'; Methods: ECL computed from the pre-operative central corneal ECD)",
+   "notes": "Table 5 column 'FLACS (n=10)', rows 'Mean (SD) Min-max' under Baseline, 1 month and 3 months; the cell text starts with the mean. The row label unit '(mm)' is read as cells/mm2 (Methods). Per-visit n not tabulated."
+  },
+  {
+   "series_id": "conventional-phaco/ecd",
+   "group": "conventional-phaco",
+   "kind": "group_mean",
+   "n": 10,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3],
+   "cells": [
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R4C5",
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R6C5",
+    "PMC12867309.xml::IJO.IJO_18_25-T6!R8C5"
+   ],
+   "baseline_label": "Baseline = preoperative central ECD of the operated eye (Table 5 'Baseline'; Methods: ECL computed from the pre-operative central corneal ECD)",
+   "notes": "Table 5 column 'CP (n=10)', rows 'Mean (SD) Min-max' under Baseline, 1 month and 3 months; the cell text starts with the mean. The row label unit '(mm)' is read as cells/mm2 (Methods). Per-visit n not tabulated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 5 'Endothelial cell loss (%)' rows at 1 and 3 months",
+   "reason": "Reported as median (IQR); medians are not admissible and the absolute ECD means are used"
+  },
+  {
+   "what": "Table 5 rows 'Baseline vs. 1 month', 'Baseline vs. 3 months' and the p-value / FDR-adjusted P columns",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 5 CDE and total surgery time rows",
+   "reason": "Not endothelial cell density"
+  },
+  {
+   "what": "Table 1 baseline ECD row",
+   "reason": "Same baseline as Table 5; Table 5 cells are cited for the whole series"
+  }
+ ],
+ "notes": [
+  "Two established cataract techniques randomized against each other without an investigational agent; femtosecond-assisted surgery is listed under the protocol's cataract context, so both arms are control-role, separate groups.",
+  "All eyes had prophylactic Nd:YAG laser peripheral iridotomy 2 weeks before cataract surgery; the article does not state whether the baseline ECD was measured before or after the iridotomy.",
+  "Three CP patients developed refractory secondary glaucoma requiring additional surgery during follow-up (Results); no group was redefined."
+ ]
+}

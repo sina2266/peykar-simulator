@@ -1,0 +1,140 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc6062117",
+ "doi": "10.1371/journal.pone.0201342",
+ "pmcid": "PMC6062117",
+ "title": "Prospective cohort study of corneal endothelial cell loss after Baerveldt glaucoma implantation",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> xlink:href and ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6062117.xml",
+   "sha256": "f3b96e125bc5771cda53c9abcb20d532557269a8c9597dd09e4a840c882ef56b",
+   "bytes": 99105,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6062117/fullTextXML)"
+  }
+ ],
+ "indication": "Refractory glaucoma (secondary, neovascular, or wide conjunctival scarring after failed filtration or retinal surgery); Table 1: acBGI POAG 15, exfoliation 15, neovascular 3, other secondary 12 of 45 eyes; ppBGI neovascular 12, exfoliation 1, other secondary 1 of 14 eyes; mostly pseudophakic",
+ "groups": [
+  {
+   "group": "acbgi",
+   "role": "control",
+   "n_reported": 45,
+   "procedure": "glaucoma",
+   "description": "Baerveldt BG101-350 (350 mm2 endplate) with the tube inserted into the anterior chamber through a 23-gauge scleral tunnel; single surgeon, Fukui 2012-2015; prospective cohort (UMIN000007812)"
+  },
+  {
+   "group": "ppbgi",
+   "role": "control",
+   "n_reported": 14,
+   "procedure": "glaucoma",
+   "description": "Baerveldt BG102-350 with Hoffmann elbow, tube inserted into the vitreous cavity through the pars plana in previously vitrectomized eyes; same surgeon"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tables 3 and 4 'Tube insertion' and 'Contralateral' quadrant columns",
+   "reason": "Peripheral measurement locations (each the mean of two peripheral points) in the same eyes as the central series; the central location is extracted so that each group has one series and stays comparable with central ECD elsewhere"
+  },
+  {
+   "what": "Table 2 (all 41 eyes, both arms pooled), including its 'Average' five-point column",
+   "reason": "Union of the two arms whose central series are extracted from Tables 3 and 4"
+  },
+  {
+   "what": "P-value rows of Tables 2-4; Table 5 correlations; Table 7 logistic model for more than 30% loss",
+   "reason": "p-values and model estimates are not admissible; Table 7 is defined by a postoperative outcome"
+  }
+ ],
+ "notes": [
+  "Role: anterior chamber and pars plana tube insertion are two standard techniques with the same device class and no investigational agent; both control-role, separate groups.",
+  "Of 59 enrolled eyes, 41 completed ECD measurement at all follow-up visits (18 with low photo quality); the arm series use these eyes (column n of Tables 3 and 4). Two acBGI implants were removed for plate escape and three eyes were lost to follow-up."
+ ],
+ "series": [
+  {
+   "series_id": "acbgi/central-ecd",
+   "group": "acbgi",
+   "kind": "group_mean",
+   "n": 32,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    32,
+    32,
+    32,
+    32
+   ],
+   "baseline_label": "Preoperative (Table 3 row label) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 column 'Center (n = 32)', rows Preoperative, 3, 6 and 12 months; data shown as mean ± SD; Konan XI FA-3709P non-contact specular microscope, manual centre-dot method; column n applies to every visit (eyes with complete ECD at all visits).",
+   "values": [
+    2076.0,
+    1973.0,
+    1927.0,
+    1825.0
+   ],
+   "source_cells": [
+    "PMC6062117.xml::pone.0201342.t003!R2C3",
+    "PMC6062117.xml::pone.0201342.t003!R3C3",
+    "PMC6062117.xml::pone.0201342.t003!R4C3",
+    "PMC6062117.xml::pone.0201342.t003!R5C3"
+   ],
+   "source_cell_texts": [
+    "2,076 ± 633",
+    "1,973 ± 586",
+    "1,927 ± 626",
+    "1,825 ± 609"
+   ]
+  },
+  {
+   "series_id": "ppbgi/central-ecd",
+   "group": "ppbgi",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    9,
+    9,
+    9,
+    9
+   ],
+   "baseline_label": "Preoperative (Table 4 row label) = preoperative central ECD of the operated eye",
+   "notes": "Table 4 column 'Center (n = 9)', rows Preoperative, 3, 6 and 12 months; data shown as mean ± SD; column n applies to every visit (eyes with complete ECD at all visits).",
+   "values": [
+    2226.0,
+    2308.0,
+    2178.0,
+    2194.0
+   ],
+   "source_cells": [
+    "PMC6062117.xml::pone.0201342.t004!R2C3",
+    "PMC6062117.xml::pone.0201342.t004!R3C3",
+    "PMC6062117.xml::pone.0201342.t004!R4C3",
+    "PMC6062117.xml::pone.0201342.t004!R5C3"
+   ],
+   "source_cell_texts": [
+    "2,226 ± 650",
+    "2,308 ± 800",
+    "2,178 ± 704",
+    "2,194 ± 708"
+   ]
+  }
+ ]
+}

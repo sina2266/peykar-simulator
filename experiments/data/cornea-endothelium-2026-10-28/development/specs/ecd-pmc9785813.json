@@ -1,0 +1,37 @@
+{
+ "study_id": "ecd-pmc9785813",
+ "doi": "10.3390/jpm12122075",
+ "pmcid": "PMC9785813",
+ "title": "Corneal Endothelial Cell Loss after Ciliary Sulcus Placement of Ahmed Glaucoma Valve in Patients with Noninfectious Uveitic Glaucoma",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [{"name": "PMC9785813.xml", "sha256": "983d08fd9054b44e637259b09486c5d8dd68952c9ca7f3315813fdd01a52d913", "bytes": 80396, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9785813/fullTextXML"}],
+ "indication": "Glaucoma secondary to noninfectious uveitis (chronic iridocyclitis 10, retinal vasculitis 5, sarcoidosis 4, multifocal choroiditis 3, VKH 3, Fuchs iridocyclitis 1, sympathetic ophthalmia 1); bilateral uveitis 21, unilateral 6; previous cataract surgery 24, trabeculectomy 9, vitrectomy 7 of 27 eyes; 3 eyes with concomitant cataract surgery",
+ "groups": [
+  {"group": "all", "role": "control", "n_reported": 27, "description": "Ahmed glaucoma valve (FP7) with the tube inserted into the ciliary sulcus through a scleral tunnel, scleral patch graft; single surgeon; inflammation quiescent at surgery"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "all/ecd", "group": "all", "kind": "group_mean", "n": 27,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 3, 6, 9, 12],
+   "cells": ["PMC9785813.xml::jpm-12-02075-t002!R2C3", "PMC9785813.xml::jpm-12-02075-t002!R3C3", "PMC9785813.xml::jpm-12-02075-t002!R4C3", "PMC9785813.xml::jpm-12-02075-t002!R5C3", "PMC9785813.xml::jpm-12-02075-t002!R6C3"],
+   "n_by_time": [27, 22, 26, 22, 27],
+   "baseline_label": "Baseline = preoperative central CECD of the operated eye (Topcon SP-3000, technician-verified cell margins)",
+   "notes": "mean ± SD; per-visit n from column N (C2) of Table 2"
+  }
+ ],
+ "exclusions": [
+  {"what": "jpm-12-02075-t002 'Reduction (%)' and 'p Value' columns (C4, C5)", "reason": "percent change derived from the same series; p-values are not admissible"},
+  {"what": "jpm-12-02075-t004 unilateral and bilateral uveitis subgroups", "reason": "header sizes (6 + 25) do not add up to the 27-eye cohort (Table 1: 21 bilateral, 6 unilateral), the subgroups are the same eyes as the Table 2 series, and they report only 6 and 12 months; the whole-cohort series is used"},
+  {"what": "Contralateral eyes of patients with bilateral uveitis (text only)", "reason": "unoperated fellow eyes are excluded"}
+ ],
+ "notes": [
+  "Retrospective study (2017-2021), one eye per patient (the first-operated eye when both had an AGV); inclusion required a minimum preoperative CECD and more than 12 months of follow-up.",
+  "Per-visit n varies (column N), so the means at 3 and 9 months come from a subset of the 27 eyes.",
+  "Tube-shunt surgery without an investigational arm; the single cohort is control."
+ ]
+}

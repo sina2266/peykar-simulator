@@ -1,0 +1,125 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc6766098",
+ "doi": "10.1155/2019/7182324",
+ "pmcid": "PMC6766098",
+ "title": "Clinical Outcomes of Steep-Axis One-Handed Phacoemulsification under the Guidance of a Verion Image-Guided System",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: 'open access article distributed under the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited')"
+ },
+ "source_files": [
+  {
+   "name": "PMC6766098.xml",
+   "sha256": "2c4147ba85617033920c48d2c524498954b43573a43bd1f4b5a765730f66e0b5",
+   "bytes": 80061,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6766098/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related cataract with regular corneal astigmatism (total corneal astigmatism above 0.5 D), LOCS III nuclear opalescence of grade 3 or less, normal anterior segment and fundus, no previous intraocular surgery or injury",
+ "groups": [
+  {
+   "group": "steep-axis-one-handed",
+   "role": "control",
+   "n_reported": 104,
+   "procedure": "cataract",
+   "description": "One-handed phacoemulsification through a 2.4 mm clear corneal incision at the steep axis of total corneal astigmatism (Verion-guided), Centurion OZil IP burst mode, monofocal aspheric IOL in the bag; technique chosen by the patient; single surgeon; prospective non-randomized; 104 eyes of 96 patients"
+  },
+  {
+   "group": "steep-axis-two-handed",
+   "role": "control",
+   "n_reported": 105,
+   "procedure": "cataract",
+   "description": "Two-handed phacoemulsification through a 2.4 mm steep-axis clear corneal incision plus a 1.0 mm limbal side incision; eye conditions matched; 105 eyes of 96 patients"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 'ECL (%)' rows",
+   "reason": "The same table gives absolute ECD for each group; the absolute ECD series is used"
+  },
+  {
+   "what": "Table 4 p columns; 10-mm corneal volume and HEX% blocks",
+   "reason": "p-values are not admissible; not endothelial cell density"
+  }
+ ],
+ "notes": [
+  "Role: two standard phacoemulsification techniques compared without an investigational agent or device; both control-role, separate groups.",
+  "Seven patients had one eye in each group.",
+  "Licence statement names the Creative Commons Attribution License without a version or URL; it grants unrestricted use with attribution, so it is treated as CC BY (public).",
+  "Same institution and surgeon as ecd-pmc6157994, with a different enrolment period (September 2017 to May 2018 here). The specular microscope model is not named in this article."
+ ],
+ "series": [
+  {
+   "series_id": "steep-axis-one-handed/central-ecd",
+   "group": "steep-axis-one-handed",
+   "kind": "group_mean",
+   "n": 104,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Pre-op (Table 4, ECD (mm2) block) = preoperative central ECD of the operated eye",
+   "notes": "Table 4 'Steep-axis one-handed' column, rows Pre-op, 1 week, 1 month and 3 month post-op under 'ECD (mm2)' (read as cells/mm2; central endothelial cell measurements per Methods 2.4); 1 week = 7/30.4375 months. Per-visit n not tabulated.",
+   "values": [
+    2539.91,
+    2356.35,
+    2350.37,
+    2349.28
+   ],
+   "source_cells": [
+    "PMC6766098.xml::tab4!R8C2",
+    "PMC6766098.xml::tab4!R9C2",
+    "PMC6766098.xml::tab4!R10C2",
+    "PMC6766098.xml::tab4!R11C2"
+   ],
+   "source_cell_texts": [
+    "2539.91 ± 230.75",
+    "2356.35 ± 238.08",
+    "2350.37 ± 227.55",
+    "2349.28 ± 229.39"
+   ]
+  },
+  {
+   "series_id": "steep-axis-two-handed/central-ecd",
+   "group": "steep-axis-two-handed",
+   "kind": "group_mean",
+   "n": 105,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.23,
+    1,
+    3
+   ],
+   "baseline_label": "Pre-op (Table 4, ECD (mm2) block) = preoperative central ECD of the operated eye",
+   "notes": "Table 4 'Steep-axis two-handed' column, rows Pre-op, 1 week, 1 month and 3 month post-op under 'ECD (mm2)' (read as cells/mm2); 1 week = 7/30.4375 months. Per-visit n not tabulated.",
+   "values": [
+    2570.21,
+    2349.93,
+    2343.32,
+    2342.31
+   ],
+   "source_cells": [
+    "PMC6766098.xml::tab4!R8C4",
+    "PMC6766098.xml::tab4!R9C4",
+    "PMC6766098.xml::tab4!R10C4",
+    "PMC6766098.xml::tab4!R11C4"
+   ],
+   "source_cell_texts": [
+    "2570.21 ± 255.91",
+    "2349.93 ± 261.97",
+    "2343.32 ± 252.55",
+    "2342.31 ± 259.41"
+   ]
+  }
+ ]
+}

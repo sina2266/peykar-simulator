@@ -1,0 +1,37 @@
+{
+ "study_id": "ecd-pmc8180280",
+ "doi": "10.2147/OPTH.S310873",
+ "pmcid": "PMC8180280",
+ "title": "Outcomes of Descemet Membrane Endothelial Keratoplasty in Bangkok, Thailand",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {"statement": "Dove Medical Press terms incorporating CC BY-NC 3.0 unported (article <license>); not CC BY, record kept private", "url": "https://creativecommons.org/licenses/by-nc/3.0/"},
+ "source_files": [{"name": "PMC8180280.xml", "sha256": "4fd24bb07f1bd6d4818efbe6fdbe7fc581166b198e73216cdd2df5c02c1e0e09", "bytes": 129595, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8180280/fullTextXML"}],
+ "indication": "Corneal endothelial failure: Fuchs endothelial corneal dystrophy 33/62, pseudophakic bullous keratopathy 11/62, decompensation after viral endotheliitis 6/62, failed DSAEK/DMEK 4/62, bullous keratopathy after laser iridotomy 3/62, other 5/62; DMEK alone in 33 pseudophakic eyes, triple-DMEK in 29 phakic eyes",
+ "groups": [
+  {"group": "all", "role": "control", "n_reported": 62, "description": "Consecutive DMEK and triple-DMEK (standard technique, SF6 20% tamponade, standard steroid regimen); ECD reported for the 51 eyes with a clear graft"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "all/graft-ecd", "group": "all", "kind": "group_mean", "n": 51,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 3, 6, 12, 24],
+   "cells": ["PMC8180280.xml::t0003!R18C2", "PMC8180280.xml::t0003!R18C4", "PMC8180280.xml::t0003!R18C5", "PMC8180280.xml::t0003!R18C6", "PMC8180280.xml::t0003!R18C7"],
+   "baseline_label": "Preoperative = donor post-harvesting ECD reported by the provider eye banks (Methods; Table 2 row 'Mean post-harvesting ECD')",
+   "notes": "row label 'ECD, mean ± SD (cell/mm2) (51 eyes)'; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {"what": "t0003 R18C3 (1 Month)", "reason": "blank cell: ECD was not measured at 1 month (Methods: 3, 6, 12 and 24 months)"},
+  {"what": "t0003 row 'Mean ECL' (R19)", "reason": "percent loss derived from the same series; the absolute ECD series is used"}
+ ],
+ "notes": [
+  "Retrospective single-centre cohort of 62 eyes of 62 patients with at least 24 months of follow-up; three surgeons, same technique.",
+  "The ECD row covers the 51 eyes with a clear graft: the authors excluded the 11 eyes with primary (10) or secondary (1) graft failure from further analysis, so follow-up values are conditional on graft survival.",
+  "The reference cell repeats the mean and SD of all 62 donor tissues in Table 2 (t0003!R18C2 matches t0002!R6C2), so the reference may include the donors of the 11 failed grafts; the tabulated ECL is computed against this reference.",
+  "Donor tissue from the Thai Red Cross Eye Bank (19) or EBAA-accredited US eye banks (43); postoperative ECD by non-contact specular microscopy (EM-3000) in the clinic.",
+  "Pooled DMEK and triple-DMEK; the table does not separate them."
+ ]
+}

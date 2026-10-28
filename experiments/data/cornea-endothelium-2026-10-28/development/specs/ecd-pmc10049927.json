@@ -1,0 +1,73 @@
+{
+ "study_id": "ecd-pmc10049927",
+ "doi": "10.1007/s00417-022-05898-x",
+ "pmcid": "PMC10049927",
+ "title": "Five-year follow-up of corneal endothelial cell density after transscleral ab interno glaucoma gel stent implantation",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [
+  {"name": "PMC10049927.xml", "sha256": "6b103b3e628e46beefebd26fb144670fde1e812fb261cc745a2ffb332faf3da7", "bytes": 97511, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10049927/fullTextXML"}
+ ],
+ "indication": "Mild to moderate open-angle glaucoma with insufficiently controlled IOP or intolerance to topical therapy; ab interno XEN45 gel stent with intra-Tenon mitomycin C, alone (solo group) or combined with phacoemulsification through the cataract ports (combined group); 22 of 69 solo-group eyes were pseudophakic at baseline",
+ "groups": [
+  {"group": "solo", "role": "control", "n_reported": 69, "description": "Solo XEN45 gel stent implantation (solo surgery group)"},
+  {"group": "combined", "role": "control", "n_reported": 86, "description": "XEN45 gel stent implantation combined with phacoemulsification cataract surgery (combined surgery group)"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "solo/central-ecd",
+   "group": "solo",
+   "kind": "group_mean",
+   "n": 69,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 12, 24, 36, 48, 60],
+   "cells": [
+    "PMC10049927.xml::Tab3!R3C4",
+    "PMC10049927.xml::Tab3!R4C4",
+    "PMC10049927.xml::Tab3!R5C4",
+    "PMC10049927.xml::Tab3!R6C4",
+    "PMC10049927.xml::Tab3!R7C4",
+    "PMC10049927.xml::Tab3!R8C4"
+   ],
+   "n_by_time": [69, 16, 30, 31, 28, 18],
+   "baseline_label": "Baseline = preoperative central ECD recorded within 3 months before surgery (Methods)",
+   "notes": "Table 3 'Mean' column of the solo surgery group: mean (95% CI, n) of central ECD (Konan CellChek XL); rows labelled 1 to 5 years are yearly data bins (first to fifth postoperative year, Statistical methods)"
+  },
+  {
+   "series_id": "combined/central-ecd",
+   "group": "combined",
+   "kind": "group_mean",
+   "n": 86,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 12, 24, 36, 48, 60],
+   "cells": [
+    "PMC10049927.xml::Tab3!R3C7",
+    "PMC10049927.xml::Tab3!R4C7",
+    "PMC10049927.xml::Tab3!R5C7",
+    "PMC10049927.xml::Tab3!R6C7",
+    "PMC10049927.xml::Tab3!R7C7",
+    "PMC10049927.xml::Tab3!R8C7"
+   ],
+   "n_by_time": [86, 20, 40, 29, 32, 20],
+   "baseline_label": "Baseline = preoperative central ECD recorded within 3 months before surgery (Methods)",
+   "notes": "Table 3 'Mean' column of the combined surgery group: mean (95% CI, n) of central ECD (Konan CellChek XL); rows labelled 1 to 5 years are yearly data bins (first to fifth postoperative year, Statistical methods)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Tab3 'Median' and 'Median % change' columns (C2, C3, C5, C6, C8, C9)", "reason": "medians and median percent changes are not admissible (protocol 1.0.0, Inclusion 3)"},
+  {"what": "Tab3 'Both groups' columns (C8-C10)", "reason": "pooled total of the solo and combined groups (same eyes); the two procedure groups are extracted separately"},
+  {"what": "Tab1 R12 central endothelial cell count", "reason": "baseline median with 95% CI only"},
+  {"what": "Tab4 proportions of eyes with loss above thresholds", "reason": "proportions of eyes (counts), not ECD means"},
+  {"what": "Superior-nasal and inferior-temporal ECD (Methods)", "reason": "not tabulated by visit; only central ECD is in Table 3"}
+ ],
+ "notes": [
+  "Design (Methods): all eyes had a preoperative baseline visit and a last postoperative visit in 2021; yearly interim visits were optional (used by 58 of 155 eyes), so each yearly mean is over a different subset of eyes (per-visit n in the cells).",
+  "Table 1 footnote: 13 of 47 phakic solo-group eyes had cataract surgery between the XEN45 procedure and the postoperative visit.",
+  "Both arms are XEN45 glaucoma surgery without a declared experimental arm; both recorded as control (procedure context glaucoma, combined cataract surgery in the combined group)."
+ ]
+}

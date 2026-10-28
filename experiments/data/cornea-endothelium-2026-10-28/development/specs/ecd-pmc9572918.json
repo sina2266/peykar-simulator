@@ -1,0 +1,43 @@
+{
+ "study_id": "ecd-pmc9572918",
+ "doi": "10.3390/jcm11195601",
+ "pmcid": "PMC9572918",
+ "title": "Descemet Stripping Automated Endothelial Keratoplasty in Thick Corneas",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license; ali:license_ref)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [{"name": "PMC9572918.xml", "sha256": "601200013d87b5cdd0151ff0d66c66b2baab8d243eeb8dd6fefd911d9c9c2cea", "bytes": 49869, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9572918/fullTextXML"}],
+ "indication": "Corneal endothelial dysfunction: pseudophakic bullous keratopathy 21/30, Fuchs endothelial dystrophy 4/30, blunt trauma 3/30, CHED 2/30; triple-DSAEK in 6/30; previous keratoplasty and glaucoma drainage devices excluded",
+ "groups": [
+  {"group": "thickness-le-820um", "role": "control", "n_reported": 15, "description": "DSAEK (Moria ALTK lenticule, Busin glide) in eyes with preoperative corneal thickness at or below 820 µm (the cohort median)", "indication": "baseline condition subgroup: preoperative corneal thickness ≤ 820 µm"},
+  {"group": "thickness-gt-820um", "role": "control", "n_reported": 15, "description": "DSAEK (Moria ALTK lenticule, Busin glide) in eyes with preoperative corneal thickness above 820 µm", "indication": "baseline condition subgroup: preoperative corneal thickness > 820 µm"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "thickness-le-820um/graft-ecd", "group": "thickness-le-820um", "kind": "group_mean", "n": 15,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 1, 12],
+   "cells": ["PMC9572918.xml::jcm-11-05601-t001!R13C2", "PMC9572918.xml::jcm-11-05601-t002!R6C2", "PMC9572918.xml::jcm-11-05601-t002!R7C2"],
+   "baseline_label": "Donor ECD (Table 1) quantified with an EB-3000 XYZ eye-bank specular microscope during Optisol-GS storage (Methods 2.2)",
+   "notes": "mean ± SD; reference from Table 1, follow-ups from Table 2; per-visit n not reported"
+  },
+  {
+   "series_id": "thickness-gt-820um/graft-ecd", "group": "thickness-gt-820um", "kind": "group_mean", "n": 15,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 1, 12],
+   "cells": ["PMC9572918.xml::jcm-11-05601-t001!R13C3", "PMC9572918.xml::jcm-11-05601-t002!R6C3", "PMC9572918.xml::jcm-11-05601-t002!R7C3"],
+   "baseline_label": "Donor ECD (Table 1) quantified with an EB-3000 XYZ eye-bank specular microscope during Optisol-GS storage (Methods 2.2)",
+   "notes": "mean ± SD; reference from Table 1, follow-ups from Table 2; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {"what": "jcm-11-05601-t001 and t002 'p-Value' columns (C4)", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Retrospective study of 30 eyes of 30 patients (2017-2018), two corneal surgeons; groups split at the median preoperative corneal thickness, a baseline patient condition, so both are control.",
+  "Postoperative ECD was measured by laser confocal microscopy (HRT-3), a different device from the eye-bank specular count used for the donor reference.",
+  "ECD recorded before surgery (donor) and at 1 and 12 months after surgery."
+ ]
+}

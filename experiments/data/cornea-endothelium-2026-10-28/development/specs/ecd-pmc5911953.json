@@ -1,0 +1,100 @@
+{
+ "study_id": "ecd-pmc5911953",
+ "doi": "10.1186/s40662-018-0102-5",
+ "pmcid": "PMC5911953",
+ "title": "Comparison of clinical outcomes between femtosecond laser-assisted versus conventional phacoemulsification",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> and ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5911953.xml",
+   "sha256": "bdf811d8bf03b9fac698c9818ba5f5f19a64fd8471912c176f27b9187d955c79",
+   "bytes": 148704,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5911953/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related cataract (LOCS III NO1-NO4); eyes with corneal scarring, keratoconus, amblyopia, glaucoma, retinal, macular or optic nerve disease excluded; monofocal, toric, multifocal or accommodating IOLs",
+ "groups": [
+  {
+   "group": "flacs",
+   "role": "control",
+   "n_reported": 296,
+   "procedure": "cataract",
+   "description": "Femtosecond laser-assisted cataract surgery (Victus laser: anterior capsulotomy, lens fragmentation, corneal incisions) followed by phacoemulsification (Infiniti, divide and conquer); single surgeon; retrospective cohort, technique chosen by the patient"
+  },
+  {
+   "group": "cp",
+   "role": "control",
+   "n_reported": 439,
+   "procedure": "cataract",
+   "description": "Conventional phacoemulsification (2.75 mm temporal clear corneal incision, manual capsulorhexis, Infiniti, divide and conquer), same surgeon"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "flacs/ecd",
+   "group": "flacs",
+   "kind": "group_mean",
+   "n": 283,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1
+   ],
+   "cells": [
+    "PMC5911953.xml::Tab10!R13C3",
+    "PMC5911953.xml::Tab10!R14C3"
+   ],
+   "n_by_time": [
+    283,
+    189
+   ],
+   "baseline_label": "Baseline (Table 10, ECD block) = preoperative ECD (Methods: Konan CellChek XL specular microscopy pre-operatively and at 1 month)",
+   "notes": "Table 10 FLACS 'Mean ± SD' column, rows Baseline and 1 Month under 'ECD (cells/mm2)'; per-visit n from the adjacent FLACS 'n' column."
+  },
+  {
+   "series_id": "cp/ecd",
+   "group": "cp",
+   "kind": "group_mean",
+   "n": 353,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1
+   ],
+   "cells": [
+    "PMC5911953.xml::Tab10!R13C5",
+    "PMC5911953.xml::Tab10!R14C5"
+   ],
+   "n_by_time": [
+    353,
+    69
+   ],
+   "baseline_label": "Baseline (Table 10, ECD block) = preoperative ECD (Methods: Konan CellChek XL specular microscopy pre-operatively and at 1 month)",
+   "notes": "Table 10 CP 'Mean ± SD' column, rows Baseline and 1 Month under 'ECD (cells/mm2)'; per-visit n from the adjacent CP 'n' column."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 10 row 'EC Loss'",
+   "reason": "Change from baseline in the eyes with 1-month data; the same table gives absolute ECD for each group and the absolute series is used"
+  },
+  {
+   "what": "Table 10 corneal oedema and aqueous cells/flare rows; P value column",
+   "reason": "Not endothelial cell density; p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: two established cataract techniques compared without an investigational agent (femtosecond-assisted surgery is listed under the protocol's cataract context); both control-role, separate groups.",
+  "The 1-month means come from subsets of the baseline eyes (FLACS 189 of 283, CP 69 of 353); baseline and 1-month means are not restricted to the same eyes.",
+  "Table 1 counts 296 FLACS and 439 CP eyes overall; the ECD baseline n is smaller (Table 10)."
+ ]
+}

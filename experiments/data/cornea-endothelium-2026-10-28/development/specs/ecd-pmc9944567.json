@@ -1,0 +1,56 @@
+{
+ "study_id": "ecd-pmc9944567",
+ "doi": "10.1016/j.xops.2022.100239",
+ "pmcid": "PMC9944567",
+ "title": "The Biologic Character of Donor Corneal Endothelial Cells Influences Endothelial Cell Density Post Successful Corneal Transplantation",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {"statement": "CC BY-NC-ND 4.0 (article <license>); not CC BY, record kept private", "url": "http://creativecommons.org/licenses/by-nc-nd/4.0/"},
+ "source_files": [{"name": "PMC9944567.xml", "sha256": "6b81dadcedb3b1caaeaee462c395b92112c5f3425f55d91377473dc4f6c8ea24", "bytes": 107695, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9944567/fullTextXML"}],
+ "indication": "Whole cohort of 68 eyes: corneal stromal opacity 21, glaucoma-related bullous keratopathy 17, pseudophakic/aphakic bullous keratopathy 15, Fuchs endothelial dystrophy 6, keratoconus 4, other bullous keratopathy 5; indications of the 36 DSAEK eyes are not tabulated separately",
+ "groups": [
+  {"group": "dsaek-high-maturity", "role": "control", "n_reported": 7, "description": "DSAEK with or without IOL (CorneaGen precut flaps, Busin glide) using donors whose cultured peripheral endothelial cells were more than 70% mature-differentiated by FACS (high-maturity group)", "indication": "donor-tissue condition subgroup: high CEC maturity in culture"},
+  {"group": "dsaek-middle-maturity", "role": "control", "n_reported": 17, "description": "DSAEK with or without IOL using donors with 10-70% mature-differentiated cultured cells (middle-maturity group)", "indication": "donor-tissue condition subgroup: middle CEC maturity in culture"},
+  {"group": "dsaek-low-maturity", "role": "control", "n_reported": 12, "description": "DSAEK with or without IOL using donors with less than 10% mature-differentiated cultured cells (low-maturity group)", "indication": "donor-tissue condition subgroup: low CEC maturity in culture"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dsaek-high-maturity/graft-ecd", "group": "dsaek-high-maturity", "kind": "group_mean", "n": 7,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 6, 12, 24, 36],
+   "cells": ["PMC9944567.xml::tbl2!R10C2", "PMC9944567.xml::tbl2!R11C2", "PMC9944567.xml::tbl2!R12C2", "PMC9944567.xml::tbl2!R13C2", "PMC9944567.xml::tbl2!R14C2"],
+   "baseline_label": "Baseline = donor ECD (Table 1 'Donor ECD'; corneas from CorneaGen Eye Bank)",
+   "notes": "'Subgroup (DSAEK)' rows of Table 2, mean (SD); n = Table 1 DSAEK + DSAEK+IOL counts"
+  },
+  {
+   "series_id": "dsaek-middle-maturity/graft-ecd", "group": "dsaek-middle-maturity", "kind": "group_mean", "n": 17,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 6, 12, 24, 36],
+   "cells": ["PMC9944567.xml::tbl2!R10C3", "PMC9944567.xml::tbl2!R11C3", "PMC9944567.xml::tbl2!R12C3", "PMC9944567.xml::tbl2!R13C3", "PMC9944567.xml::tbl2!R14C3"],
+   "baseline_label": "Baseline = donor ECD (Table 1 'Donor ECD'; corneas from CorneaGen Eye Bank)",
+   "notes": "'Subgroup (DSAEK)' rows of Table 2, mean (SD); n = Table 1 DSAEK + DSAEK+IOL counts"
+  },
+  {
+   "series_id": "dsaek-low-maturity/graft-ecd", "group": "dsaek-low-maturity", "kind": "group_mean", "n": 12,
+   "value_kind": "ecd_absolute", "reference_kind": "donor_eye_bank",
+   "months": [0, 6, 12, 24, 36],
+   "cells": ["PMC9944567.xml::tbl2!R10C4", "PMC9944567.xml::tbl2!R11C4", "PMC9944567.xml::tbl2!R12C4", "PMC9944567.xml::tbl2!R13C4", "PMC9944567.xml::tbl2!R14C4"],
+   "baseline_label": "Baseline = donor ECD (Table 1 'Donor ECD'; corneas from CorneaGen Eye Bank)",
+   "notes": "'Subgroup (DSAEK)' rows of Table 2, mean (SD); n = Table 1 DSAEK + DSAEK+IOL counts"
+  }
+ ],
+ "exclusions": [
+  {"what": "tbl2 'Overall groups' rows (R4-R8)", "reason": "each maturity group mixes DSAEK and PK eyes, so no single procedure context applies, and the groups contain the DSAEK subgroup eyes"},
+  {"what": "PK eyes (32)", "reason": "no PK-only table; PK means appear only in the text and supplementary figures, which are not citable table cells"},
+  {"what": "tbl2 ECL columns (C5-C7) and P-value columns (C8-C9)", "reason": "percent loss derived from the same series; p-values are not admissible"}
+ ],
+ "notes": [
+  "Prospective cohort (2014-2016), single surgeon, 68 consecutive DSAEK or PK patients with 36-month follow-up; the cohort is defined as successful transplants and no graft failure occurred, so values are conditional on graft survival.",
+  "Maturity groups come from FACS of cultured donor rim cells (a donor-tissue characteristic, split at the top quartile, middle half and bottom quartile of donors), not from a postoperative outcome; recorded as control condition subgroups.",
+  "The DSAEK subgroup size per maturity group is not printed in Table 2; n is the sum of the Table 1 'DSAEK' and 'DSAEK+IOL' counts (tbl1 R27, R28), which totals 36 DSAEK eyes, matching the 52.9% DSAEK share in the abstract.",
+  "Postoperative ECD measured every 6 months with a non-contact specular microscope (EM-3000); who measured the donor ECD is not stated.",
+  "The Results text gives one low-maturity overall value that differs from Table 2 (outside the extracted DSAEK rows); the table is the cited source."
+ ]
+}

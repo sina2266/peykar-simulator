@@ -1,0 +1,66 @@
+{
+ "study_id": "ecd-pmc11826720",
+ "doi": "10.5935/0004-2749.20230053",
+ "pmcid": "PMC11826720",
+ "title": "Deep anterior lamellar keratoplasty versus penetrating keratoplasty: comparison of clinical outcomes in contralateral eyes",
+ "species": "human",
+ "procedure": "pk",
+ "split": "development",
+ "license": {"statement": "Creative Commons Attribution License, version not stated (article <license>)", "url": null},
+ "source_files": [
+  {"name": "PMC11826720.xml", "sha256": "461093567f43f88f988fa7d6f518fc2c755b680778310a5c3cbc7638c3302b1b", "bytes": 76549, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11826720/fullTextXML"}
+ ],
+ "indication": "Contralateral eyes of 26 patients (keratoconus 19, stromal dystrophy 6, post-LASIK ectasia 1): PK in the eye with Descemet membrane rupture (hydrops history, opacities) or deep dystrophic lesions, big-bubble DALK in the fellow eye; one surgeon; eye-bank donor corneas in Eusol-C; minimum follow-up 3 years",
+ "groups": [
+  {"group": "pk", "role": "control", "procedure": "pk", "n_reported": 26, "description": "Penetrating keratoplasty eyes"},
+  {"group": "dalk", "role": "control", "procedure": "dalk", "n_reported": 26, "description": "Deep anterior lamellar keratoplasty (big bubble) eyes, contralateral to the PK eyes; host Descemet membrane and endothelium retained"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "pk/ecd",
+   "group": "pk",
+   "kind": "group_mean",
+   "n": 26,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [0, 6, 12, 24, 36],
+   "cells": [
+    "PMC11826720.xml::t2!R2C2",
+    "PMC11826720.xml::t2!R2C3",
+    "PMC11826720.xml::t2!R2C4",
+    "PMC11826720.xml::t2!R2C5",
+    "PMC11826720.xml::t2!R2C6"
+   ],
+   "baseline_label": "Table 2 'Preoperative' ECD of the PK group; Methods describe donor ECD measured by the eye bank (Konan EKA-04); recorded as the donor eye-bank reference (uncertain, see record notes)",
+   "notes": "Table 2 PK row, mean ± SD at preoperative, 6, 12, 24 and 36 months; postoperative ECD by Topcon SP-2000P; no per-visit n"
+  },
+  {
+   "series_id": "dalk/ecd",
+   "group": "dalk",
+   "kind": "group_mean",
+   "n": 26,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 6, 12, 24, 36],
+   "cells": [
+    "PMC11826720.xml::t2!R3C2",
+    "PMC11826720.xml::t2!R3C3",
+    "PMC11826720.xml::t2!R3C4",
+    "PMC11826720.xml::t2!R3C5",
+    "PMC11826720.xml::t2!R3C6"
+   ],
+   "baseline_label": "Table 2 'Preoperative' ECD of the DALK group, recorded as the host preoperative ECD (DALK retains the host endothelium; uncertain, see record notes)",
+   "notes": "Table 2 DALK row, mean ± SD at preoperative, 6, 12, 24 and 36 months; postoperative ECD by Topcon SP-2000P; no per-visit n"
+  }
+ ],
+ "exclusions": [
+  {"what": "t3 endothelial cell loss (%)", "reason": "percent loss of the same groups; the absolute ECD series is used (cells also use decimal commas)"},
+  {"what": "t2 R4 p-values", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Reference ambiguity: Table 2 labels the reference column 'Preoperative' for both groups. Methods state that donor ECD was measured with the eye bank's Konan EKA-04 and postoperative ECD with a Topcon SP-2000P, but do not state how the preoperative value of each group was obtained. Following the protocol definitions, the PK reference is recorded as donor eye-bank ECD and the DALK reference as the host's preoperative ECD; both reference kinds are uncertain.",
+  "Two standard keratoplasty techniques compared in contralateral operated eyes without an investigational agent; both recorded as control with per-group procedure (pk, dalk).",
+  "Microperforation occurred in 4 DALK eyes without conversion to PK (Abstract)."
+ ]
+}

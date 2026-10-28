@@ -1,0 +1,44 @@
+{
+ "study_id": "ecd-pmc10114460",
+ "doi": "10.1186/s12886-023-02912-6",
+ "pmcid": "PMC10114460",
+ "title": "The effect of accelerated pulsed high-fluence corneal cross-linking on corneal endothelium; a prospective specular microscopy study",
+ "species": "human",
+ "procedure": "crosslinking",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>); CC0 waiver applies to data made available in the article", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [
+  {"name": "PMC10114460.xml", "sha256": "5a3886fc703ab16cbb884dfc5c0f9885bd45af69d86c418a0e671db2e6e1481e", "bytes": 72350, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10114460/fullTextXML"}
+ ],
+ "indication": "Mild to moderate progressive keratoconus (Kmax below 56 D, thinnest pachymetry above 400 µm); epithelium-off accelerated pulsed high-fluence CXL (KXL, 30 mW/cm2 UVA, 8 min pulsed 1 s on/1 s off, 7.2 J/cm2, riboflavin 0.1% in HPMC)",
+ "groups": [
+  {"group": "all", "role": "control", "n_reported": 45, "description": "Single-arm prospective case series (45 eyes of 27 patients) treated with pulsed-light accelerated CXL; no comparator arm"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "all/central-ecd",
+   "group": "all",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 3, 6],
+   "cells": [
+    "PMC10114460.xml::Tab2!R2C2",
+    "PMC10114460.xml::Tab2!R2C3",
+    "PMC10114460.xml::Tab2!R2C4"
+   ],
+   "baseline_label": "Preoperative non-contact specular microscopy (Nidek CEM-530) of the treated eye",
+   "notes": "Table 2 row 'Endothelial cell density', mean ± SD at preoperative, 3 months and 6 months postoperatively; analysed by repeated-measures ANOVA; the table gives no per-visit n"
+  }
+ ],
+ "exclusions": [
+  {"what": "Tab2 R3-R7 (CV, hexagonality, cell sizes)", "reason": "other specular parameters, not ECD"},
+  {"what": "Tab1 R12 baseline ECD", "reason": "same preoperative mean as Tab2 R2C2 (with range); Table 2 carries the follow-up"}
+ ],
+ "notes": [
+  "Single-arm case series of a standard CXL procedure context without a declared experimental arm; recorded as control.",
+  "Trial registration NCT04160338."
+ ]
+}

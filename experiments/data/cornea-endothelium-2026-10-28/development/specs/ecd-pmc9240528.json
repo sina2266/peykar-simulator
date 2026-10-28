@@ -1,0 +1,45 @@
+{
+ "study_id": "ecd-pmc9240528",
+ "doi": "10.4103/ijo.IJO_1955_21",
+ "pmcid": "PMC9240528",
+ "title": "Comparison of corneal endothelial changes following phacoemulsification in diabetic and non-diabetic patients",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {"statement": "CC BY-NC-SA 4.0 (article <license>); not CC BY, record kept private", "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"},
+ "source_files": [{"name": "PMC9240528.xml", "sha256": "47a4cc12a71154d84f80879028d7003f1837f5c2839e0a2f41fd68dc183a6f98", "bytes": 87399, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9240528/fullTextXML"}],
+ "indication": "Senile nuclear cataract grade I-III; diabetic group with type 2 diabetes and good glycaemic control (HbA1c below 7%) without diabetic retinopathy, non-diabetic group age-matched; corneal disease, pseudoexfoliation, glaucoma, uveitis, retinal disease and previous ocular surgery excluded",
+ "groups": [
+  {"group": "non-diabetic", "role": "control", "n_reported": 100, "description": "Phacoemulsification (phaco chop, single surgeon) in patients without diabetes", "indication": "senile cataract, no diabetes"},
+  {"group": "diabetic", "role": "control", "n_reported": 100, "description": "Phacoemulsification (phaco chop, single surgeon) in patients with type 2 diabetes", "indication": "senile cataract with type 2 diabetes (patient-condition subgroup)"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "non-diabetic/ecd", "group": "non-diabetic", "kind": "group_mean", "n": 100,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 0.23, 0.9199, 3],
+   "cells": ["PMC9240528.xml::IJO_1955_21-t003!R2C4", "PMC9240528.xml::IJO_1955_21-t003!R4C4", "PMC9240528.xml::IJO_1955_21-t003!R6C4", "PMC9240528.xml::IJO_1955_21-t003!R8C4"],
+   "baseline_label": "Pre-op. = preoperative ECD of the operated eye (Tomey EM-1000 specular microscope)",
+   "notes": "'Mean' column (C4) of Table 3; times 1 week and 4 weeks converted from days; per-visit n not tabulated for ECD"
+  },
+  {
+   "series_id": "diabetic/ecd", "group": "diabetic", "kind": "group_mean", "n": 100,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 0.23, 0.9199, 3],
+   "cells": ["PMC9240528.xml::IJO_1955_21-t003!R3C4", "PMC9240528.xml::IJO_1955_21-t003!R5C4", "PMC9240528.xml::IJO_1955_21-t003!R7C4", "PMC9240528.xml::IJO_1955_21-t003!R9C4"],
+   "baseline_label": "Pre-op. = preoperative ECD of the operated eye (Tomey EM-1000 specular microscope)",
+   "notes": "'Mean' column (C4) of Table 3; diabetic rows have an empty time cell and belong to the time label of the row above; per-visit n not tabulated for ECD"
+  }
+ ],
+ "exclusions": [
+  {"what": "IJO_1955_21-t003 SD, minimum, maximum and P columns (C5-C8)", "reason": "not means; p-values are not admissible"},
+  {"what": "IJO_1955_21-t004 'Change in Endothelial cell density' rows", "reason": "changes of the same series; the absolute ECD series is used"}
+ ],
+ "notes": [
+  "Prospective comparative observational study of 200 patients (100 per group), one operated eye per patient as implied by group sizes and side counts.",
+  "The second postoperative visit is labelled '4-weeks' in the Table 3 rows and in the abstract but '1 month' in the caption and Methods; it is converted as 4 weeks (28 days).",
+  "Table 5 (BCVA) reports n = 100 per group at every visit; the ECD table gives no per-visit n.",
+  "Both groups receive the same standard surgery; diabetes defines a patient-condition subgroup, so both are control."
+ ]
+}

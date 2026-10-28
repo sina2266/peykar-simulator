@@ -1,0 +1,158 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc9859240",
+ "doi": "10.3390/ijerph20021365",
+ "pmcid": "PMC9859240",
+ "title": "Efficacy and Safety of ab Externo Phaco-Canaloplasty versus First-Generation iStent Bypass Implantation Combined with Phacoemulsification in Patients with Primary Open Angle Glaucoma-Early Results",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license; ali:license_ref)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9859240.xml",
+   "sha256": "e2aab3e2a15bb743fc4131872cb53a38ac8f38547e4bb068dc7dd833131a2925",
+   "bytes": 169254,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9859240/fullTextXML"
+  }
+ ],
+ "indication": "Mild-to-moderate primary open-angle glaucoma not at target IOP on maximally tolerated medication, with cataract requiring surgery; narrow-angle, pseudoexfoliative, pigmentary and neovascular glaucoma and previous laser or surgery excluded",
+ "groups": [
+  {
+   "group": "phaco-canaloplasty",
+   "role": "control",
+   "n_reported": 47,
+   "description": "Phacoemulsification and IOL combined with ab externo canaloplasty (iTrack microcatheter, 360° viscocanalostomy, tensioned 10-0 polypropylene suture)"
+  },
+  {
+   "group": "phaco-istent",
+   "role": "control",
+   "n_reported": 45,
+   "description": "Phacoemulsification and IOL combined with ab interno first-generation iStent trabecular bypass implantation"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "ijerph-20-01365-t003 baseline (R2) and 6-month (R4) ECD",
+   "reason": "median (Q1, Q3), not admissible"
+  },
+  {
+   "what": "ijerph-20-01365-t003 3-month ECD (R3)",
+   "reason": "same means as the 3-month paired rows of Tables 6 and 7, whose baselines (means of the same eyes) are used instead of the Table 3 median baseline"
+  },
+  {
+   "what": "ijerph-20-01365-t006 ECD rows 'after 14 days' (R4), 'after 1 month' (R5), 'after 6 months' (R7)",
+   "reason": "baseline and follow-up given as median (Q1, Q3), not admissible"
+  },
+  {
+   "what": "ijerph-20-01365-t007 ECD rows 'after 1 month' (R5) and 'after 6 months' (R7)",
+   "reason": "baseline and follow-up given as median (Q1, Q3), not admissible"
+  },
+  {
+   "what": "MD (95% CI) and p columns of Tables 3, 6 and 7",
+   "reason": "differences and p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Prospective single-centre study (2021-2022), single surgeon, 92 eyes of 82 patients; allocation by surgeon judgement and eye anatomy, not randomized. Mean follow-up was below 6 months in both groups (Table 1).",
+  "Tables 6 and 7 report each follow-up as a paired comparison within the subset of eyes measured at that visit, each with its own baseline. Each admissible mean pair is recorded as its own two-point series referenced to that subset's baseline. The two phaco-istent series come from different, overlapping subsets of the same 45-eye group.",
+  "Both arms are standard glaucoma procedures combined with phacoemulsification and no investigational agent; both are control."
+ ],
+ "series": [
+  {
+   "series_id": "phaco-canaloplasty/ecd-paired-3m",
+   "group": "phaco-canaloplasty",
+   "kind": "group_mean",
+   "n": 32,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3
+   ],
+   "n_by_time": [
+    32,
+    32
+   ],
+   "baseline_label": "Baseline ECD of the 32 eyes measured at 3 months (paired row 'after 3 months, n = 32', Table 6); SP-3000P specular microscope",
+   "notes": "mean ± SD pair (dependent-samples t-test, superscript 1)",
+   "values": [
+    2254.72,
+    1878.38
+   ],
+   "source_cells": [
+    "PMC9859240.xml::ijerph-20-01365-t006!R6C2",
+    "PMC9859240.xml::ijerph-20-01365-t006!R6C3"
+   ],
+   "source_cell_texts": [
+    "2254.72 ± 335.42",
+    "1878.38 ± 564.69"
+   ]
+  },
+  {
+   "series_id": "phaco-istent/ecd-paired-14d",
+   "group": "phaco-istent",
+   "kind": "group_mean",
+   "n": 21,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.46
+   ],
+   "n_by_time": [
+    21,
+    21
+   ],
+   "baseline_label": "Baseline ECD of the 21 eyes measured at 14 days (paired row 'after 14 days, n = 21', Table 7); SP-3000P specular microscope",
+   "notes": "mean ± SD pair (dependent-samples t-test, superscript 1); 14 days converted from days",
+   "values": [
+    2142.81,
+    1448.0
+   ],
+   "source_cells": [
+    "PMC9859240.xml::ijerph-20-01365-t007!R4C2",
+    "PMC9859240.xml::ijerph-20-01365-t007!R4C3"
+   ],
+   "source_cell_texts": [
+    "2142.81 ± 423.32",
+    "1448.00 ± 716.52"
+   ]
+  },
+  {
+   "series_id": "phaco-istent/ecd-paired-3m",
+   "group": "phaco-istent",
+   "kind": "group_mean",
+   "n": 29,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3
+   ],
+   "n_by_time": [
+    29,
+    29
+   ],
+   "baseline_label": "Baseline ECD of the 29 eyes measured at 3 months (paired row 'after 3 months, n = 29', Table 7); SP-3000P specular microscope",
+   "notes": "mean ± SD pair (dependent-samples t-test, superscript 1)",
+   "values": [
+    2178.79,
+    1440.66
+   ],
+   "source_cells": [
+    "PMC9859240.xml::ijerph-20-01365-t007!R6C2",
+    "PMC9859240.xml::ijerph-20-01365-t007!R6C3"
+   ],
+   "source_cell_texts": [
+    "2178.79 ± 445.08",
+    "1440.66 ± 589.33"
+   ]
+  }
+ ]
+}

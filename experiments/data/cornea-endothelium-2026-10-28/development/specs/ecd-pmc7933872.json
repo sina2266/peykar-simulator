@@ -1,0 +1,108 @@
+{
+ "study_id": "ecd-pmc7933872",
+ "doi": "10.4103/ijo.IJO_956_20",
+ "pmcid": "PMC7933872",
+ "title": "A comparative study on endothelial cell loss in nanophthalmic eyes undergoing cataract surgery by phacoemulsification",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license> and ali:license_ref https://creativecommons.org/licenses/by-nc-sa/4.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7933872.xml",
+   "sha256": "e3ef0e74b186a9be3671390ff3a8ea9bbfcde2aca32f2840e2a763985c14a08e",
+   "bytes": 87721,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7933872/fullTextXML)"
+  }
+ ],
+ "indication": "Visually significant cataract (LOCS III below NO5); study group: nanophthalmos (axial length below 20.5 mm, retino-choroido-scleral thickness above 1.7 mm, ACD above 1.5 mm, corneal diameter at least 11 mm; eyes below the Methods ECD threshold excluded); control group: age-matched normal eyes",
+ "groups": [
+  {
+   "group": "nanophthalmic",
+   "role": "control",
+   "n_reported": 19,
+   "procedure": "cataract",
+   "description": "Phacoemulsification (2.8 mm temporal clear corneal incision, stop and chop, Centurion, SN60WF IOL) with concomitant prophylactic inferotemporal posterior sclerostomy; laser peripheral iridotomy at least 2 weeks before surgery; 19 eyes of 15 patients; same surgeon; prospective, 2018"
+  },
+  {
+   "group": "normal",
+   "role": "control",
+   "n_reported": 42,
+   "procedure": "cataract",
+   "description": "Standard phacoemulsification in age-matched normal eyes; 42 eyes of 21 patients; same surgeon"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "nanophthalmic/central-ecd",
+   "group": "nanophthalmic",
+   "kind": "group_mean",
+   "n": 19,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC7933872.xml::T3!R19C2",
+    "PMC7933872.xml::T3!R20C2",
+    "PMC7933872.xml::T3!R21C2"
+   ],
+   "baseline_label": "Baseline (Table 3, Endothelial Cell Density block) = preoperative central ECD (specular microscopy one day before surgery, after the laser iridotomy)",
+   "notes": "Table 3 'Study group (n=19) Mean±SD' column, rows Baseline, Month 1 and Month 3 under 'Endothelial Cell Density (ECD)'; Konan Noncon Robo specular microscopy, centre method. Per-visit n not tabulated."
+  },
+  {
+   "series_id": "normal/central-ecd",
+   "group": "normal",
+   "kind": "group_mean",
+   "n": 42,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC7933872.xml::T3!R19C4",
+    "PMC7933872.xml::T3!R20C4",
+    "PMC7933872.xml::T3!R21C4"
+   ],
+   "baseline_label": "Baseline (Table 3, Endothelial Cell Density block) = preoperative central ECD of the operated eye",
+   "notes": "Table 3 'Control group (n=42) Mean±SD' column, rows Baseline, Month 1 and Month 3 under 'Endothelial Cell Density (ECD)'. Per-visit n not tabulated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 'ECD loss%' rows",
+   "reason": "Reported as median (IQR); medians are not admissible and the absolute ECD means are used"
+  },
+  {
+   "what": "Table 2 ACD ≤2.5 and ACD >2.5 subgroups of the nanophthalmic eyes",
+   "reason": "Partition of the same eyes as the nanophthalmic series; the study's primary groups (Table 3) are used"
+  },
+  {
+   "what": "Table 4 CDE ≤7 and >7 subsets",
+   "reason": "Subsets of the same eyes defined by intraoperative phaco energy, not separate groups"
+  },
+  {
+   "what": "Table 1 baseline ECD rows",
+   "reason": "Same baseline as Table 3; Table 3 cells are cited for the whole series"
+  },
+  {
+   "what": "Table 3 IOP, BCVA, CCT, CDE and phaco-time rows; P columns; Table 5 regression",
+   "reason": "Not endothelial cell density; p-values and model estimates are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: nanophthalmos is a patient condition (protocol); both groups had phacoemulsification without an investigational agent, so both are control-role groups. The nanophthalmic eyes also had prophylactic posterior sclerostomy and prior laser iridotomy.",
+  "One nanophthalmic eye with malignant glaucoma (vitrectomy after 1 month) was removed from all postoperative analyses; the Table 3 header still states n = 19.",
+  "Control eyes: 42 eyes of 21 patients (both eyes of each control patient)."
+ ]
+}

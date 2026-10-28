@@ -1,0 +1,129 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc9098022",
+ "doi": "10.1371/journal.pone.0267940",
+ "pmcid": "PMC9098022",
+ "title": "Comparison of triple-DMEK to pseudophakic-DMEK: A cohort study of 95 eyes",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, linked to creativecommons.org/licenses/by/4.0)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9098022.xml",
+   "sha256": "729cc406acd50eb6cd790ce3eb32db4f16e1a173ce130dedf0d67be252db27fb",
+   "bytes": 162230,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9098022/fullTextXML"
+  }
+ ],
+ "indication": "Fuchs endothelial corneal dystrophy (adults, BSCVA criterion per Methods); organ-cultured grafts from two French regional tissue banks; Nd:YAG inferior iridotomy before surgery in all eyes",
+ "groups": [
+  {
+   "group": "triple-dmek",
+   "role": "control",
+   "n_reported": 40,
+   "description": "Phacoemulsification immediately followed by DMEK in the same session (40 eyes of 34 patients)"
+  },
+  {
+   "group": "pseudophakic-dmek",
+   "role": "control",
+   "n_reported": 55,
+   "description": "DMEK in pseudophakic eyes, phacoemulsification done earlier (55 eyes of 43 patients)"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "pone.0267940.t002 'Endothelial cell loss, % relative to baseline' rows (R8-R10)",
+   "reason": "percent loss derived from the same series; the absolute ECD series is used"
+  },
+  {
+   "what": "pone.0267940.t002 'P value' column (C4)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "pone.0267940.t001 'Graft ECD' row (R11)",
+   "reason": "donor graft ECD given only as median (range); medians are not admissible, so it cannot serve as the reference"
+  }
+ ],
+ "notes": [
+  "Retrospective cohort of consecutive FECD patients (2015-2019), single surgeon, at least 12 months follow-up; Methods state that data were complete for all analysed patients.",
+  "Eyes needing a second transplant (5 triple-DMEK, 8 pseudophakic-DMEK) were excluded from the statistical analysis by the authors, so postoperative values are conditional on graft survival.",
+  "Reference kind: Table 2 'Preoperative' ECD is recorded as patient_preoperative (Methods describe preoperative specular microscopy of the patients; the donor graft ECD is reported separately in Table 1 as median (range)). The two tables' preoperative and graft ranges are not identical and the article does not reconcile them, so the attribution to recipient or donor endothelium is unverified.",
+  "Both arms are standard DMEK variants without an investigational agent; both are control."
+ ],
+ "series": [
+  {
+   "series_id": "triple-dmek/ecd",
+   "group": "triple-dmek",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative ECD (Table 2), the stated baseline of the tabulated endothelial cell loss; per Methods the preoperative examination included specular microscopy (CEM-530) of the patient's eye",
+   "notes": "mean ± SD (range) per footnote; header 40 eyes; per-visit n not tabulated",
+   "values": [
+    2510.0,
+    1430.0,
+    1330.0,
+    1180.0
+   ],
+   "source_cells": [
+    "PMC9098022.xml::pone.0267940.t002!R3C2",
+    "PMC9098022.xml::pone.0267940.t002!R4C2",
+    "PMC9098022.xml::pone.0267940.t002!R5C2",
+    "PMC9098022.xml::pone.0267940.t002!R6C2"
+   ],
+   "source_cell_texts": [
+    "2510±200 (2000–2900)",
+    "1430±470 (640–2600)",
+    "1330±430 (666–2400)",
+    "1180±480 (509–2831)"
+   ]
+  },
+  {
+   "series_id": "pseudophakic-dmek/ecd",
+   "group": "pseudophakic-dmek",
+   "kind": "group_mean",
+   "n": 55,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative ECD (Table 2), the stated baseline of the tabulated endothelial cell loss; per Methods the preoperative examination included specular microscopy (CEM-530) of the patient's eye",
+   "notes": "mean ± SD (range) per footnote; header 55 eyes; per-visit n not tabulated",
+   "values": [
+    2570.0,
+    1570.0,
+    1460.0,
+    1300.0
+   ],
+   "source_cells": [
+    "PMC9098022.xml::pone.0267940.t002!R3C3",
+    "PMC9098022.xml::pone.0267940.t002!R4C3",
+    "PMC9098022.xml::pone.0267940.t002!R5C3",
+    "PMC9098022.xml::pone.0267940.t002!R6C3"
+   ],
+   "source_cell_texts": [
+    "2570±196 (2080–2950)",
+    "1570±370 (634–2239)",
+    "1460±360 (535–2240)",
+    "1300±380 (494–2032)"
+   ]
+  }
+ ]
+}

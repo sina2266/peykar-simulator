@@ -1,0 +1,151 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc12952605",
+ "doi": "10.1371/journal.pone.0344183",
+ "pmcid": "PMC12952605",
+ "title": "Comparative outcomes of DSAEK and DMEK in eyes with prior Ahmed glaucoma valve implantation",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12952605.xml",
+   "sha256": "9dcbbbac6cf26178255265f21515c99ff9fc9cd46ee9385471d6d72bc3aaef47",
+   "bytes": 172859,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12952605/fullTextXML)"
+  }
+ ],
+ "indication": "Endothelial keratoplasty in eyes with a prior Ahmed glaucoma valve (single or multiple AGV, some with prior trabeculectomy/MIGS; POAG, secondary, uveitic, pseudoexfoliative, neovascular glaucoma, ICE syndrome); no previous corneal transplantation; mostly pseudophakic",
+ "groups": [
+  {
+   "group": "dsaek",
+   "role": "control",
+   "n_reported": 16,
+   "procedure": "dsaek",
+   "description": "Ultrathin DSAEK (precut eye-bank tissue, mean graft thickness about 58 um, pull-through insertion, air tamponade); surgeon's choice of technique; retrospective consecutive series"
+  },
+  {
+   "group": "dmek",
+   "role": "control",
+   "n_reported": 11,
+   "procedure": "dmek",
+   "description": "DMEK (precut, preloaded eye-bank grafts in glass tubes, air tamponade); surgeon's choice of technique; retrospective consecutive series"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 percent endothelial cell loss (%ECL relative to donor ECD)",
+   "reason": "The same groups have absolute ECD in Table 3; the absolute ECD series are used"
+  },
+  {
+   "what": "Table 3 'Mean Difference (95% CI)' and 'P value' columns",
+   "reason": "Between-group differences and p-values are not admissible"
+  },
+  {
+   "what": "Table 1 donor ECD row",
+   "reason": "Same donor values as Table 3; Table 3 cells are cited for the whole series"
+  }
+ ],
+ "notes": [
+  "DSAEK and DMEK are two standard techniques chosen by surgeon preference, no investigational agent: both control-role groups with per-group procedure contexts (dsaek, dmek).",
+  "Failed grafts were removed from later visits (5/16 DSAEK and 3/11 DMEK secondary failures overall); the group itself is defined by procedure, not by a postoperative outcome, so it is kept and the attrition is shown in n_by_time.",
+  "The method used to count donor ECD is not described beyond the eye-bank supply of the tissue."
+ ],
+ "series": [
+  {
+   "series_id": "dsaek/graft-ecd",
+   "group": "dsaek",
+   "kind": "group_mean",
+   "n": 16,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    16,
+    16,
+    16,
+    16,
+    14
+   ],
+   "baseline_label": "Reference = donor ECD (Table 3 row 'Donor'); donor tissue precut and supplied by a nonprofit eye bank (Methods)",
+   "notes": "Table 3 column 'DSAEK (n = 16)'; mean ± standard deviation. n_by_time: header n for the donor, 1- and 3-month rows; footnotes ‡ (6 months, n = 16) and § (12 months, n = 14); Results: eyes with graft failure by a visit were excluded from that visit's analysis.",
+   "values": [
+    2874.6,
+    1685.3,
+    1704.5,
+    1583.2,
+    1441.1
+   ],
+   "source_cells": [
+    "PMC12952605.xml::pone.0344183.t003!R3C2",
+    "PMC12952605.xml::pone.0344183.t003!R4C2",
+    "PMC12952605.xml::pone.0344183.t003!R5C2",
+    "PMC12952605.xml::pone.0344183.t003!R6C2",
+    "PMC12952605.xml::pone.0344183.t003!R7C2"
+   ],
+   "source_cell_texts": [
+    "2874.6 ± 200.6",
+    "1685.3 ± 576.7",
+    "1704.5 ± 611.5",
+    "1583.2 ± 562.6",
+    "1441.1 ± 502.6"
+   ]
+  },
+  {
+   "series_id": "dmek/graft-ecd",
+   "group": "dmek",
+   "kind": "group_mean",
+   "n": 11,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    11,
+    11,
+    11,
+    10,
+    10
+   ],
+   "baseline_label": "Reference = donor ECD (Table 3 row 'Donor'); donor tissue precut and preloaded by a nonprofit eye bank (Methods)",
+   "notes": "Table 3 column 'DMEK (n = 11)'; mean ± standard deviation. n_by_time: header n for the donor, 1- and 3-month rows; footnotes ‡ (6 months, n = 10) and § (12 months, n = 10); Results: eyes with graft failure by a visit were excluded from that visit's analysis.",
+   "values": [
+    2715.3,
+    1550.9,
+    1486.7,
+    1109.5,
+    1046.6
+   ],
+   "source_cells": [
+    "PMC12952605.xml::pone.0344183.t003!R3C3",
+    "PMC12952605.xml::pone.0344183.t003!R4C3",
+    "PMC12952605.xml::pone.0344183.t003!R5C3",
+    "PMC12952605.xml::pone.0344183.t003!R6C3",
+    "PMC12952605.xml::pone.0344183.t003!R7C3"
+   ],
+   "source_cell_texts": [
+    "2715.3 ± 272.6",
+    "1550.9 ± 748.7",
+    "1486.7 ± 578.7",
+    "1109.5 ± 484.8",
+    "1046.6 ± 327.3"
+   ]
+  }
+ ]
+}

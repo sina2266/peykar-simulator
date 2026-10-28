@@ -1,0 +1,35 @@
+{
+ "study_id": "ecd-pmc8786756",
+ "doi": "10.1007/s00417-021-05334-6",
+ "pmcid": "PMC8786756",
+ "title": "Impact of DMEK on visual quality in patients with Fuchs’ endothelial dystrophy",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [{"name": "PMC8786756.xml", "sha256": "ad0a3066ca030036e933854769a07ee8efe8e88b46c1dddc819491a739beeb18", "bytes": 72934, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8786756/fullTextXML"}],
+ "indication": "Fuchs endothelial dystrophy without previous corneal surgery; 22 pseudophakic DMEK and 29 triple DMEK",
+ "groups": [
+  {"group": "all", "role": "control", "n_reported": 51, "description": "DMEK with surgeon-prepared grafts (Melles technique), SF6 20% tamponade, standardized postoperative steroids; prospective institutional case series"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "all/ecd", "group": "all", "kind": "group_mean", "n": 51,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3],
+   "cells": ["PMC8786756.xml::Tab2!R3C2", "PMC8786756.xml::Tab2!R3C3", "PMC8786756.xml::Tab2!R3C4"],
+   "baseline_label": "Preoperative ECD as tabulated (Table 2 'Preoperative'); the article does not state whether it is the recipient's or the donor's count",
+   "notes": "mean ± SD (range) per caption; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {"what": "Tab2 rows other than ECD (CDVA, CCT, keratometry, densitometry)", "reason": "not endothelial cell density"}
+ ],
+ "notes": [
+  "Prospective case series of 51 patients (one DMEK eye each) operated February 2018 to February 2019.",
+  "Four patients needing secondary keratoplasty (3 repeat DMEK for persistent graft dysfunction, 1 PK for stromal scarring) were excluded from the postoperative analysis and 41 patients completed the 3-month visit (Results), so postoperative values are conditional on graft survival and follow-up.",
+  "Reference kind: Table 2 labels the value 'Preoperative' and Methods mention only specular microscopy (Oculus/Nidek CEM-530) without attributing it to the donor tissue; it is recorded as labelled (patient_preoperative). The attribution to recipient or donor endothelium is unverified.",
+  "ECD measured preoperatively and at 1 and 3 months after DMEK."
+ ]
+}

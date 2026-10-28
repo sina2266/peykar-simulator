@@ -1,0 +1,117 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc8162248",
+ "doi": "10.1155/2020/3690528",
+ "pmcid": "PMC8162248",
+ "title": "Comparison of Femtosecond Laser-Assisted Cataract Surgery and Conventional Phacoemulsification in Shallow Anterior Chambers and Glaucoma",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License; ali:license_ref)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8162248.xml",
+   "sha256": "55133cbe7c9b599698b9cb90d91c0e6d6de8356ff3015e0c8eb2f922a05ed1ba",
+   "bytes": 63650,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8162248/fullTextXML"
+  }
+ ],
+ "indication": "Symptomatic cataract with shallow anterior chamber (ACD below 2.4 mm per Methods) and elevated IOP (glaucoma); subluxated lens/zonulysis in 26 of 106 eyes (10 FLACS, 16 conventional); one eye per patient",
+ "groups": [
+  {
+   "group": "flacs",
+   "role": "control",
+   "n_reported": 52,
+   "description": "Femtosecond laser-assisted cataract surgery (LenSx capsulotomy and lens fragmentation) then phaco-chop phacoemulsification and SN60WF IOL"
+  },
+  {
+   "group": "conventional",
+   "role": "control",
+   "n_reported": 54,
+   "description": "Conventional phacoemulsification (keratome incisions, manual capsulorhexis, phaco-chop) with the same IOL"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "tab3 columns 'ECL at month 6' (C5) and 'ECL%' (C6)",
+   "reason": "loss derived from the same series; the absolute ECD series is used"
+  },
+  {
+   "what": "tab3 row 'P value' (R4)",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Retrospective single-centre review (2016-2018); patients chose the procedure after counselling; same surgeon, same phaco platform and IOL.",
+  "Role assignment: FLACS and conventional phacoemulsification are two established techniques compared in a retrospective observational design, with no investigational agent and no arm declared experimental, so both are control (separate groups).",
+  "ECD was measured preoperatively and at 3 and 6 months (Methods 2.4).",
+  "Methods give the shallow-AC inclusion criterion as ACD below 2.4 mm, the Discussion as below 2.5 mm."
+ ],
+ "series": [
+  {
+   "series_id": "flacs/ecd",
+   "group": "flacs",
+   "kind": "group_mean",
+   "n": 52,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Preoperation = preoperative ECD of the operated eye (EM-3000 specular microscope, Methods 2.4)",
+   "notes": "mean ± SD (tab3 footnote); per-visit n not reported; n = group size from Results",
+   "values": [
+    2185.51,
+    2022.07,
+    2001.85
+   ],
+   "source_cells": [
+    "PMC8162248.xml::tab3!R2C2",
+    "PMC8162248.xml::tab3!R2C3",
+    "PMC8162248.xml::tab3!R2C4"
+   ],
+   "source_cell_texts": [
+    "2185.51 ± 666.55",
+    "2022.07 ± 622.69",
+    "2001.85 ± 616.47"
+   ]
+  },
+  {
+   "series_id": "conventional/ecd",
+   "group": "conventional",
+   "kind": "group_mean",
+   "n": 54,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Preoperation = preoperative ECD of the operated eye (EM-3000 specular microscope, Methods 2.4)",
+   "notes": "mean ± SD (tab3 footnote); per-visit n not reported; n = group size from Results",
+   "values": [
+    2473.25,
+    2176.85,
+    2155.09
+   ],
+   "source_cells": [
+    "PMC8162248.xml::tab3!R3C2",
+    "PMC8162248.xml::tab3!R3C3",
+    "PMC8162248.xml::tab3!R3C4"
+   ],
+   "source_cell_texts": [
+    "2473.25 ± 679.83",
+    "2176.85 ± 570.98",
+    "2155.09 ± 565.27"
+   ]
+  }
+ ]
+}

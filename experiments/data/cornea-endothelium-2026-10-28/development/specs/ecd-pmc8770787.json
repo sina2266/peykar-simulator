@@ -1,0 +1,47 @@
+{
+ "study_id": "ecd-pmc8770787",
+ "doi": "10.1007/s40123-021-00428-0",
+ "pmcid": "PMC8770787",
+ "title": "Corneal Endothelial Cell Loss After PRESERFLO™ MicroShunt Implantation in the Anterior Chamber: Anterior Segment OCT Tube Location as a Risk Factor",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {"statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial 4.0 International); not CC BY, record kept private", "url": "https://creativecommons.org/licenses/by-nc/4.0/"},
+ "source_files": [{"name": "PMC8770787.xml", "sha256": "0b7df9a6f493e568fefc5320ff0e79e6583dce4ef530732c956fbb17fa3afa46", "bytes": 93071, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8770787/fullTextXML"}],
+ "indication": "Glaucoma treated with PRESERFLO MicroShunt (mitomycin C) into the anterior chamber: primary open-angle 43, pseudoexfoliative 2, primary angle-closure 1 of 46 eyes; 3 eyes with previous trabeculectomy; standalone implantation only in pseudophakic eyes",
+ "groups": [
+  {"group": "combined", "role": "control", "n_reported": 14, "description": "Phacoemulsification and IOL implantation combined with PRESERFLO MicroShunt implantation in the same session ('combined' group)", "indication": "glaucoma with cataract (combined surgery)"},
+  {"group": "standalone-pseudophakic", "role": "control", "n_reported": 32, "description": "PRESERFLO MicroShunt implantation alone in pseudophakic eyes ('standalone pseudophakic, SPF')", "indication": "glaucoma, pseudophakic eyes"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "combined/ecd", "group": "combined", "kind": "group_mean", "n": 14,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3, 6, 12],
+   "cells": ["PMC8770787.xml::Tab4!R2C2", "PMC8770787.xml::Tab4!R3C2", "PMC8770787.xml::Tab4!R4C2", "PMC8770787.xml::Tab4!R5C2", "PMC8770787.xml::Tab4!R6C2"],
+   "baseline_label": "Baseline = preoperative central ECD of the operated eye (Topcon SP-1P specular microscope)",
+   "notes": "mean ± SD; per-visit n not reported; n = subgroup size from Results"
+  },
+  {
+   "series_id": "standalone-pseudophakic/ecd", "group": "standalone-pseudophakic", "kind": "group_mean", "n": 32,
+   "value_kind": "ecd_absolute", "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3, 6, 12],
+   "cells": ["PMC8770787.xml::Tab4!R2C4", "PMC8770787.xml::Tab4!R3C4", "PMC8770787.xml::Tab4!R4C4", "PMC8770787.xml::Tab4!R5C4", "PMC8770787.xml::Tab4!R6C4"],
+   "baseline_label": "Baseline = preoperative central ECD of the operated eye (Topcon SP-1P specular microscope)",
+   "notes": "mean ± SD; per-visit n not reported; n = subgroup size from Results"
+  }
+ ],
+ "exclusions": [
+  {"what": "Tab1 whole-population ECD series (46 eyes)", "reason": "same eyes as the two Tab4 subgroup series, which form a complete disjoint partition (14 + 32); the subgroups are used to avoid counting the eyes twice"},
+  {"what": "Tab4 '% decrease' columns (C3, C5)", "reason": "loss derived from the same series; the absolute ECD series is used"},
+  {"what": "Tab6 groups a/b/c by tube-endothelium distance", "reason": "groups defined by a postoperative AS-OCT measurement of the tube position (selected by a post-operative finding)"},
+  {"what": "Tab2, Tab3, Tab5, Tab7 (mean monthly reduction and monthly percentage loss)", "reason": "rates of change, not ECD values with a reference"},
+  {"what": "Tab1 'Mean decrease' and '% decrease' columns", "reason": "changes of the excluded whole-population series"}
+ ],
+ "notes": [
+  "Prospective observational study, consecutive patients, single surgeon; 46 eyes of 40 patients, so some patients contributed both eyes.",
+  "Role assignment: there is no investigational arm; PRESERFLO implantation is the study procedure in both subgroups, which differ by combined cataract surgery, so both are control.",
+  "Central ECD measured preoperatively and at 1, 3, 6 and 12 months."
+ ]
+}

@@ -1,5 +1,39 @@
 # Verification record
 
+## Corneal endothelial density model 1.0.0 and protocol freeze: 2026-10-28
+
+- Start state: main at `b0c2b043` (= origin, outcome-blind split committed). The
+  background `make check-docker` started after that commit ended **exit 0: 797
+  Python tests passed in 79.00 s**, 87% coverage, strict mypy 120 files, 18 frontend
+  tests, contracts and all builds (`.peykar/endothelium-split-check-docker-20261028.log`).
+- Four development extractor sub-agents built 59 records (148 series; 7 reserved
+  studies not extractable: medians, outcome-selected groups, missing references,
+  time ranges); three custodian sub-agents built 17 sealed records and reported
+  structure and hashes only (4 sealed studies excluded with reasons).
+- Development-only diagnostics (private scripts under `.peykar/`): in-sample best
+  grid fits of series with ≥4 follow-ups compared kinetic laws; smoke runs on 3–5
+  development studies led to the declared changes listed in the protocol.
+- `scripts/evaluate_endothelial_population.py --development`, each exit 0:
+  round 1 (exponential law) 590.6 s; round 2 (power law) 508.5 s; round 3 (power law,
+  author clusters) 500.2 s. Round 3: next observation `population_anchored_t4`
+  pooled 4.02 pp versus persistence 5.14 pp, 99/115 series within 5/10 pp, 51 meeting
+  all criteria; landmark 5.46 versus 10.07 pp; control group means 9.34 pp (pooled
+  curve 9.45). Coverage of the primary forecaster 0.820/0.897 (next observation).
+- `scripts/link_endothelium_authors.py` (first run failed strict mypy, fixed and
+  regenerated): 8 linked pairs, 4 development clusters, 3 sealed training exclusions.
+- `scripts/publish_endothelial_population.py --development`: public metrics in
+  `experiments/vcornea/endothelium/development-loso-2026-10-28/`; 24 studies with
+  NC/ND/SA licences reduced to metrics. The licence classifier agrees with the
+  public/private storage split for all 59 development records.
+- `pytest tests/unit/test_endothelial_population.py` **10 passed** (7.76 s).
+- `make check-docker` **exit 0: 807 Python tests passed in 97.70 s**, 87% coverage,
+  strict mypy 122 files, 18 frontend tests, contracts and all builds
+  (`.peykar/endothelium-freeze-check-docker-20261028.log`).
+- `experiments/vcornea/endothelium/protocol-1.0.0.json` written exclusively, SHA
+  `fdec8d89a0d62f4edbae7f0106c941cd98f47a71a47a5a2675d0e229880715dc` (26 frozen
+  files, 59 development and 17 sealed record hashes); the operator's
+  `check_protocol` reports no problem before and after the full check.
+
 ## Corneal dataset 1.1.0, closure-tail model 2.0.0 and protocol freeze: 2026-10-28
 
 - Start state: main at `39f4c134` (= origin) with uncommitted v2 model/harness and

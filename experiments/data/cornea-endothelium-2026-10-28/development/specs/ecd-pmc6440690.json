@@ -1,0 +1,107 @@
+{
+ "study_id": "ecd-pmc6440690",
+ "doi": "10.1136/bmjophth-2018-000233",
+ "pmcid": "PMC6440690",
+ "title": "Comparison of refractive predictability and endothelial cell loss in femtosecond laser-assisted cataract surgery and conventional phaco surgery: prospective randomised trial with 6 months of follow-up",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license> and ali:license_ref https://creativecommons.org/licenses/by-nc/4.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6440690.xml",
+   "sha256": "2788ac7f02d02517fd73d10d883cefaf89a43ca3e601f401becb431f7d089f2c",
+   "bytes": 87438,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6440690/fullTextXML)"
+  }
+ ],
+ "indication": "Bilateral visually significant cataract of any type and degree; severe dry eye, corneal scars, herpetic keratitis, keratoconus, uveitis, pseudoexfoliation, uncontrolled glaucoma, maculopathy, vitreomacular traction and previous ocular surgery excluded",
+ "groups": [
+  {
+   "group": "flacs",
+   "role": "control",
+   "n_reported": 96,
+   "procedure": "cataract",
+   "description": "Femtosecond laser-assisted cataract surgery (LensAR: 5.0 mm capsulotomy and lens fragmentation) followed by conventional phaco steps (divide and conquer, Infiniti) and aspheric hydrophobic IOL; one eye per patient by computer block randomisation; single surgeon"
+  },
+  {
+   "group": "cps",
+   "role": "control",
+   "n_reported": 96,
+   "procedure": "cataract",
+   "description": "Conventional phaco surgery (manual capsulorhexis, divide and conquer, Infiniti, same IOL) in the contralateral eye of the same patients"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "flacs/central-ecd",
+   "group": "flacs",
+   "kind": "group_mean",
+   "n": 93,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1.3142,
+    5.9138
+   ],
+   "cells": [
+    "PMC6440690.xml::T5!R3C2",
+    "PMC6440690.xml::T5!R4C2",
+    "PMC6440690.xml::T5!R6C2"
+   ],
+   "n_by_time": [
+    93,
+    82,
+    85
+   ],
+   "baseline_label": "Mean preoperative ECD (Table 5) = preoperative central ECD of the operated eye",
+   "notes": "Table 5 'FLACS (95% CI)' column, rows 'Mean preoperative ECD', 'Mean 40 days ECD' and 'Mean 180 days ECD' (mean with 95% CI); day 40 = 40/30.4375 and day 180 = 180/30.4375 months; per-visit n from the Table 5 title row (preoperatively, day 40, day 180). Topcon SP-3000P non-contact specular microscopy with ImageNet, manually corrected counts."
+  },
+  {
+   "series_id": "cps/central-ecd",
+   "group": "cps",
+   "kind": "group_mean",
+   "n": 93,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1.3142,
+    5.9138
+   ],
+   "cells": [
+    "PMC6440690.xml::T5!R3C3",
+    "PMC6440690.xml::T5!R4C3",
+    "PMC6440690.xml::T5!R6C3"
+   ],
+   "n_by_time": [
+    93,
+    82,
+    85
+   ],
+   "baseline_label": "Mean preoperative ECD (Table 5) = preoperative central ECD of the operated eye",
+   "notes": "Table 5 'CPS (95% CI)' column, rows 'Mean preoperative ECD', 'Mean 40 days ECD' and 'Mean 180 days ECD' (mean with 95% CI); day 40 = 40/30.4375 and day 180 = 180/30.4375 months; per-visit n from the Table 5 title row."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 5 'Mean 40 days ECL' and 'Mean 180 days ECL' rows (cells/mm2 and %)",
+   "reason": "The same table gives absolute ECD for each group; the absolute ECD series is used"
+  },
+  {
+   "what": "Table 5 hexagonality rows and P value column; Table 6 regression",
+   "reason": "Not endothelial cell density; p-values and model estimates are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: two established cataract techniques randomised against each other without an investigational agent (femtosecond-assisted surgery is listed under the protocol's cataract context); both control-role, separate groups.",
+  "Paired-eye design: each patient had FLACS in one randomly allocated eye and CPS in the contralateral eye; the CPS eyes are operated comparison eyes, not unoperated fellow eyes. The two series share patients.",
+  "Visits are labelled day 40 and day 180; the reported mean (SD) intervals from operation were 60 (34) and 234 (124) days. Table labels are used for the months.",
+  "Of 108 enrolled patients, those not operated on both eyes were excluded (96 analysed for surgery data)."
+ ]
+}

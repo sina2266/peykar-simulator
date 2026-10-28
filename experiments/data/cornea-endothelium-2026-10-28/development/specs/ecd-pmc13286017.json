@@ -1,0 +1,108 @@
+{
+ "study_id": "ecd-pmc13286017",
+ "doi": "10.2147/OPTH.S612110",
+ "pmcid": "PMC13286017",
+ "title": "Long-Term Clinical Outcomes of nDSAEK and Machine Learning-Based Prediction of Graft Survival in Corneal Endothelial Decompensation",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 via Dove Medical Press terms (article <license>, ali:license_ref https://creativecommons.org/licenses/by-nc/4.0/); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13286017.xml",
+   "sha256": "9986f201e74457ccb2677a0b0ece027bc8084226da11012273aebcd5c7501e3b",
+   "bytes": 118571,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13286017/fullTextXML)"
+  }
+ ],
+ "indication": "Corneal endothelial decompensation treated with non-Descemet-stripping automated endothelial keratoplasty (nDSAEK): Fuchs endothelial corneal dystrophy with bullous changes (43 eyes) or decompensation after previous ocular surgery, mostly cataract surgery (71 eyes); young donors (12-30 years) from the institutional eye bank; microkeratome or femtosecond-laser graft preparation; single surgeon",
+ "groups": [
+  {
+   "group": "fecd",
+   "role": "control",
+   "n_reported": 43,
+   "procedure": "dsaek",
+   "indication": "Fuchs endothelial corneal dystrophy with bullous changes",
+   "description": "nDSAEK (host Descemet membrane not stripped; 7.5-8.0 mm posterior lamellar graft by microkeratome or femtosecond laser, glide insertion, air tamponade) in FECD eyes"
+  },
+  {
+   "group": "non-fecd",
+   "role": "control",
+   "n_reported": 71,
+   "procedure": "dsaek",
+   "indication": "Endothelial decompensation secondary to previous ocular surgery (cataract surgery, including some with trauma surgery, vitrectomy or a previous graft)",
+   "description": "nDSAEK (host Descemet membrane not stripped; 7.5-8.0 mm posterior lamellar graft by microkeratome or femtosecond laser, glide insertion, air tamponade) in non-FECD eyes"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "fecd/ecd",
+   "group": "fecd",
+   "kind": "group_mean",
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3, 6, 12, 24, 36],
+   "cells": [
+    "PMC13286017.xml::t0001!R3C2",
+    "PMC13286017.xml::t0001!R4C2",
+    "PMC13286017.xml::t0001!R5C2",
+    "PMC13286017.xml::t0001!R6C2",
+    "PMC13286017.xml::t0001!R7C2",
+    "PMC13286017.xml::t0001!R8C2",
+    "PMC13286017.xml::t0001!R9C2"
+   ],
+   "baseline_label": "Table 1 row 'Preoperative' = the recipient's own preoperative ECD (Results: preoperative ECD could not be recorded in several eyes because of severe corneal edema), not the donor ECD; it is the reference of the article's 3-year cumulative ECD loss",
+   "notes": "Table 1 'ECD (cell/mm2)' FECD column; mean ± SD (Methods: continuous variables as mean ± standard deviation). Series n omitted: the number of eyes with a recorded preoperative ECD is not reported (group size 43). Per-visit n not tabulated; median follow-up 41.5 months."
+  },
+  {
+   "series_id": "non-fecd/ecd",
+   "group": "non-fecd",
+   "kind": "group_mean",
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3, 6, 12, 24, 36],
+   "cells": [
+    "PMC13286017.xml::t0001!R3C3",
+    "PMC13286017.xml::t0001!R4C3",
+    "PMC13286017.xml::t0001!R5C3",
+    "PMC13286017.xml::t0001!R6C3",
+    "PMC13286017.xml::t0001!R7C3",
+    "PMC13286017.xml::t0001!R8C3",
+    "PMC13286017.xml::t0001!R9C3"
+   ],
+   "baseline_label": "Table 1 row 'Preoperative' = the recipient's own preoperative ECD (Results: preoperative ECD could not be recorded in several eyes because of severe corneal edema), not the donor ECD; it is the reference of the article's 3-year cumulative ECD loss",
+   "notes": "Table 1 'ECD (cell/mm2)' Non-FECD column; mean ± SD (Methods: continuous variables as mean ± standard deviation). Series n omitted: the number of eyes with a recorded preoperative ECD is not reported (group size 71). Per-visit n not tabulated; median follow-up 41.5 months."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 row '3-Year Cumulative ECD Loss (%)'",
+   "reason": "The same table gives absolute ECD for both groups; the absolute ECD series are used"
+  },
+  {
+   "what": "Table 1 P columns and the Mean CCT columns",
+   "reason": "p-values are not admissible; CCT is not endothelial cell density"
+  },
+  {
+   "what": "Table 3 (literature benchmark comparison)",
+   "reason": "Values of other studies and graft survival rates, not ECD of this cohort"
+  },
+  {
+   "what": "Linear mixed-model ECD estimates and femtosecond versus manual comparison (Results text, Figure 10)",
+   "reason": "Model estimates in text/figures, not tabulated group means"
+  },
+  {
+   "what": "Donor ECD",
+   "reason": "Not reported for this cohort"
+  }
+ ],
+ "notes": [
+  "Keratoplasty study whose tabulated reference is the recipient's diseased cornea, not the donor: kept because it is the article's stated reference row for the follow-up loss, as the extraction brief allows; reference_kind is patient_preoperative and this mismatch must be considered before any use as a donor-referenced series.",
+  "FECD and non-FECD are patient-condition subgroups after the same standard procedure: control-role groups.",
+  "Both microkeratome and femtosecond-laser graft preparation are pooled within each group; 15 graft failures occurred during follow-up and the article does not state whether failed grafts contribute to later ECD means."
+ ]
+}

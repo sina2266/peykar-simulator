@@ -1,0 +1,151 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc7338484",
+ "doi": "10.1038/s41598-020-68023-0",
+ "pmcid": "PMC7338484",
+ "title": "Risk factors for endothelial cell loss after Descemet membrane endothelial keratoplasty (DMEK)",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> and ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7338484.xml",
+   "sha256": "f8107aaaa30732e8c1311fcdce2b4ceba51230f4625d12fb218750e5a968b726",
+   "bytes": 76250,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7338484/fullTextXML)"
+  }
+ ],
+ "indication": "Fuchs endothelial corneal dystrophy; triple DMEK (with phacoemulsification and IOL) in 358 of 644 organ-culture and 106 of 197 cold-culture eyes, otherwise DMEK alone in pseudophakic eyes; phakic DMEK, primary graft failures, previous glaucoma surgery or vitrectomy excluded; first eye only",
+ "groups": [
+  {
+   "group": "organ-culture",
+   "role": "control",
+   "n_reported": 644,
+   "procedure": "dmek",
+   "description": "Standard Cologne DMEK (injector, descemetorhexis, air or 20% SF6) with organ-cultured donor tissue (DMEM with fetal calf serum at 37 C, dextran before transplantation); donors from German or US eye banks; two surgeons; consecutive cases 2011-2016 from a prospective database"
+  },
+  {
+   "group": "cold-culture",
+   "role": "control",
+   "n_reported": 197,
+   "procedure": "dmek",
+   "description": "Same DMEK technique with cold-stored donor tissue (Optisol-GS at 5 C)"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 row 'ECD loss rates at 12 months (%)' and Figure 1 loss rates",
+   "reason": "The same table gives absolute ECD for each group; the absolute ECD series is used"
+  },
+  {
+   "what": "Whole-cohort ECD course in the Results text",
+   "reason": "Pooled over both groups and not in a table; the per-group Table 2 series are used"
+  },
+  {
+   "what": "Table 2 BCVA, CCT, re-bubbling and rejection rows; Table 3",
+   "reason": "Not endothelial cell density; model statistics are not admissible"
+  }
+ ],
+ "notes": [
+  "Role: organ culture and cold storage are two standard donor storage methods compared without an investigational agent; both control-role, separate groups.",
+  "Primary graft failures were excluded from the study population (Methods); follow-up n varies by visit (Table 2).",
+  "Table 2 labels the dispersion 'mean ± SD', but it is small relative to the whole-cohort SDs given in the Results text and may be a standard error; dispersion is not used in the record."
+ ],
+ "series": [
+  {
+   "series_id": "organ-culture/graft-ecd",
+   "group": "organ-culture",
+   "kind": "group_mean",
+   "n": 636,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    636,
+    287,
+    246,
+    303,
+    357
+   ],
+   "baseline_label": "Baseline ECD (Table 2) = donor ECD evaluated before storage (Methods; donor information from the supplying eye banks)",
+   "notes": "Table 2 'Organ culture' column, rows Baseline ECD and ECD 1, 3, 6 and 12 months after surgery, with per-visit n in the cell text; postoperative ECD by Tomey EM-3000 specular microscopy.",
+   "values": [
+    2734.0,
+    1766.0,
+    1752.0,
+    1712.0,
+    1681.0
+   ],
+   "source_cells": [
+    "PMC7338484.xml::Tab2!R2C2",
+    "PMC7338484.xml::Tab2!R3C2",
+    "PMC7338484.xml::Tab2!R4C2",
+    "PMC7338484.xml::Tab2!R5C2",
+    "PMC7338484.xml::Tab2!R6C2"
+   ],
+   "source_cell_texts": [
+    "2,734 ± 9 (n = 636)",
+    "1766 ± 20 (n = 287)",
+    "1752 ± 23 (n = 246)",
+    "1712 ± 21 (n = 303)",
+    "1681 ± 21 (n = 357)"
+   ]
+  },
+  {
+   "series_id": "cold-culture/graft-ecd",
+   "group": "cold-culture",
+   "kind": "group_mean",
+   "n": 197,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "n_by_time": [
+    197,
+    84,
+    78,
+    86,
+    108
+   ],
+   "baseline_label": "Baseline ECD (Table 2) = donor ECD evaluated before storage (Methods; donor information from the supplying eye banks)",
+   "notes": "Table 2 'Cold culture' column, rows Baseline ECD and ECD 1, 3, 6 and 12 months after surgery, with per-visit n in the cell text.",
+   "values": [
+    2663.0,
+    1872.0,
+    1773.0,
+    1833.0,
+    1741.0
+   ],
+   "source_cells": [
+    "PMC7338484.xml::Tab2!R2C3",
+    "PMC7338484.xml::Tab2!R3C3",
+    "PMC7338484.xml::Tab2!R4C3",
+    "PMC7338484.xml::Tab2!R5C3",
+    "PMC7338484.xml::Tab2!R6C3"
+   ],
+   "source_cell_texts": [
+    "2,663 ± 15 (n = 197)",
+    "1872 ± 37 (n = 84)",
+    "1773 ± 41 (n = 78)",
+    "1833 ± 40 (n = 86)",
+    "1741 ± 39 (n = 108)"
+   ]
+  }
+ ]
+}

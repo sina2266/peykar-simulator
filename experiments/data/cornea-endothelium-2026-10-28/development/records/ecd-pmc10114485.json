@@ -1,0 +1,120 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc10114485",
+ "doi": "10.1186/s12886-023-02918-0",
+ "pmcid": "PMC10114485",
+ "title": "Mechanical protective effect of lens anterior capsule disc on corneal endothelial cells during femtosecond laser-assisted cataract surgery in a rabbit model",
+ "species": "rabbit",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>, text statement); CC0 waiver applies to data made available in the article",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10114485.xml",
+   "sha256": "0db32a9cf9c77f7391aba46085c95ca10b7995f855f42c574a2261a9a981069d",
+   "bytes": 55731,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10114485/fullTextXML"
+  }
+ ],
+ "indication": "Healthy New Zealand white rabbits, right eye; experimental model without cataract: femtosecond laser capsulotomy (LenSx), then 1 min of ultrasound with the phaco tip held 1.5-2.0 mm from the central endothelium (Infiniti, 80% longitudinal power, 10 s alternating), then lens aspiration; topical tobramycin/dexamethasone for 7 days",
+ "groups": [
+  {
+   "group": "capsule-disc",
+   "role": "treated",
+   "n_reported": 20,
+   "description": "Experimental (LACD) group: the isolated femtosecond lens anterior capsule disc was lifted against the endothelium with OVD as a mechanical protector during the ultrasound exposure"
+  },
+  {
+   "group": "conventional",
+   "role": "control",
+   "n_reported": 20,
+   "description": "Control (conventional FLACS) group: same surgery with the capsule disc removed once the main incision was created"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tab1 'Endothelial Cell Loss (%)' columns (R3C5, R3C6, R4C5, R4C6)",
+   "reason": "percent loss of the same groups; the absolute ECD series is used"
+  },
+  {
+   "what": "Tab1 R5 P values",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Tab2 central corneal thickness",
+   "reason": "not ECD"
+  }
+ ],
+ "notes": [
+  "n per group from Methods (20 rabbits, one eye each); Methods state that eyes whose disc separated from the endothelium during the damage were to be excluded, and Results report two decentered discs in the experimental group without stating their exclusion.",
+  "Animal injury model with a time course (protocol Inclusion 4 does not exclude it); the deliberate ultrasound exposure differs from standard cataract surgery.",
+  "Study funded by an Alcon research grant (Funding)."
+ ],
+ "series": [
+  {
+   "series_id": "capsule-disc/central-ecd",
+   "group": "capsule-disc",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.0986,
+    0.23
+   ],
+   "baseline_label": "Preoperative specular microscopy (Nidek CEM-530) of the operated rabbit eye",
+   "notes": "Table 1 'Endothelial Cell Count' columns Preop, 3 day postop (3/30.4375 months), 7 day postop (7/30.4375 months); mean ± SD; the table gives no n",
+   "values": [
+    2812.0,
+    2712.0,
+    2730.0
+   ],
+   "source_cells": [
+    "PMC10114485.xml::Tab1!R3C2",
+    "PMC10114485.xml::Tab1!R3C3",
+    "PMC10114485.xml::Tab1!R3C4"
+   ],
+   "source_cell_texts": [
+    "2812 ± 127",
+    "2712 ± 126",
+    "2730 ± 135"
+   ]
+  },
+  {
+   "series_id": "conventional/central-ecd",
+   "group": "conventional",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    0.0986,
+    0.23
+   ],
+   "baseline_label": "Preoperative specular microscopy (Nidek CEM-530) of the operated rabbit eye",
+   "notes": "Table 1 'Endothelial Cell Count' columns Preop, 3 day postop (3/30.4375 months), 7 day postop (7/30.4375 months); mean ± SD; the table gives no n",
+   "values": [
+    2744.0,
+    2421.0,
+    2457.0
+   ],
+   "source_cells": [
+    "PMC10114485.xml::Tab1!R4C2",
+    "PMC10114485.xml::Tab1!R4C3",
+    "PMC10114485.xml::Tab1!R4C4"
+   ],
+   "source_cell_texts": [
+    "2744 ± 142",
+    "2421 ± 195",
+    "2457 ± 159"
+   ]
+  }
+ ]
+}

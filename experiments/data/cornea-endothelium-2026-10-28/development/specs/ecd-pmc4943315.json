@@ -1,0 +1,69 @@
+{
+ "study_id": "ecd-pmc4943315",
+ "doi": "10.1159/000446103",
+ "pmcid": "PMC4943315",
+ "title": "Non-Descemet Stripping Automated Endothelial Keratoplasty for Bullous Keratopathy in Buphthalmic Eye",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial-4.0 International License, Karger); not CC BY or CC0, so the record is private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4943315.xml",
+   "sha256": "c8a680da2c8e0d17fa984c3ba6157e9734f04464b004bea70e3d5e49e33ff132",
+   "bytes": 27575,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4943315/fullTextXML)"
+  }
+ ],
+ "indication": "Phakic bullous keratopathy in a buphthalmic eye (congenital glaucoma, glaucoma surgery in childhood, Haab striae); single case, 39-year-old man",
+ "groups": [
+  {
+   "group": "case",
+   "role": "control",
+   "n_reported": 1,
+   "procedure": "dsaek",
+   "description": "Non-Descemet-stripping automated endothelial keratoplasty (nDSAEK) with an 8.0 mm graft (300 um dissection, double-glide insertion, air tamponade) in one eye; topical betamethasone tapered over 6 months"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "case/graft-ecd",
+   "group": "case",
+   "kind": "individual",
+   "n": 1,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_other",
+   "months": [0, 0.46, 1, 2, 6, 12, 18, 24],
+   "cells": [
+    "PMC4943315.xml::T1!R2C2",
+    "PMC4943315.xml::T1!R3C2",
+    "PMC4943315.xml::T1!R4C2",
+    "PMC4943315.xml::T1!R5C2",
+    "PMC4943315.xml::T1!R6C2",
+    "PMC4943315.xml::T1!R7C2",
+    "PMC4943315.xml::T1!R8C2",
+    "PMC4943315.xml::T1!R9C2"
+   ],
+   "baseline_label": "Reference = ECD of the donor graft before surgery (Table 1 row 'Before surgery'; Methods: 'The endothelial cell density (ECD) of the graft before surgery'); the counting source is not stated",
+   "notes": "Table 1 column 'ECD, cells/mm2' (single eye; thousands separators removed by the record builder). The '0.5 mo' row is the 2-week visit of Methods (2 x 7/30.4375 months). The '2 mo' row is taken as 2 months from the table label (Results: IOP above 30 mm Hg at around 2 months, same row), although the Methods visit schedule lists 3 months."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 BCVA and IOP columns",
+   "reason": "Not endothelial cell density"
+  },
+  {
+   "what": "Fellow (right) eye with failed penetrating keratoplasty",
+   "reason": "No ECD time course reported for that eye"
+  }
+ ],
+ "notes": [
+  "Single-patient case report: one individual series (kind 'individual'), standard procedure without an investigational agent, control role.",
+  "Methods visit schedule (2 weeks, 1, 3, 6, 12, 18, 24 months) and Table 1 rows (0.5, 1, 2, 6, 12, 18, 24 mo) disagree for the second-month visit; the table row label is used because it identifies the cited cell."
+ ]
+}

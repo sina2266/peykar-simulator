@@ -1,0 +1,168 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc3396288",
+ "doi": "10.1007/s00417-012-1927-6",
+ "pmcid": "PMC3396288",
+ "title": "Surgical outcome of Descemet’s stripping automated endothelial keratoplasty for bullous keratopathy secondary to argon laser iridotomy",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: 'distributed under the terms of the Creative Commons Attribution License which permits any use, distribution, and reproduction in any medium'); no licence URL in the article"
+ },
+ "source_files": [
+  {
+   "name": "PMC3396288.xml",
+   "sha256": "0842ae0f5bbc6af29c8da9954343b441b9783d3a7a636eb944b106b57deb590f",
+   "bytes": 75846,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3396288/fullTextXML)"
+  }
+ ],
+ "indication": "Bullous keratopathy treated by DSAEK (nDSAEK in 7 ALI and 4 PBK eyes): secondary to argon laser iridotomy (ALI-BK, 37/54 with simultaneous cataract surgery), pseudophakic bullous keratopathy (PBK) and Fuchs endothelial dystrophy (FED, 13/21 with simultaneous cataract surgery); eyes with previous penetrating keratoplasty excluded",
+ "groups": [
+  {
+   "group": "ali-bk",
+   "role": "control",
+   "n_reported": 54,
+   "procedure": "dsaek",
+   "indication": "Bullous keratopathy secondary to argon laser iridotomy",
+   "description": "DSAEK with pre-cut donor grafts (8.0 mm in most), pull-through insertion, air tamponade; simultaneous phacoemulsification in 37 eyes; nDSAEK in 7 eyes"
+  },
+  {
+   "group": "pbk",
+   "role": "control",
+   "n_reported": 28,
+   "procedure": "dsaek",
+   "indication": "Pseudophakic bullous keratopathy",
+   "description": "DSAEK with pre-cut donor grafts (8.0 mm in most), pull-through insertion, air tamponade; nDSAEK in 4 eyes"
+  },
+  {
+   "group": "fed",
+   "role": "control",
+   "n_reported": 21,
+   "procedure": "dsaek",
+   "indication": "Fuchs endothelial dystrophy",
+   "description": "DSAEK with pre-cut donor grafts (8.0 mm in most), pull-through insertion, air tamponade; simultaneous phacoemulsification in 13 eyes"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 5 'P value' column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 7 (comparison with previous reports)",
+   "reason": "Values of other studies, not this cohort's ECD over follow-up"
+  }
+ ],
+ "notes": [
+  "ALI-BK, PBK and FED are indication subgroups after the same standard procedure (DSAEK, some combined with cataract surgery): control-role groups.",
+  "Donor tissue was pre-cut; the article does not say who counted the donor ECD, so the reference kind is donor_other.",
+  "Table 1 (patient demographics) has no table rows in the XML."
+ ],
+ "series": [
+  {
+   "series_id": "ali-bk/graft-ecd",
+   "group": "ali-bk",
+   "kind": "group_mean",
+   "n": 54,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_other",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Reference = donor ECD measured preoperatively (Table 5 row 'Donor preoperatively'); the counting source (eye bank or surgeon) is not stated",
+   "notes": "Table 5 column 'ALI'; header 'ECD (/mm2 ± SD)' = mean ± SD. All eyes followed at least 6 months (Results); per-visit n not tabulated.",
+   "values": [
+    2339.0,
+    1360.0,
+    1217.0,
+    1124.0
+   ],
+   "source_cells": [
+    "PMC3396288.xml::Tab5!R2C2",
+    "PMC3396288.xml::Tab5!R3C2",
+    "PMC3396288.xml::Tab5!R4C2",
+    "PMC3396288.xml::Tab5!R5C2"
+   ],
+   "source_cell_texts": [
+    "2339 ± 284",
+    "1360 ± 467",
+    "1217 ± 485",
+    "1124 ± 427"
+   ]
+  },
+  {
+   "series_id": "pbk/graft-ecd",
+   "group": "pbk",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_other",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Reference = donor ECD measured preoperatively (Table 5 row 'Donor preoperatively'); the counting source (eye bank or surgeon) is not stated",
+   "notes": "Table 5 column 'PBK'; header 'ECD (/mm2 ± SD)' = mean ± SD. All eyes followed at least 6 months (Results); per-visit n not tabulated.",
+   "values": [
+    2600.0,
+    1023.0,
+    1174.0,
+    944.0
+   ],
+   "source_cells": [
+    "PMC3396288.xml::Tab5!R2C3",
+    "PMC3396288.xml::Tab5!R3C3",
+    "PMC3396288.xml::Tab5!R4C3",
+    "PMC3396288.xml::Tab5!R5C3"
+   ],
+   "source_cell_texts": [
+    "2600 ± 341",
+    "1023 ± 260",
+    "1174 ± 361",
+    "944 ± 386"
+   ]
+  },
+  {
+   "series_id": "fed/graft-ecd",
+   "group": "fed",
+   "kind": "group_mean",
+   "n": 21,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_other",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Reference = donor ECD measured preoperatively (Table 5 row 'Donor preoperatively'); the counting source (eye bank or surgeon) is not stated",
+   "notes": "Table 5 column 'FED'; header 'ECD (/mm2 ± SD)' = mean ± SD. All eyes followed at least 6 months (Results); per-visit n not tabulated.",
+   "values": [
+    2701.0,
+    1158.0,
+    1388.0,
+    1230.0
+   ],
+   "source_cells": [
+    "PMC3396288.xml::Tab5!R2C4",
+    "PMC3396288.xml::Tab5!R3C4",
+    "PMC3396288.xml::Tab5!R4C4",
+    "PMC3396288.xml::Tab5!R5C4"
+   ],
+   "source_cell_texts": [
+    "2701 ± 332",
+    "1158 ± 487",
+    "1388 ± 612",
+    "1230 ± 560"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc13425044",
+ "doi": "10.1155/joph/9448941",
+ "pmcid": "PMC13425044",
+ "title": "Seminuclear Flip Phacoemulsification for Soft Nuclear Cataract Surgery: A New Soft Nucleus Cataract Chopping Technique",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>, ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13425044.xml",
+   "sha256": "fd128ff959aa5d28ff04fa8e861ac18662ae94aa723ed29dc7d1b320faa9cca0",
+   "bytes": 81064,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13425044/fullTextXML)"
+  }
+ ],
+ "indication": "Age-related soft nuclear cataract (Emery-Little grade 1-2), age over 50 years, preoperative ECD above 1200 cells/mm2; previous intraocular surgery, corneal disease, glaucoma, uveitis, axial length outside 22-28 mm and zonular weakness excluded",
+ "groups": [
+  {
+   "group": "snfp",
+   "role": "treated",
+   "n_reported": 87,
+   "procedure": "cataract",
+   "description": "Seminuclear flip phacoemulsification (SNFP), the new soft-nucleus chopping technique declared as the experimental arm; randomized block design stratified by nuclear grade; Infiniti torsional mode, 2.8 mm temporal clear corneal incision; single surgeon"
+  },
+  {
+   "group": "quick-chop",
+   "role": "control",
+   "n_reported": 89,
+   "procedure": "cataract",
+   "description": "Conventional quick-chop phacoemulsification (QCP), the study's control group; randomized block design stratified by nuclear grade; Infiniti torsional mode, 2.8 mm temporal clear corneal incision; single surgeon"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 central corneal thickness rows",
+   "reason": "Not endothelial cell density"
+  },
+  {
+   "what": "Table 4 'Statistical method' and 'p value' columns",
+   "reason": "Test statistics and p-values are not admissible"
+  },
+  {
+   "what": "ANCOVA-adjusted 1-month ECD means (Results text)",
+   "reason": "Model-adjusted values in text, not tabulated group means"
+  }
+ ],
+ "notes": [
+  "The article introduces SNFP as a new technique and calls QCP the control group (randomized): SNFP is the treated (investigational technique) arm and QCP the control arm.",
+  "Two posterior capsule ruptures in the QCP group were managed with anterior vitrectomy and sulcus IOL; their postoperative data were excluded by the authors."
+ ],
+ "series": [
+  {
+   "series_id": "snfp/ecd",
+   "group": "snfp",
+   "kind": "group_mean",
+   "n": 87,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1
+   ],
+   "baseline_label": "Preoperative central corneal ECD of the operated eye (Table 4 row 'Preoperative central corneal endothelial cell density'; Topcon SP-2000)",
+   "notes": "Table 4 column 'SNFP group (n = 87)'; mean ± SD (Results: 'mean central corneal endothelial cell density'). Only preoperative and 1-month ECD were measured. Per-visit n not tabulated.",
+   "values": [
+    2430.9,
+    2308.6
+   ],
+   "source_cells": [
+    "PMC13425044.xml::tbl-0004!R6C2",
+    "PMC13425044.xml::tbl-0004!R7C2"
+   ],
+   "source_cell_texts": [
+    "2430.9 ± 263.5",
+    "2308.6 ± 259.3"
+   ]
+  },
+  {
+   "series_id": "quick-chop/ecd",
+   "group": "quick-chop",
+   "kind": "group_mean",
+   "n": 89,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    1
+   ],
+   "baseline_label": "Preoperative central corneal ECD of the operated eye (Table 4 row 'Preoperative central corneal endothelial cell density'; Topcon SP-2000)",
+   "notes": "Table 4 column 'QCP group (n = 89)'; mean ± SD (Results: 'mean central corneal endothelial cell density'). Only preoperative and 1-month ECD were measured. Results: postoperative outcome data of the 2 QCP eyes with posterior capsule rupture were excluded, so the 1-month mean likely covers 87 eyes; the table header gives n = 89.",
+   "values": [
+    2349.1,
+    2231.9
+   ],
+   "source_cells": [
+    "PMC13425044.xml::tbl-0004!R6C3",
+    "PMC13425044.xml::tbl-0004!R7C3"
+   ],
+   "source_cell_texts": [
+    "2349.1 ± 287.3",
+    "2231.9 ± 267.6"
+   ]
+  }
+ ]
+}

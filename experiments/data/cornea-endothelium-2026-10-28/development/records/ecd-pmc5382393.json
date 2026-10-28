@@ -1,0 +1,100 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc5382393",
+ "doi": "10.1186/s12886-017-0436-0",
+ "pmcid": "PMC5382393",
+ "title": "Outcomes of descemet stripping automated endothelial keratoplasty using imported donor corneas",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License, http://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5382393.xml",
+   "sha256": "8f79eb1764ef551993d596e9636d4bb3462238b6b529e848bcbd5f35dbae972d",
+   "bytes": 66112,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5382393/fullTextXML)"
+  }
+ ],
+ "indication": "Endothelial decompensation (Table 2): Fuchs endothelial dystrophy 46, pseudophakic bullous keratopathy 32, laser-iridotomy-induced decompensation 15, ICE syndrome 3, CMV endotheliitis 3, CHED 2, unknown 1 of 102 eyes; 57 pseudophakic and 45 phakic; 42 combined with phacoemulsification and IOL implantation",
+ "groups": [
+  {
+   "group": "all",
+   "role": "control",
+   "n_reported": 102,
+   "procedure": "dsaek",
+   "description": "DSAEK with donor corneas from EBAA-accredited US eye banks shipped to Thailand (death-to-operation at least 8 days); Moria ALTK microkeratome (33 surgeon-cut, 69 eye-bank precut), Busin glide insertion, air tamponade; two surgeons; retrospective case series 2006-2014, 102 eyes of 95 patients"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 'Endothelial cell loss Percentage' column",
+   "reason": "The same table gives absolute ECD for the group; the absolute ECD series is used"
+  },
+  {
+   "what": "Table 1 row 'Endothelial cell density (before precut)'",
+   "reason": "Same donor reference as the Table 3 baseline but printed with a different dispersion; the Table 3 baseline in the same table as the follow-up values is cited"
+  }
+ ],
+ "notes": [
+  "Role: standard DSAEK without an investigational agent; single control-role group.",
+  "Follow-up means are among eyes examined with clear grafts; the 6 primary and 6 late graft failures are not tabulated separately.",
+  "Mean follow-up 65.3 months (range 24-96)."
+ ],
+ "series": [
+  {
+   "series_id": "all/graft-ecd",
+   "group": "all",
+   "kind": "group_mean",
+   "n": 102,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36,
+    60
+   ],
+   "n_by_time": [
+    102,
+    96,
+    92,
+    85,
+    79,
+    72
+   ],
+   "baseline_label": "Baseline (Table 3) = preoperative donor ECD evaluated by the provider US eye banks by specular microscopy (Methods, Outcome measures)",
+   "notes": "Table 3 column 'Endothelial cell density (cells/mm2) Mean ± SD(range)', rows Baseline, 6 months, 1, 2, 3 and 5 years; per-visit n from the adjacent 'Number of eyes' column. Postoperative ECD by Tomey EM-3000 non-contact specular microscopy (automated fixed-frame count) among eyes examined with clear grafts.",
+   "values": [
+    2761.0,
+    1762.0,
+    1681.0,
+    1579.0,
+    1389.0,
+    1251.0
+   ],
+   "source_cells": [
+    "PMC5382393.xml::Tab3!R3C2",
+    "PMC5382393.xml::Tab3!R4C2",
+    "PMC5382393.xml::Tab3!R5C2",
+    "PMC5382393.xml::Tab3!R6C2",
+    "PMC5382393.xml::Tab3!R7C2",
+    "PMC5382393.xml::Tab3!R8C2"
+   ],
+   "source_cell_texts": [
+    "2761 ± 285(2361–3015)",
+    "1762 ± 294 (1084–2263)",
+    "1681 ± 284 (997–2115)",
+    "1579 ± 209(753–2048)",
+    "1389 ± 273 (729–1893)",
+    "1251 ± 264 (683–1589)"
+   ]
+  }
+ ]
+}

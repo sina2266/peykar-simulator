@@ -1,0 +1,68 @@
+{
+ "study_id": "ecd-pmc12106323",
+ "doi": "10.3389/fmed.2025.1580733",
+ "pmcid": "PMC12106323",
+ "title": "Clinical outcomes in imported endothelium-in preloaded vs. surgeon-loaded DMEKs in Asian eyes",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [
+  {"name": "PMC12106323.xml", "sha256": "fe4c51cc8f17af9f5a9a25db84a2662512f0356c3efadb8cc004c1ed9501437a", "bytes": 127760, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12106323/fullTextXML"}
+ ],
+ "indication": "Fuchs endothelial corneal dystrophy (8 preloaded, 8 surgeon-loaded) or pseudophakic bullous keratopathy including iridocorneal endothelial syndrome and regrafts (12, 32); endothelium-in pull-through DMEK (Endoglide cartridge) by one surgeon at the Singapore National Eye Centre; Asian eyes; prospective, August 2020 to June 2024",
+ "groups": [
+  {"group": "preloaded", "role": "treated", "n_reported": 20, "description": "Imported eye-bank preloaded endothelium-in DMEK grafts (Preloaded DMEK Endoglide, Eversight), processing-to-surgery 72-96 h; first 20 consecutive cases"},
+  {"group": "surgeon-loaded", "role": "control", "n_reported": 40, "description": "Surgeon-loaded grafts prepared intra-operatively (SCUBA) and pulled into the Endoglide cartridge; matched 2:1 to the preloaded cases by donor age within 3 years"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "preloaded/graft-ecd",
+   "group": "preloaded",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC12106323.xml::tab2!R27C3",
+    "PMC12106323.xml::tab2!R28C3",
+    "PMC12106323.xml::tab2!R29C3",
+    "PMC12106323.xml::tab2!R30C3"
+   ],
+   "n_by_time": [20, 13, 10, 11],
+   "baseline_label": "Pre-operative donor ECD (Table 2 'Donor ECD'); ECL defined relative to it (Methods); tissue supplied by an eye bank",
+   "notes": "Table 2 'Preloaded' column, mean ± SD; per-visit n from the Table 2 footnotes (1, 3 and 6 months)"
+  },
+  {
+   "series_id": "surgeon-loaded/graft-ecd",
+   "group": "surgeon-loaded",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "donor_eye_bank",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC12106323.xml::tab2!R27C4",
+    "PMC12106323.xml::tab2!R28C4",
+    "PMC12106323.xml::tab2!R29C4",
+    "PMC12106323.xml::tab2!R30C4"
+   ],
+   "n_by_time": [40, 11, 17, 24],
+   "baseline_label": "Pre-operative donor ECD (Table 2 'Donor ECD'); ECL defined relative to it (Methods); tissue supplied by an eye bank",
+   "notes": "Table 2 'Surgeon-loaded' column, mean ± SD; per-visit n from the Table 2 footnotes (1, 3 and 6 months)"
+  }
+ ],
+ "exclusions": [
+  {"what": "tab2 C2 'All eyes' column", "reason": "pooled total of the preloaded and surgeon-loaded groups (same eyes)"},
+  {"what": "tab1 R23 donor ECD", "reason": "duplicate donor ECD row whose surgeon-loaded entry differs slightly from tab2 R27C4; Table 2 is cited because it carries the follow-up"},
+  {"what": "ECL percentages in Results text", "reason": "not table cells"},
+  {"what": "tab2 C5 and tab3", "reason": "p-values and regression odds ratios are not admissible"}
+ ],
+ "notes": [
+  "Preloaded grafts are the technique variant under study (first 20 imported preloaded DMEKs) compared with matched surgeon-loaded controls; recorded as treated and control.",
+  "The source of the donor ECD is not stated explicitly; donor tissue was eye-bank supplied (imported), so the reference kind is recorded as donor_eye_bank.",
+  "Postoperative central ECD by non-contact specular microscopy (Konan CellChek 20 or Nidek CEM-530); later visits include different subsets of eyes (per-visit n)."
+ ]
+}

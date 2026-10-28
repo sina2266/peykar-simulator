@@ -1,0 +1,112 @@
+{
+ "schema": "cornea.endothelial-density-record-1.0.0",
+ "study_id": "ecd-pmc12387371",
+ "doi": "10.3390/jcm14165887",
+ "pmcid": "PMC12387371",
+ "title": "“Ultrasound-Assisted High-Fluidics Phacoaspiration”: An Efficient and Safe Technique for Nucleus Quadrant Workup Through 2.2 mm Mini- and 1.6 mm Micro-Incisions Following Manual or Femtosecond Laser Sectorial Lens Fragmentation",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12387371.xml",
+   "sha256": "c103cb255f0b53715b30d2013bccf55f7497fbb5dfee4d7e208a4fb3bc86d439",
+   "bytes": 98316,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12387371/fullTextXML"
+  }
+ ],
+ "indication": "Bilateral age-related cataract, immediate sequential bilateral cataract surgery; prospective randomized intraindividual comparison (one eye per arm) of high-fluidics coaxial phaco with the easyTip 2.2 through a 2.2 mm posterolimbal incision versus infusion-assisted easyTip COMICS through a 1.6 mm incision (Oertli OS3, direct-crack divide and conquer), one surgeon; excluded prior intraocular surgery, glaucoma, inflammatory eye disease, corneal disease",
+ "groups": [
+  {
+   "group": "easytip-2.2",
+   "role": "control",
+   "n_reported": 77,
+   "description": "High-fluidics phaco with easyTip 2.2 mini-needle through a 2.2 mm incision (eT2.2 HF)"
+  },
+  {
+   "group": "easytip-comics-1.6",
+   "role": "control",
+   "n_reported": 77,
+   "description": "High-fluidics infusion-assisted phaco with easyTip COMICS micro-needle through a 1.6 mm incision plus sideport infusion (eT1.6 iaCOMICS HF), fellow eye"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "jcm-14-05887-t003 R10 endothelial cell loss at 6 months",
+   "reason": "percent loss of the same groups; the absolute ECC series is used"
+  },
+  {
+   "what": "jcm-14-05887-t004 comparison groups (CMP 2.8 mm low fluidics, eT2.2 enhanced fluidics)",
+   "reason": "historical groups from earlier publications without ECD in this article"
+  },
+  {
+   "what": "jcm-14-05887-t003 C4 p-values",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "77 patients were randomized (one eye to each arm) and 50 completed the 6-month follow-up; Table 3 does not state whether the preoperative means include all 77 or only the 50 completers, so series n is the 50 completers.",
+  "Both arms are variants of the article's high-fluidics technique compared intraindividually and neither is declared experimental relative to the other; both recorded as control. The article contrasts them with previously published lower-fluidics results, which are not part of this record.",
+  "Both eyes of each patient were operated (immediate sequential bilateral surgery); the fellow eye is an operated arm, not an unoperated control."
+ ],
+ "series": [
+  {
+   "series_id": "easytip-2.2/central-ecc",
+   "group": "easytip-2.2",
+   "kind": "group_mean",
+   "n": 50,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6
+   ],
+   "baseline_label": "Preoperative endothelial cell count measured 1 week before surgery (Methods)",
+   "notes": "Table 3 'Endothelial Cell Count (ECC)' rows preop and 6 months postop, eT2.2 HF column; data are means ± SD when normally distributed (Statistics); n = 50 completers of the 6-month follow-up (table gives no n)",
+   "values": [
+    2497.0,
+    2425.0
+   ],
+   "source_cells": [
+    "PMC12387371.xml::jcm-14-05887-t003!R8C2",
+    "PMC12387371.xml::jcm-14-05887-t003!R9C2"
+   ],
+   "source_cell_texts": [
+    "2497 ± 257",
+    "2425 ± 292"
+   ]
+  },
+  {
+   "series_id": "easytip-comics-1.6/central-ecc",
+   "group": "easytip-comics-1.6",
+   "kind": "group_mean",
+   "n": 50,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [
+    0,
+    6
+   ],
+   "baseline_label": "Preoperative endothelial cell count measured 1 week before surgery (Methods)",
+   "notes": "Table 3 'Endothelial Cell Count (ECC)' rows preop and 6 months postop, eT1.6 iaCOMICS HF column; data are means ± SD when normally distributed (Statistics); n = 50 completers of the 6-month follow-up (table gives no n)",
+   "values": [
+    2522.0,
+    2436.0
+   ],
+   "source_cells": [
+    "PMC12387371.xml::jcm-14-05887-t003!R8C3",
+    "PMC12387371.xml::jcm-14-05887-t003!R9C3"
+   ],
+   "source_cell_texts": [
+    "2522 ± 283",
+    "2436 ± 331"
+   ]
+  }
+ ]
+}

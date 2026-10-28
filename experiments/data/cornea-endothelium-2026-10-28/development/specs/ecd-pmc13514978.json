@@ -1,0 +1,71 @@
+{
+ "study_id": "ecd-pmc13514978",
+ "doi": "10.3390/life16081237",
+ "pmcid": "PMC13514978",
+ "title": "Corneal Endothelial Safety and Intraocular Pressure Outcomes of MicroPulse Laser Trabeculoplasty in Treatment-Naïve Glaucoma: A Six-Month Retrospective Study",
+ "species": "human",
+ "procedure": "glaucoma",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13514978.xml",
+   "sha256": "065db825f4fccbe090b86dcfdfbbd5880adae523e179529755c3811227a41af0",
+   "bytes": 95004,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13514978/fullTextXML)"
+  }
+ ],
+ "indication": "Newly diagnosed, treatment-naive open-angle glaucoma (POAG 48 eyes, pseudoexfoliation glaucoma 22 eyes; Shaffer grade 3-4); previous intraocular or laser surgery, contact lens wear, corneal disease, uveitis and diabetes excluded; one eye per patient",
+ "groups": [
+  {
+   "group": "mlt",
+   "role": "control",
+   "n_reported": 70,
+   "procedure": "glaucoma",
+   "description": "MicroPulse laser trabeculoplasty (577 nm Easyret, micropulse mode, 300 um, 300 ms, 1000 mW, 360 degrees, 10% or 15% duty cycle by surgeon); no IOP-lowering medication during follow-up; retrospective consecutive cohort"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "mlt/ecd",
+   "group": "mlt",
+   "kind": "group_mean",
+   "n": 70,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC13514978.xml::life-16-01237-t002!R3C2",
+    "PMC13514978.xml::life-16-01237-t002!R3C3",
+    "PMC13514978.xml::life-16-01237-t002!R3C4",
+    "PMC13514978.xml::life-16-01237-t002!R3C5"
+   ],
+   "n_by_time": [70, 64, 56, 63],
+   "baseline_label": "Baseline = pre-laser ECD of the treated eye (Table 2 column 'Baseline'; Methods: specular microscopy at baseline and 1, 3 and 6 months)",
+   "notes": "Table 2 row 'Endothelial cell density (cells/mm2)'; footnote: mean ± SD with the number of eyes examined at that visit in parentheses (used for n_by_time)."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 'Mixed-Model Change from Baseline' column",
+   "reason": "Model estimates and p-values, not measured group means"
+  },
+  {
+   "what": "Table 1 baseline ECD by subtype (POAG, PEX)",
+   "reason": "Follow-up ECD is not tabulated by subtype (only in a supplementary table not part of the source XML); the whole-cohort series is used"
+  },
+  {
+   "what": "Tables 3 and 4 (treatment success, equivalence tests)",
+   "reason": "Not ECD group means at follow-up times"
+  }
+ ],
+ "notes": [
+  "Procedure context 'glaucoma' (laser trabeculoplasty as glaucoma treatment); the protocol lists laser iridotomy under 'other' but laser trabeculoplasty is a glaucoma procedure applied to treat glaucoma itself.",
+  "Single-arm cohort of a standard clinical laser treatment without an investigational agent: control role.",
+  "Duty cycle (10% vs 15%) is confounded with surgeon (Methods); both are pooled in the tabulated cohort."
+ ]
+}

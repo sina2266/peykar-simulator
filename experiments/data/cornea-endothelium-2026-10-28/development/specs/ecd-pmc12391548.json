@@ -1,0 +1,92 @@
+{
+ "study_id": "ecd-pmc12391548",
+ "doi": "10.1038/s41598-025-14330-3",
+ "pmcid": "PMC12391548",
+ "title": "Impact of veriflex and ICL on corneal biomechanics and endothelial cell density",
+ "species": "human",
+ "procedure": "phakic_iol",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12391548.xml",
+   "sha256": "78cfc827c4b845deb3796c97f1ed48e877a4fb816ab9bd2fadf85374e4508a87",
+   "bytes": 74576,
+   "origin": "Europe PMC fullTextXML (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12391548/fullTextXML)"
+  }
+ ],
+ "indication": "Moderate to high myopia, age 21-45 years, stable refraction; eyes with abnormal cornea, endothelial dystrophy, preoperative ECD below 2600 cells/mm2, anterior segment pathology, uveitis, glaucoma or ACD below 3.00 mm excluded",
+ "groups": [
+  {
+   "group": "veriflex",
+   "role": "control",
+   "n_reported": 58,
+   "procedure": "phakic_iol",
+   "description": "Group I: 58 eyes of 30 patients implanted with the Veriflex foldable iris-fixated (iris-claw) anterior chamber phakic IOL by enclavation; standard procedure and postoperative care"
+  },
+  {
+   "group": "icl",
+   "role": "control",
+   "n_reported": 59,
+   "procedure": "phakic_iol",
+   "description": "Group II: 59 eyes of 30 patients implanted with the EVO ICL V4c (central KS-Aquaport) posterior chamber phakic IOL; standard procedure and postoperative care"
+  }
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "veriflex/ecd",
+   "group": "veriflex",
+   "kind": "group_mean",
+   "n": 58,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC12391548.xml::Tab2!R2C2",
+    "PMC12391548.xml::Tab2!R3C2",
+    "PMC12391548.xml::Tab2!R4C2"
+   ],
+   "baseline_label": "Preoperative ECD of the operated eye (Table 2 row 'Preoperative'; Methods: Topcon EM-3000 specular microscopy preoperatively)",
+   "notes": "Table 2 column 'Group I (Veriflex)'; mean ± SD (the Abstract and Results describe these values as mean ECD). Per-visit n not tabulated."
+  },
+  {
+   "series_id": "icl/ecd",
+   "group": "icl",
+   "kind": "group_mean",
+   "n": 59,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC12391548.xml::Tab2!R2C3",
+    "PMC12391548.xml::Tab2!R3C3",
+    "PMC12391548.xml::Tab2!R4C3"
+   ],
+   "baseline_label": "Preoperative ECD of the operated eye (Table 2 row 'Preoperative'; Methods: Topcon EM-3000 specular microscopy preoperatively)",
+   "notes": "Table 2 column 'Group II (ICL)'; mean ± SD (the Abstract and Results describe these values as mean ECD). Per-visit n not tabulated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 rows 'Change from Baseline (cells/mm2) ± SD' and 'Percentage Change'",
+   "reason": "The same table gives absolute ECD for both groups; the absolute ECD series are used"
+  },
+  {
+   "what": "Table 2 'P-value (Between Groups)' column and 'P-value (Within Group)' row",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 'Preoperative ECD' row",
+   "reason": "Same preoperative values as Table 2; Table 2 cells are cited for the whole series"
+  }
+ ],
+ "notes": [
+  "Two established phakic IOL designs compared without an investigational agent: both groups are control-role, separate groups (protocol: two standard techniques compared).",
+  "Both eyes of most patients were included (117 eyes of 60 patients); n counts eyes.",
+  "Surgeries in the two groups were performed by different surgeons (Methods)."
+ ]
+}

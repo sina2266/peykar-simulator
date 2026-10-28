@@ -1,0 +1,64 @@
+{
+ "study_id": "ecd-pmc12112250",
+ "doi": "10.3390/jcm14103603",
+ "pmcid": "PMC12112250",
+ "title": "Impact of Well-Controlled Type 2 Diabetes on Corneal Endothelium Following Cataract Surgery: A Prospective Longitudinal Analysis",
+ "species": "human",
+ "procedure": "cataract",
+ "split": "development",
+ "license": {"statement": "CC BY 4.0 (article <license>)", "url": "https://creativecommons.org/licenses/by/4.0/"},
+ "source_files": [
+  {"name": "PMC12112250.xml", "sha256": "8767f164b0e589af9328156fb679bea8a30e66fcde53d6e269f3a22337d3faf6", "bytes": 235704, "origin": "Europe PMC fullTextXML", "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12112250/fullTextXML"}
+ ],
+ "indication": "Age-related cataract (LOCS III, nuclear grades 5-6 excluded), age 60-80 years, Caucasian; well-controlled type 2 diabetes on oral therapy (HbA1c of 7% or less, no or mild non-proliferative retinopathy) versus non-diabetic patients operated in the same period; uneventful stop-and-chop phacoemulsification (Centurion) with SN60AT IOL by four surgeons; excluded glaucoma, pseudoexfoliation, corneal dystrophies or scars, low preoperative ECD",
+ "groups": [
+  {"group": "type2-diabetes", "role": "control", "n_reported": 80, "description": "Study group (DM+): well-controlled type 2 diabetes, 80 eyes of 80 patients"},
+  {"group": "no-diabetes", "role": "control", "n_reported": 80, "description": "Control group (DM-): no type 2 diabetes, 80 eyes of 80 patients"}
+ ],
+ "extraction_protocol": "endothelium-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "type2-diabetes/central-ecd",
+   "group": "type2-diabetes",
+   "kind": "group_mean",
+   "n": 80,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 0.46, 3],
+   "cells": [
+    "PMC12112250.xml::jcm-14-03603-t005!R8C2",
+    "PMC12112250.xml::jcm-14-03603-t005!R9C2",
+    "PMC12112250.xml::jcm-14-03603-t005!R10C2"
+   ],
+   "baseline_label": "Preoperative central ECD (Nidek CEM-530) of the operated eye, Table 5 'Before surgery'",
+   "notes": "Table 5 ECD rows, 'Mean ± SD' column: before surgery, after 14 days (14/30.4375 months) and after 3 months; the 6-8 month visit is excluded (range); no per-visit n"
+  },
+  {
+   "series_id": "no-diabetes/central-ecd",
+   "group": "no-diabetes",
+   "kind": "group_mean",
+   "n": 80,
+   "value_kind": "ecd_absolute",
+   "reference_kind": "patient_preoperative",
+   "months": [0, 0.46, 3],
+   "cells": [
+    "PMC12112250.xml::jcm-14-03603-t006!R8C2",
+    "PMC12112250.xml::jcm-14-03603-t006!R9C2",
+    "PMC12112250.xml::jcm-14-03603-t006!R10C2"
+   ],
+   "baseline_label": "Preoperative central ECD (Nidek CEM-530) of the operated eye, Table 6 'Before surgery'",
+   "notes": "Table 6 ECD rows, 'Mean ± SD' column: before surgery, after 14 days (14/30.4375 months) and after 3 months; the 6-8 month visit is excluded (range); no per-visit n"
+  }
+ ],
+ "exclusions": [
+  {"what": "jcm-14-03603-t005 R11C2 and jcm-14-03603-t006 R11C2 ('After 6-8 months')", "reason": "visit time given as a range (protocol: ranges are excluded); Methods confirm the visit was between 6 and 8 months"},
+  {"what": "Median (Q1; Q3) and MD (95% CI) columns of Tables 5-6", "reason": "medians and differences are not admissible"},
+  {"what": "jcm-14-03603-t007 R13-R16", "reason": "same group means as Tables 5-6"},
+  {"what": "jcm-14-03603-t008 to t011 (changes and percent changes from baseline)", "reason": "changes of the same groups; the absolute ECD series is used; Table 11 labels the third visit '6 months' while Tables 5-7 and Methods give 6-8 months"},
+  {"what": "jcm-14-03603-t002 R14 and t003 R13 preoperative ECD", "reason": "same preoperative means as Tables 5-6"}
+ ],
+ "notes": [
+  "Diabetic and non-diabetic groups are patient-condition subgroups receiving the same standard phacoemulsification; both recorded as control (the authors call DM+ the study group and DM- the control group).",
+  "Methods schedule: 2 weeks, 3 months and between 6 and 8 months after surgery; the tables label the first visit 'After 14 days', converted as 14 days."
+ ]
+}
