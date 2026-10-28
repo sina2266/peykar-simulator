@@ -1,5 +1,76 @@
 # Verification record
 
+## IOP tranche 2 and model 1.1: blind triage, custody, freeze and sealed test: 2026-10-28
+
+- Start state: main at `c93d5018` (= origin, IOP 1.0.0 results committed).
+- `experiments/data/iop-glaucoma-surgery-2026-10-28/screening/triage_chunks.py --tranche 1
+  --check-tranche-1` rebuilt all three tranche-1 triage chunks and their id lists byte
+  for byte. With `--tranche 2` it wrote three masked chunks of 40 articles. The
+  reservation rule (tranche-2 README) was committed before triage (`ac2fad66`).
+- Three reviewer sub-agents wrote the masked-preview decisions (84 admit, 36
+  exclude). `.peykar/write_iop_tranche2_triage.py` applied the tranche-1
+  percent-change rule to three exclusions and wrote `tranche-2/triage-1.0.0.json`
+  (87 admitted, 33 excluded) and the reservation (72 development, 87 sealed). Commit
+  `bd2882a8`.
+- `scripts/link_study_authors.py --dataset .../tranche-2 --raw
+  .peykar/iop-literature-screen-2026-10-28/raw --prefix iop- --schema
+  eye.iop-author-overlap-1.0.0` found 37 pairs, 7 development clusters, 18 sealed
+  studies with training exclusions and 10 sealed–sealed pairs.
+- The first launch of seven custodian sub-agents returned "usage limit reached". Only
+  C5 had written files (7 studies, no report). Resumed C5 rebuilt those 7 records with
+  identical SHA-256 values and finished; C1–C4, C6 and C7 then ran from scratch. A
+  structure-only check rebuilt all 74 records from their specs and hash-checked source
+  copies (74/74 equal) and printed counts only: 192 series, 13 admitted studies
+  without a record. Commit `d6a687ad`.
+- `scripts/evaluate_iop_population_1_1.py --development --model 1.0.0` (frozen 1.0.0
+  harness over the 72 tranche-1 records): exit 0, 380.2 s, report
+  `8ddcd757cc8a5c2cb5a8353efaa0c278539a3c0afe5792b19eff433d99b4a819`. On group means
+  the Gaussian variant scored 6.849 pp next observation and 8.757 landmark.
+- `experiments/eye/iop/model-1.1/diagnostics_1_1.py` (training data only): without a
+  transient the residual SD was 0.0755; with one it was 0.0636 (3 d), 0.0621 (7 d)
+  and 0.0629 (14 d). Group-mean SD scales as `ln sd = −1.986 − 0.306 ln n`; lag-1
+  residual correlation −0.294.
+- `pytest tests/unit/test_iop_population_1_1.py`: the first run had **1 failure**. The
+  test's own expected shape was wrong: with its parameters the course peaks at month
+  1, not week 1. After correcting the expectation, **12 passed** (3.91 s). Strict
+  `mypy` passed on the two new modules; ruff passed on all new files.
+- `scripts/evaluate_iop_population_1_1.py --development` (model 1.1.0): exit 0, 642.2
+  s, report `02ec89d5c73427e4906480c72c7cef311ee49ae858546228177e1a13134f1c76`.
+  Gaussian group means: 6.773 pp next observation, 8.555 landmark, coverage
+  0.754/0.866. A repeat run (661.0 s) produced the same report SHA.
+- `scripts/publish_iop_population_1_1.py --development --reference <round-0 report>`:
+  38 studies redacted in both public reports, and a scan found no values in them.
+- The first `make check-docker` **exited 2**: the editor had re-wrapped
+  `scripts/publish_iop_population_1_1.py` and `ruff format --check` failed. After
+  `ruff format`, **exit 0: 858 Python tests passed in 134.79 s**, 89% coverage, strict
+  mypy 130 files, 18 frontend tests, contracts and all builds
+  (`.peykar/iop11-prefreeze-check-docker-2026-10-28.log`).
+- `experiments/eye/iop/model-1.1/protocol-1.1.0.json` written exclusively, SHA
+  `33dff2202a7853143faff4c13b3932028191beb890501093de2bbe3c0080352f`. It pins 42
+  files, 72 training and 74 sealed record hashes; `check_protocol` reported no
+  problem. Commit `ac8abf83` pushed; local `HEAD` equals `origin/main`.
+- `scripts/evaluate_iop_population_1_1.py --sealed --protocol .../protocol-1.1.0.json`:
+  run once, exit 0, 996.3 s, all pins matched. Report
+  `3c126572aa10273ec2fd4509a9d46a72defd171ddd7e6b382f4c29940e3c209b`; 1.0.0 reference
+  report `7e04c9b9e11c7113955f33645b2396e36ae0f1d07a28499579f35e534b28b681`.
+- `scripts/publish_iop_population_1_1.py --sealed --reference ...`: verdicts H1–H5 all
+  true.
+  - H1: 341/425 = 0.802 and 381/425 = 0.896.
+  - H2: 6.69 pp against 8.06, 44.56, 8.60 and 9.90.
+  - H3: 8.95 against 15.10, 15.44 and 17.60.
+  - H4: 9.71 against 17.88 for the pooled curve on its own groups, or 18.06 on the
+    same 99 groups.
+  - H5: 6.69 against 6.92 and 8.95 against 9.40.
+
+  36 studies were redacted, and the same scan found nothing. The plot ran with
+  `.peykar/cornea-native47/bin/python`; the PNG was inspected and the legend was
+  moved before the final render.
+- After the result documents: every pin of the IOP 1.1 and 1.0.0, thickness,
+  endothelium and both corneal population protocols still matched. `make check-docker`
+  **exit 0, 858 Python tests passed in 117.70 s**, 89% coverage, strict mypy 130
+  files, 18 frontend tests, 479 files formatted, contracts and all builds
+  (`.peykar/iop11-results-check-docker-2026-10-28.log`).
+
 ## IOP after glaucoma procedures: model 1.0.0, protocol freeze and sealed test: 2026-10-28
 
 - Start state: main at `c125cf64` (= origin). The dataset split, development and

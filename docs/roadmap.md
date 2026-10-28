@@ -272,9 +272,18 @@ protocol `f13238a2`) before a one-shot sealed test.
   inside both windows (H1 pass), landmark 9.92 vs 12.89 pp (H3 pass), initial state
   10.96 vs 17.99 pp (H4 pass); 21/43 group means within 5/10 pp. Development and
   sealed sets are now consumed.
-- [ ] Represent early non-monotone courses (week-1 rises after GATT, rebound after a
-  very low day 1 after canaloplasty) with a second early component or wider early
-  noise; test on the reserved tranches 2–5.
+- [x] Represent early non-monotone courses (week-1 rises after GATT, rebound after a
+  very low day 1 after canaloplasty) with a second early component: model 1.1 (fixed
+  7-day transient, group-size noise) was tested on tranche 2, reserved before triage.
+  All five declared hypotheses passed: next observation 6.69 vs 8.06 pp for
+  persistence and vs 6.92 for 1.0.0 trained on the same records; landmark 8.95 vs
+  15.10 and 9.40.
+- [ ] Calibrate early and long-horizon intervals. Tranche 2 showed first-month
+  next-observation coverage of 58.5%/73.4% and landmark 80% coverage of 67.1%. Wider
+  early noise or a study-level early-variability term is needed, tested on tranches
+  3–5 (259 unread articles).
+- [ ] Early rises far above the context prior (KDB goniotomy 42% → 89% at week 1)
+  can only be followed after week 1; no fixed-prior model predicts them from day 1.
 - [ ] Represent a waning effect (micropulse cyclophotocoagulation) or late failure
   with a late drift term; recalibrate long-horizon intervals (landmark 80% coverage
   0.652 in the sealed set).

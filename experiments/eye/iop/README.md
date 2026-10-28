@@ -153,3 +153,10 @@ frozen model.
 Both the development and the sealed sets are now consumed. A further version must
 be tested on the reserved tranches 2–5 (379 screened articles that no one has
 triaged or read).
+
+**Model 1.1** ([README](model-1.1/README.md),
+[Persian results](model-1.1/results.fa.md)) adds a fast early transient and noise
+scaled by group size. It was trained on all 72 tranche-1 records and tested once on
+tranche 2, where all five declared hypotheses passed. These include beating 1.0.0
+trained on the same records: 6.69 against 6.92 pp for next observation and 8.95
+against 9.40 pp for landmark.

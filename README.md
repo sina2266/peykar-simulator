@@ -161,6 +161,23 @@ group-mean series), with these results:
 All four declared hypotheses passed, but only 21/43 group means were within 5/10 pp.
 Early pressure rises after angle surgery and a waning micropulse-laser effect are not
 represented ([Persian results](experiments/eye/iop/results.fa.md)).
+**Model 1.1** ([experiment](experiments/eye/iop/model-1.1/README.md)) adds a fast
+early transient (7-day time constant) and group-mean noise scaled by the number of
+eyes. It was trained on all 72 tranche-1 records, frozen and pushed (`ac8abf83`),
+then tested once on tranche 2, a set reserved before triage: 87 blind-triaged
+articles, from which seven custodians built 74 records. All five declared hypotheses
+passed on 113 human group-mean series:
+
+- next-follow-up forecasts 6.69 pp versus 8.06 for persistence;
+- intervals inside both windows (80.2%/89.6%);
+- landmark forecasts 8.95 versus 15.10 pp;
+- initial state 9.71 versus 18.06 pp for the pooled curve;
+- 1.1 better than 1.0.0 trained on the same records (6.69 versus 6.92 and 8.95 versus
+  9.40 pp).
+
+The gain is confined to the first postoperative month. Early and long-horizon
+intervals were too narrow, and 58/113 group means were within 5/10 pp
+([Persian results](experiments/eye/iop/model-1.1/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

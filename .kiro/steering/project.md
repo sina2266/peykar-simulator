@@ -1,5 +1,34 @@
 # Peykar continuation context
 
+## IOP model 1.1 and its tranche-2 sealed test, 2026-10-28
+
+- Tranche 2 (ranks 120–239) was reserved for the 1.1 test BEFORE triage
+  (`ac2fad66`; tranche-2/README.md). `screening/triage_chunks.py` rebuilds the
+  tranche-1 chunks byte for byte. Blind triage admitted 87 articles; the reservation
+  lists the 72 tranche-1 record studies as training and the 87 as sealed. Seven
+  custodians built 74 records with 192 series (`.peykar/iop-tranche2-sealed-2026-10-28`,
+  private). Sub-agent runs can hit usage limits; a resumed custodian must verify its
+  earlier outputs by rebuild hash.
+- Model `iop_population_1_1` 1.1.0 adds an early transient s·exp(−(t − 1 d)/7 d) and
+  group-mean noise scaled by (n/40)^−g. Harness `eye_iop_evaluation_1_1` imports the
+  model-independent parts of the frozen 1.0.0 harness. The operator
+  `scripts/evaluate_iop_population_1_1.py` has `--model 1.0.0` for the reference and
+  scores 1.0.0 in the same sealed run. The publisher
+  `scripts/publish_iop_population_1_1.py` loads the frozen 1.0.0 publisher as a
+  library. The primary is the Gaussian variant, selected on group means.
+- Protocol experiments/eye/iop/model-1.1/protocol-1.1.0.json, SHA 33dff220…, frozen at
+  commit `ac8abf83`. The sealed set was run once (996 s). All five hypotheses passed
+  on 113 human group means:
+  - next observation 6.69 vs persistence 8.06 pp;
+  - coverage 0.802/0.896;
+  - landmark 8.95 vs 15.10;
+  - initial state 9.71 vs 18.06;
+  - H5 vs 1.0.0 with the same training: 6.69 vs 6.92 and 8.95 vs 9.40.
+- The gain is only in the first month. First-month coverage was 0.585/0.734 and
+  landmark 80% coverage 0.671; 58/113 within 5/10 pp. Tranches 3–5 (259 unread
+  articles) are the next fresh test data. Pre-freeze make check-docker: 858 tests,
+  89% coverage, mypy 130 files.
+
 ## IOP after glaucoma procedures model 1.0.0 and its sealed test, 2026-10-28
 
 - Fourth eye component, first outside the cornea. Dataset
