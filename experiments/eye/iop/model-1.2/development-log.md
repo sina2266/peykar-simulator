@@ -88,3 +88,65 @@ procedures). The first c0 and c2 runs were stopped unread. Generic version 2 now
 `study_effects = "per_group"` (checked against `iop_population_1_1` with a
 multi-procedure study in `tests/unit/test_eye_recovery_population2.py`), and every IOP
 1.2 candidate uses it; c0 and c2 are otherwise unchanged.
+
+### Round 1 results (LOSO, 146 studies, human group means; each run in four shards merged by `--merge`)
+
+| | model 1.1.0 (1.1 harness) | c0 | c2 (deviations 0.5, 3 mo) | persistence | pooled curve |
+|---|---|---|---|---|---|
+| next observation, 946 targets | 6.840 | 6.840 | 6.912 | 8.022 | — |
+| landmark, 946 targets | 8.803 | 8.803 | 8.836 | 14.461 | — |
+| initial state, 1,062 targets | 10.585 | 10.585 | 10.585 | — | 18.159 |
+| next-obs coverage 80% / 90% | 0.737 / 0.866 | 0.737 / 0.866 | 0.718 / 0.857 | — | — |
+| first-month next-obs coverage, 219 targets | 0.639 / 0.822 | 0.639 / 0.822 | 0.580 / 0.781 | — | — |
+| first-month next-obs RMSE | 10.38 | 10.38 | 10.64 | — | — |
+
+The primary of every run is the Gaussian variant (the Student-t variant is within
+0.05 pp).
+
+- **Check passed**: c0 equals the frozen model 1.1.0 with its own harness in all
+  195,431 numbers of every study; the only differences are text (the reason given when
+  a population prior is unavailable names the "baseline value" instead of the
+  "preoperative IOP").
+- **c2 is not adopted**: it gains in no task (+0.07, +0.03, 0.00 pp) and lowers the
+  first-month coverage. As expected from the weak error persistence of IOP series,
+  persistent deviations do not help. **Incumbent after round 1: c0.**
+
+### Round 2 procedure result
+
+`.peykar/iop12_early_noise_calibration.py` on c0's rows (219 first-month targets;
+Gaussian approximation 0.626 / 0.804 against the exact 0.639 / 0.822) chose
+**k = 8, T = 1 month** (first month 0.826 / 0.904, all targets 0.795 / 0.878 in the
+approximation; loss 0.031). **c1** = c0 with forecast-only early noise `(8, 1)`; it is
+run by LOSO next, under the round-2 adoption rule declared above.
+
+### Round 2 results (LOSO, 146 studies, human group means)
+
+| | c0 | c1 (early noise 8, 1 month) |
+|---|---|---|
+| next observation, 946 targets | 6.840 | 6.851 |
+| landmark, 946 targets | 8.803 | 8.808 |
+| initial state, 1,062 targets | 10.585 | 10.583 |
+| next-obs coverage 80% / 90% | 0.737 / 0.866 | 0.790 / 0.890 |
+| **first-month** next-obs coverage, 219 targets | 0.639 / 0.822 | **0.826 / 0.904** |
+| first-month landmark coverage (reported) | 0.680 / 0.836 | 0.808 / 0.909 |
+| first-month next-obs RMSE | 10.38 | 10.41 |
+
+Under the round-2 rule c1 is **adopted**: the first-month 80% coverage moves from 0.161
+to 0.026 away from nominal and the 90% coverage from 0.078 to 0.004 (both by more than
+0.05); the pooled coverages lie inside the H1 windows; no task's RMSE rises by more
+than 0.011 pp (point forecasts move only through the mixture medians). The primary is
+the Gaussian variant (the Student-t variant is within 0.05 pp).
+
+## Freeze decision (2026-10-29)
+
+- Primary candidate **c1** (model 1.1.0's law and fit in generic version 2, with
+  forecast-only early noise `k = 8`, `T = 1 month`). U1 primary
+  `population_initial_state`; U2 and U3 primary `population_assimilation`.
+- Reference: the frozen model 1.1.0 with its own harness, scored in the same sealed
+  run. H5 tests what the change targets: first-month next-observation coverage closer
+  to nominal at both levels, with the pooled next-observation RMSE at most 0.05 pp
+  higher than 1.1.0's.
+- Expected, from development: no accuracy gain; the gain is calibration only. The
+  first-month errors themselves (about 10 pp) remain.
+- No further development rounds. This decision was written before any result of the
+  retinal-thickness 1.1 sealed test (run in parallel) was read.

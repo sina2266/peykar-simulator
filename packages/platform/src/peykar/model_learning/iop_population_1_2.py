@@ -50,4 +50,7 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     # c2: c0 with forecast-only persistent deviations (half the residual variance,
     # 3-month correlation time).
     "c2": _config("1.2.0-c2", deviation=(0.5, 3.0)),
+    # c1 (round 2): c0 with forecast-only early noise, k = 8 and T = 1 month, chosen by
+    # the declared calibration procedure on c0's development rows.
+    "c1": _config("1.2.0-c1", early_noise=(8.0, 1.0)),
 }

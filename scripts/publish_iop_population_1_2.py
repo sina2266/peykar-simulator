@@ -49,6 +49,9 @@ REFERENCE_PRIMARY = {
     "initial_state": "population_initial_state",
 }
 FIRST_MONTH = 1.0
+# H5 (declared in the 1.2 protocol): first-month next-observation coverage closer to
+# nominal at both levels, with the pooled next-observation RMSE at most this much higher.
+H5_RMSE_TOLERANCE_PP = 0.05
 COVERAGE_LEVELS = {"80": ("0.1", "0.9", 0.80), "90": ("0.05", "0.95", 0.90)}
 
 
@@ -192,6 +195,16 @@ def main(argv: list[str] | None = None) -> int:
         reference = json.loads(args.reference.read_text())
         h5 = versus_reference(report, reference)
         result["H5_versus_model_1_1_same_training"] = h5
+        coverage = h5["first_month_next_observation_coverage"]
+        accuracy = h5["next_observation"]
+        result["verdicts"]["H5_first_month_coverage_closer_without_rmse_loss"] = bool(
+            coverage["targets"] > 0
+            and all(coverage[level]["model_1_2_closer"] for level in COVERAGE_LEVELS)
+            and accuracy["model_1_2_rmse_pp"] is not None
+            and accuracy["model_1_1_rmse_pp"] is not None
+            and accuracy["model_1_2_rmse_pp"]
+            <= accuracy["model_1_1_rmse_pp"] + H5_RMSE_TOLERANCE_PP
+        )
         extra["reference_report_sha256"] = previous.sha256(args.reference)
     redacted = sorted(k for k, v in classes.items() if not v)
     for block in result["per_series"].values():
