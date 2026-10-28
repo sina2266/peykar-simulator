@@ -1,5 +1,26 @@
 # Peykar continuation context
 
+## In progress 2026-10-28 (late): retina 1.1 and IOP 1.2 development
+
+- Fresh sealed sets, reserved before triage and extracted blind: retina tranche 2
+  (63 records, `.peykar/retina-tranche2-sealed-2026-10-28`) and IOP tranche 3 (83
+  records, `.peykar/iop-tranche3-sealed-2026-10-28`); custody checks by
+  `.peykar/verify_retina_tranche2_custody.py` and `verify_iop_tranche3_custody.py`.
+- New generic model `eye_recovery_population2` (defaults = model 1 bit for bit):
+  wear-off `L(t)(1 - rho W(t))` from series metadata `effect_duration_months`,
+  treatment fallback, early noise (likelihood or forecast-only), noise pooling
+  (median/pooled), forecast-only pooling, study effects shared/per_group. Harness
+  `eye_recovery_evaluation2`. Retina 1.1: `retina_thickness_population_1_1` (dose rule:
+  single dexamethasone implant D = 3.5 mo, w 0.5, rho 0.8), `eye_retina_data_1_1`,
+  operator/publisher `*_retina_population_1_1.py`. IOP 1.2: `iop_population_1_2`
+  (study_effects per_group = IOP 1.1), `eye_iop_data_1_2.IopSeries`, operator with
+  `--shard i/n` and `--merge`, publisher `publish_iop_population_1_2.py`.
+- Retina dev (65 studies): s2 (wear-off) adopted; s1 (fallback) and s4 (pooled noise)
+  rejected; round 3 s5 (forecast-only pooled noise) pending. Logs in
+  `experiments/eye/{retina/model-1.1,iop/model-1.2}/development-log.md`.
+- Run LOSO with `OMP_NUM_THREADS=1` etc.; otherwise BLAS threads oversubscribe.
+- Web searches can surface sealed values: none more on retina/IOP outcomes before freeze.
+
 ## Retinal-thickness model 1.0.0 and its sealed test, 2026-10-28
 
 - Fifth eye component, chosen by data availability. Dataset
