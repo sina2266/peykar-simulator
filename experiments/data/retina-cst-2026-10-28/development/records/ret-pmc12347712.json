@@ -1,0 +1,101 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc12347712",
+ "doi": "10.3390/jcm14155412",
+ "pmcid": "PMC12347712",
+ "title": "Real-World Efficacy and Durability of Faricimab in Aflibercept-Resistant Neovascular Age-Related Macular Degeneration",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12347712.xml",
+   "sha256": "ac8186f98d7e9a0bd09915e4487018ceee613fd6e0ea7f2d8627f5e7a496af7a",
+   "bytes": 78316,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Aflibercept-resistant neovascular AMD (persistent SRF or IRF despite at least three consecutive aflibercept injections at 4-6-week intervals), switched to faricimab; 60 eyes of 60 patients, Yeungnam University, 2023-2024, retrospective; subtypes typical nAMD 24, PCV 32, RAP 4; no previous vitreoretinal surgery or PDT",
+ "groups": [
+  {
+   "group": "faricimab-switch",
+   "role": "control",
+   "n_reported": 60,
+   "agent": "faricimab intravitreal (switch from aflibercept 2 mg)",
+   "description": "Whole cohort; after switching, PRN with a minimum injection interval of 8 weeks and no mandatory loading doses"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 BCVA row and p-value column",
+   "reason": "Visual acuity and p-values are not extracted"
+  },
+  {
+   "what": "Table 2 subfoveal choroidal thickness and maximum PED height/width rows",
+   "reason": "Choroidal thickness and PED dimensions are out of scope"
+  },
+  {
+   "what": "Table 3 factors associated with complete resolution of SRF and IRF",
+   "reason": "Logistic regression on a post-baseline outcome (fluid resolution); not a thickness series"
+  },
+  {
+   "what": "Table 1 baseline CST",
+   "reason": "Duplicate of the Table 2 baseline for the same eyes; Table 2 cited"
+  },
+  {
+   "what": "Retinal fluid proportions (Figure 3)",
+   "reason": "Proportions; figure only"
+  }
+ ],
+ "notes": [
+  "Measure: central subfield thickness (CST) on Heidelberg Spectralis SD-OCT; recorded as central_subfield by the protocol's CST naming.",
+  "Prior treatment: all eyes previously treated with aflibercept (and other anti-VEGF) before the switch.",
+  "Indication namd includes PCV and RAP subtypes (subtype counts in condition).",
+  "Role control: approved agent, single real-world cohort without an investigational arm."
+ ],
+ "series": [
+  {
+   "series_id": "faricimab-switch/cst",
+   "group": "faricimab-switch",
+   "kind": "group_mean",
+   "n": 60,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "prn",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline at the switch visit (Table 2, row 3 'Central subfield thickness', column 2)",
+   "notes": "Mean +/- SD (Statistical Analysis); time origin is the switch to faricimab (first faricimab injection); visits at 1, 3 and 6 months after switching; per-visit n not reported (mean follow-up given in weeks in the Results)",
+   "values": [
+    356.2,
+    348.8,
+    338.7,
+    324.5
+   ],
+   "source_cells": [
+    "PMC12347712.xml::jcm-14-05412-t002!R3C2",
+    "PMC12347712.xml::jcm-14-05412-t002!R3C3",
+    "PMC12347712.xml::jcm-14-05412-t002!R3C4",
+    "PMC12347712.xml::jcm-14-05412-t002!R3C5"
+   ],
+   "source_cell_texts": [
+    "356.2 ± 38.4",
+    "348.8 ± 42.1",
+    "338.7 ± 49.7",
+    "324.5 ± 45.1"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+{
+ "study_id": "ret-pmc9793787",
+ "doi": "10.2147/OPTH.S395577",
+ "pmcid": "PMC9793787",
+ "title": "Brolucizumab in Neovascular Age-Related Macular Degeneration – Indian Real-World Experience: The BRAILLE Study – Fifty-Two-Week Outcomes",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License); private record",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9793787.xml",
+   "sha256": "06baf9d42e5471d5976f503b83ca8d7898cbcd40f872d8bbeeabda412007fd3a",
+   "bytes": 81365,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Neovascular age-related macular degeneration (polypoidal choroidal vasculopathy excluded by ICGA), treatment-naive or recalcitrant to aflibercept/ranibizumab and switched; intravitreal brolucizumab with 4-weekly reviews and PRN retreatment; retrospective multicentre chart analysis (four Indian tertiary centres, 2020-2022) of the eyes with 52-week follow-up data",
+ "groups": [
+  {
+   "group": "naive",
+   "role": "control",
+   "n_reported": 17,
+   "agent": "intravitreal brolucizumab 6 mg/0.05 mL, PRN",
+   "description": "Treatment-naive eyes (baseline-defined subgroup)"
+  },
+  {
+   "group": "switch",
+   "role": "control",
+   "n_reported": 65,
+   "agent": "intravitreal brolucizumab 6 mg/0.05 mL, PRN",
+   "description": "Recalcitrant eyes switched from aflibercept or ranibizumab (fluid worsening or persistent despite repeated doses; baseline-defined subgroup)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "naive/cst",
+   "group": "naive",
+   "kind": "group_mean",
+   "n": 17,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "unstated",
+   "regimen": "prn",
+   "prior_treatment": "naive",
+   "months": [0, 2.7598, 5.5195, 8.2793, 11.9589],
+   "cells": [
+    "PMC9793787.xml::t0002!R3C6",
+    "PMC9793787.xml::t0002!R4C6",
+    "PMC9793787.xml::t0002!R6C6",
+    "PMC9793787.xml::t0002!R8C6",
+    "PMC9793787.xml::t0002!R10C6"
+   ],
+   "baseline_label": "Baseline (Table 2, CST treatment-naive column)",
+   "notes": "mean ± SD (see notes on the statistic); weeks 12, 24, 36 and 52 from the first brolucizumab injection (weeks x 7 / 30.4375 months); analysis restricted to eyes with 52-week data"
+  },
+  {
+   "series_id": "switch/cst",
+   "group": "switch",
+   "kind": "group_mean",
+   "n": 65,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "unstated",
+   "regimen": "prn",
+   "prior_treatment": "previously_treated",
+   "months": [0, 2.7598, 5.5195, 8.2793, 11.9589],
+   "cells": [
+    "PMC9793787.xml::t0002!R3C7",
+    "PMC9793787.xml::t0002!R4C7",
+    "PMC9793787.xml::t0002!R6C7",
+    "PMC9793787.xml::t0002!R8C7",
+    "PMC9793787.xml::t0002!R10C7"
+   ],
+   "baseline_label": "Baseline at the switch to brolucizumab (Table 2, CST switch-therapy column)",
+   "notes": "mean ± SD (see notes on the statistic); weeks 12, 24, 36 and 52 from the first brolucizumab injection (weeks x 7 / 30.4375 months); analysis restricted to eyes with 52-week data; the 36-week and 52-week cells of this column have identical text in the article (cited as published)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 CST 'Entire Cohort' column (C5)", "reason": "whole cohort tabulated with its baseline subgroups; the subgroups are extracted so that no eye is counted twice"},
+  {"what": "Table 2 BCVA columns (C2-C4)", "reason": "visual acuity (median [IQR]) is not extracted"},
+  {"what": "Table 2 P value rows (R5, R7, R9, R11)", "reason": "p-values are not admissible"},
+  {"what": "Table 3 proportions with SRF, IRF and PED", "reason": "proportions are not admissible"},
+  {"what": "Tables 4-5 inflammation and adverse events", "reason": "not central retinal thickness"},
+  {"what": "12 eyes lost to follow-up before week 52", "reason": "not in the analysed set (not tabulated)"}
+ ],
+ "notes": [
+  "Visual acuity, fluid status, injection numbers and adverse events are reported (not extracted).",
+  "Post-baseline events (intraocular inflammation in three eyes; vitrectomy for vitreous haemorrhage in two eyes) are not reported as removing or replacing values.",
+  "Ambiguity resolved: Table 2 labels only BCVA as median [IQR]; the Methods report normally distributed continuous variables as mean±SD and non-normal ones as median (IQR), the CST cells use the ± notation, and the Results describe 'mean CST' for the cohort and subgroups, so the CST statistic is taken as mean ± SD.",
+  "Ambiguity resolved: restricting the analysis to eyes with 52-week data is attrition, not an outcome-defined selection, so the series are kept with a note.",
+  "Ambiguity resolved: the SD-OCT device is not named, so device is unstated."
+ ]
+}

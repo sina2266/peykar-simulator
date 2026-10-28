@@ -1,0 +1,111 @@
+{
+ "study_id": "ret-pmc8078110",
+ "doi": "10.1097/IAE.0000000000002974",
+ "pmcid": "PMC8078110",
+ "title": "DIABETIC MACULAR EDEMA AND CATARACT SURGERY",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8078110.xml",
+   "sha256": "0587ae6b1826dfb93cdefdcf1f8ea0655e547eb77ccd0bfc2ba4191792791f93",
+   "bytes": 69637,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Nonproliferative diabetic retinopathy with macular edema and visually significant cataract (laser-treated PDR also admitted), HbA1c at most 9%, no corticosteroid for DME in the previous 6 months; 46 patients, Policlinico Bari, 2018-2019; retrospective comparative cohort, phacoemulsification with dexamethasone implant matched with consecutive phacoemulsification alone; some eyes were on ranibizumab treatment at baseline (9 and 11)",
+ "groups": [
+  {
+   "group": "phaco-dex",
+   "role": "treated",
+   "n_reported": 23,
+   "agent": "dexamethasone intravitreal implant (Ozurdex) injected via pars plana at the end of phacoemulsification with IOL implantation",
+   "description": "Group 1: Phaco-Dex"
+  },
+  {
+   "group": "phaco-alone",
+   "role": "control",
+   "treatment": "other",
+   "n_reported": 23,
+   "agent": "phacoemulsification with IOL implantation, no intravitreal treatment at surgery",
+   "description": "Group 2: standard phacoemulsification alone; eyes given rescue dexamethasone implant during follow-up were removed from the later analyses (Results)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "phaco-dex/cst",
+   "group": "phaco-dex",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "single",
+   "prior_treatment": "mixed",
+   "months": [0, 1, 2, 3],
+   "cells": [
+    "PMC8078110.xml::T3!R3C1",
+    "PMC8078110.xml::T3!R3C2",
+    "PMC8078110.xml::T3!R3C3",
+    "PMC8078110.xml::T3!R3C4"
+   ],
+   "baseline_label": "Baseline, Phaco-Dex (Table 3, row 3, column 1; values sit in the third header row)",
+   "notes": "Mean +/- SD (Table 3 footnote); monthly visits after surgery; no drop-outs in this group during the 3-month follow-up"
+  },
+  {
+   "series_id": "phaco-alone/cst",
+   "group": "phaco-alone",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "single",
+   "prior_treatment": "mixed",
+   "months": [0, 1],
+   "cells": [
+    "PMC8078110.xml::T3!R3C5",
+    "PMC8078110.xml::T3!R3C6"
+   ],
+   "baseline_label": "Baseline, Phaco-alone (Table 3, row 3, column 5; values sit in the third header row)",
+   "notes": "Mean +/- SD; the month-1 value still has the full group (the footnotes give reduced n only at months 2 and 3); eyes that received rescue dexamethasone implant from month 1 onward were removed from later visits, so months 2 and 3 are excluded"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 Phaco-alone 2-month and 3-month values (row 3, columns 7-8)",
+   "reason": "Values after the first rescue event: eyes given rescue dexamethasone implant were removed from the analysis (footnotes give reduced n at 2 and 3 months); only visits before the first rescue with the full baseline number of eyes are kept"
+  },
+  {
+   "what": "Table 3 rows 4-5 (mean difference between groups and its 95% CI)",
+   "reason": "Between-group differences and CI bounds are not extracted"
+  },
+  {
+   "what": "Table 1 baseline CST",
+   "reason": "Duplicate (rounded) of the Table 3 baselines for the same eyes; Table 3 cited"
+  },
+  {
+   "what": "Table 2 interaction and contrast p-values",
+   "reason": "p-values are not extracted"
+  },
+  {
+   "what": "Table 4 IOP and BCVA",
+   "reason": "Not thickness outcomes"
+  }
+ ],
+ "notes": [
+  "Measure: CST defined in Methods as the average thickness in the central 1-mm ETDRS grid (Cirrus SD-OCT): central_subfield, device cirrus.",
+  "Time origin: the day of surgery (all eyes underwent phacoemulsification at time 0; the dexamethasone implant was given at the end of surgery in Group 1).",
+  "Treatment: the Phaco-Dex arm is recorded as steroid_implant with phacoemulsification as a co-intervention; the Phaco-alone arm declares treatment other (cataract surgery without intravitreal treatment), because some of its eyes were on ranibizumab treatment at baseline and the arm is not untreated.",
+  "Prior treatment mixed: some eyes on ranibizumab at baseline and laser-treated PDR admitted.",
+  "Group n is reported per group (23 each); the article reports patients, one eye per patient is implied but not stated.",
+  "Between-group comparisons used multilevel regression models; the tabulated values are observed means."
+ ]
+}

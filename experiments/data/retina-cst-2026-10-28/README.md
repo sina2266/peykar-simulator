@@ -60,6 +60,51 @@ Records use schema `eye.retina-thickness-record-1.0.0`
 `scripts/build_retina_record.py`. Sealed studies are extracted by separate
 custodians and stay private until the evaluation protocol is frozen.
 
+## Extraction outcome (2026-10-28)
+
+Four development extractors and three sealed custodians (sub-agents) worked from
+`.peykar/retina-extraction-brief.md` and protocol 1.0.0. The brief adds rulings
+applied the same way in both splits: months count from the first treatment of the
+study period (the switch visit in switch studies); a visit named after an injection
+is used only when a fixed schedule gives its time; groups or analysis sets defined by
+a post-baseline event are excluded; means from multiple imputation or least-squares
+models are model estimates and excluded; LOCF and observed-case means over all eyes
+are kept with a note.
+
+**Development:** 46 specs (`development/specs/`; cells cited, no values copied) and
+**46 records with 98 series**:
+
+- 79 control and 19 treated series;
+- 62 group means and 36 single eyes;
+- most series have 2–4 follow-ups; ten control group means have five or more.
+
+The 26 CC BY records are in `development/records/`, with their source XML in
+`development/raw/`. The 20 non-commercial or publisher-licensed records are private.
+Eight studies have no record, all because the analysis set or the groups were
+selected by post-baseline events or values were model estimates:
+
+- `ret-pmc8927559`, `ret-pmc9437166`, `ret-pmc12873363`, `ret-pmc6137827`,
+  `ret-pmc8632047`: eyes with rescue treatment, additional surgery or other
+  post-baseline events were removed from every visit, baseline included.
+- `ret-pmc8017745`: inclusion required a minimum number of injections after the
+  switch and no other treatment during follow-up.
+- `ret-pmc8322725`: both groups defined by the post-baseline clinical course.
+- `ret-pmc6558052`: thickness changes are multiple-imputation means; the other rows
+  are groups defined after baseline.
+
+**Sealed:** the custodians built **19 records with 82 series** and reported only
+structure and hashes. Five studies were excluded: medians only
+(`ret-pmc10707275`), groups or analysis sets defined by post-baseline events
+(`ret-pmc12976323`, `ret-pmc10856664`, `ret-pmc7125496`), and censoring after a
+switch at unreported times (`ret-pmc12955161`).
+
+Builder correction: `thickness_number` now skips a leading change sign ("Δ-132.5 ±
+19.6" reads as −132.5); no other text is transformed. Before the correction one
+development study (`ret-pmc13249049`) could not be built. After it, all 45
+development and 19 sealed records built so far rebuilt byte-identical (sealed
+records compared by SHA-256 only, `.peykar/rebuild_retina_records.py`), and
+`ret-pmc13249049` was built by its extractor.
+
 No thickness value of these articles had been read by the model developer when the
 rule, the tranche order, the extraction protocol, the triage and the split were
 committed.

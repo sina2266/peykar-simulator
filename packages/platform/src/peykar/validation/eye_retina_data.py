@@ -71,9 +71,14 @@ MAX_FRACTION = 3.0
 _ID = re.compile(r"^[a-z0-9][a-z0-9._/-]{2,120}$")
 
 
+_CHANGE_SIGN = re.compile(r"^\s*[\u0394\u2206]\s*")
+
+
 def thickness_number(text: str) -> float:
-    """Leading number of a cell (decimal commas accepted, as for IOP cells)."""
-    return iop_number(text)
+    """Leading number of a cell (decimal commas accepted, as for IOP cells). A change
+    sign (Greek capital delta or the increment sign) before the number is skipped, so
+    "Δ-132.5 ± 19.6" reads as -132.5; no other text is transformed."""
+    return iop_number(_CHANGE_SIGN.sub("", text, count=1))
 
 
 @dataclass(frozen=True)

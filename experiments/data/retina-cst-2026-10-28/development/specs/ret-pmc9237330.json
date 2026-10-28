@@ -1,0 +1,94 @@
+{
+ "study_id": "ret-pmc9237330",
+ "doi": "10.3389/fmed.2022.895220",
+ "pmcid": "PMC9237330",
+ "title": "One-Month Outcomes of Intravitreal Anti-VEGF vs. Dexamethasone Implant in the Treatment of Diabetic Macular Edema in Vitrectomized Eyes",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY (article <license>: 'Creative Commons Attribution License (CC BY)'; no version or URL given in the licence element)"
+ },
+ "source_files": [
+  {
+   "name": "PMC9237330.xml",
+   "sha256": "cf832cee2cedc056bf465009a34121295ebd7d8f0a3a54cf5c1020345d2f5fd2",
+   "bytes": 59437,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Clinically significant diabetic macular edema in eyes previously vitrectomized (PPV with panretinal photocoagulation at least 1 month before baseline, mostly for vitreous haemorrhage or vitreomacular traction); prospective, open-label/subject-masked randomised 1:1 single-centre trial (Second Xiangya Hospital), 70 eyes of 70 patients, 1-month duration",
+ "groups": [
+  {
+   "group": "ranibizumab",
+   "role": "control",
+   "n_reported": 35,
+   "agent": "ranibizumab 0.3 mg/0.05 mL intravitreal",
+   "description": "IVV group: one ranibizumab injection at baseline (monthly retreatment allowed if criteria met; data collected only to month 1)"
+  },
+  {
+   "group": "dexamethasone-implant",
+   "role": "control",
+   "treatment": "steroid_implant",
+   "n_reported": 35,
+   "agent": "dexamethasone intravitreal implant 0.7 mg (Ozurdex)",
+   "description": "IVD group: one dexamethasone implant at baseline (retreatment every 3 months allowed if criteria met)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ranibizumab/crt",
+   "group": "ranibizumab",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "optovue",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [0, 0.23, 1],
+   "cells": [
+    "PMC9237330.xml::T3!R2C3",
+    "PMC9237330.xml::T3!R3C3",
+    "PMC9237330.xml::T3!R4C3"
+   ],
+   "baseline_label": "Baseline (Table 3 row Baseline, column 'IVV Group Mean ±SD')",
+   "notes": "Mean ± SD; Table 3 column n. gives the same number of eyes at baseline, week 1 and month 1; week 1 = 0.2300 months after the baseline injection (Day 1); one injection in the reported period"
+  },
+  {
+   "series_id": "dexamethasone-implant/crt",
+   "group": "dexamethasone-implant",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "optovue",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [0, 0.23, 1],
+   "cells": [
+    "PMC9237330.xml::T3!R2C5",
+    "PMC9237330.xml::T3!R3C5",
+    "PMC9237330.xml::T3!R4C5"
+   ],
+   "baseline_label": "Baseline (Table 3 row Baseline, column 'IVD Group Mean ±SD')",
+   "notes": "Mean ± SD; same visits and per-visit n as the ranibizumab series; one implant in the reported period; one eye received IOP-lowering medication at month 1 (no thickness values removed)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 p columns", "reason": "p-values are not admissible"},
+  {"what": "Table 1 baseline CRT row", "reason": "duplicates the Table 3 baseline cells (same eyes); Table 3 cited"},
+  {"what": "Table 4 change in CRT", "reason": "the same groups have absolute series in Table 3, which are used"},
+  {"what": "Table 2 and Table 4 BCVA, Table 5 IOP elevation counts", "reason": "not thickness; counts are not admissible"},
+  {"what": "Results-text CRT changes by DME pattern (IRC vs IRC+SRD) and proportions with >=20% CRT change", "reason": "text-only changes without tabulated baselines; proportions are not admissible"}
+ ],
+ "notes": [
+  "Time origin: the intravitreal injection or implant at the baseline visit (Day 1); visits at Week 1 and Month 1 (Day 2 visit had no OCT)",
+  "CRT measured on RTVue XR Avanti (Optovue) SD-OCT/OCTA, not defined as the central 1-mm subfield, so measure central_unspecified",
+  "Both arms are standard treatments compared without an investigational agent: both control (randomisation 1:1; right/left eyes split between arms for bilateral eligibility, but 70 eyes of 70 patients)",
+  "Prior intravitreal anti-VEGF or steroid treatment of the DME was allowed outside washout windows (4, 8 and 16 weeks) but not reported: prior_treatment unstated; all eyes had prior PPV with PRP",
+  "Other treatments for macular edema were prohibited during the study except for safety; none reported"
+ ]
+}

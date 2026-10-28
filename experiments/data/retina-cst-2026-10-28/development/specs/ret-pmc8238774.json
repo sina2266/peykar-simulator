@@ -1,0 +1,131 @@
+{
+ "study_id": "ret-pmc8238774",
+ "doi": "10.1007/s10792-021-01799-w",
+ "pmcid": "PMC8238774",
+ "title": "Efficacy of intravitreal ziv-aflibercept in patients with macular edema following retinal vein occlusion in Korle-Bu Teaching Hospital, Ghana: a retrospective case series",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8238774.xml",
+   "sha256": "f1d2a0bf6fd4bc61bc2e6b241edc09682357212ad5b0258cf4463771e3393990",
+   "bytes": 78251,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Centre-involving macular edema (retinal thickness above 300 um) secondary to retinal vein occlusion, treatment-naive or untreated for 3 months, retrospective case series at Korle-Bu Teaching Hospital, Ghana (October 2016 to March 2018), 43 eyes of 42 patients with at least 6 months of follow-up",
+ "groups": [
+  {
+   "group": "brvo",
+   "role": "control",
+   "n_reported": 24,
+   "agent": "ziv-aflibercept 1.25 mg/0.05 mL intravitreal (off-label), PRN",
+   "description": "Baseline diagnostic subgroup: branch retinal vein occlusion"
+  },
+  {
+   "group": "crvo_hrvo",
+   "role": "control",
+   "n_reported": 19,
+   "agent": "ziv-aflibercept 1.25 mg/0.05 mL intravitreal (off-label), PRN",
+   "description": "Baseline diagnostic subgroup: central (16 eyes) or hemi-retinal (3 eyes) vein occlusion"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "brvo/csft",
+   "group": "brvo",
+   "n": 24,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "topcon",
+   "regimen": "prn",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    9,
+    12
+   ],
+   "cells": [
+    "PMC8238774.xml::Tab2!R20C2",
+    "PMC8238774.xml::Tab2!R21C2",
+    "PMC8238774.xml::Tab2!R22C2",
+    "PMC8238774.xml::Tab2!R23C2",
+    "PMC8238774.xml::Tab2!R24C2",
+    "PMC8238774.xml::Tab2!R25C2"
+   ],
+   "baseline_label": "Baseline (Table 2 CSFT rows, BRVO column)",
+   "notes": "CSFT = mean thickness of the central 1000-um ETDRS circle on Topcon 3D OCT-2000 (Methods); Table 2 'Mean ± SD'; observed cases: the 9- and 12-month rows are labelled n = 29 for the whole cohort (subgroup n at these visits not reported; inclusion required at least 6 months of follow-up); months after the first injection at the nominal visit months"
+  },
+  {
+   "series_id": "crvo_hrvo/csft",
+   "group": "crvo_hrvo",
+   "n": 19,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "topcon",
+   "regimen": "prn",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    9,
+    12
+   ],
+   "cells": [
+    "PMC8238774.xml::Tab2!R20C3",
+    "PMC8238774.xml::Tab2!R21C3",
+    "PMC8238774.xml::Tab2!R22C3",
+    "PMC8238774.xml::Tab2!R23C3",
+    "PMC8238774.xml::Tab2!R24C3",
+    "PMC8238774.xml::Tab2!R25C3"
+   ],
+   "baseline_label": "Baseline (Table 2 CSFT rows, CRVO/HRVO column)",
+   "notes": "CSFT = mean thickness of the central 1000-um ETDRS circle on Topcon 3D OCT-2000 (Methods); Table 2 'Mean ± SD'; observed cases: the 9- and 12-month rows are labelled n = 29 for the whole cohort (subgroup n at these visits not reported; inclusion required at least 6 months of follow-up); months after the first injection at the nominal visit months"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 Overall column (C4)",
+   "reason": "whole cohort tabulated together with its baseline subgroups; the subgroups are extracted so no eye is counted twice"
+  },
+  {
+   "what": "Table 2 'Final visit' rows",
+   "reason": "undated final visit"
+  },
+  {
+   "what": "Table 2 P value columns",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 CSFT baseline",
+   "reason": "same eyes and baseline as Table 2 (duplicate); Table 2 cited"
+  },
+  {
+   "what": "Table 2 BCVA and IOP rows",
+   "reason": "visual acuity and IOP are not extracted"
+  },
+  {
+   "what": "Table 2 number of recurrences and number of injections",
+   "reason": "counts are not extracted"
+  }
+ ],
+ "notes": [
+  "Prior treatment mixed in both subgroups: five eyes had prior bevacizumab, the others were treatment naive (Table 1)",
+  "Retreatment by clinical need (PRN); no fixed loading phase stated",
+  "One patient contributed both eyes (43 eyes of 42 patients)"
+ ]
+}

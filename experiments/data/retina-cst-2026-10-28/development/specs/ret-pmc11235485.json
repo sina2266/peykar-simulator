@@ -1,0 +1,105 @@
+{
+ "study_id": "ret-pmc11235485",
+ "doi": "10.12998/wjcc.v12.i21.4491",
+ "pmcid": "PMC11235485",
+ "title": "Effects of vitrectomy combined with internal limiting membrane peeling in patients with diabetic macular edema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "vitrectomy",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11235485.xml",
+   "sha256": "72652908bd6ac94908854760b46a85352b47cf54d89833d44d5685677848127e",
+   "bytes": 64924,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Diabetic macular edema, 81 patients (92 eyes), Beijing Shanqu Liangxiang Hospital, 2022; Methods describe a retrospective review with allocation by computer-generated random number sequences to PPV alone or PPV with ILM peeling; no previous laser, anti-VEGF, vitrectomy, cataract or other intraocular surgery; inclusion required follow-up of at least 6 months and complete clinical data",
+ "groups": [
+  {
+   "group": "ppv",
+   "role": "control",
+   "n_reported": 47,
+   "agent": "23-gauge three-port pars plana vitrectomy with triamcinolone staining; silicone oil tamponade and subconjunctival dexamethasone/gentamicin at the end of surgery (Methods)",
+   "description": "Control group: PPV alone, 41 patients / 47 eyes"
+  },
+  {
+   "group": "ppv-ilm-peeling",
+   "role": "treated",
+   "n_reported": 45,
+   "agent": "pars plana vitrectomy plus internal limiting membrane peeling (0.1% indocyanine green staining, peeling range 2 disc diameters)",
+   "description": "Stripping group: PPV with ILM peeling, 40 patients / 45 eyes"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ppv/cmt",
+   "group": "ppv",
+   "kind": "group_mean",
+   "n": 47,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "months": [0, 1, 3],
+   "cells": [
+    "PMC11235485.xml::T2!R3C2",
+    "PMC11235485.xml::T2!R3C3",
+    "PMC11235485.xml::T2!R3C4"
+   ],
+   "baseline_label": "Preoperative (Table 2, row 3 'Control group (n = 47)', column 2)",
+   "notes": "Mean +/- SD; times from surgery (1 and 3 months after surgery); n per visit not given separately from the row label (n = 47); values are not stated as removed after complications (retinal detachment, endophthalmitis)"
+  },
+  {
+   "series_id": "ppv-ilm-peeling/cmt",
+   "group": "ppv-ilm-peeling",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "months": [0, 1, 3],
+   "cells": [
+    "PMC11235485.xml::T2!R4C2",
+    "PMC11235485.xml::T2!R4C3",
+    "PMC11235485.xml::T2!R4C4"
+   ],
+   "baseline_label": "Preoperative (Table 2, row 4 'Stripping group (n = 45)', column 2)",
+   "notes": "Mean +/- SD; times from surgery (1 and 3 months after surgery); n per visit not given separately from the row label (n = 45); values are not stated as removed after complications"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 rows 5-6 (t and P) and columns 5-6 (F and P of repeated-measures ANOVA)",
+   "reason": "Test statistics and p-values are not extracted"
+  },
+  {
+   "what": "Table 3 BCVA",
+   "reason": "Visual acuity is not extracted"
+  },
+  {
+   "what": "Table 4 volume of cystoid macular edema",
+   "reason": "Volume measured by B-mode ultrasonography, not central thickness by OCT (out of scope)"
+  },
+  {
+   "what": "Complication counts",
+   "reason": "Counts are not extracted"
+  }
+ ],
+ "notes": [
+  "Measure: Methods state CMT was measured manually on OCT at the fovea (retinal thickness from ILM to RPE), three measurements averaged; recorded as central_point (manual foveal measurement, not the 1-mm subfield mean).",
+  "Device: 'OCT (Heidelberg, Germany)' recorded as spectralis.",
+  "Design wording is inconsistent: retrospective review in Methods, random allocation in Methods and abstract; recorded as stated.",
+  "Complication counts differ between the abstract and the Results text; not extracted.",
+  "Role: the stripping group (ILM peeling added) is the declared experimental arm; PPV alone is labelled the control group by the authors."
+ ]
+}

@@ -10,6 +10,7 @@ from peykar.validation.eye_retina_data import (
     RetinaSeries,
     build_record,
     structural_summary,
+    thickness_number,
     to_retina_series,
     validate_record,
 )
@@ -163,3 +164,11 @@ def test_builder_reads_cited_cells_and_checks_hashes() -> None:
     assert record["series"][0]["values"] == [480.0, 352.5, 300.0]
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
+
+
+def test_change_sign_before_a_number_is_skipped() -> None:
+    assert thickness_number("\u0394-132.46\u00b1196.55") == pytest.approx(-132.46)
+    assert thickness_number("\u2206 -12,5 \u00b1 3,1") == pytest.approx(-12.5)
+    assert thickness_number("352 \u00b1 70") == pytest.approx(352.0)
+    with pytest.raises(InvalidRequest):
+        thickness_number("delta -12")

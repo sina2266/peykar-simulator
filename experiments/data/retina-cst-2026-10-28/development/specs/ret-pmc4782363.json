@@ -1,0 +1,67 @@
+{
+ "study_id": "ret-pmc4782363",
+ "doi": "10.1186/s12886-016-0203-7",
+ "pmcid": "PMC4782363",
+ "title": "Peripapillary choroidal thickness after intravitreal ranibizumab injections in eyes with neovascular age-related macular degeneration",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License; CC0 waiver for data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4782363.xml",
+   "sha256": "e9605854507c02d415d027947daabd51239f776748fc79ef9b2b175bc51ebcee",
+   "bytes": 102893,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive neovascular AMD (type 2 or type 3 neovascularization; PCV, high myopia, glaucoma and prior PDT or intravitreal anti-VEGF excluded); retrospective case-control study (Korea University Medical Center, February 2011 to March 2013), 39 eyes of 39 patients; age-matched healthy control eyes not extracted",
+ "groups": [
+  {
+   "group": "ranibizumab",
+   "role": "control",
+   "n_reported": 39,
+   "agent": "ranibizumab 0.5 mg intravitreal",
+   "description": "Neovascular AMD eyes: three monthly ranibizumab injections, then monthly follow-up with retreatment as needed"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ranibizumab/central-rt",
+   "group": "ranibizumab",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "topcon",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [0, 3, 6],
+   "cells": [
+    "PMC4782363.xml::Tab3!R9C2",
+    "PMC4782363.xml::Tab3!R9C3",
+    "PMC4782363.xml::Tab3!R9C5"
+   ],
+   "baseline_label": "Baseline (Table 3 row 'Central RT (μm)', column Baseline)",
+   "notes": "Mean ± SD (table footnote); data collected at baseline, 3 and 6 months after the first injection (nominal times); per-visit n not reported (paired t-tests)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 subfoveal and peripapillary choroidal thickness rows", "reason": "choroidal thickness is out of scope"},
+  {"what": "Table 3 peripapillary retinal thickness and RNFL rows", "reason": "peripapillary/RNFL thickness, not central retinal thickness"},
+  {"what": "Table 3 p-value columns", "reason": "p-values are not admissible"},
+  {"what": "Tables 1, 2 and 4 (baseline characteristics, choroidal thickness comparisons with healthy controls, choroidal thickness by neovascularization type with medians/IQR for type 3)", "reason": "not central retinal thickness series; healthy control eyes excluded"},
+  {"what": "Tables 5 and 6 responder analyses", "reason": "groups defined by a post-baseline outcome (3-month response); regression statistics"}
+ ],
+ "notes": [
+  "Time origin: the first ranibizumab injection; mean 4.4 injections within 6 months (range 3-6)",
+  "SD-OCT Topcon 3D OCT-1000 Mark II (device topcon); central RT/CRT is not defined in the Methods (horizontal 6-mm line scans centred on the fovea), so measure central_unspecified",
+  "Image-quality exclusions (Q-factor < 45 or choroid not visible due to severe subfoveal haemorrhage; 3 low-quality cases among screened records) are measurement-quality exclusions; no values were removed or replaced after a treatment event",
+  "Neovascularization type: type 2 in 35 eyes, type 3 in 4 eyes; BCVA exists but is not extracted"
+ ]
+}

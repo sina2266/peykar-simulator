@@ -1,0 +1,85 @@
+{
+ "study_id": "ret-pmc6466874",
+ "doi": "10.1155/2019/3982428",
+ "pmcid": "PMC6466874",
+ "title": "Impact of Intravitreal Dexamethasone Implant on Vessel Diameters in Patients with Retinal Vein Occlusion",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "Creative Commons Attribution License, version not stated (article <license>: 'open access article distributed under the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited')"
+ },
+ "source_files": [
+  {
+   "name": "PMC6466874.xml",
+   "sha256": "66e5ada4b9d4cf20284581af2a8692858364d6d5208e112aab20a4108bf406d2",
+   "bytes": 75403,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Macular edema secondary to retinal vein occlusion (central 9 eyes, branch 8 eyes), CMT above 300 um, BCVA 5-50 ETDRS letters; prospective observational study (Kocaeli University), 17 eyes of 17 patients, single dexamethasone implant, follow-up 2 months; age- and sex-matched healthy controls not extracted",
+ "groups": [
+  {
+   "group": "dexamethasone_implant",
+   "role": "control",
+   "n_reported": 17,
+   "agent": "dexamethasone intravitreal implant 0.7 mg (Ozurdex), one implant at baseline",
+   "description": "All 17 RVO eyes (CRVO and BRVO pooled; CMT is not tabulated by subgroup)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dexamethasone_implant/cmt",
+   "group": "dexamethasone_implant",
+   "kind": "group_mean",
+   "n": 17,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [
+    0,
+    0.23,
+    1,
+    2
+   ],
+   "cells": [
+    "PMC6466874.xml::tab1!R3C2",
+    "PMC6466874.xml::tab1!R3C3",
+    "PMC6466874.xml::tab1!R3C4",
+    "PMC6466874.xml::tab1!R3C5"
+   ],
+   "baseline_label": "Baseline before injection (Table 1 CMT row, column 2)",
+   "notes": "CMT by Spectralis SD-OCT automated measurement, no subfield definition; mean ± SD (Table 1 footnote: normally distributed values as mean ± SD, others as median with percentiles; the CMT row uses ±); superscript letters mark p < 0.05 comparisons; week 1 converted as 7/30.4375 months; per-visit n not reported; Table 1 gives no unit for CMT, the Results give um and the Methods print the inclusion threshold unit as 'mm'"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Age- and sex-matched healthy control eyes",
+   "reason": "healthy eyes are excluded"
+  },
+  {
+   "what": "Table 1 p column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 SFCT row",
+   "reason": "choroidal thickness is out of scope"
+  },
+  {
+   "what": "Table 1 BCVA and IOP rows (medians with percentiles)",
+   "reason": "visual acuity and IOP are not extracted; medians are not admissible"
+  },
+  {
+   "what": "Table 2 vessel analysis parameters",
+   "reason": "not a thickness outcome"
+  }
+ ],
+ "notes": [
+  "Prior treatment not stated: exclusion only of anti-VEGF within 3 months and intravitreal steroid within 6 months",
+  "One eye per patient"
+ ]
+}

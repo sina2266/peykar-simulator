@@ -1,0 +1,100 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc10034169",
+ "doi": "10.3389/fmed.2023.1090964",
+ "pmcid": "PMC10034169",
+ "title": "Retinal vein changes after treatment with aflibercept and PRP in high-risk proliferative diabetic retinopathy",
+ "species": "human",
+ "indication": "other",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License (CC BY))",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10034169.xml",
+   "sha256": "025ab84b827b96a46c0aebdb265871a318a626e5f518aa63bb48eee1f98e6892",
+   "bytes": 62713,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "High-risk proliferative diabetic retinopathy in type 2 diabetes, no prior photocoagulation, anti-VEGF or steroid; retrospective single-arm cohort (59 patients, 59 eyes) treated January 2018 to December 2019; presence of centre-involving diabetic macular edema is not stated in the Methods",
+ "groups": [
+  {
+   "group": "aflibercept_prp",
+   "role": "control",
+   "n_reported": 59,
+   "agent": "aflibercept 2 mg intravitreal (monthly for 3 months, then PRN, '3 + PRN') plus panretinal photocoagulation (532 nm laser, four sessions), PRP starting 1 week after the first injection",
+   "description": "All eyes of the retrospective cohort (one eye per patient)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 rows R3 (t) and R4 (p)",
+   "reason": "test statistics and p-values are not admissible"
+  },
+  {
+   "what": "Table 1 R9C2 baseline CFT",
+   "reason": "same eyes and same baseline as Table 3 column 2 (duplicate); Table 3 cited"
+  },
+  {
+   "what": "Table 2 BCVA (logMAR)",
+   "reason": "visual acuity is not extracted"
+  },
+  {
+   "what": "Table 4 retinal vein diameter",
+   "reason": "not a retinal thickness outcome"
+  }
+ ],
+ "notes": [
+  "Treatment schedule (Methods): aflibercept plus PRP at months 0, 1 and 2 (3 + PRN), further combination therapy if neovascularization persisted or recurred; number of injections not extracted",
+  "Indication coded 'other' (high-risk PDR) because the Methods do not state centre-involving diabetic macular edema",
+  "Fundus angiography used Heidelberg Spectralis HRA; thickness was measured on Cirrus HD-OCT"
+ ],
+ "series": [
+  {
+   "series_id": "aflibercept_prp/cft",
+   "group": "aflibercept_prp",
+   "kind": "group_mean",
+   "n": 59,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "cirrus",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24
+   ],
+   "baseline_label": "Pre-treatment (Table 3 column 2)",
+   "notes": "Central foveal thickness (CFT, um) by Zeiss Cirrus HD-OCT built-in software, no subfield definition; mean ± SD (Methods: continuous variables expressed as mean ± SD); Table 3 row label gives n = 59; per-visit n not reported separately (paired t-tests against pre-treatment); months are 'months post-treatment' read as time since the first treatment",
+   "values": [
+    456.53,
+    310.67,
+    295.98,
+    282.56,
+    281.53
+   ],
+   "source_cells": [
+    "PMC10034169.xml::tab3!R2C2",
+    "PMC10034169.xml::tab3!R2C3",
+    "PMC10034169.xml::tab3!R2C4",
+    "PMC10034169.xml::tab3!R2C5",
+    "PMC10034169.xml::tab3!R2C6"
+   ],
+   "source_cell_texts": [
+    "456.53 ± 51.49",
+    "310.67 ± 52.53",
+    "295.98 ± 45.65",
+    "282.56 ± 43.57",
+    "281.53 ± 51.16"
+   ]
+  }
+ ]
+}

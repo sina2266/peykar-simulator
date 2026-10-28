@@ -1,0 +1,118 @@
+{
+ "study_id": "ret-pmc10779608",
+ "doi": "10.3390/jcm13010111",
+ "pmcid": "PMC10779608",
+ "title": "Anatomical and Functional Outcomes with Prompt versus Delayed Initiation of Anti-VEGF in Exudative Age-Related Macular Degeneration",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, Licensee MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10779608.xml",
+   "sha256": "b9d49f3e10dbc322730b3850804ed36426f5ed8f2ad1d8e92b6db6692b8d69d6",
+   "bytes": 103274,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive exudative (neovascular) age-related macular degeneration, first affected eye per patient; induction with three monthly intravitreal bevacizumab injections started within 30 days of diagnosis, then pro re nata or treat-and-extend maintenance by patient and physician preference, with switch to ranibizumab or aflibercept for non-response; retrospective single tertiary centre (Rabin Medical Center, 2012-2018), up to two years from treatment; groups by days from diagnosis to the first injection",
+ "groups": [
+  {
+   "group": "prompt",
+   "role": "control",
+   "n_reported": 68,
+   "agent": "bevacizumab 1.25 mg/0.05 mL",
+   "description": "first bevacizumab injection within 10 days of diagnosis (baseline-defined subgroup)"
+  },
+  {
+   "group": "intermediate",
+   "role": "control",
+   "n_reported": 31,
+   "agent": "bevacizumab 1.25 mg/0.05 mL",
+   "description": "first bevacizumab injection 11-20 days after diagnosis (baseline-defined subgroup)"
+  },
+  {
+   "group": "delayed",
+   "role": "control",
+   "n_reported": 47,
+   "agent": "bevacizumab 1.25 mg/0.05 mL",
+   "description": "first bevacizumab injection 21-30 days after diagnosis (baseline-defined subgroup)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "prompt/csmt",
+   "group": "prompt",
+   "kind": "group_mean",
+   "n": 68,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "other",
+   "prior_treatment": "naive",
+   "months": [0, 12, 24],
+   "cells": [
+    "PMC10779608.xml::jcm-13-00111-t002!R3C2",
+    "PMC10779608.xml::jcm-13-00111-t002!R5C2",
+    "PMC10779608.xml::jcm-13-00111-t002!R6C2"
+   ],
+   "baseline_label": "Pre (Table 2, CSMT block, row 'Pre', column 2)",
+   "notes": "mean ± SD (Table 2 footnote); 'Pre' is the pretreatment value; 1-year and 2-year values counted from treatment start; per-visit n not reported (dropouts during follow-up in Table 5); handling of missing visits not stated; switched eyes (Table 5) not reported as removed; maintenance PRN or treat-and-extend (proportions in Table 1)"
+  },
+  {
+   "series_id": "intermediate/csmt",
+   "group": "intermediate",
+   "kind": "group_mean",
+   "n": 31,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "other",
+   "prior_treatment": "naive",
+   "months": [0, 12, 24],
+   "cells": [
+    "PMC10779608.xml::jcm-13-00111-t002!R3C3",
+    "PMC10779608.xml::jcm-13-00111-t002!R5C3",
+    "PMC10779608.xml::jcm-13-00111-t002!R6C3"
+   ],
+   "baseline_label": "Pre (Table 2, CSMT block, row 'Pre', column 3)",
+   "notes": "mean ± SD (Table 2 footnote); 'Pre' is the pretreatment value; 1-year and 2-year values counted from treatment start; per-visit n not reported (dropouts during follow-up in Table 5); handling of missing visits not stated; switched eyes (Table 5) not reported as removed; maintenance PRN or treat-and-extend (proportions in Table 1)"
+  },
+  {
+   "series_id": "delayed/csmt",
+   "group": "delayed",
+   "kind": "group_mean",
+   "n": 47,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "other",
+   "prior_treatment": "naive",
+   "months": [0, 12, 24],
+   "cells": [
+    "PMC10779608.xml::jcm-13-00111-t002!R3C4",
+    "PMC10779608.xml::jcm-13-00111-t002!R5C4",
+    "PMC10779608.xml::jcm-13-00111-t002!R6C4"
+   ],
+   "baseline_label": "Pre (Table 2, CSMT block, row 'Pre', column 4)",
+   "notes": "mean ± SD (Table 2 footnote); 'Pre' is the pretreatment value; 1-year and 2-year values counted from treatment start; per-visit n not reported (dropouts during follow-up in Table 5); handling of missing visits not stated; switched eyes (Table 5) not reported as removed; maintenance PRN or treat-and-extend (proportions in Table 1)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 R4 'After anti-VEGF induction phase' (C2-C4)", "reason": "visit named after the three-injection induction; the Methods give no fixed time of this visit relative to the first injection, so its time since the first treatment does not follow exactly"},
+  {"what": "Table 2 BCVA rows (R7-R11)", "reason": "visual acuity is not extracted"},
+  {"what": "Table 2 p-value column (C5)", "reason": "p-values are not admissible"},
+  {"what": "Table 3 (macular status proportions), Table 4 (correlations), Table 5 (dropouts, switch rates, treatment intervals, injection counts)", "reason": "proportions, correlations and counts are not admissible"}
+ ],
+ "notes": [
+  "Visual acuity, macular fluid status, treatment intervals and injection numbers are reported (not extracted).",
+  "Ambiguity resolved: the abstract states outcomes were compared up to two years from treatment while the Results mention complete data up to two years from presentation; the 1-year and 2-year rows are taken as 12 and 24 months from the first injection.",
+  "Ambiguity resolved: after induction the maintenance regimen was PRN or treat-and-extend within each group, so regimen is recorded as other.",
+  "Ambiguity resolved: the groups are defined by the delay from diagnosis to the first injection, which is known at baseline, so they are control subgroups; no whole-cohort row is tabulated."
+ ]
+}

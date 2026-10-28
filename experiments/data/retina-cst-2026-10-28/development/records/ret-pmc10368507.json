@@ -1,0 +1,128 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc10368507",
+ "doi": "10.1155/2023/1485059",
+ "pmcid": "PMC10368507",
+ "title": "Factors Affecting Intensive Aflibercept Treatment Response in Diabetic Macular Edema: A Real-World Study",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10368507.xml",
+   "sha256": "b6733fad2d99c7b8b94d8a4405b00221c937352b3dac2af0d25b9edfcfec5839",
+   "bytes": 107210,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Diabetic macular edema (NPDR or PDR) eligible under the Korean insurance criteria (baseline CRT at or above 300 um, HbA1c below 8.0%); 30 eyes of 23 patients; retrospective consecutive cohort, Asan Medical Center, Seoul, 2020-2022; 8 treatment-naive eyes and 22 eyes previously treated (vitrectomy and PRP, bevacizumab with or without PRP, or PRP only)",
+ "groups": [
+  {
+   "group": "aflibercept",
+   "role": "control",
+   "n_reported": 30,
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal",
+   "description": "Whole cohort: five monthly loading injections (baseline and months 1-4), then monthly visits with PRN retreatment; PRN retreatment could be switched to bevacizumab, dexamethasone implant or sub-Tenon triamcinolone"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 BCVA rows and p-value rows",
+   "reason": "Visual acuity and p-values are not extracted (brief)"
+  },
+  {
+   "what": "Table 3 baseline CRT of good versus suboptimal responders",
+   "reason": "Groups defined by CRT after the loading phase (post-baseline outcome); outcome-defined groups are excluded"
+  },
+  {
+   "what": "Figure 3 CRT curves by DM duration, eGFR, creatinine, potassium and ERM",
+   "reason": "Figure only; no tabulated cells to cite"
+  }
+ ],
+ "notes": [
+  "CRT is defined in Methods 2.3 as the average retinal thickness of the ETDRS central subfield (1 mm diameter), Heidelberg SD-OCT automated measurement: measure central_subfield, device spectralis.",
+  "Role control: approved standard agent, no investigational arm.",
+  "Table 1 gives baseline characteristics without thickness; Table 3 (responder groups) is not used."
+ ],
+ "series": [
+  {
+   "series_id": "aflibercept/crt",
+   "group": "aflibercept",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "baseline_label": "Baseline (Table 2, row 3 'CRT (um, mean +/- SD)', column 2)",
+   "notes": "Mean +/- SD over the whole cohort (Table 2 caption 'whole cohort'); monthly visits counted from the first injection; per-visit n not reported; handling of missed visits not stated; Methods exclude OCT images of poor quality or with artifacts from analysis; values are not stated as removed or replaced after PRN retreatment or switching (first PRN retreatment at month 5; 7 eyes switched to other agents during the maintenance phase)",
+   "values": [
+    486.87,
+    366.57,
+    338.3,
+    329.0,
+    331.27,
+    334.9,
+    390.74,
+    377.15,
+    390.45,
+    368.98,
+    391.0,
+    414.3,
+    382.0
+   ],
+   "source_cells": [
+    "PMC10368507.xml::tab2!R3C2",
+    "PMC10368507.xml::tab2!R3C3",
+    "PMC10368507.xml::tab2!R3C4",
+    "PMC10368507.xml::tab2!R3C5",
+    "PMC10368507.xml::tab2!R3C6",
+    "PMC10368507.xml::tab2!R3C7",
+    "PMC10368507.xml::tab2!R3C8",
+    "PMC10368507.xml::tab2!R3C9",
+    "PMC10368507.xml::tab2!R3C10",
+    "PMC10368507.xml::tab2!R3C11",
+    "PMC10368507.xml::tab2!R3C12",
+    "PMC10368507.xml::tab2!R3C13",
+    "PMC10368507.xml::tab2!R3C14"
+   ],
+   "source_cell_texts": [
+    "486.87 ± 95.46",
+    "366.57 ± 75.54",
+    "338.30 ± 75.25",
+    "329.00 ± 57.49",
+    "331.27 ± 73.24",
+    "334.90 ± 69.47",
+    "390.74 ± 137.23",
+    "377.15 ± 110.89",
+    "390.45 ± 130.69",
+    "368.98 ± 58.81",
+    "391.00 ± 52.83",
+    "414.30 ± 97.49",
+    "382.00 ± 72.02"
+   ]
+  }
+ ]
+}

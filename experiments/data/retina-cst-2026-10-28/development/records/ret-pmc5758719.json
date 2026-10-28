@@ -1,0 +1,97 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc5758719",
+ "doi": "10.1038/s41598-017-18255-4",
+ "pmcid": "PMC5758719",
+ "title": "Benefits of aflibercept treatment for age-related macular degeneration patients with good best-corrected visual acuity at baseline",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5758719.xml",
+   "sha256": "98f493ec39ac53b71f668e7e383086d6430edbb82ac3c5dfdadfd26df3d71e14",
+   "bytes": 85853,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive exudative AMD with good baseline BCVA (better than 0.6 Landolt C, better than 74 ETDRS letters); 29 eyes of 29 patients, Keio University Hospital, 2013-2015; prospective single-arm interventional study (UMIN000012221); subtypes typical AMD 11, PCV 17, RAP 1",
+ "groups": [
+  {
+   "group": "aflibercept-2q8",
+   "role": "control",
+   "n_reported": 29,
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal",
+   "description": "Whole cohort: monthly injections for 3 months, then every 2 months (2Q8) to month 12, IVA monotherapy per protocol; monthly follow-up"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 CCT, macular volume and choroidal area rows",
+   "reason": "Choroidal thickness, macular volume and choroidal areas are out of scope"
+  },
+  {
+   "what": "Table 3 BCVA, contrast VA, FVA, VMR, GLD, IOP and VFQ-25 rows; p-value columns",
+   "reason": "Not thickness outcomes; p-values are not extracted"
+  },
+  {
+   "what": "Tables 4 and 5 (correlations)",
+   "reason": "Correlation coefficients and p-values are not extracted"
+  },
+  {
+   "what": "Monthly CRT means (Figure 1d)",
+   "reason": "Figure only; no tabulated cells to cite"
+  },
+  {
+   "what": "Dry-macula proportions (Figure 1h)",
+   "reason": "Proportions are not extracted"
+  }
+ ],
+ "notes": [
+  "Measure: CRT on Heidelberg Spectralis without a subfield definition in Methods (the ETDRS 6-mm area is defined only for macular volume): central_unspecified.",
+  "Regimen fixed_interval: monthly for 3 months then every 2 months (2Q8), no additional treatments per protocol.",
+  "The Methods describe included patients as having attended for at least 12 months with IVA as the only treatment; the Results attribute this to the monotherapy protocol and the one dropout is retained at baseline, so the cohort is treated as all enrolled eyes rather than an outcome-selected set.",
+  "Role control: approved agent, single-arm cohort."
+ ],
+ "series": [
+  {
+   "series_id": "aflibercept-2q8/crt",
+   "group": "aflibercept-2q8",
+   "kind": "group_mean",
+   "n": 29,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "spectralis",
+   "regimen": "fixed_interval",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (Table 3, row 6 'CRT (um)', column 2)",
+   "notes": "Mean +/- SD (Table 3 footnote); months after the initial injection; one patient dropped out after the 11-month visit and his month-12 data were not included (observed cases at month 12, ordinary attrition)",
+   "values": [
+    350.7,
+    252.2,
+    254.5
+   ],
+   "source_cells": [
+    "PMC5758719.xml::Tab3!R6C2",
+    "PMC5758719.xml::Tab3!R6C3",
+    "PMC5758719.xml::Tab3!R6C5"
+   ],
+   "source_cell_texts": [
+    "350.7 ± 111.7",
+    "252.2 ± 78.3",
+    "254.5 ± 87.2"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "study_id": "ret-pmc13553420",
+ "doi": "10.3389/fendo.2026.1875115",
+ "pmcid": "PMC13553420",
+ "title": "Efficacy of conbercept pro re nata (PRN) versus treat-and-extend (T&E) regimens following five initial monthly doses in diabetic macular edema: a 24-month retrospective cohort study",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License (CC BY))",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13553420.xml",
+   "sha256": "58a4753691626e540f4f4a03a3ad174defb30cef6c9d0f626dd9d6dbaaf9795b",
+   "bytes": 154579,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Newly diagnosed, treatment-naive diabetic macular edema in type 2 diabetes (CFT >= 300 µm; no prior PRP, intravitreal anti-VEGF/steroid or vitrectomy); single-centre retrospective cohort (Qilu Hospital, Shandong University), 119 eyes of 119 patients treated September 2020 to September 2022 with at least 24 months of regular follow-up",
+ "groups": [
+  {
+   "group": "5-prn",
+   "role": "control",
+   "n_reported": 60,
+   "agent": "conbercept 0.05 mL intravitreal",
+   "description": "5+PRN: five initial monthly conbercept injections, then 4-weekly evaluation with reinjection when predefined retreatment criteria were met"
+  },
+  {
+   "group": "5-te",
+   "role": "control",
+   "n_reported": 59,
+   "agent": "conbercept 0.05 mL intravitreal",
+   "description": "5+T&E: five initial monthly conbercept injections, then treat-and-extend starting at 8 weeks (shortened to a minimum of 4 weeks or extended by 4 weeks up to 16 weeks)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "5-prn/cft",
+   "group": "5-prn",
+   "kind": "group_mean",
+   "n": 60,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "cirrus",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [0, 6, 12, 18, 24],
+   "cells": [
+    "PMC13553420.xml::T3!R2C2",
+    "PMC13553420.xml::T3!R2C3",
+    "PMC13553420.xml::T3!R2C4",
+    "PMC13553420.xml::T3!R2C5",
+    "PMC13553420.xml::T3!R2C6"
+   ],
+   "baseline_label": "Baseline (Table 3 row '5+PRN(n=60)', column Baseline)",
+   "notes": "Mean ± SD (Methods: normally distributed data as mean ± SD; the 24m cells print the SD without the ± sign); scheduled 6/12/18/24-month visits with a ±4-week window (nominal times); completers with regular follow-up (patients lost to follow-up excluded)"
+  },
+  {
+   "series_id": "5-te/cft",
+   "group": "5-te",
+   "kind": "group_mean",
+   "n": 59,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "cirrus",
+   "regimen": "treat_and_extend",
+   "prior_treatment": "naive",
+   "months": [0, 6, 12, 18, 24],
+   "cells": [
+    "PMC13553420.xml::T3!R3C2",
+    "PMC13553420.xml::T3!R3C3",
+    "PMC13553420.xml::T3!R3C4",
+    "PMC13553420.xml::T3!R3C5",
+    "PMC13553420.xml::T3!R3C6"
+   ],
+   "baseline_label": "Baseline (Table 3 row '5+T&E(n=59)', column Baseline)",
+   "notes": "Mean ± SD; same visit windows and completer definition as the 5+PRN series"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 F, P, t and P rows/columns", "reason": "test statistics and p-values are not admissible"},
+  {"what": "Table 1 baseline CFT row", "reason": "duplicates the Table 3 baseline cells (same eyes); Table 3 cited"},
+  {"what": "Tables 2 and 4-9 (BCVA, microaneurysm count, venular diameter, DCP vessel density, FAZ area, hard exudate and haemorrhage area categories)", "reason": "not retinal thickness (counts/proportions or other measures)"},
+  {"what": "Numbers of injections and visits", "reason": "not thickness"}
+ ],
+ "notes": [
+  "Time origin: the first conbercept injection at the first visit (start of the five monthly loading doses)",
+  "CFT defined in the Methods as the perpendicular ILM to inner-RPE distance at the foveal centre on a single cross-sectional Cirrus HD-OCT scan: measure central_point, device cirrus",
+  "Regimen groups were allocated after the loading phase according to practical conditions and treatment preferences (geographical accessibility, feasibility of regular visits), not randomised and not by a post-baseline outcome; both groups received identical treatment until the end of loading",
+  "Rescue PRP was permitted for neovascularization; PRP was given after loading to 6 (5+PRN) and 10 (5+T&E) patients with neovascularization present at baseline FFA; no values were removed or replaced",
+  "Means are over eyes with complete follow-up (inclusion required at least 24 months of regular follow-up; data within ±4 weeks of each scheduled visit accepted)"
+ ]
+}

@@ -1,0 +1,98 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc11674592",
+ "doi": "10.1186/s12886-024-03744-8",
+ "pmcid": "PMC11674592",
+ "title": "Early response of anti-vascular endothelial growth factor (anti-VEGF) in diabetic macular edema (DME) management: microperimetry and optical coherence tomography (OCT) findings: a pilot study at national eye center of third world country",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11674592.xml",
+   "sha256": "deead4d37c61eca27b7c075f502c1963a4fa60cc3c0181f2572ef5bf2d320934",
+   "bytes": 86721,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Centre-involving diabetic macular edema (type 2 diabetes; severe NPDR or PDR), eyes receiving intravitreal anti-VEGF for the first time; prospective analytical observational pilot study (Cicendo National Eye Center, Bandung), 16 eyes of 12 patients",
+ "groups": [
+  {
+   "group": "bevacizumab",
+   "role": "control",
+   "n_reported": 16,
+   "agent": "bevacizumab 1.25 mg/0.05 mL intravitreal (Bevaas)",
+   "description": "All study eyes; OCT and microperimetry before the first loading injection and 1 week and 1 month after it; at least three injections one month apart were planned"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 'Difference' and p-value columns",
+   "reason": "changes duplicated by the absolute series; p-values are not admissible"
+  },
+  {
+   "what": "Table 4 duplicate pairwise rows (R4, R6, R7)",
+   "reason": "duplicates of the cited cells"
+  },
+  {
+   "what": "Results-text area-wise thickness (ETDRS areas 1-5, Figure 3)",
+   "reason": "not tabulated; only extreme areas are given in text; sector values without a complete central series"
+  },
+  {
+   "what": "Retinal sensitivity (Table 3, Figures 4 and 6), Table 2 CMT-RS correlation and Figure 5 regression",
+   "reason": "not thickness series"
+  },
+  {
+   "what": "Table 1 baseline characteristics (medians, ranges, proportions)",
+   "reason": "not follow-up thickness"
+  }
+ ],
+ "notes": [
+  "Time origin: the first intravitreal bevacizumab injection (treatment-naive eyes; 2 eyes had prior PRP and 2 prior cataract surgery; prior DME therapy was an exclusion criterion)",
+  "Device named inconsistently: 'Stratus OCT scanner (Cirrus HD 5000; Carl Zeiss Meditech GmbH, Germany)' with the Fast Macular Thickness protocol (6 radial 6-mm scans), so device recorded as unstated",
+  "Measure: the Methods describe the ETDRS grid with a 1-mm central zone and state that only subfield areas 1-5 were used, but they do not define the tabulated 'Central macular thickness (CMT)'; the Results text calls area-specific values 'CMT' too and gives area-1 (central) values at week 1 and month 1 that differ from the tabulated CMT, so the tabulated CMT may not be the central-subfield mean (it may average several ETDRS areas); recorded as central_unspecified",
+  "The study pooled area-level observations for the CMT-RS correlation and regression; whether the Table 4 SD is over eyes or eye-areas is not stated",
+  "Visual acuity, retinal sensitivity and fixation stability exist but are not extracted"
+ ],
+ "series": [
+  {
+   "series_id": "bevacizumab/cmt",
+   "group": "bevacizumab",
+   "kind": "group_mean",
+   "n": 16,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    0.23,
+    1
+   ],
+   "baseline_label": "Pre Injection (Table 4 row 2, column 'Mean ± SD (µm)')",
+   "notes": "Mean ± SD (µm); Table 4 is a pairwise-comparison layout that repeats the pre-injection, 1-week and 1-month cells (R4C2, R6C2, R7C2 duplicate R2C3, R3C2, R5C2); 1 week = 0.2300 months; the 1-month visit follows the first injection only (Figure 2 legend: '1 month after the injection of the first loading dose'), so the reported period contains one injection; per-visit n not reported",
+   "values": [
+    449.33,
+    427.94,
+    357.93
+   ],
+   "source_cells": [
+    "PMC11674592.xml::Tab4!R2C3",
+    "PMC11674592.xml::Tab4!R3C2",
+    "PMC11674592.xml::Tab4!R5C2"
+   ],
+   "source_cell_texts": [
+    "449.33 ± 100.79",
+    "427.94 ± 85.76",
+    "357.93 ± 75.91"
+   ]
+  }
+ ]
+}

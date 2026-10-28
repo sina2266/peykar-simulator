@@ -1,0 +1,95 @@
+{
+ "study_id": "ret-pmc6951119",
+ "doi": "10.4103/ijo.IJO_350_19",
+ "pmcid": "PMC6951119",
+ "title": "Can subthreshold micropulse yellow laser treatment change the anti-vascular endothelial growth factor algorithm in diabetic macular edema? A randomized clinical trial",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license>: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License); PRIVATE",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6951119.xml",
+   "sha256": "59bbb950dc9ba0e458e2748a8f82e6de975d59ceaeac0d8fef1193bee1bfe748",
+   "bytes": 78420,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive centre-involving diabetic macular edema in type 2 diabetes (CMT >= 300 µm, no ischaemic maculopathy or PDR); prospective randomised 1:1 two-centre comparison (Istanbul, April 2015 to November 2017), 56 patients/eyes, 12 months",
+ "groups": [
+  {
+   "group": "aflibercept",
+   "role": "control",
+   "n_reported": 28,
+   "agent": "aflibercept 2 mg intravitreal",
+   "description": "IAI monotherapy: three monthly loading injections, then PRN (paused when stable; resumed for a loss of more than one BCVA line or a CMT increase of at least 20%)"
+  },
+  {
+   "group": "aflibercept-smyl",
+   "role": "control",
+   "treatment": "combination",
+   "n_reported": 28,
+   "agent": "aflibercept 2 mg intravitreal plus subthreshold micropulse yellow laser (577 nm, 5% duty cycle)",
+   "description": "Combination: three monthly aflibercept loading injections, SMYL one month after loading (or after one more injection if CMT stayed above 450 µm), then PRN with SMYL repeats; described by the article as one of 'two coexisting standard treatments'"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "aflibercept/cmt",
+   "group": "aflibercept",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "other",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [0, 3, 6, 12],
+   "cells": [
+    "PMC6951119.xml::T2!R6C2",
+    "PMC6951119.xml::T2!R6C5",
+    "PMC6951119.xml::T2!R6C8",
+    "PMC6951119.xml::T2!R6C11"
+   ],
+   "baseline_label": "Initial (Table 2 row 'CMT (μm)', Initial Mono. column)",
+   "notes": "Mean ± SD (Results text reports the same cells as means ± SD); Table 2 header row R3 is offset (its 12 sub-headers start at C1 while data rows carry the label in C1), so data cells C2/C5/C8/C11 are Mono. and C3/C6/C9/C12 are Comb.; '1 Month after loading' = month 3 (loading injections at months 0, 1 and 2 at 1-month intervals, visit one month after the third); per-visit n not reported"
+  },
+  {
+   "series_id": "aflibercept-smyl/cmt",
+   "group": "aflibercept-smyl",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "other",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [0, 3, 6, 12],
+   "cells": [
+    "PMC6951119.xml::T2!R6C3",
+    "PMC6951119.xml::T2!R6C6",
+    "PMC6951119.xml::T2!R6C9",
+    "PMC6951119.xml::T2!R6C12"
+   ],
+   "baseline_label": "Initial (Table 2 row 'CMT (μm)', Initial Comb. column)",
+   "notes": "Mean ± SD; same column layout and timing as the monotherapy series; SMYL was first applied after the month-3 visit"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 BCVA, BCVA (LogMar) and SFCT rows", "reason": "visual acuity and choroidal thickness are not extracted / out of scope"},
+  {"what": "Table 2 P columns", "reason": "p-values are not admissible"},
+  {"what": "Figure 1 medians and interquartile ranges", "reason": "medians/IQR are not admissible"},
+  {"what": "Numbers of injections and SMYL sessions, retreatment proportions", "reason": "not thickness; counts/proportions"}
+ ],
+ "notes": [
+  "Time origin: the first loading aflibercept injection after eligibility at the baseline examination",
+  "OCT device printed as 'Nikon RS-3000' (SD-OCT; device other); CMT is not defined beyond 'with foveal involvement', so measure central_unspecified",
+  "Roles: the article states both arms are 'two coexisting standard treatments' (randomised parallel 1:1), so both groups are control; the combination arm declares treatment combination",
+  "Licence CC BY-NC-SA: record kept private"
+ ]
+}

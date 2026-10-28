@@ -1,0 +1,146 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc4121691",
+ "doi": "10.12669/pjms.304.4810",
+ "pmcid": "PMC4121691",
+ "title": "Subtenon Vs Intravitreal Triamcinolone injection in Diabetic Macular Edema, A prospective study in Chinese population",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_injection",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 3.0 (article <license>: Creative Commons Attribution License, http://creativecommons.org/licenses/by/3.0/)",
+  "url": "https://creativecommons.org/licenses/by/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4121691.xml",
+   "sha256": "75cd99006589a4a1ed1165fa0af4f782ca043edd31d262e453b0bbeb16c0e41a",
+   "bytes": 62294,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Diabetic macular edema (type 1 or 2 diabetes) with macular thickening on OCT, phakic eyes without vitreoretinal traction, previously treated with laser photocoagulation; prospective paired-eye study in which one eye received intravitreal and the fellow eye sub-Tenon triamcinolone (20 patients, 40 eyes; Shanghai First People's Hospital, 2011-2013); 12-week follow-up",
+ "groups": [
+  {
+   "group": "ivta",
+   "role": "control",
+   "n_reported": 20,
+   "agent": "intravitreal triamcinolone acetonide, single injection (30-gauge needle; dose not stated in the Methods)",
+   "description": "First-treated eye of each patient"
+  },
+  {
+   "group": "sbta",
+   "role": "control",
+   "n_reported": 20,
+   "agent": "sub-Tenon triamcinolone acetonide, single injection (27-gauge needle, placement checked by B-scan; dose not stated in the Methods)",
+   "description": "Fellow eye of the same patients, injected one week after the intravitreal eye"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table I visual acuity",
+   "reason": "visual acuity is not extracted"
+  },
+  {
+   "what": "Table III intraocular pressure",
+   "reason": "IOP is not extracted"
+  },
+  {
+   "what": "Table II p-value columns (C4-C6)",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "CMT was measured by OCT with six radial scans per eye; the OCT device and the CMT definition are not stated.",
+  "The two series are fellow eyes of the same 20 patients (paired design), not the same eyes.",
+  "Visual acuity and IOP are reported (not extracted).",
+  "Ambiguity resolved: the study tests sub-Tenon triamcinolone as an alternative route to intravitreal triamcinolone without an investigational agent, so both groups are control.",
+  "Ambiguity resolved: inclusion required previous laser photocoagulation, so prior_treatment is previously_treated."
+ ],
+ "series": [
+  {
+   "series_id": "ivta/cmt",
+   "group": "ivta",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    0.46,
+    0.9199,
+    1.8398,
+    2.7598
+   ],
+   "baseline_label": "Baseline (Table II, row 2, IVTA column; before injection)",
+   "notes": "mean ± SD (Table II footnote); scheduled visits 2, 4, 8 and 12 weeks after the injection (weeks x 7 / 30.4375 months); per-visit n not reported",
+   "values": [
+    390.5,
+    302.8,
+    262.9,
+    242.1,
+    246.8
+   ],
+   "source_cells": [
+    "PMC4121691.xml::T2!R2C2",
+    "PMC4121691.xml::T2!R3C2",
+    "PMC4121691.xml::T2!R4C2",
+    "PMC4121691.xml::T2!R5C2",
+    "PMC4121691.xml::T2!R6C2"
+   ],
+   "source_cell_texts": [
+    "390.5 ± 17",
+    "302.8 ± 27",
+    "262.9 ± 26",
+    "242.1 ± 22",
+    "246.8 ± 25"
+   ]
+  },
+  {
+   "series_id": "sbta/cmt",
+   "group": "sbta",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    0.46,
+    0.9199,
+    1.8398,
+    2.7598
+   ],
+   "baseline_label": "Baseline (Table II, row 2, SBTA column; before injection)",
+   "notes": "mean ± SD (Table II footnote); scheduled visits 2, 4, 8 and 12 weeks after the injection of this eye (weeks x 7 / 30.4375 months); per-visit n not reported",
+   "values": [
+    394.4,
+    299.1,
+    254.8,
+    240.5,
+    241.5
+   ],
+   "source_cells": [
+    "PMC4121691.xml::T2!R2C3",
+    "PMC4121691.xml::T2!R3C3",
+    "PMC4121691.xml::T2!R4C3",
+    "PMC4121691.xml::T2!R5C3",
+    "PMC4121691.xml::T2!R6C3"
+   ],
+   "source_cell_texts": [
+    "394.4 ± 21",
+    "299.1 ± 23",
+    "254.8 ± 24",
+    "240.5 ± 23",
+    "241.5 ± 27"
+   ]
+  }
+ ]
+}

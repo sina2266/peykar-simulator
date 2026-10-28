@@ -1,0 +1,79 @@
+{
+ "study_id": "ret-pmc6178335",
+ "doi": "10.2147/OPTH.S180663",
+ "pmcid": "PMC6178335",
+ "title": "Going green – treatment outcome and safety profile of chronic central serous chorioretinopathy treated with subthreshold green laser",
+ "species": "human",
+ "indication": "csc",
+ "treatment": "laser",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>, Dove Medical Press terms)",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6178335.xml",
+   "sha256": "94bcf409d646f02986aa276a5f6e623edab740c052815d294eaf049df0cbd12a",
+   "bytes": 66148,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Chronic (non-resolving, at least 3 months) central serous chorioretinopathy with active angiographic leakage and BCVA 6/36 or worse, no previous treatment for CSCR (including anti-VEGF or laser); 13 eyes of 12 male patients, Lumbini Eye Institute, Nepal, 2017-2018; prospective noncomparative consecutive interventional case series",
+ "groups": [
+  {
+   "group": "subthreshold-green-laser",
+   "role": "treated",
+   "n_reported": 13,
+   "agent": "532 nm green laser in SP-Mode (subthreshold, 10% duty cycle), Lightmed LIGHTLas 532",
+   "description": "Single laser session over focal and diffuse leakage areas, sparing the fovea"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "subthreshold-green-laser/cmt",
+   "group": "subthreshold-green-laser",
+   "kind": "group_mean",
+   "n": 13,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "cirrus",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "months": [0, 1, 3, 5],
+   "cells": [
+    "PMC6178335.xml::t1-opth-12-1963!R7C2",
+    "PMC6178335.xml::t1-opth-12-1963!R7C3",
+    "PMC6178335.xml::t1-opth-12-1963!R7C4",
+    "PMC6178335.xml::t1-opth-12-1963!R7C5"
+   ],
+   "baseline_label": "Baseline (Table 1, row 7 'Mean' under 'Central macular thickness', column 2)",
+   "notes": "Row labelled 'Mean', with 95% CI in the next row; visits at 1, 3 and 5 months after the laser session; per-visit n not reported; for the bilateral patient the second eye was treated after the first eye's 1-month visit and its baseline is at its own treatment"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 '95% CI for mean' rows",
+   "reason": "CI bounds are not extracted as values"
+  },
+  {
+   "what": "Table 1 visual acuity and macular volume rows",
+   "reason": "Visual acuity is not extracted; macular volume is out of scope"
+  },
+  {
+   "what": "Table 2 change in central macular thickness",
+   "reason": "Decrease reported as a positive number (not transformable) and the absolute series of Table 1 is used"
+  },
+  {
+   "what": "Table 2 gain in lines of vision and duration to resolution of subretinal fluid",
+   "reason": "Not thickness outcomes"
+  }
+ ],
+ "notes": [
+  "Measure: CMT quantified from a Cirrus HD-OCT 5000 5-line raster scan without a subfield definition: central_unspecified, device cirrus.",
+  "Role treated: the paper evaluates the 532 nm subthreshold (green) laser variant as the investigated intervention, contrasted with established yellow subthreshold lasers.",
+  "Statistical analysis text mentions a 3-month comparison while the endpoint is at 5 months; the tabulated values are means.",
+  "All eyes were treated once; no retreatment was given within the reported period (Results)."
+ ]
+}

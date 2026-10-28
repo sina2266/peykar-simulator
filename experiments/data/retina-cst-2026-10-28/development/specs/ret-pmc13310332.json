@@ -1,0 +1,99 @@
+{
+ "study_id": "ret-pmc13310332",
+ "doi": "10.1177/03000605261463829",
+ "pmcid": "PMC13310332",
+ "title": "Immediate versus delayed dexamethasone implantation during vitrectomy for diabetic macular edema with secondary epiretinal membrane: A retrospective comparative study",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial 4.0 License, SAGE); private record",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13310332.xml",
+   "sha256": "8ce7beb2e4fe4b8d403a8c56bf2f9f4d150a23f4db0b247d2de50cf58e2c6f05",
+   "bytes": 113647,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Pseudophakic eyes with diabetic macular edema and secondary epiretinal membrane, no prior intravitreal corticosteroid and a washout after the last anti-VEGF injection; 25-gauge pars plana vitrectomy with ERM and ILM peeling (triamcinolone-assisted, ICG staining) plus dexamethasone implant given either at the end of surgery or at 1 month; PRN dexamethasone retreatment from month 3; retrospective single-centre comparative study (People's Hospital of Leshan, 2020-2024); 12-month follow-up",
+ "groups": [
+  {
+   "group": "immediate",
+   "role": "control",
+   "n_reported": 40,
+   "agent": "vitrectomy with ERM/ILM peeling plus dexamethasone 0.7 mg implant (Ozurdex) at the end of surgery; PRN implants from month 3 (minimum 3-month interval)",
+   "description": "Immediate Group"
+  },
+  {
+   "group": "delayed",
+   "role": "control",
+   "n_reported": 40,
+   "agent": "vitrectomy with ERM/ILM peeling; first dexamethasone 0.7 mg implant (Ozurdex) at the 1-month postoperative visit; PRN implants from month 3 (minimum 3-month interval)",
+   "description": "Delayed Group"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "immediate/cmt",
+   "group": "immediate",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "prn",
+   "prior_treatment": "unstated",
+   "months": [0, 1, 3, 6, 9, 12],
+   "cells": [
+    "PMC13310332.xml::table4-03000605261463829!R2C2",
+    "PMC13310332.xml::table4-03000605261463829!R3C2",
+    "PMC13310332.xml::table4-03000605261463829!R4C2",
+    "PMC13310332.xml::table4-03000605261463829!R5C2",
+    "PMC13310332.xml::table4-03000605261463829!R6C2",
+    "PMC13310332.xml::table4-03000605261463829!R7C2"
+   ],
+   "baseline_label": "Baseline (Table 4, row 2, Immediate Group)",
+   "notes": "mean ± SD (Table 4 footnote); times from surgery (preoperative baseline; 1, 3, 6, 9 and 12 months after surgery); all 40 eyes completed every visit with no missing observations; PRN dexamethasone re-implants from month 3 are included (values not removed)"
+  },
+  {
+   "series_id": "delayed/cmt",
+   "group": "delayed",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "other",
+   "prior_treatment": "unstated",
+   "months": [0, 1, 3, 6, 9, 12],
+   "cells": [
+    "PMC13310332.xml::table4-03000605261463829!R2C3",
+    "PMC13310332.xml::table4-03000605261463829!R3C3",
+    "PMC13310332.xml::table4-03000605261463829!R4C3",
+    "PMC13310332.xml::table4-03000605261463829!R5C3",
+    "PMC13310332.xml::table4-03000605261463829!R6C3",
+    "PMC13310332.xml::table4-03000605261463829!R7C3"
+   ],
+   "baseline_label": "Baseline (Table 4, row 2, Delayed Group)",
+   "notes": "mean ± SD (Table 4 footnote); times from surgery (preoperative baseline; 1, 3, 6, 9 and 12 months after surgery); the first implant is given at the 1-month visit; all 40 eyes completed every visit with no missing observations; PRN dexamethasone re-implants from month 3 are included (values not removed)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 5 linear mixed-effects coefficients", "reason": "model estimates are not admissible"},
+  {"what": "Table 4 column C4 (t / P-value)", "reason": "test statistics and p-values are not admissible"},
+  {"what": "Tables 2-3 BCVA", "reason": "visual acuity is not extracted"},
+  {"what": "Table 6 retreatment counts and Table 7 IOP and safety", "reason": "counts and IOP are not extracted"},
+  {"what": "Table 1 R11 baseline CMT", "reason": "duplicate of Table 4 R2 (same eyes); Table 4 is cited"}
+ ],
+ "notes": [
+  "Visual acuity, IOP, injection numbers and adverse events are reported (not extracted).",
+  "Ambiguity resolved: the two arms differ only in the timing of an approved implant and neither is declared experimental, so both groups are control.",
+  "Ambiguity resolved: regimen prn for the immediate arm (implant at surgery, then PRN) and other for the delayed arm (scheduled implant at 1 month, then PRN).",
+  "Ambiguity resolved: the Methods require a washout after the last anti-VEGF injection but do not state how many eyes had prior anti-VEGF, so prior_treatment is unstated."
+ ]
+}

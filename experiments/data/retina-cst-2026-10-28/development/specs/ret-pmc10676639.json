@@ -1,0 +1,90 @@
+{
+ "study_id": "ret-pmc10676639",
+ "doi": "10.2147/OPTH.S415883",
+ "pmcid": "PMC10676639",
+ "title": "Non-Invasive Treatment of Early Diabetic Macular Edema by Multiwavelength Photobiomodulation with the Valeda Light Delivery System",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "other",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press licence incorporating CC BY-NC 3.0 (unported) (article <license>); non-commercial, so private",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10676639.xml",
+   "sha256": "466d839c9dd8d329f9bb9c2e3edcc1707bbd782843bc0af860ffd89e852cfe22",
+   "bytes": 90774,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Early-stage diabetic macular edema with good vision (BCVA better than 20/25, intraretinal fluid on OCT, no urgent need for intravitreal therapy); retrospective single-centre open-label post-hoc case series (Dusseldorf), 30 eyes of 19 subjects; some eyes had earlier intravitreal therapy more than 6 weeks before",
+ "groups": [
+  {
+   "group": "pbm",
+   "role": "treated",
+   "n_reported": 30,
+   "agent": "multiwavelength photobiomodulation (Valeda Light Delivery System; 590, 660 and 850 nm LED), one series of 9 sessions delivered 3 times per week over 3-4 weeks",
+   "description": "All analysed eyes (30 eyes, 19 subjects); role 'treated' because photobiomodulation is the novel treatment under evaluation, not a standard DME treatment"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "pbm/crt_1mm",
+   "group": "pbm",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "fixed_interval",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC10676639.xml::t0001!R4C2",
+    "PMC10676639.xml::t0001!R4C3",
+    "PMC10676639.xml::t0001!R4C4"
+   ],
+   "baseline_label": "Baseline, before PBM treatment (Table 1 column 2)",
+   "notes": "Central 1 mm subfield retinal thickness (Methods); Cirrus 5000 and 6000; Table 1 'Mean (SD)' row (descriptive means; the linear mixed effects model was used only for comparisons); Month 1 = visit immediately after the 9 sessions (3-4 weeks after the first session) and Month 3 = '~3 months follow-up', both used at their nominal labels; n = 30 eyes at Month 1 stated in Results, Month 3 n not stated for CRT; anti-VEGF injections were given after PBM to some eyes at the physicians' discretion and their values were not removed (means over all analysed eyes)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 R3 'Min, Max' CRT",
+   "reason": "ranges are not admissible"
+  },
+  {
+   "what": "Table 1 R5-R7 retinal volume",
+   "reason": "macular volume is out of scope"
+  },
+  {
+   "what": "Table 1 R8-R13 intraretinal fluid and cyst counts",
+   "reason": "counts are not admissible"
+  },
+  {
+   "what": "Table 2 DRSS",
+   "reason": "not a thickness outcome"
+  },
+  {
+   "what": "BCVA in Results text",
+   "reason": "visual acuity is not extracted"
+  },
+  {
+   "what": "Safety OCT review up to 16 months",
+   "reason": "no tabulated central thickness at those times"
+  }
+ ],
+ "notes": [
+  "Prior treatment mixed: some eyes had received intravitreal anti-VEGF before PBM (latest more than 6 weeks before baseline), the others were treatment naive (Results)",
+  "Thirty eyes of 19 subjects: both eyes of some subjects are included",
+  "Time origin: the Baseline visit before the first PBM session; the PBM series was modified in some cases for scheduling conflicts (Methods)",
+  "Number and intervals of post-PBM intravitreal injections are reported in the article and not extracted"
+ ]
+}

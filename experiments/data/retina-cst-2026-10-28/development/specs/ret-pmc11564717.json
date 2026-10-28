@@ -1,0 +1,93 @@
+{
+ "study_id": "ret-pmc11564717",
+ "doi": "10.1007/s40123-024-01059-x",
+ "pmcid": "PMC11564717",
+ "title": "Micropulse Laser versus Eplerenone for Chronic Central Serous Chorioretinopathy: A 12-Month Comparison",
+ "species": "human",
+ "indication": "csc",
+ "treatment": "laser",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial 4.0 International License); private record",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11564717.xml",
+   "sha256": "fbf21deca7fad3b304bd5f748e9bb0553b2ea8b5005af7ad588a2b676a3d3b4a",
+   "bytes": 98057,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Unilateral chronic central serous chorioretinopathy (foveal subretinal fluid for more than 6 months), no prior treatment for the disease and no macular neovascularization; retrospective two-centre comparison in which each centre used its available modality (2021-2023); 12-month follow-up",
+ "groups": [
+  {
+   "group": "eplerenone",
+   "role": "control",
+   "treatment": "other",
+   "n_reported": 26,
+   "agent": "oral eplerenone 50 mg daily, continuous",
+   "description": "Eyes treated at the University of Bari"
+  },
+  {
+   "group": "nsml",
+   "role": "control",
+   "n_reported": 18,
+   "agent": "navigated 577-nm subthreshold micropulse laser (Navilas 577s), power individualized by titration; a second session at the 90-day visit when subretinal fluid persisted",
+   "description": "Eyes treated at the University of Chieti-Pescara"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "eplerenone/cmt",
+   "group": "eplerenone",
+   "kind": "group_mean",
+   "n": 26,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "other",
+   "prior_treatment": "naive",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC11564717.xml::Tab2!R4C3",
+    "PMC11564717.xml::Tab2!R4C4",
+    "PMC11564717.xml::Tab2!R4C5"
+   ],
+   "baseline_label": "Baseline (Table 2, CMT row, EPL)",
+   "notes": "mean ± SD (Table 2 footnote); follow-up cells also contain p-value text after the mean ± SD; times from treatment start (baseline, 6 and 12 months); per-visit n not reported; continuous daily oral therapy over the study period"
+  },
+  {
+   "series_id": "nsml/cmt",
+   "group": "nsml",
+   "kind": "group_mean",
+   "n": 18,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "prn",
+   "prior_treatment": "naive",
+   "months": [0, 6, 12],
+   "cells": [
+    "PMC11564717.xml::Tab2!R5C2",
+    "PMC11564717.xml::Tab2!R5C3",
+    "PMC11564717.xml::Tab2!R5C4"
+   ],
+   "baseline_label": "Baseline (Table 2, CMT row, NSML; row-spanned label so cells start one column earlier)",
+   "notes": "mean ± SD (Table 2 footnote); follow-up cells also contain p-value text after the mean ± SD; times from the first laser session (baseline, 6 and 12 months); per-visit n not reported; ten eyes had the planned second session at the 90-day visit"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 BCVA rows (R2-R3)", "reason": "visual acuity is not extracted"},
+  {"what": "Table 2 subretinal fluid height rows (R6-R7)", "reason": "not central retinal thickness"},
+  {"what": "Table 2 subfoveal choroidal thickness rows (R8-R9)", "reason": "choroidal thickness is out of scope"},
+  {"what": "Table 3 delta CMT rows (R5-R7)", "reason": "change values in a separate table without a stated unit; the absolute Table 2 series of the same eyes is used"},
+  {"what": "p-values in Table 2 cells and Table 3", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Visual acuity, subretinal fluid height, choroidal thickness and time to fluid resolution are also reported (not extracted).",
+  "Ambiguity resolved: the two treatments are compared without a declared experimental arm, so both groups are control.",
+  "Ambiguity resolved: continuous daily oral eplerenone does not match an injection or session schedule; regimen recorded as other. The laser arm had an initial session and retreatment only if fluid persisted; regimen recorded as prn."
+ ]
+}

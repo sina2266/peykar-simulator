@@ -1,0 +1,69 @@
+{
+ "study_id": "ret-pmc6079526",
+ "doi": "10.1155/2018/9171269",
+ "pmcid": "PMC6079526",
+ "title": "Corrigendum to “Two-Year Outcome of Aflibercept in Patients with Pigment Epithelial Detachment due to Neovascular Age-Related Macular Degeneration (nAMD) Refractory to Ranibizumab”",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License, http://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6079526.xml",
+   "sha256": "e4079f2fa748f56ea243f859f090182610dcfdb2161528cc17344e6e1e0bd28e",
+   "bytes": 14158,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Neovascular age-related macular degeneration with pigment epithelial detachment refractory to ranibizumab, switched to aflibercept; corrected Table 2 (time of switch to 24 months) published as a corrigendum to the original article doi:10.1155/2017/8984313 (PMC5615945), whose Methods are not part of this source",
+ "groups": [
+  {
+   "group": "aflibercept",
+   "role": "control",
+   "n_reported": 44,
+   "agent": "intravitreal aflibercept (dose and schedule not given in the corrigendum)",
+   "description": "Eyes switched from ranibizumab to aflibercept"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "aflibercept/cmt",
+   "group": "aflibercept",
+   "kind": "group_mean",
+   "n": 44,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "unstated",
+   "prior_treatment": "previously_treated",
+   "months": [0, 3, 6, 12, 24],
+   "cells": [
+    "PMC6079526.xml::tab2!R4C2",
+    "PMC6079526.xml::tab2!R4C3",
+    "PMC6079526.xml::tab2!R4C5",
+    "PMC6079526.xml::tab2!R4C7",
+    "PMC6079526.xml::tab2!R4C9"
+   ],
+   "baseline_label": "Baseline at the time of switch (corrected Table 2, central macular thickness row, column 2)",
+   "notes": "mean ± SD (table footnote); baseline = time of switch to aflibercept; N row (R2) gives 44 eyes at baseline and months 3, 6 and 12 and 38 at month 24 (attrition); handling of missing visits not stated"
+  }
+ ],
+ "exclusions": [
+  {"what": "Corrected Table 2 ETDRS row (R3)", "reason": "visual acuity is not extracted"},
+  {"what": "Corrected Table 2 macular volume row (R5)", "reason": "macular volume is out of scope"},
+  {"what": "Corrected Table 2 PED height row (R6)", "reason": "not central retinal thickness"},
+  {"what": "Corrected Table 2 subfoveal choroidal thickness row (R7)", "reason": "choroidal thickness is out of scope"},
+  {"what": "Corrected Table 2 P columns (C4, C6, C8, C10)", "reason": "p-values are not admissible"},
+  {"what": "Corrected Results sentence with CRT values", "reason": "duplicates the corrected table; the table is cited"}
+ ],
+ "notes": [
+  "Same cohort as the original article doi:10.1155/2017/8984313 (PMC5615945); linked here so the cohort is not entered twice. The corrigendum's corrected table supersedes the original Table 2.",
+  "Ambiguity resolved: the corrigendum contains no Methods, so the thickness definition, OCT device and aflibercept regimen are recorded as central_unspecified, unstated and unstated; the original article was not used as a source.",
+  "Ambiguity resolved: the N row sits under a row-spanned header; its five cells map to the Baseline, Month 3, Month 6, Month 12 and Month 24 columns."
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "study_id": "ret-pmc7414027",
+ "doi": "10.1038/s41598-020-70197-6",
+ "pmcid": "PMC7414027",
+ "title": "Association between displacement and thickness of macula after vitrectomy in eyes with epiretinal membrane",
+ "species": "human",
+ "indication": "other",
+ "treatment": "vitrectomy",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7414027.xml",
+   "sha256": "d0f36988b997e487d86864ca4f75df82353488fb67e1e63eb6107c606f6a44f2",
+   "bytes": 85753,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Unilateral idiopathic epiretinal membrane, 25-G pars plana vitrectomy with ERM and ILM peeling (Nagoya University Hospital), retrospective study of 20 eyes of 20 patients with OCT before and 2, 4 and 8 weeks after surgery; 19 of 20 eyes had combined phacoemulsification with IOL implantation",
+ "groups": [
+  {
+   "group": "vitrectomy_ilm_peeling",
+   "role": "control",
+   "n_reported": 20,
+   "agent": "25-G three-port pars plana vitrectomy with ERM and ILM peeling (19 eyes combined with phacoemulsification and IOL)",
+   "description": "All 20 analysed eyes (one eye per patient)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "vitrectomy_ilm_peeling/cft",
+   "group": "vitrectomy_ilm_peeling",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [
+    0,
+    0.46,
+    0.9199,
+    1.8398
+   ],
+   "cells": [
+    "PMC7414027.xml::Tab3!R2C2",
+    "PMC7414027.xml::Tab3!R2C3",
+    "PMC7414027.xml::Tab3!R2C4",
+    "PMC7414027.xml::Tab3!R2C5"
+   ],
+   "baseline_label": "Week 0 = preoperative (Table 3 CFT row, column 2; the Results give the preoperative CFT that this cell holds)",
+   "notes": "CFT defined as ILM to outer border of the RPE at the central fovea, caliper measurement on Spectralis OCT (central point); mean ± SD (Table 3 footnote); weeks after surgery converted as weeks x 7/30.4375 months; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 INL and ORL quadrant rows",
+   "reason": "layer thicknesses at parafoveal quadrant points are out of scope (not central retinal thickness)"
+  },
+  {
+   "what": "Table 3 P value column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Fellow-eye CFT in Results text",
+   "reason": "untreated fellow eyes are excluded"
+  },
+  {
+   "what": "Table 2 bifurcation-fovea distances and FAZ area",
+   "reason": "not a thickness outcome"
+  },
+  {
+   "what": "Table 1 BCVA",
+   "reason": "visual acuity is not extracted"
+  }
+ ],
+ "notes": [
+  "Time origin: surgery; Week 0 is the preoperative examination",
+  "Treatment coded 'vitrectomy'; the combined cataract surgery in 19 eyes is recorded here and in the group agent",
+  "Prior treatment for the membrane is not stated"
+ ]
+}

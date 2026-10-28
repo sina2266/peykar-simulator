@@ -1,0 +1,137 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc13065104",
+ "doi": "10.22336/rjo.2025.80",
+ "pmcid": "PMC13065104",
+ "title": "Assessing the Role of Statins as an Adjunctive Anti-VEGF Therapy for Clinically Significant Macular Edema (CSME) in Type 2 Diabetes Mellitus",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13065104.xml",
+   "sha256": "9c6f891c1803e060c28e452d1e91038526035a1cb51d13f8cf6027c89052a365",
+   "bytes": 87913,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Type 2 diabetes with NPDR and clinically significant macular edema (ETDRS), 18 patients; prospective randomized interventional study, PGIMER Chandigarh (CTRI REF/2020/06/034527); eligibility admitted treatment-naive eyes and eyes treated for CSME at least 3 months before enrolment; no statin in the previous 6 months; vitamin D loading before statin therapy",
+ "groups": [
+  {
+   "group": "ranibizumab-low-dose-atorvastatin",
+   "role": "treated",
+   "n_reported": 9,
+   "agent": "ranibizumab 0.5 mg intravitreal plus oral atorvastatin 10-20 mg",
+   "description": "Group A (randomized): low-dose atorvastatin; three monthly ranibizumab loading injections then PRN to 6 months"
+  },
+  {
+   "group": "ranibizumab-high-dose-atorvastatin",
+   "role": "treated",
+   "n_reported": 9,
+   "agent": "ranibizumab 0.5 mg intravitreal plus oral atorvastatin 30-40 mg",
+   "description": "Group B (randomized): high-dose atorvastatin; three monthly ranibizumab loading injections then PRN to 6 months"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 CMT rows (rows 4 and 7)",
+   "reason": "Same eyes and visits as Table 4 (duplicate); Table 4 cited"
+  },
+  {
+   "what": "Table 2 baseline CMT",
+   "reason": "Duplicate of the Table 4 baseline; Table 4 cited"
+  },
+  {
+   "what": "Table 3/Table 4 BCVA rows, Table 2 IOP and metabolic rows, serum VEGF",
+   "reason": "Not thickness outcomes; not extracted"
+  },
+  {
+   "what": "p-values (Tables 3 and 4) and Table 5 Pearson correlations",
+   "reason": "p-values and correlation coefficients are not extracted"
+  },
+  {
+   "what": "Number of injections",
+   "reason": "Counts are not extracted"
+  }
+ ],
+ "notes": [
+  "Treatment combination: each arm combines intravitreal ranibizumab (anti_vegf) with an oral statin (other); both arms receive the investigational statin adjunct at different doses, so both groups are treated.",
+  "Measure: CMT by swept-source OCT (DRI Triton, Topcon) 5-line raster scan without a subfield definition: central_unspecified; device topcon.",
+  "Prior treatment mixed: eligibility admitted treatment-naive eyes and eyes previously treated for CSME (at least 3 months earlier); the numbers of each are not reported.",
+  "Regimen: three monthly ranibizumab loading injections then PRN over six months (loading_then_prn)."
+ ],
+ "series": [
+  {
+   "series_id": "ranibizumab-low-dose-atorvastatin/cmt",
+   "group": "ranibizumab-low-dose-atorvastatin",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "topcon",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline, Group A (Table 4, row 4 'CMT', column 2)",
+   "notes": "Mean +/- SD (Statistical analysis); scheduled visits '3 months (10-14 weeks)' and '6 months (22-26 weeks)' recorded at their nominal times; n reported as patients per group (number of eyes not stated); per-visit n not reported",
+   "values": [
+    516.77,
+    269.66,
+    243.0
+   ],
+   "source_cells": [
+    "PMC13065104.xml::T4!R4C2",
+    "PMC13065104.xml::T4!R4C5",
+    "PMC13065104.xml::T4!R4C8"
+   ],
+   "source_cell_texts": [
+    "516.77 ± 139.19",
+    "269.66 ± 85.57",
+    "243.00± 30.30"
+   ]
+  },
+  {
+   "series_id": "ranibizumab-high-dose-atorvastatin/cmt",
+   "group": "ranibizumab-high-dose-atorvastatin",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "topcon",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "mixed",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline, Group B (Table 4, row 4 'CMT', column 3)",
+   "notes": "Mean +/- SD; scheduled visits '3 months (10-14 weeks)' and '6 months (22-26 weeks)' recorded at their nominal times; n reported as patients per group (number of eyes not stated); per-visit n not reported",
+   "values": [
+    438.77,
+    343.66,
+    362.62
+   ],
+   "source_cells": [
+    "PMC13065104.xml::T4!R4C3",
+    "PMC13065104.xml::T4!R4C6",
+    "PMC13065104.xml::T4!R4C9"
+   ],
+   "source_cell_texts": [
+    "438.77± 80.23",
+    "343.66 ± 90.27",
+    "362.62 ± 129.32"
+   ]
+  }
+ ]
+}

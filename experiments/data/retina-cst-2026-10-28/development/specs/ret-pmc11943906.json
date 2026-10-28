@@ -1,0 +1,97 @@
+{
+ "study_id": "ret-pmc11943906",
+ "doi": "10.3390/medicina61030488",
+ "pmcid": "PMC11943906",
+ "title": "Efficacy of Intravitreal Dexamethasone Implant (Ozurdex®) in Naïve and Refractory Patients with Different Morphological Subtypes of Diabetic Macular Edema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, Licensee MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11943906.xml",
+   "sha256": "65f040d50dc9a674b74cc6d713a43677e5b4f43921f24625c652dd70f9b218d5",
+   "bytes": 125955,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Centre-involving diabetic macular edema without proliferative diabetic retinopathy (type 2 diabetes), one eye per patient; a single intravitreal dexamethasone implant analysed over the 6 months after the first implant; treatment-naive and anti-VEGF-refractory (previously treated) eyes; retrospective single-centre study (Ophthalmica Eye Institute, 2018-2021); minimum 6-month follow-up required",
+ "groups": [
+  {
+   "group": "naive",
+   "role": "control",
+   "n_reported": 27,
+   "agent": "dexamethasone 0.7 mg intravitreal implant (Ozurdex), single injection",
+   "description": "Treatment-naive eyes (TN; baseline-defined subgroup)"
+  },
+  {
+   "group": "previously_treated",
+   "role": "control",
+   "n_reported": 57,
+   "agent": "dexamethasone 0.7 mg intravitreal implant (Ozurdex), single injection",
+   "description": "Eyes previously treated with anti-VEGF and refractory to it (PT; at least three consecutive monthly ranibizumab or aflibercept injections with no or partial response; baseline-defined subgroup)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "naive/cst",
+   "group": "naive",
+   "kind": "group_mean",
+   "n": 27,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "months": [0, 2, 4, 6],
+   "cells": [
+    "PMC11943906.xml::medicina-61-00488-t002!R2C6",
+    "PMC11943906.xml::medicina-61-00488-t002!R3C6",
+    "PMC11943906.xml::medicina-61-00488-t002!R4C6",
+    "PMC11943906.xml::medicina-61-00488-t002!R5C6"
+   ],
+   "baseline_label": "CST baseline (Table 2, row 2, TN column)",
+   "notes": "mean (SD) per Table 2 caption; baseline visit before the implant and visits at 2, 4 and 6 months after it; observed means (minimum 6-month follow-up was an inclusion criterion; per-visit n not reported)"
+  },
+  {
+   "series_id": "previously_treated/cst",
+   "group": "previously_treated",
+   "kind": "group_mean",
+   "n": 57,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [0, 2, 4, 6],
+   "cells": [
+    "PMC11943906.xml::medicina-61-00488-t002!R2C7",
+    "PMC11943906.xml::medicina-61-00488-t002!R3C7",
+    "PMC11943906.xml::medicina-61-00488-t002!R4C7",
+    "PMC11943906.xml::medicina-61-00488-t002!R5C7"
+   ],
+   "baseline_label": "CST baseline (Table 2, row 2, PT column)",
+   "notes": "mean (SD) per Table 2 caption; baseline visit before the implant and visits at 2, 4 and 6 months after it; observed means (minimum 6-month follow-up was an inclusion criterion; per-visit n not reported)"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 'Total' column (C2)", "reason": "whole cohort tabulated with its baseline subgroups; the treatment-status subgroups are extracted so that no eye is counted twice"},
+  {"what": "Table 2 morphological subgroup columns CME, DRT, SRD (C3-C5)", "reason": "a second baseline partition of the same 84 eyes; extracting it together with the treatment-status partition would count every eye twice"},
+  {"what": "Table 2 CSTmax rows (R6-R9)", "reason": "maximum thickness, not a central thickness measure"},
+  {"what": "Table 2 BCVA rows (R10-R13)", "reason": "visual acuity is not extracted"},
+  {"what": "Table 1 R6 baseline CST", "reason": "duplicate of Table 2 R2 (same eyes); Table 2 is cited"},
+  {"what": "Final-visit CST after multiple implants (text only)", "reason": "undated final visit, not tabulated"}
+ ],
+ "notes": [
+  "Visual acuity, CSTmax, IOP and the number of later implants are reported (not extracted).",
+  "The Methods describe mixed-effects models with maximum-likelihood handling of missing data for inference; Table 2 presents observed mean (SD) values.",
+  "Ambiguity resolved: Table 2 tabulates two crossing baseline partitions (morphology and treatment status); the treatment-status partition is extracted because prior treatment is a per-series protocol field, and the morphology columns are excluded to avoid counting eyes twice.",
+  "Ambiguity resolved: CST is named 'central subfoveal thickness' and is generated by the device software; the edema and retreatment criteria refer to thickness in the central subfield, so it is recorded as central_subfield.",
+  "Ambiguity resolved: the 6-month analysis follows one implant per eye (abstract: all subjects received a single injection); additional implants given during the longer overall follow-up are not part of the analysed window, so regimen is single."
+ ]
+}

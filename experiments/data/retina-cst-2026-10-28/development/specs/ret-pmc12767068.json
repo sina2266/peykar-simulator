@@ -1,0 +1,68 @@
+{
+ "study_id": "ret-pmc12767068",
+ "doi": "10.1155/joph/5637071",
+ "pmcid": "PMC12767068",
+ "title": "Intravitreal Ranibizumab Injections Significantly Influence Retinal Venous Calibre in Patients With Diabetic Macular Oedema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: open access under the terms of http://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12767068.xml",
+   "sha256": "c14ec5837152dc66eb8261d95812cc8d82586b6fd04c8b5b78eeba22f01e78aa",
+   "bytes": 101869,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive centre-involving diabetic macular oedema; ranibizumab per the RESTORE protocol (three monthly loading injections, then PRN to 12 months); post hoc analysis of a prospective aqueous-cytokine study (DISCERN and later recruitment, Royal Victorian Eye and Ear Hospital, 2015-2021), 76 eyes of 67 patients; untreated fellow eyes analysed separately for vascular calibre only",
+ "groups": [
+  {
+   "group": "ranibizumab",
+   "role": "control",
+   "n_reported": 76,
+   "agent": "intravitreal ranibizumab (dose not stated in this article), RESTORE protocol",
+   "description": "Treated study eyes (76 recruited); the number of eyes behind the Table 2 thickness values is not stated"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ranibizumab/cmt-change",
+   "group": "ranibizumab",
+   "kind": "group_mean",
+   "n": null,
+   "value_kind": "thickness_change",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [0, 2, 12],
+   "reference_cell": "PMC12767068.xml::tbl-0002!R5C2",
+   "cells": [
+    {"definition": "definition:Table 2 footnote (change score = month 2/12 score minus baseline score; change at baseline is 0)", "value": 0},
+    "PMC12767068.xml::tbl-0002!R5C3",
+    "PMC12767068.xml::tbl-0002!R5C5"
+   ],
+   "baseline_label": "Baseline (Table 2, CMT row, column 2), cited as the reference thickness",
+   "notes": "mean ± SD (Table 2 footnote); changes are follow-up minus baseline in micrometres; scheduled visits at months 2 and 12 (eyes had received the month-0 and month-1 injections by month 2); number of eyes in Table 2 not stated and n left null: the Table 2 baseline means differ from those of the Table 1 'Included' set (complete baseline and month-2 photographs), and the Methods describe the primary analysis set as eyes with complete baseline and month-2 data; missing-visit handling for month 12 not stated"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 CRAE, CRVE and AVR rows (R2-R4)", "reason": "retinal vascular calibre, not retinal thickness"},
+  {"what": "Table 2 BCVA row (R6)", "reason": "visual acuity is not extracted"},
+  {"what": "Table 2 p-value columns (C4, C6)", "reason": "p-values are not admissible"},
+  {"what": "Table 1 R10 baseline CMT of 'Included' and 'Excluded' eyes", "reason": "baseline-only subsets defined by availability of gradable photographs; no follow-up thickness per subset"},
+  {"what": "Untreated fellow ('nonstudy') eyes", "reason": "untreated fellow eyes are excluded and no thickness is tabulated for them"}
+ ],
+ "notes": [
+  "Visual acuity, retinal vascular calibre and blood pressure are reported (not extracted).",
+  "Ambiguity resolved: the eye count behind the Table 2 CMT row cannot be established from the article, so n is recorded as null rather than inferred.",
+  "Ambiguity resolved: this article names neither the OCT device nor the CMT definition (the recruitment protocol is in its references 32-34); device unstated and measure central_unspecified; CMT taken as the OCT central macular thickness of the cited protocol.",
+  "Ambiguity resolved: the analysis set is restricted by the availability of gradable fundus photographs, not by a treatment outcome, so the series is kept."
+ ]
+}

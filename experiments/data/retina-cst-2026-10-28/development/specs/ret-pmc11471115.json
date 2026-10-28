@@ -1,0 +1,118 @@
+{
+ "study_id": "ret-pmc11471115",
+ "doi": "10.2147/OPTH.S473329",
+ "pmcid": "PMC11471115",
+ "title": "Efficacy and Safety of an Indian Bevacizumab BIOSimilar (BEVATAS) for Retinal Vein Occlusion (BIOS-RVO Study)",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press licence incorporating CC BY-NC 3.0 (unported) (article <license>); non-commercial, so private",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11471115.xml",
+   "sha256": "2c7738390ccb8e8a7f4e5940955af39d8a9a87188c6f94cceca258bc4693916a",
+   "bytes": 56005,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive macular edema due to retinal vein occlusion (branch and central), consecutive patients June 2022 to August 2023, single tertiary centre in India; retrospective interventional single-agent study, one eye per patient",
+ "groups": [
+  {
+   "group": "brvo",
+   "role": "control",
+   "n_reported": 92,
+   "agent": "bevacizumab biosimilar (Bevatas) intravitreal, three monthly loading doses then PRN",
+   "description": "Baseline diagnostic subgroup: branch retinal vein occlusion"
+  },
+  {
+   "group": "crvo",
+   "role": "control",
+   "n_reported": 62,
+   "agent": "bevacizumab biosimilar (Bevatas) intravitreal, three monthly loading doses then PRN",
+   "description": "Baseline diagnostic subgroup: central retinal vein occlusion"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "brvo/cmt",
+   "group": "brvo",
+   "n": 92,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "topcon",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC11471115.xml::t0003!R3C2",
+    "PMC11471115.xml::t0003!R4C2",
+    "PMC11471115.xml::t0003!R5C2",
+    "PMC11471115.xml::t0003!R6C2"
+   ],
+   "baseline_label": "Baseline (Table 3 row 3, BRVO Mean ± SD column)",
+   "notes": "Central macular thickness (CMT) by Topcon Maestro2 OCT, no subfield definition; Table 3 header 'Mean ± SD'; visits at 3, 6 and 12 months (± 2 weeks) after the initiation of therapy (nominal times; '1 year' = month 12); per-visit n not reported"
+  },
+  {
+   "series_id": "crvo/cmt",
+   "group": "crvo",
+   "n": 62,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "topcon",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC11471115.xml::t0003!R3C4",
+    "PMC11471115.xml::t0003!R4C4",
+    "PMC11471115.xml::t0003!R5C4",
+    "PMC11471115.xml::t0003!R6C4"
+   ],
+   "baseline_label": "Baseline (Table 3 row 3, CRVO Mean ± SD column)",
+   "notes": "Central macular thickness (CMT) by Topcon Maestro2 OCT, no subfield definition; Table 3 header 'Mean ± SD'; visits at 3, 6 and 12 months (± 2 weeks) after the initiation of therapy (nominal times; '1 year' = month 12); per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 p-value columns (with baseline and between groups)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Whole RVO cohort",
+   "reason": "not tabulated for CMT; the BRVO and CRVO subgroups are extracted so no eye is counted twice"
+  },
+  {
+   "what": "Table 2 BCVA (median, IQR)",
+   "reason": "visual acuity is not extracted; medians and IQRs are not admissible"
+  },
+  {
+   "what": "Table 4 IOP",
+   "reason": "IOP is not extracted"
+  },
+  {
+   "what": "Number of injections (Results)",
+   "reason": "not extracted"
+  }
+ ],
+ "notes": [
+  "Groups are baseline diagnostic subgroups (BRVO, CRVO) and therefore control groups; the biosimilar is a marketed agent used in routine care, no investigational arm",
+  "Statistical analysis: continuous variables as mean ± SD when normally distributed, otherwise median (IQR); Table 3 is labelled Mean ± SD"
+ ]
+}

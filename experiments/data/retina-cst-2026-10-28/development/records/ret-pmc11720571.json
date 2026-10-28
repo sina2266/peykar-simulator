@@ -1,0 +1,152 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc11720571",
+ "doi": "10.1186/s40942-024-00623-8",
+ "pmcid": "PMC11720571",
+ "title": "Suprachoroidal injection of triamcinolone acetonide as adjuvant to surgical treatment of epiretinal membrane",
+ "species": "human",
+ "indication": "other",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11720571.xml",
+   "sha256": "6897db85516aee62b676a3844d440168067c08992eb70e19d1e07f4a20de5cdd",
+   "bytes": 86882,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Idiopathic epiretinal membrane, Govetto stage 3-4, CRT above 300 um, pseudophakic patients aged 50-85; prospective randomized comparative pilot study (Brescia, Italy), 25-G pars plana vitrectomy with ERM and ILM peeling, intraoperative randomization 1:1 to intravitreal or suprachoroidal triamcinolone acetonide 4 mg",
+ "groups": [
+  {
+   "group": "ivta",
+   "role": "control",
+   "n_reported": 25,
+   "agent": "25-G vitrectomy with ERM/ILM peeling plus intravitreal triamcinolone acetonide 4 mg (0.1 mL) at the end of surgery",
+   "description": "Group 1 (G-1), comparator arm; all 25 enrolled eyes completed 6 months"
+  },
+  {
+   "group": "schi_ta",
+   "role": "treated",
+   "n_reported": 23,
+   "agent": "25-G vitrectomy with ERM/ILM peeling plus suprachoroidal triamcinolone acetonide 4 mg (29 G needle, 0.9 mm exposed tip) at the end of surgery",
+   "description": "Group 2 (G-2), experimental arm; 25 enrolled, 23 analysed (2 missed the 6-month visit and were not analysed)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 rows R11, R15, R19 and Table 3 rows R4, R7 (p)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 R8 baseline CRT",
+   "reason": "same eyes and baseline as Table 2 (duplicate); Table 2 cited"
+  },
+  {
+   "what": "Table 3 CRT reduction in um and percent",
+   "reason": "same eyes as the Table 2 absolute series (duplicate); the absolute series is used"
+  },
+  {
+   "what": "EIFL-T rows of Tables 1-4",
+   "reason": "ectopic inner foveal layer thickness is a layer thickness, not central retinal thickness"
+  },
+  {
+   "what": "Table 4 EIFL-T in Govetto stage 4 eyes",
+   "reason": "layer thickness, not central retinal thickness"
+  },
+  {
+   "what": "BCVA and IOP rows of Tables 1-2",
+   "reason": "visual acuity and IOP are not extracted"
+  },
+  {
+   "what": "24-hour and 1-week visits",
+   "reason": "no tabulated central thickness at these visits"
+  }
+ ],
+ "notes": [
+  "Time origin: preoperative baseline; follow-up visits at 1, 3 and 6 months after surgery",
+  "Role: suprachoroidal TA is the experimental arm (treated); intravitreal TA is the comparator (control); both arms are vitrectomy plus triamcinolone and are coded as treatment 'combination'",
+  "Prior treatment for the epiretinal membrane is not stated in the Methods (all eyes pseudophakic, cataract surgery at least 3 months earlier)"
+ ],
+ "series": [
+  {
+   "series_id": "ivta/crt",
+   "group": "ivta",
+   "n": 25,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline, before surgery (Table 2 row G-1 CRT, column 2)",
+   "notes": "CRT by Spectralis HRA-OCT (radial or raster scan), no subfield definition; mean ± SD (Table 1 'Baseline CRT (SD)', same baseline); months after surgery; topical fluocinolone was given to some eyes with postoperative CME and two of them received a second suprachoroidal TA (Results); their values were not removed (all 25 eyes analysed)",
+   "values": [
+    505.0,
+    456.0,
+    400.0,
+    374.0
+   ],
+   "source_cells": [
+    "PMC11720571.xml::Tab2!R9C2",
+    "PMC11720571.xml::Tab2!R9C3",
+    "PMC11720571.xml::Tab2!R9C4",
+    "PMC11720571.xml::Tab2!R9C5"
+   ],
+   "source_cell_texts": [
+    "505 ± 69 µm",
+    "456 ± 103 (*) µm",
+    "400 ± 72 (*) µm",
+    "374 ± 82(*) µm"
+   ]
+  },
+  {
+   "series_id": "schi_ta/crt",
+   "group": "schi_ta",
+   "n": 23,
+   "kind": "group_mean",
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline, before surgery (Table 2 row G-2 CRT, column 2)",
+   "notes": "CRT by Spectralis HRA-OCT (radial or raster scan), no subfield definition; mean ± SD (Table 1 'Baseline CRT (SD)', same baseline); months after surgery; analysis set is the 23 eyes that completed 6 months (2 enrolled eyes missed the 6-month visit); one eye received a second suprachoroidal TA for CME about 100 days after surgery and its values were not removed",
+   "values": [
+    543.0,
+    404.0,
+    351.0,
+    320.0
+   ],
+   "source_cells": [
+    "PMC11720571.xml::Tab2!R10C2",
+    "PMC11720571.xml::Tab2!R10C3",
+    "PMC11720571.xml::Tab2!R10C4",
+    "PMC11720571.xml::Tab2!R10C5"
+   ],
+   "source_cell_texts": [
+    "543 ± 120 µm",
+    "404 ± 98 (*) µm",
+    "351 ± 82 (*) µm",
+    "320 ± 77 (*) µm"
+   ]
+  }
+ ]
+}

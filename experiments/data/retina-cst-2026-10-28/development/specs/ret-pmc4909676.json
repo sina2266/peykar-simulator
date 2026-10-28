@@ -1,0 +1,85 @@
+{
+ "study_id": "ret-pmc4909676",
+ "doi": "10.1007/s40123-016-0049-3",
+ "pmcid": "PMC4909676",
+ "title": "Case Series Investigating the Efficacy and Safety of Bilateral Fluocinolone Acetonide (ILUVIEN®) in Patients with Diabetic Macular Edema: 10 Eyes with 12 Months Follow-up",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial 4.0 International License); non-commercial, so private",
+  "url": "http://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4909676.xml",
+   "sha256": "420bcf0614b27f802f7a2b2a69a4853db696b321deb2f7dddf620a82b5a5c959",
+   "bytes": 28930,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Bilateral chronic diabetic macular edema in pseudophakic eyes, previously treated with macular laser and anti-VEGF (most also with intravitreal triamcinolone); case series of 10 eyes of 5 patients, both eyes implanted at different dates, 12-month follow-up",
+ "groups": [
+  {
+   "group": "fluocinolone_implant",
+   "role": "control",
+   "n_reported": 10,
+   "agent": "fluocinolone acetonide intravitreal implant 0.2 ug/day (ILUVIEN), one implant per eye",
+   "description": "All 10 eyes (both eyes of 5 patients; the fellow eye implanted at a later visit, each eye followed from its own implant); marketed implant, no experimental arm"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "fluocinolone_implant/crt_change",
+   "group": "fluocinolone_implant",
+   "kind": "group_mean",
+   "n": 10,
+   "value_kind": "thickness_change",
+   "measure": "central_unspecified",
+   "device": "unstated",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "cells": [
+    {
+     "definition": "definition:change from baseline is 0 at baseline; Table 2 6- and 12-month cells are mean changes from baseline (Case Series text: 'Table 2 shows the mean changes from baseline')",
+     "value": 0
+    },
+    "PMC4909676.xml::Tab2!R3C3",
+    "PMC4909676.xml::Tab2!R3C4"
+   ],
+   "reference_cell": "PMC4909676.xml::Tab2!R3C2",
+   "baseline_label": "Baseline before the implant (Table 2 row 'Central retinal thickness, um', column 2)",
+   "notes": "Central retinal thickness in um, no subfield definition; mean ± SD (Table 2 footnote); the 6- and 12-month cells are signed mean changes from baseline (the column headers do not say 'change'; the text states that Table 2 shows mean changes); OCT device not named in the article; months after the implant; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Percent change in CRT given in the Case Series text",
+   "reason": "not a table cell; the um change series from the same eyes is used"
+  },
+  {
+   "what": "Figure 1 per-eye CRT plots and per-patient changes quoted in the text",
+   "reason": "figure values and partial text values are not citable table cells"
+  },
+  {
+   "what": "Table 2 visual acuity and IOP rows",
+   "reason": "visual acuity and IOP are not extracted"
+  },
+  {
+   "what": "Table 1 demographics and prior treatments",
+   "reason": "no thickness values"
+  }
+ ],
+ "notes": [
+  "Prior treatment: all eyes had macular laser and intravitreal anti-VEGF before the implant (Table 1 and text)",
+  "The article does not name the OCT device or scan; central retinal thickness in um is taken as the reported OCT value (device 'unstated')",
+  "Both eyes of each patient are included (n = 10 eyes of 5 patients)"
+ ]
+}

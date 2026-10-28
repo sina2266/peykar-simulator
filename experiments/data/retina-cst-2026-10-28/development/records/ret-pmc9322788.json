@@ -1,0 +1,101 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc9322788",
+ "doi": "10.3390/jcm11144139",
+ "pmcid": "PMC9322788",
+ "title": "Visual Functions Affecting Vision-Related Quality of Life Following Intravitreal Ranibizumab Therapy for Central Retinal Vein Occlusion",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9322788.xml",
+   "sha256": "02c9303917095c70458dea872fb1466230bc78dcd437031c16df9c534b83743b",
+   "bytes": 79390,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive cystoid macular edema secondary to central retinal vein occlusion, 23 eyes of 23 patients; multicenter open-label single-arm prospective study, Tsukuba University Hospital and Mito Kyodo General Hospital, 2016-2018; other ophthalmic disorders except mild refractive error and cataract excluded",
+ "groups": [
+  {
+   "group": "ranibizumab",
+   "role": "control",
+   "n_reported": 23,
+   "agent": "ranibizumab 0.5 mg intravitreal (Lucentis)",
+   "description": "Whole cohort: three monthly injections, then PRN retreatment by OCT criteria; monthly examinations to 12 months"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 visual function rows (BCVA, LCS, metamorphopsia, aniseikonia, TST, TNO) and VFQ-25",
+   "reason": "Not thickness outcomes; not extracted"
+  },
+  {
+   "what": "Table 2 p-value rows",
+   "reason": "p-values are not extracted"
+  },
+  {
+   "what": "Table 1 baseline central foveal thickness",
+   "reason": "Duplicate of the Table 2 baseline for the same eyes; Table 2 cited"
+  },
+  {
+   "what": "Tables 3-5 regression analyses",
+   "reason": "Regression and correlation coefficients are not extracted"
+  },
+  {
+   "what": "Monthly examinations other than 3, 6 and 12 months",
+   "reason": "Not tabulated; no cells to cite"
+  }
+ ],
+ "notes": [
+  "Measure: CFT measured manually with the Cirrus analysis software on five-line raster cross-scans (not the automated 1-mm subfield mean): recorded as central_point; device cirrus.",
+  "Regimen loading_then_prn: three monthly ranibizumab injections, then additional injections when OCT/fluid retreatment criteria were met.",
+  "Role control: approved agent, single-arm cohort.",
+  "The number of injections is reported in the Results (not extracted)."
+ ],
+ "series": [
+  {
+   "series_id": "ranibizumab/cft",
+   "group": "ranibizumab",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "thickness_absolute",
+   "measure": "central_point",
+   "device": "cirrus",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (Table 2, row 16 'CFT (um)', column 2)",
+   "notes": "Mean +/- SD (Table 2 footnote); months after treatment; per-visit n not reported; no cataract surgery during the study period (Results)",
+   "values": [
+    771.0,
+    181.0,
+    361.0,
+    308.0
+   ],
+   "source_cells": [
+    "PMC9322788.xml::jcm-11-04139-t002!R16C2",
+    "PMC9322788.xml::jcm-11-04139-t002!R16C3",
+    "PMC9322788.xml::jcm-11-04139-t002!R16C4",
+    "PMC9322788.xml::jcm-11-04139-t002!R16C5"
+   ],
+   "source_cell_texts": [
+    "771 ± 319",
+    "181 ± 58",
+    "361 ± 303",
+    "308 ± 259"
+   ]
+  }
+ ]
+}

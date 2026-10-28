@@ -1,0 +1,130 @@
+{
+ "study_id": "ret-pmc13249049",
+ "doi": "10.2147/DDDT.S601668",
+ "pmcid": "PMC13249049",
+ "title": "Real-World Outcomes of Aflibercept 2 mg Using a Treat-and-Extend Protocol for Neovascular Age-Related Macular Degeneration: A 24-Month Retrospective Study in a Chinese Population",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "Dove Medical Press licence incorporating CC BY-NC 4.0 (unported) (article <license>; terms https://www.dovepress.com/terms.php); non-commercial, so private",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13249049.xml",
+   "sha256": "cb94330b848e62681d5c355b0b40417ab84fa5d2781cd077fac0440a966eb5b2",
+   "bytes": 76415,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Treatment-naive neovascular age-related macular degeneration (newly diagnosed by FFA and/or OCTA; no prior anti-VEGF or photodynamic therapy); retrospective single-arm, single-centre real-world cohort (China); intravitreal aflibercept 2 mg as initial anti-VEGF therapy, three monthly loading injections then treat-and-extend; inclusion required completion of at least 24 months of follow-up",
+ "groups": [
+  {
+   "group": "aflibercept_tae",
+   "role": "control",
+   "n_reported": 37,
+   "agent": "aflibercept 2 mg/0.05 mL (EYLEA)",
+   "description": "All included eyes, one cohort (Results: eyes included): three consecutive monthly loading injections, then treat-and-extend (interval lengthened in 2-week steps up to 16 weeks without fluid or haemorrhage, shortened by 2 weeks with disease activity; treatment suspended with 16-weekly monitoring after three consecutive 16-week intervals without recurrence)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "aflibercept_tae/cmt_change",
+   "group": "aflibercept_tae",
+   "kind": "group_mean",
+   "n": 37,
+   "value_kind": "thickness_change",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "treat_and_extend",
+   "prior_treatment": "naive",
+   "months": [
+    0,
+    3,
+    6,
+    12,
+    18,
+    24
+   ],
+   "cells": [
+    {
+     "definition": "definition:Table 1 (t0001) footnote tfn0001: Δ represents the change from baseline (mean ± SD), so the change at baseline is 0",
+     "value": 0
+    },
+    "PMC13249049.xml::t0001!R3C3",
+    "PMC13249049.xml::t0001!R3C4",
+    "PMC13249049.xml::t0001!R3C5",
+    "PMC13249049.xml::t0001!R3C6",
+    "PMC13249049.xml::t0001!R3C7"
+   ],
+   "reference_cell": "PMC13249049.xml::t0001!R3C2",
+   "baseline_label": "Baseline (Table 1 column 2, CMT row R3; reference cell)",
+   "notes": "Mean ± SD (Table 1 footnote; Statistical Analysis: continuous variables as mean ± SD or median (IQR), these cells use ±). Follow-up cells are Δ-prefixed mean changes from baseline (the builder skips the leading change sign). n = eyes at baseline; per-visit n for CMT not reported; the percentages of the categorical rows of Table 1 imply 37 eyes at baseline and 3 months, 36 at 6, 12 and 18 months and 35 at 24 months (ordinary attrition kept); handling of missing visits (observed cases or LOCF) not stated. Visit columns used at their nominal months from the baseline visit (no visit window stated)."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 R2 BCVA (logMAR)",
+   "reason": "visual acuity is not extracted"
+  },
+  {
+   "what": "Table 1 R4 PEDH (pigment epithelial detachment height)",
+   "reason": "not central retinal thickness"
+  },
+  {
+   "what": "Table 1 R5 SCT (subfoveal choroidal thickness)",
+   "reason": "choroidal thickness is out of scope"
+  },
+  {
+   "what": "Table 1 R6-R12 (SRF, IRF, HRD, SHE, fibrosis, MA, EZ disruption)",
+   "reason": "counts and proportions are not admissible"
+  },
+  {
+   "what": "Table 1 C8 P values",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 C3-C4 effective and non-effective groups",
+   "reason": "defined by the 24-month visual outcome (outcome-defined groups)"
+  },
+  {
+   "what": "Table 2 C2 overall column (R6C2 baseline CMT)",
+   "reason": "same eyes and baseline as Table 1 R3C2 (duplicate); Table 1 cited"
+  },
+  {
+   "what": "Table 2 C5 P values",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 R4 and Results text, number of injections",
+   "reason": "number of injections is not extracted"
+  },
+  {
+   "what": "Tables 3-4 univariate and multivariable logistic regression (beta, SE, OR, 95% CI, p)",
+   "reason": "model estimates, not thickness series"
+  },
+  {
+   "what": "CMT values in the Abstract and Results text (baseline, one follow-up absolute mean, changes)",
+   "reason": "not table cells; they repeat Table 1, which is cited"
+  },
+  {
+   "what": "Figure 1B CMT over time (approximate values in the alt-text)",
+   "reason": "figure values are not citable table cells"
+  }
+ ],
+ "notes": [
+  "Single-arm retrospective real-world cohort of a marketed agent without an investigational arm: role control.",
+  "Time origin: baseline visit (first aflibercept injection). Table 1 columns '3 Months' to '24 Months' used at nominal months; no visit window stated; month 3 is one month after the third monthly loading injection (months 0, 1 and 2).",
+  "Measure: the Methods define CMT as the mean retinal thickness within the central 1-mm ETDRS subfield (the same sentence also lists IRF, SRF and PED), so central_subfield.",
+  "Device: Heidelberg Engineering spectral-domain OCT ('Spec-TR-04283'; Figure 2 shows a Heidelberg scan), so spectralis.",
+  "Treatment suspension after three consecutive 16-week intervals without recurrence is part of the regimen; no values were removed or replaced after it (means over all included eyes).",
+  "Inclusion required completion of at least 24 months of follow-up (follow-up completion, not an outcome-defined group).",
+  "No table gives follow-up absolute CMT: Table 1 gives the baseline thickness and the changes from baseline, so value kind thickness_change with Table 1 R3C2 as the reference cell.",
+  "BCVA, PED height, subfoveal choroidal thickness, OCT biomarker proportions, number of injections and logistic regression results exist but are not extracted.",
+  "nAMD subtype (for example polypoidal choroidal vasculopathy) not stated.",
+  "Licence non-commercial (Dove terms incorporating CC BY-NC 4.0): record private; no raw copy in the repository."
+ ]
+}

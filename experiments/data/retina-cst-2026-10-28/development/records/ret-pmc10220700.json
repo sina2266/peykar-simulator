@@ -1,0 +1,163 @@
+{
+ "schema": "eye.retina-thickness-record-1.0.0",
+ "study_id": "ret-pmc10220700",
+ "doi": "10.3390/medicina59050982",
+ "pmcid": "PMC10220700",
+ "title": "Combined Treatment of Persistent Diabetic Macular Edema with Aflibercept and Triamcinolone Acetonide in Pseudophakic Eyes",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, Licensee MDPI, Basel, Switzerland)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10220700.xml",
+   "sha256": "a34eea1c6d3a7b42e7feede90d00bc20b72913a53d4032230bca5320f48f4643",
+   "bytes": 132977,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Persistent (refractory) centre-involving diabetic macular edema in pseudophakic eyes of type 2 diabetics after three previously administered monthly intravitreal aflibercept injections (anatomical/functional non-response assessed one month after the third injection); prospective, observational, interventional, non-randomized, single centre (Kragujevac, Serbia), 24 eyes of 24 patients split equally into two groups",
+ "groups": [
+  {
+   "group": "aflibercept",
+   "role": "control",
+   "treatment": "anti_vegf",
+   "n_reported": 12,
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal every 8 weeks (2 months)",
+   "description": "Group A: continued aflibercept alone on a fixed every-2-months schedule; six aflibercept injections over the 12-month follow-up"
+  },
+  {
+   "group": "aflibercept-ta",
+   "role": "treated",
+   "treatment": "combination",
+   "n_reported": 12,
+   "agent": "aflibercept 2 mg/0.05 mL every 8 weeks plus intravitreal triamcinolone acetonide 10 mg/0.1 mL (triple sedimentation of Kenalog 40 mg/mL, off-label) every 4 months",
+   "description": "Group A+TA: same aflibercept schedule plus triamcinolone every 4 months (first TA 2-3 weeks after the first study aflibercept injection; three TA injections in total); the experimental combination arm"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 1 VA (Snellen) and IOP rows",
+   "reason": "not thickness outcomes"
+  },
+  {
+   "what": "Table 1 SRF, IRCS, DRIL and ORL/ELM/EZ grade rows",
+   "reason": "proportions of graded OCT biomarkers, not thickness"
+  },
+  {
+   "what": "Table 1 p-value rows",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Figure 2 CMT means and Figure 3 single-eye example",
+   "reason": "figures/single case; the same group means are cited from Table 1"
+  },
+  {
+   "what": "Results-text CMT means and ranges",
+   "reason": "duplicates of Table 1 cells; ranges are not admissible"
+  }
+ ],
+ "notes": [
+  "Time origin: the first aflibercept injection of the reported study period (baseline visit before the study treatment started); eyes had received three monthly aflibercept injections before baseline (prior_treatment previously_treated); some eyes also had prior focal laser or PRP",
+  "CMT was 'measured automatically' on Optopol REVO NX 130 SD-OCT (device other); the Methods do not define CMT as the central 1-mm subfield (the 1-mm area is stated for the OCT biomarker grading), so measure central_unspecified",
+  "The Results text words some visits as 'after the last injection'; the Methods and the table caption give follow-up controls after 1, 3, 6, 9 and 12 months from the start of treatment, used as nominal times",
+  "Statistical comparisons: two-tailed t-test between groups; the article states means; VA, IOP and OCT biomarkers exist but are not extracted"
+ ],
+ "series": [
+  {
+   "series_id": "aflibercept/cmt",
+   "group": "aflibercept",
+   "kind": "group_mean",
+   "n": 12,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "other",
+   "regimen": "fixed_interval",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    9,
+    12
+   ],
+   "baseline_label": "Baseline (Table 1 row CMT(µm), Baseline column, group A)",
+   "notes": "Mean ± dispersion (caption: 'Mean values'; the ± statistic is not labelled SD or SE); table headers print '>1 Month' ... '>12 Months'; nominal times from the Methods ('OCT examination was performed before the treatment started and after 1, 3, 6, 9 and 12 months'); per-visit n not reported (all eyes reported to have received all six injections)",
+   "values": [
+    452.67,
+    404.34,
+    361.29,
+    318.16,
+    303.67,
+    315.47
+   ],
+   "source_cells": [
+    "PMC10220700.xml::medicina-59-00982-t001!R7C2",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C4",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C6",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C8",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C10",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C12"
+   ],
+   "source_cell_texts": [
+    "452.67 ± 137.48",
+    "404.34 ± 105.21",
+    "361.29 ± 125.88",
+    "318.16 ± 97.23",
+    "303.67 ± 134.67",
+    "315.47 ± 121.34"
+   ]
+  },
+  {
+   "series_id": "aflibercept-ta/cmt",
+   "group": "aflibercept-ta",
+   "kind": "group_mean",
+   "n": 12,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "other",
+   "regimen": "fixed_interval",
+   "prior_treatment": "previously_treated",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    9,
+    12
+   ],
+   "baseline_label": "Baseline (Table 1 row CMT(µm), Baseline column, group A+TA)",
+   "notes": "Mean ± dispersion (not labelled SD or SE); same timing as the aflibercept series; per-visit n not reported; eyes with an IOP rise received topical dorzolamide-timolol (no thickness values removed or replaced)",
+   "values": [
+    467.67,
+    396.88,
+    313.13,
+    272.56,
+    268.44,
+    278.78
+   ],
+   "source_cells": [
+    "PMC10220700.xml::medicina-59-00982-t001!R7C3",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C5",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C7",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C9",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C11",
+    "PMC10220700.xml::medicina-59-00982-t001!R7C13"
+   ],
+   "source_cell_texts": [
+    "467.67 ± 143.53",
+    "396.88 ± 113.72",
+    "313.13 ± 97.52",
+    "272.56 ± 68.92",
+    "268.44 ± 69.87",
+    "278.78 ± 85.46"
+   ]
+  }
+ ]
+}

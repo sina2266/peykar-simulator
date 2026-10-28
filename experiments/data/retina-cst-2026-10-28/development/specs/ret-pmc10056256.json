@@ -1,0 +1,68 @@
+{
+ "study_id": "ret-pmc10056256",
+ "doi": "10.3390/jcm12062297",
+ "pmcid": "PMC10056256",
+ "title": "Role of Vitrectomy in Nontractional Refractory Diabetic Macular Edema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "vitrectomy",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, Licensee MDPI)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10056256.xml",
+   "sha256": "4a127b89387a45a61a0b7644c39f83bd0778b1b2c637845fd6040076a0f86008",
+   "bytes": 88269,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Nontractional diabetic macular edema refractory to at least six intravitreal aflibercept injections (no epiretinal membrane, vitreomacular traction or proliferative diabetic retinopathy), all eyes pseudophakic; 25-gauge pars plana vitrectomy with or without ILM peeling; retrospective single-centre chart review (San Giuseppe Hospital, Milan, 2016-2018) of eyes with two-year follow-up",
+ "groups": [
+  {
+   "group": "ppv",
+   "role": "control",
+   "n_reported": 28,
+   "agent": "25-gauge pars plana vitrectomy (single surgeon), intravitreal triamcinolone used intraoperatively to visualize the posterior cortical vitreous; ILM peeling in 13 of 28 eyes",
+   "description": "All 28 eyes of 28 patients; single-arm cohort without a control arm"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ppv/cmt",
+   "group": "ppv",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "cirrus",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [0, 6, 12, 24],
+   "cells": [
+    "PMC10056256.xml::jcm-12-02297-t002!R3C2",
+    "PMC10056256.xml::jcm-12-02297-t002!R3C3",
+    "PMC10056256.xml::jcm-12-02297-t002!R3C5",
+    "PMC10056256.xml::jcm-12-02297-t002!R3C7"
+   ],
+   "baseline_label": "Baseline (Table 2, CMT row, column 2; preoperative visit)",
+   "notes": "mean ± SD (Table 2 footnote); times count from surgery (preoperative baseline; 6, 12 and 24 months post-vitrectomy, scheduled visits); no patient lost to follow-up, all 28 eyes at every visit; seven eyes received intravitreal corticosteroid injections for worsening DME in the second year and two retinal detachments and one vitreous haemorrhage needed a second intervention (timing not stated); their values were not reported as removed or replaced, so all visits are kept as means over all treated eyes"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 BCVA row (R2)", "reason": "visual acuity is not extracted"},
+  {"what": "Table 2 p-value columns (C4, C6, C8)", "reason": "p-values are not admissible"},
+  {"what": "Table 1 R8C2 baseline central macular thickness", "reason": "duplicate of Table 2 R3C2 (same 28 eyes); Table 2 is cited"},
+  {"what": "ILM peeling vs no ILM peeling and SRD vs no SRD subgroups", "reason": "thickness is not tabulated by subgroup (text gives only p-values and visual acuity)"}
+ ],
+ "notes": [
+  "Visual acuity (BCVA) is also reported in Table 2 and Figures 1-3 (not extracted).",
+  "Refractory status is defined by the response to anti-VEGF given before baseline, a condition known at baseline.",
+  "Ambiguity resolved: the Methods state that CMT values were obtained from the central subfield of the (Cirrus) macular thickness map; recorded as central_subfield although the 1-mm diameter is not written out.",
+  "Ambiguity resolved: intraoperative triamcinolone was used as a visualization aid in all eyes, not as a separately defined treatment arm; treatment recorded as vitrectomy (not combination).",
+  "Ambiguity resolved: second-year intravitreal corticosteroid injections and repeat surgeries in some eyes did not lead to removal or replacement of values, so no visit is censored."
+ ]
+}

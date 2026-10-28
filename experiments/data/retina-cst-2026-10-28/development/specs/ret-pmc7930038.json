@@ -1,0 +1,101 @@
+{
+ "study_id": "ret-pmc7930038",
+ "doi": "10.1038/s41598-021-84442-z",
+ "pmcid": "PMC7930038",
+ "title": "Comparison of the effect of air tamponade versus no tamponade after pars plana vitrectomy for idiopathic epiretinal membrane",
+ "species": "human",
+ "indication": "other",
+ "treatment": "vitrectomy",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7930038.xml",
+   "sha256": "b1b8ce228d3dfd3a9897a8c4e28318b0defd938bcdd7c67cd24a31ea8917c725",
+   "bytes": 93539,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Idiopathic epiretinal membrane (no glaucoma, diabetic retinopathy, vein occlusion or AMD; posterior vitreous detachment required); 25-gauge pars plana vitrectomy with ERM and ILM peeling by one surgeon, combined with cataract surgery in all phakic eyes; full air tamponade when an atrophic hole or lattice degeneration was present, otherwise balanced salt solution (no tamponade); prospective cohort (Hangil Eye Hospital, 2015-2018); 2-year follow-up",
+ "groups": [
+  {
+   "group": "bss",
+   "role": "control",
+   "n_reported": 66,
+   "agent": "pars plana vitrectomy with ERM and ILM peeling, no tamponade (balanced salt solution)",
+   "description": "BSS group"
+  },
+  {
+   "group": "air",
+   "role": "control",
+   "n_reported": 79,
+   "agent": "pars plana vitrectomy with ERM and ILM peeling, full air tamponade, prone positioning for one day",
+   "description": "Air group (air used when an atrophic hole or lattice degeneration was present)"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "bss/cmt",
+   "group": "bss",
+   "kind": "group_mean",
+   "n": 66,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [0, 1, 3, 6, 12, 24],
+   "cells": [
+    "PMC7930038.xml::Tab3!R2C3",
+    "PMC7930038.xml::Tab3!R5C3",
+    "PMC7930038.xml::Tab3!R8C3",
+    "PMC7930038.xml::Tab3!R11C3",
+    "PMC7930038.xml::Tab3!R14C3",
+    "PMC7930038.xml::Tab3!R17C3"
+   ],
+   "baseline_label": "Preoperative (Table 3, 'Central' location, BSS row)",
+   "notes": "mean ± SD (Table 3 footnote); 'Central' location of the ETDRS grid; times from surgery (preoperative; 1, 3 and 6 months; 1 and 2 years); per-visit n and handling of missing visits not stated"
+  },
+  {
+   "series_id": "air/cmt",
+   "group": "air",
+   "kind": "group_mean",
+   "n": 79,
+   "value_kind": "thickness_absolute",
+   "measure": "central_subfield",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "unstated",
+   "months": [0, 1, 3, 6, 12, 24],
+   "cells": [
+    "PMC7930038.xml::Tab3!R3C2",
+    "PMC7930038.xml::Tab3!R6C2",
+    "PMC7930038.xml::Tab3!R9C2",
+    "PMC7930038.xml::Tab3!R12C2",
+    "PMC7930038.xml::Tab3!R15C2",
+    "PMC7930038.xml::Tab3!R18C2"
+   ],
+   "baseline_label": "Preoperative (Table 3, 'Central' location, Air row; row-spanned visit label so cells start one column earlier)",
+   "notes": "mean ± SD (Table 3 footnote); 'Central' location of the ETDRS grid; times from surgery (preoperative; 1, 3 and 6 months; 1 and 2 years); per-visit n and handling of missing visits not stated"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 3 superior, nasal, inferior and temporal locations", "reason": "sector subfields are out of scope"},
+  {"what": "Table 3 p-value rows", "reason": "p-values are not admissible"},
+  {"what": "Table 1 R10 baseline CMT (total, BSS, air)", "reason": "duplicates the Table 3 preoperative central values (same eyes); Table 3 is cited"},
+  {"what": "Table 2 visual acuity, spherical equivalent and IOP", "reason": "not central retinal thickness"},
+  {"what": "Tables 4-5 peripapillary RNFL thickness", "reason": "retinal nerve fibre layer thickness is out of scope"},
+  {"what": "Table 6 regression coefficients", "reason": "model estimates are not admissible"}
+ ],
+ "notes": [
+  "Combined phacoemulsification in phakic eyes (lens status in Table 1); intraoperative triamcinolone used for membrane peeling in some cases; treatment recorded as vitrectomy.",
+  "Visual acuity, refraction, IOP and peripapillary RNFL thickness are reported (not extracted).",
+  "Ambiguity resolved: tamponade was chosen during surgery from intraoperative findings, a treatment variant fixed at the time of treatment rather than a post-baseline outcome, so both arms are kept as control groups.",
+  "Ambiguity resolved: the Methods state that CMT was obtained from the ETDRS circle and Table 3 lists it as the 'Central' location next to the four sectors; recorded as central_subfield.",
+  "Ambiguity resolved: prior treatment of the membrane is not mentioned, so prior_treatment is unstated."
+ ]
+}

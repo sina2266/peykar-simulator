@@ -1,0 +1,68 @@
+{
+ "study_id": "ret-pmc11076480",
+ "doi": "10.1038/s41433-023-02900-6",
+ "pmcid": "PMC11076480",
+ "title": "Short-term response to anti-VEGF as indicator of visual prognosis in refractory age-related macular degeneration",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11076480.xml",
+   "sha256": "68ac39c5e950a3b18e4f288bbbb8567e493daf5cb42b4085210fe70e404d32da",
+   "bytes": 78495,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "condition": "Neovascular AMD refractory to monthly anti-VEGF (intraretinal and/or subretinal fluid at every monitoring visit for 6 months or more after at least 12 months of anti-VEGF; same agent for at least 6 months); monocentric retrospective chart and OCT review (Jules Gonin Eye Hospital, Lausanne), 45 eyes of 41 patients, one injection cycle analysed per eye",
+ "groups": [
+  {
+   "group": "refractory-namd",
+   "role": "control",
+   "n_reported": 45,
+   "agent": "ranibizumab (22 eyes) or aflibercept (23 eyes), the agent used in the 6 months before baseline and directly thereafter",
+   "description": "All study eyes: OCT just before an anti-VEGF injection (study baseline), at an intermediate visit 1 week after that injection and at the following visit 1 month after the injection"
+  }
+ ],
+ "extraction_protocol": "retina-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "refractory-namd/crt",
+   "group": "refractory-namd",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "thickness_absolute",
+   "measure": "central_unspecified",
+   "device": "spectralis",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "months": [0, 0.23, 1],
+   "cells": [
+    "PMC11076480.xml::Tab1!R6C2",
+    "PMC11076480.xml::Tab1!R6C3",
+    "PMC11076480.xml::Tab1!R6C5"
+   ],
+   "baseline_label": "Baseline (Table 1 row 'CRT (µm ± SD)', column Baseline: visit just before the injection)",
+   "notes": "Mean ± SD; 1 week = 7/30.4375 months (0.2300) after the baseline injection; 1 month after the injection is the next visit (next injection given then); per-visit n not separately reported (paired t-tests over the 45 eyes); eyes were on ongoing monthly injections, the reported period contains exactly one injection"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 1 rows: time interval from last injection, visual acuity, maximum ILM-RPE distance, maximum RPE elevation, AI fluid volumes (IRF, SRF, PED)", "reason": "not central retinal thickness (maximum-height and volume measures are not the central value)"},
+  {"what": "Table 1 p-value columns", "reason": "p-values are not admissible"},
+  {"what": "Table 2 'CRT change at initiation of anti-VEGF treatment' (and the Results-text CRT before/after the initial loading doses years earlier)", "reason": "a single change without a tabulated baseline thickness in the same series; the before/after values exist only in the text; different (historical) treatment period"},
+  {"what": "Table 2 subfoveal choroidal thickness", "reason": "choroidal thickness is out of scope"},
+  {"what": "Figure 2 subgroups by >=70% fluid responsiveness at week 1", "reason": "groups defined by a post-baseline outcome (response); visual acuity only"},
+  {"what": "Table 3 associations with long-term visual outcome", "reason": "correlation/regression statistics and visual acuity, not thickness series"}
+ ],
+ "notes": [
+  "Time origin: the anti-VEGF injection given at the study-baseline visit (the visit just before the injection); eyes had a mean of 27 prior injections, prior_treatment previously_treated",
+  "CRT measured on Heidelberg Spectralis (macular cube 6 mm, 49 lines); the Methods do not define CRT as the central 1-mm subfield, so measure central_unspecified",
+  "Regimen labelled single: exactly one injection falls between the baseline visit and the 1-month visit (routine practice was monthly injections while fluid persisted)",
+  "Visual acuity, fluid volumes and long-term visual follow-up exist but are not extracted"
+ ]
+}
