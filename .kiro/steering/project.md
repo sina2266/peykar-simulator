@@ -1,25 +1,33 @@
 # Peykar continuation context
 
-## In progress 2026-10-28 (late): retina 1.1 and IOP 1.2 development
+## Retina 1.1 tested, IOP 1.2 frozen, 2026-10-28/29
 
 - Fresh sealed sets, reserved before triage and extracted blind: retina tranche 2
   (63 records, `.peykar/retina-tranche2-sealed-2026-10-28`) and IOP tranche 3 (83
-  records, `.peykar/iop-tranche3-sealed-2026-10-28`); custody checks by
+  records, `.peykar/iop-tranche3-sealed-2026-10-28`); custody checks
   `.peykar/verify_retina_tranche2_custody.py` and `verify_iop_tranche3_custody.py`.
-- New generic model `eye_recovery_population2` (defaults = model 1 bit for bit):
-  wear-off `L(t)(1 - rho W(t))` from series metadata `effect_duration_months`,
-  treatment fallback, early noise (likelihood or forecast-only), noise pooling
-  (median/pooled), forecast-only pooling, study effects shared/per_group. Harness
-  `eye_recovery_evaluation2`. Retina 1.1: `retina_thickness_population_1_1` (dose rule:
-  single dexamethasone implant D = 3.5 mo, w 0.5, rho 0.8), `eye_retina_data_1_1`,
-  operator/publisher `*_retina_population_1_1.py`. IOP 1.2: `iop_population_1_2`
-  (study_effects per_group = IOP 1.1), `eye_iop_data_1_2.IopSeries`, operator with
-  `--shard i/n` and `--merge`, publisher `publish_iop_population_1_2.py`.
-- Retina dev (65 studies): s2 (wear-off) adopted; s1 (fallback) and s4 (pooled noise)
-  rejected; round 3 s5 (forecast-only pooled noise) pending. Logs in
-  `experiments/eye/{retina/model-1.1,iop/model-1.2}/development-log.md`.
-- Run LOSO with `OMP_NUM_THREADS=1` etc.; otherwise BLAS threads oversubscribe.
-- Web searches can surface sealed values: none more on retina/IOP outcomes before freeze.
+- Generic model `eye_recovery_population2` (PINNED by both protocols; defaults = model
+  1 bit for bit): wear-off `L(t)(1 - rho W(t))` from series metadata
+  `effect_duration_months`, treatment fallback, early noise (`early_noise_in_likelihood`),
+  `noise_pooling` median/pooled, `forecast_noise_pooling`, `study_effects`
+  shared/per_group. Harness `eye_recovery_evaluation2` (pinned).
+- Retina 1.1.0 = s5 (`retina_thickness_population_1_1`, dose rule: one dexamethasone
+  implant D 3.5 mo, w 0.5, rho 0.8; forecast-only pooled noise). Protocol `fd14a1c5`,
+  freeze `84ee1e9c`. Sealed once (2,382 s): H1–H4 pass (coverage 0.844/0.896, next obs
+  7.91 vs persistence 8.81, landmark 9.90 vs 11.55, initial 13.00 vs 18.51); H5 FAILS
+  (1.0.0 same training 7.79/9.73/13.25). 1.0.0 coverage there 0.660/0.772. One
+  vitrectomy+implant group (ret-pmc6899066) did not rebound. Tranche 2 consumed;
+  tranches 3–4 (155) unread. Next: per-series duration learned from own visits.
+- IOP 1.2.0 = c1 (`iop_population_1_2`: 1.1.0 law in generic 2 with per_group study
+  effects, forecast-only early noise k 8, T 1 month). Protocol `4169750d`, freeze
+  `df8f389a`. Sealed run started 2026-10-29 00:45 into
+  `.peykar/iop12-sealed-test-2026-10-29` (reference 1.1.0 in the same run); publish with
+  `scripts/publish_iop_population_1_2.py --sealed --report … --reference
+  …/reference-1.1.0-report.json` (H5 = first-month coverage closer, RMSE within 0.05).
+- IOP operator `--shard i/n` + `--merge` for development LOSO. Always run LOSO with
+  `OMP_NUM_THREADS=1` (BLAS threads oversubscribe 16 cores otherwise).
+- The image viewer does not see files created after the session snapshot, and long
+  `sleep` calls may be cut short: poll in a loop that checks `date +%s`.
 
 ## Retinal-thickness model 1.0.0 and its sealed test, 2026-10-28
 

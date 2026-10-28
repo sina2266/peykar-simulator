@@ -322,6 +322,29 @@ protocol `f13238a2`) before a one-shot sealed test.
 - [ ] Late follow-ups (after month 3) tie with persistence; retreatment timing is
   not an input.
 
+### 2026-10-28/29 retinal-thickness model 1.1 (tranche-2 sealed test)
+[Model 1.1.0](../experiments/eye/retina/model-1.1/README.md) was frozen (commit
+`84ee1e9c`, protocol `fd14a1c5`) before a one-shot test on tranche 2, which was
+reserved before triage.
+- [x] Tranche 2: blind triage (85 admitted), seven custodians (63 records, 135
+  series), every record rebuilt byte for byte.
+- [x] Generic eye model version 2 (`eye_recovery_population2`, harness
+  `eye_recovery_evaluation2`): wear-off of single doses, treatment fallback, early
+  noise, noise pooling, per-group study effects; defaults reproduce version 1 bit for
+  bit.
+- [x] Declared dose rule for one dexamethasone implant (duration 3.5 months, 80% of
+  the effect lost) and forecast noise from the pooled study noise; three declared LOSO
+  rounds on 65 studies (fallback and full pooled noise rejected).
+- [x] Sealed result on 92 group means: H1–H4 pass (coverage 84.4%/89.6%, next
+  observation 7.91 vs persistence 8.81, landmark 9.90 vs 11.55, initial state 13.00 vs
+  18.51). H5 fails: model 1.0.0 with the same training forecast slightly better (7.79,
+  9.73) but would have failed H1 (coverage 66.0%/77.2%).
+- [ ] Let the implant's effect duration vary per series and be learned from its own
+  visits (a fixed 3.5 months predicted a rebound that did not occur after vitrectomy
+  with an implant); test on tranches 3–4 (155 unread articles).
+- [ ] Contexts without training series remain worse than persistence (11.27 vs 10.21
+  pp); add data rather than a fallback rule.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

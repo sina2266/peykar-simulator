@@ -203,6 +203,19 @@ Anti-VEGF series were forecast within 1.1–3.7 pp. The gain is in the first thr
 months. The rebound after a single dexamethasone implant wears off is missed, and
 only 5/40 group means met every per-series criterion
 ([Persian results](experiments/eye/retina/model-1.0/results.fa.md)).
+**Retinal-thickness model 1.1.0** was then tested once on tranche 2, which was
+reserved before triage (63 custodian-extracted records). It runs on
+[generic eye model version 2](packages/platform/src/peykar/model_learning/eye_recovery_population2.py)
+with a declared wear-off of one dexamethasone implant and forecast intervals from the
+pooled study noise. Four of its five declared hypotheses passed on 92 group-mean
+series: coverage 84.4%/89.6%, next follow-up 7.91 pp versus 8.81 for persistence,
+landmark 9.90 versus 11.55, initial state 13.00 versus 18.51. The fifth failed: model
+1.0.0 with the same training forecast slightly better (7.79 and 9.73 pp), but its
+intervals covered only 66.0%/77.2% of the fresh data. The wear-off rule cut the
+initial-state error of single-implant groups from 14.61 to 5.42 pp, but one group
+treated after vitrectomy did not re-thicken as predicted
+([model 1.1](experiments/eye/retina/model-1.1/README.md),
+[Persian results](experiments/eye/retina/model-1.1/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

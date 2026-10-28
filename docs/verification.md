@@ -1,4 +1,67 @@
 # Verification record
+## Fresh sealed tranches, generic eye model 2, retinal-thickness model 1.1 and IOP model 1.2: 2026-10-28/29
+Commands run from the repository root; outcomes observed. Start state: main at
+`76c575ce` (= origin; retina tranche 2 and IOP tranche 3 triaged and reserved).
+- Seven retina tranche-2 custodian sub-agents, then
+  `uv run --frozen python .peykar/verify_retina_tranche2_custody.py`: 85 reserved
+  studies, 63 records and 22 exclusions, 63/63 records rebuilt byte for byte, 0 raw
+  copies differing from the screened source, 135 series, no problem. Commit
+  `d98aa812`, pushed.
+- Eight IOP tranche-3 custodian sub-agents, then
+  `uv run --frozen python .peykar/verify_iop_tranche3_custody.py`: 97 reserved
+  studies, 83 records and 14 exclusions, 83/83 rebuilt byte for byte, 97 raw copies
+  equal to the screened sources, 196 series, no problem. Commit `78ceec47`, pushed.
+- `tests/unit/test_eye_recovery_population2.py` (11 tests: bit-for-bit equivalence
+  with generic model 1, exact joint-Gaussian checks of early noise, wear-off,
+  fallback, pooled noise, per-group study effects against `iop_population_1_1`) and
+  `tests/unit/test_eye_recovery_version2_components.py` (4 tests): pass.
+- `uv run --frozen python scripts/evaluate_retina_population_1_1.py --development
+  --candidate <s0..s5>` and `--model 1.0.0` (65 studies, 1,100–1,800 s each): s0
+  equals model 1.0.0 with its own harness in every score; group-mean next
+  observation / landmark / initial state (pp): s0 7.204/9.047/13.285 (robust), s1
+  7.225/9.056/13.302, s2 6.375/7.945/12.163, s4 6.473/8.003/11.755, s5
+  6.368/7.952/12.153 with coverage 0.848/0.930. s2 then s5 adopted by the declared
+  rules; a rerun of s2 with the final code reproduced its report.
+- `make check-docker` before the retina freeze: 885 tests passed in 231.77 s, 89%
+  coverage, mypy 140 source files, 18 frontend tests, package builds; EXIT=0
+  (`.peykar/retina11-prefreeze-check-docker-2026-10-28.log`).
+- `.peykar/write_retina_protocol_1_1.py .peykar/retina-1.1-dev/round3-s5 s5
+  population_assimilation`: protocol SHA-256 `fd14a1c5…` (53 frozen files, 65 training
+  and 63 sealed record hashes); the operator's protocol check returned no problem.
+  Freeze commit `84ee1e9c`, pushed; HEAD = origin.
+- `uv run --frozen python scripts/evaluate_retina_population_1_1.py --sealed
+  --protocol experiments/eye/retina/model-1.1/protocol-1.1.0.json --output
+  .peykar/retina11-sealed-test-2026-10-28`: hashes verified, 2,381.9 s, exit 0; report
+  SHA-256 `00554481…`, reference 1.0.0 `85cb7cbb…`.
+- `uv run --frozen python scripts/publish_retina_population_1_1.py --sealed --report …
+  --reference … --output experiments/eye/retina/model-1.1/sealed-test-2026-10-28/public`
+  (files then moved one level up): H1–H4 pass, H5 fails (next observation 7.91 vs
+  1.0.0 7.79, landmark 9.90 vs 9.73, initial state 13.00 vs 13.25 pp); coverage
+  0.844/0.896. `.peykar/check_retina_redaction_1_1.py sealed …`: no value in the 58
+  report entries of the 29 non-CC-BY studies; 34 CC BY studies keep values.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/retina/model-1.1/sealed-test-2026-10-28/plot-results.py`: figure
+  written.
+- IOP 1.2 development, each LOSO run in four shards (`--shard i/4`, 2,650–3,270 s per
+  shard) joined by `--merge`: c0 equals the frozen 1.1.0 with its own harness in all
+  195,431 numbers (only a text label differs); next observation / landmark / initial
+  state (pp) c0 6.840/8.803/10.585, c2 6.912/8.836/10.585, c1 6.851/8.808/10.583;
+  first-month next-observation coverage c0 0.639/0.822, c1 0.826/0.904.
+  `.peykar/iop12_early_noise_calibration.py` chose k = 8, T = 1 month before c1 ran.
+  c1 adopted by the declared rule.
+- `make check-docker` before the IOP freeze: 885 tests passed in 159.39 s, 89%
+  coverage, mypy 140 source files, package builds; EXIT=0
+  (`.peykar/iop12-prefreeze-check-docker-2026-10-29.log`).
+- `.peykar/write_iop_protocol_1_2.py .peykar/iop-1.2-dev/round2-c1 c1
+  population_assimilation`: protocol SHA-256 `4169750d…` (52 frozen files, 146 training
+  and 83 sealed record hashes); protocol check returned no problem. Freeze commit
+  `df8f389a`, pushed; HEAD = origin. This happened before any retina 1.1 sealed
+  result was read.
+- After the retina documentation: both protocols' checks still return no problem
+  (every pinned file, training and sealed record unchanged); `make check-docker`: 885
+  tests passed in 162.96 s, 89% coverage, mypy 140 source files, 18 frontend tests,
+  package builds, EXIT=0 (`.peykar/retina11-results-check-docker-2026-10-29.log`);
+  host `make build`: EXIT=0.
 
 ## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 

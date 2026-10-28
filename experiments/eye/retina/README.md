@@ -17,6 +17,14 @@ vitrectomy, and it reflects fluid in and under the retina.
   one-shot sealed test passed all five declared hypotheses on 40 group-mean series
   (next observation 5.75 vs persistence 6.34 pp; [Persian results](model-1.0/results.fa.md)).
 
-The tranche-1 development and sealed sets are now spent for testing (the dataset
-README is pinned by protocol 1.0.0 and stays unchanged). A later version must
-reserve one of the unread tranches 2–4 before triage and be tested on it.
+- Model 1.1: [`model-1.1/`](model-1.1/README.md), on generic eye model version 2
+  (`peykar.model_learning.eye_recovery_population2`) with a declared wear-off of one
+  dexamethasone implant and forecast intervals from the pooled study noise. Tested
+  once on tranche 2 (reserved before triage; 63 records): H1–H4 passed on 92
+  group-mean series (coverage 84.4%/89.6%, next observation 7.91 vs persistence
+  8.81 pp); H5 failed, because model 1.0.0 with the same training forecast slightly
+  better (7.79 pp) while covering only 66.0%/77.2% ([Persian results](model-1.1/results.fa.md)).
+
+Tranches 1 and 2 are now spent for testing (the dataset and tranche-2 READMEs are
+pinned by protocols 1.0.0 and 1.1.0 and stay unchanged). A later version must reserve
+one of the unread tranches 3–4 (155 articles) before triage and be tested on it.
