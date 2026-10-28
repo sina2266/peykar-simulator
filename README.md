@@ -140,6 +140,27 @@ series, mostly cataract), with these results:
 Laser capsulotomy groups extracted as `other` were wrongly given the graft-family
 swelling prior. A 10-year DMEK series thickened late, which the model does not
 represent ([Persian results](experiments/vcornea/thickness/results.fa.md)).
+The fourth eye component, and the first outside the cornea, is
+[intraocular pressure after glaucoma procedures](experiments/eye/iop/README.md):
+trabeculectomy, tubes, micro-shunts, angle surgery, cyclodestruction, laser
+trabeculoplasty and cataract surgery in glaucoma eyes. It is built from an
+[outcome-blind dataset](experiments/data/iop-glaucoma-surgery-2026-10-28/README.md)
+of 2,572 screened open-access papers. Only the first of five salted tranches was
+used, so 379 screened papers stay unread for later tests. There are 47 development
+and 25 custodian-extracted sealed records. **Model 1.0.0** uses an exponential return
+from the day-1 deviation, one shared regression of the long-term level on the
+preoperative pressure, one hierarchy per species and predictive-median forecasts. It
+was frozen and pushed (`ff470345`) before a one-shot sealed test (25 studies, 43
+group-mean series), with these results:
+
+- next-follow-up forecasts 7.74 pp versus 8.64 for persistence;
+- intervals inside both windows (76.3%/89.4%);
+- landmark forecasts 9.92 versus 12.89 pp;
+- initial state 10.96 versus 17.99 pp for the pooled training curve.
+
+All four declared hypotheses passed, but only 21/43 group means were within 5/10 pp.
+Early pressure rises after angle surgery and a waning micropulse-laser effect are not
+represented ([Persian results](experiments/eye/iop/results.fa.md)).
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

@@ -1,5 +1,42 @@
 # Peykar continuation context
 
+## IOP after glaucoma procedures model 1.0.0 and its sealed test, 2026-10-28
+
+- Fourth eye component, first outside the cornea. Dataset
+  experiments/data/iop-glaucoma-surgery-2026-10-28: 2,572 screened OA papers;
+  499 passed the masked-table rule; salted tranches (`peykar-iop-tranche-v1:`,
+  size 120). Only tranche 1 was triaged (86 admitted). **379 articles in tranches
+  2–5 stay untriaged and unread**: they are the fresh test data for IOP 1.1. Split
+  salt `peykar-iop-glaucoma-holdout-v1:` gave 54 development and 32 sealed studies.
+  There are 47 development records (23 CC BY public, 24 private in
+  .peykar/iop-development-private) and 25 sealed records by three custodians
+  (.peykar/iop-sealed-2026-10-28). Commits `96d7b828`, `f5c5b535`, `c125cf64`.
+- Model `peykar.model_learning.iop_population` 1.0.0:
+  - law: ln f = ell + e·exp(−(t − t1)/tau), t1 = 1 day;
+  - ell = context level + b·ln(IOP0/20), with b shared and estimated inside REML
+    (about −0.74);
+  - one hierarchy per species (`species/all`), no mechanism families;
+  - point forecast = predictive median (round 2), primary
+    population_assimilation_robust.
+- Code: harness validation/eye_iop_evaluation, operator
+  scripts/evaluate_iop_population.py, publisher scripts/publish_iop_population.py
+  (strict licence classifier: CC BY/CC0 statement at the start, open URL, no NC/ND/SA,
+  "not CC" or "unclear"), tests tests/unit/test_iop_population.py, log
+  experiments/eye/iop/development-log.md.
+- Protocol experiments/eye/iop/protocol-1.0.0.json, SHA f13238a2…, frozen at commit
+  `ff470345` (pushed). Tested hypotheses cover group means only. The sealed set was
+  run once (88.8 s, report 9c62c0f4…). Results, all four passing:
+  - next observation 7.74 vs persistence 8.64 pp (also below pooled ratio 8.98 and
+    analog 9.77);
+  - coverage 0.763/0.894, inside both windows;
+  - landmark 9.92 vs 12.89;
+  - initial state 10.96 vs 17.99.
+- Limits: only 21/43 group means within 5/10 pp; landmark 80% coverage 0.652.
+  Failures: week-1 pressure rises after GATT and canaloplasty (the law is monotone
+  from day 1) and waning micropulse-laser effect. Both IOP sets are now consumed.
+  Pre-freeze make check-docker: 846 tests, 99.67 s, 88% coverage, mypy 128 files.
+  Heartbeat stays PAUSED.
+
 ## Corneal thickness (CCT) model 1.0.0 and its sealed test, 2026-10-28
 
 - Third corneal component: CCT after surgery (hydration). Dataset

@@ -1,5 +1,68 @@
 # Verification record
 
+## IOP after glaucoma procedures: model 1.0.0, protocol freeze and sealed test: 2026-10-28
+
+- Start state: main at `c125cf64` (= origin). The dataset split, development and
+  sealed extraction were committed in `96d7b828`, `f5c5b535` and `c125cf64`; their
+  commands are listed in the dataset README. The model, harness, operator and
+  author-overlap file were uncommitted.
+- `scripts/link_study_authors.py --dataset experiments/data/iop-glaucoma-surgery-2026-10-28
+  --raw .peykar/iop-literature-screen-2026-10-28/raw --prefix iop- --schema
+  eye.iop-author-overlap-1.0.0`: 13 linked pairs, 4 development clusters, 7 sealed
+  training exclusions (3 for sealed studies with records), no sealed–sealed pair. A
+  rerun into `/tmp` produced the same file apart from its UTC field.
+- `experiments/eye/iop/round0_law_comparison.py` (development only): group-mean
+  log-SD 0.0682 for the exponential return against 0.0716 (hyperbolic), 0.0760
+  (power 0.5) and 0.0698 (power 2); late-level slope −0.765 over 76 control group
+  means. The output equals that of the private round-0 script.
+- `scripts/evaluate_iop_population.py --development`: round 1 exit 0, 162.6 s,
+  report `0725e53d…` (robust next observation 9.45 pp). The first round-2 command
+  chain stopped at a ruff SIM401 finding in `iop_population.py` before the
+  evaluation started. After the one-line fix, round 2 exit 0, 167.2 s, report
+  `d5a39284447596f222241a1b26bba68c72e80cb7a5ef38a17f8b2571c6d984a0` (robust 9.455 pp
+  next observation and 13.389 landmark; group means 6.34 and 8.66). A repeat run
+  (162.6 s) produced the same report SHA.
+- `pytest tests/unit/test_iop_population.py tests/unit/test_eye_iop_data.py`:
+  **21 passed** (3.34 s). `ruff check .`, `ruff format --check .` (478 files) and
+  strict `mypy` (128 files) passed.
+- `scripts/publish_iop_population.py --development`: the licence classifier marked
+  23 development studies public and 24 private (sealed: 11 public, 14 private). A
+  scan found no observed values, predictions, intervals, preoperative pressures or
+  signed errors in redacted studies.
+- A structure-only load of the 25 sealed records printed counts only: 68 series (44
+  group means, 24 single eyes; 53 control, 15 treated), the custodians' contexts, and
+  14 series with fewer than two follow-ups.
+- `make check-docker` **exit 0: 846 Python tests passed in 99.67 s**, 88% coverage,
+  strict mypy 128 files, 18 frontend tests, contracts and all builds
+  (`.peykar/iop-prefreeze-check-docker-2026-10-28.log`).
+- `experiments/eye/iop/protocol-1.0.0.json` written exclusively, SHA
+  `f13238a2678e2057a76f51deabdafc7f436ff4cc500dcc47b9777d2ecf8f0417` (32 frozen
+  files, 47 development and 25 sealed record hashes); `check_protocol` reported no
+  problem. Commit `ff470345` pushed; local `HEAD` equals `origin/main`.
+- `scripts/evaluate_iop_population.py --sealed --protocol
+  experiments/eye/iop/protocol-1.0.0.json`: run once, exit 0, 88.8 s, all pins
+  matched, report SHA `9c62c0f4faf92dc029abc97fccea400f04245c4f0190b1a86f969482c0efaabb`.
+  25 studies, 54 forecast series (43 group means) and 198 group-mean
+  next-observation targets.
+  - H1: 151/198 = 0.763 (80%) and 177/198 = 0.894 (90%), both inside the frozen
+    windows.
+  - H2: robust 7.74 pp versus persistence 8.64, last-two trend 39.98, pooled-curve
+    ratio 8.98 and analog kNN 9.77.
+  - H3: landmark 9.92 versus 12.89, 14.24 and 14.82 pp; landmark coverage 0.652/0.823
+    (reported).
+  - H4: 10.96 versus 17.99 pp for the pooled curve; 10/40 control group means within
+    5/10 pp.
+  - Group means: 21/43 within 5/10 pp, 11/43 also ≥ 0.5 pp better than persistence.
+- `scripts/publish_iop_population.py --sealed`: 14 studies reduced to metrics, the
+  same scan found nothing, and verdicts H1–H4 were all true. The plot script ran
+  with `.peykar/cornea-native47/bin/python`; the PNG was inspected and the legend
+  position and per-series colours were changed before the final render.
+- After the result documents: every pin of the IOP, thickness, endothelium and
+  corneal population protocols still matched. `make check-docker` **exit 0, 846
+  Python tests passed in 108.84 s**, 88% coverage, strict mypy 128 files, 18 frontend
+  tests, 465 files formatted, contracts and all builds
+  (`.peykar/iop-results-check-docker-2026-10-28.log`).
+
 ## Corneal thickness dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 
 - Start state: main at `b34838cf` (= origin, thickness split committed), with

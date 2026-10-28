@@ -252,8 +252,36 @@ was frozen (commit `de9762a0`) before a one-shot sealed test.
   (seen in the same 10-year cohort in both components) should raise CCT.
 - [ ] Graft forecasting and single eyes remain too sparse to claim; more keratoplasty
   studies with early follow-ups are needed.
-- [ ] Next candidates: intraocular pressure after glaucoma surgery (488 papers in the
-  earlier screen), corneal nerves (159), stromal haze (115), then retina.
+- [x] Next candidate after thickness: intraocular pressure after glaucoma
+  procedures, chosen as the fourth eye component; see the section below.
+### 2026-10-28 intraocular pressure after glaucoma procedures (fourth eye component)
+[Model 1.0.0](../experiments/eye/iop/README.md) was frozen (commit `ff470345`,
+protocol `f13238a2`) before a one-shot sealed test.
+- [x] Screen 2,572 open-access full texts and 3,040 tables with masked previews; a
+  mechanical rule kept 499 articles; salted tranches keep 379 of them untriaged and
+  unread for later versions; triage of tranche 1 (86 admitted); outcome-blind split
+  (54 development/32 sealed); four development extractors (47 records) and three
+  custodians (25 sealed records); censoring at reoperation treated as outcome-selected.
+- [x] Exponential return from the day-1 deviation; long-term level regressed on the
+  preoperative pressure with one shared slope; one hierarchy per species with
+  procedure contexts (no mechanism families); exact Gaussian-mixture posteriors;
+  predictive-median point forecasts (round 2, declared before the run); stricter
+  licence classifier in the publisher.
+- [x] Sealed result on group means: next observation 7.74 vs persistence 8.64 pp
+  (H2 pass, also below the pooled-curve ratio and analog kNN), coverage 76.3%/89.4%
+  inside both windows (H1 pass), landmark 9.92 vs 12.89 pp (H3 pass), initial state
+  10.96 vs 17.99 pp (H4 pass); 21/43 group means within 5/10 pp. Development and
+  sealed sets are now consumed.
+- [ ] Represent early non-monotone courses (week-1 rises after GATT, rebound after a
+  very low day 1 after canaloplasty) with a second early component or wider early
+  noise; test on the reserved tranches 2–5.
+- [ ] Represent a waning effect (micropulse cyclophotocoagulation) or late failure
+  with a late drift term; recalibrate long-horizon intervals (landmark 80% coverage
+  0.652 in the sealed set).
+- [ ] Use postoperative medication and medicated/unmedicated references as
+  covariates; surgical success/failure endpoints are not claimed.
+- [ ] Next candidates: corneal nerves (159 papers in the earlier screen), stromal
+  haze (115), then retina.
 
 ## S0 — preservation and platform contracts
 
