@@ -1,0 +1,199 @@
+{
+ "schema": "cornea.central-thickness-sealed-protocol-1.0.0",
+ "frozen_utc": "2026-10-28T09:30:50.209280+00:00",
+ "status": "frozen before any sealed outcome value was read by the model developer",
+ "context_of_use": [
+  "U1 initial-state prediction of a new study's control-group mean central corneal thickness (fraction of its preoperative CCT) at the study's follow-up months, from species, procedure, series kind and the preoperative CCT only",
+  "U2 causal forecasting of each group mean's next follow-up (control and treated groups) from its own earlier follow-ups",
+  "U3 landmark forecasting of every later follow-up of each group mean from its first postoperative measurement only"
+ ],
+ "not_claimed": [
+  "biological mechanism validation",
+  "treatment-effect prediction (treated groups use the control prior of their context)",
+  "single-eye prediction (development single-eye initial state: 2 eyes, 22 pp)",
+  "clinical decision use (for example corneal decompensation or graft-failure thresholds)",
+  "contexts without a training study except through the declared family fallback",
+  "non-human species (the rabbit family has one development study and no prior)",
+  "measurement-device equivalence (fractions are taken within each series' device)"
+ ],
+ "model": {
+  "id": "cornea.central-thickness-population",
+  "version": "1.0.0",
+  "kinetics": "ln f(t) = ell + e r(t), r(t) = (1 + t1/tau)/(1 + t/tau), t1 = 1 day, t in months, f = CCT / preoperative CCT",
+  "families": "host (cataract, glaucoma, phakic IOL, vitreoretinal): theta = (ell, e, ln tau); graft (DSAEK, DMEK, PK, DALK, other): ell = L - ln(CCT0/550 um), theta = (L, e, ln tau), the long-term level pooled as absolute thickness",
+  "computation": "given ln tau the law is linear in (level, e): exact Gaussian posteriors on an 80-point tau grid 0.002..120 months, mixtures over noise levels, Student-t scale-mixture nodes and robust components; quantiles from the exact mixture CDF",
+  "observation": "Gaussian noise in ln f; SD per (study, family, series kind) from best fits of series with >=4 follow-ups; a new study's SD marginalized over log-normal(log-SD 0.5) around the family/kind median, floor 0.005",
+  "hierarchy": "per family: family mean, procedure context effect, study effect, series deviation (group mean or single eye); diagonal covariances by penalized REML (Gamma(2) SD modes 0.05, 0.05, 0.5) on per-series likelihood-information summaries (weak prior N(0,1) on level and e, near-uniform ln tau, subtracted; directions below 0.05 weak-prior precisions carry no weight)",
+  "fallback": "a context absent from training uses its family mean with the context variance added; a family with <2 training studies has no population prior",
+  "forecasting": "population_assimilation_robust: population Gaussian prior mixed 0.8/0.2 with a broad component (SD 0.3, 0.3, 2.0 added), exact posterior given the prefix",
+  "development_changes_before_freeze": [
+   "round 0 (in-sample, development series with >=4 follow-ups): hyperbolic return adopted over exponential and power 0.5/2 laws (host group-mean dof-adjusted log-SD 0.0094 vs 0.0120/0.0123/0.0105; graft nearly equal)",
+   "round 0 structural choice: graft family pools the long-term level as absolute thickness (physiology, not fitted)",
+   "round 1 LOSO (weak-prior moment summaries): robust next-observation 4.70 pp, landmark 4.73 pp; graft summaries uninformative about ln tau pulled REML estimates toward the weak prior's centre",
+   "round 2 LOSO (likelihood-information summaries, declared before the run, adopted by the declared rule): robust next-observation 4.67 pp, landmark 4.75 pp; primary chosen by the rule declared before round 1"
+  ]
+ },
+ "methods": {
+  "primary_U1": "population_initial_state (Gaussian prior predictive mean)",
+  "secondary_U1": [
+   "population_initial_state_t4",
+   "pooled_training_curve"
+  ],
+  "primary_U2": "population_assimilation_robust",
+  "secondary_U2": [
+   "population_assimilation",
+   "population_assimilation_t4",
+   "population_anchored",
+   "population_anchored_t4",
+   "weak_prior (unpooled)",
+   "analog_knn (k=5, same family)",
+   "pooled_curve_ratio",
+   "last_two_log_linear",
+   "reference_to_last_log_linear",
+   "preoperative_level (f = 1)",
+   "persistence"
+  ],
+  "primary_U3": "population_assimilation_robust",
+  "secondary_U3": "same set as U2, all from the first follow-up only",
+  "selection_rule": "declared before round 1: lowest pooled development next-observation RMSE among population variants with next-observation coverage inside both windows; ties within 0.05 pp to the simpler variant"
+ },
+ "training": "all 33 development records (69 series; 37 reserved development studies minus 2 not extractable and 2 excluded as outcome-selected); controls fit the population, all series give noise and analog-library inputs; for each sealed study the development studies linked to it by the author-overlap rule are removed from its training set",
+ "development_result_reference": "experiments/vcornea/thickness/development-loso-2026-10-28/development-analysis.json",
+ "sealed_test": {
+  "studies": [
+   "cct-pmc11296430",
+   "cct-pmc12027762",
+   "cct-pmc13006302",
+   "cct-pmc13205573",
+   "cct-pmc13366855",
+   "cct-pmc13549601",
+   "cct-pmc3373231",
+   "cct-pmc6157994",
+   "cct-pmc7509714",
+   "cct-pmc7708550",
+   "cct-pmc8775002",
+   "cct-pmc8890902",
+   "cct-pmc9114609",
+   "cct-pmc9119399",
+   "cct-pmc9156484"
+  ],
+  "reserved_by": "experiments/data/cornea-thickness-2026-10-28/split-reservation-1.0.0.json (19 sealed studies, salt peykar-cornea-thickness-holdout-v1:)",
+  "excluded_by_custodians": {
+   "cct-pmc10011236": "model-based medians only (no observed per-arm follow-up means)",
+   "cct-pmc10032283": "cohort selected for postoperative corneal edema (outcome-selected)",
+   "cct-pmc10735023": "median (IQR) only",
+   "cct-pmc8180280": "clear-graft subset only (outcome-selected)"
+  },
+  "training_exclusions_by_author_overlap": {
+   "cct-pmc13006302": [
+    "cct-pmc12994532"
+   ],
+   "cct-pmc9119399": [
+    "cct-pmc12952605"
+   ]
+  },
+  "sealed_pairs_sharing_authors": [
+   [
+    "cct-pmc6157994",
+    "cct-pmc8890902"
+   ]
+  ],
+  "custodians": "two separate sub-agents extracted sealed records and reported only structure and hashes",
+  "structure_seen_before_freeze": "the developer saw the custodians' structural summaries only: contexts human/cataract, human/glaucoma and human/vitreoretinal (custodian 1; no training study for glaucoma or vitreoretinal, family fallback), human/cataract, human/dmek and human/other (custodian 2); 29 series, 2 single eyes; methods, value kinds (all cct_absolute) and licence classes; no thickness value"
+ },
+ "criteria": {
+  "per_series_U2": "RMSE<=5 pp AND max<=10 pp AND RMSE at least 0.5 pp below persistence",
+  "per_series_U3": "RMSE<=5 pp AND max<=10 pp AND RMSE at least 0.5 pp below persistence (first follow-up carried forward)",
+  "per_group_U1": "RMSE<=5 pp AND max<=10 pp",
+  "unit": "percentage points of each series' preoperative CCT",
+  "H1_calibration": "pooled population_assimilation_robust next-observation coverage: 90% interval within [0.80,0.97] AND 80% interval within [0.70,0.90]",
+  "H2_accuracy": "pooled next-observation RMSE of population_assimilation_robust lower than persistence AND lower than last_two_log_linear over common targets",
+  "H3_landmark": "pooled landmark RMSE of population_assimilation_robust lower than persistence over common targets; calibration windows reported",
+  "H4_initial_state": "population_initial_state per control group with the per-group criterion; pooled RMSE versus pooled_training_curve and coverage reported",
+  "reported_not_tested": "comparison with preoperative_level (f = 1), per family results, controls-only counts",
+  "all_points": "every sealed series/target is scored; none removed; thresholds unchanged after unsealing"
+ },
+ "frozen_files_sha256": {
+  "packages/platform/src/peykar/model_learning/thickness_population.py": "87060980219f40a7bdb050d7220d7336a8d9c4e58e054416c5e2a4917f248e9d",
+  "packages/platform/src/peykar/model_learning/corneal_population.py": "bc715dc20ee835cc79ac2222332b5ce4843d444c4a045c2bff2b803cf6d79bf5",
+  "packages/platform/src/peykar/model_learning/corneal_analog.py": "93d9b941f34620fb1ca93a9d35b58d04e97358082940e3ce1338eb753ad2bdd8",
+  "packages/platform/src/peykar/model_learning/corneal_online.py": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+  "packages/platform/src/peykar/validation/cornea_thickness_evaluation.py": "fa039726866bb8bba8513a62b6d8de1af9ee021a41fb9e2035e2b5426b067785",
+  "packages/platform/src/peykar/validation/cornea_thickness_data.py": "1ee36acca0dccbf156555a2ac53d29cf0e2ce8de9df7147aa893a90bae17bb8b",
+  "packages/platform/src/peykar/validation/cornea_population_evaluation.py": "06efe53c73305027249e8abb40c594ec05b6aad3fffdb60f4a5d0034663c58c1",
+  "packages/platform/src/peykar/validation/cornea_population_data.py": "9bf0b53efa3fd7881b07d6b6b84c8d29ba29e6b8a0fc4165c378a2118ec55cde",
+  "packages/platform/src/peykar/validation/cornea_table_records.py": "0b872e97e327173ffdaead38c519c926757cf4a22a0485a852c13a515b74cf34",
+  "packages/core/src/peykar_core/errors.py": "419c8fbfdb7792ee2bb87775227e7a2d5182f4ea28d2fe4096f45a43e39c5e1c",
+  "scripts/evaluate_thickness_population.py": "ab2cf51b771b15bd6d02c642b94ac93d250c42b2ed4cbe985a173f9c4135893a",
+  "scripts/publish_thickness_population.py": "6868f23b64cb00edc124cc91a00c6e2ad406146e1fb9f1945c567db5daa8bb21",
+  "scripts/link_study_authors.py": "e3838e7f24513e4b12f9d93e4d0d4452eea28eeb6c67070e5227621224c4bc7d",
+  "scripts/build_thickness_record.py": "de645818c99792a1419aeebd29ccd894c747f230d5830bef742968b7d8dc9905",
+  "scripts/reserve_thickness_split.py": "2d030933b91b180d2a186fa1a1425ac07b437005bc983a557248d39dcfb45a6f",
+  "experiments/data/cornea-thickness-2026-10-28/README.md": "ccc292dc9ec8e8755c9562d6e83c419095897399f745771811473acf3cf71ea4",
+  "experiments/data/cornea-thickness-2026-10-28/extraction-protocol-1.0.0.md": "1db392c508a9fb5a9fd1de3588b7232323a8b9c067aa481a5b43786383938211",
+  "experiments/data/cornea-thickness-2026-10-28/triage-1.0.0.json": "94042dfe5498cf925f5b54838f66e9ff98ed489b46da5a4770e8cf8741450a42",
+  "experiments/data/cornea-thickness-2026-10-28/split-reservation-1.0.0.json": "e787696031b597ded5de44640022bd2a210548b8f8e7a4d6966256bbc8b65ace",
+  "experiments/data/cornea-thickness-2026-10-28/author-overlap-1.0.0.json": "0882e5a8a26cff8dc5c3aa60bd7b8dc04138de42152a47579d65616d195796e0",
+  ".peykar/thickness-extraction-brief.md": "055b2173f8f56d34dac60b1a5cc53654b540b6ab42f8be0878b4acfdb2d9ade3",
+  ".peykar/thickness-sealed-2026-10-28/custody-report-S1.json": "10689df8ede83b629fc1d383e3c99ea5e01cbd9531402a40f342e8d2c7a34c5f",
+  ".peykar/thickness-sealed-2026-10-28/custody-report-S2.json": "a5d3a2f8429bee9a367ccf351f389c2dd35feb88dec992a9ed17ef07e4a0dbab",
+  ".peykar/thickness-development-loso-r2-2026-10-28/report.json": "b7a5c08f3b7527dab71bd0ca16176774ceb1766b977ae42901f5463943758ea9",
+  "experiments/vcornea/thickness/development-loso-2026-10-28/development-analysis.json": "b9af8661a60af8d4dba7a64247fd276b66a94d39f713fd8a1ff93127e4c7ffe1",
+  "experiments/vcornea/thickness/development-log.md": "1531bdfb34cfbe76d181e9da92d89abef14cb2cbe33f83a502b1438fb76d0565",
+  "experiments/vcornea/thickness/round0_law_comparison.py": "97903ad11fbdc482d73282ad31b28a1b7641bf173268b315a1ba4efd3c5c7bee"
+ },
+ "development_records_sha256": {
+  "cct-pmc10114485.json": "30e693ebe592f23f4cc4e32763dfb60a3aefb34ccaa7cbe7bd2ba0c354cba74c",
+  "cct-pmc10856448.json": "b3a3075bd3f8d546b7ac247bf72b3460efc0f89eb3be463824e0688ae451386b",
+  "cct-pmc11569703.json": "2458f982c107a39962e0306202d3f0a81907f2c6cd10fd1a8218c99bd5bef15b",
+  "cct-pmc11765653.json": "3cdefd1ff2379ce4add255c5716ba66e62b61eebf1ddc77a6cf4063deaa78db3",
+  "cct-pmc11826720.json": "2e8462cfbbc697ec05b4e29aba950eb8cf0d24d00fa9663cbda13daa229120fc",
+  "cct-pmc11964349.json": "3fb003a6b8dad47f2918a441742dd61d0766a5f42efbdd4783991e8b92849c2f",
+  "cct-pmc12113373.json": "4b63d9e5011cfb7ae1328f10a337441b10adaaaeff8a97df6fc9316376ca43ca",
+  "cct-pmc12387371.json": "3badc6cf5a83306c7e72e84810f0b0f490b6cae0799128c75f5fc8c941224254",
+  "cct-pmc12470596.json": "20cde797e43b87d4ec9b377a912248b0a342367007ecfc23e8a6bfe6f97d26c3",
+  "cct-pmc12488337.json": "b250acc8dc0b9877256d347ea84554450a38ea5e1f51ff3fff1f5b95382532c5",
+  "cct-pmc12952605.json": "50af3c3925ffa08e650f193ad181596202393326dfd963e48bd1b66c96a46f2e",
+  "cct-pmc12985571.json": "33315136b0c52949efb8af14dbd2c9df771d3e892e019c8970083857f31a9f46",
+  "cct-pmc12994532.json": "407316d782db50236e986217af2ac4ebb87600c638ad105a0e31bdd2407a795e",
+  "cct-pmc13425044.json": "ecea61e68986fb4fa4082cae7acf45f5d97303a8fb1ed7ec072edf4f1a33d3a9",
+  "cct-pmc13457278.json": "56c7faa54f3ead8a07914012f9c3c8f2a3ce21634872d60d853aa76e1dd969fd",
+  "cct-pmc2569137.json": "ff04474bc2b63a1c498b037d1b8f98e52c62f4eacb1e08c5c8bc161202c51f6d",
+  "cct-pmc2684437.json": "8bd2319047355ca434c2526931d7f3c66467538882029b0665827b85d05a56b3",
+  "cct-pmc3438247.json": "693ea970ab653271dc05e39be21be09daea77917003baf6412f6f4a850077f2c",
+  "cct-pmc4310271.json": "df4a3520c74e0ead5410cbbd936be2990a80a87d3a87c1f96f9056a938c0f976",
+  "cct-pmc4888734.json": "7e3e8603851ad29013b4aa24771930528769207cbd4ed842204988bdd2a7e478",
+  "cct-pmc4967293.json": "a2a32ad0760b201d204bfb1ed0fe90d4d918a2ece3f6b87db362cd6e1c28ac89",
+  "cct-pmc6302480.json": "40008316c974ed6d1acc91eecc96e6579b368b0e7a71d892516633f053a26d4f",
+  "cct-pmc6398396.json": "9ea32f6bf59dfb74e90ecabc9d7db6113dbb762d6ca61ce6eea2e3f2f2050385",
+  "cct-pmc6438261.json": "1bcea1a049309f26c58dae497c4884a2884be2cd221c45f026822b4173414ffc",
+  "cct-pmc6711464.json": "a83dabcd81d729ee34e38c9a89dc08eacc8a6bac1887f0ec73904b04f493fc05",
+  "cct-pmc6951183.json": "e9a9f77bf71c8dca15b11b4c1166b3d309ae182942cbab6ebf130a224432eefc",
+  "cct-pmc7556451.json": "0db6769fa0b722529924d7ecb874438ba96df7ea20aae8251277636f2296ef54",
+  "cct-pmc8963521.json": "4d14a31067f21be3e71dfa13157b19e12f0c7025f13b7ca99bce54715e782b35",
+  "cct-pmc9023966.json": "8b8060ddb88a4af557396f5d8cbcbbaa7417fece600f1bdb179296fa42f6c1d4",
+  "cct-pmc9128437.json": "e4d228be7e6c071d9b6da0c229d74adfb641255d9a4347153724e7a7bbd36082",
+  "cct-pmc9572918.json": "3c410c19650fd63c184b9225f44c86632807e8697df1ba036582b7042a046be2",
+  "cct-pmc9907241.json": "700dad9e77eb71794da20e3d22805ebabb71426a3f30d41104de8cc1da99dd16",
+  "cct-pmc9907258.json": "ff1f31c3fb9671f5d2eb76f50c9fde0bc0fab833fe2dd77aabe30ff1bc814c1f"
+ },
+ "sealed_records_sha256": {
+  "cct-pmc11296430.json": "00d8704f76035b119b6b1be51d93d4752124e909fc4d6ab2ab5df2e8ef5ca0a8",
+  "cct-pmc12027762.json": "b4edec79b72a84fc7970ea8b39dfc42461716436d52c4bd6cabe4f82ebffa0ff",
+  "cct-pmc13006302.json": "747951f29057ddb02d9bad6a00df3ffc264ca4afa3488428457615896e3aaac5",
+  "cct-pmc13205573.json": "acb4e69ce16366b673f8ac533cacc1cf25a81f953e9325b392846b370110ac9a",
+  "cct-pmc13366855.json": "08ad16c6e5a0233f6e713e6f22c5f9ea4f4e1864b30b3d1bb9b206bc353aa6bb",
+  "cct-pmc13549601.json": "3bdf6775075b74dc691a7b2407ee3abfeaeb8821e74c79f63fc549cfe0192fbf",
+  "cct-pmc3373231.json": "ecee32da51e5656030d3e12a722e0e41e7e9b6ea61680119ef4cba1f103fc864",
+  "cct-pmc6157994.json": "24541f59a3ddbdebca40c8524b957a2060371348b2e6993354edb53ef114745a",
+  "cct-pmc7509714.json": "bdec574547e6ad42f208f19ed096f25461e725c992d15a3fa148b6ce85a85874",
+  "cct-pmc7708550.json": "8097ad1514aa067e303d181fda29fd24f85fed15816b24a1f5494cb87e23e94d",
+  "cct-pmc8775002.json": "e2be8b756dba3934495758bb18609a710f7c4d35496d66ac3fc29408ed02d711",
+  "cct-pmc8890902.json": "274660d2ace13b207d13e998a5f6db600f664f0ad3628ab6a8f6aa52c1eb7e97",
+  "cct-pmc9114609.json": "a01b8df6dd10d604dfb9c7596fccc4d3d73974a6f733936dba1da59a7b22fb74",
+  "cct-pmc9119399.json": "a8f1dbda69a6fe17ce79f88e9c801be47a7baef83bbc649b9733c30d13a31f98",
+  "cct-pmc9156484.json": "a9dce61994aed5e7782f0fc0135ad85f8afd676be3ef3d3f5030616a7c7ac5f6"
+ },
+ "operator": "uv run --frozen python scripts/evaluate_thickness_population.py --sealed --protocol experiments/vcornea/thickness/protocol-1.0.0.json --output <new dir>",
+ "publication_operator": "uv run --frozen python scripts/publish_thickness_population.py --sealed --report <dir>/report.json --output <new public dir>"
+}
