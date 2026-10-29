@@ -59,3 +59,49 @@ loses no more than 0.05 letters in any. Otherwise v0 is model 1.0.0. The protoco
 the H1–H4 hypotheses and comparators of the other eye components (persistence, last-two
 trend, pooled-curve increment and analog kNN for the forecasts; the pooled training
 curve for the initial state), whatever development shows.
+
+## Round 1 — results (2026-10-29)
+
+LOSO over the 15 studies (`.peykar/retina-acuity-1.0-dev/round1-v0`, `round1-v1`; 69
+next-observation and 69 landmark targets and 83 initial-state targets of group means;
+`.peykar/acuity_compare.py`, RMSE in ETDRS letters). **No population variant of either
+candidate lies inside both H1 windows**: next-observation coverage of the 80% intervals
+is 0.59–0.68 (the 90% intervals 0.74–0.83), so the intervals are too narrow. By the
+declared rule the primary of both is the robust variant, and the miss is recorded.
+
+| method | next observation | landmark | initial state |
+|---|---|---|---|
+| v0 robust | 2.778 (cov 0.623/0.768) | 3.066 | 4.737 |
+| v1 robust | 2.772 (cov 0.609/0.783) | 3.031 | 4.763 |
+| persistence | 2.654 | 3.148 | — |
+| pooled-curve increment | 2.858 | 3.392 | — |
+| analog kNN | 3.528 | 4.970 | — |
+| pooled training curve | — | — | 5.683 |
+
+**v1 rejected**: gains of 0.006 and 0.035 letters and a loss of 0.026 letters in the
+initial state; no gain reaches 0.10. v0 stays the incumbent. Two problems remain: the
+intervals are too narrow, and persistence beats the model for the next observation
+(2.65 against 2.78 letters). Group means of acuity after these treatments move little
+between visits, and a group that is above or below the law at one visit stays there.
+
+## Round 2 — declared before results (2026-10-29)
+
+- **v2**: v0 with persistent (Ornstein–Uhlenbeck) deviations from the law in
+  forecasting only, the setting of the retinal-thickness component 1.0 and of corneal
+  acuity a4: 80% of the residual variance as a deviation process with a 12-month
+  correlation time; the population is fitted as in v0. A group above or below the law
+  at its last visit is then expected to stay so for months, and the intervals carry
+  that uncertainty.
+- **v3**: v0 with forecast intervals from the pooled study noise
+  (`forecast_noise_pooling = "pooled"`, the retinal-thickness 1.1 setting), the
+  likelihood keeping the median noise centre.
+
+Adoption rule against v0 (robust: 2.778 / 3.066 / 4.737 letters, outside the H1
+windows): a candidate is adopted if (a) it meets the round-1 RMSE rule (a gain of at
+least 0.10 letters in one task, no loss above 0.05 letters in any), or (b) its primary
+lies inside both H1 windows, which v0 misses, while it loses no more than 0.05 letters
+in any task. The primary of each candidate is chosen by the round-1 rule. If both are
+adopted, the one with the larger summed gain over the three tasks is model 1.0.0
+(ties within 0.05 letters: v2, the setting of the anatomical counterpart). If neither
+is adopted, v0 is model 1.0.0 and its H1 miss on development is recorded with the
+protocol.

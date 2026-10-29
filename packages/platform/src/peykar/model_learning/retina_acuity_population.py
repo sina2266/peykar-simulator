@@ -22,6 +22,12 @@ Candidates:
 - ``v1``: ``v0`` with contexts nested in their treatment (grouping
   ``("treatment", "context")``), so a new indication of a known treatment borrows that
   treatment's level, amplitude and time constant.
+- ``v2`` (round 2): ``v0`` with persistent deviations from the law in forecasting only
+  (fraction 0.8 of the residual variance, 12-month correlation time), so a group that
+  is above or below the law at its last visit is expected to stay so for months and the
+  forecast intervals carry that uncertainty.
+- ``v3`` (round 2): ``v0`` with forecast intervals from the pooled study noise
+  (``forecast_noise_pooling = "pooled"``) instead of the median noise centre.
 
 Each development round of ``experiments/eye/retina-acuity/model-1.0/development-log.md``
 adds a named candidate and never changes an earlier one. Nothing here reads files or
@@ -61,8 +67,20 @@ def _config(version: str) -> RecoveryConfig:
 DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     # v0: one level per context (the corneal acuity 1.0.0 settings).
     "v0": _config("1.0.0-v0"),
-    # v1: contexts nested in their treatment.
+    # v1: contexts nested in their treatment (round 1, not adopted).
     "v1": replace(_config("1.0.0-v1"), grouping=("treatment", "context")),
+    # v2 (round 2): v0 with persistent (Ornstein-Uhlenbeck) deviations from the law in
+    # forecasting only, the retinal-thickness 1.0 setting: 80% of the residual variance,
+    # 12-month correlation time; the population is fitted as in v0.
+    "v2": replace(
+        _config("1.0.0-v2"),
+        deviation_fraction=0.8,
+        deviation_months=12.0,
+        deviation_in_population_fit=False,
+    ),
+    # v3 (round 2): v0 with forecast intervals from the pooled study noise (the
+    # retinal-thickness 1.1 setting); the likelihood keeps the median noise centre.
+    "v3": replace(_config("1.0.0-v3"), forecast_noise_pooling="pooled"),
 }
 
 
