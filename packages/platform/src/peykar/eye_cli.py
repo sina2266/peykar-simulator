@@ -59,7 +59,7 @@ def fit(
     output: Annotated[Path, typer.Option(dir_okay=False)],
 ) -> None:
     """Fit a component's population to the record folders and store it as JSON
-    (retina-thickness and iop; corneal and refraction components are fitted at
+    (retina-thickness and iop; corneal, refraction and acuity components are fitted at
     forecast time)."""
     item = eye_simulation.component(component)
     if output.exists():
@@ -85,7 +85,11 @@ def forecast(
     component: Annotated[str, typer.Option()],
     context: Annotated[str, typer.Option(help="for example human/dme/anti_vegf")],
     baseline: Annotated[
-        float, typer.Option(help="pretreatment value in the component's unit (SE0 for refraction)")
+        float,
+        typer.Option(
+            help="pretreatment value in the component's unit (SE0 for refraction, "
+            "preoperative logMAR for acuity)"
+        ),
     ],
     months: Annotated[str, typer.Option(help="comma-separated forecast months")],
     fit_file: Annotated[

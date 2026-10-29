@@ -393,12 +393,35 @@ reserved before triage.
   laser platform, nomogram and optical zone are not inputs.
 - [ ] A later version needs a new screen reserved before triage (no unread tranche).
 
-### 2026-10-29 retinal-thickness model 1.2 development (no change adopted yet)
+### 2026-10-29 retinal-thickness model 1.2 development (no change adopted)
 - [x] Round 1 on the 128 training studies of tranches 1–2: a prior-treatment level and
   an OCT-device level gained at most 0.074 pp and were rejected by the declared rule.
-- [ ] Round 2 (regimen level) declared and running; if it is rejected, no 1.2 protocol
-  is frozen and tranche 3 (67 extracted sealed records) stays sealed for a later
-  version.
+- [x] Round 2 (regimen level, declared from an out-of-sample regimen bias diagnostic)
+  gained at most 0.012 pp and was rejected; the regimen biases stayed almost unchanged.
+  No 1.2 protocol was frozen; tranche 3 (67 extracted sealed records) stays sealed and
+  unread for a later version.
+- [ ] Untested: an implant-duration mixture learned from each series' own visits.
+
+### 2026-10-29 corrected visual acuity after keratoplasty and cross-linking (seventh eye component)
+[Model 1.0.0](../experiments/eye/acuity/model-1.0/README.md) was frozen (commit
+`baafe4cd`, protocol `0c60925c`) before a one-shot sealed test.
+- [x] Screen 1,994 open-access articles and 1,185 masked tables; articles kept by
+  other components' untested tranches dropped first; a mechanical rule kept 175 in two
+  tranches; blind triage of tranche 1 (67 admitted); outcome-blind split (47/20); five
+  development extractors (27 records, 62 series) and three custodians (15 sealed
+  records, 25 series), every sealed record rebuilt byte for byte.
+- [x] The additive pattern of refraction reused for logMAR, scored in ETDRS letters;
+  three development rounds (indication level, per-family hierarchies, forecast-only
+  persistent deviations) rejected by the declared rule.
+- [x] Sealed result on 21 group-mean forecast series: all four hypotheses pass
+  (coverage 82.9%/92.7%, next observation 5.00 vs persistence 5.06 letters, landmark
+  5.24 vs 7.27, initial state 9.04 vs pooled curve 9.79), although development had
+  failed H2/H3 against the pooled-curve increment.
+- [x] `peykar eye forecast --component acuity` (fitted from record folders, forecasts
+  in logMAR).
+- [ ] Poorly recovering keratoplasty groups (comorbidity, very poor baseline) are
+  forecast too optimistically; PK was not in the sealed set. Next version: keep an
+  early shortfall in the forecast and test on tranche 2 (55 unread articles).
 
 ## S0 — preservation and platform contracts
 

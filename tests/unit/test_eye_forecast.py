@@ -507,3 +507,66 @@ def test_refraction_component_forecasts_in_dioptres(tmp_path: Path) -> None:
         ],
     )
     assert refused.exit_code != 0
+
+
+def _acuity_record(index: int) -> dict:
+    rng = np.random.default_rng(200 + index)
+    logmar0 = float(rng.uniform(0.6, 1.2))
+    months = [0.0, 0.25, 1.0, 3.0, 6.0, 12.0]
+    recovery = [0.7, 0.5, 0.35, 0.3, 0.28]
+    values = [logmar0, *(r * logmar0 + float(rng.normal(0, 0.02)) for r in recovery)]
+    return {
+        "schema": "cornea.acuity-record-1.0.0",
+        "study_id": f"acu-synthetic-{index}",
+        "doi": f"10.0/acu{index}",
+        "species": "human",
+        "procedure": "dmek",
+        "split": "development",
+        "license": {"statement": "CC BY 4.0"},
+        "source_files": [{"name": "a.xml", "sha256": "0" * 64}],
+        "groups": [{"group": "g", "role": "control", "indication": "fuchs", "combined": None}],
+        "series": [
+            {
+                "series_id": "g/bcva",
+                "group": "g",
+                "kind": "group_mean",
+                "n": 30,
+                "value_kind": "logmar_absolute",
+                "months": months,
+                "values": values,
+                "source_cells": [f"a.xml::T1!R{i}C1" for i in range(len(months))],
+            }
+        ],
+    }
+
+
+def test_acuity_component_forecasts_in_logmar(tmp_path: Path) -> None:
+    folder = tmp_path / "acuity"
+    folder.mkdir()
+    for i in range(5):
+        (folder / f"a{i}.json").write_text(json.dumps(_acuity_record(i)))
+    item = eye_simulation.any_component("acuity")
+    assert isinstance(item, eye_simulation.AdditiveComponent)
+    assert item.describe()["candidate"] == "a0" and item.unit == "logMAR"
+    runner = CliRunner()
+    base = ["forecast", "--component", "acuity", "--context", "human/dmek", "--baseline", "0.9"]
+    result = runner.invoke(
+        eye_app, [*base, "--months", "6,12", "--n", "30", "--records", str(folder)]
+    )
+    assert result.exit_code == 0, result.output
+    payload = json.loads(result.output)
+    assert payload["unit"] == "logMAR" and payload["method"] == "population_initial_state"
+    for row in payload["forecast"]:
+        low, high = row["value"]["interval_90"]
+        assert low < row["value"]["point"] < high
+        assert 0.0 < row["value"]["point"] < 0.6
+    observed = runner.invoke(
+        eye_app,
+        [*base, "--months", "12", "--observed", "1:0.5,3:0.35", "--records", str(folder)],
+    )
+    assert observed.exit_code == 0, observed.output
+    forecast = json.loads(observed.output)
+    assert forecast["method"] == "population_assimilation_robust"
+    assert forecast["observed"][0]["change"] == pytest.approx(-0.4)
+    assert abs(forecast["forecast"][0]["value"]["point"] - 0.3) < 0.15
+    assert forecast["warnings"] == ["single-eye forecasts were scored but not tested"]

@@ -28,3 +28,12 @@ vitrectomy, and it reflects fluid in and under the retina.
 Tranches 1 and 2 are now spent for testing (the dataset and tranche-2 READMEs are
 pinned by protocols 1.0.0 and 1.1.0 and stay unchanged). A later version must reserve
 one of the unread tranches 3–4 (155 articles) before triage and be tested on it.
+
+## Model 1.2 (development only, 2026-10-29)
+
+Leave-one-study-out development on the 128 studies of tranches 1 and 2 tested a
+prior-treatment level, an OCT-device level and a regimen level against 1.1.0. None
+gained 0.10 pp (the regimen level, declared from an out-of-sample bias by regimen,
+gained 0.012 pp and left those biases almost unchanged), so **no 1.2 protocol was
+frozen**. Tranche 3 (67 extracted records) stays sealed and unread for a later version;
+see the [development log](model-1.2/development-log.md).

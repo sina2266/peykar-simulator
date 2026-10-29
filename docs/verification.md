@@ -1,4 +1,95 @@
 # Verification record
+## Machine restart, retinal-thickness 1.2 round 2 and visual-acuity model 1.0: 2026-10-29 (afternoon)
+Commands run from the repository root; outcomes observed. Start state: main at
+`d7ded65b` (= origin; refraction results committed).
+- The machine hung soon after 13:03 CET and its hardware watchdog restarted it at
+  13:09 (`uptime`; `/Library/Logs/DiagnosticReports/ResetCounter-2026-10-29-130944.diag`:
+  boot faults `wdog,reset_in_1`; no panic report; cause not determined). This stopped
+  the IOP 1.3 sealed run after 41 of its 79 d1 studies (no report or execution record
+  had been written; the log lists study identifiers only), the eight retina e6 shards
+  after 10–12 of 16 studies each (no report), and four triage sub-agents (no decision
+  file). Their logs and empty output folders were kept as
+  `.peykar/iop13-sealed-test-2026-10-29-attempt1-killed{,.log}` and
+  `.peykar/retina-1.2-dev/round2-e6-attempt1-killed/`. Docker Desktop was started
+  again and the stopped API and Worker containers were restarted unchanged on the same
+  volume (`docker start peykar3-api-1 peykar3-worker-1`; `/healthz` returned
+  `{"status":"ok","version":"0.3.0"}`).
+- Long runs now start through `.peykar/detach.py` (own session, `caffeinate -i`, exit
+  code appended to the log). The IOP 1.3 sealed run was started again from the
+  beginning at 13:17 with the same command and protocol (protocol check passed; run in
+  progress). The eight e6 shards were rerun unchanged (13:18–14:24, all exit 0) and
+  joined by `--merge`; `.peykar/compare_iop_12.py` gave next observation / landmark /
+  initial state 7.181/9.412/12.922 pp against e0 7.193/9.376/12.892: e6 rejected;
+  `.peykar/retina12_diag_regimen.py` on e6: the regimen biases are almost unchanged.
+- Visual acuity (dataset `cornea-acuity-2026-10-29`):
+  `scripts/screen_corneal_wound_literature.py --queries .../screening/queries.json
+  --output .peykar/acuity-literature-screen-2026-10-29 --workers 6`: 1,994 articles,
+  1,992 full texts (PMC13186544 and PMC5179223 HTTP 500); a first start failed before
+  any request because the queries file did not exist yet. `scripts/screen_corneal_tables.py`
+  with acuity topic, time and corneal-surgery context patterns: 1,185 masked tables in
+  780 articles. `screening/triage_rule.py`: 175 articles, 0 reserved elsewhere
+  (`screening/reserved.py`: 585 identifiers of retina tranches 3–4 and IOP tranches
+  4–5); `screening/tranche_order.py`: 120 in tranche 1, 55 in tranche 2;
+  `screening/triage_chunks.py --chunks 4`: four chunks of 30 with no decimal outside
+  DOI and licence lines; regenerated after the restart and identical (`diff -r`).
+  Commit `bc8fbb9b` before triage.
+- Four reviewer sub-agents: 12 + 14 + 21 + 20 admits; `.peykar/write_acuity_triage.py`:
+  67 admitted, 658 excluded (605 by the rule, 53 by the reviewers), 55 reserved; `scripts/reserve_acuity_split.py`:
+  47 development, 20 sealed; `scripts/link_study_authors.py --prefix acu- --schema
+  cornea.acuity-author-overlap-1.0.0`: 7 pairs, 2 development clusters, 2 sealed
+  training exclusions. `uv run --frozen pytest -q tests/unit/test_cornea_acuity.py`: 3
+  passed. `make check-docker`: 906 tests passed in 258.66 s, 89% coverage, mypy 153
+  source files, EXIT=0. Commit `3877950b` before extraction.
+- Five development extractors and three custodians (sub-agents), in two waves; addendum
+  1 (`.peykar/acuity-extraction-brief-addendum-1.md`) was written between the waves.
+  `uv run --frozen python .peykar/rebuild_acuity_records.py development`: 27 records
+  rebuilt the same, 3 exclusion-only specs. `uv run --frozen python
+  .peykar/verify_acuity_custody.py`: 20 reserved, 15 records and 5 exclusions, 15/15
+  rebuilt the same, 20 raw copies equal to the screened sources, 25 series, no problem.
+- Development LOSO (`scripts/evaluate_acuity_population.py --development --candidate
+  <a0|a1|a2|a4> --shard i/4`, about 30–40 s per shard) joined by `--merge`;
+  `.peykar/acuity_compare.py` (letters, next observation / landmark / initial state):
+  a0 5.434/7.588/15.918, a1 5.332/7.283/16.107, a2 5.320/7.346/16.213, a4
+  5.387/7.569/15.918; pooled-curve increment 5.130/7.179; pooled training curve
+  16.804 (initial state). Round 1 declared in commit `a67bd141`, round 2 in `41ef088d`,
+  each before its run.
+- `uv run --frozen python scripts/publish_acuity_population.py --development --report
+  .peykar/acuity-1.0-dev/round1-a0/report.json --output ...`: H1 and H4 pass, H2 and H3
+  fail (pooled-curve increment).
+- `make check-docker` before the freeze: a first run stopped at `ruff format --check`
+  (the editor had re-wrapped `scripts/publish_acuity_population.py`); after `ruff
+  format`, the not yet used protocol was deleted and written again; second run: 908
+  tests passed in 164.07 s, 89% coverage, mypy 154 source files, EXIT=0.
+  `uv run --frozen python .peykar/write_acuity_protocol.py`: protocol SHA-256
+  `0c60925c…` (62 frozen files, 27 training and 15 sealed record hashes);
+  `.peykar/check_frozen_protocols.py`: no problem in any of the twelve frozen protocols.
+- Acuity freeze commit `baafe4cd`, pushed (HEAD = origin). Then, once,
+  `uv run --frozen python scripts/evaluate_acuity_population.py --sealed --protocol
+  experiments/eye/acuity/model-1.0/protocol-1.0.0.json --output
+  .peykar/acuity10-sealed-test-2026-10-29`: protocol check passed, exit 0, 52.1 s,
+  `report.json` SHA-256 `194c4ee7…`.
+- `uv run --frozen python scripts/publish_acuity_population.py --sealed --report
+  .peykar/acuity10-sealed-test-2026-10-29/report.json --output
+  experiments/eye/acuity/model-1.0/sealed-test-2026-10-29`: H1–H4 pass (21 series, 41
+  targets; 59 initial-state targets): coverage 34/41 and 38/41; next observation 5.00
+  against persistence 5.06 letters; landmark 5.24 against 7.27; initial state 9.04
+  against the pooled training curve 9.79. `.peykar/check_acuity_redaction.py` on the
+  sealed and development folders: 0 leaks (6 and 10 redacted studies).
+  `uv run --frozen python .peykar/acuity10_sealed_breakdown.py`: per-context and
+  per-period tables. `.peykar/cornea-native47/bin/python
+  experiments/eye/acuity/model-1.0/sealed-test-2026-10-29/plot-results.py`: exit 0; the
+  figure was inspected.
+- `uv run --frozen pytest -q tests/unit/test_eye_forecast.py` after adding `acuity` to
+  `peykar eye`: 7 passed (a first run failed because the synthetic test records had
+  too few follow-ups for a noise estimate). `uv run --frozen peykar eye forecast
+  --component acuity --records experiments/data/cornea-acuity-2026-10-29/development/records
+  --context human/dmek --baseline 0.9 --n 30 --months 3,12 --observed 1:0.4`: exit 0,
+  robust assimilation, logMAR 0.22 and 0.17.
+- `make check-docker` before the acuity results commit: a first run was stopped by hand
+  after `ruff format --check .` reported `tests/unit/test_eye_forecast.py` (re-wrapped by
+  the editor); after `ruff format`, 909 tests passed in 163.96 s, 89% coverage, mypy 154
+  source files, EXIT=0 (`.peykar/acuity-results-check-docker-20261029.log`);
+  `.peykar/check_frozen_protocols.py`: no problem in any frozen protocol.
 ## Generic eye model 3, IOP model 1.3, retinal-thickness model 1.2 and refraction model 1.0: 2026-10-29
 Commands run from the repository root; outcomes observed. Start state: main at
 `e6c077ee` (= origin; IOP 1.2 published, `peykar eye` CLI committed).

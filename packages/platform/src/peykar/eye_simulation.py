@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from peykar.model_learning import (
+    acuity_population,
     endothelial_population,
     iop_population_1_2,
     refraction_population,
@@ -31,6 +32,12 @@ from peykar.model_learning.eye_forecast import (
     fit_from_json,
     fit_to_json,
     forecast_scenario,
+)
+from peykar.validation.cornea_acuity_data import (
+    COVARIATE_UNIT_LOGMAR,
+    MODEL_UNIT_LOGMAR,
+    AcuitySeries,
+    to_acuity_series,
 )
 from peykar.validation.cornea_endothelium_data import DensitySeries, to_density_series
 from peykar.validation.cornea_refraction_data import (
@@ -478,11 +485,13 @@ def forecast_corneal(
 
 @dataclass(frozen=True)
 class AdditiveComponent:
-    """A component whose outcome changes additively (refraction, dioptres).
+    """A component whose outcome changes additively (refraction in dioptres, visual
+    acuity in logMAR).
 
     The generic model sees the change from baseline as the pseudo-fraction
     ``exp(change / model_unit)`` and the baseline as ``exp(baseline / covariate_unit)``
-    (``cornea_refraction_data``); forecasts are turned back into the outcome's unit.
+    (``cornea_refraction_data``, ``cornea_acuity_data``); forecasts are turned back into
+    the outcome's unit.
     Fitted at forecast time from record folders; the tested primaries are the
     Gaussian initial state and the robust assimilation, with the predictive median.
     """
@@ -500,6 +509,9 @@ class AdditiveComponent:
     context_of_use: str
     model_unit: float
     covariate_unit: float
+    # (context, baseline, months, changes, group size) -> the component's series type
+    scenario_series: Callable[[str, float, tuple[float, ...], tuple[float, ...], int | None], Any]
+    single_eye_note: str = "single-eye forecasts were not tested (no single-eye series)"
 
     def describe(self) -> dict[str, Any]:
         return {
@@ -517,6 +529,42 @@ class AdditiveComponent:
             "stored_fits": False,
             "configuration": self.config.describe(),
         }
+
+
+def _refraction_scenario(
+    context: str,
+    baseline: float,
+    months: tuple[float, ...],
+    changes: tuple[float, ...],
+    n: int | None,
+) -> RefractionSeries:
+    return RefractionSeries(
+        series_id="scenario/series",
+        study_id="scenario",
+        context=context,
+        reference_d=baseline,
+        months=months,
+        changes_d=changes,
+        aggregate_n=n,
+    )
+
+
+def _acuity_scenario(
+    context: str,
+    baseline: float,
+    months: tuple[float, ...],
+    changes: tuple[float, ...],
+    n: int | None,
+) -> AcuitySeries:
+    return AcuitySeries(
+        series_id="scenario/series",
+        study_id="scenario",
+        context=context,
+        reference_logmar=baseline,
+        months=months,
+        changes_logmar=changes,
+        aggregate_n=n,
+    )
 
 
 ADDITIVE_COMPONENTS: dict[str, AdditiveComponent] = {
@@ -544,6 +592,36 @@ ADDITIVE_COMPONENTS: dict[str, AdditiveComponent] = {
         ),
         model_unit=MODEL_UNIT_D,
         covariate_unit=COVARIATE_UNIT_D,
+        scenario_series=_refraction_scenario,
+    ),
+    "acuity": AdditiveComponent(
+        component_id="acuity",
+        model_version="1.0.0",
+        candidate="a0",
+        quantity="corrected distance visual acuity after keratoplasty or cross-linking",
+        unit="logMAR",
+        context_form=(
+            "human/<procedure> with procedure pk, dalk, dsaek, dmek, cxl or other, for "
+            "example human/dmek or human/cxl"
+        ),
+        config=acuity_population.DEVELOPMENT_CANDIDATES["a0"],
+        to_series=to_acuity_series,
+        protocol="experiments/eye/acuity/model-1.0/protocol-1.0.0.json",
+        sealed_result=(
+            "sealed test, 21 group-mean forecast series: H1-H4 pass (coverage 0.829/0.927; "
+            "next observation 5.00 vs persistence 5.06 letters; landmark 5.24 vs 7.27 letters; "
+            "initial state 9.04 vs pooled curve 9.79 letters); on development it lost H2/H3 to "
+            "the pooled-curve increment"
+        ),
+        context_of_use=(
+            "human group means after cross-linking and endothelial keratoplasty (tested mostly "
+            "on cross-linking and DMEK); keratoplasty groups that recover poorly for their "
+            "preoperative acuity are forecast too optimistically"
+        ),
+        model_unit=MODEL_UNIT_LOGMAR,
+        covariate_unit=COVARIATE_UNIT_LOGMAR,
+        scenario_series=_acuity_scenario,
+        single_eye_note="single-eye forecasts were scored but not tested",
     ),
 }
 
@@ -572,14 +650,12 @@ def forecast_additive(
     if group_size is not None and (isinstance(group_size, bool) or int(group_size) < 1):
         raise InvalidRequest("The group size must be a positive integer")
     n = None if group_size is None else int(group_size)
-    series = RefractionSeries(
-        series_id="scenario/series",
-        study_id="scenario",
-        context=context,
-        reference_d=baseline,
-        months=tuple(m for m, _ in pairs) or (1.0,),
-        changes_d=tuple(v - baseline for _, v in pairs) or (0.0,),
-        aggregate_n=n,
+    series = item.scenario_series(
+        context,
+        baseline,
+        tuple(m for m, _ in pairs) or (1.0,),
+        tuple(v - baseline for _, v in pairs) or (0.0,),
+        n,
     )
     config = item.config
     prior = fit.prior(context, series.kind, population.level_covariate(config, series))
@@ -612,7 +688,7 @@ def forecast_additive(
             f"context {context!r} has no training series; the prior comes from {level_used}"
         )
     if n is None:
-        warnings.append("single-eye forecasts were not tested (no single-eye series)")
+        warnings.append(item.single_eye_note)
     if pairs and min(targets) <= pairs[-1][0]:
         warnings.append("some forecast months are not after the last observed follow-up")
     return {

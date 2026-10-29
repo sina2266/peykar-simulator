@@ -227,6 +227,10 @@ initial-state error of single-implant groups from 14.61 to 5.42 pp, but one grou
 treated after vitrectomy did not re-thicken as predicted
 ([model 1.1](experiments/eye/retina/model-1.1/README.md),
 [Persian results](experiments/eye/retina/model-1.1/results.fa.md)).
+Retinal-thickness version 1.2 found no change worth testing: a prior-treatment level,
+an OCT-device level and a regimen level each gained less than 0.10 pp over 1.1.0 in
+leave-one-study-out development, so no 1.2 protocol was frozen and tranche 3 stays
+sealed and unread ([development log](experiments/eye/retina/model-1.2/development-log.md)).
 The sixth eye component, and the fourth corneal one, is
 [refraction after corneal laser refractive surgery](experiments/eye/refraction/README.md):
 the spherical equivalent (dioptres) after PRK and other surface ablation, LASIK and
@@ -248,12 +252,35 @@ regress about 0.4 D towards myopia, but one severe-myopia LASIK group regressed 
 −1.9 D, outside the 90% interval; the test is small, myopic only and weighted to LASIK
 ([model 1.0](experiments/eye/refraction/model-1.0/README.md),
 [Persian results](experiments/eye/refraction/model-1.0/results.fa.md)).
+The seventh eye component, and the fifth corneal one, is
+[corrected visual acuity after keratoplasty and cross-linking](experiments/eye/acuity/README.md)
+(BCVA/CDVA in logMAR after PK, DALK, DSAEK, DMEK and corneal cross-linking). Its
+[outcome-blind dataset](experiments/data/cornea-acuity-2026-10-29/README.md) comes
+from 1,994 screened open-access papers: 175 passed a masked-table rule after articles
+kept by other components' untested tranches were dropped, the 120 of tranche 1 were
+triaged blind (67 admitted, split 47/20 before any value was read) and the 55 of
+tranche 2 stay unread for the next version. Complete-case and outcome-selected
+analysis sets were excluded, leaving 27 development and 15 custodian-extracted sealed
+records. Acuity is scored on the same additive scale, in ETDRS letters. **Acuity
+model 1.0.0** (procedure contexts; an indication level, per-family hierarchies and
+persistent deviations were each rejected in development) was frozen and pushed
+(`baafe4cd`) although on development it lost both forecast tasks to the
+pooled-curve increment. Tested once on 21 group-mean forecast series, it passed all
+four declared hypotheses: coverage 82.9%/92.7%, next follow-up 5.00 letters versus
+5.06 for persistence and 6.07 for the pooled-curve increment, landmark 5.24 versus
+7.27, initial state 9.04 versus 9.79 for the pooled curve. The sealed set is mostly
+cross-linking and DMEK and has no PK group; keratoplasty groups that recover poorly
+for their preoperative acuity (one DSAEK group after glaucoma surgery in the sealed
+set) are still forecast too optimistically
+([model 1.0](experiments/eye/acuity/model-1.0/README.md),
+[Persian results](experiments/eye/acuity/model-1.0/results.fa.md)).
 The tested eye components can be run as forecasters with `peykar eye`
 ([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
 follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%
 intervals, its sealed-test result and its context of use. It covers retinal thickness
-1.1.0, IOP 1.2.0, corneal endothelial density 1.0.0, corneal thickness 1.0.0 and
-refraction 1.0.0 (in dioptres); it is a research tool, not a clinical one.
+1.1.0, IOP 1.2.0, corneal endothelial density 1.0.0, corneal thickness 1.0.0,
+refraction 1.0.0 (in dioptres) and visual acuity 1.0.0 (in logMAR); it is a research
+tool, not a clinical one.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

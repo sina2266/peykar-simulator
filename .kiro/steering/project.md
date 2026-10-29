@@ -1,5 +1,39 @@
 # Peykar continuation context
 
+## Machine restart, retina 1.2 closed, acuity 1.0 tested, 2026-10-29 afternoon
+
+- The Mac hung after 13:03 and the hardware watchdog rebooted it at 13:09 (cause
+  unknown). It killed the IOP 1.3 sealed run (41/79 d1, nothing written), the retina
+  e6 shards and the triage sub-agents. The IOP 1.3 sealed run was restarted from
+  scratch at 13:17 with the same command/protocol (not a second test: no output had
+  existed); log `.peykar/iop13-sealed-test-2026-10-29.log` (ends with `EXIT=<code>`).
+  Start long runs with `python3 .peykar/detach.py <log> <pidfile> -- <cmd...>` (own
+  session + caffeinate). Docker Desktop and the stopped `peykar3-api-1`/`peykar3-worker-1`
+  containers were restarted unchanged on `peykar3_peykar-data` (`/healthz` ok).
+- Retina 1.2 round 2 (e6 regimen level) rejected (gain 0.012 pp, initial +0.030): NO
+  1.2 protocol, tranche 3 stays sealed/unread; `check_frozen_protocols.py` still prints
+  "retina 1.2.0: no protocol yet" (expected).
+- Acuity 1.0.0, seventh eye component: corrected distance acuity (logMAR) after PK,
+  DALK, DSAEK, DMEK, CXL. Dataset experiments/data/cornea-acuity-2026-10-29: 1,994
+  screened; `screening/reserved.py` drops retina t3–4 and IOP t4–5 articles before
+  triage; 175 by the masked-table rule; tranche 1 (120) triaged blind, 67 admitted;
+  **tranche 2 (55) unread** for 1.1; split salt `peykar-acuity-holdout-v1:` 47/20; 27
+  dev records (62 series; private in `.peykar/acuity-development-private`), 15 sealed
+  (25 series, custodians C1–C3, `.peykar/acuity-sealed-2026-10-29`). Brief +
+  `.peykar/acuity-extraction-brief-addendum-1.md` (supplements, complete-case rule,
+  combined flag). Module `peykar.validation.cornea_acuity_data` (letters → logMAR =
+  (85 − L)/50; `{"cell":..., "take": "parenthesized"}`), configs
+  `peykar.model_learning.acuity_population` (a0 adopted; a1, a2, a4 rejected), operator
+  `scripts/evaluate_acuity_population.py`, publisher `scripts/publish_acuity_population.py`
+  (IOP 1.0 H1–H4, letters). Protocol SHA `0c60925c…`, freeze `baafe4cd`. Sealed once
+  (52 s): ALL FOUR pass (coverage 0.829/0.927; next obs 5.00 vs persistence 5.06
+  letters; landmark 5.24 vs 7.27; initial 9.04 vs pooled curve 9.79), but on
+  development a0 failed H2/H3 to the pooled-curve increment; sealed set has no PK; one
+  DSAEK group after glaucoma surgery missed by ~24 letters. `peykar eye` forecasts
+  `acuity` (AdditiveComponent now takes `scenario_series`).
+- Pending (uncommitted at the time of writing): acuity results/docs commit; then IOP 1.3
+  publication when its sealed run ends.
+
 ## IOP 1.3 frozen, refraction 1.0 tested, retina 1.2 round 2 running, 2026-10-29
 
 - IOP 1.3 (generic eye model 3, `scripts/evaluate_iop_population_1_3.py`): candidate d1
