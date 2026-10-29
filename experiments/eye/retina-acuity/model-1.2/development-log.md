@@ -136,3 +136,11 @@ treatment fallback adds nothing once the hold is in place.
   ties on development, so sealed failures of either would not be surprising.
 - The protocol is written after the custodians finish tranches 3–4; no tranche-3/4
   value is read before it is frozen.
+
+## Custody finished; protocol written (2026-10-29)
+
+The nine custodians built 27 sealed records with 143 series (34 group means); the custody
+verifier rebuilt every record byte for byte (tranche-3 README, custody outcome). The
+protocol `protocol-1.2.0.json` pins this log, the code, the dataset files, the custody
+reports and the record hashes, and records one process note: before the freeze the
+developer opened one sealed spec by mistake (no acuity value) and several custody reports.

@@ -13,9 +13,20 @@ Commands run from the repository root; outcomes observed. Start state: main at
   --dataset .../tranche-3 --prefix rac-`: 12 pairs, 3 development clusters, 6 sealed
   studies with training exclusions (commit `e4033419`).
 - Custodians: C2, C3 and C4 finished (2, 5 and 5 records); C1 and C5 were throttled by
-  the agent service mid-run, and C1 finished on a later attempt after rebuilding its 4
-  earlier records with identical SHA-256 (6 records). C5–C9 are still pending
-  ("Too many requests, client has been throttled" on every retry so far).
+  the agent service mid-run ("Too many requests, client has been throttled") and finished
+  on later attempts after rebuilding their earlier records with identical SHA-256 (6 and
+  3 records); C6–C9 gave 1, 0, 3 and 2 records. `uv run --frozen python
+  .peykar/verify_retina_acuity_tranche34_custody.py`: 70 reserved, 27 records and 43
+  exclusions, 27/27 rebuilt the same, 70 raw copies equal to the screened sources, 143
+  series, no problem. The developer opened one sealed spec and several custody reports
+  by mistake while launching custodians (structure only; recorded in the protocol).
+- `uv run --frozen python .peykar/write_retina_acuity_protocol_1_2.py`: protocol
+  `experiments/eye/retina-acuity/model-1.2/protocol-1.2.0.json`, SHA-256 `a0618bbf…`, 94
+  frozen files, 53 training and 27 sealed record hashes; the operator's own check passed
+  first. `.peykar/check_frozen_protocols.py`: no problem in any frozen protocol,
+  retinal acuity 1.2.0 included. `make check-docker` after writing the protocol: 934
+  tests passed in 187.22 s, 89% coverage, mypy 165 source files, all packages built,
+  EXIT=0 (`.peykar/retina-acuity12-freeze-check-docker-20261029.log`).
 - `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_support.py
   tests/unit/test_eye_retina_acuity_1_2.py tests/unit/test_eye_retina_acuity_1_1.py`: 9
   passed (the hold changes no prediction without early visits, holds early initial

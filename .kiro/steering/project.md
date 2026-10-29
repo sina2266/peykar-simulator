@@ -1,5 +1,10 @@
 # Peykar continuation context
 ## Retinal acuity 1.2 in progress, 2026-10-29 late night
+- UPDATE: custody finished (27 records, 143 series, 34 group means; verifier clean);
+  protocol experiments/eye/retina-acuity/model-1.2/protocol-1.2.0.json SHA `a0618bbf…`
+  (94 files; writer `.peykar/write_retina_acuity_protocol_1_2.py`; in
+  check_frozen_protocols). Sealed run ONCE → `.peykar/retina-acuity12-sealed-test-2026-10-29`;
+  publish with `--reference <dir>/reference-x0-report.json`.
 - Tranches 3–4 reserved (`a3489c25`), briefs + chunks (`5ad75a7b`), blind triage 70
   admitted + reservation (53 dev, 70 sealed) + author overlap (`e4033419`). Custody
   `.peykar/retina-acuity-tranche34-sealed-2026-10-29`, assignments C1–C9: C1–C4 DONE;

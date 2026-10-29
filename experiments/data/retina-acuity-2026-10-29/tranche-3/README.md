@@ -82,3 +82,29 @@ between a development and a sealed study (6 sealed studies lose 7 training studi
 over the sorted study keys in `.peykar/retina-acuity-tranche34-extraction-assignments.json`,
 SHA-256 `8cb0306e…`) extract the admits into
 `.peykar/retina-acuity-tranche34-sealed-2026-10-29/`.
+
+## Custody outcome (2026-10-29)
+
+The nine custodians reported structure and hashes only (`custody-report-C1.json` to
+`C9.json` in the sealed folder). The agent service throttled several starts; C1 and C5
+were stopped mid-run and finished on a later attempt, after rebuilding their earlier
+records from their specs with identical SHA-256. **27 records with 143 series** were
+built: 34 group means (27 control, 7 treated) and 109 per-eye series; contexts DME with
+anti-VEGF 33, postoperative edema with a steroid injection 22 (per-eye), neovascular AMD
+with anti-VEGF 22 and combination 21, DME with a steroid implant 17, vein occlusion with
+anti-VEGF 8, and smaller ones; value kinds logMAR 114 and ETDRS letters 29; 14 records
+public and 13 private by licence. Eight series of two studies have a visit before month
+0.9. **43 admitted studies have no record**: most are complete-case sets (a minimum
+follow-up equal to the last tabulated visit, or an analysis set of completers); the
+others have acuity not established as best-corrected, logMAR or ETDRS letters,
+analysis sets that removed eyes after a post-baseline event or groups defined after
+baseline, or medians or model estimates only.
+
+`.peykar/verify_retina_acuity_tranche34_custody.py` rebuilt all 27 records byte for byte
+from their specs and found all 70 raw copies equal to their screened sources, with no
+problem. Process notes from the reports: some custodians ran a spec write and its builder
+in one tool batch, and each such record was rebuilt with an identical SHA-256; one
+custodian's text search matched provenance lines of development files. Before the freeze
+the model developer opened, by mistake, one sealed spec file (groups, months, cell
+references and notes; a spec holds no acuity value) and several custody reports
+(structure only, as designed); no record or raw sealed article was opened.

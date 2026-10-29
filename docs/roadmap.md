@@ -484,12 +484,12 @@ reserved before triage.
   version 1.2 ([declaration](../experiments/data/retina-acuity-2026-10-29/tranche-3/README.md));
   development on the 53 record studies of tranches 1–2.
 - [x] Blind triage of tranches 3–4 (70 admitted) and author overlap.
-- [ ] Custody of tranches 3–4 (four of nine custodians finished; the rest were throttled
-  by the agent service).
+- [x] Custody of tranches 3–4 (27 records, 143 series, 34 group means).
 - [x] Generic support hold (`eye_support`, harness 5) and version 1.2 development on the
   53 record studies of tranches 1–2: x3 (hold + dexamethasone wear-off) chosen,
   3.228/3.782/5.216 letters against 1.1.0's 3.628/4.921/5.556.
-- [ ] Freeze and one-shot sealed test of version 1.2.
+- [x] Freeze of version 1.2 (protocol `a0618bbf`).
+- [ ] One-shot sealed test of version 1.2.
 - [ ] Context curves shrunk toward the pooled curve; the pooled-curve increment as a
   forecaster.
 ## S0 — preservation and platform contracts
