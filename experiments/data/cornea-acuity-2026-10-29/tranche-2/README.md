@@ -72,3 +72,39 @@ one development cluster, and 3 pairs link two tranche-2 studies.
 **Custody.** Four custodian sub-agents (C1–C4; 7, 7, 7 and 6 studies, dealt
 round-robin over the sorted study keys in `.peykar/acuity-tranche2-extraction-assignments.json`,
 SHA-256 `3f44109c…`) extract the admits into `.peykar/acuity-tranche2-sealed-2026-10-29/`.
+
+## Custody outcome (2026-10-29)
+
+The four custodians reported structure and hashes only (`custody-report-C1.json` to
+`C4.json` in the sealed folder). **11 records with 23 series** were built: all group
+means of logMAR at every time, 22 control and 1 treated; contexts cross-linking 10,
+DMEK 9 (8 of them indication subgroups of one study), DSAEK 3 and other 1
+(cross-linking combined with PTK and PRK for keratoconus); indications keratoconus
+11, bullous keratopathy 5, mixed 3, Fuchs dystrophy 2 and graft failure 2; 7 records
+public and 4 private by licence. The three admitted keratoplasty studies with PK
+groups were all excluded, so the set has no PK series. Sixteen admitted studies have
+no record:
+
+- complete-case analysis sets (a minimum follow-up or a stated analysis set equal to
+  the last tabulated visit): `acu-pmc11566242`, `acu-pmc12356456`, `acu-pmc4314761`,
+  `acu-pmc5510105`, `acu-pmc6720021`, `acu-pmc6773968`, `acu-pmc7790794`,
+  `acu-pmc8949731`, `acu-pmc9672700`;
+- analysis sets selected by a postoperative outcome: `acu-pmc8786756`,
+  `acu-pmc9983850` (also complete-case), `acu-pmc13002641` (repeat grafts inside the
+  groups and outside grafts admitted by graft survival);
+- decimal acuity only, or logMAR rows beside decimal rows without a per-eye
+  conversion: `acu-pmc10573660`, `acu-pmc4128847`, `acu-pmc4527220`, `acu-pmc8199119`.
+
+`.peykar/verify_acuity_tranche2_custody.py` rebuilt all 11 records byte for byte from
+their specs and found the 19 raw copies equal to their screened sources; every
+reserved study was assigned and reported once. Process notes from the reports: two
+custodians (C2, C3) once started a build before the spec was on disk (two tool calls at
+the same time); the builder wrote nothing and the record was rebuilt from the
+unchanged spec. C3 edited its own report once to rename a summary key. Custodians
+differ in whether they kept raw copies or exclusion-only specs for excluded studies;
+no excluded study has a record.
+
+**Status.** Acuity model 1.1 development (on the 42 tranche-1 records) adopted no
+candidate, so there is no 1.1 protocol
+([development log](../../../eye/acuity/model-1.1/development-log.md)). Tranche 2
+stays sealed and unread for a later acuity version.

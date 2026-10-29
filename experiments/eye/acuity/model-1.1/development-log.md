@@ -93,3 +93,43 @@ improves the pooled RMSE of its primary by at least 0.10 letters in at least one
 If both are adopted, round 2 runs **b3** (b1 and b2 together) against the one with the
 larger summed gain over the three tasks, under the same rule. If neither is adopted,
 there is no 1.1 protocol and tranche 2 stays sealed and unread.
+
+## Round 1 — results (2026-10-29)
+
+LOSO over the same 42 studies (`.peykar/acuity-1.1-dev/round1-b1`, `round1-b2`;
+`.peykar/acuity_compare.py`). Every population variant of both candidates lies inside
+both H1 windows. By the declared rule the primary of each is the robust variant
+(anchored t4 is lower by 0.033 and 0.049 letters, within 0.05, and comes later):
+
+| candidate | next observation | landmark | initial state | gain over a0 (next / landmark / initial) |
+|---|---|---|---|---|
+| a0 | 5.412 | 7.136 | 13.006 | — |
+| b1 (correlated level and amplitude) | 5.328 | 7.069 | 13.004 | +0.084 / +0.067 / +0.002 |
+| b2 (cross-linking slope) | 5.377 | 7.114 | 13.124 | +0.035 / +0.022 / −0.118 |
+
+- **b1 rejected**: it is better in all three tasks, but no gain reaches 0.10 letters.
+  The fitted correlation is negative (median ρ = −0.76 over the 42 held-out fits,
+  range −0.82 to −0.40): a group whose long-term level is worse also has a smaller
+  transient amplitude, so it improves less and an early shortfall is expected to grow,
+  not to resolve. This is the persistence the model 1.0 diagnosis asked for, but on
+  these data it changes the pooled errors by less than a tenth of a letter.
+- **b2 rejected**: it loses 0.118 letters in the initial state, beyond the 0.05 limit.
+  The cross-linking slope is −0.33 (median SD 0.21) against −0.60 for keratoplasty
+  (a0: one slope −0.60). Cross-linking improves as declared (initial state 6.63 →
+  5.84 letters, landmark 5.72 → 5.62), but the steeper keratoplasty slope makes the
+  large keratoplasty errors larger (DSAEK initial state 18.35 → 18.89, PK 26.42 →
+  26.86 letters), and they dominate the pooled RMSE.
+
+## Closure (2026-10-29)
+
+Neither candidate is adopted, so, as declared, **there is no acuity 1.1 protocol**.
+Tranche 2 (11 custodian records, 23 series) stays sealed and unread for a later
+acuity version, whose candidates will be declared in a new development log. Model
+1.0.0 (a0) stays the acuity component of `peykar eye`.
+
+What this round shows for a later version: on 42 studies the remaining error is
+dominated by prior-only forecasts of a few keratoplasty groups that recover far less
+than their preoperative acuity predicts (DSAEK and PK initial-state RMSE 18–27
+letters, against 6–9 for cross-linking and DMEK). Neither persistence of shortfalls
+(b1) nor a separate slope (b2) addresses that; a covariate that describes those
+groups (indication, ocular comorbidity) or a different law for keratoplasty would.
