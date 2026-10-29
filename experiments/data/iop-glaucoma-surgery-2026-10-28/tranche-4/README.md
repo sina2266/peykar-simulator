@@ -34,3 +34,37 @@ Known exposure: the developer earlier saw the IOP medians in one table of PMC118
 a medians-only micro-shunt study in tranche 4 (see the tranche-3 README). Medians are
 not admissible under protocol 1.0.0, so triage or extraction is expected to exclude it;
 if a custodian finds admissible means, the study is excluded from the sealed test.
+
+## Triage outcome (2026-10-29)
+
+**Triage.** `screening/triage_chunks.py --check-tranche-1` confirmed that the three
+tranche-1 chunks still rebuild byte for byte; the tranche-4 chunks contain no decimal
+and no ± followed by a digit outside identifier lines. Three reviewer sub-agents
+followed `.peykar/iop-tranche4-triage-brief.md` (the tranche-3 brief with tranche-4
+paths) and saw masked previews only ([`triage-1.0.0.json`](triage-1.0.0.json)). They
+admitted 91 articles and excluded 29. The owner applied the tranche-1 rule for
+percent-change tables to the three exclusions whose reason states a percent IOP
+reduction from baseline at follow-up times (PMC12708801, PMC9150991, PMC4817329); the
+custodians decide whether they are extractable. Absolute mean reductions without a
+baseline (PMC10559792) and a table without a preoperative row (PMC13220826) are not
+covered by that rule and stay excluded. **94 admitted, 26 excluded.** The exclusions
+were medians only (including PMC11852638, the study whose medians the developer saw
+earlier), outcome-defined groups or analysis sets, changes without a baseline, fewer
+than two dated postoperative times, range times, success or count tables, p-value or
+posture tables, baseline-only tables, a review, keratoplasty (out of scope) and one
+article without a DOI.
+
+The first write of the triage file listed only the first two percent-rule overrides.
+The omission of PMC4817329 was found from the reviewers' reasons before any commit or
+extraction; the triage, reservation, author-overlap and assignment files were then
+regenerated (hashes of the superseded first write:
+`.peykar/iop-t4-first-write-superseded.sha256`).
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 229 record studies of tranches 1–3 as development (training of model 1.3) and all
+94 admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) found 154
+linked pairs: 34 tranche-4 studies lose linked training studies, 17 pairs link two
+tranche-4 studies, and 35 development clusters leave training together in
+leave-one-study-out.

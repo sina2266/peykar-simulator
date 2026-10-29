@@ -62,6 +62,23 @@ Commands run from the repository root; outcomes observed. Start state: main at
   tests passed in 162.96 s, 89% coverage, mypy 140 source files, 18 frontend tests,
   package builds, EXIT=0 (`.peykar/retina11-results-check-docker-2026-10-29.log`);
   host `make build`: EXIT=0.
+- Fresh tranches reserved before triage (retina tranche 3 for model 1.2, IOP tranche
+  4 for model 1.3): commit `02b64d6e`, pushed. `screening/triage_chunks.py` of the
+  retina dataset rebuilt the tranche-1 and tranche-2 chunks byte for byte, then wrote
+  three tranche-3 chunks of 40; the IOP script with `--tranche 4 --check-tranche-1`
+  rebuilt the tranche-1 chunks byte for byte and wrote three tranche-4 chunks. A scan
+  of both chunk sets found no decimal and no ± followed by a digit.
+- Six reviewer sub-agents (masked previews only): retina 27+28+33 admits, IOP
+  30+31+30 admits. `.peykar/write_tranche_triage_reservation.py retina-t3`: 88
+  admitted, 32 excluded, 128 development and 88 sealed studies, no override.
+  `... iop-t4`: the first write applied the tranche-1 percent rule to two exclusions;
+  a third (PMC4817329) was found from the reasons, the four outputs were deleted
+  before any commit or extraction (hashes in
+  `.peykar/iop-t4-first-write-superseded.sha256`) and rewritten: 94 admitted, 26
+  excluded, 229 development and 94 sealed studies.
+- `scripts/link_study_authors.py` on both tranche reservations: retina 60 pairs, 19
+  sealed studies with training exclusions, 4 sealed–sealed pairs, 10 development
+  clusters; IOP 154 pairs, 34, 17 and 35.
 
 ## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 
