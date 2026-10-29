@@ -50,7 +50,7 @@ Commands run from the repository root; outcomes observed. Start state: main at
   experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29/plot-results.py`: exit
   0; inspected through a local `http.server` and Playwright, re-rendered once (legend
   over a bar label).
-- `make check-docker` before the results commit: 934 tests passed in 191.44 s, 89%
+- `make check-docker` before the results commit: 934 tests passed in 162.44 s, 89%
   coverage, mypy 165 source files, all packages built, EXIT=0
   (`.peykar/retina-acuity12-results-check-docker-20261029.log`).
 - `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_support.py
