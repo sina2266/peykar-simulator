@@ -1,0 +1,80 @@
+{
+ "study_id": "ref-pmc4881238",
+ "doi": "10.1016/j.joco.2016.01.005",
+ "pmcid": "PMC4881238",
+ "title": "Stereoacuity after photorefractive keratectomy in myopia",
+ "species": "human",
+ "procedure": "surface_ablation",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license license-type='CC BY-NC-ND'>); private: record not published",
+  "url": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4881238.xml",
+   "sha256": "dc9bad901ff18a5d48a0b118f0bcc21033a042007fd9a7e9c7b4c723013a47c8",
+   "bytes": 37767,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4881238/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:49:13.377993+00:00"
+  }
+ ],
+ "indication": "myopia or myopic astigmatism (inclusion: preoperative mean spherical equivalent and cylinder within the stated limits, stable refraction, BCVA 20/20 or better)",
+ "groups": [
+  {
+   "group": "prk",
+   "role": "control",
+   "procedure": "surface_ablation",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 96,
+   "description": "Alcohol-assisted PRK (Technolas 217z flying-spot excimer, wavefront-guided personalized or aspheric ablation) with mitomycin C 0.02% and bandage lens; both eyes of 48 patients; prospective interventional case series"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "prk/se",
+   "group": "prk",
+   "kind": "group_mean",
+   "n": 96,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC4881238.xml::tbl1!R2C2",
+    "PMC4881238.xml::tbl1!R2C3",
+    "PMC4881238.xml::tbl1!R2C4"
+   ],
+   "baseline_label": "Preoperative visit MSE (Table 1)",
+   "notes": "mean ± standard deviation (range) per Table 1 footnote a; the range in parentheses is not used; per-visit n not reported (96 eyes of 48 patients)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 P-value column (C5)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Ranges printed in parentheses in Table 1 cells",
+   "reason": "ranges are not admissible (only the leading mean is read)"
+  },
+  {
+   "what": "Stereoacuity outcomes (Results text)",
+   "reason": "not refraction; text values are not citable cells"
+  }
+ ],
+ "notes": [
+  "Target refraction is not stated; recorded as unstated.",
+  "Method: Methods list manifest and full-cycloplegic refraction preoperatively; Results describe the tabulated refractive errors as the manifest refractive errors; recorded as manifest.",
+  "Two ablation profiles (wavefront-guided personalized and aspheric) are described in Methods but outcomes are tabulated only for the whole cohort, which is extracted.",
+  "Both eyes of each patient were treated and included (96 eyes of 48 patients; fellow-eye correlation).",
+  "Table 1 also tabulates cylinder, UCVA, BCVA (logMAR) and higher-order aberrations (not extracted; schema 1.0.0 has no such series).",
+  "Licence CC BY-NC-ND: the record is private; this spec cites cells and copies no values."
+ ]
+}

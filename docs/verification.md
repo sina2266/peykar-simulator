@@ -1,5 +1,5 @@
 # Verification record
-## Generic eye model 3, IOP model 1.3 and retinal-thickness model 1.2: 2026-10-29
+## Generic eye model 3, IOP model 1.3, retinal-thickness model 1.2 and refraction model 1.0: 2026-10-29
 Commands run from the repository root; outcomes observed. Start state: main at
 `e6c077ee` (= origin; IOP 1.2 published, `peykar eye` CLI committed).
 - `uv run --frozen pytest -q tests/unit/test_eye_recovery_version3.py` (7 tests: the
@@ -30,6 +30,54 @@ Commands run from the repository root; outcomes observed. Start state: main at
   returned no problem, and `.peykar/check_frozen_protocols.py` found no problem in any
   of the ten frozen protocols (corneal 1.0.0 and 2.0.0, endothelium, corneal
   thickness, IOP 1.0.0–1.3.0, retina 1.0.0 and 1.1.0).
+- IOP 1.3 freeze commit `38f4f874`, pushed (HEAD = origin); then
+  `uv run --frozen python scripts/evaluate_iop_population_1_3.py --sealed --protocol
+  experiments/eye/iop/model-1.3/protocol-1.3.0.json --output
+  .peykar/iop13-sealed-test-2026-10-29` started (protocol check passed, run in progress).
+- Refraction after corneal laser refractive surgery (dataset
+  `cornea-refraction-2026-10-29`): `scripts/screen_corneal_wound_literature.py --queries
+  experiments/data/cornea-refraction-2026-10-29/screening/queries.json --output
+  .peykar/refraction-literature-screen-2026-10-29 --workers 6`: 2,169 articles, 2,168
+  full texts (PMC8651116 HTTP 500). `scripts/screen_corneal_tables.py` with refraction
+  topic, month/year time and refractive-surgery context patterns: 1,215 masked tables in
+  793 articles (a first run without `--time` used the hour/day default and was deleted
+  unread). `screening/triage_rule.py`: 89 articles; `screening/tranche_order.py`: all 89
+  in tranche 1; `screening/triage_chunks.py --tranche 1`: three chunks of 30/30/29 whose
+  only decimals are licence version numbers. Commit `2a525e17` before triage.
+- Three reviewer sub-agents (masked previews only): 15 + 12 + 12 admits;
+  `.peykar/write_refraction_triage.py`: 39 admitted, 50 excluded, no override;
+  `scripts/reserve_refraction_split.py`: 31 development, 8 sealed;
+  `scripts/link_study_authors.py --prefix ref- --schema
+  cornea.refraction-author-overlap-1.0.0`: 4 pairs, 2 development clusters, no sealed
+  training exclusion. Commit `e14aaf5c`.
+- Three development extractors and two sealed custodians (sub-agents). Four admissible
+  studies were blocked by the shared cell reader (a minus sign set apart from its digits
+  by a no-break, thin or ordinary space; one figure dash). After `refraction_number`
+  was extended, `.peykar/rebuild_refraction_records.py development` rebuilt all 21
+  earlier development records byte for byte; the three blocked development records
+  were built (24 records, 43 series), and the resumed custodian C2 built the blocked
+  sealed record and found its three earlier records unchanged by rebuild hash.
+  `uv run --frozen python .peykar/verify_refraction_custody.py`: 8 reserved, 8
+  records, 8/8 rebuilt byte for byte, 8 raw copies equal to the screened sources, 14
+  series, no problem.
+- `uv run --frozen pytest -q tests/unit/test_cornea_refraction.py` (5 tests: record
+  validation and exact pseudo-fractions, signed and spaced cells, additive scores equal
+  to native errors in report units with the target comparator, and the refraction
+  publisher's H4/H5 rules and redaction): passed.
+- Refraction 1.0 development: `scripts/evaluate_refraction_population.py --development
+  --candidate <f0|f1>` (24 studies, about 90 s each), rerun as `round1t-*` after the
+  plano-target comparator was added (model forecasts identical); primary (robust
+  variant) next observation / landmark / initial state in D: f0 0.153/0.326/0.552, f1
+  0.157/0.322/0.538; persistence 0.163/0.348; plano target 0.616/0.616/0.575. f1
+  adopted. `scripts/publish_refraction_population.py --development` on both reports:
+  H1–H5 pass; `.peykar/check_refraction_redaction.py development`: 0 leaks in 22
+  reports of redacted studies.
+- `make check-docker` before the refraction freeze: 902 tests passed in 205.80 s, 89%
+  coverage, mypy 152 source files, package builds, EXIT=0
+  (`.peykar/refraction-freeze-check-docker-20261029.log`).
+- `uv run --frozen python .peykar/write_refraction_protocol.py`: protocol SHA-256
+  `8634f5a2…` (58 frozen files, 24 training and 8 sealed record hashes);
+  `.peykar/check_frozen_protocols.py`: no problem in any of the eleven frozen protocols.
 ## Fresh sealed tranches, generic eye model 2, retinal-thickness model 1.1 and IOP model 1.2: 2026-10-28/29
 Commands run from the repository root; outcomes observed. Start state: main at
 `76c575ce` (= origin; retina tranche 2 and IOP tranche 3 triaged and reserved).

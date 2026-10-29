@@ -1,0 +1,98 @@
+{
+ "schema": "cornea.refraction-record-1.0.0",
+ "study_id": "ref-pmc9976533",
+ "doi": "10.1186/s40662-023-00327-4",
+ "pmcid": "PMC9976533",
+ "title": "Twelve-month outcomes of single-step transepithelial photorefractive keratectomy for moderate hyperopia and hyperopic astigmatism",
+ "species": "human",
+ "procedure": "surface_ablation",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <permissions>/<license>: Creative Commons Attribution 4.0 International License; CC0 waiver for data)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9976533.xml",
+   "sha256": "5b78c72a33466cec7c5ec8507787b72d758ba48bad97d4b436cc5b1d2c532326",
+   "bytes": 99772,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9976533/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:53:10.774955+00:00"
+  }
+ ],
+ "indication": "moderate hyperopia or hyperopic astigmatism (inclusion by cycloplegic SEQ, sphere, cylinder and keratometry limits as stated in Methods)",
+ "groups": [
+  {
+   "group": "single-step-te-prk",
+   "role": "control",
+   "procedure": "surface_ablation",
+   "refractive_error": "hyperopia",
+   "target": "plano",
+   "n_reported": 48,
+   "description": "Single-step transepithelial PRK (StreamLight, WaveLight EX500), mitomycin C 0.02% mid-peripherally, bandage lens; 48 eyes of 30 patients; prospective, single surgeon; correction based on full cycloplegic refraction without a specific nomogram"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 cycloplegic SEQ row (R8) at the same visits",
+   "reason": "both manifest and cycloplegic SE are tabulated; the manifest SE is extracted per the extraction brief"
+  },
+  {
+   "what": "Table 2 Range rows and P value columns (C6-C9)",
+   "reason": "ranges and p-values are not admissible"
+  },
+  {
+   "what": "Figure 1 standard graphs (attempted versus achieved SEQ, accuracy within ±0.5 D, stability)",
+   "reason": "attempted-versus-achieved fits and proportions are not admissible; figures are not citable cells"
+  },
+  {
+   "what": "Table 3 haze grading",
+   "reason": "not refraction; proportions"
+  },
+  {
+   "what": "1- and 3-month visits",
+   "reason": "listed in Methods but not tabulated"
+  }
+ ],
+ "notes": [
+  "Target: Methods state postoperative emmetropia was targeted in all eyes; target recorded as plano.",
+  "Method: Methods state that both manifest and full cycloplegic refraction were measured with the auto-keratorefractometer KR-8900 (Topcon) and that pre- and postoperative assessments used the same tools; recorded as objective (autorefraction) for the row labelled 'Manifest SEQ'.",
+  "Attrition: 58 eyes of 38 patients collected; eight patients dropped out; 48 eyes of 30 patients completed the planned follow-up and are analysed (not outcome-defined).",
+  "Bilaterally treated patients contribute both eyes (fellow-eye correlation).",
+  "Table 2 also tabulates UDVA, CDVA, cycloplegic sphere and cylinder, mean keratometry and Q value (not extracted; schema 1.0.0 has no such series)."
+ ],
+ "series": [
+  {
+   "series_id": "single-step-te-prk/se",
+   "group": "single-step-te-prk",
+   "kind": "group_mean",
+   "n": 48,
+   "value_kind": "se_absolute",
+   "method": "objective",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative manifest SEQ (Table 2)",
+   "notes": "mean ± SE as labelled in Table 2 (C2 'Mean ± SE'); columns Preoperative, Postoperative 6 months and 12 months; per-visit n not reported (48 eyes completed the planned follow-up)",
+   "values": [
+    2.96,
+    0.33,
+    0.38
+   ],
+   "source_cells": [
+    "PMC9976533.xml::Tab2!R6C3",
+    "PMC9976533.xml::Tab2!R6C4",
+    "PMC9976533.xml::Tab2!R6C5"
+   ],
+   "source_cell_texts": [
+    "2.96 ± 0.53",
+    "0.33 ± 0.04",
+    "0.38 ± 0.03"
+   ]
+  }
+ ]
+}

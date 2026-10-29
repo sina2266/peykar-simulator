@@ -23,7 +23,7 @@ import hashlib
 import math
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 from peykar.validation.cornea_table_records import cell_text
@@ -48,12 +48,25 @@ MAX_SE_D = 15.0
 # covariate SE0 / COVARIATE_UNIT_D (see the module docstring).
 MODEL_UNIT_D = 5.0
 COVARIATE_UNIT_D = 5.0
+# Errors are reported in tenths of a dioptre: one reported pp is 0.1 D.
+REPORT_UNIT_D = 0.1
 _ID = re.compile(r"^[a-z0-9][a-z0-9._/-]{2,120}$")
+# Typeset minus signs in refraction tables: hyphens, the figure dash, the small and
+# fullwidth hyphen-minus (the unicode minus and en dash are read by the shared reader).
+_MINUS = re.compile("[\u2010\u2011\u2012\ufe63\uff0d]")
+# A leading sign set apart from its digits by a space, no-break space, thin space or
+# narrow no-break space ("\u2212\u00a02.26").
+_SPACED_SIGN = re.compile("^(\\s*[-+\u2212\u2013])[\\s\u00a0\u2009\u200a\u202f]+(?=\\d)")
 
 
 def refraction_number(text: str) -> float:
-    """Leading signed number of a cell (unicode minus, decimal comma, change sign)."""
-    return thickness_number(text)
+    """Leading signed number of a cell (unicode minus, decimal comma, change sign).
+
+    Refraction tables often typeset the minus as a figure dash or another hyphen, or
+    set a space between the sign and the digits; both are read as the sign of the
+    number. Every other cell text reads as in the shared table reader.
+    """
+    return thickness_number(_SPACED_SIGN.sub(r"\1", _MINUS.sub("-", text, count=1), count=1))
 
 
 @dataclass(frozen=True)
@@ -258,6 +271,20 @@ def to_refraction_series(record: Mapping[str, Any]) -> list[RefractionSeries]:
             )
         )
     return result
+
+
+def refractive_error_context(context: str, refractive_error: str) -> str:
+    """``species/procedure`` → ``species/<refractive error>/procedure``."""
+    species, procedure = context.split("/")
+    return f"{species}/{refractive_error}/{procedure}"
+
+
+def to_refraction_series_by_error(record: Mapping[str, Any]) -> list[RefractionSeries]:
+    """The series with refractive-error sub-contexts (myopia, hyperopia, mixed)."""
+    return [
+        replace(item, context=refractive_error_context(item.context, item.refractive_error))
+        for item in to_refraction_series(record)
+    ]
 
 
 def structural_summary(records: Sequence[Mapping[str, Any]]) -> dict[str, Any]:

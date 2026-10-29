@@ -1,0 +1,96 @@
+{
+ "study_id": "ref-pmc10821807",
+ "doi": "10.1155/2024/8835585",
+ "pmcid": "PMC10821807",
+ "title": "Long-Term Visual Quality and Pupil Changes after Small-Incision Lenticule Extraction for Eyes without Preoperative Cylinder Refraction",
+ "species": "human",
+ "procedure": "lenticule_extraction",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>/<ali:license_ref>: Creative Commons Attribution License, https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10821807.xml",
+   "sha256": "3ce8ac00f991fce212d4749f2fa1db6b050e0f869552e0627bfe33d6937ca7fd",
+   "bytes": 110872,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10821807/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:46:31.538479+00:00"
+  }
+ ],
+ "indication": "myopia without preoperative cylinder refraction (inclusion: cylinder refraction = 0 D, stable myopia); one (right) eye per patient",
+ "groups": [
+  {
+   "group": "smile",
+   "role": "control",
+   "procedure": "lenticule_extraction",
+   "refractive_error": "myopia",
+   "target": "plano",
+   "n_reported": 33,
+   "description": "SMILE (VisuMax femtosecond laser), myopic eyes without preoperative cylinder, 33 right eyes of 33 patients, prospective; emmetropia as the attempted correction (monovision targets excluded by inclusion criteria); single surgeon"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "smile/se",
+   "group": "smile",
+   "kind": "group_mean",
+   "n": 33,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    0.23,
+    1,
+    3,
+    6,
+    12,
+    30
+   ],
+   "cells": [
+    "PMC10821807.xml::tab2!R11C2",
+    "PMC10821807.xml::tab2!R11C3",
+    "PMC10821807.xml::tab2!R11C4",
+    "PMC10821807.xml::tab2!R11C5",
+    "PMC10821807.xml::tab2!R11C6",
+    "PMC10821807.xml::tab2!R11C7",
+    "PMC10821807.xml::tab2!R11C8"
+   ],
+   "baseline_label": "Preop spherical equivalent (Table 2)",
+   "notes": "mean ± SD (Statistical analysis: quantitative variables expressed as mean ± standard deviation); columns Preop, 1 week, 1 month, 3 month, 6 month, 12 month, 30 month; per-visit n not reported; no loss to follow-up reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 p rows (R3, R6, R9, R12)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 4 (group one: eyes with zero cylinder at 30 months versus group two: eyes with postoperative cylinder)",
+   "reason": "groups selected by a postoperative outcome; also preoperative parameters only"
+  },
+  {
+   "what": "Table 3 (percentage of eyes with induced astigmatism)",
+   "reason": "proportions; cylinder, not SE"
+  },
+  {
+   "what": "Figures 4 and 5 (attempted versus achieved SE; proportions within ±0.50 and ±1.00 D) and Figure 6 (SE stability graph)",
+   "reason": "attempted-versus-achieved fits and proportions are not admissible; figures are not citable cells"
+  },
+  {
+   "what": "Table 1 sphere refraction (preoperative only)",
+   "reason": "sphere only, no follow-up; the Table 2 preoperative SE cell is used as the reference"
+  }
+ ],
+ "notes": [
+  "Target: inclusion criteria require emmetropia as the attempted correction (eyes targeted for monovision excluded); an additional spherical nomogram adjustment was applied for patients under 40 years (Methods 2.2), still aiming at emmetropia; target recorded as plano.",
+  "Method: Methods state manifest refraction was measured preoperatively and at each follow-up and Table 2 is titled 'Visual acuity and manifest refraction'; one Methods sentence says SE stability was assessed with postoperative cycloplegic refraction; recorded as manifest following the table title.",
+  "The Methods examination schedule lists 1 week, 1, 3, 6 and 30 months; Table 2 also prints a 12-month column, which is extracted as tabulated.",
+  "SE equals the preoperative sphere because the preoperative cylinder is zero by inclusion (Results).",
+  "Table 2 also tabulates CDVA, sphere and cylinder; aberrations, contrast sensitivity, pupil size and anterior corneal astigmatism are tabulated elsewhere (not extracted; schema 1.0.0 has no such series).",
+  "Rows R4, R7 and R10 of Table 2 are empty separator rows; rows with rowspan shift the following p rows."
+ ]
+}

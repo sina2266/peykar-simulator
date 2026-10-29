@@ -16,7 +16,13 @@ baseline value itself, and recomputes every score with the harnesses' own scorin
 functions. One "pp" of the rewritten report is one ``report_unit``: for refraction
 with ``report_unit = 0.1 D`` the per-series criteria (RMSE <= 5, max <= 10 pp,
 forecasts at least 0.5 pp below persistence) read 0.5 D, 1.0 D and 0.05 D. Interval
-coverage is unchanged because the map is monotone. Nothing here reads files.
+coverage is unchanged because the map is monotone.
+
+When the scale declares the outcome value treatment aims at (``target``; refraction:
+plano, 0 D), every initial-state entry and forecast row also gets the comparator
+``target_level``: the target at every time, the change ``target - baseline``. For a
+refractive operation it is the full correction a surgeon plans for. Nothing here
+reads files.
 """
 
 from __future__ import annotations
@@ -57,10 +63,13 @@ class AdditiveScale:
     model_unit: float
     covariate_unit: float
     report_unit: float
+    target: float | None = None
 
     def __post_init__(self) -> None:
         if not all(v > 0 for v in (self.model_unit, self.covariate_unit, self.report_unit)):
             raise InvalidRequest("Additive scale units must be positive")
+        if self.target is not None and not math.isfinite(self.target):
+            raise InvalidRequest("The target must be finite")
 
     def change(self, fraction: float) -> float:
         return self.model_unit * math.log(fraction)
@@ -71,6 +80,12 @@ class AdditiveScale:
 
     def baseline(self, reference: float) -> float:
         return self.covariate_unit * math.log(reference)
+
+    def target_report(self, baseline: float) -> float | None:
+        """The reported value of the target for a series with this baseline."""
+        if self.target is None:
+            return None
+        return 1.0 + (self.target - baseline) / (100.0 * self.report_unit)
 
     def describe(self) -> dict[str, Any]:
         return asdict(self)
@@ -101,6 +116,9 @@ def _initial(entry: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
     out["predictions"] = {
         name: [scale.report(v) for v in values] for name, values in entry["predictions"].items()
     }
+    target = scale.target_report(out["reference_value"])
+    if target is not None:
+        out["predictions"]["target_level"] = [target for _ in out["observed"]]
     out["scores"] = {}
     for name, values in out["predictions"].items():
         score = _errors(values, out["observed"])
@@ -109,7 +127,11 @@ def _initial(entry: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
     return out
 
 
-def _forecast(entry: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
+def _forecast(
+    entry: dict[str, Any], scale: AdditiveScale, baseline: float | None
+) -> dict[str, Any]:
+    target = None if baseline is None else scale.target_report(baseline)
+    extra = {} if target is None else {"target_level": target}
     rows = []
     for row in entry["rows"]:
         rows.append(
@@ -117,7 +139,8 @@ def _forecast(entry: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
                 **row,
                 "observed": scale.report(row["observed"]),
                 "predictions": {
-                    name: scale.report(value) for name, value in row["predictions"].items()
+                    **{name: scale.report(value) for name, value in row["predictions"].items()},
+                    **extra,
                 },
                 "intervals": {
                     name: {q: scale.report(v) for q, v in quantiles.items()}
@@ -133,12 +156,20 @@ def _forecast(entry: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
     }
 
 
-def rescale_study(result: dict[str, Any], scale: AdditiveScale) -> dict[str, Any]:
-    """A harness study result in reported units, every score recomputed."""
+def rescale_study(
+    result: dict[str, Any],
+    scale: AdditiveScale,
+    baselines: dict[str, float] | None = None,
+) -> dict[str, Any]:
+    """A harness study result in reported units, every score recomputed.
+
+    ``baselines`` (series id → baseline value) lets forecast rows carry the target
+    comparator; initial-state entries carry their own baseline."""
     out = dict(result)
     out["initial_state"] = [_initial(e, scale) for e in result["initial_state"]]
+    known = baselines or {}
     for task in ("next_observation", "landmark"):
-        out[task] = [_forecast(e, scale) for e in result[task]]
+        out[task] = [_forecast(e, scale, known.get(e["series_id"])) for e in result[task]]
     out["additive_evaluation_version"] = EVALUATION_VERSION
     return out
 
@@ -152,7 +183,8 @@ def evaluate_study(
 ) -> dict[str, Any]:
     """Score one excluded study on the additive scale (training-only models)."""
     result = _harness(config).evaluate_study(config, study_series=study_series, training=training)
-    return rescale_study(result, scale)
+    baselines = {s.series_id: scale.baseline(s.reference_value) for s in study_series}
+    return rescale_study(result, scale, baselines)
 
 
 def leave_one_study_out(

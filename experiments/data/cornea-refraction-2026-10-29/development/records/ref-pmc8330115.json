@@ -1,0 +1,135 @@
+{
+ "schema": "cornea.refraction-record-1.0.0",
+ "study_id": "ref-pmc8330115",
+ "doi": "10.1186/s12886-021-02048-5",
+ "pmcid": "PMC8330115",
+ "title": "Comparison of the optical quality after SMILE and FS-LASIK for high myopia by OQAS and iTrace analyzer: a one-year retrospective study",
+ "species": "human",
+ "procedure": "lenticule_extraction",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8330115.xml",
+   "sha256": "912b01c10039a4887b2ec5777366ac0ae62c5547ef0aabef45bf1cabe394311b",
+   "bytes": 108674,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "high myopia (inclusion: spherical refraction -6.00 to -10.00 D, astigmatism 0 to -2.50 D, age 18 years or older); retrospective single-surgeon comparison, right eyes only",
+ "groups": [
+  {
+   "group": "smile",
+   "role": "control",
+   "procedure": "lenticule_extraction",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 51,
+   "description": "SMILE (VisuMax 500 kHz, optical zone 6.0-6.8 mm, cap 100-120 um), manufacturer nomograms without adjustment; right eyes of 51 patients"
+  },
+  {
+   "group": "fs-lasik",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 49,
+   "description": "FS-LASIK (VisuMax flap 90 um, VISX Star S4 excimer), manufacturer nomograms without adjustment; right eyes of 49 patients"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tab1 columns/rows p1-value and p0-value",
+   "reason": "p-values (protocol inclusion 4)"
+  },
+  {
+   "what": "Fig. 1 standard graphs (SE within +/-0.50 D, SE change >0.50 D, attempted versus achieved)",
+   "reason": "proportions and attempted-versus-achieved plots (protocol inclusion 4)"
+  },
+  {
+   "what": "Tab1 rows Astigmatism and UDVA",
+   "reason": "not spherical equivalent"
+  }
+ ],
+ "notes": [
+  "Refraction: manifest refraction (Methods); recorded as manifest.",
+  "Target refraction not stated (manufacturer nomograms without adjustment); recorded as unstated.",
+  "Analysis set: right eyes with regular checks at 1, 6 and 12 months (attendance-based inclusion criterion, not outcome-defined; kept).",
+  "Procedure was allocated by corneal thickness, refractive error and patient preference (non-randomized).",
+  "Astigmatism, UDVA (Table 1), OQAS strehl ratio, MTF cutoff, OSI (Table 2) and iTrace wavefront aberrations (Tables 3-4) are tabulated; not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "smile/se",
+   "group": "smile",
+   "kind": "group_mean",
+   "n": 51,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    1,
+    6,
+    12
+   ],
+   "baseline_label": "Preop SE (Table 1, SMILE group)",
+   "notes": "mean ± SD (asterisks mark within-group tests); rows Post 1mo/6mo/12mo lack the spanned label cell, so the SMILE value is C2 there; all eyes had the 1, 6 and 12 month checks (inclusion criterion)",
+   "values": [
+    -7.964,
+    -0.194,
+    -0.156,
+    -0.204
+   ],
+   "source_cells": [
+    "PMC8330115.xml::Tab1!R3C3",
+    "PMC8330115.xml::Tab1!R4C2",
+    "PMC8330115.xml::Tab1!R5C2",
+    "PMC8330115.xml::Tab1!R6C2"
+   ],
+   "source_cell_texts": [
+    "−7.964 ± 0.943",
+    "−0.194 ± 0.549*",
+    "−0.156 ± 0.486*",
+    "−0.204 ± 0.461*"
+   ]
+  },
+  {
+   "series_id": "fs-lasik/se",
+   "group": "fs-lasik",
+   "kind": "group_mean",
+   "n": 49,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    1,
+    6,
+    12
+   ],
+   "baseline_label": "Preop SE (Table 1, FS-LASIK group)",
+   "notes": "mean ± SD; the FS-LASIK value is C3 in the rows without the spanned label cell; all eyes had the 1, 6 and 12 month checks",
+   "values": [
+    -8.39,
+    -0.23,
+    -0.194,
+    -0.334
+   ],
+   "source_cells": [
+    "PMC8330115.xml::Tab1!R3C4",
+    "PMC8330115.xml::Tab1!R4C3",
+    "PMC8330115.xml::Tab1!R5C3",
+    "PMC8330115.xml::Tab1!R6C3"
+   ],
+   "source_cell_texts": [
+    "−8.390 ± 1.372",
+    "−0.230 ± 0.487*",
+    "−0.194 ± 0.459*",
+    "−0.334 ± 0.441*"
+   ]
+  }
+ ]
+}

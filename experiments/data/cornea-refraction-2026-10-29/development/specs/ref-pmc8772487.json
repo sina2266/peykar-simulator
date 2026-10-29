@@ -1,0 +1,80 @@
+{
+ "study_id": "ref-pmc8772487",
+ "doi": "10.4103/joco.joco_29_21",
+ "pmcid": "PMC8772487",
+ "title": "Long-Term Visual and Refractive Stability and Ocular Biometric Changes after Laser-Assisted Subepithelial Keratomileusis for Correction of Myopia: An 8-Year Follow-Up",
+ "species": "human",
+ "procedure": "surface_ablation",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <permissions>/<license>: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License); private: record not published",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8772487.xml",
+   "sha256": "40cb8dd4f0fab35ceb9d31165821d52fa1bc504b37127f3d20bf5fba26787945",
+   "bytes": 53492,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8772487/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:52:14.107573+00:00"
+  }
+ ],
+ "indication": "mild to moderate myopia with or without astigmatism (inclusion limits as stated in Methods)",
+ "groups": [
+  {
+   "group": "lasek",
+   "role": "control",
+   "procedure": "surface_ablation",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 70,
+   "description": "LASEK (20% alcohol, epithelial flap, Technolas 217P excimer, 6.5 mm optical zone) with mitomycin C 0.02% and bandage lens; both eyes of 35 patients who completed the 6-month and 8-year visits; prospective, single surgeon"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "lasek/se",
+   "group": "lasek",
+   "kind": "group_mean",
+   "n": 70,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    6,
+    96
+   ],
+   "cells": [
+    "PMC8772487.xml::T1!R7C2",
+    "PMC8772487.xml::T1!R7C3",
+    "PMC8772487.xml::T1!R7C6"
+   ],
+   "baseline_label": "Baseline spherical equivalent, mean (SD) (Table 1)",
+   "notes": "mean (SD) columns only (Table 1 'Mean (SD)' under baseline, 6 months and 8 years); the same 70 eyes at every visit (completers)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 'Coefficient (95% CI)' columns (C4, C7)",
+   "reason": "generalized mixed-model fixed-effect estimates are model-adjusted estimates, not admissible"
+  },
+  {
+   "what": "Table 1 P columns (C5, C8, C9)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Figures 1-3 (cumulative CDVA/UDVA and change in CDVA)",
+   "reason": "visual acuity, not refraction; figures are not citable cells"
+  }
+ ],
+ "notes": [
+  "Target refraction is not stated; recorded as unstated.",
+  "Method: manifest refraction (Abstract and Methods: manifest refractions assessed preoperatively, at 6 months and 8 years; cycloplegic refraction mentioned only as part of the examination).",
+  "Analysis set: 90 patients were enrolled; 35 patients (70 eyes) completed both follow-ups and Methods exclude participants with follow-up shorter than 8 years, so every visit reports the same completers; the selection is by follow-up completion, not by a refractive outcome (kept as attrition, with this note).",
+  "Both eyes of each patient included (laterality handled as a repeated measure in the authors' model).",
+  "Table 1 also tabulates sphere, cylinder, keratometry, CCT, axial length, anterior chamber and aqueous depth and lens thickness (not extracted; schema 1.0.0 has no such series).",
+  "Licence CC BY-NC-SA: the record is private; this spec cites cells and copies no values."
+ ]
+}

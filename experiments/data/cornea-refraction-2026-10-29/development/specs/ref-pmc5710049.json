@@ -1,0 +1,90 @@
+{
+ "study_id": "ref-pmc5710049",
+ "doi": "10.22336/rjo.2017.5",
+ "pmcid": "PMC5710049",
+ "title": "One year refractive outcomes of Femtosecond-LASIK in mild, moderate and high myopia",
+ "species": "human",
+ "procedure": "lasik",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <permissions>/<license>: 'distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited'; no licence URL in the XML)",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC5710049.xml",
+   "sha256": "a24769c0ff0fd21e9d7ee59833b5dc958ec73b6feb49be49e1adeddf237b9656",
+   "bytes": 45401,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5710049/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:49:41.230609+00:00"
+  }
+ ],
+ "indication": "mild, moderate and high myopia (whole cohort tabulated; low preoperative cylinder)",
+ "groups": [
+  {
+   "group": "fs-lasik",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "plano",
+   "n_reported": 60,
+   "description": "Femtosecond-LASIK (VisuMax flap, MEL 80 excimer ablation), myopic eyes; attempted result emmetropia in all cases; prospective, 60 eyes (31 right, 29 left) of 36 patients analysed"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "fs-lasik/se",
+   "group": "fs-lasik",
+   "kind": "group_mean",
+   "n": 60,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    0.0329,
+    1,
+    12
+   ],
+   "cells": [
+    "PMC5710049.xml::T2!R2C2",
+    "PMC5710049.xml::T2!R3C2",
+    "PMC5710049.xml::T2!R4C2",
+    "PMC5710049.xml::T2!R5C2"
+   ],
+   "baseline_label": "Preoperative manifest spherical equivalent (Table 2)",
+   "notes": "mean ± SD (Table 2 header 'Diopters (mean±SD)'); rows Preoperative, Postoperative 1 day, 1 month and 12 months; some cells print the minus sign as an en dash (read as minus); per-visit n not reported (caption: the 60 myopic eyes)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 P-value column (C3) and footnote rows R6-R8",
+   "reason": "p-values are not admissible; footnote rows carry no values"
+  },
+  {
+   "what": "Table 1 cycloplegic sphere, cylinder and spherical equivalent (preoperative only)",
+   "reason": "no follow-up; the manifest SE is extracted (Table 1 manifest SE equals the Table 2 preoperative reference text)"
+  },
+  {
+   "what": "Tables 3 and 4 (clinical case V.I.C., right and left eye)",
+   "reason": "individual eyes of a case presentation: manifest refraction printed as sphere^cylinder without an SE, no tabulated preoperative refraction (preoperative refraction only in text), membership in the cohort not stated"
+  },
+  {
+   "what": "Figure 1 (stability), Figure 2 (attempted versus achieved regression) and Figure 3 (accuracy proportions)",
+   "reason": "figures are not citable cells; attempted-versus-achieved fits and proportions are not admissible"
+  },
+  {
+   "what": "3- and 6-month visits",
+   "reason": "not tabulated for the cohort (only plotted)"
+  }
+ ],
+ "notes": [
+  "Target: Methods state 'The surgical attempted result was emmetropia in all cases'; target recorded as plano.",
+  "Method: manifest SE (Table 2 title and row label; Methods: manifest refraction measured at each visit).",
+  "Attrition: 66 eyes of 40 patients were treated; three bilaterally treated patients were lost to follow-up after the first month visit; 60 eyes of 36 patients (patient count as printed) are analysed at every tabulated visit (not outcome-defined).",
+  "Twelve patients treated for myopia in one eye had the fellow eye treated for compound myopic astigmatism; those fellow eyes are not described as part of the 60-eye cohort.",
+  "Bilaterally treated patients contribute both eyes (fellow-eye correlation).",
+  "Corneal thickness and visual acuity are reported in text; keratometry and pachymetry for the case patient in Tables 3-4 (not extracted)."
+ ]
+}

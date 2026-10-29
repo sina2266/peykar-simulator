@@ -1,0 +1,96 @@
+{
+ "study_id": "ref-pmc4508064",
+ "doi": "10.2147/OPTH.S87887",
+ "pmcid": "PMC4508064",
+ "title": "Clinical outcomes of wavefront-guided laser in situ keratomileusis to treat moderate-to-high astigmatism",
+ "species": "human",
+ "procedure": "lasik",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Creative Commons Attribution - Non Commercial (unported, v3.0) License, Dove Medical Press)",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4508064.xml",
+   "sha256": "c56813f15405a326219bbf1be660bc6db4266ccd353d9be200752fd9273a662a",
+   "bytes": 80431,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "simple or compound myopic astigmatism with refractive cylinder 2.0 to 6.0 D and MSE no more than -12.0 D (selection criteria); retrospective noncomparative series",
+ "groups": [
+  {
+   "group": "wfg-lasik",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "plano",
+   "n_reported": 611,
+   "description": "primary wavefront-guided LASIK (VISX STAR S4 IR, iDesign profile, iris registration) under a femtosecond flap (iFS, 100-120 um), targeted for emmetropia; 611 eyes of 442 patients"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "wfg-lasik/mse",
+   "group": "wfg-lasik",
+   "kind": "group_mean",
+   "n": 611,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    0.23,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC4508064.xml::t2-opth-9-1291!R6C2",
+    "PMC4508064.xml::t2-opth-9-1291!R6C3",
+    "PMC4508064.xml::t2-opth-9-1291!R6C4",
+    "PMC4508064.xml::t2-opth-9-1291!R6C5"
+   ],
+   "baseline_label": "Preop MSE (Table 2)",
+   "notes": "mean ± SD [median] (range) cells, the leading mean is read; all 611 eyes at every visit (completion of the 1-week, 1-month and 3-month exams was a selection criterion); some patients contribute both eyes"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "t2-opth-9-1291 median and range inside each cell",
+   "reason": "medians and ranges are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "t2-opth-9-1291 column P-value",
+   "reason": "p-values (protocol inclusion 4)"
+  },
+  {
+   "what": "t2-opth-9-1291 rows Sphere and Cylinder",
+   "reason": "not spherical equivalent (protocol inclusion 1)"
+  },
+  {
+   "what": "t3-opth-9-1291 (stability between visits)",
+   "reason": "proportions and changes between postoperative visits without the preoperative reference (protocol inclusion 4)"
+  },
+  {
+   "what": "Fig. 2 attempted versus achieved MSE and the proportions within +/-0.50 and +/-1.00 D",
+   "reason": "attempted-versus-achieved fit and proportions (protocol inclusion 4)"
+  },
+  {
+   "what": "t4-opth-9-1291 (vector analysis by preoperative cylinder strata)",
+   "reason": "cylinder vector parameters, not SE"
+  },
+  {
+   "what": "t5-opth-9-1291",
+   "reason": "literature comparison table of other studies"
+  }
+ ],
+ "notes": [
+  "Target: database selection of primary LASIK procedures targeted for emmetropia (plano); a nomogram adjusted the sphere for the aberrometer-derived cylinder.",
+  "Analysis set: eyes that completed the 1-week, 1-month and 3-month examinations (attendance-based, not outcome-defined; kept).",
+  "Refraction: manifest refraction at follow-up visits (MSE = manifest spherical equivalent); preoperative manifest and cycloplegic refraction were measured, only MSE is tabulated.",
+  "The 1-day visit was a slit-lamp examination only.",
+  "UDVA, CDVA (logMAR), manifest sphere and cylinder are tabulated (Table 2) and cylinder vector analysis (Table 4); not extracted.",
+  "Months: 1 week = 7/30.4375 (rounded to 4 decimals)."
+ ]
+}

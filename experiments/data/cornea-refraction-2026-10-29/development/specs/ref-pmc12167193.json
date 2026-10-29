@@ -1,0 +1,125 @@
+{
+ "study_id": "ref-pmc12167193",
+ "doi": "10.1007/s40123-025-01167-2",
+ "pmcid": "PMC12167193",
+ "title": "Transepithelial Versus Conventional PRK: A Randomized Controlled Study",
+ "species": "human",
+ "procedure": "surface_ablation",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>: Creative Commons Attribution-NonCommercial 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12167193.xml",
+   "sha256": "f91df4b9f080d6bd412ee978e679d3f911a25f0fae6e236339d46e1ce25ffb48",
+   "bytes": 78171,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "myopia (eligibility allowed myopia or hyperopia; Results: all enrolled subjects were myopic); prospective randomized contralateral masked single-surgeon noninferiority trial (NCT04698174), TENEO 317 Model 2 excimer laser, mitomycin C 0.02% in both arms",
+ "groups": [
+  {
+   "group": "conventional-prk",
+   "role": "control",
+   "procedure": "surface_ablation",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 35,
+   "description": "conventional alcohol-assisted PRK (20% alcohol 30 s, epithelium removed with a microhoe), then excimer ablation, mitomycin C 0.02% 30 s, protective contact lens; one eye of each of 35 subjects (far-dominant eye randomized to either procedure); declared control eyes"
+  },
+  {
+   "group": "t-prk",
+   "role": "treated",
+   "procedure": "surface_ablation",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 35,
+   "description": "transepithelial PRK (laser epithelial removal, default 54 um) with the same laser, mitomycin C and contact lens; fellow eye of the same 35 subjects; further 1:1 randomization to end-treatment laser polishing (5 um) or not, pooled in Table 2; declared study eyes of the noninferiority comparison"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "conventional-prk/se",
+   "group": "conventional-prk",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    0.23,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC12167193.xml::Tab2!R6C2",
+    "PMC12167193.xml::Tab2!R6C4",
+    "PMC12167193.xml::Tab2!R6C6",
+    "PMC12167193.xml::Tab2!R6C8"
+   ],
+   "baseline_label": "Baseline manifest spherical equivalent (Table 2, Conventional PRK)",
+   "notes": "mean (SD); baseline cell also prints a range (not used); three subjects lost to follow-up (two after 1 month, one after 3 months), per-visit n not tabulated"
+  },
+  {
+   "series_id": "t-prk/se",
+   "group": "t-prk",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    0.23,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC12167193.xml::Tab2!R6C3",
+    "PMC12167193.xml::Tab2!R6C5",
+    "PMC12167193.xml::Tab2!R6C7",
+    "PMC12167193.xml::Tab2!R6C9"
+   ],
+   "baseline_label": "Baseline manifest spherical equivalent (Table 2, t-PRK)",
+   "notes": "mean (SD); with and without end-treatment polishing pooled; baseline cell also prints a range (not used); same attrition as the fellow eyes"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Tab2 rows Sphere and Cylinder",
+   "reason": "not spherical equivalent (protocol inclusion 1)"
+  },
+  {
+   "what": "range text inside the Tab2 baseline cells",
+   "reason": "ranges are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "t-PRK with versus without end-treatment laser polishing (Results text, 3 and 6 months)",
+   "reason": "values given in text only, without a preoperative SE of the subgroups (protocol inclusion 2); the pooled t-PRK series is extracted"
+  },
+  {
+   "what": "absolute prediction error (Fig. 2, Results text)",
+   "reason": "absolute deviation from the attempted correction, not SE (protocol inclusion 4)"
+  },
+  {
+   "what": "Fig. 3 attempted versus achieved SE and SE stability",
+   "reason": "attempted-versus-achieved plot and figure (protocol inclusion 4)"
+  },
+  {
+   "what": "1-month manifest sphere in Results text",
+   "reason": "sphere only and not tabulated (protocol inclusion 1)"
+  }
+ ],
+ "notes": [
+  "Refraction: manifest subjective refraction by phoropter or trial frame in 0.25 D steps with a mandatory cross cylinder (Methods); recorded as manifest.",
+  "Target refraction not stated (standard manufacturer nomograms); recorded as unstated.",
+  "Contralateral design: the two groups are fellow eyes of the same subjects, treated by the study as separate groups.",
+  "Methods visits: 1 day, 4 days, 1 week, 1 month, 3 months and 6 months; Table 2 tabulates baseline, 1 week, 3 months and 6 months only.",
+  "Table 2 footnote: during analysis one subject's manifest refraction sign was corrected after a discrepancy with cycloplegic refraction (as published).",
+  "Negative Tab2 SE cells print a unicode minus, then a space, then the number; cell text not edited.",
+  "UDVA/CDVA, contrast sensitivity, halos and glare, pain, satisfaction (Tab3), haze and manifest sphere/cylinder are reported; not extracted.",
+  "Months: 1 week = 7/30.4375 (rounded to 4 decimals)."
+ ]
+}

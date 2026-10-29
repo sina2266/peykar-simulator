@@ -1,0 +1,135 @@
+{
+ "schema": "cornea.refraction-record-1.0.0",
+ "study_id": "ref-pmc5896223",
+ "doi": "10.1155/2018/3060939",
+ "pmcid": "PMC5896223",
+ "title": "Corneal Stability following Hyperopic LASIK with Advanced Laser Ablation Profiles Analyzed by a Light Propagation Study",
+ "species": "human",
+ "procedure": "lasik",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license> and ali:license_ref)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5896223.xml",
+   "sha256": "b83831d22a6acff8d25d9350f6ca1619bc9e56157b2265f8f706c2b84627dc01",
+   "bytes": 97514,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "hyperopia +0.50 to +8.50 D and/or hyperopic astigmatism up to 4.75 D (eligibility); right eye of each patient; cohort restricted to eyes with 12-month follow-up",
+ "groups": [
+  {
+   "group": "group-1-se-le-3d",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "hyperopia",
+   "target": "plano",
+   "n_reported": 9,
+   "description": "Group 1, preoperative SE of 3 D or less (as defined in Methods); femtosecond LASIK (60 kHz IntraLase flap, Schwind Amaris, optimized aspheric aberration-free profile)"
+  },
+  {
+   "group": "group-2-se-gt-3d",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "hyperopia",
+   "target": "plano",
+   "n_reported": 28,
+   "description": "Group 2, preoperative SE above 3 D (as defined in Methods); femtosecond LASIK (60 kHz IntraLase flap, Schwind Amaris, optimized aspheric aberration-free profile)"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "tab1 SE row (all 37 eyes)",
+   "reason": "whole cohort; its two preoperative-SE subgroups (tab2, tab3) are extracted instead"
+  },
+  {
+   "what": "OCP r3 and r4.5 rows",
+   "reason": "objective corneal power, not refraction"
+  },
+  {
+   "what": "p columns",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Fig. 3 (efficacy, safety, predictability, refractive change plots)",
+   "reason": "plots and proportions are not admissible"
+  },
+  {
+   "what": "1-day and 6-month examinations",
+   "reason": "not tabulated"
+  }
+ ],
+ "notes": [
+  "Target recorded plano: the planned correction was the manifest refraction (patients older than 40) or the manifest refraction plus 50% of the manifest-cycloplegic difference (younger than 40) to offset latent hyperopia; no non-plano target is described.",
+  "Method unstated: the Results state the range of the preoperative cycloplegic SE, which is the range printed in tab1!R8C2, so the tabulated preoperative SE appears to be cycloplegic; postoperative refraction is described only as subjective refraction.",
+  "The SE used for the group cut-off is not identified exactly: the printed preoperative SE range of group 2 (tab3!R8C2) includes values not above the stated cut-off.",
+  "Preoperative exclusion criteria list previous corneal surgery and retouch of refractive surgery.",
+  "Visual acuity, sphere, cylinder and objective corneal power are tabulated but not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "group-1-se-le-3d/se",
+   "group": "group-1-se-le-3d",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "se_absolute",
+   "method": "unstated",
+   "months": [
+    0,
+    3,
+    12
+   ],
+   "baseline_label": "Pre SE (Table 2)",
+   "notes": "mean ± SD (range) per footnote, range not used; n from the table header; no attrition (cohort restricted to eyes with 12-month follow-up)",
+   "values": [
+    1.88,
+    0.01,
+    0.08
+   ],
+   "source_cells": [
+    "PMC5896223.xml::tab2!R8C2",
+    "PMC5896223.xml::tab2!R8C3",
+    "PMC5896223.xml::tab2!R8C4"
+   ],
+   "source_cell_texts": [
+    "1.88 ± 0.73 (0.63 to 2.88)",
+    "0.01 ± 0.43 (−0.50 to 0.63)",
+    "0.08 ± 0.40 (−0.25 to 1.13)"
+   ]
+  },
+  {
+   "series_id": "group-2-se-gt-3d/se",
+   "group": "group-2-se-gt-3d",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "se_absolute",
+   "method": "unstated",
+   "months": [
+    0,
+    3,
+    12
+   ],
+   "baseline_label": "Pre SE (Table 3)",
+   "notes": "mean ± SD (range) per footnote, range not used; n from the table header; no attrition (cohort restricted to eyes with 12-month follow-up)",
+   "values": [
+    4.22,
+    0.21,
+    0.35
+   ],
+   "source_cells": [
+    "PMC5896223.xml::tab3!R8C2",
+    "PMC5896223.xml::tab3!R8C3",
+    "PMC5896223.xml::tab3!R8C4"
+   ],
+   "source_cell_texts": [
+    "4.22 ± 1.12 (2.75 to 8.00)",
+    "0.21 ± 1.13 (−1.38 to 3.00)",
+    "0.35 ± 1.06 (−1.00 to 3.25)"
+   ]
+  }
+ ]
+}

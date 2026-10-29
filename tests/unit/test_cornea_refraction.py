@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import math
+from pathlib import Path
+from types import ModuleType
+from typing import Any
 
 import numpy as np
 import pytest
@@ -167,6 +171,14 @@ def test_builder_reads_signed_cells_and_checks_hashes() -> None:
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
     assert refraction_number("\u0394\u22120.50 \u00b1 0.2") == pytest.approx(-0.5)
+    assert refraction_number("\u2212\u00a02.26 \u00b1 1.1") == pytest.approx(-2.26)
+    assert refraction_number("\u2212\u20090.75") == pytest.approx(-0.75)
+    assert refraction_number("- 1.50 (0.4)") == pytest.approx(-1.5)
+    assert refraction_number("\u20123.25 \u00b1 0.9") == pytest.approx(-3.25)
+    assert refraction_number("+ 0.12") == pytest.approx(0.12)
+    assert refraction_number("0.25 \u2012 0.50") == pytest.approx(0.25)
+    with pytest.raises(InvalidRequest):
+        refraction_number("\u2012")
 
 
 def _library() -> list[RefractionSeries]:
@@ -228,3 +240,66 @@ def test_additive_scores_are_native_errors_in_report_units() -> None:
     )
     long_term = initial["predictions"]["population_initial_state"][-1]
     assert abs(100 * (long_term - 1) * 0.1 - held.changes_d[-1]) < 0.5
+    assert "target_level" not in initial["predictions"]
+    planned = additive.AdditiveScale(**{**SCALE.describe(), "target": 0.0})
+    targeted = additive.leave_one_study_out(CONFIG, series, scale=planned, studies=["ref-syn0"])
+    entry = targeted["studies"][0]["initial_state"][0]
+    assert entry["predictions"]["target_level"] == pytest.approx(
+        [1 - held.reference_d / 10] * len(held.months)
+    )
+    row = targeted["studies"][0]["next_observation"][0]["rows"][0]
+    series_reference = next(s for s in series if s.series_id == entry["series_id"]).reference_d
+    assert row["predictions"]["target_level"] == pytest.approx(1 - series_reference / 10)
+    assert "target_level" in targeted["studies"][0]["next_observation"][0]["scores"]
+
+
+def _publisher() -> ModuleType:
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_refraction_population.py"
+    spec = importlib.util.spec_from_file_location("publish_refraction_population", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_refraction_publisher_tests_initial_state_against_plano_and_f0() -> None:
+    publish = _publisher()
+    assert "target_level" in publish.base.H2_COMPARATORS
+    assert "baseline_level" in publish.base.REPORTED
+
+    def initial(predicted: list[float], target: float) -> dict[str, Any]:
+        return {
+            "series_id": "s",
+            "context": "human/myopia/lasik",
+            "kind": "group_mean",
+            "observed": [1.0, 1.0],
+            "predictions": {
+                "population_initial_state": predicted,
+                "target_level": [target, target],
+            },
+            "scores": {},
+        }
+
+    report = {"studies": [{"study_id": "x", "initial_state": [initial([1.01, 0.99], 1.03)]}]}
+    h4 = publish.initial_versus_target(report)
+    assert h4["common_targets"] == 2 and h4["population_lower"]
+    assert h4["population_initial_state_rmse_pp"] == pytest.approx(1.0)
+    redacted = publish.redact(
+        {
+            "initial_state": [{**initial([1.0, 1.0], 1.0), "reference_value": -5.0}],
+            "next_observation": [],
+            "landmark": [],
+        }
+    )
+    assert set(redacted["initial_state"][0]) <= publish.INITIAL_STATE_PUBLIC_FIELDS
+
+    def h5(initial_f1: float, next_f1: float) -> dict[str, Any]:
+        return {
+            "initial_state": {"common_targets": 4, "f1_rmse_pp": initial_f1, "f0_rmse_pp": 5.5},
+            "next_observation": {"common_targets": 4, "f1_rmse_pp": next_f1, "f0_rmse_pp": 1.5},
+            "landmark": {"common_targets": 4, "f1_rmse_pp": 3.2, "f0_rmse_pp": 3.3},
+        }
+
+    assert publish.h5_passes(h5(5.4, 1.54))
+    assert not publish.h5_passes(h5(5.6, 1.5))
+    assert not publish.h5_passes(h5(5.4, 1.56))

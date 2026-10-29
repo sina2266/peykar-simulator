@@ -1,0 +1,85 @@
+{
+ "study_id": "ref-pmc8958109",
+ "doi": "10.1155/2022/8764103",
+ "pmcid": "PMC8958109",
+ "title": "Evaluation of Wide Corneal Epithelial Remodeling after Small Incision Lenticule Extraction (SMILE) with Wide-Field Optical Coherence Tomography",
+ "species": "human",
+ "procedure": "lenticule_extraction",
+ "split": "development",
+ "license": {
+  "statement": "Creative Commons Attribution License, version not stated (article <license>)",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC8958109.xml",
+   "sha256": "6378e25c30c3a3899a309aaef70e205aec0d4a92a4c6eec83b8d2db4f71fd94c",
+   "bytes": 83525,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "myopia or myopic astigmatism; 64 eyes of 64 patients",
+ "groups": [
+  {
+   "group": "smile",
+   "role": "control",
+   "procedure": "lenticule_extraction",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 64,
+   "description": "Standard SMILE (VisuMax 500 kHz, 110 um cap, 6.0-6.9 mm optical zone), one eye per patient"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "smile/se",
+   "group": "smile",
+   "kind": "group_mean",
+   "n": 64,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC8958109.xml::tab1!R5C2",
+    "PMC8958109.xml::tab2!R10C5",
+    "PMC8958109.xml::tab2!R10C6",
+    "PMC8958109.xml::tab2!R10C7"
+   ],
+   "baseline_label": "Preoperative SE (Table 1, same 64 eyes)",
+   "notes": "mean ± SD (range rows not used); refraction not measured at 1 day and 1 week"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "tab2!R10C2 (preoperative SE in Table 2)",
+   "reason": "prints the preoperative mean of tab1!R5C2 with a figure dash (U+2012) that the frozen number parser does not read; tab1!R5C2 (same 64 eyes) is cited instead"
+  },
+  {
+   "what": "tab2 range rows",
+   "reason": "ranges are not admissible"
+  },
+  {
+   "what": "tab4 and tab5",
+   "reason": "correlation coefficients"
+  },
+  {
+   "what": "Proportion within ±0.50 D of the intended correction (Results)",
+   "reason": "proportions are not admissible"
+  },
+  {
+   "what": "tab3",
+   "reason": "epithelial thickness, not refraction"
+  }
+ ],
+ "notes": [
+  "Method manifest: Methods state manifest refraction at 1, 3 and 6 months; preoperatively both manifest and cycloplegic refraction were measured and the tables do not say which preoperative SE is shown.",
+  "Target unstated: the Results refer to the intended correction without stating it.",
+  "Epithelial thickness, visual acuity, sphere and cylinder are tabulated but not extracted."
+ ]
+}

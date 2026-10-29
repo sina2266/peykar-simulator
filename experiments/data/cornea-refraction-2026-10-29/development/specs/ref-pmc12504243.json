@@ -1,0 +1,109 @@
+{
+ "study_id": "ref-pmc12504243",
+ "doi": "10.3389/fmed.2025.1650495",
+ "pmcid": "PMC12504243",
+ "title": "Tear film thickness and stability following femtosecond-assisted laser in situ keratomileusis: a comparison of high- and low-myopia",
+ "species": "human",
+ "procedure": "lasik",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <permissions>/<license>: 'Creative Commons Attribution License (CC BY)'; no licence URL in the XML)",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC12504243.xml",
+   "sha256": "1a3b90aae68332643561e0a834dc406345d62b47b37fc5706f3c5f55a21b070e",
+   "bytes": 127246,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12504243/fullTextXML",
+   "retrieved_utc": "2026-10-29T08:47:38.521502+00:00"
+  }
+ ],
+ "indication": "low myopia and high myopia groups defined by the preoperative refraction (inclusion: spherical error 0 to −3.00 D or more than −6.00 D, astigmatism within the stated limit); one (right) eye per patient",
+ "groups": [
+  {
+   "group": "low-myopia",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 26,
+   "description": "Low-myopia group (LMG): spherical equivalent '≤−3.00 D' as printed (inclusion: spherical error 0 to −3.00 D); FS-LASIK with Ziemer FEMTO LDV Z2 flap and Schwind AMARIS 500 ablation; single surgeon"
+  },
+  {
+   "group": "high-myopia",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 26,
+   "description": "High-myopia group (HMG): spherical equivalent '≥−6.00 D' as printed (inclusion: spherical error more than −6.00 D); FS-LASIK with Ziemer FEMTO LDV Z2 flap and Schwind AMARIS 500 ablation; single surgeon"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "low-myopia/se",
+   "group": "low-myopia",
+   "kind": "group_mean",
+   "n": 26,
+   "value_kind": "se_absolute",
+   "method": "unstated",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC12504243.xml::tab2!R4C2",
+    "PMC12504243.xml::tab2!R4C3",
+    "PMC12504243.xml::tab2!R4C4"
+   ],
+   "baseline_label": "Preoperative SEQ, LMG (Table 2)",
+   "notes": "mean ± SD (Table 2 footnote); postoperative cells carry the table's significance markers (* or #) after the value; per-visit n not reported (header N = 26)"
+  },
+  {
+   "series_id": "high-myopia/se",
+   "group": "high-myopia",
+   "kind": "group_mean",
+   "n": 26,
+   "value_kind": "se_absolute",
+   "method": "unstated",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "cells": [
+    "PMC12504243.xml::tab2!R4C6",
+    "PMC12504243.xml::tab2!R4C7",
+    "PMC12504243.xml::tab2!R4C8"
+   ],
+   "baseline_label": "Preoperative SEQ, HMG (Table 2)",
+   "notes": "mean ± SD (Table 2 footnote); postoperative cells carry the table's significance markers (* or #) after the value; per-visit n not reported (header N = 26)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 p columns (C5, C9)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 3 SEQ row (1 and 3 months by group)",
+   "reason": "postoperative values without the preoperative reference; same visits as Table 2 (duplicate eyes)"
+  },
+  {
+   "what": "Table 1 SEQ row (preoperative by group and total)",
+   "reason": "preoperative only; the whole-cohort column would duplicate the subgroups; the Table 2 preoperative cell of each group is used as its reference"
+  }
+ ],
+ "notes": [
+  "Groups are defined by the preoperative degree of myopia (patient-condition subgroups), both control; only the subgroups are tabulated over time, so no whole-cohort series is extracted.",
+  "Target refraction is not stated in the article; recorded as unstated.",
+  "Refraction method: 'spherical equivalent refraction (SEQ)' is listed first in the examination order without stating manifest, cycloplegic or objective; recorded as unstated.",
+  "Table 1 prints a preoperative SEQ for the LMG that differs from the Table 2 preoperative cell; the Table 2 cell (same table as the follow-ups) is cited.",
+  "If both eyes met the criteria the right eye was selected; one eye per patient.",
+  "Table 2 also tabulates UDVA, CDVA, lipid layer, tear meniscus, break-up times, Schirmer, OSDI, staining, epithelial and tear film thickness (not extracted; schema 1.0.0 has no such series)."
+ ]
+}

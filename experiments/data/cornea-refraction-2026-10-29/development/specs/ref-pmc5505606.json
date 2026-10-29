@@ -1,0 +1,117 @@
+{
+ "study_id": "ref-pmc5505606",
+ "doi": "10.2147/OPTH.S127101",
+ "pmcid": "PMC5505606",
+ "title": "Matched population comparison of visual outcomes and patient satisfaction between 3 modalities for the correction of low to moderate myopic astigmatism",
+ "species": "human",
+ "procedure": "lenticule_extraction",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License)",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5505606.xml",
+   "sha256": "15529ad58ea1dfde1b8822c29839e32754538c45a0ead99e039d55593914ec0b",
+   "bytes": 97765,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "indication": "low to moderate myopic astigmatism (inclusion: SE -3 to -8 D, astigmatism at least -0.75 D, age 21-40 years); prospective non-randomized single-centre comparison of T-ICL, femto-LASIK and ReLEx SMILE",
+ "groups": [
+  {
+   "group": "fs-lasik",
+   "role": "control",
+   "procedure": "lasik",
+   "refractive_error": "myopia",
+   "target": "plano",
+   "n_reported": 30,
+   "description": "Group B femto-LASIK: VisuMax flap 100-120 um, MEL 90 standard (non-wavefront) ablation with iris recognition, aim of emmetropia; bilateral surgery, one eye per patient analysed"
+  },
+  {
+   "group": "smile",
+   "role": "control",
+   "procedure": "lenticule_extraction",
+   "refractive_error": "myopia",
+   "target": "unstated",
+   "n_reported": 30,
+   "description": "Group C ReLEx SMILE: VisuMax 500 kHz, cap 120 um, 2 mm incision, manual cyclotorsion compensation; bilateral surgery, one eye per patient analysed"
+  }
+ ],
+ "extraction_protocol": "refraction-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "fs-lasik/se",
+   "group": "fs-lasik",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    1,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC5505606.xml::t2-opth-11-1253!R12C3",
+    "PMC5505606.xml::t2-opth-11-1253!R13C3",
+    "PMC5505606.xml::t2-opth-11-1253!R14C3",
+    "PMC5505606.xml::t2-opth-11-1253!R15C3"
+   ],
+   "baseline_label": "Preoperative SE (Table 2, Group B FS-LASIK)",
+   "notes": "mean ± SD; per-group n not tabulated (Methods: 30 eyes of 30 patients; the reported percentages of eyes are consistent only with 30 eyes per group); per-visit n not reported"
+  },
+  {
+   "series_id": "smile/se",
+   "group": "smile",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "se_absolute",
+   "method": "manifest",
+   "months": [
+    0,
+    1,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC5505606.xml::t2-opth-11-1253!R12C4",
+    "PMC5505606.xml::t2-opth-11-1253!R13C4",
+    "PMC5505606.xml::t2-opth-11-1253!R14C4",
+    "PMC5505606.xml::t2-opth-11-1253!R15C4"
+   ],
+   "baseline_label": "Preoperative SE (Table 2, Group C SMILE)",
+   "notes": "mean ± SD; per-group n not tabulated (as for FS-LASIK); per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "t2-opth-11-1253 column Group A (T-ICL)",
+   "reason": "toric phakic intraocular lens, out of scope"
+  },
+  {
+   "what": "t2-opth-11-1253 column P-value",
+   "reason": "p-values (protocol inclusion 4)"
+  },
+  {
+   "what": "t1-opth-11-1253 row SE (D)",
+   "reason": "same preoperative reference as the Table 2 Preoperative row (not duplicated)"
+  },
+  {
+   "what": "Fig. 3 SE predictability and Fig. 4 attempted versus achieved cylinder",
+   "reason": "proportions and attempted-versus-achieved plots (protocol inclusion 4)"
+  },
+  {
+   "what": "t3-opth-11-1253 vector analysis",
+   "reason": "astigmatism vectors, not SE"
+  }
+ ],
+ "notes": [
+  "Refraction: manifest refraction at each visit from 1 month onward (Methods); recorded as manifest. Day 1 and 1 week visits are not tabulated.",
+  "Target: stated as emmetropia for femto-LASIK; not stated for SMILE (recorded as unstated).",
+  "Groups were matched by the authors for age, SE, contrast sensitivity and TBUT; one eye per patient was included although surgery was bilateral.",
+  "UDVA, CDVA, cylinder (Table 2), HOA, endothelial cell density, TBUT and contrast sensitivity (Table 4) are tabulated; not extracted."
+ ]
+}
