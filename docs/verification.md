@@ -1,5 +1,5 @@
 # Verification record
-## Retinal visual-acuity model 1.1: development and protocol freeze: 2026-10-29 (night)
+## Retinal visual-acuity model 1.1: development, protocol freeze and sealed test: 2026-10-29 (night)
 Commands run from the repository root; outcomes observed. Start state: main at
 `93283648` (= origin; IOP 1.3 results committed).
 - Rounds 0–1 declared in the 1.1 development log, with the module
@@ -37,7 +37,49 @@ Commands run from the repository root; outcomes observed. Start state: main at
   1.1.0 included (retina 1.2.0 has no protocol).
 - `make check-docker` after writing the protocol: 930 tests passed in 170.51 s, 89%
   coverage, mypy 161 source files, 18 frontend tests, all packages built, EXIT=0
-  (`.peykar/retina-acuity11-freeze-check-docker-20261029.log`).
+  (`.peykar/retina-acuity11-freeze-check-docker-20261029.log`). Freeze commit
+  `7fce2b4f`, pushed; `git ls-remote origin refs/heads/main` returned the same SHA.
+- Then, once: `OMP_NUM_THREADS=1 uv run --frozen python
+  scripts/evaluate_retina_acuity_population_1_1.py --sealed --protocol
+  experiments/eye/retina-acuity/model-1.1/protocol-1.1.0.json --output
+  .peykar/retina-acuity11-sealed-test-2026-10-29` (detached; log ends with `EXIT=0`):
+  protocol check passed, 169.7 s, 24 training and 29 sealed record hashes,
+  `report.json` `eb8110f1…`, `reference-w0-report.json` `bd3cb6b6…`.
+- `OMP_NUM_THREADS=1 uv run --frozen python scripts/publish_retina_acuity_population_1_1.py
+  --sealed --report .peykar/retina-acuity11-sealed-test-2026-10-29/report.json
+  --reference .peykar/retina-acuity11-sealed-test-2026-10-29/reference-w0-report.json
+  --output experiments/eye/retina-acuity/model-1.1/sealed-test-2026-10-29`: exit 0; H1
+  pass (77/106, 93/106), H2 fail (3.95 against persistence 3.00 and the pooled-curve
+  increment 2.80), H3 fail (6.24 against 3.56 and 3.06), H4 fail (6.65 against 5.87),
+  H5 fail (3.95/6.24/6.65 against 3.61/5.01/6.52); model 1.0.0's own H1–H4 all fail.
+- `uv run --frozen python .peykar/check_retina_acuity_redaction_1_1.py sealed
+  experiments/eye/retina-acuity/model-1.1/sealed-test-2026-10-29`: 15 public and 14
+  private studies, 28 redacted study reports (both public reports) and 152 analysis rows
+  checked, 0 leaks, exit 0. The publisher's licence rule classes 15 records as public;
+  the custody verifier had counted 13 because custodian C7 wrote `license_class` for two
+  of its records (both `public`).
+- `uv run --frozen python .peykar/retina_acuity11_sealed_breakdown.py
+  .peykar/retina-acuity11-sealed-test-2026-10-29/report.json
+  .peykar/retina-acuity11-sealed-test-2026-10-29/reference-w0-report.json`: exit 0;
+  per-study, per-target-month and per-context tables; removing any single study changes
+  no H1–H4 verdict. Inline reads of the private reports: without the linked
+  dexamethasone pair H5 would pass and H2–H4 would still fail; forecasts from origins
+  before the earliest training control visit of their context (from the training
+  records' visit months) 6.04 letters (29 targets) and 8.90 (45) against 2.78 (77) and
+  3.02 (61) from later origins. The fitted context parameters in `report-public.json`
+  give time constants of 7.58–12.64 days.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/retina-acuity/model-1.1/sealed-test-2026-10-29/plot-results.py`: exit
+  0. The image viewer showed only the content files had at the start of this session,
+  so the figure was opened through a local `python3 -m http.server` (127.0.0.1) in the
+  Playwright browser and inspected there; re-rendered twice (legend over a bar label,
+  overlapping annotation).
+- `make check-docker` before the results commit: 930 tests passed in 163.89 s, 89%
+  coverage, mypy 161 source files, all packages built, EXIT=0
+  (`.peykar/retina-acuity11-results-check-docker-20261029.log`); the dashboard check
+  step was a cached Docker layer (its inputs unchanged since the freeze check, where its
+  18 tests ran and passed). `.peykar/check_frozen_protocols.py`: no problem in any
+  frozen protocol.
 ## Acuity 1.1 (closed), generic eye model 4 and retinal visual-acuity model 1.0: 2026-10-29 (evening)
 Commands run from the repository root; outcomes observed. Start state: main at
 `f6c74736` (= origin; acuity 1.0 results committed). The IOP 1.3 sealed run started at

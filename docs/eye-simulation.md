@@ -30,7 +30,9 @@ on logMAR: its baseline is the preoperative corrected acuity and its values are 
 closure is not included: its models apply to mouse debridement wounds only. Nor is the
 best-corrected acuity after macular treatment: its model 1.0.0 failed all four
 hypotheses of its sealed test
-([README](../experiments/eye/retina-acuity/model-1.0/README.md)), and only components
+([README](../experiments/eye/retina-acuity/model-1.0/README.md)) and model 1.1.0 failed
+four of five on a fresh set
+([README](../experiments/eye/retina-acuity/model-1.1/README.md)), and only components
 that passed are offered. A newer version replaces an offered one only when it passes
 all its declared hypotheses, including the comparison with its predecessor, or when the
 predecessor fails H1–H4 on the newer sealed set: retinal thickness 1.1.0 replaced 1.0.0,
@@ -100,8 +102,11 @@ uv run --frozen peykar eye components   # versions, methods, sealed results
   before the earliest training visit, where the early part of the law (a transient of
   one or two weeks) is not constrained by any data, and when a forecast month lies
   after the latest one. The retinal acuity model 1.0 failed its sealed test this way:
-  no training visit before day 30, and one sealed study with a day-1 visit. The check
-  changes no forecast value. With the public development records the earliest training
+  no training visit before day 30, and one sealed study with a day-1 visit. Version 1.1
+  failed the same way through its recovery term: its sealed forecasts from origins
+  before the first training visit of their context had about twice the error of the
+  others (next observation 6.04 against 2.78 letters). The check changes no forecast
+  value. With the public development records the earliest training
   visit is day 1 for `iop`, the corneal components, `refraction` and `acuity`, and day
   7 for `retina-thickness`.
 - A stored fit records the configuration, the SHA-256 of every record it used and its

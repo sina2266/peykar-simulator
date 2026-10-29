@@ -471,10 +471,18 @@ reserved before triage.
   early transient (w1) adopted (3.46/3.97/4.87 against 4.33/5.83/7.62 letters); a
   treatment fallback and dexamethasone wear-off rejected. Protocol `c0c37c7e` frozen
   with H5 against 1.0.0 trained on the same records.
-- [ ] One-shot sealed test of version 1.1 on tranche 2.
-- [ ] A pre-freeze check of which terms of a law the training visits identify.
-- [ ] Steroid-implant wear-off (the declared w3 rule made LOSO worse); tranches 3–4
-  (138 unread articles) for a later version.
+- [x] One-shot sealed test of version 1.1 on tranche 2: H1 passes, H2–H5 fail (next
+  observation 3.95 vs persistence 3.00 and the pooled-curve increment 2.80 letters;
+  landmark 6.24 vs 3.56 and 3.06; initial state 6.65 vs 5.87; worse than 1.0.0 with the
+  same training). The recovery term (time constant 7.5–13 days) took the transient's
+  place before each context's first training visit; two linked dexamethasone-implant
+  studies with day-3 visits carried most of the error.
+- [ ] A pre-freeze check of which terms of a law the training visits identify in each
+  context, and a rule for times before a context's first training visit (pooled-curve
+  shape there, or interpolation from the baseline).
+- [ ] Context curves shrunk toward the pooled curve; the pooled-curve increment as a
+  forecaster; steroid-implant wear-off with early-visit training data; tranches 3–4
+  (138 unread articles) for the next sealed test.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

@@ -1,4 +1,22 @@
 # Peykar continuation context
+## Retinal acuity 1.1 FAILED its sealed test (H1 only), 2026-10-29 late night
+- Sealed run once (169.7 s, report `eb8110f1…`, reference w0 `bd3cb6b6…` in
+  `.peykar/retina-acuity11-sealed-test-2026-10-29`). Published in
+  experiments/eye/retina-acuity/model-1.1/sealed-test-2026-10-29 (0 leaks,
+  `.peykar/check_retina_acuity_redaction_1_1.py`; breakdown
+  `.peykar/retina_acuity11_sealed_breakdown.py`). H1 pass; H2 3.95 vs persistence 3.00 /
+  pooled-curve increment 2.80; H3 6.24 vs 3.56/3.06; H4 6.65 vs 5.87; H5 fail (1.0.0
+  3.61/5.01/6.52). 1.0.0 also fails its own H1–H4 → NO retinal acuity in `peykar eye`.
+- Cause (post hoc): recovery term tau 7.5–13 d in every context → unconstrained before
+  each context's first training visit (DME steroid implant +32 letters at day 1, first
+  training visit month 2); linked DEX pair (rac-pmc3720664/4852759, private) with day-3
+  visits: landmark 19.5/18.9. Outside-support origins 6.04/8.90 vs 2.78/3.02 inside.
+  Custody verifier undercounted public licences (C7 used `license_class`): real 15/14.
+- Tranche 2 consumed; tranches 3–4 (138) unread. Next-version ideas: support rule before
+  a context's first training visit, context curves shrunk to the pooled curve,
+  pooled-curve increment as forecaster. Image viewer shows session-start file content
+  only: view new PNGs via `python3 -m http.server --bind 127.0.0.1` + Playwright
+  screenshot (run the render and the screenshot in SEPARATE tool batches).
 ## Retinal acuity 1.1 frozen, 2026-10-29 late night
 - Round 1 (declared in `ac6f562c`) LOSO on 24 studies: w1 (no early transient) ADOPTED
   (anchored_t4 3.460/3.965/4.873 vs w0 4.327/5.827/7.615 letters); w2 (treatment
