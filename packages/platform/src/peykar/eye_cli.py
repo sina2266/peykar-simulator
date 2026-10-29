@@ -48,6 +48,7 @@ def components() -> None:
     _emit(
         [item.describe() for item in eye_simulation.COMPONENTS.values()]
         + [item.describe() for item in eye_simulation.CORNEAL_COMPONENTS.values()]
+        + [item.describe() for item in eye_simulation.ADDITIVE_COMPONENTS.values()]
     )
 
 
@@ -58,7 +59,8 @@ def fit(
     output: Annotated[Path, typer.Option(dir_okay=False)],
 ) -> None:
     """Fit a component's population to the record folders and store it as JSON
-    (retina-thickness and iop; corneal components are fitted at forecast time)."""
+    (retina-thickness and iop; corneal and refraction components are fitted at
+    forecast time)."""
     item = eye_simulation.component(component)
     if output.exists():
         raise InvalidRequest("--output must not exist")
@@ -82,7 +84,9 @@ def fit(
 def forecast(
     component: Annotated[str, typer.Option()],
     context: Annotated[str, typer.Option(help="for example human/dme/anti_vegf")],
-    baseline: Annotated[float, typer.Option(help="pretreatment value in the component's unit")],
+    baseline: Annotated[
+        float, typer.Option(help="pretreatment value in the component's unit (SE0 for refraction)")
+    ],
     months: Annotated[str, typer.Option(help="comma-separated forecast months")],
     fit_file: Annotated[
         Path | None, typer.Option("--fit", exists=True, dir_okay=False, help="stored fit")
@@ -118,6 +122,21 @@ def forecast(
             group_size=group_size,
             observed=pairs,
             reference_kind=reference_kind,
+        )
+        _emit({**result, "fit_records": len(hashes)})
+        return
+    if isinstance(item, eye_simulation.AdditiveComponent):
+        if records is None or regimen is not None or agent is not None:
+            raise InvalidRequest("Additive components need --records and take no dose rule")
+        series, hashes = eye_simulation.load_series_any(item, eye_simulation.record_paths(records))
+        result = eye_simulation.forecast_additive(
+            item,
+            eye_simulation.fit_component(item, series),
+            context=context,
+            baseline=baseline,
+            months=targets,
+            group_size=group_size,
+            observed=pairs,
         )
         _emit({**result, "fit_records": len(hashes)})
         return

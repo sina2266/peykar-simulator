@@ -16,12 +16,15 @@ version, its sealed-test result and its context of use.
 | `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass ([README](../experiments/eye/iop/model-1.2/README.md)) |
 | `corneal-endothelium` | 1.0.0 | endothelial cell density (cells/mm²) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/endothelium/README.md)) |
 | `corneal-thickness` | 1.0.0 | central corneal thickness (µm) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/thickness/README.md)) |
+| `refraction` | 1.0.0 (`f1`) | spherical equivalent after laser refractive surgery (D) | `human/<refractive error>/<procedure>` | all five hypotheses pass on 13 series ([README](../experiments/eye/refraction/model-1.0/README.md)) |
 
 `retina-thickness` and `iop` run on the generic eye model version 2
 (`peykar.model_learning.eye_recovery_population2`); their fits can be stored as JSON.
 The two corneal components keep their own frozen model APIs and are fitted when a
-forecast is asked for. Epithelial wound closure is not included: its models apply to
-mouse debridement wounds only.
+forecast is asked for. `refraction` runs on generic eye model version 2 on the change
+from the preoperative SE (an additive outcome) and is also fitted at forecast time; its
+baseline is the preoperative SE and its values are SEs in dioptres. Epithelial wound
+closure is not included: its models apply to mouse debridement wounds only.
 
 Each component uses its own tested primary methods:
 
@@ -30,6 +33,7 @@ Each component uses its own tested primary methods:
 | `retina-thickness`, `iop` | Gaussian population prior | Gaussian prior updated by the follow-ups | predictive median |
 | `corneal-endothelium` | Gaussian population prior | Student-t prior, level anchored to the follow-ups | predictive mean |
 | `corneal-thickness` | Gaussian population prior | robust mixture prior updated by the follow-ups | predictive mean |
+| `refraction` | Gaussian population prior | robust mixture prior updated by the follow-ups | predictive median |
 
 ## Use
 
@@ -53,6 +57,11 @@ uv run --frozen peykar eye forecast --component corneal-endothelium \
   --records experiments/data/cornea-endothelium-2026-10-28/development/records \
   --context human/cataract --baseline 2500 --n 40 --months 1,3,12
 
+# Refraction: preoperative SE as the baseline, observed SEs in dioptres.
+uv run --frozen peykar eye forecast --component refraction \
+  --records experiments/data/cornea-refraction-2026-10-29/development/records \
+  --context human/myopia/lasik --baseline -5.0 --n 40 --months 6,12 --observed 1:-0.1,3:-0.2
+
 uv run --frozen peykar eye components   # versions, methods, sealed results
 ```
 
@@ -61,7 +70,8 @@ uv run --frozen peykar eye components   # versions, methods, sealed results
   and can be added as further `--records` folders. A fit made from the public records
   alone uses fewer studies than the tested models did.
 - Values are given and returned in the component's unit; fractions of the baseline
-  are returned as well.
+  are returned as well, except for `refraction`, which returns the change from the
+  preoperative SE instead.
 - `--reference-kind` (endothelium) says what the baseline count is:
   `patient_preoperative` (default) or a donor count (`donor_eye_bank`, `donor_other`).
 - Warnings name what the sealed tests did not cover: a context without training

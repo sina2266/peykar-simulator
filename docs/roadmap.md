@@ -370,6 +370,36 @@ reserved before triage.
   surgery. Model 1.3 is to be developed on tranches 1–3 (229 studies) and tested on
   tranche 4.
 
+### 2026-10-29 refraction after corneal laser refractive surgery (sixth eye component)
+[Model 1.0.0](../experiments/eye/refraction/model-1.0/README.md) was frozen (commit
+`a2eccf2c`, protocol `8634f5a2`) before a one-shot sealed test.
+- [x] Screen 2,169 open-access articles and 1,215 masked tables; a mechanical rule
+  kept 89 (one tranche); blind triage (39 admitted); outcome-blind split (31/8); three
+  development extractors (24 records, 43 series) and two custodians (8 sealed records,
+  14 series), every sealed record rebuilt byte for byte.
+- [x] Additive outcomes on the generic model: an exact pseudo-fraction of the change
+  from baseline (`cornea_refraction_data`) and an additive evaluation that rescores
+  the unchanged harness in the outcome's unit with a target comparator
+  (`eye_additive_evaluation`). The same pattern can serve visual acuity (letters or
+  logMAR) and visual-field indices.
+- [x] Sealed result on 13 group-mean forecast series: all five hypotheses pass
+  (coverage 82.1%/85.7%, next observation 0.29 vs persistence 0.37 D, landmark 0.47
+  vs 0.78, initial state 0.40 vs 0.50 D for full correction, refractive-error level
+  better than procedure only).
+- [x] `peykar eye forecast --component refraction` (fitted from record folders,
+  forecasts in dioptres).
+- [ ] Hyperopic and mixed-astigmatism corrections: six training series, none tested.
+- [ ] The initial state is limited by between-study differences (SD about 0.48 D);
+  laser platform, nomogram and optical zone are not inputs.
+- [ ] A later version needs a new screen reserved before triage (no unread tranche).
+
+### 2026-10-29 retinal-thickness model 1.2 development (no change adopted yet)
+- [x] Round 1 on the 128 training studies of tranches 1–2: a prior-treatment level and
+  an OCT-device level gained at most 0.074 pp and were rejected by the declared rule.
+- [ ] Round 2 (regimen level) declared and running; if it is rejected, no 1.2 protocol
+  is frozen and tranche 3 (67 extracted sealed records) stays sealed for a later
+  version.
+
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

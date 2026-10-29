@@ -1,5 +1,46 @@
 # Peykar continuation context
 
+## IOP 1.3 frozen, refraction 1.0 tested, retina 1.2 round 2 running, 2026-10-29
+
+- IOP 1.3 (generic eye model 3, `scripts/evaluate_iop_population_1_3.py`): candidate d1
+  (sub-procedure level, contexts `human/<sub>/<procedure>`) adopted on LOSO over the 229
+  training studies: 6.382/8.061/10.066 pp against d0 = 1.2.0 6.464/8.348/10.209 (next
+  obs/landmark/initial). d2 (lognormal-mean point) rejected (+0.064/+0.073). Protocol
+  experiments/eye/iop/model-1.3/protocol-1.3.0.json SHA `0cac4daf…`, freeze `38f4f874`.
+  The ONE sealed run on tranche 4 started 09:37 CET 10-29 (PID 68525, about 6 min per
+  study, d1 then the d0 reference; log `.peykar/iop13-sealed-test-2026-10-29.log`,
+  output `.peykar/iop13-sealed-test-2026-10-29/`). Never stop or restart it. Publisher
+  `scripts/publish_iop_population_1_3.py` tests human series only (the one rabbit
+  training study has individual series only) and allow-lists initial-state fields of
+  redacted studies; then run `.peykar/check_iop_redaction_1_3.py` and
+  `.peykar/iop13_sealed_breakdown.py`.
+- Refraction 1.0.0, sixth eye component: spherical equivalent after PRK/surface
+  ablation, LASIK or SMILE. Dataset experiments/data/cornea-refraction-2026-10-29:
+  2,169 screened, 89 by the masked-table rule, 39 admitted blind, split salt
+  `peykar-refraction-holdout-v1:` 31 development / 8 sealed; 24 development records
+  (43 series; private ones in `.peykar/refraction-development-private`) and 8 sealed
+  (14 series, custodians C1–C2, `.peykar/refraction-sealed-2026-10-29`). Additive
+  scale: the change enters generic model 2 as the exact pseudo-fraction exp(change/5 D);
+  `peykar.validation.eye_additive_evaluation` rescores in report units of 0.1 D (1 pp =
+  0.1 D) and adds the plano-target comparator. f1 (procedure → refractive error)
+  adopted over f0; slope b −0.90. Protocol SHA `8634f5a2…`, freeze `a2eccf2c`. Sealed
+  once (39.9 s): ALL FIVE pass: coverage 0.821/0.857, next obs 0.293 vs persistence
+  0.370 D, landmark 0.468 vs 0.780, initial 0.397 vs plano 0.501 and f0 0.413. A public
+  severe-myopia LASIK group regressed to −1.9 D, outside the 90% landmark interval.
+  Every sealed series is myopic. Both refraction sets are consumed. `peykar eye` lists
+  and forecasts `refraction` (`ADDITIVE_COMPONENTS`; needs `--records`; output in D).
+- Retina 1.2 round 1 (LOSO, 128 studies, Gaussian primary): e3 (prior treatment) and
+  e4 (OCT device) rejected (no 0.10 pp gain). Round 2: e6 (regimen level,
+  `eye_retina_data_1_2.to_retina_series_1_2_regimen`) declared from the e0 regimen
+  bias diagnostic, running in 8 shards `.peykar/retina-1.2-dev/round2-e6-shard{0..7}`
+  since 12:21 CET. Merge with `--merge`, compare with `.peykar/compare_iop_12.py`
+  against round1-e0. If e6 is rejected: no 1.2 protocol, tranche 3 stays sealed.
+- Next component candidate: BCVA (logMAR, 818 OA hits) on the additive scale; drop
+  retina tranche-4 and IOP tranche-5 articles before triage so they stay unread.
+  Corneal nerves had only 47 hits.
+- `.peykar/check_frozen_protocols.py` checks the pins of all eleven frozen protocols
+  (and reports "retina 1.2.0: no protocol yet"); run it before every commit.
+
 ## Retina 1.1 and IOP 1.2 tested; next tranches extracted, 2026-10-28/29
 
 - Fresh sealed sets, reserved before triage and extracted blind: retina tranche 2

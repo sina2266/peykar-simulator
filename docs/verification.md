@@ -78,6 +78,48 @@ Commands run from the repository root; outcomes observed. Start state: main at
 - `uv run --frozen python .peykar/write_refraction_protocol.py`: protocol SHA-256
   `8634f5a2…` (58 frozen files, 24 training and 8 sealed record hashes);
   `.peykar/check_frozen_protocols.py`: no problem in any of the eleven frozen protocols.
+- Refraction freeze commit `a2eccf2c`, pushed (HEAD = origin). Then, once,
+  `uv run --frozen python scripts/evaluate_refraction_population.py --sealed --protocol
+  experiments/eye/refraction/model-1.0/protocol-1.0.0.json --output
+  .peykar/refraction10-sealed-test-2026-10-29`: protocol check passed, f1 and the f0
+  reference scored in the same run, exit 0, 39.9 s; `report.json` SHA-256 `4c3ca270…`,
+  `reference-f0-report.json` `a05e719a…`.
+- `uv run --frozen python scripts/publish_refraction_population.py --sealed --report
+  .peykar/refraction10-sealed-test-2026-10-29/report.json --reference
+  .peykar/refraction10-sealed-test-2026-10-29/reference-f0-report.json --output
+  experiments/eye/refraction/model-1.0/sealed-test-2026-10-29`: H1–H5 pass (13 forecast
+  series, 28 targets; 34 initial-state targets): coverage 23/28 and 24/28; next
+  observation 2.93 against persistence 3.70 pp; landmark 4.68 against 7.80; initial
+  state 3.97 against the plano target 5.01 and f0 4.13 (1 pp = 0.1 D).
+  `uv run --frozen python .peykar/refraction10_sealed_breakdown.py`: per-period and
+  per-procedure tables (after month 6: plano 0.750 D, model 0.204/0.631 D next
+  observation/landmark). The development LOSO reports were published with
+  `--development` into `development-loso-2026-10-29/`.
+  `uv run --frozen python .peykar/check_refraction_redaction.py <development|sealed>
+  <public folder>` on both folders: 0 leaks in 22 reports of the 11 redacted
+  development studies and in 8 reports of the 4 redacted sealed studies.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/refraction/model-1.0/sealed-test-2026-10-29/plot-results.py`: exit 0;
+  the figure was inspected, and the script was then changed (legend placement, x range
+  from surgery, per-series legend, panel titles stating the severe-myopia miss) and
+  rerun, exit 0.
+- Retina 1.2 round 1, each candidate LOSO over the 128 training studies in four shards
+  (`scripts/evaluate_retina_population_1_2.py --development --candidate <e0|e3|e4>
+  --shard i/4`, 4,722–5,014 s per shard for e0) joined by `--merge`;
+  `.peykar/compare_iop_12.py`: next observation / landmark / initial state (pp) e0
+  7.193/9.376/12.892, e3 7.162/9.407/12.945, e4 7.196/9.381/12.818; e3 and e4 rejected.
+  `uv run --frozen python .peykar/retina12_diag_regimen.py` (training LOSO of e0 only):
+  initial-state bias by regimen −11.9 pp (fixed monthly, 10 targets) to +2.2 pp (fixed
+  interval, 17). Round 2 (e6, regimen level) declared, commit `04dd314c`, pushed; eight
+  shards started (`--candidate e6 --shard i/8`).
+- `uv run --frozen pytest -q tests/unit/test_eye_forecast.py` after adding the additive
+  refraction component to `peykar eye`: 11 tests passed; `ruff check`, `ruff format
+  --check` and `mypy` (152 source files) passed.
+- `make check-docker` before the refraction results commit (eight retina LOSO shards and
+  the IOP 1.3 sealed run alongside): 903 tests passed in 346.84 s, 89% coverage, mypy
+  152 source files, 18 frontend tests, package builds, EXIT=0
+  (`.peykar/refraction-results-check-docker-20261029.log`).
+  `.peykar/check_frozen_protocols.py`: no problem in any of the eleven frozen protocols.
 ## Fresh sealed tranches, generic eye model 2, retinal-thickness model 1.1 and IOP model 1.2: 2026-10-28/29
 Commands run from the repository root; outcomes observed. Start state: main at
 `76c575ce` (= origin; retina tranche 2 and IOP tranche 3 triaged and reserved).

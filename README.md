@@ -227,12 +227,33 @@ initial-state error of single-implant groups from 14.61 to 5.42 pp, but one grou
 treated after vitrectomy did not re-thicken as predicted
 ([model 1.1](experiments/eye/retina/model-1.1/README.md),
 [Persian results](experiments/eye/retina/model-1.1/results.fa.md)).
+The sixth eye component, and the fourth corneal one, is
+[refraction after corneal laser refractive surgery](experiments/eye/refraction/README.md):
+the spherical equivalent (dioptres) after PRK and other surface ablation, LASIK and
+SMILE. It is built from an
+[outcome-blind dataset](experiments/data/cornea-refraction-2026-10-29/README.md) of
+2,169 screened open-access papers (89 passed a masked-table rule, 39 admitted blind,
+split 31/8 before any value was read): 24 development and 8 custodian-extracted sealed
+records. Refraction changes in dioptres, not as a fraction of its baseline, so the
+series give the generic eye model the change as an exact pseudo-fraction and
+[an additive evaluation](packages/platform/src/peykar/validation/eye_additive_evaluation.py)
+scores it in tenths of a dioptre, with full correction (the plano target) as a
+comparator. **Refraction model 1.0.0** (procedure → refractive-error hierarchy) was
+frozen and pushed (`a2eccf2c`) and tested once on 13 group-mean forecast series. All
+five declared hypotheses passed: coverage 82.1%/85.7%, next follow-up 0.29 D versus
+0.37 for persistence, landmark 0.47 versus 0.78, initial state 0.40 versus 0.50 D for
+full correction, and the refractive-error level beat the procedure-only model in the
+initial state. The gain over full correction is largest after month 6, where eyes
+regress about 0.4 D towards myopia, but one severe-myopia LASIK group regressed to
+−1.9 D, outside the 90% interval; the test is small, myopic only and weighted to LASIK
+([model 1.0](experiments/eye/refraction/model-1.0/README.md),
+[Persian results](experiments/eye/refraction/model-1.0/results.fa.md)).
 The tested eye components can be run as forecasters with `peykar eye`
 ([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
 follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%
 intervals, its sealed-test result and its context of use. It covers retinal thickness
-1.1.0, IOP 1.2.0, corneal endothelial density 1.0.0 and corneal thickness 1.0.0; it is
-a research tool, not a clinical one.
+1.1.0, IOP 1.2.0, corneal endothelial density 1.0.0, corneal thickness 1.0.0 and
+refraction 1.0.0 (in dioptres); it is a research tool, not a clinical one.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable

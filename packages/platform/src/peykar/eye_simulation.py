@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,6 +21,7 @@ from typing import Any
 from peykar.model_learning import (
     endothelial_population,
     iop_population_1_2,
+    refraction_population,
     retina_thickness_population_1_1,
     thickness_population,
 )
@@ -31,14 +33,22 @@ from peykar.model_learning.eye_forecast import (
     forecast_scenario,
 )
 from peykar.validation.cornea_endothelium_data import DensitySeries, to_density_series
+from peykar.validation.cornea_refraction_data import (
+    COVARIATE_UNIT_D,
+    MODEL_UNIT_D,
+    RefractionSeries,
+    to_refraction_series_by_error,
+)
 from peykar.validation.cornea_thickness_data import ThicknessSeries, to_thickness_series
 from peykar.validation.eye_iop_data_1_2 import to_iop_series
 from peykar.validation.eye_retina_data_1_1 import to_retina_series_1_1
 from peykar_core.errors import InvalidRequest
 
 __all__ = [
+    "ADDITIVE_COMPONENTS",
     "COMPONENTS",
     "CORNEAL_COMPONENTS",
+    "AdditiveComponent",
     "Component",
     "CornealComponent",
     "fit_component",
@@ -149,7 +159,7 @@ def load_series(item: Component, paths: Sequence[Path]) -> tuple[list[Any], dict
 
 
 def load_series_any(
-    item: Component | CornealComponent, paths: Sequence[Path]
+    item: Component | CornealComponent | AdditiveComponent, paths: Sequence[Path]
 ) -> tuple[list[Any], dict[str, str]]:
     """As :func:`load_series`, for any component."""
     series: list[Any] = []
@@ -165,7 +175,9 @@ def load_series_any(
     return series, hashes
 
 
-def fit_component(item: Component, series: Sequence[Any]) -> population.RecoveryFit:
+def fit_component(
+    item: Component | AdditiveComponent, series: Sequence[Any]
+) -> population.RecoveryFit:
     """The population fit the harness makes: controls with a baseline value fit the
     population; every series gives noise estimates."""
     controls = [s for s in series if s.role == "control" and s.reference_value > 0]
@@ -313,12 +325,14 @@ CORNEAL_COMPONENTS: dict[str, CornealComponent] = {
 }
 
 
-def any_component(name: str) -> Component | CornealComponent:
+def any_component(name: str) -> Component | CornealComponent | AdditiveComponent:
     if name in COMPONENTS:
         return COMPONENTS[name]
     if name in CORNEAL_COMPONENTS:
         return CORNEAL_COMPONENTS[name]
-    known = sorted({*COMPONENTS, *CORNEAL_COMPONENTS})
+    if name in ADDITIVE_COMPONENTS:
+        return ADDITIVE_COMPONENTS[name]
+    known = sorted({*COMPONENTS, *CORNEAL_COMPONENTS, *ADDITIVE_COMPONENTS})
     raise InvalidRequest(f"Unknown eye component {name!r}; known: {known}")
 
 
@@ -451,6 +465,176 @@ def forecast_corneal(
                         baseline * quantiles["0.05"][i],
                         baseline * quantiles["0.95"][i],
                     ],
+                },
+            }
+            for i, month in enumerate(targets)
+        ],
+        "warnings": warnings,
+    }
+
+
+# --- additive components (outcomes that change in their own unit) ----------------------
+
+
+@dataclass(frozen=True)
+class AdditiveComponent:
+    """A component whose outcome changes additively (refraction, dioptres).
+
+    The generic model sees the change from baseline as the pseudo-fraction
+    ``exp(change / model_unit)`` and the baseline as ``exp(baseline / covariate_unit)``
+    (``cornea_refraction_data``); forecasts are turned back into the outcome's unit.
+    Fitted at forecast time from record folders; the tested primaries are the
+    Gaussian initial state and the robust assimilation, with the predictive median.
+    """
+
+    component_id: str
+    model_version: str
+    candidate: str
+    quantity: str
+    unit: str
+    context_form: str
+    config: population.RecoveryConfig
+    to_series: Callable[[Mapping[str, Any]], Sequence[Any]]
+    protocol: str
+    sealed_result: str
+    context_of_use: str
+    model_unit: float
+    covariate_unit: float
+
+    def describe(self) -> dict[str, Any]:
+        return {
+            "component": self.component_id,
+            "model_version": self.model_version,
+            "candidate": self.candidate,
+            "quantity": self.quantity,
+            "unit": self.unit,
+            "context_form": self.context_form,
+            "protocol": self.protocol,
+            "sealed_result": self.sealed_result,
+            "context_of_use": self.context_of_use,
+            "primary_initial_state": "population_initial_state (Gaussian prior, median)",
+            "primary_forecast": "population_assimilation_robust (median)",
+            "stored_fits": False,
+            "configuration": self.config.describe(),
+        }
+
+
+ADDITIVE_COMPONENTS: dict[str, AdditiveComponent] = {
+    "refraction": AdditiveComponent(
+        component_id="refraction",
+        model_version="1.0.0",
+        candidate="f1",
+        quantity="spherical equivalent after corneal laser refractive surgery",
+        unit="D",
+        context_form=(
+            "human/<refractive error>/<procedure>, for example human/myopia/lasik, "
+            "human/myopia/lenticule_extraction or human/hyperopia/surface_ablation"
+        ),
+        config=refraction_population.DEVELOPMENT_CANDIDATES["f1"],
+        to_series=to_refraction_series_by_error,
+        protocol="experiments/eye/refraction/model-1.0/protocol-1.0.0.json",
+        sealed_result=(
+            "sealed test, 13 group-mean forecast series: all five hypotheses pass (coverage "
+            "0.821/0.857; next observation 0.29 vs persistence 0.37 D; landmark 0.47 vs "
+            "0.78 D; initial state 0.40 vs full correction 0.50 D)"
+        ),
+        context_of_use=(
+            "human group means with a plano target after surface ablation, LASIK or "
+            "lenticule extraction; myopic corrections tested, hyperopic ones only trained"
+        ),
+        model_unit=MODEL_UNIT_D,
+        covariate_unit=COVARIATE_UNIT_D,
+    ),
+}
+
+
+def forecast_additive(
+    item: AdditiveComponent,
+    fit: population.RecoveryFit,
+    *,
+    context: str,
+    baseline: float,
+    months: Sequence[float],
+    group_size: int | None = None,
+    observed: Sequence[tuple[float, float]] = (),
+) -> dict[str, Any]:
+    """The tested primary forecast of one additive scenario, in the outcome's unit."""
+    if not math.isfinite(baseline):
+        raise InvalidRequest("The baseline value must be finite")
+    targets = [float(m) for m in months]
+    if not targets or any(not (0 < m < float("inf")) for m in targets):
+        raise InvalidRequest("Every forecast month must be finite and positive")
+    pairs = sorted((float(m), float(v)) for m, v in observed)
+    if any(not (0 < m < float("inf") and math.isfinite(v)) for m, v in pairs):
+        raise InvalidRequest("Observed months must be positive and values finite")
+    if len({m for m, _ in pairs}) != len(pairs):
+        raise InvalidRequest("Observed months must be unique")
+    if group_size is not None and (isinstance(group_size, bool) or int(group_size) < 1):
+        raise InvalidRequest("The group size must be a positive integer")
+    n = None if group_size is None else int(group_size)
+    series = RefractionSeries(
+        series_id="scenario/series",
+        study_id="scenario",
+        context=context,
+        reference_d=baseline,
+        months=tuple(m for m, _ in pairs) or (1.0,),
+        changes_d=tuple(v - baseline for _, v in pairs) or (0.0,),
+        aggregate_n=n,
+    )
+    config = item.config
+    prior = fit.prior(context, series.kind, population.level_covariate(config, series))
+    level_used = fit.level_used(context)
+    gaussian = population.gaussian(prior["mean"], prior["covariance"])
+    noise = fit.noise(series.kind, context, n)
+    if pairs:
+        fitted = population.posterior(
+            config, population.robust(config, gaussian), series=series, noise=noise
+        )
+        method = "population_assimilation_robust"
+    else:
+        fitted = population.posterior(config, gaussian, series=None, noise=noise)
+        method = "population_initial_state"
+    result = population.predictive(
+        config,
+        fitted,
+        months=targets,
+        quantiles=QUANTILES,
+        extra_noise=fit.forecast_inflation(series.kind, context, n),
+    )
+    quantiles = result["quantiles"]
+
+    def value(fraction: float) -> float:
+        return baseline + item.model_unit * math.log(fraction)
+
+    warnings = []
+    if level_used != context:
+        warnings.append(
+            f"context {context!r} has no training series; the prior comes from {level_used}"
+        )
+    if n is None:
+        warnings.append("single-eye forecasts were not tested (no single-eye series)")
+    if pairs and min(targets) <= pairs[-1][0]:
+        warnings.append("some forecast months are not after the last observed follow-up")
+    return {
+        "component": item.component_id,
+        "model_version": item.model_version,
+        "unit": item.unit,
+        "sealed_result": item.sealed_result,
+        "context_of_use": item.context_of_use,
+        "context": context,
+        "level_used": level_used,
+        "method": method,
+        "point": "predictive median",
+        "baseline": baseline,
+        "group_size": n,
+        "observed": [{"month": m, "value": v, "change": v - baseline} for m, v in pairs],
+        "forecast": [
+            {
+                "month": month,
+                "value": {
+                    "point": value(result["point_fraction"][i]),
+                    "interval_80": [value(quantiles["0.1"][i]), value(quantiles["0.9"][i])],
+                    "interval_90": [value(quantiles["0.05"][i]), value(quantiles["0.95"][i])],
                 },
             }
             for i, month in enumerate(targets)

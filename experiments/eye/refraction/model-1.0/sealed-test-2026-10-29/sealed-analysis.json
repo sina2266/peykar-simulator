@@ -1,0 +1,3558 @@
+{
+ "mode": "sealed",
+ "status": "declared sealed-test analysis",
+ "model_version": "1.0.0-f1",
+ "source_report_sha256": "4c3ca2705385ef84c4eb442092a36b96d1e365906cf56857366c922dc2c11ad7",
+ "tested_subset": "human series (contexts human/...)",
+ "unit": "1 pp = 0.1 D of spherical equivalent change from the preoperative SE",
+ "H4_pooled_training_curve_reported_only": true,
+ "reference_report_sha256": "a05e719a394c1fb24121550835dfe4008e24cfed7d2bfae3104f6354d8172b2e",
+ "studies_with_redacted_values": [
+  "ref-pmc13046917",
+  "ref-pmc13078066",
+  "ref-pmc3711877",
+  "ref-pmc5003563"
+ ],
+ "primary_methods": {
+  "next_observation": "population_assimilation_robust",
+  "landmark": "population_assimilation_robust",
+  "initial_state": "population_initial_state"
+ },
+ "verdicts": {
+  "H1_calibration_next_observation_group_means": true,
+  "H2_accuracy_next_observation_group_means": true,
+  "H3_landmark_group_means": true,
+  "H4_initial_state_below_plano_target_control_group_means": true,
+  "H5_initial_state_lower_than_f0_forecasts_within_0_05_pp": true
+ },
+ "H1_calibration_next_observation_group_means": {
+  "80": {
+   "inside": 23,
+   "n": 28,
+   "coverage": 0.8214285714285714,
+   "window": [
+    0.7,
+    0.9
+   ],
+   "within_window": true
+  },
+  "90": {
+   "inside": 24,
+   "n": 28,
+   "coverage": 0.8571428571428571,
+   "window": [
+    0.8,
+    0.97
+   ],
+   "within_window": true
+  }
+ },
+ "H2_accuracy_next_observation_group_means": {
+  "persistence": {
+   "common_targets": 28,
+   "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+   "persistence_rmse_pp": 3.697623271392432,
+   "population_assimilation_robust_lower": true
+  },
+  "last_two_log_linear": {
+   "common_targets": 28,
+   "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+   "last_two_log_linear_rmse_pp": 18.972730845330506,
+   "population_assimilation_robust_lower": true
+  },
+  "pooled_curve_ratio": {
+   "common_targets": 28,
+   "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+   "pooled_curve_ratio_rmse_pp": 16.63408304311569,
+   "population_assimilation_robust_lower": true
+  },
+  "analog_knn": {
+   "common_targets": 28,
+   "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+   "analog_knn_rmse_pp": 8.003836552389382,
+   "population_assimilation_robust_lower": true
+  },
+  "target_level": {
+   "common_targets": 28,
+   "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+   "target_level_rmse_pp": 5.237547817715571,
+   "population_assimilation_robust_lower": true
+  }
+ },
+ "H3_landmark_group_means": {
+  "comparisons": {
+   "persistence": {
+    "common_targets": 28,
+    "population_assimilation_robust_rmse_pp": 4.680593406942754,
+    "persistence_rmse_pp": 7.799907050728235,
+    "population_assimilation_robust_lower": true
+   },
+   "pooled_curve_ratio": {
+    "common_targets": 28,
+    "population_assimilation_robust_rmse_pp": 4.680593406942754,
+    "pooled_curve_ratio_rmse_pp": 32.047295207975175,
+    "population_assimilation_robust_lower": true
+   },
+   "analog_knn": {
+    "common_targets": 28,
+    "population_assimilation_robust_rmse_pp": 4.680593406942754,
+    "analog_knn_rmse_pp": 24.483009100266706,
+    "population_assimilation_robust_lower": true
+   },
+   "target_level": {
+    "common_targets": 28,
+    "population_assimilation_robust_rmse_pp": 4.680593406942754,
+    "target_level_rmse_pp": 5.237547817715571,
+    "population_assimilation_robust_lower": true
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 23,
+    "n": 28,
+    "coverage": 0.8214285714285714,
+    "window": [
+     0.7,
+     0.9
+    ],
+    "within_window": true
+   },
+   "90": {
+    "inside": 24,
+    "n": 28,
+    "coverage": 0.8571428571428571,
+    "window": [
+     0.8,
+     0.97
+    ],
+    "within_window": true
+   }
+  }
+ },
+ "H4_initial_state_control_group_means": {
+  "summary": {
+   "pooled_training_curve": {
+    "series": 12,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 24.728448243863117,
+    "pooled_max_abs_pp": 63.39037780850354,
+    "targets": 34
+   },
+   "population_initial_state": {
+    "series": 12,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 11,
+    "pooled_rmse_pp": 3.9717432090400324,
+    "pooled_max_abs_pp": 11.731072144961585,
+    "targets": 34
+   },
+   "population_initial_state_t4": {
+    "series": 12,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 11,
+    "pooled_rmse_pp": 3.9669253658308583,
+    "pooled_max_abs_pp": 11.758127333692169,
+    "targets": 34
+   },
+   "target_level": {
+    "series": 12,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 11,
+    "pooled_rmse_pp": 5.005173793774033,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 34
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 32,
+    "n": 34,
+    "window": [
+     0.7,
+     0.9
+    ]
+   },
+   "90": {
+    "inside": 32,
+    "n": 34,
+    "window": [
+     0.8,
+     0.97
+    ]
+   }
+  }
+ },
+ "reported_not_tested": {
+  "single_eyes": {
+   "next_observation": {
+    "persistence": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "persistence_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "last_two_log_linear_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "reference_to_last_log_linear_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "pooled_curve_ratio_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "analog_knn_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "baseline_level": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "baseline_level_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "target_level": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "target_level_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    }
+   },
+   "landmark": {
+    "persistence": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "persistence_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "last_two_log_linear_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "reference_to_last_log_linear_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "pooled_curve_ratio_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "analog_knn_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "baseline_level": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "baseline_level_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    },
+    "target_level": {
+     "common_targets": 0,
+     "population_assimilation_robust_rmse_pp": null,
+     "target_level_rmse_pp": null,
+     "population_assimilation_robust_lower": false
+    }
+   },
+   "coverage_next_observation": {
+    "80": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "coverage_landmark": {
+    "80": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "initial_state": {}
+  },
+  "all_series_coverage": {
+   "next_observation": {
+    "80": {
+     "inside": 23,
+     "n": 28,
+     "coverage": 0.8214285714285714,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": true
+    },
+    "90": {
+     "inside": 24,
+     "n": 28,
+     "coverage": 0.8571428571428571,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   },
+   "landmark": {
+    "80": {
+     "inside": 23,
+     "n": 28,
+     "coverage": 0.8214285714285714,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": true
+    },
+    "90": {
+     "inside": 24,
+     "n": 28,
+     "coverage": 0.8571428571428571,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   }
+  },
+  "group_mean_other_comparators": {
+   "next_observation": {
+    "reference_to_last_log_linear": {
+     "common_targets": 28,
+     "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+     "reference_to_last_log_linear_rmse_pp": 17.44289284261071,
+     "population_assimilation_robust_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 28,
+     "population_assimilation_robust_rmse_pp": 2.9252929150826312,
+     "baseline_level_rmse_pp": 56.90600702662493,
+     "population_assimilation_robust_lower": true
+    }
+   },
+   "landmark": {
+    "last_two_log_linear": {
+     "common_targets": 28,
+     "population_assimilation_robust_rmse_pp": 4.680593406942754,
+     "last_two_log_linear_rmse_pp": 18.307537841199842,
+     "population_assimilation_robust_lower": true
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 28,
+     "population_assimilation_robust_rmse_pp": 4.680593406942754,
+     "reference_to_last_log_linear_rmse_pp": 18.307537841199842,
+     "population_assimilation_robust_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 28,
+     "population_assimilation_robust_rmse_pp": 4.680593406942754,
+     "baseline_level_rmse_pp": 56.90600702662493,
+     "population_assimilation_robust_lower": true
+    }
+   }
+  }
+ },
+ "pass_counts": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 13,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 8.003836552389382,
+    "pooled_max_abs_pp": 37.141095652173895,
+    "targets": 28
+   },
+   "baseline_level": {
+    "series": 13,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 56.90600702662493,
+    "pooled_max_abs_pp": 81.80000000000001,
+    "targets": 28
+   },
+   "last_two_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.97273084533051,
+    "pooled_max_abs_pp": 53.6084313290437,
+    "targets": 28
+   },
+   "persistence": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 3.6976232713924326,
+    "pooled_max_abs_pp": 12.400000000000011,
+    "targets": 28
+   },
+   "pooled_curve_ratio": {
+    "series": 13,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 16.63408304311569,
+    "pooled_max_abs_pp": 40.86204447517021,
+    "targets": 28
+   },
+   "population_anchored": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.2991711533888903,
+    "pooled_max_abs_pp": 11.229753758978568,
+    "targets": 28
+   },
+   "population_anchored_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.307014310450192,
+    "pooled_max_abs_pp": 11.277900833775734,
+    "targets": 28
+   },
+   "population_assimilation": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.9325764969629247,
+    "pooled_max_abs_pp": 11.170827025501717,
+    "targets": 28
+   },
+   "population_assimilation_robust": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.9252929150826312,
+    "pooled_max_abs_pp": 11.197955855872465,
+    "targets": 28
+   },
+   "population_assimilation_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.971839245634576,
+    "pooled_max_abs_pp": 11.234283205926365,
+    "targets": 28
+   },
+   "reference_to_last_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 17.44289284261071,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "target_level": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.237547817715571,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 28
+   },
+   "weak_prior": {
+    "series": 13,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 6.733757831949884,
+    "pooled_max_abs_pp": 18.31936494168169,
+    "targets": 28
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 13,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 24.483009100266703,
+    "pooled_max_abs_pp": 59.66243305953702,
+    "targets": 28
+   },
+   "baseline_level": {
+    "series": 13,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 56.90600702662493,
+    "pooled_max_abs_pp": 81.80000000000001,
+    "targets": 28
+   },
+   "last_two_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 18.307537841199846,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "persistence": {
+    "series": 13,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 7.799907050728235,
+    "pooled_max_abs_pp": 25.4,
+    "targets": 28
+   },
+   "pooled_curve_ratio": {
+    "series": 13,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 32.047295207975175,
+    "pooled_max_abs_pp": 67.25037780850352,
+    "targets": 28
+   },
+   "population_anchored": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.244224560962731,
+    "pooled_max_abs_pp": 20.853404829733346,
+    "targets": 28
+   },
+   "population_anchored_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.263109270261716,
+    "pooled_max_abs_pp": 20.914432662659177,
+    "targets": 28
+   },
+   "population_assimilation": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.654377327954413,
+    "pooled_max_abs_pp": 15.79508893914725,
+    "targets": 28
+   },
+   "population_assimilation_robust": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.680593406942754,
+    "pooled_max_abs_pp": 15.875761606499683,
+    "targets": 28
+   },
+   "population_assimilation_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.718509287490732,
+    "pooled_max_abs_pp": 15.987108959595764,
+    "targets": 28
+   },
+   "reference_to_last_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 18.307537841199846,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "target_level": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 5.237547817715571,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 28
+   },
+   "weak_prior": {
+    "series": 13,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 11.199538067997555,
+    "pooled_max_abs_pp": 29.333420595318582,
+    "targets": 28
+   }
+  }
+ },
+ "pass_counts_group_means": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 13,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 8.003836552389382,
+    "pooled_max_abs_pp": 37.141095652173895,
+    "targets": 28
+   },
+   "baseline_level": {
+    "series": 13,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 56.90600702662493,
+    "pooled_max_abs_pp": 81.80000000000001,
+    "targets": 28
+   },
+   "last_two_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.97273084533051,
+    "pooled_max_abs_pp": 53.6084313290437,
+    "targets": 28
+   },
+   "persistence": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 3.6976232713924326,
+    "pooled_max_abs_pp": 12.400000000000011,
+    "targets": 28
+   },
+   "pooled_curve_ratio": {
+    "series": 13,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 16.63408304311569,
+    "pooled_max_abs_pp": 40.86204447517021,
+    "targets": 28
+   },
+   "population_anchored": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.2991711533888903,
+    "pooled_max_abs_pp": 11.229753758978568,
+    "targets": 28
+   },
+   "population_anchored_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.307014310450192,
+    "pooled_max_abs_pp": 11.277900833775734,
+    "targets": 28
+   },
+   "population_assimilation": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.9325764969629247,
+    "pooled_max_abs_pp": 11.170827025501717,
+    "targets": 28
+   },
+   "population_assimilation_robust": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.9252929150826312,
+    "pooled_max_abs_pp": 11.197955855872465,
+    "targets": 28
+   },
+   "population_assimilation_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 2.971839245634576,
+    "pooled_max_abs_pp": 11.234283205926365,
+    "targets": 28
+   },
+   "reference_to_last_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 17.44289284261071,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "target_level": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.237547817715571,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 28
+   },
+   "weak_prior": {
+    "series": 13,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 6.733757831949884,
+    "pooled_max_abs_pp": 18.31936494168169,
+    "targets": 28
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 13,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 24.483009100266703,
+    "pooled_max_abs_pp": 59.66243305953702,
+    "targets": 28
+   },
+   "baseline_level": {
+    "series": 13,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 56.90600702662493,
+    "pooled_max_abs_pp": 81.80000000000001,
+    "targets": 28
+   },
+   "last_two_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 18.307537841199846,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "persistence": {
+    "series": 13,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 7.799907050728235,
+    "pooled_max_abs_pp": 25.4,
+    "targets": 28
+   },
+   "pooled_curve_ratio": {
+    "series": 13,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 32.047295207975175,
+    "pooled_max_abs_pp": 67.25037780850352,
+    "targets": 28
+   },
+   "population_anchored": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.244224560962731,
+    "pooled_max_abs_pp": 20.853404829733346,
+    "targets": 28
+   },
+   "population_anchored_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.263109270261716,
+    "pooled_max_abs_pp": 20.914432662659177,
+    "targets": 28
+   },
+   "population_assimilation": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.654377327954413,
+    "pooled_max_abs_pp": 15.79508893914725,
+    "targets": 28
+   },
+   "population_assimilation_robust": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.680593406942754,
+    "pooled_max_abs_pp": 15.875761606499683,
+    "targets": 28
+   },
+   "population_assimilation_t4": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 4.718509287490732,
+    "pooled_max_abs_pp": 15.987108959595764,
+    "targets": 28
+   },
+   "reference_to_last_log_linear": {
+    "series": 13,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 18.307537841199846,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 28
+   },
+   "target_level": {
+    "series": 13,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 5.237547817715571,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 28
+   },
+   "weak_prior": {
+    "series": 13,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 11.199538067997555,
+    "pooled_max_abs_pp": 29.333420595318582,
+    "targets": 28
+   }
+  }
+ },
+ "pass_counts_controls": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 11,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 8.96977723260069,
+    "pooled_max_abs_pp": 37.141095652173895,
+    "targets": 22
+   },
+   "baseline_level": {
+    "series": 11,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 52.89229192854612,
+    "pooled_max_abs_pp": 77.49999999999999,
+    "targets": 22
+   },
+   "last_two_log_linear": {
+    "series": 11,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 19.14451485509645,
+    "pooled_max_abs_pp": 53.6084313290437,
+    "targets": 22
+   },
+   "persistence": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 3.9681688013948766,
+    "pooled_max_abs_pp": 12.400000000000011,
+    "targets": 22
+   },
+   "pooled_curve_ratio": {
+    "series": 11,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 17.722965388837,
+    "pooled_max_abs_pp": 40.86204447517021,
+    "targets": 22
+   },
+   "population_anchored": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.511799214269156,
+    "pooled_max_abs_pp": 11.229753758978568,
+    "targets": 22
+   },
+   "population_anchored_t4": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.520514182456527,
+    "pooled_max_abs_pp": 11.277900833775734,
+    "targets": 22
+   },
+   "population_assimilation": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.093665172047435,
+    "pooled_max_abs_pp": 11.170827025501717,
+    "targets": 22
+   },
+   "population_assimilation_robust": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.084195487558566,
+    "pooled_max_abs_pp": 11.197955855872465,
+    "targets": 22
+   },
+   "population_assimilation_t4": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 3.1405095530505798,
+    "pooled_max_abs_pp": 11.234283205926365,
+    "targets": 22
+   },
+   "reference_to_last_log_linear": {
+    "series": 11,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 17.191488665490386,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 22
+   },
+   "target_level": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.777188684032146,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 22
+   },
+   "weak_prior": {
+    "series": 11,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 7.49958105550168,
+    "pooled_max_abs_pp": 18.31936494168169,
+    "targets": 22
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 11,
+    "series_within_5_10_pp": 6,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 26.064810167226657,
+    "pooled_max_abs_pp": 59.66243305953702,
+    "targets": 22
+   },
+   "baseline_level": {
+    "series": 11,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 52.89229192854612,
+    "pooled_max_abs_pp": 77.49999999999999,
+    "targets": 22
+   },
+   "last_two_log_linear": {
+    "series": 11,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.299975516940474,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 22
+   },
+   "persistence": {
+    "series": 11,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 8.538761885979405,
+    "pooled_max_abs_pp": 25.4,
+    "targets": 22
+   },
+   "pooled_curve_ratio": {
+    "series": 11,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 34.83483361147085,
+    "pooled_max_abs_pp": 67.25037780850352,
+    "targets": 22
+   },
+   "population_anchored": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 6.841475870450334,
+    "pooled_max_abs_pp": 20.853404829733346,
+    "targets": 22
+   },
+   "population_anchored_t4": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 6.854368597787704,
+    "pooled_max_abs_pp": 20.914432662659177,
+    "targets": 22
+   },
+   "population_assimilation": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.136440423954638,
+    "pooled_max_abs_pp": 15.79508893914725,
+    "targets": 22
+   },
+   "population_assimilation_robust": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.156692619716015,
+    "pooled_max_abs_pp": 15.875761606499683,
+    "targets": 22
+   },
+   "population_assimilation_t4": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.203416544989939,
+    "pooled_max_abs_pp": 15.987108959595764,
+    "targets": 22
+   },
+   "reference_to_last_log_linear": {
+    "series": 11,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.299975516940474,
+    "pooled_max_abs_pp": 35.430614433405516,
+    "targets": 22
+   },
+   "target_level": {
+    "series": 11,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 5.777188684032146,
+    "pooled_max_abs_pp": 18.799999999999994,
+    "targets": 22
+   },
+   "weak_prior": {
+    "series": 11,
+    "series_within_5_10_pp": 6,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 12.443660960503577,
+    "pooled_max_abs_pp": 29.333420595318582,
+    "targets": 22
+   }
+  }
+ },
+ "by_context": {
+  "human/myopia/lasik": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 26.323929523128157,
+     "pooled_max_abs_pp": 63.39037780850354,
+     "targets": 25
+    },
+    "population_initial_state": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 4.338752063423152,
+     "pooled_max_abs_pp": 11.731072144961585,
+     "targets": 25
+    },
+    "population_initial_state_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 4.3350696229461985,
+     "pooled_max_abs_pp": 11.758127333692169,
+     "targets": 25
+    },
+    "target_level": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 5.794169483196017,
+     "pooled_max_abs_pp": 18.799999999999994,
+     "targets": 25
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 9,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.656730848606669,
+     "pooled_max_abs_pp": 37.141095652173895,
+     "targets": 19
+    },
+    "baseline_level": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 48.63126663718355,
+     "pooled_max_abs_pp": 74.2,
+     "targets": 19
+    },
+    "last_two_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 18.463484632382738,
+     "pooled_max_abs_pp": 53.6084313290437,
+     "targets": 19
+    },
+    "persistence": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.460692063369826,
+     "pooled_max_abs_pp": 12.400000000000011,
+     "targets": 19
+    },
+    "pooled_curve_ratio": {
+     "series": 9,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 19.99937260915325,
+     "pooled_max_abs_pp": 40.86204447517021,
+     "targets": 19
+    },
+    "population_anchored": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 3.9538325924262137,
+     "pooled_max_abs_pp": 11.229753758978568,
+     "targets": 19
+    },
+    "population_anchored_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 3.965737123869201,
+     "pooled_max_abs_pp": 11.277900833775734,
+     "targets": 19
+    },
+    "population_assimilation": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 3.5024053113453544,
+     "pooled_max_abs_pp": 11.170827025501717,
+     "targets": 19
+    },
+    "population_assimilation_robust": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 3.493898356794656,
+     "pooled_max_abs_pp": 11.197955855872465,
+     "targets": 19
+    },
+    "population_assimilation_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 3.5511363572652064,
+     "pooled_max_abs_pp": 11.234283205926365,
+     "targets": 19
+    },
+    "reference_to_last_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.993586072494614,
+     "pooled_max_abs_pp": 35.430614433405516,
+     "targets": 19
+    },
+    "target_level": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 6.2793035148477205,
+     "pooled_max_abs_pp": 18.799999999999994,
+     "targets": 19
+    },
+    "weak_prior": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 8.14400417595845,
+     "pooled_max_abs_pp": 18.31936494168169,
+     "targets": 19
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 29.695324930458582,
+     "pooled_max_abs_pp": 59.66243305953702,
+     "targets": 19
+    },
+    "baseline_level": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 48.63126663718355,
+     "pooled_max_abs_pp": 74.2,
+     "targets": 19
+    },
+    "last_two_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.359391791698627,
+     "pooled_max_abs_pp": 35.430614433405516,
+     "targets": 19
+    },
+    "persistence": {
+     "series": 9,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.428370959363471,
+     "pooled_max_abs_pp": 25.4,
+     "targets": 19
+    },
+    "pooled_curve_ratio": {
+     "series": 9,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 38.65094605376749,
+     "pooled_max_abs_pp": 67.25037780850352,
+     "targets": 19
+    },
+    "population_anchored": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.525138127396405,
+     "pooled_max_abs_pp": 20.853404829733346,
+     "targets": 19
+    },
+    "population_anchored_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.548384131338026,
+     "pooled_max_abs_pp": 20.914432662659177,
+     "targets": 19
+    },
+    "population_assimilation": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 5.5771399594624755,
+     "pooled_max_abs_pp": 15.79508893914725,
+     "targets": 19
+    },
+    "population_assimilation_robust": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 5.609464563526892,
+     "pooled_max_abs_pp": 15.875761606499683,
+     "targets": 19
+    },
+    "population_assimilation_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 5.65621041302636,
+     "pooled_max_abs_pp": 15.987108959595764,
+     "targets": 19
+    },
+    "reference_to_last_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.359391791698627,
+     "pooled_max_abs_pp": 35.430614433405516,
+     "targets": 19
+    },
+    "target_level": {
+     "series": 9,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 6.2793035148477205,
+     "pooled_max_abs_pp": 18.799999999999994,
+     "targets": 19
+    },
+    "weak_prior": {
+     "series": 9,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 13.480292216088426,
+     "pooled_max_abs_pp": 29.333420595318582,
+     "targets": 19
+    }
+   }
+  },
+  "human/myopia/lenticule_extraction": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 20.15497451232945,
+     "pooled_max_abs_pp": 25.174166666666675,
+     "targets": 6
+    },
+    "population_initial_state": {
+     "series": 2,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.4610428319973763,
+     "pooled_max_abs_pp": 2.774038064895179,
+     "targets": 6
+    },
+    "population_initial_state_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.442191883517135,
+     "pooled_max_abs_pp": 2.7490209396633825,
+     "targets": 6
+    },
+    "target_level": {
+     "series": 2,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 1.409491634124398,
+     "pooled_max_abs_pp": 2.0000000000000018,
+     "targets": 6
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.7407051182125661,
+     "pooled_max_abs_pp": 3.8799999999999946,
+     "targets": 7
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 76.80302263397117,
+     "pooled_max_abs_pp": 81.80000000000001,
+     "targets": 7
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.481434449963952,
+     "pooled_max_abs_pp": 26.869385566594506,
+     "targets": 7
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.7955231881329037,
+     "pooled_max_abs_pp": 1.1999999999999789,
+     "targets": 7
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.5581535981444594,
+     "pooled_max_abs_pp": 2.3181666666666434,
+     "targets": 7
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.0291502539238815,
+     "pooled_max_abs_pp": 1.894698761756719,
+     "targets": 7
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.0051936890904647,
+     "pooled_max_abs_pp": 1.8129046507395552,
+     "targets": 7
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.0388956715783038,
+     "pooled_max_abs_pp": 1.9451878927990718,
+     "targets": 7
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.0340724659447116,
+     "pooled_max_abs_pp": 1.9297858960460434,
+     "targets": 7
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.0363225912668579,
+     "pooled_max_abs_pp": 1.935487466562802,
+     "targets": 7
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.481434449963952,
+     "pooled_max_abs_pp": 26.869385566594506,
+     "targets": 7
+    },
+    "target_level": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.6370705543744932,
+     "pooled_max_abs_pp": 2.6000000000000023,
+     "targets": 7
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.1540899791104688,
+     "pooled_max_abs_pp": 1.9988975634680495,
+     "targets": 7
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.041087710021299,
+     "pooled_max_abs_pp": 3.8799999999999946,
+     "targets": 7
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 76.80302263397117,
+     "pooled_max_abs_pp": 81.80000000000001,
+     "targets": 7
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.481434449963952,
+     "pooled_max_abs_pp": 26.869385566594506,
+     "targets": 7
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.4242792663559445,
+     "pooled_max_abs_pp": 3.0000000000000027,
+     "targets": 7
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.3238059634342783,
+     "pooled_max_abs_pp": 4.983055555555538,
+     "targets": 7
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.4838655042582058,
+     "pooled_max_abs_pp": 3.1278671260798196,
+     "targets": 7
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.4817777652358388,
+     "pooled_max_abs_pp": 3.125442149452473,
+     "targets": 7
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.484219071646707,
+     "pooled_max_abs_pp": 3.14110578913378,
+     "targets": 7
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.4829825023822312,
+     "pooled_max_abs_pp": 3.1383811042374754,
+     "targets": 7
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.4822214216598208,
+     "pooled_max_abs_pp": 3.138880818525225,
+     "targets": 7
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.481434449963952,
+     "pooled_max_abs_pp": 26.869385566594506,
+     "targets": 7
+    },
+    "target_level": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.6370705543744932,
+     "pooled_max_abs_pp": 2.6000000000000023,
+     "targets": 7
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.903982812896734,
+     "pooled_max_abs_pp": 5.64909579472368,
+     "targets": 7
+    }
+   }
+  },
+  "human/myopia/surface_ablation": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 18.527453167833716,
+     "pooled_max_abs_pp": 25.93825661853191,
+     "targets": 3
+    },
+    "population_initial_state": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 3.129519260678357,
+     "pooled_max_abs_pp": 3.398436504707858,
+     "targets": 3
+    },
+    "population_initial_state_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 3.1323244885219834,
+     "pooled_max_abs_pp": 3.4013014314691503,
+     "targets": 3
+    },
+    "target_level": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 0.42031734043061586,
+     "pooled_max_abs_pp": 0.6000000000000005,
+     "targets": 3
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.596759784167799,
+     "pooled_max_abs_pp": 0.8407999999999971,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 47.150238599608386,
+     "pooled_max_abs_pp": 47.30000000000001,
+     "targets": 2
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.656728086594744,
+     "pooled_max_abs_pp": 7.930614433405503,
+     "targets": 2
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.4123105625617772,
+     "pooled_max_abs_pp": 0.5000000000000115,
+     "targets": 2
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.089438617865309,
+     "pooled_max_abs_pp": 10.575756618531894,
+     "targets": 2
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.40604522908746093,
+     "pooled_max_abs_pp": 0.5652584785267312,
+     "targets": 2
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.40643200013173275,
+     "pooled_max_abs_pp": 0.5648270914751619,
+     "targets": 2
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.2957969288800059,
+     "pooled_max_abs_pp": 0.3971544798155646,
+     "targets": 2
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.3009584809432865,
+     "pooled_max_abs_pp": 0.40483205807138045,
+     "targets": 2
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.2937918743883051,
+     "pooled_max_abs_pp": 0.3930221780765075,
+     "targets": 2
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.782060200314435,
+     "pooled_max_abs_pp": 7.930614433405503,
+     "targets": 2
+    },
+    "target_level": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.2915475947422634,
+     "pooled_max_abs_pp": 0.40000000000000036,
+     "targets": 2
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.24809776296001,
+     "pooled_max_abs_pp": 0.3293461981453527,
+     "targets": 2
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.22378990147012087,
+     "pooled_max_abs_pp": 0.30800000000001937,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 47.150238599608386,
+     "pooled_max_abs_pp": 47.30000000000001,
+     "targets": 2
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.782060200314435,
+     "pooled_max_abs_pp": 7.930614433405503,
+     "targets": 2
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.38078865529320305,
+     "pooled_max_abs_pp": 0.5000000000000115,
+     "targets": 2
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.942143154353015,
+     "pooled_max_abs_pp": 14.938256618531899,
+     "targets": 2
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.44167836818641326,
+     "pooled_max_abs_pp": 0.565258478526709,
+     "targets": 2
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.4412721186302164,
+     "pooled_max_abs_pp": 0.5648270914751841,
+     "targets": 2
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.28699870872694416,
+     "pooled_max_abs_pp": 0.3971544798155646,
+     "targets": 2
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.29352098292060846,
+     "pooled_max_abs_pp": 0.40483205807138045,
+     "targets": 2
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.2835191350653915,
+     "pooled_max_abs_pp": 0.3930221780765075,
+     "targets": 2
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.782060200314435,
+     "pooled_max_abs_pp": 7.930614433405503,
+     "targets": 2
+    },
+    "target_level": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.2915475947422634,
+     "pooled_max_abs_pp": 0.40000000000000036,
+     "targets": 2
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.4190361487947758,
+     "pooled_max_abs_pp": 0.5801262847473732,
+     "targets": 2
+    }
+   }
+  }
+ },
+ "per_series": {
+  "next_observation": [
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-mild/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.7319442596136913,
+     "max_abs_pp": 1.073597543522875,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 2.092844953645641,
+     "max_abs_pp": 2.6999999999999913,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.488267747249214,
+     "max_abs_pp": 33.03061443340549,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 30.08316211757522,
+     "max_abs_pp": 35.430614433405516,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 20.526039524080304,
+     "max_abs_pp": 31.66204447517018,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 21.542521515725692,
+     "max_abs_pp": 37.141095652173895,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 20.42792206760149,
+     "max_abs_pp": 21.90000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.1090536506409476,
+     "max_abs_pp": 1.2000000000000233,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-moderate/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.0350993427185398,
+     "max_abs_pp": 1.2775677515184158,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.357082066318902,
+     "max_abs_pp": 4.0999999999999925,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 10.160753060049675,
+     "max_abs_pp": 16.97832260927441,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 6.926534769679371,
+     "max_abs_pp": 8.930614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 21.539306560769955,
+     "max_abs_pp": 32.76204447517019,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.7598070923781117,
+     "max_abs_pp": 4.7742894650475876,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 48.49278296819022,
+     "max_abs_pp": 51.69999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 2.5521232990067912,
+     "max_abs_pp": 3.299999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-severe/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 7.711687776905091,
+     "max_abs_pp": 11.197955855872465,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 9.942836617384401,
+     "max_abs_pp": 12.400000000000011,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 33.8381516914211,
+     "max_abs_pp": 53.6084313290437,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 12.271694911362028,
+     "max_abs_pp": 19.2693855665945,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 28.00318217148172,
+     "max_abs_pp": 40.86204447517021,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 10.181714276617196,
+     "max_abs_pp": 13.074289465047606,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 65.8517780068744,
+     "max_abs_pp": 74.2,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 15.21862893517897,
+     "max_abs_pp": 18.799999999999994,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc13046917",
+    "series_id": "ref-pmc13046917/klex/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.2930822843739911,
+     "max_abs_pp": 0.40930288117724256,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.4654746681256246,
+     "max_abs_pp": 0.6000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.33699737183119,
+     "max_abs_pp": 22.56938556659449,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 22.33699737183119,
+     "max_abs_pp": 22.56938556659449,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.2332893890235854,
+     "max_abs_pp": 1.6179999999999861,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.6098387983721714,
+     "max_abs_pp": 0.7792000000000243,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 77.2669398902273,
+     "max_abs_pp": 77.49999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.7454703282114739,
+     "max_abs_pp": 2.0000000000000018,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc13046917",
+    "series_id": "ref-pmc13046917/klex-xtra/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.4946754382586196,
+     "max_abs_pp": 1.9297858960460434,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.023067283548186,
+     "max_abs_pp": 1.1999999999999789,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 25.75318634218627,
+     "max_abs_pp": 26.869385566594506,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 25.75318634218627,
+     "max_abs_pp": 26.869385566594506,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.903273723148171,
+     "max_abs_pp": 2.3181666666666434,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.2961828677569598,
+     "max_abs_pp": 1.868000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 80.67213480089228,
+     "max_abs_pp": 81.80000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.7136705245369352,
+     "max_abs_pp": 2.6000000000000023,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc13078066",
+    "series_id": "ref-pmc13078066/fs-lasik-xtra/se",
+    "context": "human/myopia/lasik",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.8067512759551354,
+     "max_abs_pp": 4.80179543517627,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.330050049673936,
+     "max_abs_pp": 5.120000000000013,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 2.9469046631824662,
+     "max_abs_pp": 3.709385566594503,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 3.02248595338523,
+     "max_abs_pp": 3.709385566594503,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 16.59569947070363,
+     "max_abs_pp": 24.71863636363636,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.491789067558027,
+     "max_abs_pp": 3.362222222222244,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 56.571965377443505,
+     "max_abs_pp": 58.64,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 2.8875248916676095,
+     "max_abs_pp": 4.930000000000012,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/femto-ldv/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.3845956247671203,
+     "max_abs_pp": 3.2705567961809123,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.4472135954999683,
+     "max_abs_pp": 0.6000000000000227,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 1.6255947349609714,
+     "max_abs_pp": 2.210755961440869,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 0.9777746282567575,
+     "max_abs_pp": 1.230614433405508,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 18.445181184030247,
+     "max_abs_pp": 20.82066513535894,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.9479130951278415,
+     "max_abs_pp": 1.1365322378996456,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 54.00083332690339,
+     "max_abs_pp": 54.30000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.236931687685302,
+     "max_abs_pp": 1.5000000000000124,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/intralase-fs60/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.2387283619739433,
+     "max_abs_pp": 3.149628687837658,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.35355339059326935,
+     "max_abs_pp": 0.40000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.029063303306833,
+     "max_abs_pp": 10.030614433405516,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 10.181719414797511,
+     "max_abs_pp": 10.330614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 18.432022557567855,
+     "max_abs_pp": 21.02066513535896,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.498389041580923,
+     "max_abs_pp": 2.056532237899611,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 44.75025139594189,
+     "max_abs_pp": 44.899999999999984,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.8631338250815869,
+     "max_abs_pp": 0.9999999999999787,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group1-intralase-visx-wfg/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.1935587815288917,
+     "max_abs_pp": 1.1935587815288917,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.40000000000000036,
+     "max_abs_pp": 0.40000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 16.8306144334055,
+     "max_abs_pp": 16.8306144334055,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 16.8306144334055,
+     "max_abs_pp": 16.8306144334055,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.129696969696969,
+     "max_abs_pp": 14.129696969696969,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.874289465047573,
+     "max_abs_pp": 0.874289465047573,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 38.1,
+     "max_abs_pp": 38.1,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.5000000000000115,
+     "max_abs_pp": 0.5000000000000115,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group2-wavelight-wfo/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.4064968513928466,
+     "max_abs_pp": 1.4064968513928466,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.6000000000000005,
+     "max_abs_pp": 0.6000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.530614433405503,
+     "max_abs_pp": 8.530614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.530614433405503,
+     "max_abs_pp": 8.530614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.32969696969697,
+     "max_abs_pp": 14.32969696969697,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.1520000000000188,
+     "max_abs_pp": 0.1520000000000188,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 46.4,
+     "max_abs_pp": 46.4,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.6999999999999895,
+     "max_abs_pp": 0.6999999999999895,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5006606",
+    "series_id": "ref-pmc5006606/smile/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.7247657416934228,
+     "max_abs_pp": 0.7247657416934228,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.8000000000000007,
+     "max_abs_pp": 0.8000000000000007,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.169385566594499,
+     "max_abs_pp": 7.169385566594499,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.169385566594499,
+     "max_abs_pp": 7.169385566594499,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.250814814814838,
+     "max_abs_pp": 1.250814814814838,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.8799999999999946,
+     "max_abs_pp": 3.8799999999999946,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 62.1,
+     "max_abs_pp": 62.1,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.8999999999999897,
+     "max_abs_pp": 0.8999999999999897,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc5997857",
+    "series_id": "ref-pmc5997857/wfo-lasik/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.5239355837314497,
+     "max_abs_pp": 0.5239355837314497,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.30000000000001137,
+     "max_abs_pp": 0.30000000000001137,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 30.930614433405502,
+     "max_abs_pp": 30.930614433405502,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 30.930614433405502,
+     "max_abs_pp": 30.930614433405502,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.1996868686868547,
+     "max_abs_pp": 0.1996868686868547,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.6659999999999888,
+     "max_abs_pp": 0.6659999999999888,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 24.0,
+     "max_abs_pp": 24.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.9000000000000119,
+     "max_abs_pp": 0.9000000000000119,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc7794860",
+    "series_id": "ref-pmc7794860/prk/se",
+    "context": "human/myopia/surface_ablation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/surface_ablation",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.3009584809432865,
+     "max_abs_pp": 0.40483205807138045,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.4123105625617772,
+     "max_abs_pp": 0.5000000000000115,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 5.656728086594744,
+     "max_abs_pp": 7.930614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.782060200314435,
+     "max_abs_pp": 7.930614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.089438617865309,
+     "max_abs_pp": 10.575756618531894,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.596759784167799,
+     "max_abs_pp": 0.8407999999999971,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 47.150238599608386,
+     "max_abs_pp": 47.30000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.2915475947422634,
+     "max_abs_pp": 0.40000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "landmark": [
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-mild/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.5008558599262751,
+     "max_abs_pp": 0.6700193333619486,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.333589736004096,
+     "max_abs_pp": 5.100000000000016,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 34.54711758089975,
+     "max_abs_pp": 35.430614433405516,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 34.54711758089975,
+     "max_abs_pp": 35.430614433405516,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 42.67236951610417,
+     "max_abs_pp": 47.79174144486718,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 38.79242176824088,
+     "max_abs_pp": 50.86636713584767,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 20.42792206760149,
+     "max_abs_pp": 21.90000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.1090536506409476,
+     "max_abs_pp": 1.2000000000000233,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-moderate/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.104298103712955,
+     "max_abs_pp": 1.7416203544783349,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.463243262818114,
+     "max_abs_pp": 9.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.926534769679371,
+     "max_abs_pp": 8.930614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 6.926534769679371,
+     "max_abs_pp": 8.930614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 45.715559574734755,
+     "max_abs_pp": 51.35037780850351,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 28.917410147942082,
+     "max_abs_pp": 43.762433059537045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 48.49278296819022,
+     "max_abs_pp": 51.69999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 2.5521232990067912,
+     "max_abs_pp": 3.299999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-severe/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 13.506970688417292,
+     "max_abs_pp": 15.875761606499683,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 21.426307816949397,
+     "max_abs_pp": 25.4,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 12.271694911362028,
+     "max_abs_pp": 19.2693855665945,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 12.271694911362028,
+     "max_abs_pp": 19.2693855665945,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 59.666331700809806,
+     "max_abs_pp": 67.25037780850352,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 42.15635885545525,
+     "max_abs_pp": 59.66243305953702,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 65.8517780068744,
+     "max_abs_pp": 74.2,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 15.21862893517897,
+     "max_abs_pp": 18.799999999999994,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc13046917",
+    "series_id": "ref-pmc13046917/klex/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.24961577000607393,
+     "max_abs_pp": 0.40930288117724256,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.39157800414902283,
+     "max_abs_pp": 0.6000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.33699737183119,
+     "max_abs_pp": 22.56938556659449,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 22.33699737183119,
+     "max_abs_pp": 22.56938556659449,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.180843487763127,
+     "max_abs_pp": 1.683055555555546,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.5635886916301197,
+     "max_abs_pp": 0.7792000000000243,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 77.2669398902273,
+     "max_abs_pp": 77.49999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.7454703282114739,
+     "max_abs_pp": 2.0000000000000018,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc13046917",
+    "series_id": "ref-pmc13046917/klex-xtra/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.2122726051403534,
+     "max_abs_pp": 3.1383811042374754,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.0896570691543306,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 25.75318634218627,
+     "max_abs_pp": 26.869385566594506,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 25.75318634218627,
+     "max_abs_pp": 26.869385566594506,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.2686800272235765,
+     "max_abs_pp": 4.983055555555538,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.0940372998906467,
+     "max_abs_pp": 3.299999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 80.67213480089228,
+     "max_abs_pp": 81.80000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.7136705245369352,
+     "max_abs_pp": 2.6000000000000023,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc13078066",
+    "series_id": "ref-pmc13078066/fs-lasik-xtra/se",
+    "context": "human/myopia/lasik",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.1391389762974167,
+     "max_abs_pp": 3.6842891597702154,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 5.364991456967423,
+     "max_abs_pp": 8.330000000000016,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 3.02248595338523,
+     "max_abs_pp": 3.709385566594503,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 3.02248595338523,
+     "max_abs_pp": 3.709385566594503,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 26.00332617508133,
+     "max_abs_pp": 41.65833333333333,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 24.659726634646077,
+     "max_abs_pp": 42.50555555555555,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 56.571965377443505,
+     "max_abs_pp": 58.64,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 2.8875248916676095,
+     "max_abs_pp": 4.930000000000012,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/femto-ldv/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.902154089031895,
+     "max_abs_pp": 4.021062780248186,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.5830951894845268,
+     "max_abs_pp": 0.8000000000000007,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 0.9777746282567575,
+     "max_abs_pp": 1.230614433405508,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 0.9777746282567575,
+     "max_abs_pp": 1.230614433405508,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 29.73488900436069,
+     "max_abs_pp": 36.53528638897674,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 25.40488984126488,
+     "max_abs_pp": 35.92090592885378,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 54.00083332690339,
+     "max_abs_pp": 54.30000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 1.236931687685302,
+     "max_abs_pp": 1.5000000000000124,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/intralase-fs60/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 2.43720424227305,
+     "max_abs_pp": 3.4316585714409875,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.5700877125495627,
+     "max_abs_pp": 0.6999999999999895,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 10.181719414797511,
+     "max_abs_pp": 10.330614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 10.181719414797511,
+     "max_abs_pp": 10.330614433405504,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 29.743893969852436,
+     "max_abs_pp": 36.43528638897673,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 25.331781581228434,
+     "max_abs_pp": 35.82090592885374,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 44.75025139594189,
+     "max_abs_pp": 44.899999999999984,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.8631338250815869,
+     "max_abs_pp": 0.9999999999999787,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group1-intralase-visx-wfg/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.1935587815288917,
+     "max_abs_pp": 1.1935587815288917,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.40000000000000036,
+     "max_abs_pp": 0.40000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 16.8306144334055,
+     "max_abs_pp": 16.8306144334055,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 16.8306144334055,
+     "max_abs_pp": 16.8306144334055,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.129696969696969,
+     "max_abs_pp": 14.129696969696969,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.874289465047573,
+     "max_abs_pp": 0.874289465047573,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 38.1,
+     "max_abs_pp": 38.1,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.5000000000000115,
+     "max_abs_pp": 0.5000000000000115,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group2-wavelight-wfo/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 1.4064968513928466,
+     "max_abs_pp": 1.4064968513928466,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.6000000000000005,
+     "max_abs_pp": 0.6000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.530614433405503,
+     "max_abs_pp": 8.530614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.530614433405503,
+     "max_abs_pp": 8.530614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.32969696969697,
+     "max_abs_pp": 14.32969696969697,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.1520000000000188,
+     "max_abs_pp": 0.1520000000000188,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 46.4,
+     "max_abs_pp": 46.4,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.6999999999999895,
+     "max_abs_pp": 0.6999999999999895,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5006606",
+    "series_id": "ref-pmc5006606/smile/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.7247657416934228,
+     "max_abs_pp": 0.7247657416934228,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.8000000000000007,
+     "max_abs_pp": 0.8000000000000007,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.169385566594499,
+     "max_abs_pp": 7.169385566594499,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.169385566594499,
+     "max_abs_pp": 7.169385566594499,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.250814814814838,
+     "max_abs_pp": 1.250814814814838,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.8799999999999946,
+     "max_abs_pp": 3.8799999999999946,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 62.1,
+     "max_abs_pp": 62.1,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.8999999999999897,
+     "max_abs_pp": 0.8999999999999897,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc5997857",
+    "series_id": "ref-pmc5997857/wfo-lasik/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.5239355837314497,
+     "max_abs_pp": 0.5239355837314497,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.30000000000001137,
+     "max_abs_pp": 0.30000000000001137,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 30.930614433405502,
+     "max_abs_pp": 30.930614433405502,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 30.930614433405502,
+     "max_abs_pp": 30.930614433405502,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.1996868686868547,
+     "max_abs_pp": 0.1996868686868547,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.6659999999999888,
+     "max_abs_pp": 0.6659999999999888,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 24.0,
+     "max_abs_pp": 24.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.9000000000000119,
+     "max_abs_pp": 0.9000000000000119,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc7794860",
+    "series_id": "ref-pmc7794860/prk/se",
+    "context": "human/myopia/surface_ablation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/surface_ablation",
+    "population_assimilation_robust": {
+     "rmse_pp": 0.29352098292060846,
+     "max_abs_pp": 0.40483205807138045,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.38078865529320305,
+     "max_abs_pp": 0.5000000000000115,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.782060200314435,
+     "max_abs_pp": 7.930614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.782060200314435,
+     "max_abs_pp": 7.930614433405503,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 12.942143154353015,
+     "max_abs_pp": 14.938256618531899,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 0.22378990147012087,
+     "max_abs_pp": 0.30800000000001937,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 47.150238599608386,
+     "max_abs_pp": 47.30000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "target_level": {
+     "rmse_pp": 0.2915475947422634,
+     "max_abs_pp": 0.40000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "initial_state": [
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-mild/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 0.36242676576568494,
+     "max_abs_pp": 0.5059896948521159,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 35.35646492527103,
+     "max_abs_pp": 45.901363636363655,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-moderate/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 3.592833470971025,
+     "max_abs_pp": 5.5921413850720025,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 20.836097444796547,
+     "max_abs_pp": 32.790377808503536,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc12668699",
+    "series_id": "ref-pmc12668699/myopia-severe/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 9.222511025545808,
+     "max_abs_pp": 11.731072144961585,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 33.74068472009688,
+     "max_abs_pp": 63.39037780850354,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc13046917",
+    "series_id": "ref-pmc13046917/klex/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_initial_state": {
+     "rmse_pp": 2.5485527102167875,
+     "max_abs_pp": 2.774038064895179,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 23.859195023070658,
+     "max_abs_pp": 25.174166666666675,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc13078066",
+    "series_id": "ref-pmc13078066/fs-lasik/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 2.978016583725296,
+     "max_abs_pp": 2.978016583725296,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 20.40000000000002,
+     "max_abs_pp": 20.40000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/femto-ldv/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 2.7053622142452953,
+     "max_abs_pp": 4.3161309821661,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 24.615801445051403,
+     "max_abs_pp": 38.66393285362317,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc3711877",
+    "series_id": "ref-pmc3711877/intralase-fs60/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 1.9469363121082268,
+     "max_abs_pp": 3.2517044469409173,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 18.147652548653806,
+     "max_abs_pp": 29.463932853623163,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group1-intralase-visx-wfg/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 2.3662923741191704,
+     "max_abs_pp": 3.077069829134982,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 21.43428630935419,
+     "max_abs_pp": 27.30136363636364,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5003563",
+    "series_id": "ref-pmc5003563/group2-wavelight-wfo/mrse",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 3.3754810491096143,
+     "max_abs_pp": 4.0654805743352895,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 13.836117401311812,
+     "max_abs_pp": 19.001363636363642,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "ref-pmc5006606",
+    "series_id": "ref-pmc5006606/smile/se",
+    "context": "human/myopia/lenticule_extraction",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lenticule_extraction",
+    "population_initial_state": {
+     "rmse_pp": 2.2759511482609485,
+     "max_abs_pp": 2.6115757011053287,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.952464380275963,
+     "max_abs_pp": 9.556000000000008,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc5997857",
+    "series_id": "ref-pmc5997857/wfo-lasik/se",
+    "context": "human/myopia/lasik",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/lasik",
+    "population_initial_state": {
+     "rmse_pp": 1.0142811368487954,
+     "max_abs_pp": 1.4207191319431045,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 27.471691537677124,
+     "max_abs_pp": 27.571353535353516,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "ref-pmc7794860",
+    "series_id": "ref-pmc7794860/prk/se",
+    "context": "human/myopia/surface_ablation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/myopia/surface_ablation",
+    "population_initial_state": {
+     "rmse_pp": 3.129519260678357,
+     "max_abs_pp": 3.398436504707858,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 18.527453167833716,
+     "max_abs_pp": 25.93825661853191,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   }
+  ]
+ },
+ "H4_versus_plano_target": {
+  "common_targets": 34,
+  "population_initial_state_rmse_pp": 3.971743209040032,
+  "target_level_rmse_pp": 5.005173793774033,
+  "population_lower": true
+ },
+ "H5_versus_f0_same_training": {
+  "next_observation": {
+   "common_targets": 28,
+   "f1_rmse_pp": 2.9252929150826312,
+   "f0_rmse_pp": 2.90252222880329
+  },
+  "landmark": {
+   "common_targets": 28,
+   "f1_rmse_pp": 4.680593406942754,
+   "f0_rmse_pp": 4.75927978887914
+  },
+  "initial_state": {
+   "common_targets": 34,
+   "f1_rmse_pp": 3.971743209040032,
+   "f0_rmse_pp": 4.130404114443765
+  }
+ }
+}
