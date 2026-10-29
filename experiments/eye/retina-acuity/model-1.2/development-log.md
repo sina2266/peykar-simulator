@@ -77,3 +77,37 @@ human group-mean targets, the 1.2 primary's pooled landmark RMSE and initial-sta
 (control group means) each lower than 1.1.0's, and its pooled next-observation RMSE at
 most 0.05 letters higher. Comparisons inside and outside the training time support are
 reported, not tested.
+
+## Round 1 results (LOSO on the 53 training studies, 2026-10-29)
+
+Human group means: 206 next-observation and landmark targets, 251 initial-state targets.
+Pooled RMSE in ETDRS letters (`.peykar/retina_acuity11_compare.py` on the private
+reports `.peykar/retina-acuity-1.2-dev/round1-x{0,1,2,3}/report.json`; EXIT=0 each).
+
+| candidate | primary | next observation | landmark | initial state | next-observation coverage 80% / 90% |
+|---|---|---|---|---|---|
+| x0 = 1.1.0 | anchored | 3.628 | 4.921 | 5.556 | 0.796 / 0.898 |
+| x1 support hold | anchored | 3.477 | 4.366 | 5.429 | 0.796 / 0.903 |
+| x2 x1 + treatment fallback | anchored | 3.482 | 4.380 | 5.428 | 0.796 / 0.903 |
+| x3 x1 + dexamethasone wear-off | anchored | 3.228 | 3.782 | 5.216 | 0.772 / 0.893 |
+
+Comparators on the same targets (next observation / landmark): persistence 3.234 /
+4.026, pooled-curve increment 3.566 / 5.015, analog kNN 5.212 / 8.909, last-two trend
+13.013 / 37.287. Initial state: pooled training curve 5.278. In every candidate the
+Gaussian anchored variant is the primary: anchored t4 has the lowest next-observation
+RMSE, and anchored lies within 0.05 letters of it and comes earlier in the order.
+
+- x1: −0.151, −0.556, −0.127 letters against x0, coverage inside both windows. Adopted.
+- x2: −0.146, −0.541, −0.128. Adopted.
+- x3: −0.400, −1.139, −0.340. Adopted.
+
+All three are adopted, so by the declared rule round 2 runs the combination.
+
+## Round 2 — declared before results (2026-10-29)
+
+- **x4**: every change adopted in round 1: the support hold, the treatment fallback and
+  the dexamethasone wear-off of `x3`.
+
+x4 is compared with x3, the adopted single candidate with the largest summed gain
+(−1.879 letters over the three tasks; x1 −0.834, x2 −0.815), by the round-1 adoption
+rule. If x4 is adopted it is the model; otherwise x3 is the model.

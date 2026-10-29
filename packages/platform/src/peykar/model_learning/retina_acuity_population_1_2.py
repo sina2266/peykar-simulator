@@ -58,10 +58,19 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
         wear_off_loss=0.8,
         wear_off_width_months=WEAR_OFF_WIDTH_MONTHS,
     ),
+    # Round 2. x4: every change adopted in round 1 (hold, fallback, wear-off).
+    "x4": replace(
+        _HELD,
+        model_version="1.2.0-x4",
+        treatment_fallback=True,
+        wear_off_loss=0.8,
+        wear_off_width_months=WEAR_OFF_WIDTH_MONTHS,
+    ),
 }
 
 _ADAPTERS: dict[str, Callable[[Mapping[str, Any]], list[RetinaAcuitySeries]]] = {
     "x3": version_1_1.to_retina_acuity_series_dose,
+    "x4": version_1_1.to_retina_acuity_series_dose,
 }
 
 
