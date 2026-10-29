@@ -1,4 +1,43 @@
 # Verification record
+## Retinal visual-acuity model 1.1: development and protocol freeze: 2026-10-29 (night)
+Commands run from the repository root; outcomes observed. Start state: main at
+`93283648` (= origin; IOP 1.3 results committed).
+- Rounds 0–1 declared in the 1.1 development log, with the module
+  `retina_acuity_population_1_1`, the operator and three unit tests, in commit
+  `ac6f562c` before any run. Then `OMP_NUM_THREADS=1 uv run --frozen python
+  scripts/evaluate_retina_acuity_population_1_1.py --development --candidate w0|w1|w2|w3
+  --output .peykar/retina-acuity-1.1-dev/round1-<name>`: EXIT=0 each, 24 training studies,
+  57–77 s.
+- `uv run --frozen python .peykar/retina_acuity11_compare.py
+  .peykar/retina-acuity-1.1-dev/round1-w{0,1,2,3}`: primaries w0 t4 4.327/5.827/7.615
+  letters (next observation / landmark / initial state; coverage 0.770/0.830), w1
+  anchored t4 3.460/3.965/4.873 (0.840/0.910), w2 t4 4.327/5.814/7.613, w3 t4
+  4.515/6.516/8.790; persistence 3.468/4.463, pooled-curve increment 3.805/5.781,
+  pooled training curve 5.524. w1 adopted (−0.867/−1.861/−2.742), w2 and w3 rejected by
+  the declared rule; no round 2.
+- `uv run --frozen python scripts/publish_retina_acuity_population_1_1.py --development
+  --report .peykar/retina-acuity-1.1-dev/round1-w1/report.json --reference
+  .peykar/retina-acuity-1.1-dev/round1-w0/report.json --output
+  .peykar/retina-acuity-1.1-dev/round1-w1-published`: exit 0; H1–H5 pass (H2 against
+  persistence 3.46 against 3.47 on 100 targets; H5 3.46/3.97/4.87 against
+  4.33/5.83/7.62, the same numbers as the comparison script); model 1.0.0's own H1–H4 on
+  the same LOSO: pass, fail, fail, fail.
+- `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_retina_acuity_1_1.py
+  tests/unit/test_eye_retina_acuity.py`: 10 passed (2 new publisher tests). `uv run
+  --frozen ruff format --check .`: 644 files formatted; `ruff check .`: no issue; `mypy
+  scripts/publish_retina_acuity_population_1_1.py`: no issue.
+- Structure of the sealed set from the custody verifier and an inline read of visit
+  months only: 19 series of 6 studies have a visit before month 1 (1 at day 1), last
+  visits 1–36 months; custodian exclusion reasons by keyword 22/9/3/1.
+- `uv run --frozen python .peykar/write_retina_acuity_protocol_1_1.py`: protocol
+  `experiments/eye/retina-acuity/model-1.1/protocol-1.1.0.json`, SHA-256 `c0c37c7e…`, 87
+  frozen files, 24 training and 29 sealed record hashes; the writer ran the operator's
+  own protocol check first (no problem). `uv run --frozen python
+  .peykar/check_frozen_protocols.py`: no problem in any frozen protocol, retinal acuity
+  1.1.0 included (retina 1.2.0 has no protocol).
+- `make check-docker` after writing the protocol: 930 tests passed in 170.51 s, 89%
+  coverage, mypy 161 source files, 18 frontend tests, all packages built, EXIT=0
+  (`.peykar/retina-acuity11-freeze-check-docker-20261029.log`).
 ## Acuity 1.1 (closed), generic eye model 4 and retinal visual-acuity model 1.0: 2026-10-29 (evening)
 Commands run from the repository root; outcomes observed. Start state: main at
 `f6c74736` (= origin; acuity 1.0 results committed). The IOP 1.3 sealed run started at

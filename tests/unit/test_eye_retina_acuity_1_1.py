@@ -112,3 +112,95 @@ def test_the_law_without_transient_fits_and_forecasts() -> None:
     forecast = population.predictive(config, posterior, months=[0.0329, 6.0], quantiles=(0.5,))
     changes = [math.log(f) for f in forecast["quantiles"]["0.5"]]
     assert all(-0.6 < c < 0.1 for c in changes)
+
+
+def _publisher():
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_retina_acuity_population_1_1.py"
+    spec = importlib.util.spec_from_file_location("publish_retina_acuity_population_1_1", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _report(next_error: float, landmark_error: float, initial_error: float, method: str) -> dict:
+    def rows(error: float) -> list[dict]:
+        return [
+            {
+                "origin_month": 1.0,
+                "target_month": 3.0,
+                "observed": 0.9,
+                "predictions": {method: 0.9 + error / 100.0},
+            }
+        ]
+
+    def entry(error: float, context: str = "human/dme/anti_vegf") -> dict:
+        return {
+            "series_id": "g/bcva",
+            "context": context,
+            "kind": "group_mean",
+            "rows": rows(error),
+        }
+
+    return {
+        "studies": [
+            {
+                "study_id": "rac-pmc1",
+                "next_observation": [entry(next_error), entry(50.0, "rabbit/dme/anti_vegf")],
+                "landmark": [entry(landmark_error)],
+                "initial_state": [
+                    {
+                        "series_id": "g/bcva",
+                        "context": "human/dme/anti_vegf",
+                        "kind": "group_mean",
+                        "months": [1.0, 3.0],
+                        "observed": [0.9, 0.8],
+                        "predictions": {
+                            "population_initial_state": [
+                                0.9 + initial_error / 100.0,
+                                0.8 - initial_error / 100.0,
+                            ]
+                        },
+                    }
+                ],
+            }
+        ]
+    }
+
+
+def test_retina_acuity_1_1_publisher_points_the_frozen_analysis_at_1_1() -> None:
+    module = _publisher()
+    assert module.MODEL_VERSION == "1.1.0-w1"
+    assert module.REFERENCE_VERSION == "1.0.0-v3"
+    expected = {
+        "next_observation": "population_anchored_t4",
+        "landmark": "population_anchored_t4",
+        "initial_state": "population_initial_state",
+    }
+    assert expected == module.PRIMARY
+    assert expected == module.previous.PRIMARY
+    assert expected == module.base.PRIMARY
+    assert module.previous.RECORD_DIRS is module.RECORD_DIRS
+    assert len(module.RECORD_DIRS["development"]) == 3
+    assert module.RECORD_DIRS["sealed"][0].name == "records"
+    assert "tranche2" in str(module.RECORD_DIRS["sealed"][0])
+
+
+def test_retina_acuity_1_1_h5_compares_common_human_group_means() -> None:
+    module = _publisher()
+    new = _report(3.0, 4.0, 5.0, "population_anchored_t4")
+    old = _report(3.02, 6.0, 7.0, "population_assimilation_t4")
+    h5 = module.versus_reference(new, old)
+    assert h5["next_observation"]["common_targets"] == 1
+    assert math.isclose(h5["next_observation"]["model_1_1_rmse_pp"], 3.0)
+    assert math.isclose(h5["landmark"]["model_1_0_rmse_pp"], 6.0)
+    assert h5["initial_state"]["common_targets"] == 2
+    assert math.isclose(h5["initial_state"]["model_1_1_rmse_pp"], 5.0)
+    assert module.h5_passes(h5)
+    worse_next = module.versus_reference(_report(3.1, 4.0, 5.0, "population_anchored_t4"), old)
+    assert not module.h5_passes(worse_next)
+    worse_landmark = module.versus_reference(_report(3.0, 6.0, 5.0, "population_anchored_t4"), old)
+    assert not module.h5_passes(worse_landmark)

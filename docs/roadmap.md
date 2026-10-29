@@ -465,10 +465,16 @@ reserved before triage.
 - [x] `peykar eye` reports each forecast's training-time support (earliest and latest
   training visit, stored with each fit) and warns for observed or forecast months
   outside it; forecast values are unchanged.
-- [ ] A pre-freeze check of which terms of a law the training visits identify, and an
-  acuity law without the unidentified term.
-- [ ] Steroid-implant wear-off, a treatment fallback for unseen contexts, and a test
-  on tranches 2–4 (258 unread articles).
+- [x] Tranche 2 (120 articles) reserved before triage as the sealed set of version 1.1:
+  blind triage (64 admitted), eight custodians (29 records, 81 series).
+- [x] Version 1.1 development on the 24 tranche-1 record studies: the law without the
+  early transient (w1) adopted (3.46/3.97/4.87 against 4.33/5.83/7.62 letters); a
+  treatment fallback and dexamethasone wear-off rejected. Protocol `c0c37c7e` frozen
+  with H5 against 1.0.0 trained on the same records.
+- [ ] One-shot sealed test of version 1.1 on tranche 2.
+- [ ] A pre-freeze check of which terms of a law the training visits identify.
+- [ ] Steroid-implant wear-off (the declared w3 rule made LOSO worse); tranches 3–4
+  (138 unread articles) for a later version.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

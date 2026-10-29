@@ -1,4 +1,17 @@
 # Peykar continuation context
+## Retinal acuity 1.1 frozen, 2026-10-29 late night
+- Round 1 (declared in `ac6f562c`) LOSO on 24 studies: w1 (no early transient) ADOPTED
+  (anchored_t4 3.460/3.965/4.873 vs w0 4.327/5.827/7.615 letters); w2 (treatment
+  fallback) and w3 (DEX wear-off) rejected; no round 2. Model 1.1.0 = w1, primaries
+  U2/U3 `population_anchored_t4`, U1 `population_initial_state`; reference w0 scored in
+  the same sealed run. Dev H1–H5 pass, H2 vs persistence only 3.46 vs 3.47.
+- Publisher `scripts/publish_retina_acuity_population_1_1.py` (loads the frozen 1.0
+  publisher; H5 + 1.0.0's own H1–H4 reported). Protocol
+  experiments/eye/retina-acuity/model-1.1/protocol-1.1.0.json SHA `c0c37c7e…` (87 files;
+  writer `.peykar/write_retina_acuity_protocol_1_1.py`; in check_frozen_protocols).
+  Sealed run ONCE: `scripts/evaluate_retina_acuity_population_1_1.py --sealed --protocol
+  <p> --output .peykar/retina-acuity11-sealed-test-2026-10-29`; publish with `--sealed
+  --reference <dir>/reference-w0-report.json`. Add to `peykar eye` only if all pass.
 ## IOP 1.3 H5 failed (1.2.0 stays), retinal-acuity tranche 2 sealed, 2026-10-29 night
 - IOP 1.3 sealed run finished 18:21 (EXIT=0, 18,216 s). Published in
   experiments/eye/iop/model-1.3/sealed-test-2026-10-29 (0 leaks): H1–H4 pass, H5 FAILS
