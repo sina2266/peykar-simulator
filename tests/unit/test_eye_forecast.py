@@ -1,0 +1,395 @@
+"""Scenario forecasts, stored fits and the eye CLI on synthetic records."""
+
+from __future__ import annotations
+
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+import pytest
+from typer.testing import CliRunner
+
+from peykar import eye_simulation
+from peykar.eye_cli import eye_app
+from peykar.model_learning import eye_recovery_population2 as population
+from peykar.model_learning.eye_forecast import (
+    fit_from_json,
+    fit_to_json,
+    forecast_scenario,
+)
+from peykar.model_learning.retina_thickness_population_1_1 import DEVELOPMENT_CANDIDATES
+from peykar.validation.eye_retina_data import RetinaSeries
+from peykar_core.errors import InvalidRequest
+
+CONFIG = DEVELOPMENT_CANDIDATES["s5"]
+MONTHS = (0.25, 1.0, 2.0, 4.0, 6.0)
+
+
+def _series() -> list[RetinaSeries]:
+    rng = np.random.default_rng(17)
+    contexts = {
+        "human/dme/anti_vegf": (-0.3, 0.05, -0.1, 2.0, None),
+        "human/rvo/anti_vegf": (-0.4, 0.05, -0.1, 2.0, None),
+        "human/dme/steroid_implant": (-0.4, 0.1, -0.05, 0.5, 3.5),
+    }
+    out = []
+    for c, (context, (level, excess, transient, tau, duration)) in enumerate(
+        sorted(contexts.items())
+    ):
+        for s in range(3):
+            for k, n in enumerate((25, None)):
+                reference = float(rng.uniform(320, 600))
+                x = math.log(reference / 300.0)
+                beta = np.array([level - 0.5 * x + rng.normal(0, 0.03), excess, transient])
+                curve = np.exp(
+                    population.design(CONFIG, MONTHS, np.array([math.log(tau)]), duration)[0] @ beta
+                )
+                values = curve * np.exp(rng.normal(0, 0.03 if n else 0.06, len(MONTHS)))
+                out.append(
+                    RetinaSeries(
+                        series_id=f"st{c}{s}/{k}",
+                        study_id=f"st{c}{s}",
+                        context=context,
+                        reference_value=reference,
+                        months=MONTHS,
+                        fractions=tuple(float(v) for v in values),
+                        aggregate_n=n,
+                        metadata={"effect_duration_months": duration},
+                    )
+                )
+    return out
+
+
+def test_stored_fit_round_trips_and_forecasts_match_the_harness_path() -> None:
+    series = _series()
+    fit = population.fit_population(CONFIG, series)
+    stored = json.loads(json.dumps(fit_to_json(fit, note="test")))
+    again = fit_from_json(CONFIG, stored)
+    for name, family in fit.families.items():
+        np.testing.assert_array_equal(family.solution, again.families[name].solution)
+        np.testing.assert_array_equal(family.covariance, again.families[name].covariance)
+    assert dict(again.noise_centers.centers) == dict(fit.noise_centers.centers)
+    assert again.forecast_inflation("aggregate", "human/dme/anti_vegf", 30) == pytest.approx(
+        fit.forecast_inflation("aggregate", "human/dme/anti_vegf", 30)
+    )
+    with pytest.raises(InvalidRequest):
+        fit_from_json(DEVELOPMENT_CANDIDATES["s2"], stored)
+    result = forecast_scenario(
+        CONFIG,
+        again,
+        context="human/dme/anti_vegf",
+        baseline=450.0,
+        months=[4.0, 6.0],
+        group_size=30,
+        observed=[(1.0, 360.0), (2.0, 350.0)],
+    )
+    # The same computation through the public model functions.
+    observed = RetinaSeries(
+        series_id="x/1",
+        study_id="x",
+        context="human/dme/anti_vegf",
+        reference_value=450.0,
+        months=(1.0, 2.0),
+        fractions=(360.0 / 450.0, 350.0 / 450.0),
+        aggregate_n=30,
+    )
+    prior = fit.prior(observed.context, observed.kind, population.level_covariate(CONFIG, observed))
+    direct = population.predictive(
+        CONFIG,
+        population.posterior(
+            CONFIG,
+            population.gaussian(prior["mean"], prior["covariance"]),
+            series=observed,
+            noise=fit.noise("aggregate", observed.context, 30),
+        ),
+        months=[4.0, 6.0],
+        quantiles=(0.05, 0.1, 0.5, 0.9, 0.95),
+        extra_noise=fit.forecast_inflation("aggregate", observed.context, 30),
+    )
+    assert result["method"] == "population_assimilation"
+    for i, row in enumerate(result["forecast"]):
+        assert row["fraction"]["point"] == pytest.approx(direct["quantiles"]["0.5"][i])
+        assert row["value"]["interval_90"][1] == pytest.approx(450 * direct["quantiles"]["0.95"][i])
+
+
+def test_initial_state_uses_the_duration_and_warns_for_untrained_contexts() -> None:
+    fit = population.fit_population(CONFIG, _series())
+    with_rule = forecast_scenario(
+        CONFIG,
+        fit,
+        context="human/dme/steroid_implant",
+        baseline=500.0,
+        months=[2.0, 6.0],
+        group_size=30,
+        effect_duration_months=3.5,
+    )
+    without = forecast_scenario(
+        CONFIG,
+        fit,
+        context="human/dme/steroid_implant",
+        baseline=500.0,
+        months=[2.0, 6.0],
+        group_size=30,
+    )
+    assert with_rule["method"] == "population_initial_state" and not with_rule["warnings"]
+    assert (
+        with_rule["forecast"][1]["fraction"]["point"] > without["forecast"][1]["fraction"]["point"]
+    )
+    unknown = forecast_scenario(
+        CONFIG,
+        fit,
+        context="human/csc/laser",
+        baseline=400.0,
+        months=[1.0],
+        observed=[(2.0, 300.0)],
+    )
+    assert unknown["level_used"] == "family:human/all"
+    assert len(unknown["warnings"]) == 3
+    with pytest.raises(InvalidRequest):
+        forecast_scenario(CONFIG, fit, context="human/dme/anti_vegf", baseline=-1, months=[1.0])
+    with pytest.raises(InvalidRequest):
+        forecast_scenario(
+            CONFIG,
+            fit,
+            context="human/dme/anti_vegf",
+            baseline=400,
+            months=[3.0],
+            observed=[(1.0, 300.0), (1.0, 310.0)],
+        )
+
+
+def _record(index: int, context_treatment: str, agent: str) -> dict:
+    rng = np.random.default_rng(index)
+    months = [0.0, 0.5, 1.0, 2.0, 4.0, 6.0]
+    base = float(rng.uniform(350, 550))
+    values = [base, *(base * float(v) for v in rng.uniform(0.6, 0.9, 5))]
+    return {
+        "schema": "eye.retina-thickness-record-1.0.0",
+        "study_id": f"ret-synthetic-{index}",
+        "doi": f"10.0/{index}",
+        "species": "human",
+        "indication": "dme",
+        "treatment": context_treatment,
+        "split": "development",
+        "license": {"statement": "CC BY 4.0"},
+        "source_files": [{"name": "a.xml", "sha256": "0" * 64}],
+        "groups": [{"group": "g", "role": "control", "agent": agent}],
+        "series": [
+            {
+                "series_id": "g/cst",
+                "group": "g",
+                "kind": "group_mean",
+                "n": 30,
+                "value_kind": "thickness_absolute",
+                "measure": "central_subfield",
+                "device": "spectralis",
+                "regimen": "single" if context_treatment == "steroid_implant" else "prn",
+                "prior_treatment": "naive",
+                "months": months,
+                "values": values,
+                "source_cells": [f"a.xml::T1!R{i}C1" for i in range(len(months))],
+            }
+        ],
+    }
+
+
+def test_cli_fits_and_forecasts_from_record_folders(tmp_path: Path) -> None:
+    folder = tmp_path / "records"
+    folder.mkdir()
+    for i in range(6):
+        treatment, agent = (
+            ("steroid_implant", "dexamethasone implant (Ozurdex)")
+            if i % 2
+            else ("anti_vegf", "ranibizumab")
+        )
+        (folder / f"r{i}.json").write_text(json.dumps(_record(i, treatment, agent)))
+    runner = CliRunner()
+    fit_path = tmp_path / "fit.json"
+    result = runner.invoke(
+        eye_app,
+        [
+            "fit",
+            "--component",
+            "retina-thickness",
+            "--records",
+            str(folder),
+            "--output",
+            str(fit_path),
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    assert json.loads(result.output)["records"] == 6
+    again = runner.invoke(
+        eye_app,
+        [
+            "fit",
+            "--component",
+            "retina-thickness",
+            "--records",
+            str(folder),
+            "--output",
+            str(fit_path),
+        ],
+    )
+    assert again.exit_code != 0
+    result = runner.invoke(
+        eye_app,
+        [
+            "forecast",
+            "--component",
+            "retina-thickness",
+            "--fit",
+            str(fit_path),
+            "--context",
+            "human/dme/steroid_implant",
+            "--baseline",
+            "480",
+            "--months",
+            "2,6",
+            "--n",
+            "30",
+            "--regimen",
+            "single",
+            "--agent",
+            "Ozurdex",
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    payload = json.loads(result.output)
+    assert payload["effect_duration_months"] == 3.5 and payload["model_version"] == "1.1.0"
+    assert payload["fit_records"] == 6 and len(payload["forecast"]) == 2
+    listed = runner.invoke(eye_app, ["components"])
+    assert listed.exit_code == 0
+    assert {c["component"] for c in json.loads(listed.output)} == {
+        *eye_simulation.COMPONENTS,
+        *eye_simulation.CORNEAL_COMPONENTS,
+    }
+    with pytest.raises(InvalidRequest):
+        eye_simulation.component("lens")
+
+
+def _corneal_series(kind: str) -> list:
+    from peykar.validation.cornea_endothelium_data import DensitySeries
+    from peykar.validation.cornea_thickness_data import ThicknessSeries
+
+    rng = np.random.default_rng(23)
+    months = (0.0329, 0.23, 1.0, 3.0, 6.0, 12.0)
+    out = []
+    for s in range(4):
+        for context in ("human/cataract", "human/glaucoma"):
+            for k, n in enumerate((30, None)):
+                if kind == "endothelium":
+                    fractions = tuple(
+                        float(v)
+                        for v in 0.9
+                        * (1 + np.asarray(months) / 6.0) ** -0.05
+                        * np.exp(rng.normal(0, 0.02, len(months)))
+                    )
+                    out.append(
+                        DensitySeries(
+                            series_id=f"e{s}/{context}/{k}",
+                            study_id=f"e{s}",
+                            context=context,
+                            reference_ecd=2500.0,
+                            months=months,
+                            fractions=fractions,
+                            aggregate_n=n,
+                        )
+                    )
+                else:
+                    fractions = tuple(
+                        float(v)
+                        for v in np.exp(0.1 / (1 + np.asarray(months) / 0.2))
+                        * np.exp(rng.normal(0, 0.01, len(months)))
+                    )
+                    out.append(
+                        ThicknessSeries(
+                            series_id=f"t{s}/{context}/{k}",
+                            study_id=f"t{s}",
+                            context=context,
+                            reference_um=540.0,
+                            months=months,
+                            fractions=fractions,
+                            aggregate_n=n,
+                        )
+                    )
+    return out
+
+
+@pytest.mark.parametrize("name", ["corneal-endothelium", "corneal-thickness"])
+def test_corneal_components_use_their_frozen_primaries(name: str) -> None:
+    from peykar.model_learning import endothelial_population, thickness_population
+
+    item = eye_simulation.CORNEAL_COMPONENTS[name]
+    series = _corneal_series("endothelium" if "endothelium" in name else "thickness")
+    fit = eye_simulation.fit_corneal(item, series)
+    initial = eye_simulation.forecast_corneal(
+        item,
+        fit,
+        context="human/cataract",
+        baseline=2500.0 if "endo" in name else 540.0,
+        months=[1.0, 6.0],
+        group_size=30,
+    )
+    assert initial["method"].startswith("population_initial_state") and not initial["warnings"]
+    observed = eye_simulation.forecast_corneal(
+        item,
+        fit,
+        context="human/cataract",
+        baseline=2500.0 if "endo" in name else 540.0,
+        months=[6.0],
+        group_size=30,
+        observed=[
+            (1.0, 2200.0 if "endo" in name else 545.0),
+            (3.0, 2150.0 if "endo" in name else 541.0),
+        ],
+    )
+    prefix = type(series[0])(
+        **{
+            **{f: getattr(series[0], f) for f in series[0].__dataclass_fields__},
+            "series_id": "scenario/series",
+            "study_id": "scenario",
+            "context": "human/cataract",
+            "months": (1.0, 3.0),
+            "fractions": (2200 / 2500, 2150 / 2500) if "endo" in name else (545 / 540, 541 / 540),
+            "aggregate_n": 30,
+        }
+    )
+    if "endo" in name:
+        model = endothelial_population
+        prior = fit.prior("human/cataract", "aggregate")
+        direct = model.predictive(
+            model.anchored_posterior(
+                prior, series=prefix, noise=fit.noise("aggregate", "human/cataract"), student_df=4.0
+            ),
+            months=[6.0],
+            draws=2000,
+            seed=0,
+        )
+    else:
+        tmodel = thickness_population
+        prior = fit.prior("human/cataract", "aggregate")
+        direct = tmodel.predictive(
+            tmodel.posterior(
+                tmodel.robust(tmodel.gaussian(prior["mean"], prior["covariance"])),
+                series=prefix,
+                noise=fit.noise("aggregate", "human/cataract"),
+                offset=0.0,
+            ),
+            months=[6.0],
+        )
+    assert observed["forecast"][0]["fraction"]["point"] == pytest.approx(direct["mean_fraction"][0])
+    assert observed["point"] == "predictive mean"
+    unknown = eye_simulation.forecast_corneal(
+        item,
+        fit,
+        context="human/vitreoretinal",
+        baseline=2500.0 if "endo" in name else 540.0,
+        months=[3.0],
+    )
+    assert unknown["level_used"].startswith("family:") and len(unknown["warnings"]) == 2
+    with pytest.raises(InvalidRequest):
+        eye_simulation.forecast_corneal(
+            item, fit, context="human/cataract", baseline=500.0, months=[1.0], reference_kind="x"
+        )

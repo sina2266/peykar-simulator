@@ -116,6 +116,16 @@ Commands run from the repository root; outcomes observed. Start state: main at
 - After the documentation edits, the protocol checks of all nine frozen protocols
   (corneal 1.0.0 and 2.0.0, endothelium, corneal thickness, IOP 1.0.0, 1.1.0 and 1.2.0,
   retina 1.0.0 and 1.1.0) returned no problem.
+- `peykar eye` CLI: `uv run --frozen pytest -q tests/unit/test_eye_forecast.py` (5 tests:
+  a stored JSON fit round-trips, refuses another configuration and forecasts like the
+  harness; the initial state applies the dose rule and warns for untrained contexts;
+  the CLI fits and forecasts from record folders; both corneal components use their
+  frozen primaries) passed; mypy on the three new modules passed;
+  `uv run --frozen peykar eye components` printed the four components.
+- `make check-docker` with the IOP 1.2 documentation and the CLI in place: 890 tests
+  passed in 128.98 s, 89% coverage, mypy 143 source files, 18 frontend tests, package
+  builds, EXIT=0 (`.peykar/iop12-results-check-docker-2026-10-29.log`); host `make
+  build`: EXIT=0.
 
 ## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 

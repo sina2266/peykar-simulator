@@ -38,6 +38,11 @@
   and `.peykar/verify_iop_tranche4_custody.py`. Retina tranche 4 (35) and IOP tranche 5
   (19) stay unread. Retina has no owner override rule; IOP applies the tranche-1
   percent rule to reviewer excludes whose reason is a percent reduction from baseline.
+- `peykar eye` CLI (`peykar/eye_simulation.py`, `peykar/eye_cli.py`,
+  `model_learning/eye_forecast.py`, guide `docs/eye-simulation.md`): retina-thickness
+  1.1.0, iop 1.2.0 (stored JSON fits), corneal-endothelium and corneal-thickness 1.0.0
+  (fitted at forecast time). When a newer version passes its sealed test, add it to
+  `COMPONENTS` with its sealed result.
 - IOP operator `--shard i/n` + `--merge` for development LOSO. Always run LOSO with
   `OMP_NUM_THREADS=1` (BLAS threads oversubscribe 16 cores otherwise).
 - The image viewer does not see files created after the session snapshot, and long

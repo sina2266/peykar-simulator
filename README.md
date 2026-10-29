@@ -227,6 +227,12 @@ initial-state error of single-implant groups from 14.61 to 5.42 pp, but one grou
 treated after vitrectomy did not re-thicken as predicted
 ([model 1.1](experiments/eye/retina/model-1.1/README.md),
 [Persian results](experiments/eye/retina/model-1.1/results.fa.md)).
+The tested eye components can be run as forecasters with `peykar eye`
+([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
+follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%
+intervals, its sealed-test result and its context of use. It covers retinal thickness
+1.1.0, IOP 1.2.0, corneal endothelial density 1.0.0 and corneal thickness 1.0.0; it is
+a research tool, not a clinical one.
 
 The [whole-platform roadmap](docs/roadmap.md) covers fourteen system EPICs; vCornea
 is one integration within it. Shared backends now include an immutable
