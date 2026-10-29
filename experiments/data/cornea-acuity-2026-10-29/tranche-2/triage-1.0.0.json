@@ -1,0 +1,479 @@
+{
+ "schema": "cornea.acuity-triage-1.0.0",
+ "utc": "2026-10-29T14:19:07.926552+00:00",
+ "tranche": 2,
+ "basis": "Masked article-table previews only (data cells hidden; decimals, ±, %, n/N and equations hidden in labels), captions, footnotes and titles; no acuity value read.",
+ "chunks": "experiments/data/cornea-acuity-2026-10-29/screening/triage_chunks.py --tranche 2 --chunks 2 (28 and 27 articles, round-robin by rank)",
+ "tranche_order": "experiments/data/cornea-acuity-2026-10-29/tranche-order-1.0.0.json",
+ "reviewers": "two sub-agents following .peykar/acuity-tranche2-triage-brief.md (the tranche-1 brief with tranche-2 paths); no owner override",
+ "extraction_protocol": "experiments/data/cornea-acuity-2026-10-29/extraction-protocol-1.0.0.md",
+ "studies": [
+  {
+   "pmcid": "PMC9672700",
+   "doi": "10.4103/ijo.IJO_2778_21",
+   "study_key": "acu-pmc9672700",
+   "fulltext_sha256": "7a1a1ff08c01dc0931545a5dfce04fd4e5a36c3ad7cb6327b4e222904c43fa4d",
+   "decision": "admit",
+   "reason": "Tab1: CDVA logMAR mean+-SD at baseline, 2 and 5 years after accelerated CXL for progressive keratoconus",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC8199119",
+   "doi": "10.3390/jcm10112421",
+   "study_key": "acu-pmc8199119",
+   "fulltext_sha256": "93c8c062ac709676bd40d05c8b281569d024d448b7f4d385239d89ff10c59670",
+   "decision": "admit",
+   "reason": "Tab3: BCVA block and logMAR block, preop and 6/12 months, mean +/- SD per group, DALK vs PK for keratoconus; extractor to confirm the logMAR rows are means of per-eye logMAR",
+   "context_hint": "dalk,pk/keratoconus"
+  },
+  {
+   "pmcid": "PMC7318888",
+   "doi": "10.3389/fmed.2020.00283",
+   "study_key": "acu-pmc7318888",
+   "fulltext_sha256": "7b9ed3b9a4eb2c97347d9f81a56283341cf39db70898af41150f18f5ca431e2b",
+   "decision": "admit",
+   "reason": "Tab3: CDVA logMAR preop and 1 wk/1/3/6/12 months after accelerated transepithelial CXL for keratoconus; summary statistic not shown, long-term column has no stated time",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC13431067",
+   "doi": "10.14744/bej.2026.68726",
+   "study_key": null,
+   "fulltext_sha256": "e96db189c11ea6347d4972bec6c54e3317d48cd755c344da959e945e891de923",
+   "decision": "exclude",
+   "reason": "Tab1 per-eye CDVA logMAR: repeat CXL has preop and year 1 only (one postoperative time); the initial-CXL years belong to eyes selected for progression after CXL (outcome-selected)"
+  },
+  {
+   "pmcid": "PMC13520967",
+   "doi": "10.2147/OPTH.S602295",
+   "study_key": null,
+   "fulltext_sha256": "39fea02b73c794db911450220b1aa73662ea9750b644e575760a9cf55b442a5e",
+   "decision": "exclude",
+   "reason": "out of scope: optimal (thermal refractive) keratoplasty for hyperopia/presbyopia, not PK/DALK/EK/CXL; uncorrected acuity only"
+  },
+  {
+   "pmcid": "PMC8180280",
+   "doi": "10.2147/OPTH.S310873",
+   "study_key": null,
+   "fulltext_sha256": "4fd24bb07f1bd6d4818efbe6fdbe7fc581166b198e73216cdd2df5c02c1e0e09",
+   "decision": "exclude",
+   "reason": "Tab3: BCVA only as eye counts per acuity category (proportions, no means); second set excludes graft failures (outcome-selected)"
+  },
+  {
+   "pmcid": "PMC9535916",
+   "doi": "10.4103/sjopt.sjopt_184_21",
+   "study_key": null,
+   "fulltext_sha256": "ab6115e4e67cff11dd8916d68efe531ed9147a090ac893eb82d701c0f88a0a0a",
+   "decision": "exclude",
+   "reason": "out of scope: cataract surgery alone in keratoconic eyes"
+  },
+  {
+   "pmcid": "PMC10313539",
+   "doi": "10.1007/s10792-022-02628-4",
+   "study_key": null,
+   "fulltext_sha256": "1aa75cbe568ac7643d80f330313656b7a1b77e759cf575a93a857b94c1cfe0ab",
+   "decision": "exclude",
+   "reason": "trial protocol; Tab3 is a visit schedule only, no outcome table"
+  },
+  {
+   "pmcid": "PMC9293522",
+   "doi": "10.1155/2022/1640249",
+   "study_key": null,
+   "fulltext_sha256": "863912be4abb4fbd24097e9ecc1484cacc8a190ce37c7ffd71b33f39c1bf80d9",
+   "decision": "exclude",
+   "reason": "only uncorrected acuity (UDVA) shown, no CDVA rows (SMILE with prophylactic accelerated CXL)"
+  },
+  {
+   "pmcid": "PMC8599962",
+   "doi": "10.3389/fmed.2021.771365",
+   "study_key": null,
+   "fulltext_sha256": "f1436d514941f7859653cf4535d58234fa8e65e0b738d04b826841814421b928",
+   "decision": "exclude",
+   "reason": "Tab2: CDVA on Snellen scale with range only, no logMAR"
+  },
+  {
+   "pmcid": "PMC8380572",
+   "doi": "10.1007/s00417-021-05203-2",
+   "study_key": null,
+   "fulltext_sha256": "41da80766f16ead07a2d65305e305133a5b37091a3a8d5dcb661e19b639fabd8",
+   "decision": "exclude",
+   "reason": "Tab2 groups are uncomplicated DMEK split by postoperative macular edema (outcome-selected subgroups); no unselected group shown"
+  },
+  {
+   "pmcid": "PMC10197381",
+   "doi": "10.1186/s12886-023-02976-4",
+   "study_key": null,
+   "fulltext_sha256": "705fd091a0aad267714a484380cc53c250243247f602329fff0583cd9279ddf5",
+   "decision": "exclude",
+   "reason": "trial protocol; Tab1 is a visit schedule only, no outcome table"
+  },
+  {
+   "pmcid": "PMC11898512",
+   "doi": "10.3390/diagnostics15050626",
+   "study_key": null,
+   "fulltext_sha256": "ef4a8830d756c7fb987307f7db492d981eb8f3561eda2ba1ce3fef69e7f37666",
+   "decision": "exclude",
+   "reason": "Tab2 follow-up times are ranges only (6-12 months, 1-3 years), not admissible times; footnote allows medians for non-normal variables"
+  },
+  {
+   "pmcid": "PMC4527220",
+   "doi": "10.1186/s12886-015-0094-z",
+   "study_key": "acu-pmc4527220",
+   "fulltext_sha256": "e5d29cd7471c86d96199095ef14aebf70cdc7ad2bbfa10dd3fa04cea6c86c849",
+   "decision": "admit",
+   "reason": "Tab1 per-eye rows (4 eyes): initial BCVA and BCVA at 6 and 12 months after DSAEK (2 with phaco+IOL); unit not shown, one preop value printed as hand motion",
+   "context_hint": "dsaek/bullous_keratopathy"
+  },
+  {
+   "pmcid": "PMC7508074",
+   "doi": "10.4103/ijo.IJO_1465_19",
+   "study_key": null,
+   "fulltext_sha256": "f4ce94fbde640b4610b538c5466ba57a648ffd2c1157d053be5d455edea2d954",
+   "decision": "exclude",
+   "reason": "median logMAR acuity only, no preoperative row; corrected vs uncorrected not shown"
+  },
+  {
+   "pmcid": "PMC11765653",
+   "doi": "10.3390/jcm14020343",
+   "study_key": null,
+   "fulltext_sha256": "0824ca2a22db352593bb549f118274926567eb2c4be0db28f0d88eb7d91782f0",
+   "decision": "exclude",
+   "reason": "Tab2: BCVA logMAR mean +/- SD at 6 and 12 months with p vs preop, but no preoperative value in the shown table (mushroom PK after failed PK)"
+  },
+  {
+   "pmcid": "PMC4863112",
+   "doi": "10.1155/2016/2672980",
+   "study_key": null,
+   "fulltext_sha256": "796fdcd4ef247f9144433b2d163c91d1b2e0a388d8c095dde6805a69fe8d204a",
+   "decision": "exclude",
+   "reason": "only safety/efficacy index ratios shown, no CDVA preop/follow-up values (SMILE with CXL vs SMILE)"
+  },
+  {
+   "pmcid": "PMC13159946",
+   "doi": "10.2147/OPTH.S598840",
+   "study_key": null,
+   "fulltext_sha256": "120bc67725cba552fbcbdf87a12f3e05631caf3b644e9a82bc1722baa64a2f32",
+   "decision": "exclude",
+   "reason": "Tab3 layout reads as pairwise mean differences pre-op vs 1/3/6 months (SD, 95% CI, p) only; no absolute preoperative BCVA in the table; unit not shown"
+  },
+  {
+   "pmcid": "PMC12997584",
+   "doi": "10.5935/0004-2749.2023-0309",
+   "study_key": null,
+   "fulltext_sha256": "d51ef944a1e23d108d63c4da75a0b5525f393b33535692c8c0d3ce22402315e1",
+   "decision": "exclude",
+   "reason": "medians/IQR only (Dresden vs accelerated CXL, pediatric)"
+  },
+  {
+   "pmcid": "PMC12356448",
+   "doi": "10.4103/IJO.IJO_1836_24",
+   "study_key": null,
+   "fulltext_sha256": "d595c0095fa8c45cf831bc11195e43a41d5888d92e2763e69aee3174a18f2f49",
+   "decision": "exclude",
+   "reason": "Tab2: BCVA as median (IQR) only"
+  },
+  {
+   "pmcid": "PMC5847305",
+   "doi": "",
+   "study_key": null,
+   "fulltext_sha256": "c97f754d212594eec8e96c96313de77d0315655620da9c251021aa9c709df318",
+   "decision": "exclude",
+   "reason": "no DOI (doi field empty on the === line)"
+  },
+  {
+   "pmcid": "PMC5842166",
+   "doi": "10.1186/s12348-018-0146-7",
+   "study_key": null,
+   "fulltext_sha256": "fee095c44c349909889a7226d579d4972d3ee88a3b7d2b291cf6046f2ca7e764",
+   "decision": "exclude",
+   "reason": "single case of recurrent interstitial keratitis followed over time; no keratoplasty or cross-linking shown (out of scope)"
+  },
+  {
+   "pmcid": "PMC4545854",
+   "doi": "10.1186/s12886-015-0096-x",
+   "study_key": "acu-pmc4545854",
+   "fulltext_sha256": "205952a8fceb5f5bcea372621a66901023c48986cf27c7de2bc9df411d2579b4",
+   "decision": "admit",
+   "reason": "Tab1: BCVA logMAR mean (SD) preop and 3/6/12 months after DSAEK for Fuchs",
+   "context_hint": "dsaek/fuchs"
+  },
+  {
+   "pmcid": "PMC4128847",
+   "doi": "10.2147/OPTH.S59840",
+   "study_key": "acu-pmc4128847",
+   "fulltext_sha256": "4b796950ac0139ee4eca04af1f520914bfc6cf4dfe3a518c78275979705ec811",
+   "decision": "admit",
+   "reason": "Tab1: visual acuity preop and at 6/12 months, accelerated vs conventional CXL; corrected vs uncorrected and unit not shown",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC7790794",
+   "doi": "10.1007/s00417-020-04861-y",
+   "study_key": "acu-pmc7790794",
+   "fulltext_sha256": "9daa8f83598ad4dadc2e17fff9f5f6e6b78759226167f0109ae0319961d6ca08",
+   "decision": "admit",
+   "reason": "Tab2: BCVA mean+-SD at baseline and 1/2/3/5 years, c-CXL vs ei-CXL (transepithelial iontophoresis CXL) for keratoconus; unit not shown",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC11566242",
+   "doi": "10.1186/s12886-024-03766-2",
+   "study_key": "acu-pmc11566242",
+   "fulltext_sha256": "ceffb2b497f75f64907c4ea8b5d33be743c3442bdc59a91b24b69f88c0b1308e",
+   "decision": "admit",
+   "reason": "Tab3: corrected VA logMAR mean (SD) preop and 6/12 months, PKP vs DALK; Tab4 repeats this for the keratoconus subset",
+   "context_hint": "dalk,pk/unstated"
+  },
+  {
+   "pmcid": "PMC13002641",
+   "doi": "10.1007/s00417-025-07050-x",
+   "study_key": "acu-pmc13002641",
+   "fulltext_sha256": "ddec7bce74be3c4d5695c49bfd924cb790885c09f6c010d82db2eef226275d41",
+   "decision": "admit",
+   "reason": "Tab1: logMAR visual outcome mean+-SD pre-op and 1/3/4/5 years after PK for granular, lattice and macular dystrophy; corrected vs uncorrected not shown (caption truncated)",
+   "context_hint": "pk/scar_or_infection"
+  },
+  {
+   "pmcid": "PMC12948762",
+   "doi": "10.2147/OPTH.S569518",
+   "study_key": "acu-pmc12948762",
+   "fulltext_sha256": "afcea91ff44142c8d80b0391a8788e0a6c760d4c5be6a924ee1752328f66dc8f",
+   "decision": "admit",
+   "reason": "Tab3: BCVA logMAR baseline, week 1 and months 1/3/6, epi-off CXL with amniotic membrane vs CXL control; statistic not shown",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC5510105",
+   "doi": "10.12669/pjms.333.11907",
+   "study_key": "acu-pmc5510105",
+   "fulltext_sha256": "4172c50c350c289118eabb00c530242a2d3b666d3e7df1f37f43a99c509b143f",
+   "decision": "admit",
+   "reason": "Table II: BCVA logMAR preop and 3/6/12 months after transepithelial CXL for keratoconus; summary statistic not shown (Friedman test noted)",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC7774118",
+   "doi": "10.4103/ijo.IJO_2364_19",
+   "study_key": "acu-pmc7774118",
+   "fulltext_sha256": "5756fbff529c0fe1e9bc1eff7b2e7f0d0cc9017aebd66b14c032b4040eb9583e",
+   "decision": "admit",
+   "reason": "Tab2: mean BSCVA preop and 6/12/24 months after DMEK by indication; unit not shown",
+   "context_hint": "dmek/mixed"
+  },
+  {
+   "pmcid": "PMC12129991",
+   "doi": "10.3389/fmed.2025.1499422",
+   "study_key": null,
+   "fulltext_sha256": "b9c381799dc5adfeddc8359488e0f0b7c9eb1f6af384873e378badade0273651",
+   "decision": "exclude",
+   "reason": "BCVA analysis excluded eyes with primary or secondary graft failure (outcome-selected set), nDSEK vs DSEK"
+  },
+  {
+   "pmcid": "PMC12356456",
+   "doi": "10.4103/IJO.IJO_1013_24",
+   "study_key": "acu-pmc12356456",
+   "fulltext_sha256": "e8ddbe71ea1a6da3e77de50dc12d25bd8dd061430e929e9f65692d3da34aea71",
+   "decision": "admit",
+   "reason": "Tab1: BCVA logMAR mean +/- SD preop, 6 and 12 months (values stacked in one cell per group), CXL eyes vs contralateral Bowman-stromal inlay eyes",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC10573660",
+   "doi": "10.3390/jcm12196316",
+   "study_key": "acu-pmc10573660",
+   "fulltext_sha256": "1bbdcf8aefc606f946b7a392a1a65911696f2705577386317139d6a13344ad05",
+   "decision": "admit",
+   "reason": "Tab2: per-case BCVA preop, 6 and 12 months after DMEK (non-numeric preop entries for some cases, 12-month NA for some); unit not shown",
+   "context_hint": "dmek/unstated"
+  },
+  {
+   "pmcid": "PMC12220558",
+   "doi": "10.1186/s12886-025-04195-5",
+   "study_key": "acu-pmc12220558",
+   "fulltext_sha256": "9c1ae094378c9684eadffa7ec007ae80ed18d326f4c694f30df5b9109a5a4fe6",
+   "decision": "admit",
+   "reason": "Tab2: BCVA logMAR mean +/- SD baseline and 1/6/12 months after customized accelerated CXL; Tab10 by preoperative stage",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC13229708",
+   "doi": "10.3389/fmed.2026.1845722",
+   "study_key": null,
+   "fulltext_sha256": "d2e6fe7082dfc4f58651e6ef97bf3214f29cba9dedbc8a107b5eaf01f409a890",
+   "decision": "exclude",
+   "reason": "baseline-only table shown (amniotic membrane plugging vs acellular porcine partially penetrating DALK)"
+  },
+  {
+   "pmcid": "PMC5866901",
+   "doi": "10.1155/2018/7320816",
+   "study_key": "acu-pmc5866901",
+   "fulltext_sha256": "6608e83cc16bee4d99bdba737ee07d048e97d6f462acb4304a5ff45b261c026b",
+   "decision": "admit",
+   "reason": "Tab2: BSCVA logMAR mean +/- SD with n, baseline and 1 month to 7 years after DSAEK",
+   "context_hint": "dsaek/unstated"
+  },
+  {
+   "pmcid": "PMC4314761",
+   "doi": "10.1186/s40199-015-0091-z",
+   "study_key": "acu-pmc4314761",
+   "fulltext_sha256": "c143a48d27f9462bb5127d6c0a73a05f16f7ec91e5dbaf669fb52c720d63e8cd",
+   "decision": "admit",
+   "reason": "Tab1: BCVA logMAR preop, 6 and 18 months, CXL with two riboflavin preparations for keratoconus",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC6397964",
+   "doi": "10.1155/2019/2707826",
+   "study_key": "acu-pmc6397964",
+   "fulltext_sha256": "fdc151df9867bed999034595ca5c1e4d7f1bdd16caa69035dfb6e73446cd3483",
+   "decision": "admit",
+   "reason": "Tab1: CDVA logMAR preop and 6/12/24 months after PTK+PRK combined with CXL for post-LASIK ectasia",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC6773968",
+   "doi": "10.2147/OPTH.S225909",
+   "study_key": "acu-pmc6773968",
+   "fulltext_sha256": "a265c8e8ee1e6963bbb0eac95c5405fc93efc96bc03cda2e47771c0a39e8049d",
+   "decision": "admit",
+   "reason": "Tab2: CDVA logMAR mean+-SD at Day 0 (taken as preop reference) and 1/3/6 months after refractive surgery combined with simultaneous CXL; refractive procedure type not shown",
+   "context_hint": "cxl/unstated"
+  },
+  {
+   "pmcid": "PMC6033781",
+   "doi": "10.1016/j.joco.2017.11.009",
+   "study_key": null,
+   "fulltext_sha256": "dafe8d1a3fde8e70120e2bbfcadabe2a662d6633dafcf614c41bec532574d21c",
+   "decision": "exclude",
+   "reason": "Tab1: BCVA logMAR preop and 14 days after DSAEK only (one postoperative time)"
+  },
+  {
+   "pmcid": "PMC7936678",
+   "doi": "10.2147/OPTH.S289730",
+   "study_key": "acu-pmc7936678",
+   "fulltext_sha256": "b0efaa3fd7eb62476ea838c3ead11cfe6d919c576f02e9295d61e8fecae4cc4d",
+   "decision": "admit",
+   "reason": "Tab4: BCVA logMAR mean+-SD (unpaired) preop and 1 wk/1/3 months, DSAEK vs DMEK, eyes without prior keratoplasty or other comorbidity (preoperative selection); median decimal rows also shown",
+   "context_hint": "dsaek/unstated; dmek/unstated"
+  },
+  {
+   "pmcid": "PMC5988782",
+   "doi": "10.1007/s10792-017-0535-1",
+   "study_key": null,
+   "fulltext_sha256": "1bd034d64e176e4db96fc4c0e08eaea2fa9e72fa5afba9780d456dbce6622ca3",
+   "decision": "exclude",
+   "reason": "Tab2: per-eye visual acuity in decimal only, with mixed correction (spectacles, scleral lenses, none)"
+  },
+  {
+   "pmcid": "PMC8949731",
+   "doi": "10.1177/25158414221083362",
+   "study_key": "acu-pmc8949731",
+   "fulltext_sha256": "7ae0d8805fd9a2123cbe9a9348e36e475a2ceebf115dbf730d003885a22d04fa",
+   "decision": "admit",
+   "reason": "Tab1: BCVA logMAR baseline and 3/6/12/24 months after combined PRK and CXL for keratoconus",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC3792949",
+   "doi": "10.2147/OPTH.S52281",
+   "study_key": null,
+   "fulltext_sha256": "ddd888e5f85d8ff65c93eaf75b9e6f549774a91a96383fd889274edde2246789",
+   "decision": "exclude",
+   "reason": "PRK alone in keratoconus (refractive laser surgery without CXL), out of scope"
+  },
+  {
+   "pmcid": "PMC13073647",
+   "doi": "10.3390/jcm15072764",
+   "study_key": null,
+   "fulltext_sha256": "1d309a9953a086bf0d62e3293f46bc123605d2e81fa69d048d49538d5d47e38a",
+   "decision": "exclude",
+   "reason": "acuity is habitual-corrected (post-CXL and pre-lens times without stated months) or scleral-lens corrected; no best spectacle-corrected series"
+  },
+  {
+   "pmcid": "PMC5669787",
+   "doi": "10.2147/OPTH.S139358",
+   "study_key": null,
+   "fulltext_sha256": "d7759a0e9bf507a4d56526e891822919fb54a5d6ab80c558685432249ecbafc1",
+   "decision": "exclude",
+   "reason": "Tab2: change in CDVA logMAR from baseline at 1/3/6/12 months only; preoperative value not in the shown table"
+  },
+  {
+   "pmcid": "PMC8786756",
+   "doi": "10.1007/s00417-021-05334-6",
+   "study_key": "acu-pmc8786756",
+   "fulltext_sha256": "ad0a3066ca030036e933854769a07ee8efe8e88b46c1dddc819491a739beeb18",
+   "decision": "admit",
+   "reason": "Tab2: CDVA logMAR mean+-SD preop, 1 and 3 months after DMEK for Fuchs; footnote excludes some patients from CDVA, reason not shown",
+   "context_hint": "dmek/fuchs"
+  },
+  {
+   "pmcid": "PMC6720021",
+   "doi": "10.2147/OPTH.S206103",
+   "study_key": "acu-pmc6720021",
+   "fulltext_sha256": "8c9143cbb5d39bce654c1f971acbf72194190df1421d38350cf9f471abaf13e6",
+   "decision": "admit",
+   "reason": "Tab2: CDVA logMAR baseline and months 1/3/6/12 for two pulsed accelerated CXL protocols; indication not shown",
+   "context_hint": "cxl/unstated"
+  },
+  {
+   "pmcid": "PMC8905293",
+   "doi": "10.3389/fbioe.2022.830776",
+   "study_key": "acu-pmc8905293",
+   "fulltext_sha256": "18d5fa40d6f7686ce4a0af108594f54f32c57582b69054ff8fe4fc509d723b69",
+   "decision": "admit",
+   "reason": "Tab1: CDVA logMAR mean+-SD preop and 1 wk/1/3/6/12 months after topography-guided transepithelial accelerated CXL for keratoconus",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC11916917",
+   "doi": "10.1186/s12886-025-03968-2",
+   "study_key": null,
+   "fulltext_sha256": "b4344525a206d5bdff8ec00fb74950d41226836ab169983568f28b7f9e863cda",
+   "decision": "exclude",
+   "reason": "Tab1: BCVA logMAR as median (IQR) only"
+  },
+  {
+   "pmcid": "PMC10391445",
+   "doi": "10.4103/ijo.IJO_1942_22",
+   "study_key": null,
+   "fulltext_sha256": "edcfeb861b18e2b467fb50183bda15b3861239856546062744fd12238a5cef81",
+   "decision": "exclude",
+   "reason": "systematic review"
+  },
+  {
+   "pmcid": "PMC13178756",
+   "doi": "10.22336/rjo.2026.13",
+   "study_key": "acu-pmc13178756",
+   "fulltext_sha256": "04712131704803bbc00a88cf33c5cb67683964c1c85d34084ae461d6fc9e2c40",
+   "decision": "admit",
+   "reason": "Tab5/Tab6: CDVA logMAR mean +/- SD baseline and 6/12/24/36 months, conventional vs accelerated epi-off CXL",
+   "context_hint": "cxl/keratoconus"
+  },
+  {
+   "pmcid": "PMC8381497",
+   "doi": "10.1186/s12886-021-02066-3",
+   "study_key": "acu-pmc8381497",
+   "fulltext_sha256": "8e9256005768909561c12963dd1ee6b3e970948a0688c0bee8eea1adcc2428be",
+   "decision": "admit",
+   "reason": "Tab1: BCDVA logMAR mean+-SD preop and 1/3/6/12 months after conventional CXL; indication not shown",
+   "context_hint": "cxl/unstated"
+  },
+  {
+   "pmcid": "PMC9983850",
+   "doi": "10.1371/journal.pone.0282594",
+   "study_key": "acu-pmc9983850",
+   "fulltext_sha256": "c9a8740b3f4c96689d04b945466bcb01cafaa9cca88150006a1d3dc6d2c5d438",
+   "decision": "admit",
+   "reason": "Tab4: BSCVA logMAR mean +/- SD preop and day 8 to 12 months after DMEK, groups by preoperative CCT",
+   "context_hint": "dmek/unstated"
+  },
+  {
+   "pmcid": "PMC11856340",
+   "doi": "10.3390/jcm14041038",
+   "study_key": null,
+   "fulltext_sha256": "6cbc20d09411bd1fea5cbabb720a215b757b052e9eb49d4d9eb822c6ce540f07",
+   "decision": "exclude",
+   "reason": "out of scope: PRK or topography-guided PRK after earlier PK (reference is pre-PRK); decimal acuity means only"
+  }
+ ]
+}

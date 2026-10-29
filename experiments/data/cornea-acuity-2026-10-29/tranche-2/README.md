@@ -49,3 +49,26 @@ for planning only; it is not a criterion.
 
 The tranche-1 sources are unchanged: triage brief `19a39526…`, extraction brief
 `786614de…` and addendum 1 `f93c4ef4…`.
+
+## Triage outcome (2026-10-29)
+
+**Triage.** Two reviewer sub-agents worked from masked previews only
+([`triage-1.0.0.json`](triage-1.0.0.json), written by
+`.peykar/write_acuity_tranche2_triage.py`). **27 admitted, 28 excluded**, with no
+owner override. PMC5847305 was excluded only because its preview has no DOI (brief
+criterion 4); it stays excluded, as declared. Context hints of the admits:
+cross-linking 16, DSAEK 4, DMEK 4, DALK and PK compared 2, PK 1. The hints are not
+binding; the custodians decide from the articles.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 42 tranche-1 record studies as development (training of model 1.1) and all 27
+admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (run with
+a byte-identical copy of the screening receipts in `screening/`) found 15 linked pairs:
+10 tranche-2 studies lose linked training studies, two tranche-1 record studies form
+one development cluster, and 3 pairs link two tranche-2 studies.
+
+**Custody.** Four custodian sub-agents (C1–C4; 7, 7, 7 and 6 studies, dealt
+round-robin over the sorted study keys in `.peykar/acuity-tranche2-extraction-assignments.json`,
+SHA-256 `3f44109c…`) extract the admits into `.peykar/acuity-tranche2-sealed-2026-10-29/`.
