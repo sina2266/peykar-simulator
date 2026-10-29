@@ -49,3 +49,33 @@ for planning only; it is not a criterion.
 
 The tranche-1 sources are unchanged: triage brief `52eaf97b…`, extraction brief
 `1bad2e98…` and addendum 1 `53a56d7c…`.
+
+## Triage outcome (2026-10-29)
+
+**Triage.** Four reviewer sub-agents worked from masked previews only
+([`triage-1.0.0.json`](triage-1.0.0.json), written by
+`.peykar/write_retina_acuity_tranche2_triage.py`). **64 admitted, 56 excluded**, with no
+owner override. The exclusions were proportions or letter categories only, medians or
+IQR only, model-based or least-squares estimates, one follow-up time or no baseline
+value in the shown tables, groups defined after baseline, reviews, meta-analyses,
+cost-effectiveness models, out-of-scope surgery or treatments, and two articles without
+a DOI. Context hints of the admits (not binding): neovascular AMD 26, diabetic macular
+edema 16, vein occlusion 8, myopic CNV 3, several indications 2, uveitic edema 1,
+central serous chorioretinopathy 1, not shown 7; anti-VEGF 39, two arms of different
+types 6, steroid implant 4, combination 3, vitrectomy 2, photodynamic therapy 2,
+steroid injection 1, not shown 7.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 24 tranche-1 record studies as development (training of model 1.1) and all 64
+admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (run with
+a byte-identical copy of the screening receipts in `screening/`) found 4 linked pairs,
+each of two tranche-2 studies; no tranche-1 record study is linked to a tranche-2
+study, so no training set loses a study. The linked sealed pairs may share a cohort;
+they stay separate studies of the test and are reported as pairs.
+
+**Custody.** Eight custodian sub-agents (C1–C8; 8 studies each, dealt round-robin over
+the sorted study keys in `.peykar/retina-acuity-tranche2-extraction-assignments.json`,
+SHA-256 `5fece57f…`) extract the admits into
+`.peykar/retina-acuity-tranche2-sealed-2026-10-29/`.
