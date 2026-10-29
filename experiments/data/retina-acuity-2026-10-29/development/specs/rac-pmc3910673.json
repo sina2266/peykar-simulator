@@ -1,0 +1,139 @@
+{
+ "study_id": "rac-pmc3910673",
+ "doi": "10.1155/2013/141279",
+ "pmcid": "PMC3910673",
+ "title": "Comparison between Intravitreal Triamcinolone with Grid Laser Photocoagulation versus Bevacizumab with Grid Laser Photocoagulation Combinations for Branch Retinal Vein Occlusion",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY (article <license>: 'Creative Commons Attribution License'; no version or URL given in the licence element)",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC3910673.xml",
+   "sha256": "8c02179b1fabebd2f21ca6231e6f7112b38defd6349f43637c7c9e39f8ca9feb",
+   "bytes": 95582,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ivt-glp",
+   "role": "control",
+   "agent": "intravitreal triamcinolone acetonide 4 mg/0.1 mL plus grid laser photocoagulation",
+   "n_reported": 52,
+   "description": "Treatment-naive macular edema secondary to branch retinal vein occlusion (edema for less than 3 months at first admission), retrospective (January 2008 to January 2012), 52 eyes of 52 patients: one intravitreal triamcinolone injection, grid laser one month later, monthly follow-up with as-needed reinjection at 4-month intervals and additional laser at 4-month intervals."
+  },
+  {
+   "group": "ivb-glp",
+   "role": "control",
+   "agent": "intravitreal bevacizumab 1.25 mg/0.05 mL plus grid laser photocoagulation",
+   "n_reported": 47,
+   "description": "As ivt-glp with intravitreal bevacizumab, 47 eyes of 47 patients: one bevacizumab injection, grid laser one month later, monthly follow-up with as-needed monthly reinjection and additional laser at 4-month intervals."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ivt-glp/bcva",
+   "group": "ivt-glp",
+   "kind": "group_mean",
+   "n": 52,
+   "value_kind": "logmar_absolute",
+   "regimen": "prn",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    3,
+    6,
+    9,
+    12,
+    15,
+    18,
+    21,
+    24
+   ],
+   "cells": [
+    "PMC3910673.xml::tab2!R2C2",
+    "PMC3910673.xml::tab2!R4C2",
+    "PMC3910673.xml::tab2!R8C2",
+    "PMC3910673.xml::tab2!R12C2",
+    "PMC3910673.xml::tab2!R16C2",
+    "PMC3910673.xml::tab2!R20C2",
+    "PMC3910673.xml::tab2!R24C2",
+    "PMC3910673.xml::tab2!R28C2",
+    "PMC3910673.xml::tab2!R32C2"
+   ],
+   "baseline_label": "Baseline BCVA (LogMAR) (Table 2, row R2, IVT + GLP column C2)",
+   "notes": "Mean (Table 2 caption 'mean visual acuity levels'; the Results text reports the same cells as means +/- SD). Rows 'Month 3 ... Month 24 BCVA (LogMAR)'; the month-9 row label omits '(LogMAR)', the table footnote and all other rows state LogMAR. Times from the first injection. Per-visit n not reported; no minimum follow-up criterion is stated and the Results give month-24 proportions over all 52 patients. Handling of missing visits not stated. Cataract surgery during the study period in some eyes (Table 4); values were not stated as removed."
+  },
+  {
+   "series_id": "ivb-glp/bcva",
+   "group": "ivb-glp",
+   "kind": "group_mean",
+   "n": 47,
+   "value_kind": "logmar_absolute",
+   "regimen": "prn",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    3,
+    6,
+    9,
+    12,
+    15,
+    18,
+    21,
+    24
+   ],
+   "cells": [
+    "PMC3910673.xml::tab2!R2C3",
+    "PMC3910673.xml::tab2!R4C3",
+    "PMC3910673.xml::tab2!R8C3",
+    "PMC3910673.xml::tab2!R12C3",
+    "PMC3910673.xml::tab2!R16C3",
+    "PMC3910673.xml::tab2!R20C3",
+    "PMC3910673.xml::tab2!R24C3",
+    "PMC3910673.xml::tab2!R28C3",
+    "PMC3910673.xml::tab2!R32C3"
+   ],
+   "baseline_label": "Baseline BCVA (LogMAR) (Table 2, row R2, IVB + GLP column C3)",
+   "notes": "Mean (Table 2 caption 'mean visual acuity levels'; the Results text reports the same cells as means +/- SD). Rows 'Month 3 ... Month 24 BCVA (LogMAR)'; the month-9 row label omits '(LogMAR)', the table footnote and all other rows state LogMAR. Times from the first injection. Per-visit n not reported; no minimum follow-up criterion is stated and the Results give month-24 proportions over all 47 patients. Handling of missing visits not stated. Cataract surgery during the study period in some eyes (Table 4); values were not stated as removed."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 rows 'Mean change from baseline (LogMAR)'",
+   "reason": "the absolute logMAR series of the same table is used"
+  },
+  {
+   "what": "Table 2 p-value rows and P values column",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "BCVA means quoted in the Results text",
+   "reason": "text values; the Table 2 cells are cited"
+  },
+  {
+   "what": "Proportion of patients gaining 3 or more lines at month 24 (Results text)",
+   "reason": "proportions are not admissible"
+  },
+  {
+   "what": "Table 3 (tab3) central retinal thickness and Table 4 (tab4) complications",
+   "reason": "not acuity"
+  }
+ ],
+ "notes": [
+  "Unit: BCVA measured with the ETDRS chart at 4 m (Methods 2.2) and converted to logMAR for the analysis (Methods 2.7); Table 2 states LogMAR with no Snellen or decimal row.",
+  "Role control for both groups: two standard combination treatments compared retrospectively without a declared experimental arm. Treatment combination: intravitreal drug plus grid laser photocoagulation defines each arm.",
+  "Regimen prn: one initial injection, grid laser one month later, then as-needed reinjection by visual acuity loss of one line or more or any CRT increase.",
+  "Methods state that ischemic BRVO (5 or more disc areas) was not included, while Table 1 lists ischemic eyes in both groups (text against table; noted only).",
+  "The Results text names a 'ranibizumab group' when reporting month-24 proportions, apparently the bevacizumab group; not used.",
+  "Central retinal thickness (Table 3), injection counts and complications (Table 4) are reported in the article and mentioned here only."
+ ]
+}

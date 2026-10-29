@@ -1,0 +1,84 @@
+{
+ "study_id": "rac-pmc8012128",
+ "doi": "10.1155/2021/6639418",
+ "pmcid": "PMC8012128",
+ "title": "Optical Coherence Tomography Predictors of Favorable Functional Response in Naïve Diabetic Macular Edema Eyes Treated with Dexamethasone Implants as a First-Line Agent",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license xlink:href=https://creativecommons.org/licenses/by/4.0/>, ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC8012128.xml",
+   "sha256": "6dfd379934ac89bafdb3ebd87c6981d17b36a33226d4c093447b29ad5500f8ef",
+   "bytes": 51456,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "dexamethasone-implant",
+   "role": "control",
+   "agent": "dexamethasone intravitreal implant 0.7 mg (Ozurdex)",
+   "n_reported": 39,
+   "description": "Treatment-naive centre-involving DME with central macular thickness of at least 300 um, retrospective (University of Messina), 39 eyes of 39 patients: one dexamethasone implant at baseline as first-line treatment; a second implant was given at 6 months in 5 eyes."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dexamethasone-implant/bcva",
+   "group": "dexamethasone-implant",
+   "kind": "group_mean",
+   "n": 39,
+   "value_kind": "letters_absolute",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC8012128.xml::tab2!R2C2",
+    "PMC8012128.xml::tab2!R2C3",
+    "PMC8012128.xml::tab2!R2C5",
+    "PMC8012128.xml::tab2!R2C7"
+   ],
+   "baseline_label": "Baseline (Table 2, row R2 'BCVA ETDRS letters', column C2)",
+   "notes": "Table 2, its footnote and the Methods do not label the statistic; the Results text reports these same cells as the mean BCVA in ETDRS letters at baseline and 3, 6 and 12 months, so they are read as means. The Abstract prints different dispersion values for baseline and 12 months (text against table: the table cells are cited). Times after the implant. Per-visit n not reported; no minimum follow-up criterion stated. A second implant at 6 months in 5 eyes; values were not stated as removed or replaced, so all visits are kept. Handling of missing visits not stated."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 (tab2) p-value columns",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Proportion of patients with more than 10 letters of improvement (Results text)",
+   "reason": "proportions are not admissible"
+  },
+  {
+   "what": "Logistic regression of OCT predictors of a favourable functional response",
+   "reason": "model estimates and groups defined by post-baseline response are not admissible"
+  },
+  {
+   "what": "Table 2 rows other than BCVA (CMT, SRD, HRS, cysts, choroidal thickness, DRIL, EZ, vitreomacular interface)",
+   "reason": "not acuity"
+  }
+ ],
+ "notes": [
+  "Unit: ETDRS letters (Table 2 row label; BCVA measured with the ETDRS chart, Methods).",
+  "Regimen single: one implant per eye in the reported period, with a second implant at 6 months in 5 eyes (re-implants not removed).",
+  "Role control: marketed implant, single-arm cohort.",
+  "Lens status (phakic or pseudophakic) is given in Table 1; no change in lens status was observed (Results).",
+  "Central macular thickness and other OCT biomarkers (Table 2) are reported in the article and mentioned here only."
+ ]
+}

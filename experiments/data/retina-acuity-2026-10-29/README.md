@@ -71,7 +71,8 @@ acuity, reviews, meta-analyses and cost-effectiveness models, out-of-scope condi
 selected after baseline and one article without a DOI. Context hints of the admits
 (not binding): diabetic macular edema 26, neovascular AMD 16, vein occlusion 10,
 postoperative edema 2, uveitic edema 1, myopic CNV 1, other 1, not shown 5; anti-VEGF
-34, steroid implant 9, combinations 5, steroid injection 3, laser 3, vitrectomy 1.
+34, steroid implant 9, combination 4, steroid injection 3, laser 3, vitrectomy 1, other
+1, two arms of different types 2, not shown 5.
 
 Before any value was read, [the split was frozen](split-reservation-1.0.0.json) by
 `scripts/reserve_retina_acuity_split.py` (salt `peykar-retina-acuity-holdout-v1:`, first

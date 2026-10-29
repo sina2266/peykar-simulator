@@ -1,0 +1,128 @@
+{
+ "study_id": "rac-pmc6847987",
+ "doi": "10.2147/OPTH.S209253",
+ "pmcid": "PMC6847987",
+ "title": "Real-World Data: Ranibizumab Treatment For Retinal Vein Occlusion In The OCEAN Study",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Dove Medical Press terms incorporating the Creative Commons Attribution - Non Commercial (unported, v3.0) License, http://creativecommons.org/licenses/by-nc/3.0/)",
+  "url": "http://creativecommons.org/licenses/by-nc/3.0/",
+  "class": "private"
+ },
+ "source_files": [
+  {
+   "name": "PMC6847987.xml",
+   "sha256": "54a0c9efa2a39fb37a6fdd300aa062ac58dac40332aa626651d1c248e86b97d7",
+   "bytes": 102781,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "brvo",
+   "role": "control",
+   "agent": "ranibizumab 0.5 mg intravitreal (routine care)",
+   "n_reported": 204,
+   "description": "BRVO subgroup of the RVO full analysis set of the prospective non-interventional OCEAN study (369 German sites, recruitment December 2011 to January 2015, NCT02194803): macular edema secondary to branch RVO treated with ranibizumab at the physicians' discretion and documented over 24 months; treatment-naive, anti-VEGF pre-treated and possibly pre-treated eyes (Table 1); previous corticosteroids at any time and anti-VEGF within 3 months were exclusion criteria."
+  },
+  {
+   "group": "crvo",
+   "role": "control",
+   "agent": "ranibizumab 0.5 mg intravitreal (routine care)",
+   "n_reported": 121,
+   "description": "CRVO subgroup of the same OCEAN RVO full analysis set (central RVO), same treatment and documentation."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "brvo/bcva",
+   "group": "brvo",
+   "kind": "group_mean",
+   "n": 203,
+   "value_kind": "letters_absolute",
+   "regimen": "unstated",
+   "prior_treatment": "mixed",
+   "missing_data": "observed",
+   "months": [
+    0,
+    3,
+    12,
+    24
+   ],
+   "cells": [
+    "PMC6847987.xml::T0002!R4C5",
+    "PMC6847987.xml::T0002!R6C5",
+    "PMC6847987.xml::T0002!R9C5",
+    "PMC6847987.xml::T0002!R12C5"
+   ],
+   "baseline_label": "Baseline BCVA (Table 2, row R4, BRVO subgroup 'Mean (SD) ETDRS letters' column C5)",
+   "notes": "Mean (SD) ETDRS letters (Table 2 header). Observed cases (Methods: analyses used an observed cases approach; LOCF only for the separate 'last visit'). n is the number of BRVO eyes with a baseline BCVA (Table 2 R4C4) of the 204 in the subgroup; per-visit numbers fall over time (Table 2 column C4) with considerable loss to follow-up. Follow-up visits were sorted into a predefined schedule of 30-day intervals (+/- 15 days); the month labels are used. Time origin: first ranibizumab injection of the study."
+  },
+  {
+   "series_id": "crvo/bcva",
+   "group": "crvo",
+   "kind": "group_mean",
+   "n": 120,
+   "value_kind": "letters_absolute",
+   "regimen": "unstated",
+   "prior_treatment": "mixed",
+   "missing_data": "observed",
+   "months": [
+    0,
+    3,
+    12,
+    24
+   ],
+   "cells": [
+    "PMC6847987.xml::T0002!R4C7",
+    "PMC6847987.xml::T0002!R6C7",
+    "PMC6847987.xml::T0002!R9C7",
+    "PMC6847987.xml::T0002!R12C7"
+   ],
+   "baseline_label": "Baseline BCVA (Table 2, row R4, CRVO subgroup 'Mean (SD) ETDRS letters' column C7)",
+   "notes": "Mean (SD) ETDRS letters (Table 2 header). Observed cases (Methods: analyses used an observed cases approach; LOCF only for the separate 'last visit'). n is the number of CRVO eyes with a baseline BCVA (Table 2 R4C6) of the 121 in the subgroup; per-visit numbers fall over time (Table 2 column C6) with considerable loss to follow-up. Follow-up visits were sorted into a predefined schedule of 30-day intervals (+/- 15 days); the month labels are used. Time origin: first ranibizumab injection of the study."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 (T0002) Total RVO group columns (C2-C3), 744 patients",
+   "reason": "whole cohort; its baseline subgroups by occlusion type (BRVO, CRVO) are extracted instead (brief: groups). The 419 eyes documented only as RVO are not in any extracted series."
+  },
+  {
+   "what": "Table 2 rows 'Change from baseline'",
+   "reason": "the absolute ETDRS letter series of the same table is used"
+  },
+  {
+   "what": "'Last visit' (LOCF) values in Figure 1 and the text",
+   "reason": "undated last visit"
+  },
+  {
+   "what": "BCVA means by pre-treatment status (treatment-naive, pre-treated) in the Results text",
+   "reason": "given only in the text (no table cell to cite); possibly pre-treated eyes were not included in that analysis"
+  },
+  {
+   "what": "BCVA by baseline BCVA category (supporting Figure S1 and Results text)",
+   "reason": "supplementary figure and text values only; no tabulated series with a baseline"
+  },
+  {
+   "what": "Table 1 (T0001) baseline BCVA (ETDRS letters and logMAR)",
+   "reason": "baseline only; Table 2 is cited"
+  },
+  {
+   "what": "Proportions gaining or losing 15 letters, time-to-event analyses (Figures 3-5) and Snellen approximations in the text",
+   "reason": "proportions, survival estimates and Snellen values are not admissible"
+  }
+ ],
+ "notes": [
+  "Unit: ETDRS letters (Table 2 header; BCVA documented by the physicians in ETDRS letters).",
+  "Groups are subgroups defined at baseline by the type of occlusion (control); treatment and examinations at the physicians' discretion in routine care with an approved agent, no experimental arm.",
+  "Regimen unstated: treatment and prescription were at the physicians' discretion; the article cites a national recommendation of at least three monthly injections followed by PRN or treat-and-extend, and reports injections at baseline in all patients and at months 1 and 2 in most.",
+  "Prior treatment mixed: treatment-naive, anti-VEGF pre-treated and possibly pre-treated eyes in both subgroups (Table 1).",
+  "Vitrectomy in two patients was reported among adverse events; values were not stated as removed.",
+  "Central retinal thickness, OCT counts and injection counts are reported in the article and mentioned here only."
+ ]
+}

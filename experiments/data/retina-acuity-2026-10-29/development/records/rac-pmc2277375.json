@@ -1,0 +1,132 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc2277375",
+ "doi": "10.1186/1471-2415-8-5",
+ "pmcid": "PMC2277375",
+ "title": "Intravitreal vs. subtenon triamcinolone acetonide for the treatment of diabetic cystoid macular edema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "steroid_injection",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 2.0 (article <license>)",
+  "url": "http://creativecommons.org/licenses/by/2.0"
+ },
+ "source_files": [
+  {
+   "name": "PMC2277375.xml",
+   "sha256": "3b9b783809e7f8f7f62c4ed951f0414d2bbc5f19e3f5d4ba762bc7635a8f5dcd",
+   "bytes": 71125,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "intravitreal-triamcinolone",
+   "role": "control",
+   "agent": "intravitreal triamcinolone acetonide 4 mg",
+   "n_reported": 14,
+   "description": "One eye of each of 14 patients (type II diabetes on insulin, diffuse cystoid macular edema, phakic), assigned by a computer-generated random method to a single 4 mg intravitreal triamcinolone acetonide injection."
+  },
+  {
+   "group": "subtenon-triamcinolone",
+   "role": "control",
+   "agent": "posterior sub-Tenon triamcinolone acetonide 40 mg",
+   "n_reported": 14,
+   "description": "The fellow eye of the same 14 patients, given a single 40 mg posterior sub-Tenon triamcinolone acetonide injection one week after the intravitreal injection of the first eye."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 central macular thickness and Table 3 intraocular pressure",
+   "reason": "Not visual acuity (thickness and pressure are not extracted here)"
+  },
+  {
+   "what": "Results and Abstract text acuity values",
+   "reason": "Text, not table cells (they agree with the cited Table 1 cells)"
+  }
+ ],
+ "notes": [
+  "Table 1 labels the values 'Visual Acuity' in logMAR; the Methods state that the best-corrected logMAR visual acuity was assessed with the ETDRS chart in all patients, which establishes best-corrected acuity and unit.",
+  "Paired-eye design: 28 eyes of 14 patients, one eye per arm; both arms are treated eyes (no untreated fellow eyes).",
+  "Role: two routes of the same corticosteroid are compared and neither arm is declared experimental, so both are role control.",
+  "All focal leaks had been treated by laser photocoagulation before the triamcinolone injection (prior_treatment previously_treated).",
+  "Systemic acetazolamide was given for two days before the intravitreal injection; topical netilmicin after both injections.",
+  "No retreatment within the 6 months is described (regimen single)."
+ ],
+ "series": [
+  {
+   "series_id": "intravitreal-triamcinolone/bcva",
+   "group": "intravitreal-triamcinolone",
+   "kind": "group_mean",
+   "n": 14,
+   "value_kind": "logmar_absolute",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline visual acuity (logMAR), Table 1, IVT column",
+   "notes": "mean ± SD (Methods: data presented as means ± SD; Wilcoxon signed-rank test used); per-visit n not reported",
+   "values": [
+    0.836,
+    0.491,
+    0.5,
+    0.809
+   ],
+   "source_cells": [
+    "PMC2277375.xml::T1!R2C2",
+    "PMC2277375.xml::T1!R3C2",
+    "PMC2277375.xml::T1!R4C2",
+    "PMC2277375.xml::T1!R5C2"
+   ],
+   "source_cell_texts": [
+    "0.836 ± 0.112",
+    "0.491 ± 0.070",
+    "0.500 ± 0.089",
+    "0.809 ± 0.083"
+   ]
+  },
+  {
+   "series_id": "subtenon-triamcinolone/bcva",
+   "group": "subtenon-triamcinolone",
+   "kind": "group_mean",
+   "n": 14,
+   "value_kind": "logmar_absolute",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline visual acuity (logMAR), Table 1, SBT column",
+   "notes": "mean ± SD (Methods: data presented as means ± SD; Wilcoxon signed-rank test used); per-visit n not reported; months counted from this eye's own injection (one week after the fellow eye's injection)",
+   "values": [
+    0.864,
+    0.455,
+    0.427,
+    0.46
+   ],
+   "source_cells": [
+    "PMC2277375.xml::T1!R2C3",
+    "PMC2277375.xml::T1!R3C3",
+    "PMC2277375.xml::T1!R4C3",
+    "PMC2277375.xml::T1!R5C3"
+   ],
+   "source_cell_texts": [
+    "0.864 ± 0.103",
+    "0.455 ± 0.069",
+    "0.427 ± 0.065",
+    "0.460 ± 0.072"
+   ]
+  }
+ ]
+}

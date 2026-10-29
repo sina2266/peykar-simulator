@@ -1,0 +1,229 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc9875990",
+ "doi": "10.1097/MD.0000000000032815",
+ "pmcid": "PMC9875990",
+ "title": "Optical coherence tomography classifications of diabetic macular edema and response to aflibercept: One-year follow-up outcomes in a Chinese population",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: 'Creative Commons Attribution License 4.0 (CCBY)'; no URL given in the licence element)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC9875990.xml",
+   "sha256": "caf3cc87bea5f63fe7681356c430eb3dc23848902d5cb5e4b49079bbe6a9df23",
+   "bytes": 93559,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "drt",
+   "role": "control",
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal",
+   "n_reported": 40,
+   "description": "DME with a diffuse retinal thickening pattern on baseline SD-OCT (Cirrus HD-OCT 5000), 40 eyes; five monthly aflibercept injections (baseline and months 1-4), then follow-up every 1-2 months with additional injections for visual acuity loss of more than 5 letters or a CMT increase of more than 10%; retrospective consecutive cohort (Suzhou Municipal Hospital, September 2020 to December 2021), NPDR, CMT above 300 um."
+  },
+  {
+   "group": "cme",
+   "role": "control",
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal",
+   "n_reported": 46,
+   "description": "DME with a cystoid macular edema pattern on baseline SD-OCT, 46 eyes; five monthly aflibercept injections (baseline and months 1-4), then follow-up every 1-2 months with additional injections for visual acuity loss of more than 5 letters or a CMT increase of more than 10%; retrospective consecutive cohort (Suzhou Municipal Hospital, September 2020 to December 2021), NPDR, CMT above 300 um."
+  },
+  {
+   "group": "srd",
+   "role": "control",
+   "agent": "aflibercept 2 mg/0.05 mL intravitreal",
+   "n_reported": 44,
+   "description": "DME with serous retinal detachment on baseline SD-OCT (alone or with DRT or CME), 44 eyes; five monthly aflibercept injections (baseline and months 1-4), then follow-up every 1-2 months with additional injections for visual acuity loss of more than 5 letters or a CMT increase of more than 10%; retrospective consecutive cohort (Suzhou Municipal Hospital, September 2020 to December 2021), NPDR, CMT above 300 um."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 (T2) rows 'Changes'",
+   "reason": "the absolute logMAR series of the same table is used"
+  },
+  {
+   "what": "Table 2 F value and P value columns",
+   "reason": "test statistics and p-values are not admissible"
+  },
+  {
+   "what": "Table 4 (T4) effective and ineffective groups",
+   "reason": "groups defined by the post-baseline response are not admissible"
+  },
+  {
+   "what": "Table 5 (T5) logistic regression",
+   "reason": "model estimates are not admissible"
+  },
+  {
+   "what": "BCVA values quoted in the Results text and Figure 3 legend",
+   "reason": "text and figure values; the Table 2 cells are cited"
+  },
+  {
+   "what": "Table 3 (T3) central macular thickness",
+   "reason": "not acuity"
+  }
+ ],
+ "notes": [
+  "Unit: logMAR (Table 2 column headers); BCVA was measured with an international standard visual acuity chart and converted to logMAR for the analysis (Methods 2.3 and 2.4); no Snellen or decimal row.",
+  "Groups are subgroups defined by the baseline OCT pattern (control); together they form the whole cohort (130 eyes of 95 consecutive patients, some patients contributing both eyes). No whole-cohort acuity series is tabulated.",
+  "Follow-up: the design paragraph describes a 12-month follow-up and the inclusion criteria require willingness and ability to receive regular follow-up, without a minimum follow-up or a completed-follow-up analysis set; the consecutive cohort is kept with this note.",
+  "Regimen loading_then_prn: five monthly loading injections, then injections for the stated acuity or CMT criteria (mean injection counts per group in the Results).",
+  "Prior treatment is not stated.",
+  "Role control: approved agent, no experimental arm.",
+  "Central macular thickness (Table 3) and OCT biomarkers (Table 1) are reported in the article and mentioned here only."
+ ],
+ "series": [
+  {
+   "series_id": "drt/bcva",
+   "group": "drt",
+   "kind": "group_mean",
+   "n": 40,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "unstated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (1st inj.) (Table 2, row R2, DRT (LogMAR) column C2)",
+   "notes": "Mean (Methods 2.4: numeric variables stated as mean and standard deviation; Figure 3 legend: mean BCVA); cells may carry a significance asterisk after the dispersion. Rows state the months since the first injection (1-mo to 4-mo at the 2nd to 5th injections, 6-mo, 12-mo). Per-visit n not reported; the inclusion criteria state no minimum follow-up; handling of missing visits not stated.",
+   "values": [
+    0.64,
+    0.45,
+    0.42,
+    0.39,
+    0.36,
+    0.38,
+    0.4
+   ],
+   "source_cells": [
+    "PMC9875990.xml::T2!R2C2",
+    "PMC9875990.xml::T2!R3C2",
+    "PMC9875990.xml::T2!R5C2",
+    "PMC9875990.xml::T2!R7C2",
+    "PMC9875990.xml::T2!R9C2",
+    "PMC9875990.xml::T2!R11C2",
+    "PMC9875990.xml::T2!R13C2"
+   ],
+   "source_cell_texts": [
+    "0.64 ± 0.12",
+    "0.45 ± 0.12*",
+    "0.42 ± 0.13*",
+    "0.39 ± 0.14*",
+    "0.36 ± 0.13*",
+    "0.38 ± 0.16*",
+    "0.40 ± 0.17*"
+   ]
+  },
+  {
+   "series_id": "cme/bcva",
+   "group": "cme",
+   "kind": "group_mean",
+   "n": 46,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "unstated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (1st inj.) (Table 2, row R2, CME (LogMAR) column C3)",
+   "notes": "Mean (Methods 2.4: numeric variables stated as mean and standard deviation; Figure 3 legend: mean BCVA); cells may carry a significance asterisk after the dispersion. Rows state the months since the first injection (1-mo to 4-mo at the 2nd to 5th injections, 6-mo, 12-mo). Per-visit n not reported; the inclusion criteria state no minimum follow-up; handling of missing visits not stated.",
+   "values": [
+    0.69,
+    0.58,
+    0.56,
+    0.53,
+    0.51,
+    0.55,
+    0.57
+   ],
+   "source_cells": [
+    "PMC9875990.xml::T2!R2C3",
+    "PMC9875990.xml::T2!R3C3",
+    "PMC9875990.xml::T2!R5C3",
+    "PMC9875990.xml::T2!R7C3",
+    "PMC9875990.xml::T2!R9C3",
+    "PMC9875990.xml::T2!R11C3",
+    "PMC9875990.xml::T2!R13C3"
+   ],
+   "source_cell_texts": [
+    "0.69 ± 0.14",
+    "0.58 ± 0.16",
+    "0.56 ± 0.18",
+    "0.53 ± 0.19",
+    "0.51 ± 0.19*",
+    "0.55 ± 0.17",
+    "0.57 ± 0.15"
+   ]
+  },
+  {
+   "series_id": "srd/bcva",
+   "group": "srd",
+   "kind": "group_mean",
+   "n": 44,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "unstated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline (1st inj.) (Table 2, row R2, SRD (LogMAR) column C4)",
+   "notes": "Mean (Methods 2.4: numeric variables stated as mean and standard deviation; Figure 3 legend: mean BCVA); cells may carry a significance asterisk after the dispersion. Rows state the months since the first injection (1-mo to 4-mo at the 2nd to 5th injections, 6-mo, 12-mo). Per-visit n not reported; the inclusion criteria state no minimum follow-up; handling of missing visits not stated.",
+   "values": [
+    0.73,
+    0.64,
+    0.63,
+    0.61,
+    0.58,
+    0.61,
+    0.62
+   ],
+   "source_cells": [
+    "PMC9875990.xml::T2!R2C4",
+    "PMC9875990.xml::T2!R3C4",
+    "PMC9875990.xml::T2!R5C4",
+    "PMC9875990.xml::T2!R7C4",
+    "PMC9875990.xml::T2!R9C4",
+    "PMC9875990.xml::T2!R11C4",
+    "PMC9875990.xml::T2!R13C4"
+   ],
+   "source_cell_texts": [
+    "0.73 ± 0.13",
+    "0.64 ± 0.16",
+    "0.63 ± 0.16",
+    "0.61 ± 0.16",
+    "0.58 ± 0.16*",
+    "0.61 ± 0.15",
+    "0.62 ± 0.13"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,157 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc9829912",
+ "doi": "10.1038/s41598-023-27753-7",
+ "pmcid": "PMC9829912",
+ "title": "Choroidal thickness as a possible predictor of non-response to intravitreal bevacizumab for macular edema after retinal vein occlusion",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 International (article <license>)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9829912.xml",
+   "sha256": "2c475236779802a79bf34fdbe67af1dfc639a2d47c3f22c31ecf07154d72ce2f",
+   "bytes": 116132,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "brvo-bevacizumab",
+   "role": "control",
+   "agent": "bevacizumab 1.25 mg",
+   "n_reported": 80,
+   "description": "Treatment-naive eyes with macular edema after branch retinal vein occlusion, three monthly intravitreal bevacizumab injections then pro re nata; switched to another agent in case of non-response (retrospective, 2016-2020)."
+  },
+  {
+   "group": "crvo-bevacizumab",
+   "role": "control",
+   "agent": "bevacizumab 1.25 mg",
+   "n_reported": 46,
+   "description": "Treatment-naive eyes with macular edema after central retinal vein occlusion, three monthly intravitreal bevacizumab injections then pro re nata; switched to another agent in case of non-response (retrospective, 2016-2020)."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 'All eyes with RVO (n = 126)' rows R15-R20",
+   "reason": "Whole cohort whose baseline subgroups (BRVO, CRVO) are extracted from the same table"
+  },
+  {
+   "what": "Table 5 BCVA of non-ischemic and ischemic CRVO",
+   "reason": "Second baseline partition of the same CRVO eyes (addendum 1: only the first partition in document order, by RVO type in Table 4, is extracted)"
+  },
+  {
+   "what": "Tables 1-3 response group (Group 1) and non-response group (Group 2, subgroups a and b)",
+   "reason": "Groups defined by response and switching after baseline; these tables give baseline values only"
+  },
+  {
+   "what": "Table 4 CMT and SFCT columns; Figure 3 to Figure 5",
+   "reason": "Not visual acuity, or figures (not extracted)"
+  }
+ ],
+ "notes": [
+  "BCVA was assessed in decimal and converted to logMAR for each patient (Methods); Table 4 gives logMAR only.",
+  "Post-baseline switching: 42 of 126 eyes were switched for non-response (14 after the 3-month loading phase, 28 after 16 ± 6 months), to steroids (34) or another anti-VEGF agent (8), with a second switch in 6 eyes. The article does not state that values after switching were removed or replaced; the series are taken as all treated eyes and include switched eyes.",
+  "The minimum follow-up of all 126 eyes was 1 year after the first injection, shorter than the last tabulated visit (4 years); later attrition is ordinary and noted per series.",
+  "Inclusion: macular edema at least 3 months after the occlusion, baseline BCVA between 0 and 1.4 logMAR; treatment-naive eyes (prior_treatment naive).",
+  "Bevacizumab used off-label in routine care, not declared as an experimental arm (role control).",
+  "Missing-visit handling is not stated (missing_data unstated).",
+  "Central macular thickness, subfoveal choroidal thickness and injection counts are reported but not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "brvo-bevacizumab/bcva",
+   "group": "brvo-bevacizumab",
+   "kind": "group_mean",
+   "n": 80,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36,
+    48
+   ],
+   "baseline_label": "Baseline BCVA (logMAR), Table 4, BRVO",
+   "notes": "means ± SD (Table 4 header); visits at 6 months and 1-4 years after the first injection; of the whole cohort of 126 eyes, 63, 50 and 33 eyes were followed to 2, 3 and 4 years (per-group numbers at later visits not reported)",
+   "values": [
+    0.46,
+    0.32,
+    0.35,
+    0.41,
+    0.46,
+    0.41
+   ],
+   "source_cells": [
+    "PMC9829912.xml::Tab4!R3C3",
+    "PMC9829912.xml::Tab4!R4C2",
+    "PMC9829912.xml::Tab4!R5C2",
+    "PMC9829912.xml::Tab4!R6C2",
+    "PMC9829912.xml::Tab4!R7C2",
+    "PMC9829912.xml::Tab4!R8C2"
+   ],
+   "source_cell_texts": [
+    "0.46 ± 0.28",
+    "0.32 ± 0.25*",
+    "0.35 ± 0.32*",
+    "0.41 ± 0.31*",
+    "0.46 ± 0.28",
+    "0.41 ± 0.29*"
+   ]
+  },
+  {
+   "series_id": "crvo-bevacizumab/bcva",
+   "group": "crvo-bevacizumab",
+   "kind": "group_mean",
+   "n": 46,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36,
+    48
+   ],
+   "baseline_label": "Baseline BCVA (logMAR), Table 4, CRVO",
+   "notes": "means ± SD (Table 4 header); visits at 6 months and 1-4 years after the first injection; of the whole cohort of 126 eyes, 63, 50 and 33 eyes were followed to 2, 3 and 4 years (per-group numbers at later visits not reported)",
+   "values": [
+    0.66,
+    0.52,
+    0.5,
+    0.56,
+    0.46,
+    0.33
+   ],
+   "source_cells": [
+    "PMC9829912.xml::Tab4!R9C3",
+    "PMC9829912.xml::Tab4!R10C2",
+    "PMC9829912.xml::Tab4!R11C2",
+    "PMC9829912.xml::Tab4!R12C2",
+    "PMC9829912.xml::Tab4!R13C2",
+    "PMC9829912.xml::Tab4!R14C2"
+   ],
+   "source_cell_texts": [
+    "0.66 ± 0.29",
+    "0.52 ± 0.32*",
+    "0.50 ± 0.36*",
+    "0.56 ± 0.31*",
+    "0.46 ± 0.32*",
+    "0.33 ± 0.21*"
+   ]
+  }
+ ]
+}

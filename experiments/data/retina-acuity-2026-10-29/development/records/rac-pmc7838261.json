@@ -1,0 +1,89 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc7838261",
+ "doi": "10.1038/s41598-021-81810-7",
+ "pmcid": "PMC7838261",
+ "title": "Subthreshold laser treatment for reticular pseudodrusen secondary to age-related macular degeneration",
+ "species": "human",
+ "indication": "other",
+ "treatment": "laser",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 International (article <license>)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7838261.xml",
+   "sha256": "a16b73839d0df4e4c3a271c62dc4bc5464e2a8da93536e204ac1097ea57b7894",
+   "bytes": 97642,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "subthreshold-laser",
+   "role": "treated",
+   "agent": "end-point management yellow (577 nm) subthreshold laser, Pascal Synthesis, one extrafoveal 1.27 mm2 area",
+   "n_reported": 20,
+   "description": "PASCAL pilot trial (NCT02800356): 20 eyes of 20 patients with reticular pseudodrusen secondary to dry (non-neovascular) AMD, one subthreshold laser session at baseline, followed for 3 months."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 p-value columns (Tab2!R3C3, C5, C7, C8)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 2 CMT, choroidal thickness, ONL thickness, microperimetry and fixation rows",
+   "reason": "Not visual acuity (not extracted here)"
+  },
+  {
+   "what": "Results-text BCVA medians and ranges",
+   "reason": "Medians and ranges are not admissible; the text means agree with the cited Table 2 cells"
+  }
+ ],
+ "notes": [
+  "Indication 'other': reticular pseudodrusen secondary to dry AMD without macular neovascularization or edema, treated with laser (a macular condition within scope).",
+  "BCVA was measured with Snellen charts and converted to LogMAR for every patient for the analysis (Statistical analysis); Table 2 gives LogMAR only.",
+  "Study eye: the eye with the worse BCVA at baseline when both eyes were eligible (baseline choice).",
+  "Prior AMD treatment of the study eye (other than antioxidants) was an exclusion criterion (prior_treatment naive).",
+  "Role treated: subthreshold laser for reticular pseudodrusen is the experimental intervention of this non-randomized pilot trial.",
+  "Fellow eyes received no treatment for AMD during the study and are not reported for acuity."
+ ],
+ "series": [
+  {
+   "series_id": "subthreshold-laser/bcva",
+   "group": "subthreshold-laser",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "logmar_absolute",
+   "regimen": "single",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    3
+   ],
+   "baseline_label": "Baseline BCVA (LogMAR), Table 2",
+   "notes": "mean ± SD (Table 2 subheader); per-visit n not reported, no withdrawal reported",
+   "values": [
+    0.14,
+    0.135,
+    0.115
+   ],
+   "source_cells": [
+    "PMC7838261.xml::Tab2!R3C2",
+    "PMC7838261.xml::Tab2!R3C4",
+    "PMC7838261.xml::Tab2!R3C6"
+   ],
+   "source_cell_texts": [
+    "0.14 ± 0.09",
+    "0.135 ± 0.10",
+    "0.115 ± 0.09"
+   ]
+  }
+ ]
+}

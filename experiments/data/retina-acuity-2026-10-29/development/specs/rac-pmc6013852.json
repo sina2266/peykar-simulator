@@ -1,0 +1,82 @@
+{
+ "study_id": "rac-pmc6013852",
+ "doi": "10.1186/s12886-018-0824-0",
+ "pmcid": "PMC6013852",
+ "title": "Clinical response of pigment epithelial detachment associated with neovascular age-related macular degeneration in switching treatment from Ranibizumab to Aflibercept",
+ "species": "human",
+ "indication": "namd",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License; the CC0 waiver applies to data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6013852.xml",
+   "sha256": "f4cca804ec062f815463a12e396b1ebd1edab164321be6b5733cb6be548830ea",
+   "bytes": 75073,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "aflibercept-switch",
+   "role": "control",
+   "agent": "aflibercept 2.0 mg (after ranibizumab 0.5 mg)",
+   "n_reported": 50,
+   "description": "Eyes with active nAMD and a fovea-involving PED of at least 100 µm at the switch, switched from ranibizumab to aflibercept for inadequate clinical response to ranibizumab"
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "aflibercept-switch/bcva",
+   "group": "aflibercept-switch",
+   "kind": "group_mean",
+   "n": 50,
+   "value_kind": "letters_absolute",
+   "regimen": "fixed_interval",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    4,
+    12
+   ],
+   "cells": [
+    "PMC6013852.xml::Tab2!R2C3",
+    "PMC6013852.xml::Tab2!R2C4",
+    "PMC6013852.xml::Tab2!R2C5"
+   ],
+   "baseline_label": "Switch (1st Aflibercept), Table 2",
+   "notes": "mean (SD) (Table 2 caption); ETDRS letters (Table 2 footnote; Methods: ETDRS letter score); reference is the switch visit and months are counted from the switch; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 column C2, Baseline (1st Ranibizumab)",
+   "reason": "Before the switch (switch-study rule: the reference is the switch visit)."
+  },
+  {
+   "what": "Table 2 column C6, Last follow-up visit",
+   "reason": "Undated final visit."
+  },
+  {
+   "what": "Table 4 BCVA change at 1 year by PED morphology and by retinal fluid",
+   "reason": "Changes only, without the baseline acuity of each subgroup (inclusion 3)."
+  },
+  {
+   "what": "Table 3 correlations",
+   "reason": "Not an acuity series."
+  }
+ ],
+ "notes": [
+  "Retrospective non-comparative case series: 50 of 218 eyes switched from ranibizumab to aflibercept met the inclusion criteria (ranibizumab first, fovea-involving PED, PED height of at least 100 µm at the switch); these are conditions at the switch, not post-baseline selection.",
+  "Eyes were switched for inadequate clinical response to ranibizumab (response to an earlier treatment before the reported period).",
+  "Aflibercept in the first year after the switch: monthly for 3 months, then every 2 months (fixed_interval); individualised PRN or treat-and-extend from year two.",
+  "The 4-month visit follows the 3 monthly aflibercept loading injections; Table 2 states its time since the switch.",
+  "No minimum follow-up criterion; the duration of aflibercept treatment differs between eyes (Tab1!R5C2) and per-visit n is not reported, so later means may include fewer eyes (ordinary attrition).",
+  "PED height and width (Table 2 rows R3-R4) and injection numbers (Table 1) are not extracted."
+ ]
+}

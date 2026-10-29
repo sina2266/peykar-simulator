@@ -1,0 +1,90 @@
+{
+ "study_id": "rac-pmc5685094",
+ "doi": "10.2147/OPTH.S141153",
+ "pmcid": "PMC5685094",
+ "title": "Treatment of refractory uveitic macular edema: results of a first and second implant of long-acting intravitreal dexamethasone",
+ "species": "human",
+ "indication": "uveitic",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 unported (article <license>, ali:license_ref; Dove Medical Press terms)",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5685094.xml",
+   "sha256": "3cce94aa5524848147a25a891565ce2e650ead331ed42e4a719224f2c7fc81ec",
+   "bytes": 86255,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "dexamethasone-implant-one-eye-per-patient",
+   "role": "control",
+   "agent": "dexamethasone intravitreal implant 0.7 mg (Ozurdex)",
+   "n_reported": 9,
+   "description": "First implant in 9 eyes of 9 patients with noninfectious intermediate, posterior or panuveitis and macular edema refractory to oral or peribulbar steroid; for the 3 patients treated in both eyes only the worst eye is counted (Table S2)."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dexamethasone-implant-one-eye-per-patient/bcva",
+   "group": "dexamethasone-implant-one-eye-per-patient",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "letters_absolute",
+   "regimen": "single",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    0.9856,
+    2.9569,
+    4.4353,
+    5.9138
+   ],
+   "cells": [
+    "PMC5685094.xml::ts2-opth-11-1949!R2C2",
+    "PMC5685094.xml::ts2-opth-11-1949!R3C2",
+    "PMC5685094.xml::ts2-opth-11-1949!R4C2",
+    "PMC5685094.xml::ts2-opth-11-1949!R5C2",
+    "PMC5685094.xml::ts2-opth-11-1949!R6C2"
+   ],
+   "baseline_label": "Baseline BCVA (ETDRS letters), Table S2",
+   "notes": "mean ± SD (Table S2 header); visits at 30, 90, 135 and 180 days after the implant (days/30.4375); per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "First-implant BCVA of all 12 eyes (Figure 1 and Results text)",
+   "reason": "Not in a table of the article; text and figure values are not cited"
+  },
+  {
+   "what": "Second-implant BCVA of 5 eyes (Figure 2, Figure 3 and Results text)",
+   "reason": "Eyes chosen for reinjection at day 180 after an improvement (group defined by a post-baseline event), and not tabulated"
+  },
+  {
+   "what": "Table 1 per-patient basal BCVA (t1-opth-11-1949, column C6)",
+   "reason": "Per-eye baseline only, with no per-eye follow-up values: forms no series; the tabulated group mean of Table S2 is extracted"
+  },
+  {
+   "what": "Table S2 CMT column, Tables 2-3 CMT and intraocular pressure",
+   "reason": "Not visual acuity (not extracted here)"
+  },
+  {
+   "what": "Day-7 visit",
+   "reason": "Measured per the Methods but not tabulated"
+  }
+ ],
+ "notes": [
+  "Table S2 is printed in the article XML (source file), not in a separate supplementary file.",
+  "'Worst eye' (for the 3 patients treated in both eyes) is not defined in the article; it is read as the choice of one eye per patient made at baseline, not by outcome.",
+  "BCVA measured with the standardized ETDRS protocol (Methods); Table S2 gives ETDRS letters.",
+  "Prospective single-centre single-arm study of standard-of-care dexamethasone implant; eyes refractory to oral or peribulbar steroid (prior_treatment previously_treated); stable systemic treatment for at least 3 months, none added after the implant; topical NSAID three times a day for one month after the implant.",
+  "The second implant was given after day 180 (mean reinjection interval 8.8 months), so the first-implant period up to day 180 contains a single implant.",
+  "Cataract progression is reported after the first implant (4 of 8 phakic eyes) and after the second; the Results report one eye needing cataract surgery after the second implant, while the Discussion says surgery was required in both cases. Its timing relative to the tabulated visits is not stated and no values are stated as removed, so the series is kept with this note. One intraocular pressure rise after the second implant was treated topically."
+ ]
+}

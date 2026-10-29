@@ -1,0 +1,170 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc10970839",
+ "doi": "10.3390/jcm13061819",
+ "pmcid": "PMC10970839",
+ "title": "Real-World Experience with Brolucizumab Compared to Aflibercept in Treatment-Naïve and Therapy-Refractory Patients with Diabetic Macular Edema",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "anti_vegf",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>, ali:license_ref https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC10970839.xml",
+   "sha256": "b09cc4b89b25c94e39cfe9f64f119e29b74294e6d85b1bb9f227f0a31b52f179",
+   "bytes": 117251,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "brolucizumab-naive",
+   "role": "control",
+   "agent": "brolucizumab 6 mg intravitreal",
+   "n_reported": 12,
+   "description": "Treatment-naive centre-involving DME, prospective institutional cohort (Charite Berlin, July 2022 to December 2023), 12 eyes of 8 patients: five brolucizumab injections at 6-week intervals (upload), then a modified treat-and-extend protocol from week 36 (at least 8 weeks after the upload). Deferred panretinal laser in four patients after the first injection."
+  },
+  {
+   "group": "brolucizumab-switch",
+   "role": "control",
+   "agent": "brolucizumab 6 mg intravitreal (switch after bevacizumab, ranibizumab, aflibercept and/or dexamethasone implant)",
+   "n_reported": 23,
+   "description": "Recalcitrant centre-involving DME persisting despite at least 6 months of anti-VEGF treatment (at least 6 consecutive monthly injections and/or a dexamethasone implant), switched to brolucizumab, 23 eyes of 16 patients: at least two injections every 6 weeks, continued every 6 weeks up to five as needed, then treat-and-extend. The reported period starts at the switch (baseline = first brolucizumab injection). Panretinal laser in two patients during the study."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 (jcm-13-01819-t002) aflibercept treatment-naive column (C3), 17 eyes",
+   "reason": "complete-case and post-baseline selection: the retrospective aflibercept cohort included only eyes with a full upload of six 4-weekly injections and a follow-up of at least 36 weeks, equal to the last tabulated visit; the article does not state that no treated eye was left out (protocol inclusion 5; brief complete-case ruling)"
+  },
+  {
+   "what": "Table 2 aflibercept recalcitrant (switch) column (C7), 23 eyes",
+   "reason": "complete-case and post-baseline selection: inclusion required at least two consecutive aflibercept injections after the switch and a follow-up of at least 36 weeks after the switch, equal to the last tabulated visit; no statement that no treated eye was left out"
+  },
+  {
+   "what": "Table 2 rows 'Week 8' and 'Week 20'",
+   "reason": "aflibercept-only visits (N/A for brolucizumab); the aflibercept columns are excluded"
+  },
+  {
+   "what": "Table 1 (jcm-13-01819-t001) BCVA (logMAR) row",
+   "reason": "baseline only; the same baseline is cited from Table 2"
+  },
+  {
+   "what": "Mean BCVA values and letter equivalents of the changes in the Abstract, Results and Discussion text",
+   "reason": "text values; the Table 2 cells are cited, and letter equivalents derived from logMAR changes are not a series with a baseline"
+  },
+  {
+   "what": "Figure 1 (changes in BCVA and CRT)",
+   "reason": "figure values are not extracted"
+  },
+  {
+   "what": "Proportions of eyes with resolved centre-involving DME, fluid status, treatment intervals and injection counts",
+   "reason": "not acuity; proportions and counts are not admissible"
+  }
+ ],
+ "notes": [
+  "Unit: BCVA was assessed in logMAR in the brolucizumab group (Methods 2.1; the aflibercept group was converted from decimal acuity); Table 2 states logMAR with no Snellen or decimal row.",
+  "Statistic: Table 2 header labels the values as mean BCVA + SD and its footnote defines SD; the Statistical Analysis section says means +/- SEM are reported. The values are means either way; the dispersion is not extracted.",
+  "Role control for both brolucizumab groups: brolucizumab is an approved agent used in routine care and compared with aflibercept from a registry; no investigational arm is declared.",
+  "Regimen treat_and_extend: modified treat-and-extend protocol after the upload (treatment-naive) or after at least two 6-weekly injections (switch).",
+  "No minimum follow-up criterion is stated for the prospective brolucizumab cohorts and no larger treated cohort is described; the Discussion notes increasing loss to follow-up after the 9-month period, beyond the tabulated visits.",
+  "Several patients contributed both eyes (12 eyes of 8 and 23 eyes of 16 patients).",
+  "Central retinal thickness (Table 2 CRT columns), fluid status and treatment intervals are reported in the article and mentioned here only."
+ ],
+ "series": [
+  {
+   "series_id": "brolucizumab-naive/bcva",
+   "group": "brolucizumab-naive",
+   "kind": "group_mean",
+   "n": 12,
+   "value_kind": "logmar_absolute",
+   "regimen": "treat_and_extend",
+   "prior_treatment": "naive",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1.3799,
+    2.7598,
+    4.1396,
+    5.5195,
+    8.2793
+   ],
+   "baseline_label": "Baseline (Table 2, row R4, Treatment-Naive DME / Mean BCVA / Brolucizumab column C2)",
+   "notes": "Mean (Table 2 header 'Mean BCVA + SD (logMAR)'); each follow-up cell also prints a p-value after the mean, and the leading mean is read. Rows 'Week 4-6' and 'Week 16-18' combine the two agents' visit schedules; Methods 2.2 state brolucizumab visits at baseline and weeks 6, 12, 18, 24 and 36, so these rows are dated week 6 and week 18 for this column. The week-36 visit is described in Methods as 8-12 weeks after the week-24 injection; the table label (week 36) is used. Weeks converted with weeks x 7 / 30.4375. Per-visit n not reported; the Results give week-36 outcomes for all 12 eyes. Handling of missing visits not stated. Panretinal laser given to four patients after the first injection; values were not removed.",
+   "values": [
+    0.31,
+    0.21,
+    0.2,
+    0.19,
+    0.19,
+    0.18
+   ],
+   "source_cells": [
+    "PMC10970839.xml::jcm-13-01819-t002!R4C2",
+    "PMC10970839.xml::jcm-13-01819-t002!R5C2",
+    "PMC10970839.xml::jcm-13-01819-t002!R7C2",
+    "PMC10970839.xml::jcm-13-01819-t002!R8C2",
+    "PMC10970839.xml::jcm-13-01819-t002!R10C2",
+    "PMC10970839.xml::jcm-13-01819-t002!R11C2"
+   ],
+   "source_cell_texts": [
+    "0.31 ± 0.1",
+    "0.21 ± 0.1p = 0.01",
+    "0.20 ± 0.1p = 0.03",
+    "0.19 ± 0.1p = 0.007",
+    "0.19 ± 0.1p = 0.03",
+    "0.18 ± 0.1p = 0.03"
+   ]
+  },
+  {
+   "series_id": "brolucizumab-switch/bcva",
+   "group": "brolucizumab-switch",
+   "kind": "group_mean",
+   "n": 23,
+   "value_kind": "logmar_absolute",
+   "regimen": "treat_and_extend",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1.3799,
+    2.7598,
+    4.1396,
+    5.5195,
+    8.2793
+   ],
+   "baseline_label": "Baseline at the switch (Table 2, row R4, Recalcitrant DME / Mean BCVA / Brolucizumab column C6)",
+   "notes": "Mean (Table 2 header 'Mean BCVA + SD (logMAR)'); each follow-up cell also prints a p-value after the mean, and the leading mean is read. Time origin is the switch to brolucizumab. Rows 'Week 4-6' and 'Week 16-18' combine the two agents' visit schedules; Methods 2.2 state brolucizumab visits at baseline and weeks 6, 12, 18, 24 and 36, so these rows are dated week 6 and week 18 for this column. Some eyes were extended to an 8-week interval after two injections (from week 18), so their later visits may not coincide exactly with the tabulated weeks (not stated); the table labels are used. Per-visit n not reported; the Results give week-36 outcomes for all 23 eyes. Handling of missing visits not stated. Panretinal laser in two patients during the study; values were not removed.",
+   "values": [
+    0.43,
+    0.39,
+    0.35,
+    0.35,
+    0.34,
+    0.33
+   ],
+   "source_cells": [
+    "PMC10970839.xml::jcm-13-01819-t002!R4C6",
+    "PMC10970839.xml::jcm-13-01819-t002!R5C6",
+    "PMC10970839.xml::jcm-13-01819-t002!R7C6",
+    "PMC10970839.xml::jcm-13-01819-t002!R8C6",
+    "PMC10970839.xml::jcm-13-01819-t002!R10C6",
+    "PMC10970839.xml::jcm-13-01819-t002!R11C6"
+   ],
+   "source_cell_texts": [
+    "0.43 ± 0.3",
+    "0.39 ± 0.3p = 0.75",
+    "0.35 ± 0.2p = 0.02",
+    "0.35 ± 0.3p = 0.01",
+    "0.34 ± 0.3p = 0.001",
+    "0.33 ± 0.2p = 0.006"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,129 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc13065104",
+ "doi": "10.22336/rjo.2025.80",
+ "pmcid": "PMC13065104",
+ "title": "Assessing the Role of Statins as an Adjunctive Anti-VEGF Therapy for Clinically Significant Macular Edema (CSME) in Type 2 Diabetes Mellitus",
+ "species": "human",
+ "indication": "dme",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>, ali:license_ref)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13065104.xml",
+   "sha256": "9c6f891c1803e060c28e452d1e91038526035a1cb51d13f8cf6027c89052a365",
+   "bytes": 87913,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ranibizumab-low-dose-atorvastatin",
+   "role": "treated",
+   "agent": "ranibizumab 0.5 mg + oral atorvastatin 10-20 mg",
+   "n_reported": 9,
+   "description": "Group A (randomized): three monthly loading injections of intravitreal ranibizumab 0.5 mg, then pro re nata over six months, with low-dose oral atorvastatin (10-20 mg); type 2 diabetes, NPDR with clinically significant macular edema; n from Table 1 header (patients)."
+  },
+  {
+   "group": "ranibizumab-high-dose-atorvastatin",
+   "role": "treated",
+   "agent": "ranibizumab 0.5 mg + oral atorvastatin 30-40 mg",
+   "n_reported": 9,
+   "description": "Group B (randomized): three monthly loading injections of intravitreal ranibizumab 0.5 mg, then pro re nata over six months, with high-dose oral atorvastatin (30-40 mg); type 2 diabetes, NPDR with clinically significant macular edema; n from Table 1 header (patients)."
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 4 BCVA (logMAR) by group at baseline, 3 and 6 months (T4!R3)",
+   "reason": "Same quantity as Table 3 printed again for the intergroup comparison; Table 3 cited instead"
+  },
+  {
+   "what": "Table 2 baseline BCVA (T2!R14)",
+   "reason": "Baseline already cited from Table 3"
+  },
+  {
+   "what": "Results-text BCVA values",
+   "reason": "Text, not table cells (they agree with the cited Table 3 cells)"
+  }
+ ],
+ "notes": [
+  "Prospective randomized study (CTRI REF/2020/06/034527); both arms receive the investigational oral statin adjunct at two doses and no arm is without statin, so both are role treated.",
+  "Treatment 'combination': intravitreal anti-VEGF plus an oral drug (treatment type 'other') defines each arm.",
+  "BCVA in logMAR (Tables 2-4); best-corrected acuity stated in the Methods; no Snellen or decimal row.",
+  "Eligibility admitted treatment-naive eyes and eyes treated for CSME at least 3 months before enrollment; the composition of the groups is not reported, so prior_treatment is unstated.",
+  "n is the number of patients per group (Table 1 header); the number of study eyes per patient is not stated.",
+  "The Discussion states that patients could not follow the scheduled visit protocol because of the COVID-19 pandemic; missing-visit handling is not stated.",
+  "Central macular thickness, serum VEGF and injection counts are reported but not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "ranibizumab-low-dose-atorvastatin/bcva",
+   "group": "ranibizumab-low-dose-atorvastatin",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "unstated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline BCVA (logMAR), Table 3, Group A",
+   "notes": "mean ± SD (Statistical analysis: continuous variables as means and standard deviations); visits labelled '3 months (10-14 weeks)' and '6 months (22-26 weeks)' dated at the nominal months 3 and 6; per-visit n not reported",
+   "values": [
+    0.69,
+    0.299,
+    0.27
+   ],
+   "source_cells": [
+    "PMC13065104.xml::T3!R3C2",
+    "PMC13065104.xml::T3!R3C3",
+    "PMC13065104.xml::T3!R3C4"
+   ],
+   "source_cell_texts": [
+    "0.690 ± 0.387",
+    "0.299 ± 0.189 (p value = 0.025)*",
+    "0.270 ± 0.135 (p value = 0.013)"
+   ]
+  },
+  {
+   "series_id": "ranibizumab-high-dose-atorvastatin/bcva",
+   "group": "ranibizumab-high-dose-atorvastatin",
+   "kind": "group_mean",
+   "n": 9,
+   "value_kind": "logmar_absolute",
+   "regimen": "loading_then_prn",
+   "prior_treatment": "unstated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline BCVA (logMAR), Table 3, Group B",
+   "notes": "mean ± SD (Statistical analysis: continuous variables as means and standard deviations); visits labelled '3 months (10-14 weeks)' and '6 months (22-26 weeks)' dated at the nominal months 3 and 6; per-visit n not reported",
+   "values": [
+    0.615,
+    0.535,
+    0.574
+   ],
+   "source_cells": [
+    "PMC13065104.xml::T3!R6C2",
+    "PMC13065104.xml::T3!R6C3",
+    "PMC13065104.xml::T3!R6C4"
+   ],
+   "source_cell_texts": [
+    "0.615 ± 0.264",
+    "0.535 ± 0.328 (p value = 0.05)",
+    "0.574 ± 0.305 (p value = 0.372)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+{
+ "schema": "eye.retina-acuity-record-1.0.0",
+ "study_id": "rac-pmc7230455",
+ "doi": "10.3390/jcm9041066",
+ "pmcid": "PMC7230455",
+ "title": "The Role of Subthreshold Micropulse Yellow Laser as an Alternative Option for the Treatment of Refractory Postoperative Cystoid Macular Edema",
+ "species": "human",
+ "indication": "cme_postoperative",
+ "treatment": "laser",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7230455.xml",
+   "sha256": "b8451d7ed28b13b3555e36e30670df4d668c634c7e8d9e994a7c0067f4719107",
+   "bytes": 74967,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "smyl",
+   "role": "treated",
+   "agent": "577 nm subthreshold micropulse yellow laser (5% duty cycle, confluent 7 x 7 grids covering the edema including the foveal center)",
+   "n_reported": 10,
+   "description": "Chronic postoperative cystoid macular edema after uncomplicated or complicated cataract surgery or retinal detachment surgery, refractory to conventional treatments for at least 4 months, no earlier SMYL; SMYL repeated on relapse"
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "t001 per-eye Baseline BCVA (LogMAR) (C8, R2-R11)",
+   "reason": "Per-eye rows give only the baseline value and no follow-up, so they form no series; the tabulated group mean (t002) is extracted (brief ruling on per-eye rows)."
+  },
+  {
+   "what": "Subgroups by surgery type (uncomplicated cataract, complicated cataract, retinal detachment surgery)",
+   "reason": "Shown only in a figure, not tabulated."
+  },
+  {
+   "what": "t002 CMT column and p-value columns",
+   "reason": "Retinal thickness and p-values are not extracted."
+  }
+ ],
+ "notes": [
+  "BCVA was evaluated with ETDRS charts, assessed in Snellen and converted to logMAR (Methods); t002 states LogMAR with no Snellen row.",
+  "Values were recorded at 1, 2, 3 and 6 months after laser treatment (Methods); relapses are described relative to the initial laser intervention, so months are counted from the first SMYL session.",
+  "Two eyes were re-treated with SMYL after a relapse (one of them three sessions, its last follow-up stated relative to the third session); values were not removed or replaced.",
+  "Bromfenac 0.09% eye drops were prescribed for one month after the intervention in all eyes.",
+  "Earlier treatments: topical NSAIDs in all eyes and, in some, oral NSAIDs, sub-Tenon triamcinolone, dexamethasone implant or anti-VEGF (t001).",
+  "Role treated: the article presents SMYL as a technique without earlier reports for this indication, evaluated as an alternative to standard therapies.",
+  "The comparisons used nonparametric tests; the caption labels the tabulated values as means.",
+  "Retinal thickness is not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "smyl/bcva",
+   "group": "smyl",
+   "kind": "group_mean",
+   "n": 10,
+   "value_kind": "logmar_absolute",
+   "regimen": "prn",
+   "prior_treatment": "previously_treated",
+   "missing_data": "unstated",
+   "months": [
+    0,
+    1,
+    2,
+    3,
+    6
+   ],
+   "baseline_label": "Baseline BCVA (LogMAR) (Table 2)",
+   "notes": "mean +/- SD (caption: 'Mean values'); per-visit n not reported",
+   "values": [
+    0.52,
+    0.3,
+    0.25,
+    0.22,
+    0.22
+   ],
+   "source_cells": [
+    "PMC7230455.xml::jcm-09-01066-t002!R2C2",
+    "PMC7230455.xml::jcm-09-01066-t002!R3C2",
+    "PMC7230455.xml::jcm-09-01066-t002!R4C2",
+    "PMC7230455.xml::jcm-09-01066-t002!R5C2",
+    "PMC7230455.xml::jcm-09-01066-t002!R6C2"
+   ],
+   "source_cell_texts": [
+    "0.52 ± 0.34",
+    "0.30 ± 0.27",
+    "0.25 ± 0.18",
+    "0.22 ± 0.19",
+    "0.22 ± 0.19"
+   ]
+  }
+ ]
+}

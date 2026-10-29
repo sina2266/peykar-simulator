@@ -1,0 +1,127 @@
+{
+ "study_id": "rac-pmc5116315",
+ "doi": "10.1007/s00417-016-3394-y",
+ "pmcid": "PMC5116315",
+ "title": "Two-year, prospective, multicenter study of the use of dexamethasone intravitreal implant for treatment of macular edema secondary to retinal vein occlusion in the clinical setting in France",
+ "species": "human",
+ "indication": "rvo",
+ "treatment": "steroid_implant",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "http://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5116315.xml",
+   "sha256": "6f603e2b7ebdbae6827efc233ab1f7f3028f5ddfbd4c285bdb05e90c1c6f4ae2",
+   "bytes": 86734,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "brvo",
+   "role": "control",
+   "agent": "dexamethasone intravitreal implant 0.7 mg",
+   "n_reported": 202,
+   "description": "Macular edema secondary to branch retinal vein occlusion (baseline diagnosis subgroup of the analysis population, Tab2); DEX implant at day 0 in routine practice, re-treatment with DEX implant and other RVO treatments at the physician's discretion"
+  },
+  {
+   "group": "crvo",
+   "role": "control",
+   "agent": "dexamethasone intravitreal implant 0.7 mg",
+   "n_reported": 173,
+   "description": "Macular edema secondary to central retinal vein occlusion (baseline diagnosis subgroup of the analysis population, Tab2); DEX implant at day 0 in routine practice, re-treatment with DEX implant and other RVO treatments at the physician's discretion"
+  }
+ ],
+ "extraction_protocol": "retina-acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "brvo/bcva",
+   "group": "brvo",
+   "kind": "group_mean",
+   "n": 202,
+   "value_kind": "letters_change",
+   "regimen": "prn",
+   "prior_treatment": "mixed",
+   "missing_data": "observed",
+   "months": [
+    0,
+    6,
+    24
+   ],
+   "cells": [
+    {
+     "definition": "definition:Tab2 column header 'Mean (SD) change from baseline BCVA' (the change is 0 at baseline)",
+     "value": 0
+    },
+    "PMC5116315.xml::Tab2!R4C3",
+    "PMC5116315.xml::Tab2!R4C4"
+   ],
+   "reference_cell": "PMC5116315.xml::Tab2!R4C2",
+   "baseline_label": "Mean (SD) baseline BCVA, letters (Tab2)",
+   "notes": "mean (SD) change from the mean (SD) baseline letter score of the same subgroup; per-visit n by subgroup not reported; visit windows month 6 +/- 2 weeks, month 24 +/- 2 months"
+  },
+  {
+   "series_id": "crvo/bcva",
+   "group": "crvo",
+   "kind": "group_mean",
+   "n": 173,
+   "value_kind": "letters_change",
+   "regimen": "prn",
+   "prior_treatment": "mixed",
+   "missing_data": "observed",
+   "months": [
+    0,
+    6,
+    24
+   ],
+   "cells": [
+    {
+     "definition": "definition:Tab2 column header 'Mean (SD) change from baseline BCVA' (the change is 0 at baseline)",
+     "value": 0
+    },
+    "PMC5116315.xml::Tab2!R5C3",
+    "PMC5116315.xml::Tab2!R5C4"
+   ],
+   "reference_cell": "PMC5116315.xml::Tab2!R5C2",
+   "baseline_label": "Mean (SD) baseline BCVA, letters (Tab2)",
+   "notes": "mean (SD) change from the mean (SD) baseline letter score of the same subgroup; per-visit n by subgroup not reported; visit windows month 6 +/- 2 weeks, month 24 +/- 2 months"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Tab2 total analysis population (R2)",
+   "reason": "Whole cohort; its baseline subgroups by diagnosis are extracted instead (protocol inclusion 5; brief ruling on groups)."
+  },
+  {
+   "what": "Tab2 subgroups by duration of ME at baseline (R7-R8), lens status at baseline (R10-R12) and treatment status at baseline (R14-R16)",
+   "reason": "Further baseline partitions of the same eyes; only the first partition in document order (diagnosis, R4-R5) is extracted (addendum 1, point 1)."
+  },
+  {
+   "what": "Tab2 subgroups by RVO treatment during the study, through 6 months (R19-R22) and through 24 months (R24-R27)",
+   "reason": "Groups defined by treatments received after baseline (brief ruling on groups); their changes are ANCOVA model estimates (footnote c)."
+  },
+  {
+   "what": "Tab2 percentages of patients with a 15-letter or larger gain at 6 and 24 months (C5-C6)",
+   "reason": "Proportions are not admissible."
+  },
+  {
+   "what": "Tab1 recruited patients not treated with DEX implant (C2) and analysis-population baseline BCVA (R13)",
+   "reason": "Untreated recruited patients have no follow-up; the analysis-population baseline belongs to the whole cohort."
+  },
+  {
+   "what": "Visits at week 6, months 4, 12 and 18 (Fig. 2) and changes given in the text",
+   "reason": "Not tabulated; values shown only in figures or text are not cited."
+  }
+ ],
+ "notes": [
+  "Prospective observational study (LOUVRE) of consecutive patients treated with DEX implant at baseline in routine practice in France; role control.",
+  "BCVA was measured with an ETDRS chart or the Monoyer scale; Tab2 states ETDRS letters with no Snellen or decimal row, which establishes the unit (brief ruling on units).",
+  "Efficacy analyses used observed values with no replacement of missing values in all enrolled patients with baseline BCVA (missing_data observed); month-6 BCVA was missing for part of the analysis population and not every patient completed the 2-year study (ordinary attrition).",
+  "Re-treatment with DEX implant and other RVO treatments (mostly laser or anti-VEGF) were given at the physician's discretion, and eyes that had cataract surgery were not excluded; values after these events were not removed or replaced, so all visits are kept.",
+  "The analysis population includes treatment-naive and previously treated eyes (Tab1); the prior-treatment split within each diagnosis subgroup is not reported (prior_treatment mixed).",
+  "Central retinal thickness, IOP, numbers of implants and quality of life are not extracted."
+ ]
+}
