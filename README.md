@@ -178,6 +178,17 @@ passed on 113 human group-mean series:
 The gain is confined to the first postoperative month. Early and long-horizon
 intervals were too narrow, and 58/113 group means were within 5/10 pp
 ([Persian results](experiments/eye/iop/model-1.1/results.fa.md)).
+**IOP model 1.2.0** keeps the 1.1.0 law and fit (on generic eye model version 2)
+and widens only the forecast intervals of the first postoperative month. It was
+trained on the 146 studies of tranches 1 and 2, frozen and pushed (`df8f389a`), then
+tested once on tranche 3 (83 custodian-extracted records). All five declared
+hypotheses passed on 130 human group-mean series: coverage 83.5%/93.1%, next
+follow-up 5.89 pp versus 7.21 for persistence, landmark 7.76 versus 11.89, initial
+state 10.17 versus 18.06, and first-month coverage 82.4%/93.9% against 67.9%/81.7%
+for 1.1.0 at the same accuracy. First-month errors are still about twice the later
+ones, and the month-1 pressure rise after Ahmed valves is missed
+([model 1.2](experiments/eye/iop/model-1.2/README.md),
+[Persian results](experiments/eye/iop/model-1.2/results.fa.md)).
 The fifth eye component is
 [central retinal thickness after treatment](experiments/eye/retina/README.md): the
 OCT thickness of the macula after anti-VEGF injections, steroid implants or

@@ -89,6 +89,33 @@ Commands run from the repository root; outcomes observed. Start state: main at
   `uv run --frozen python .peykar/verify_iop_tranche4_custody.py`: 94 reserved
   studies, 79 records and 15 exclusions, 79/79 rebuilt byte for byte, 79 raw copies
   equal to the screened sources, 222 series, no problem.
+- `uv run --frozen python scripts/evaluate_iop_population_1_2.py --sealed --protocol
+  experiments/eye/iop/model-1.2/protocol-1.2.0.json --output
+  .peykar/iop12-sealed-test-2026-10-29`: hashes verified, 7,260.0 s, exit 0; report
+  SHA-256 `3275c150…`, reference 1.1.0 `e40762bd…`; 24 sealed studies trained without
+  their author-linked studies.
+- `uv run --frozen python scripts/publish_iop_population_1_2.py --sealed --report …
+  --reference …/reference-1.1.0-report.json --output
+  experiments/eye/iop/model-1.2/sealed-test-2026-10-29`: all five hypotheses pass on
+  130 human group means (coverage 435/521 = 0.835 and 485/521 = 0.931; next
+  observation 5.89 vs persistence 7.21 pp; landmark 7.76 vs 11.89; initial state 10.17
+  vs 18.06; first-month coverage 0.824/0.939 vs 1.1.0 0.679/0.817 at 5.885 vs 5.877
+  pp). The same publisher with `--development` on the c1 and 1.1.0 LOSO reports wrote
+  `development-loso-2026-10-29/`.
+- `.peykar/check_iop_redaction_1_2.py sealed …` (the retina 1.1 check with the IOP 1.2
+  publisher's licence classes) first reported 92 leaks: the frozen publisher kept the
+  `reference_value` field in initial-state entries of the 53 redacted studies (159 in
+  the development folder). `experiments/eye/iop/model-1.2/redact-reference-values.py`
+  removed them (a second run removed none); the check then found 0 leaks in 106 sealed
+  and 148 development reports of redacted studies. No earlier public report carries
+  that field for a redacted study (scan of every `report-public.json` and
+  `reference*-public.json` under `experiments/`).
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/iop/model-1.2/sealed-test-2026-10-29/plot-results.py`: figure written;
+  `.peykar/iop12_sealed_breakdown.py` printed the aggregates quoted in the 1.2 README.
+- After the documentation edits, the protocol checks of all nine frozen protocols
+  (corneal 1.0.0 and 2.0.0, endothelium, corneal thickness, IOP 1.0.0, 1.1.0 and 1.2.0,
+  retina 1.0.0 and 1.1.0) returned no problem.
 
 ## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 

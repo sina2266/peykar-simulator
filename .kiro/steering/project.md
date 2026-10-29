@@ -1,6 +1,6 @@
 # Peykar continuation context
 
-## Retina 1.1 tested, IOP 1.2 frozen, 2026-10-28/29
+## Retina 1.1 and IOP 1.2 tested; next tranches extracted, 2026-10-28/29
 
 - Fresh sealed sets, reserved before triage and extracted blind: retina tranche 2
   (63 records, `.peykar/retina-tranche2-sealed-2026-10-28`) and IOP tranche 3 (83
@@ -17,13 +17,27 @@
   7.91 vs persistence 8.81, landmark 9.90 vs 11.55, initial 13.00 vs 18.51); H5 FAILS
   (1.0.0 same training 7.79/9.73/13.25). 1.0.0 coverage there 0.660/0.772. One
   vitrectomy+implant group (ret-pmc6899066) did not rebound. Tranche 2 consumed;
-  tranches 3–4 (155) unread. Next: per-series duration learned from own visits.
+  tranche 3 reserved and extracted for 1.2 (below). Next: per-series duration learned
+  from own visits.
 - IOP 1.2.0 = c1 (`iop_population_1_2`: 1.1.0 law in generic 2 with per_group study
   effects, forecast-only early noise k 8, T 1 month). Protocol `4169750d`, freeze
-  `df8f389a`. Sealed run started 2026-10-29 00:45 into
-  `.peykar/iop12-sealed-test-2026-10-29` (reference 1.1.0 in the same run); publish with
-  `scripts/publish_iop_population_1_2.py --sealed --report … --reference
-  …/reference-1.1.0-report.json` (H5 = first-month coverage closer, RMSE within 0.05).
+  `df8f389a`. Sealed once (7,260 s, `.peykar/iop12-sealed-test-2026-10-29`): ALL FIVE
+  pass on 130 group means (coverage 0.835/0.931, next obs 5.89 vs persistence 7.21,
+  landmark 7.76 vs 11.89, initial 10.17 vs 18.06, first-month coverage 0.824/0.939 vs
+  1.1.0 0.679/0.817 at 5.885 vs 5.877). Ahmed month-1 rise missed; coverage uneven by
+  procedure (tube/cyclo/non-penetrating 0.71–0.74). The frozen 1.2 publisher keeps
+  `reference_value` of redacted studies: ALWAYS run
+  `experiments/eye/iop/model-1.2/redact-reference-values.py <folder>` and
+  `.peykar/check_iop_redaction_1_2.py` after publishing with it.
+- Next sealed sets, reserved before triage, triaged blind and extracted blind (records
+  private, read NO value before the next protocol is frozen): retina tranche 3 (88
+  admitted, 67 records, 134 series, `.peykar/retina-tranche3-sealed-2026-10-29`) for
+  retina 1.2 trained on tranches 1–2 (128 studies); IOP tranche 4 (94 admitted, 79
+  records, 222 series, `.peykar/iop-tranche4-sealed-2026-10-29`) for IOP 1.3 trained
+  on tranches 1–3 (229 studies). Custody checks `.peykar/verify_retina_tranche3_custody.py`
+  and `.peykar/verify_iop_tranche4_custody.py`. Retina tranche 4 (35) and IOP tranche 5
+  (19) stay unread. Retina has no owner override rule; IOP applies the tranche-1
+  percent rule to reviewer excludes whose reason is a percent reduction from baseline.
 - IOP operator `--shard i/n` + `--merge` for development LOSO. Always run LOSO with
   `OMP_NUM_THREADS=1` (BLAS threads oversubscribe 16 cores otherwise).
 - The image viewer does not see files created after the session snapshot, and long

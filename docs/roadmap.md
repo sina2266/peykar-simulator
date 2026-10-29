@@ -278,10 +278,11 @@ protocol `f13238a2`) before a one-shot sealed test.
   All five declared hypotheses passed: next observation 6.69 vs 8.06 pp for
   persistence and vs 6.92 for 1.0.0 trained on the same records; landmark 8.95 vs
   15.10 and 9.40.
-- [ ] Calibrate early and long-horizon intervals. Tranche 2 showed first-month
-  next-observation coverage of 58.5%/73.4% and landmark 80% coverage of 67.1%. Wider
-  early noise or a study-level early-variability term is needed, tested on tranches
-  3–5 (259 unread articles).
+- [x] Calibrate early and long-horizon intervals. Tranche 2 showed first-month
+  next-observation coverage of 58.5%/73.4% and landmark 80% coverage of 67.1%. Model
+  1.2 (forecast-only early noise) raised first-month coverage to 82.4%/93.9% on
+  tranche 3 at the same accuracy; landmark coverage was 79.5%/91.0% (see the 1.2
+  section below).
 - [ ] Early rises far above the context prior (KDB goniotomy 42% → 89% at week 1)
   can only be followed after week 1; no fixed-prior model predicts them from day 1.
 - [ ] Represent a waning effect (micropulse cyclophotocoagulation) or late failure
@@ -344,6 +345,30 @@ reserved before triage.
   with an implant); test on tranches 3–4 (155 unread articles).
 - [ ] Contexts without training series remain worse than persistence (11.27 vs 10.21
   pp); add data rather than a fallback rule.
+
+### 2026-10-29 IOP model 1.2 (tranche-3 sealed test)
+[Model 1.2.0](../experiments/eye/iop/model-1.2/README.md) was frozen (commit
+`df8f389a`, protocol `4169750d`) before a one-shot test on tranche 3, which was
+reserved before triage.
+- [x] Tranche 3: blind triage (97 admitted), eight custodians (83 records, 196
+  series), every record rebuilt byte for byte.
+- [x] The 1.1.0 law and fit in generic eye model version 2 (identical in all 195,431
+  development numbers) with forecast-only early noise `k = 8`, `T = 1 month`, chosen
+  by a declared calibration on development rows; persistent deviations rejected.
+- [x] Sealed result on 130 group means: all five hypotheses pass (coverage
+  83.5%/93.1%, next observation 5.89 vs persistence 7.21, landmark 7.76 vs 11.89,
+  initial state 10.17 vs 18.06, first-month coverage 82.4%/93.9% vs 1.1.0's
+  67.9%/81.7% at 5.885 vs 5.877 pp).
+- [x] Tranche 4 reserved before triage, triaged blind (94 admitted) and extracted
+  blind (79 records, 222 series) for model 1.3; tranche 5 (19 articles) stays unread.
+- [ ] Procedure-specific early courses: the month-1 rise after Ahmed valves and the
+  week-1 fall then month-1 rise after repeat cyclophotocoagulation are missed; the
+  first-month error (9.09 pp) is twice the later one.
+- [ ] Procedure-specific noise and offsets: 80% coverage 0.71–0.74 for tubes,
+  cyclodestruction and non-penetrating surgery against 0.88 for angle MIGS; landmark
+  forecasts 5–9 pp too high after subconjunctival MIGS, cataract and non-penetrating
+  surgery. Model 1.3 is to be developed on tranches 1–3 (229 studies) and tested on
+  tranche 4.
 
 ## S0 — preservation and platform contracts
 

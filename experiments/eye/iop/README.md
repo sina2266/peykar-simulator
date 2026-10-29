@@ -160,3 +160,11 @@ scaled by group size. It was trained on all 72 tranche-1 records and tested once
 tranche 2, where all five declared hypotheses passed. These include beating 1.0.0
 trained on the same records: 6.69 against 6.92 pp for next observation and 8.95
 against 9.40 pp for landmark.
+
+**Model 1.2** ([README](model-1.2/README.md),
+[Persian results](model-1.2/results.fa.md)) keeps the 1.1.0 law and fit and adds
+forecast-only noise that is large in the first month. It was trained on the 146
+studies of tranches 1 and 2 and tested once on tranche 3, where all five declared
+hypotheses passed. First-month next-observation coverage rose from 0.679/0.817
+(1.1.0, same training) to 0.824/0.939 at the same accuracy (5.89 against 5.88 pp).
+Tranche 4 is reserved and extracted for model 1.3.
