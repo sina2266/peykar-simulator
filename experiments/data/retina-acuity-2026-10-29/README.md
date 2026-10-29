@@ -57,3 +57,26 @@ the queries, the rule, the reserved list, the tranche order and the extraction
 protocol were committed. The retinal-thickness records of tranches 1–2 of the
 thickness dataset (consumed by its tests) contain thickness values only; their
 acuity values have not been read either.
+
+## Triage and split (2026-10-29)
+
+[Triage 1.0.0](triage-1.0.0.json) (`.peykar/write_retina_acuity_triage.py`): four
+reviewer sub-agents read the masked previews of the 120 tranche-1 articles
+(`.peykar/retina-acuity-triage-chunks/`, chunks of 30) and gave a reason for every
+decision; there was no owner override. **62 admitted, 58 excluded.** The exclusions
+were medians or IQR only, proportions or letter-gain categories only, model-based or
+least-squares estimates, baseline-only or one-follow-up tables, decimal or Snellen
+acuity, reviews, meta-analyses and cost-effectiveness models, out-of-scope conditions
+(geographic atrophy, epiretinal membrane without edema, glaucoma, aphakia), subgroups
+selected after baseline and one article without a DOI. Context hints of the admits
+(not binding): diabetic macular edema 26, neovascular AMD 16, vein occlusion 10,
+postoperative edema 2, uveitic edema 1, myopic CNV 1, other 1, not shown 5; anti-VEGF
+34, steroid implant 9, combinations 5, steroid injection 3, laser 3, vitrectomy 1.
+
+Before any value was read, [the split was frozen](split-reservation-1.0.0.json) by
+`scripts/reserve_retina_acuity_split.py` (salt `peykar-retina-acuity-holdout-v1:`, first
+8 hex digits of `sha256(salt + lower(doi))` modulo 3 equal to 0 → sealed): **41
+development and 21 sealed-test studies.** [Author overlap](author-overlap-1.0.0.json)
+found 3 pairs: two development clusters of two studies leave training together in
+leave-one-study-out, and one sealed study loses one linked development study from its
+training set.
