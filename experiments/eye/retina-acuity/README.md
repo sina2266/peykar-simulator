@@ -31,8 +31,17 @@ central retinal thickness component.
   the place of the transient (time constants of 7.5–13 days, unconstrained before each
   context's first training visit), and two linked dexamethasone-implant studies with
   day-3 visits carried most of the error.
-- Neither version is offered by `peykar eye`. Tranches 3–4 (138 articles) are
-  untriaged and unread.
+- Model 1.2: [`model-1.2/`](model-1.2/README.md), 1.1 with the generic support hold (the
+  law held flat before a context's first training visit) and the wear-off of one
+  dexamethasone implant, trained on the 53 record studies of tranches 1–2 and tested once
+  on tranches 3–4 (27 records, 143 series, 34 group means, reserved before triage).
+  **All five hypotheses failed**: coverage 0.592 at 80%; next observation 4.51 letters
+  against persistence 4.06 and the pooled-curve increment 3.82; landmark 5.85 against
+  the increment 4.52; initial state 8.82 against 8.70; next observation 0.09 letter worse
+  than 1.1.0 ([Persian results](model-1.2/results.fa.md)). The set had almost no early
+  visits; the pooled training curve's increment won after the first months.
+- No version is offered by `peykar eye`. Every article of the dataset has now been used;
+  a next version needs a new screen.
 
 The dataset README is pinned by protocol 1.0.0. Articles kept by other components for
 untested or unread tranches (retinal thickness tranches 3–4, IOP tranches 4–5, corneal

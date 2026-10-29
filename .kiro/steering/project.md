@@ -1,4 +1,14 @@
 # Peykar continuation context
+## Retinal acuity 1.2 FAILED all five (third failure), 2026-10-29 late night
+- Sealed run once (234 s, report `495c5f9f…`, ref x0 `bd8ec333…`); published in
+  experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29 (0 leaks). Coverage
+  0.59; next obs 4.51 vs persistence 4.06 / pooled-curve increment 3.82; landmark 5.85
+  vs 4.52; initial 8.82 vs 8.70; H5 next obs 4.51 vs 1.1's 4.42. No early targets → hold
+  idle. Pattern of all 3 tests: pooled-curve increment and persistence beat the
+  population law (fast exponential to a level). NO retinal acuity in `peykar eye`;
+  dataset fully consumed. Next idea: model built on pooled-curve increments (flexible
+  shared time course + supported context offsets), needs a NEW screen.
+- Generic `eye_support` hold + harness 5 stay available for other components.
 ## Retinal acuity 1.2 in progress, 2026-10-29 late night
 - UPDATE: custody finished (27 records, 143 series, 34 group means; verifier clean);
   protocol experiments/eye/retina-acuity/model-1.2/protocol-1.2.0.json SHA `a0618bbf…`

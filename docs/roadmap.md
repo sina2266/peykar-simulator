@@ -489,9 +489,12 @@ reserved before triage.
   53 record studies of tranches 1–2: x3 (hold + dexamethasone wear-off) chosen,
   3.228/3.782/5.216 letters against 1.1.0's 3.628/4.921/5.556.
 - [x] Freeze of version 1.2 (protocol `a0618bbf`).
-- [ ] One-shot sealed test of version 1.2.
-- [ ] Context curves shrunk toward the pooled curve; the pooled-curve increment as a
-  forecaster.
+- [x] One-shot sealed test of version 1.2: all five hypotheses fail (next observation
+  4.51 vs the pooled-curve increment 3.82 letters; landmark 5.85 vs 4.52; 80% coverage
+  0.59). Third failure with the same pattern.
+- [ ] A model that starts from the pooled training curve's increments (flexible shared
+  time course, context offsets only where supported) instead of a fast exponential to a
+  level; it needs a new literature screen with a test part reserved before triage.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

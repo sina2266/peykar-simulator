@@ -26,7 +26,33 @@ Commands run from the repository root; outcomes observed. Start state: main at
   first. `.peykar/check_frozen_protocols.py`: no problem in any frozen protocol,
   retinal acuity 1.2.0 included. `make check-docker` after writing the protocol: 934
   tests passed in 187.22 s, 89% coverage, mypy 165 source files, all packages built,
-  EXIT=0 (`.peykar/retina-acuity12-freeze-check-docker-20261029.log`).
+  EXIT=0 (`.peykar/retina-acuity12-freeze-check-docker-20261029.log`). Freeze commit
+  `e4ac6cb9`, pushed (remote SHA equal).
+- Then, once: `OMP_NUM_THREADS=1 uv run --frozen python
+  scripts/evaluate_retina_acuity_population_1_2.py --sealed --protocol
+  experiments/eye/retina-acuity/model-1.2/protocol-1.2.0.json --output
+  .peykar/retina-acuity12-sealed-test-2026-10-29` (detached; log ends with `EXIT=0`):
+  protocol check passed, 234.0 s, 53 training and 27 sealed record hashes, `report.json`
+  `495c5f9f…`, `reference-x0-report.json` `bd8ec333…`.
+- `OMP_NUM_THREADS=1 uv run --frozen python scripts/publish_retina_acuity_population_1_2.py
+  --sealed --report .../report.json --reference .../reference-x0-report.json --output
+  experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29`: exit 0; H1–H5 all fail
+  (coverage 42/71 and 59/71; next observation 4.51 against persistence 4.06 and the
+  pooled-curve increment 3.82; landmark 5.85 against 4.52; initial state 8.82 against
+  8.70; H5 next observation 4.51 against 4.42). 1.1.0's own H1–H4 fail too.
+- `uv run --frozen python .peykar/check_retina_acuity_redaction_1_2.py sealed
+  experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29`: 14 public and 13
+  private studies, 26 redacted study reports and 178 analysis rows checked, 0 leaks.
+  `.peykar/retina_acuity12_sealed_breakdown.py`: per-study, per-target-month and
+  per-context tables; no target before month 1; removing any single study changes no
+  H1–H4 verdict.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29/plot-results.py`: exit
+  0; inspected through a local `http.server` and Playwright, re-rendered once (legend
+  over a bar label).
+- `make check-docker` before the results commit: 934 tests passed in 191.44 s, 89%
+  coverage, mypy 165 source files, all packages built, EXIT=0
+  (`.peykar/retina-acuity12-results-check-docker-20261029.log`).
 - `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_support.py
   tests/unit/test_eye_retina_acuity_1_2.py tests/unit/test_eye_retina_acuity_1_1.py`: 9
   passed (the hold changes no prediction without early visits, holds early initial
