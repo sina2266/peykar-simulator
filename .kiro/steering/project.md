@@ -12,9 +12,11 @@
   training visit month 2); linked DEX pair (rac-pmc3720664/4852759, private) with day-3
   visits: landmark 19.5/18.9. Outside-support origins 6.04/8.90 vs 2.78/3.02 inside.
   Custody verifier undercounted public licences (C7 used `license_class`): real 15/14.
-- Tranche 2 consumed; tranches 3–4 (138) unread. Next-version ideas: support rule before
-  a context's first training visit, context curves shrunk to the pooled curve,
-  pooled-curve increment as forecaster. Image viewer shows session-start file content
+- Tranche 2 consumed; tranches 3–4 (138) RESERVED before triage as the 1.2 sealed set
+  (experiments/data/retina-acuity-2026-10-29/tranche-3/README.md); 1.2 develops on the 53
+  record studies of tranches 1–2; custodians must write `licence_class`. Next-version
+  ideas: support rule before a context's first training visit, context curves shrunk to
+  the pooled curve, pooled-curve increment as forecaster. Image viewer shows session-start file content
   only: view new PNGs via `python3 -m http.server --bind 127.0.0.1` + Playwright
   screenshot (run the render and the screenshot in SEPARATE tool batches).
 ## Retinal acuity 1.1 frozen, 2026-10-29 late night

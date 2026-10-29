@@ -480,9 +480,12 @@ reserved before triage.
 - [ ] A pre-freeze check of which terms of a law the training visits identify in each
   context, and a rule for times before a context's first training visit (pooled-curve
   shape there, or interpolation from the baseline).
+- [x] Tranches 3–4 (138 unread articles) reserved before triage as the sealed set of
+  version 1.2 ([declaration](../experiments/data/retina-acuity-2026-10-29/tranche-3/README.md));
+  development on the 53 record studies of tranches 1–2.
+- [ ] Blind triage and custody of tranches 3–4.
 - [ ] Context curves shrunk toward the pooled curve; the pooled-curve increment as a
-  forecaster; steroid-implant wear-off with early-visit training data; tranches 3–4
-  (138 unread articles) for the next sealed test.
+  forecaster; steroid-implant wear-off with early-visit training data.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
