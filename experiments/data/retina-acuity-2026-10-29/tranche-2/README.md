@@ -79,3 +79,37 @@ they stay separate studies of the test and are reported as pairs.
 the sorted study keys in `.peykar/retina-acuity-tranche2-extraction-assignments.json`,
 SHA-256 `5fece57f…`) extract the admits into
 `.peykar/retina-acuity-tranche2-sealed-2026-10-29/`.
+
+## Custody outcome (2026-10-29)
+
+The eight custodians reported structure and hashes only (`custody-report-C1.json` to
+`C8.json` in the sealed folder). A first attempt to start C1–C4 failed on a usage
+limit of the agent service before any file was written; the folder did not exist yet,
+and the same custodians were started again. **29 records with 81 series** were built:
+50 group means and 31 per-eye series (two studies of single eyes), 64 control and 17
+treated; contexts neovascular AMD with anti-VEGF 20 and combination 3, vein occlusion
+with anti-VEGF 20, myopic CNV with anti-VEGF 21 (19 of them per-eye), diabetic macular
+edema with anti-VEGF 6, steroid implant 6, vitrectomy 3 and combination 2; value kinds
+logMAR 61, ETDRS letters 12 and letter changes with their baseline 8; 13 records public
+and 16 private by licence. Several series have visits in the first month (day 1, week 1,
+day 3). **35 admitted studies have no record**: most are complete-case sets (a minimum
+follow-up equal to the last tabulated visit, or an analysis set of completers); the
+others have acuity not established as best-corrected, logMAR or ETDRS letters (Snellen,
+decimal or unit not stated), medians only, analysis sets that removed eyes after a
+post-baseline event, groups defined after baseline, or (one) a correction notice that
+reprints another article's table without its Methods.
+
+`.peykar/verify_retina_acuity_tranche2_custody.py` rebuilt all 29 records byte for byte
+from their specs and found all 64 raw copies equal to their screened sources; every
+reserved study was assigned and reported once, and no problem was found. Process notes
+from the reports: several custodians ran the builder in the same tool batch as the spec
+write or check (in one case before the spec existed; that call failed and wrote
+nothing); every such record was rebuilt from its unchanged spec and kept only because
+the SHA-256 was identical. Two custodians (C4, C8) deleted and recreated their own
+report once (a field name; neutral wording of exclusion labels); no spec, record or
+raw copy changed. One custodian (C3) wrote a temporary text rendering of one article to
+`/tmp`, read it once and deleted it. In three of the four author-linked pairs both
+studies gave records (two vein-occlusion anti-VEGF cohorts; the XTEND UK cohort and the
+XTEND country cohorts; two dexamethasone implant reports with the same design and visit
+times). They may share eyes; the author-overlap rule keeps them as separate studies of
+the test, and the pairs are reported.
