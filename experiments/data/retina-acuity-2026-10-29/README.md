@@ -81,3 +81,66 @@ development and 21 sealed-test studies.** [Author overlap](author-overlap-1.0.0.
 found 3 pairs: two development clusters of two studies leave training together in
 leave-one-study-out, and one sealed study loses one linked development study from its
 training set.
+
+## Extraction outcome (2026-10-29)
+
+Five development extractors (D1–D5) and three sealed custodians (C1–C3), all
+sub-agents, followed `.peykar/retina-acuity-extraction-brief.md` (assignments in
+`.peykar/retina-acuity-extraction-assignments.json`). After the first four agents (D1–D3,
+C1), `.peykar/retina-acuity-extraction-brief-addendum-1.md` fixed three readings from
+their structural replies only: several baseline partitions of the same eyes (only the
+first is extracted), how a mean is established (the Results text or another table of
+the article that labels the same quantity also counts), and visit labels that merge two
+arms' schedules (dated by the Methods for each arm, otherwise excluded).
+
+**Development: 15 records with 52 series**: 24 group means and 28 per-eye series (one
+study of a subretinal amniotic membrane graft for advanced AMD, 23 eyes with
+neovascular AMD and 5 with geographic atrophy, all treated); 20 control and 4 treated
+group means. Contexts of the group means: diabetic macular edema with anti-VEGF 5,
+steroid implant 3, steroid injection 2 and anti-VEGF plus an oral statin 2 (treated);
+vein occlusion with anti-VEGF 4, steroid implant 2 and anti-VEGF or steroid plus laser
+2; neovascular AMD with anti-VEGF 1; uveitic edema with a steroid implant 1;
+postoperative edema with micropulse laser 1 (treated); reticular pseudodrusen with
+subthreshold laser 1 (treated). Value kinds: logMAR 43, ETDRS letters 7, letter changes
+with their baseline 2. The 13 CC BY records are in `development/records/` with their
+source XML in `development/raw/`; the 2 records under non-commercial licences are
+private (`.peykar/retina-acuity-development-private/records/`). Specs
+(`development/specs/`) cite cells and copy no values; 26 specs document exclusions
+only:
+
+- complete-case analysis sets (a minimum follow-up or a stated analysis set equal to
+  the last tabulated visit, without a statement that no treated eye was left out):
+  `rac-pmc11111667`, `rac-pmc11488816`, `rac-pmc11826659`, `rac-pmc11973271`,
+  `rac-pmc12582924`, `rac-pmc12767068`, `rac-pmc13008709`, `rac-pmc13077981`,
+  `rac-pmc13537940`, `rac-pmc13661413`, `rac-pmc4076260`, `rac-pmc5877501`,
+  `rac-pmc6832619`, `rac-pmc7125496`, `rac-pmc8054474`, `rac-pmc8374782`,
+  `rac-pmc8474890`, `rac-pmc8566718`, `rac-pmc8632047`, `rac-pmc9019565` (several of
+  them also remove eyes after a post-baseline event);
+- acuity not established as best-corrected logMAR or letters (habitual or pinhole
+  acuity, decimal acuity, "VA" without a best-corrected statement, no unit):
+  `rac-pmc11826692`, `rac-pmc4909676`, `rac-pmc6258584`, `rac-pmc6556523`,
+  `rac-pmc6880423`;
+- groups defined after baseline and a selected analysis set: `rac-pmc9333245`.
+
+**Sealed:** the custodians built **9 records with 11 series** (all group means; 9
+control and 2 treated; contexts diabetic macular edema with anti-VEGF 6 and steroid
+implant 2, vein occlusion with bevacizumab plus an investigational adjunct 1 (treated),
+macular edema of unstated cause with laser 1 and with bevacizumab plus laser 1
+(treated); logMAR 8, letters 3) and reported only structure and hashes. Twelve sealed
+studies were excluded: seven complete-case or post-baseline-selected sets, three whose
+acuity is not established as best-corrected, one with unlabelled statistics and one
+with multiple-imputation means. `.peykar/verify_retina_acuity_custody.py` rebuilt all 9
+records byte for byte from their specs and found all 21 raw copies equal to their
+screened sources; `.peykar/rebuild_retina_acuity_records.py development` rebuilt all 15
+development records byte for byte. Process notes from the replies and reports: one
+custodian (C3) once started a build before its spec was on disk (two tool calls at the
+same time), and one extractor's first verification rebuild failed at argument parsing;
+neither wrote anything, and the records were built from the unchanged specs. C3's text
+search, restricted to this dataset folder, returned lines of development specs
+(source-file metadata, licences and group descriptions, no values); the files were not
+opened. This breaks custodian independence, not developer blindness.
+
+No acuity value of these articles had been read by the model developer when the rule,
+the tranche order, the extraction protocol, the triage and the split were committed.
+Development records were then read for model development; sealed records stay private
+and unread until the evaluation protocol is frozen.

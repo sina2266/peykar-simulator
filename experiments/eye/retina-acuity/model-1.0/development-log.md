@@ -105,3 +105,42 @@ adopted, the one with the larger summed gain over the three tasks is model 1.0.0
 (ties within 0.05 letters: v2, the setting of the anatomical counterpart). If neither
 is adopted, v0 is model 1.0.0 and its H1 miss on development is recorded with the
 protocol.
+
+## Round 2 — results (2026-10-29)
+
+LOSO over the same 15 studies (`.peykar/retina-acuity-1.0-dev/round2-v2`, `round2-v3`):
+
+| candidate | primary (rule) | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|---|
+| v0 | robust (no eligible variant) | 2.778 | 3.066 | 4.737 | 0.623 / 0.768 |
+| v2 (forecast-only deviations) | robust (no eligible variant) | 2.737 | 3.066 | 4.737 | 0.551 / 0.667 |
+| v3 (pooled forecast noise) | t4 | 2.794 | 3.047 | 4.742 | 0.841 / 0.884 |
+
+- **v2 rejected**: its gains are 0.041, 0.000 and 0.000 letters, and its intervals are
+  narrower still (coverage 0.55/0.67): the persistent deviations, once conditioned on
+  the last visit, make the next visit look more certain.
+- **v3 adopted** under clause (b): every population variant lies inside both H1 windows
+  (next-observation coverage 0.81–0.84 and 0.87–0.88). By the declared rule its primary
+  is the Student-t variant (`population_assimilation_t4`, 2.794 letters, within 0.05 of
+  the robust variant's 2.783 and earlier in the order). Against v0 it loses 0.016
+  letters at the next observation and 0.005 in the initial state and gains 0.019 in the
+  landmark task, all within the 0.05 limit.
+
+## Freeze decision (2026-10-29)
+
+Model 1.0.0 is **v3** (contexts `human/<indication>/<treatment>`, one context level, a
+study effect per context arm, forecast intervals from the pooled study noise), as
+declared. Primaries: `population_assimilation_t4` for the next observation (U2) and the
+landmark task (U3), `population_initial_state` for the initial state (U1). There is no
+reference candidate, so there is no H5.
+
+The declared hypotheses are those of the other eye components, in letters: H1
+next-observation coverage of the primary inside [0.70, 0.90] and [0.80, 0.97]; H2
+next-observation RMSE lower than persistence, the last-two trend, the pooled-curve
+increment and analog kNN; H3 landmark RMSE lower than persistence, the pooled-curve
+increment and analog kNN; H4 initial-state RMSE lower than the pooled training curve
+over common control group-mean targets. On development v3 passes H1 (0.841/0.884), H3
+(3.047 against persistence 3.148, pooled-curve increment 3.392 and analog 4.970) and H4
+(4.742 against 5.683), and **fails H2 against persistence** (2.794 against 2.654
+letters). The sealed test is run to measure model 1.0 on new studies; the comparators
+are not changed after seeing this.

@@ -153,3 +153,72 @@ def test_builder_reads_cited_cells_and_checks_hashes() -> None:
     assert record["schema"] == "eye.retina-acuity-record-1.0.0"
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
+
+
+def test_retina_acuity_candidates() -> None:
+    from dataclasses import replace
+
+    from peykar.model_learning.retina_acuity_population import (
+        DEVELOPMENT_CANDIDATES,
+        REFERENCE,
+        adapter,
+    )
+
+    assert REFERENCE == "v0" and set(DEVELOPMENT_CANDIDATES) == {"v0", "v1", "v2", "v3"}
+    v0 = DEVELOPMENT_CANDIDATES["v0"]
+    assert v0.grouping == ("context",) and v0.study_effects == "per_group"
+    assert v0.covariate_reference == 1.0
+    expected = {
+        "v1": {"grouping": ("treatment", "context")},
+        "v2": {
+            "deviation_fraction": 0.8,
+            "deviation_months": 12.0,
+            "deviation_in_population_fit": False,
+        },
+        "v3": {"forecast_noise_pooling": "pooled"},
+    }
+    for name, options in expected.items():
+        config = DEVELOPMENT_CANDIDATES[name]
+        assert config == replace(v0, model_version=f"1.0.0-{name}", **options)
+    assert adapter("v3") is to_retina_acuity_series
+    with pytest.raises(KeyError):
+        adapter("v9")
+
+
+def test_retina_acuity_publisher_primaries_and_redaction() -> None:
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_retina_acuity_population.py"
+    spec = importlib.util.spec_from_file_location("publish_retina_acuity_population", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    assert module.MODEL_VERSION == "1.0.0-v3"
+    assert module.PRIMARY == {
+        "next_observation": "population_assimilation_t4",
+        "landmark": "population_assimilation_t4",
+        "initial_state": "population_initial_state",
+    }
+    assert module.base.PRIMARY == module.PRIMARY
+    assert "baseline_level" in module.base.REPORTED
+    study = {
+        "study_id": "rac-pmc1",
+        "initial_state": [
+            {
+                "series_id": "s",
+                "context": "human/dme/anti_vegf",
+                "kind": "group_mean",
+                "months": [1.0],
+                "observed": [0.9],
+                "predictions": {"population_initial_state": [0.95]},
+                "reference_value": 0.6,
+                "scores": {},
+            }
+        ],
+        "next_observation": [],
+        "landmark": [],
+    }
+    redacted = module.redact(study)
+    assert set(redacted["initial_state"][0]) <= module.INITIAL_STATE_PUBLIC_FIELDS
+    assert "observed" not in redacted["initial_state"][0]
