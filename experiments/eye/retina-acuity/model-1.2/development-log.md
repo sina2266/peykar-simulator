@@ -111,3 +111,28 @@ All three are adopted, so by the declared rule round 2 runs the combination.
 x4 is compared with x3, the adopted single candidate with the largest summed gain
 (−1.879 letters over the three tasks; x1 −0.834, x2 −0.815), by the round-1 adoption
 rule. If x4 is adopted it is the model; otherwise x3 is the model.
+
+## Round 2 results (2026-10-29)
+
+x4 (`.peykar/retina-acuity-1.2-dev/round2-x4/report.json`, EXIT=0): primary anchored,
+next observation 3.233, landmark 3.806, initial state 5.218 letters, coverage 0.777 /
+0.893; against x3 +0.005, +0.024, +0.002. No gain of 0.10: **not adopted**. The
+treatment fallback adds nothing once the hold is in place.
+
+## Freeze decision (2026-10-29)
+
+- Model 1.2.0 = **x3**: model 1.1.0's law with the support hold and the wear-off of one
+  dexamethasone implant (dose rule of retinal-thickness 1.1). Primaries: U2 and U3
+  `population_anchored`, U1 `population_initial_state`. The frozen 1.1.0 (`x0`,
+  primaries `population_anchored_t4` and `population_initial_state`) is scored in the
+  same sealed run as the H5 reference.
+- H1–H4 are those of models 1.0 and 1.1 with the same thresholds and comparators; H5 is
+  the one declared in round 1.
+- Development status of x3 (LOSO, 53 studies): H1 0.772 / 0.893 inside both windows; H2
+  3.228 against persistence 3.234 (by 0.006 letters only), the pooled-curve increment
+  3.566, analog kNN 5.212 and the last-two trend 13.013; H3 3.782 against 4.026, 5.015
+  and 8.909; H4 5.216 against the pooled training curve 5.278 (by 0.06 letters); H5
+  3.228 against 3.628, 3.782 against 4.921 and 5.216 against 5.556. H2 and H4 are near
+  ties on development, so sealed failures of either would not be surprising.
+- The protocol is written after the custodians finish tranches 3–4; no tranche-3/4
+  value is read before it is frozen.
