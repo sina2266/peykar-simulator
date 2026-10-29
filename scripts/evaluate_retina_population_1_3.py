@@ -65,6 +65,7 @@ RESERVATION = DATASET / "tranche-3/split-reservation-1.0.0.json"
 # Declared author-overlap rule over the 128 training studies and the tranche-3 admits.
 OVERLAP = DATASET / "tranche-3/author-overlap-1.0.0.json"
 OPERATOR = "scripts/evaluate_retina_population_1_3.py"
+MODEL_VERSION = "1.3.0"
 
 
 def sha256(path: Path) -> str:
@@ -320,7 +321,11 @@ def main(argv: list[str] | None = None) -> int:
         record["candidate"] = args.candidate
         record["stacked_candidate"] = stacked.describe()
         record["source_report"] = {"path": str(args.report), "sha256": sha256(args.report)}
-        report = stacking.nested_stack_report(source, stacked.spec)
+        report = {
+            **stacking.nested_stack_report(source, stacked.spec),
+            "model_version": f"{MODEL_VERSION}-{args.candidate}",
+            "stacked_candidate": stacked.describe(),
+        }
         extra["comparison.json"] = stacking.development_comparison(report, stacked.spec)
     else:
         protocol = json.loads(args.protocol.read_text())
@@ -344,7 +349,11 @@ def main(argv: list[str] | None = None) -> int:
         path = args.output / f"reference-{stacked.base}-report.json"
         path.write_text(json.dumps(reference, indent=1) + "\n")
         record["reference_reports"] = {stacked.base: sha256(path)}
-        report = stacking.stack_report(reference, weights, stacked.spec)
+        report = {
+            **stacking.stack_report(reference, weights, stacked.spec),
+            "model_version": f"{protocol['model']['version']}-{protocol['primary_candidate']}",
+            "stacked_candidate": stacked.describe(),
+        }
     for name, content in extra.items():
         (args.output / name).write_text(json.dumps(content, indent=1) + "\n")
         record[f"{name.removesuffix('.json')}_sha256"] = sha256(args.output / name)

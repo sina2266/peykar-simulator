@@ -72,3 +72,53 @@ law, the dose rule and the series stay model 1.1.0's.
   tranche 3 in the same run), landmark and initial-state RMSE lower and
   next-observation RMSE at most 0.05 pp higher. If k1 is rejected, there is no 1.3
   protocol and tranche 3 stays sealed. Tranche 4 stays unread.
+
+## Round 0 — results (2026-10-30)
+
+e0 rerun by harness 6 in 16 shards (`.peykar/retina-1.3-dev/round0-e0`, joined by
+`--merge`; 1,357–1,594 s per shard, 23,538 s in all): every number equals model 1.2's
+round-1 report of e0 (harness 2); the only additions are the initial-state intervals
+of the 259 initial-state entries with a population forecast and the evaluation version
+(`.peykar/compare_harness6.py`, 0 differences). e0's primaries: next observation 7.193
+pp, landmark 9.376, initial state 12.892 (human group means; Gaussian coverage
+0.880/0.931).
+
+## Round 1 — results (2026-10-30)
+
+Nested LOSO of k1 on e0's round-0 report (`.peykar/retina-1.3-dev/round1-k1`;
+`scripts/evaluate_retina_population_1_3.py --stack`). Pooled RMSE in pp of the baseline
+thickness on human group means:
+
+| task | targets | e0 primary | k1 stacked | gain |
+|---|---|---|---|---|
+| next observation | 493 | 7.193 | 7.154 | +0.040 |
+| landmark | 493 | 9.376 | 9.228 | +0.148 |
+| initial state | 565 | 12.892 | 12.854 | +0.038 |
+
+- Coverage of the stacked next-observation intervals: 427/493 = 0.866 at 80% and
+  462/493 = 0.937 at 90%, inside both windows (e0: 0.880 and 0.931).
+- **k1 adopted**: its landmark gain of 0.148 pp is above 0.10 and it loses nothing.
+- Weights fitted on all 128 studies (793 forecast rows, 565 initial-state targets):
+  forecasts from follow-up 0.742 model, 0.233 persistence, 0.025 pooled-curve
+  increment; initial states 0.839 model, 0.161 pooled training curve. Over the 128
+  nested fits the model's weight ranged 0.70–0.79 (forecasts) and 0.78–0.86 (initial
+  states); the increment's 0.00–0.05.
+- The development analysis of the declared hypotheses
+  (`scripts/publish_retina_population_1_3.py --development` with e0's round-0 report as
+  reference; `.peykar/retina-1.3-dev/round1-k1-analysis`) passes H1–H5: H2 7.15 pp
+  against persistence 8.34, pooled-curve increment 9.82, last-two trend 24.00 and analog
+  8.89 (7.17 on its 491 targets); H3 9.23 against 11.70, 12.14 and 12.41; H4 12.85
+  against the pooled training curve 15.62; H5 7.15/9.23/12.85 against e0's
+  7.19/9.38/12.89. Reported, not tested: landmark coverage 0.793/0.897; stacked
+  initial-state coverage 0.867 at 80%.
+- The gains are small: the weights stay close to the model, as expected from e0's lead
+  over the comparators. The landmark gain comes mostly from persistence (weight 0.23).
+
+## Freeze decision (2026-10-30)
+
+Model 1.3.0 is k1: e0's configuration and fit (model 1.1.0) with the weights above
+frozen. The protocol is `protocol-1.3.0.json`; it pins the weights, the code, the
+training records and the tranche-3 records (structure only seen). Its one sealed run
+fits e0 on the 128 training studies (minus studies linked to a sealed study), scores
+tranche 3 once, and writes e0's unstacked report (the H5 reference) and the stacked
+report of model 1.3.0 from the same fit.

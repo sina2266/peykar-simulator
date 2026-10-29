@@ -72,6 +72,7 @@ OVERLAP = TRANCHE / "author-overlap-1.0.0.json"
 SCALE = version_1_0.SCALE
 sha256 = version_1_0.sha256
 OPERATOR = "scripts/evaluate_acuity_population_1_2.py"
+MODEL_VERSION = "1.2.0"
 
 
 def training_paths() -> list[Path]:
@@ -290,7 +291,11 @@ def main(argv: list[str] | None = None) -> int:
         record["candidate"] = args.candidate
         record["stacked_candidate"] = stacked.describe()
         record["source_report"] = {"path": str(args.report), "sha256": sha256(args.report)}
-        report = stacking.nested_stack_report(source, stacked.spec)
+        report = {
+            **stacking.nested_stack_report(source, stacked.spec),
+            "model_version": f"{MODEL_VERSION}-{args.candidate}",
+            "stacked_candidate": stacked.describe(),
+        }
         extra["comparison.json"] = stacking.development_comparison(report, stacked.spec)
     else:
         protocol = json.loads(args.protocol.read_text())
@@ -314,7 +319,11 @@ def main(argv: list[str] | None = None) -> int:
         path = args.output / f"reference-{stacked.base}-report.json"
         path.write_text(json.dumps(reference, indent=1) + "\n")
         record["reference_reports"] = {stacked.base: sha256(path)}
-        report = stacking.stack_report(reference, weights, stacked.spec)
+        report = {
+            **stacking.stack_report(reference, weights, stacked.spec),
+            "model_version": f"{protocol['model']['version']}-{protocol['primary_candidate']}",
+            "stacked_candidate": stacked.describe(),
+        }
     for name, content in extra.items():
         (args.output / name).write_text(json.dumps(content, indent=1) + "\n")
         record[f"{name.removesuffix('.json')}_sha256"] = sha256(args.output / name)

@@ -1,0 +1,407 @@
+{
+ "schema": "cornea.acuity-sealed-protocol-1.2.0",
+ "frozen_utc": "2026-10-29T23:32:24.430345+00:00",
+ "status": "frozen before any tranche-2 acuity value was read by the model developer",
+ "context_of_use": [
+  "U1 initial-state prediction of a new study's control-group mean corrected distance visual acuity (logMAR) after penetrating, anterior lamellar or endothelial keratoplasty or corneal cross-linking in human eyes, from the procedure, the number of eyes and the preoperative acuity only",
+  "U2 causal forecasting of each human group mean's next follow-up acuity (control and treated groups) from its own earlier follow-ups, with calibrated intervals",
+  "U3 landmark forecasting of every later follow-up acuity of each human group mean from its first postoperative measurement only"
+ ],
+ "not_claimed": [
+  "biological mechanism validation (graft, endothelium, haze and corneal shape are not modelled; the law is empirical, and the stacking weights are an empirical average of forecasts, not a mechanism)",
+  "single-eye prediction (per-eye series are scored but not tested; the weights are fitted on group means)",
+  "indication-specific or comorbidity-specific prediction (no indication level)",
+  "treatment-effect prediction (treated groups use the control prior of their context)",
+  "calibrated initial-state intervals (their coverage is reported, not tested)",
+  "graft survival, rejection, uncorrected or near acuity, refraction, clinical decision use"
+ ],
+ "model": {
+  "id": "cornea.acuity-population",
+  "version": "1.2.0",
+  "candidate": "k1",
+  "stacked_candidate": {
+   "base": "a0",
+   "spec": {
+    "history_model": "population_assimilation_robust",
+    "initial_model": "population_initial_state",
+    "context_prefix": "human/",
+    "kind": "group_mean"
+   }
+  },
+  "base_configuration": {
+   "model_id": "cornea.acuity-population",
+   "model_version": "1.0.0-a0",
+   "quantity": "corrected distance visual acuity change from the preoperative logMAR (pseudo-fraction exp(change / 1 logMAR))",
+   "covariate": "ln(baseline / 1 pseudo-reference exp(logMAR0 / 1 logMAR), so the covariate is logMAR0)",
+   "reference_days": 1.0,
+   "transient_days": 7.0,
+   "tau_grid_months": [
+    0.01,
+    120.0,
+    80
+   ],
+   "grouping": [
+    "context"
+   ],
+   "penalty_modes": [
+    0.1,
+    0.1,
+    0.1,
+    0.5
+   ],
+   "robust_sd": [
+    0.3,
+    0.3,
+    0.3,
+    2.0
+   ],
+   "robust_weight": 0.2,
+   "noise_floor": 0.01,
+   "noise_log_sd": 0.5,
+   "noise_reference_n": 40.0,
+   "max_noise_exponent": 0.5,
+   "deviation_fraction": 0.0,
+   "deviation_months": 3.0,
+   "deviation_in_population_fit": true,
+   "generic_model_version": "2.0.0",
+   "wear_off_width_months": 0.5,
+   "wear_off_loss": 0.0,
+   "treatment_fallback": false,
+   "early_noise": null,
+   "early_noise_in_likelihood": true,
+   "noise_pooling": "median",
+   "forecast_noise_pooling": null,
+   "study_effects": "per_group"
+  },
+  "stacking": "eye_stacking 1.0.0: forecasts from follow-up = w_model population_assimilation_robust + w_persistence last observation + w_increment pooled-curve increment (pooled_curve_ratio); initial states = w_model population_initial_state + w_curve pooled training curve; a missing member drops out with the other weights renormalized; intervals = the model variant's quantiles moved to the stacked point (width unchanged)",
+  "weights_fitted_on": "the 42 training studies' leave-one-study-out forecasts of a0 (harness 6), human group means (259 forecast rows, each once; 214 control initial-state targets); convex least squares (non-negative, summing to one)",
+  "kinetics": "model 1.0.0's: change(t) / 1 logMAR = ell + e r(t) + s q(t), r = exp(-(t - t1)/tau), q = exp(-(t - t1)/7 days), t1 = 1 day, t in months, change = logMAR(t) - logMAR0; ell = context level + b logMAR0; each procedure arm of a study has its own study effect",
+  "hierarchy": "species -> procedure (contexts human/<procedure>: pk, dalk, dsaek, dmek, cxl, other; grouping (context,)); a procedure without training studies uses the species mean with the between-context variance added",
+  "scale": "the series hand generic eye model version 2 the exact pseudo-fraction exp(change / 1 logMAR) and the pseudo-reference exp(logMAR0); eye_additive_evaluation4 sends a0 to harness 6 (harness 2 plus initial-state intervals) and rewrites every forecast, observation and interval in ETDRS letters (1 pp = 0.02 logMAR); the stacking acts on the rewritten values",
+  "computation": "generic eye recovery model version 2: exact Gaussian mixtures over an 80-point tau grid 0.01..120 months, noise levels, Student-t nodes and robust components; model point forecast = predictive median"
+ },
+ "stacking_weights": {
+  "stacking_id": "eye.forecast-stacking",
+  "stacking_version": "1.0.0",
+  "history": {
+   "model": 0.5436892665824574,
+   "persistence": 0.2329686283383571,
+   "pooled_curve_increment": 0.22334210507918545
+  },
+  "initial": {
+   "model": 0.58192110413252,
+   "pooled_training_curve": 0.41807889586748
+  }
+ },
+ "scale": {
+  "quantity": "corrected distance visual acuity",
+  "unit": "logMAR",
+  "model_unit": 1.0,
+  "covariate_unit": 1.0,
+  "report_unit": 0.02,
+  "target": null
+ },
+ "methods": {
+  "primary_U1": "stacked_initial_state",
+  "primary_U2": "stacked",
+  "primary_U3": "stacked",
+  "secondary": "a0's population variants, weak_prior, analog_knn (k=5), pooled_curve_ratio (pooled-curve increment), last_two_log_linear, reference_to_last_log_linear, baseline_level (preoperative acuity), persistence",
+  "reference": "a0 = the frozen model 1.0.0 (primaries population_assimilation_robust and population_initial_state), from the same fit in the same sealed run"
+ },
+ "primary_candidate": "k1",
+ "reference_candidates": [
+  "a0"
+ ],
+ "candidates": {
+  "k1": {
+   "base": "a0",
+   "spec": {
+    "history_model": "population_assimilation_robust",
+    "initial_model": "population_initial_state",
+    "context_prefix": "human/",
+    "kind": "group_mean"
+   }
+  },
+  "a0": {
+   "model_id": "cornea.acuity-population",
+   "model_version": "1.0.0-a0",
+   "quantity": "corrected distance visual acuity change from the preoperative logMAR (pseudo-fraction exp(change / 1 logMAR))",
+   "covariate": "ln(baseline / 1 pseudo-reference exp(logMAR0 / 1 logMAR), so the covariate is logMAR0)",
+   "reference_days": 1.0,
+   "transient_days": 7.0,
+   "tau_grid_months": [
+    0.01,
+    120.0,
+    80
+   ],
+   "grouping": [
+    "context"
+   ],
+   "penalty_modes": [
+    0.1,
+    0.1,
+    0.1,
+    0.5
+   ],
+   "robust_sd": [
+    0.3,
+    0.3,
+    0.3,
+    2.0
+   ],
+   "robust_weight": 0.2,
+   "noise_floor": 0.01,
+   "noise_log_sd": 0.5,
+   "noise_reference_n": 40.0,
+   "max_noise_exponent": 0.5,
+   "deviation_fraction": 0.0,
+   "deviation_months": 3.0,
+   "deviation_in_population_fit": true,
+   "generic_model_version": "2.0.0",
+   "wear_off_width_months": 0.5,
+   "wear_off_loss": 0.0,
+   "treatment_fallback": false,
+   "early_noise": null,
+   "early_noise_in_likelihood": true,
+   "noise_pooling": "median",
+   "forecast_noise_pooling": null,
+   "study_effects": "per_group"
+  }
+ },
+ "training": "the 42 tranche-1 record studies (87 series): the 27 development records of model 1.0 and the 15 records consumed by its test, listed as development by the tranche-2 reservation; controls fit the population, all series give noise and analog-library inputs; for each sealed study the training studies linked to it by the author-overlap rule are removed from its training set",
+ "sealed_test": {
+  "studies": [
+   "acu-pmc12220558",
+   "acu-pmc12948762",
+   "acu-pmc13178756",
+   "acu-pmc4545854",
+   "acu-pmc5866901",
+   "acu-pmc6397964",
+   "acu-pmc7318888",
+   "acu-pmc7774118",
+   "acu-pmc7936678",
+   "acu-pmc8381497",
+   "acu-pmc8905293"
+  ],
+  "reserved": [
+   "acu-pmc10573660",
+   "acu-pmc11566242",
+   "acu-pmc12220558",
+   "acu-pmc12356456",
+   "acu-pmc12948762",
+   "acu-pmc13002641",
+   "acu-pmc13178756",
+   "acu-pmc4128847",
+   "acu-pmc4314761",
+   "acu-pmc4527220",
+   "acu-pmc4545854",
+   "acu-pmc5510105",
+   "acu-pmc5866901",
+   "acu-pmc6397964",
+   "acu-pmc6720021",
+   "acu-pmc6773968",
+   "acu-pmc7318888",
+   "acu-pmc7774118",
+   "acu-pmc7790794",
+   "acu-pmc7936678",
+   "acu-pmc8199119",
+   "acu-pmc8381497",
+   "acu-pmc8786756",
+   "acu-pmc8905293",
+   "acu-pmc8949731",
+   "acu-pmc9672700",
+   "acu-pmc9983850"
+  ],
+  "reserved_by": "experiments/data/cornea-acuity-2026-10-29/tranche-2/split-reservation-1.0.0.json (all 27 admitted tranche-2 articles, reserved by the tranche-2 README before triage)",
+  "excluded_by_custodians": 16,
+  "training_exclusions_by_author_overlap": {
+   "acu-pmc13178756": [
+    "acu-pmc13303802"
+   ],
+   "acu-pmc5866901": [
+    "acu-pmc6173378"
+   ],
+   "acu-pmc6397964": [
+    "acu-pmc8845528"
+   ],
+   "acu-pmc7318888": [
+    "acu-pmc8845528"
+   ],
+   "acu-pmc7774118": [
+    "acu-pmc7474407"
+   ],
+   "acu-pmc8905293": [
+    "acu-pmc8845528"
+   ]
+  },
+  "custodians": "four sub-agents (C1-C4) extracted the sealed records and reported only structure and hashes; every record rebuilds byte for byte",
+  "structure_seen_before_freeze": "11 records, 23 series, all group means (22 control, 1 treated); contexts human/cxl 10, human/dmek 9, human/dsaek 3, human/other 1; indications keratoconus 11, bullous keratopathy 5, mixed 3, Fuchs dystrophy 2, graft failure 2; value kind logMAR 23; combined cataract surgery false 4, unstated 19; licences 7 public, 4 private; 16 of the 27 reserved studies excluded by the custodians; every record rebuilds byte for byte; no acuity value (.peykar/verify_acuity_tranche2_custody.py)",
+  "power": "small: 23 group-mean series of 11 studies; verdicts on pooled targets"
+ },
+ "criteria": {
+  "per_series": "RMSE<=5 pp AND max<=10 pp (forecasts: AND RMSE at least 0.5 pp below persistence); 1 pp = 1 ETDRS letter, so 0.10, 0.20 and 0.01 logMAR",
+  "unit": "ETDRS letters (0.02 logMAR) of corrected distance acuity change from the preoperative acuity",
+  "tested_subset": "human group means (U2, U3) and human control group means (U1)",
+  "H1_calibration": "pooled coverage of the stacked next-observation intervals over group means: 80% interval within [0.70,0.90] AND 90% within [0.80,0.97]",
+  "H2_accuracy": "pooled group-mean next-observation RMSE of stacked lower than each of persistence, last_two_log_linear, pooled_curve_ratio and analog_knn over common targets",
+  "H3_landmark": "pooled group-mean landmark RMSE of stacked lower than each of persistence, pooled_curve_ratio and analog_knn over common targets",
+  "H4_initial_state": "pooled RMSE of stacked_initial_state over control group means lower than pooled_training_curve",
+  "H5_versus_1_0": "against the frozen model 1.0.0 (a0) from the same fit, over common human group-mean targets: the pooled landmark RMSE (U3) AND the pooled initial-state RMSE (U1, control group means) of 1.2 each lower than 1.0.0's, AND the pooled next-observation RMSE (U2) of 1.2 at most 0.05 pp higher than 1.0.0's",
+  "development_reference": "on development (nested LOSO) k1 passes H1-H5: next observation 5.11 against a0 5.41 letters, landmark 6.86 against 7.14, initial state 12.92 against 13.01; stacked 90% coverage 0.818 (0.018 above its window's lower limit) (development log, freeze decision)",
+  "verdicts": "computed mechanically by scripts/publish_acuity_population_1_2.py --sealed",
+  "reported_not_tested": "treated groups separately, per-context results, landmark and initial-state coverage, per-series criteria counts, the reference model's own H1-H4",
+  "all_points": "every sealed series/target is scored; none removed; thresholds and weights unchanged after unsealing",
+  "publication": "studies whose licence does not permit republishing values keep only per-series metrics and an allow-list of initial-state fields"
+ },
+ "environment": {
+  "python": "3.12.2",
+  "uv_lock_sha256": "c6b8bedf05b46b4c144e82c70cd4c04d037e1f08e2f7f378357a02f401b1e833"
+ },
+ "frozen_files_sha256": {
+  "packages/core/src/peykar_core/__init__.py": "7cb2661453e3a21f060979fb623fe5eaee361d822e49d16cf30b0f9f1dc92a28",
+  "packages/core/src/peykar_core/errors.py": "419c8fbfdb7792ee2bb87775227e7a2d5182f4ea28d2fe4096f45a43e39c5e1c",
+  "packages/platform/src/peykar/__init__.py": "26c316933385c77354a8d60c8bbf5e327ad0d741ffec95daa58e346e617baa41",
+  "packages/platform/src/peykar/model_learning/__init__.py": "4f0a6ca9067f9d5f5f489298e301f9879fe4c3f3a710e343a84769db6c8646bf",
+  "packages/platform/src/peykar/model_learning/acuity_population.py": "c03f50366d143b4ed473a33516e9f703d53dd68e64c47d35e16f31e2f5fd40c5",
+  "packages/platform/src/peykar/model_learning/acuity_population_1_2.py": "dab294b0d7c413f16247cb411728d5fffe795486eba25199bf8b018379519522",
+  "packages/platform/src/peykar/model_learning/corneal_analog.py": "93d9b941f34620fb1ca93a9d35b58d04e97358082940e3ce1338eb753ad2bdd8",
+  "packages/platform/src/peykar/model_learning/corneal_online.py": "20c6dd1a403fa8a66af7b6174fe7c1f84a43f0d70e2b671f00de310f56e13add",
+  "packages/platform/src/peykar/model_learning/corneal_population.py": "bc715dc20ee835cc79ac2222332b5ce4843d444c4a045c2bff2b803cf6d79bf5",
+  "packages/platform/src/peykar/model_learning/eye_recovery_population.py": "80a98c73dba2d9ad2bd6fffa3ea61e806c710d4719733f2dff44c4db04049de3",
+  "packages/platform/src/peykar/model_learning/eye_recovery_population2.py": "0e848d45171bccf6d8399734ab1ff580996ab318620c4a5417f4945354c714bd",
+  "packages/platform/src/peykar/model_learning/eye_recovery_population3.py": "a93b83d626f5aaa13aaedbb0727bc25830ff4da0f2682804a21865722d000db8",
+  "packages/platform/src/peykar/model_learning/eye_recovery_population4.py": "6e5c253304e7b3072a9669652f20523f3051ed9125c11917d938412d4424b217",
+  "packages/platform/src/peykar/model_learning/eye_stacking.py": "78eb3c5bd87bfcc19023539f77e810967493a7184e9787cc5b0b6f533be60371",
+  "packages/platform/src/peykar/model_learning/eye_support.py": "08f4e56073ab5e9cf1aff1b68ccbbcea231a0bf0164cafeedc4f5fa441f8fa2b",
+  "packages/platform/src/peykar/model_learning/iop_population.py": "24f52f363bf32bab36b817fe4470cf396385eadc2efd6ac958f7df7a78d4108f",
+  "packages/platform/src/peykar/validation/__init__.py": "0c37f53628cfff01a955eaf237f8f4cad5d1b9d279a54e5625776a633c79c0b4",
+  "packages/platform/src/peykar/validation/cornea_acuity_data.py": "ff8acfa637a5025dd5e711d8238780a1e5ac1dce69d954a08f3c058d0b5922aa",
+  "packages/platform/src/peykar/validation/cornea_population_data.py": "9bf0b53efa3fd7881b07d6b6b84c8d29ba29e6b8a0fc4165c378a2118ec55cde",
+  "packages/platform/src/peykar/validation/cornea_population_evaluation.py": "06efe53c73305027249e8abb40c594ec05b6aad3fffdb60f4a5d0034663c58c1",
+  "packages/platform/src/peykar/validation/cornea_refraction_data.py": "b74cc6b6aa89d2926d4c8cb25fda2ddf1c898ae290384bae62db5289a3a7a297",
+  "packages/platform/src/peykar/validation/cornea_table_records.py": "0b872e97e327173ffdaead38c519c926757cf4a22a0485a852c13a515b74cf34",
+  "packages/platform/src/peykar/validation/cornea_thickness_data.py": "1ee36acca0dccbf156555a2ac53d29cf0e2ce8de9df7147aa893a90bae17bb8b",
+  "packages/platform/src/peykar/validation/eye_additive_evaluation.py": "d31b5f0452e03da255894b0383eeeb1805d1508bf60d541021160759fe1738eb",
+  "packages/platform/src/peykar/validation/eye_additive_evaluation2.py": "814e5bcd78f15fb6d1f81def33a50e4b7e590552bdeb43c580b10d8fb26acd97",
+  "packages/platform/src/peykar/validation/eye_additive_evaluation3.py": "651eb4980ec0f9e1b7e6079d8fb6344a376e5f25861d5f0f0e53b48ed55ca6f3",
+  "packages/platform/src/peykar/validation/eye_additive_evaluation4.py": "cc9272ad2f485c2034bc54950922f6cd713c904d6e7af480fbbf3b5d7bf3e0c4",
+  "packages/platform/src/peykar/validation/eye_iop_data.py": "d1c6041c92f6d61f81d67b24364e81afe2f5c7a47f86749c8b26d734a0f0735c",
+  "packages/platform/src/peykar/validation/eye_iop_evaluation.py": "6ca7d05bd3c2a36b7109ab3ab43302cee479fb738d7c7e5c96f71777b70fbda5",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation.py": "9600593027329df0eb968ac9b443513b4b8bfa4abec0caad6c6499673f900329",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation2.py": "e782e8f908aee4d68e9dd353cc37b252c616cdf06826477b86347f579ca58860",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation3.py": "3bb5d3a3d5ccbf5bdc996a135d071ecf6c01e513153683c0c3e6d27fdc86e827",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation4.py": "93282692489e5527f5fb9471dd0fc58404bbce0f79765e283b57dfdd9ed5f189",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation5.py": "2c2b4a7ab5677a9b0885a31c1f77e1842ba4eb5e670e401aaad8592c438c43be",
+  "packages/platform/src/peykar/validation/eye_recovery_evaluation6.py": "4ed1b825ec3f0b448c010df1d4e956fe3354b4c1709db3c70f994462bf555f0b",
+  "packages/platform/src/peykar/validation/eye_retina_data.py": "7e2527ab85e099cd5d8669fb4a1d4c819c42f4c410288f258adf18a74636db43",
+  "packages/platform/src/peykar/validation/eye_stacking_evaluation.py": "acd5b6c36fa0b01460b1646386078b13f9b7934f99d778a8d1cec51be4335e09",
+  "scripts/evaluate_acuity_population_1_2.py": "142a1b31c6ea9fc700c6523de80956b1cf70a6d081283bb3ddff6b6dd089c6fa",
+  "scripts/publish_acuity_population_1_2.py": "1256a9e48c9819e61db992d847dde94b6e22624db26394e8e97f89ecc8979d3e",
+  "scripts/evaluate_acuity_population_1_1.py": "795437922086907a8486f8bb8eecda347d6d5eec23234967b51e2d89f1b9fbad",
+  "scripts/evaluate_acuity_population.py": "f20df8a607750a5e6d25966e278e13ec42f489bdedacdba036ad459bb218a068",
+  "scripts/publish_acuity_population.py": "71d399e75a27c7fe8e98af7436b8b73e856eb465948e8fcc2c01748f906d4593",
+  "scripts/publish_iop_population.py": "eb8a6ac97a08a9ab6f82fa883d202a9c5797b8fb9f1d425286d2a9b3f9dc085c",
+  "scripts/build_acuity_record.py": "db976282916b8469612a413e0ab46bcac687a67d6665e3399e39888fea9d29d5",
+  "scripts/reserve_acuity_split.py": "75286b487a6c517a734610b7210650954ae0b9fe0fac6280f563c56231b9be85",
+  "scripts/link_study_authors.py": "e3838e7f24513e4b12f9d93e4d0d4452eea28eeb6c67070e5227621224c4bc7d",
+  "scripts/screen_corneal_wound_literature.py": "8d1ea4c16ee6cb97c9f3d0d9dccb92aa05adb0b1222c1d21a387b7d7c48fe2e5",
+  "scripts/screen_corneal_tables.py": "45ea799d2a6dfb4ad15415d5298de5412a268938f9e44787af45dd1c0417e441",
+  "scripts/show_masked_previews.py": "373d1ae0ae1b1adcec6ed2f9247513ae034f32c26d74f50e76e07353ba8621f8",
+  "experiments/data/cornea-acuity-2026-10-29/README.md": "49b01dc2bccd856588cd436e67190cf3ed47ad15cb7bb405715b26f8edcd7cd5",
+  "experiments/data/cornea-acuity-2026-10-29/extraction-protocol-1.0.0.md": "48173e394086dca6bb866f4e823f2c9f963297c4a171466f5d0615791f079f8d",
+  "experiments/data/cornea-acuity-2026-10-29/screening/queries.json": "e525d54e643253933bf2a25ad21dc80b6293c9b2baf18b40306fc0490013935a",
+  "experiments/data/cornea-acuity-2026-10-29/screening/literature-screen-receipts.json": "56191333a8215d34d3f62dcfa38fb3cfb1bfb7edff5b319ecb66317d2515ff37",
+  "experiments/data/cornea-acuity-2026-10-29/screening/literature-screen-summary.json": "998f461e6adc82c88c6aa6de9d7dc91356cc81e2e27397eccc841ea645c81cd1",
+  "experiments/data/cornea-acuity-2026-10-29/screening/table-screen-receipts.json": "11ea88219abac1832fd9e2249a695380783de76b200be2edd2506076e468ccd4",
+  "experiments/data/cornea-acuity-2026-10-29/screening/table-screen-summary.json": "d04be2c7ee7c700a92dc370e4d8445a104a1bdec648deb0477032a5269706682",
+  "experiments/data/cornea-acuity-2026-10-29/screening/triage_rule.py": "08e9918a79aa3780729c9b2242996dda7797087e85bd2289477b0641b37a6cbb",
+  "experiments/data/cornea-acuity-2026-10-29/screening/reserved.py": "38243647f7fe67f8bbe3893238dc71128d37aff84499ffe3f24aee4c16c3245f",
+  "experiments/data/cornea-acuity-2026-10-29/screening/tranche_order.py": "1d6987de631354366f1a3df8108f8029868815cddb9b8c80911417cc33d6047f",
+  "experiments/data/cornea-acuity-2026-10-29/screening/triage_chunks.py": "d818a736605765d3177bcc4acee630db2efc8085b96a29bbad7a2b9698c3a47a",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-order-1.0.0.json": "17965720220ba52b1ec7327d008790e317fc02ab1d1b0b44ee1c0b5335bb521a",
+  "experiments/data/cornea-acuity-2026-10-29/triage-1.0.0.json": "64b0a67d202f13bcb9d671cdb417343c1a44e8d79d04717797dbae24d074d5a2",
+  "experiments/data/cornea-acuity-2026-10-29/split-reservation-1.0.0.json": "582d6ec4624eaeac66ab1318f3e7de4affbc8e1a629ef9a4a461bfa3069f0c27",
+  "experiments/data/cornea-acuity-2026-10-29/author-overlap-1.0.0.json": "a744ae0f1c660dca5756ca8465ef5e74270b83c05401145f8f9d4bed68da300a",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-2/README.md": "d65f8a5b2342e2fd3b6a550e8339bfaf29659e86bdc703f7ccbc6fc2c8bde414",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-2/triage-1.0.0.json": "1595b2421c91d879f1be45736e51f7e428cb2b2a6a8bb99d6b9fe3f394ca86f9",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-2/split-reservation-1.0.0.json": "c1a500d57ab5bde23b17bd58c0c7d09f46f14de6eea993343bb7c3c6dd1abfcc",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-2/author-overlap-1.0.0.json": "bb9d685e916e27951aba470c99ae7999a2d281d6ce7decb16236e6b8cd23065e",
+  "experiments/data/cornea-acuity-2026-10-29/tranche-2/screening/literature-screen-receipts.json": "56191333a8215d34d3f62dcfa38fb3cfb1bfb7edff5b319ecb66317d2515ff37",
+  ".peykar/acuity-tranche2-triage-brief.md": "5f9c846197f988c6cbbfd948e280f22eb898545e87e960665c6c2e0f8954a20c",
+  ".peykar/acuity-tranche2-extraction-brief.md": "50393d9704cc276e4518c1537b4eb414f902c5977097759186b42fe26a326d45",
+  ".peykar/acuity-tranche2-extraction-assignments.json": "3f44109c45fa1041ce2420653fbe580a244fa24660fbeca1f6208c73b6e25530",
+  ".peykar/verify_acuity_tranche2_custody.py": "e9b820267280a549b627516168c27dc9a36dc28a33c8397f0e1b99316a85c80d",
+  ".peykar/acuity-tranche2-sealed-2026-10-29/custody-report-C1.json": "fa7ab4e3f7a944df3565326aa4ff25e0131422f637734524b36f57a8294b0d69",
+  ".peykar/acuity-tranche2-sealed-2026-10-29/custody-report-C2.json": "63774febad1b51c8f40d53eee860570f2df7a140aa1c687d7e2700a3788caa44",
+  ".peykar/acuity-tranche2-sealed-2026-10-29/custody-report-C3.json": "2a0b89ec7b44fb3210a03e32dec8a19f167ed62f9749ee9243cca69de6001f3e",
+  ".peykar/acuity-tranche2-sealed-2026-10-29/custody-report-C4.json": "2b259e3d08e0166982dabb46880dd4d32c5db28c794db2a5e4e89e5d85ae6580",
+  "experiments/eye/acuity/model-1.0/protocol-1.0.0.json": "0c60925cba30dcca3925709daf4c3be334dc6549d41f679fe463fe89a6460f1a",
+  "experiments/eye/acuity/model-1.1/development-log.md": "5d2297a727564ffb11e6da89a512df93768488041a0e9d78681705d37e06964a",
+  ".peykar/acuity-1.1-dev/round0-a0/report.json": "123fcb2aca019e7ce985efa0b3a283087afe7bbeb7949801e43456ebe13dab28",
+  ".peykar/acuity-1.2-dev/round0-a0/report.json": "005651edbfb6bfb0ad2437b14cac388b1cb1b89028f02d1fd10ffebb7c6317cd",
+  ".peykar/acuity-1.2-dev/round1-k1/report.json": "4c00cde3d2a2daa2dad837dbe2025bf04c95ae9148e7c82201f65350c9abc3c8",
+  ".peykar/acuity-1.2-dev/round1-k1/comparison.json": "bd206143c34090217652e0390859840d319e46df2e0c15ef94f3d0bcca99536d",
+  ".peykar/acuity-1.2-dev/round1-k1-analysis/development-analysis.json": "4ca0dc568ca33a7e8db29fd5faf644e3d1cfd38f79b8ef54c8651d2a4abb03b9",
+  ".peykar/compare_harness6.py": "2fbc52da21c0be82bd5a310cbb64dfde6ed1d49eb83bde8bf13dc043ce352a35",
+  "experiments/eye/acuity/model-1.2/development-log.md": "0b49312d7ef3c06d9e2f36b381f093a2d0f10c98391c0097d345faf732ed5693"
+ },
+ "training_records_sha256": {
+  "acu-pmc10491041.json": "6fa77a1eda2fa954b8dff40347a71da153d349a572e9b400e9374848bb19983f",
+  "acu-pmc11508698.json": "e63d77b43c2ddc5896dde31e115b7283b9a96b67e99948040367dfbf05277588",
+  "acu-pmc11826594.json": "1cf532701a15abc2ac0799b77a3f56483e399a8f12bda1886795ca1cce1bdc95",
+  "acu-pmc11826614.json": "68ac607ef80b5fb388b8ce60a1f42963d5deea44028b539b022851c6704af635",
+  "acu-pmc12003459.json": "aadff571bec462586cf7b9bdd19997b92345441f988f16cf1dafe62753cd93f4",
+  "acu-pmc12604442.json": "6cfb74a4dc6b74a7953f19f58a0e4d18fcba6a83d6c562945615c1e4b5df02ed",
+  "acu-pmc12673900.json": "e14a1c5f5d38a059d4ba0947fd9fcfb06493de7eafd9b51f6699e0cd1843368a",
+  "acu-pmc12758863.json": "de499dd6910f7e3a7812e3ded17aa7986edf175f22053152e771fe3680077319",
+  "acu-pmc12952605.json": "f6352c232514c61fc62ece0617d09d06827bd927e60155bb95bf935c0ed68878",
+  "acu-pmc13038651.json": "3741800f5e133a0344d80847701f889ed169667f8692f1d3e5b5a145aa44a9d5",
+  "acu-pmc13273661.json": "281895214d5d1a4eb9bd42b124b84ff5ba19ba0ade87eca90ddd3b1a09e18984",
+  "acu-pmc13286017.json": "6d75943efb87d23540f294b69c06aa55c427550e0d629d7a11ee89b2b501d46c",
+  "acu-pmc13303802.json": "72d297b89d6fef1936e04db52ff67b42be16873c7d4a8de6aa3ba9c39fe0b46d",
+  "acu-pmc3396288.json": "5e633212b5c9e8c44e1a2a56bf1fafd3a84103fc8e50a4600ddbaad00ce79d89",
+  "acu-pmc3585506.json": "bc1ae69079cc542192e5ef2766aca4041725c2c74c7332696430cc2b1c1b6c59",
+  "acu-pmc4001359.json": "e83141f6fce8b4744784e94b1e0f70139db1530a1848ff35c92de85a0fc589c0",
+  "acu-pmc4090564.json": "5df33cd6b17b8f54f96df14de041df0f0ffb465d40ae88dc59c571a0f73e2e2f",
+  "acu-pmc4172981.json": "d9179eb9c391d26fc0856b845478e75c2c960740cb49098f3abd3b11d5bb4b9c",
+  "acu-pmc4370945.json": "e2104e7e6e292201106baf6b30e01842cbf3eb04fa340e1b02fe297c7d68a4b6",
+  "acu-pmc4561114.json": "4d782142b09b378ff84c6a5a55c5d94812585e1c7aac7762fd2022f0c9fb767f",
+  "acu-pmc4809308.json": "899c242f9819e74901a4eeb18f45339fe7749ef86d1dd0b9084da08809ef019e",
+  "acu-pmc5227163.json": "7872027122d9dc0b764f1b2dad37c08537bf85170dd5c225a4353f60d7e030fb",
+  "acu-pmc5286471.json": "004af823e9fc701b293abd0b78a7de978da12ef91085ab4b100e158a3bab62da",
+  "acu-pmc5368419.json": "08ee93f9aecf92d01ed5fa6e7f64deee3e99892b8f342c925041b918e80aac33",
+  "acu-pmc5747228.json": "7e7a9ad807fa38a0fd8b53c531d50a1db267b83c15c9a25556d2e9ef5985e9a1",
+  "acu-pmc6147203.json": "1d9e13922004fa81d19ea2dc7aa6f5d3a29ada9417c8c533c4d6588c31199b34",
+  "acu-pmc6173378.json": "2be7504cdba3fc211499c45e2b3c39a50631cd84a425eac295a481919fb24df7",
+  "acu-pmc6677045.json": "1e0e9b0e801c3d223378406bd10ddf1bff796c24842bc884ff12c21885e785fd",
+  "acu-pmc6855044.json": "c0de0e7949a754b588f9dd6c003f4b6d123773e90d18c8e80ec978a42001a9cd",
+  "acu-pmc7345591.json": "f2ea9ef4def7105bedf71cc49d42a21318f6432ea0669b298a695910f424dd48",
+  "acu-pmc7474407.json": "a79275989d7bf6f30f6c8dfaf93b0d46ad513c4e570573186191c85a5b919e71",
+  "acu-pmc7556451.json": "c83ef15002b6fb851177f9e5a0a0bd2c7c881e9f31481b3d39a9d1afba404b6b",
+  "acu-pmc7708533.json": "6e8afb064dbe629dcf519f206e618b995f8b1d6129fb5a36d8e980a70b5b2e52",
+  "acu-pmc8232965.json": "595defadb6edc87f442883605f186bb548bfa4653939492368582c26d4202f23",
+  "acu-pmc8305492.json": "b418b6faad0ffc697e6f9e8e4bd8bd87308367a9f47947eca5640601367e7c75",
+  "acu-pmc8670975.json": "f81a9cde1d9bf08433da9c7c21973bf9db432381bdabdcc90f196ff30f708651",
+  "acu-pmc8675085.json": "022d1532e39dc5be3f42bdeea59d13a0c2aca43b94d2c50f15ab53476df3a933",
+  "acu-pmc8845528.json": "fdec1a6d14dda1b5c95efa7fae7f6e8f737fa6b8faeb0bad2ca7bb8bc7fe7e27",
+  "acu-pmc9077944.json": "6946c691563b6e53631d44b3d81686a10552c78e19bc7db620c7098a05c22e89",
+  "acu-pmc9156484.json": "6bef26958c53e6c0081ffe5289ebb348280f9ea5d2cf906e5daba4bcdf9d6145",
+  "acu-pmc9205714.json": "5ec28280095c30bbf4d28b42a81c5aaedcc1579bca3c64a3c6749b819dd078f4",
+  "acu-pmc9375462.json": "f92ae6d7589fed893943c5fbbcf69520857759eea11ae5c956307eef60abaeb2"
+ },
+ "sealed_records_sha256": {
+  "acu-pmc12220558.json": "50abb4e2abf382f2d057aabd1560e36acd00d1be3cf5dc0a7fddab2bb7a824a9",
+  "acu-pmc12948762.json": "216ca9e66bfdcc87f015819282b295c67b4227617f9a190d7c67fe4757a3392b",
+  "acu-pmc13178756.json": "3fe8b799b5f32e8fae25da559a455354a97d6060b370152f864bb8935cf4bd53",
+  "acu-pmc4545854.json": "befe6d2ce35bc0887e901e177cd9020eb253fa2c84bef54ffeccd9545241207f",
+  "acu-pmc5866901.json": "4454020c6c05a8b5b07d8c90c80c7c9df18093cb75ae8a8acd366b75f91df621",
+  "acu-pmc6397964.json": "ad8ff7b7c110d06bb8a271edce9269422de2feff5aa837667c1c0445af9ebe26",
+  "acu-pmc7318888.json": "a0864861383e2fa457f85c7a12e1b09ba1521da7a31a059d101c4e097ceeec26",
+  "acu-pmc7774118.json": "7a9be88020cf899ad87d44bb0f0de488d0a94a22715a9848ebbb71e5d69c53ce",
+  "acu-pmc7936678.json": "a41747fafbeaadc9c34480d62644231c58a4f00e80ea8b242ab4052868cf4e23",
+  "acu-pmc8381497.json": "a6ab3fc825067586933dfffd39aa74325e7c5c660e6f218e1ce90938640c8602",
+  "acu-pmc8905293.json": "4aecf021a459ebe3fc0c5218e701ce73f6eb7315796986c8afe7634713a80f5a"
+ },
+ "operator": "uv run --frozen python scripts/evaluate_acuity_population_1_2.py --sealed --protocol experiments/eye/acuity/model-1.2/protocol-1.2.0.json --output <new dir>",
+ "publication_operator": "uv run --frozen python scripts/publish_acuity_population_1_2.py --sealed --report <dir>/report.json --reference <dir>/reference-a0-report.json --output <new public dir>"
+}

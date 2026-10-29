@@ -75,3 +75,52 @@ the law and the series stay a0's.
   tranche 2 in the same run), landmark and initial-state RMSE lower and next-observation
   RMSE at most 0.05 letters higher. If k1 is rejected, there is no 1.2 protocol and
   tranche 2 stays sealed.
+
+## Round 0 — results (2026-10-30)
+
+a0 rerun by additive evaluation 4 and harness 6 (`.peykar/acuity-1.2-dev/round0-a0`,
+375 s): every number equals model 1.1's round-0 report (harness 2); the only additions
+are the initial-state intervals of the 84 initial-state entries with a population
+forecast and the evaluation versions (`.peykar/compare_harness6.py`, 0 differences).
+a0's primaries: next observation 5.412 letters, landmark 7.136, initial state 13.006
+(human group means; coverage of the robust variant 0.767/0.830).
+
+## Round 1 — results (2026-10-30)
+
+Nested LOSO of k1 on a0's round-0 report (`.peykar/acuity-1.2-dev/round1-k1`;
+`scripts/evaluate_acuity_population_1_2.py --stack`). Pooled RMSE in letters on human
+group means:
+
+| task | targets | a0 primary | k1 stacked | gain |
+|---|---|---|---|---|
+| next observation | 159 | 5.412 | 5.114 | +0.298 |
+| landmark | 159 | 7.136 | 6.862 | +0.274 |
+| initial state | 214 | 13.006 | 12.919 | +0.086 |
+
+- Coverage of the stacked next-observation intervals: 122/159 = 0.767 at 80% and
+  130/159 = 0.818 at 90%, inside both windows (a0 robust: 0.767 and 0.830). The 90%
+  coverage is 0.018 above its lower limit.
+- **k1 adopted**: it gains 0.30 and 0.27 letters (above 0.10) and loses nothing.
+- Weights fitted on all 42 studies (259 forecast rows, 214 initial-state targets):
+  forecasts from follow-up 0.544 model, 0.233 persistence, 0.223 pooled-curve
+  increment; initial states 0.582 model, 0.418 pooled training curve. Over the 42
+  nested fits the model's weight ranged 0.48–0.59 (forecasts) and 0.47–0.82 (initial
+  states).
+- The development analysis of the declared hypotheses
+  (`scripts/publish_acuity_population_1_2.py --development` with a0's round-0 report as
+  reference; `.peykar/acuity-1.2-dev/round1-k1-analysis`) passes H1–H5: H2 5.11 letters
+  against persistence 5.86, pooled-curve increment 6.02, last-two trend 43.85 and analog
+  9.52; H3 6.86 against 9.85, 7.17 and 15.59; H4 12.92 against the pooled training curve
+  14.14; H5 5.11/6.86/12.92 against a0's 5.41/7.14/13.01. Reported, not tested: landmark
+  coverage 0.824/0.874; stacked initial-state coverage 0.771/0.860 (a0's own initial
+  states 0.850 at 80%), so the moved initial-state intervals are narrower than nominal
+  at 90%.
+
+## Freeze decision (2026-10-30)
+
+Model 1.2.0 is k1: a0's configuration and fit with the weights above frozen. The
+protocol is `protocol-1.2.0.json`; it pins the weights, the code, the training records
+and the tranche-2 records (structure only seen). Its one sealed run fits a0 on the 42
+training studies (minus studies linked to a sealed study), scores tranche 2 once, and
+writes a0's unstacked report (the H5 reference) and the stacked report of model 1.2.0
+from the same fit.
