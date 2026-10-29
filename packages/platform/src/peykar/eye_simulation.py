@@ -138,7 +138,10 @@ COMPONENTS: dict[str, Component] = {
             "tranche-3 sealed test, 130 group means: all five hypotheses pass (coverage "
             "0.835/0.931; next observation 5.89 vs persistence 7.21 pp; landmark 7.76 vs "
             "11.89; initial state 10.17 vs 18.06; first-month coverage 0.824/0.939 vs 1.1.0 "
-            "0.679/0.817 at the same accuracy)"
+            "0.679/0.817 at the same accuracy); as the reference of the tranche-4 test of "
+            "model 1.3 (reported, 133 group means) it met H1-H4 again (next observation "
+            "6.67 vs persistence 8.27 pp; initial state 10.69 vs 16.33), and 1.3.0 failed "
+            "its H5 against it"
         ),
         context_of_use=(
             "human group means after glaucoma procedures; single eyes, non-human species "

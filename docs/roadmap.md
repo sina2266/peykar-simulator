@@ -369,6 +369,20 @@ reserved before triage.
   forecasts 5–9 pp too high after subconjunctival MIGS, cataract and non-penetrating
   surgery. Model 1.3 is to be developed on tranches 1–3 (229 studies) and tested on
   tranche 4.
+### 2026-10-29 IOP model 1.3 (tranche-4 sealed test)
+[Model 1.3.0](../experiments/eye/iop/model-1.3/README.md) was frozen (commit
+`38f4f874`, protocol `0cac4daf`) before a one-shot test on tranche 4.
+- [x] A sub-procedure (device or technique) read from each arm's description and
+  nested under the procedure; adopted on 229 training studies (6.38/8.06/10.07 against
+  1.2.0's 6.46/8.35/10.21 pp); a lognormal-mean point rule rejected.
+- [x] Sealed result on 133 group means: H1–H4 pass (coverage 77.4%/88.3%, next
+  observation 6.64 vs persistence 8.27, landmark 7.92 vs 15.02, initial state 10.94 vs
+  15.94); **H5 fails** (initial state 10.94 vs 1.2.0's 10.69 pp on the same training).
+  `peykar eye` keeps 1.2.0, which met H1–H4 on tranche 4 as well (reported).
+- [ ] A sub-procedure level only where the training data show a bias (cyclodestruction,
+  subconjunctival MIGS; tubes and stents lost), the hypertensive phase of valved tubes
+  and early spikes after cataract surgery. Needs a new screen: only tranche 5 (19
+  articles) is unread.
 
 ### 2026-10-29 refraction after corneal laser refractive surgery (sixth eye component)
 [Model 1.0.0](../experiments/eye/refraction/model-1.0/README.md) was frozen (commit

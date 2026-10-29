@@ -13,7 +13,7 @@ version, its sealed-test result and its context of use.
 | component | model | quantity (unit) | context | sealed test |
 |---|---|---|---|---|
 | `retina-thickness` | 1.1.0 (`s5`) | central retinal thickness (µm) | `human/<indication>/<treatment>` | tranche 2: H1–H4 pass, H5 fails ([README](../experiments/eye/retina/model-1.1/README.md)) |
-| `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass ([README](../experiments/eye/iop/model-1.2/README.md)) |
+| `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass; tranche 4 (reference of the 1.3 test, reported): H1–H4 hold ([README](../experiments/eye/iop/model-1.2/README.md)) |
 | `corneal-endothelium` | 1.0.0 | endothelial cell density (cells/mm²) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/endothelium/README.md)) |
 | `corneal-thickness` | 1.0.0 | central corneal thickness (µm) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/thickness/README.md)) |
 | `refraction` | 1.0.0 (`f1`) | spherical equivalent after laser refractive surgery (D) | `human/<refractive error>/<procedure>` | all five hypotheses pass on 13 series ([README](../experiments/eye/refraction/model-1.0/README.md)) |
@@ -31,7 +31,11 @@ closure is not included: its models apply to mouse debridement wounds only. Nor 
 best-corrected acuity after macular treatment: its model 1.0.0 failed all four
 hypotheses of its sealed test
 ([README](../experiments/eye/retina-acuity/model-1.0/README.md)), and only components
-that passed are offered.
+that passed are offered. A newer version replaces an offered one only when it passes
+all its declared hypotheses, including the comparison with its predecessor, or when the
+predecessor fails H1–H4 on the newer sealed set: retinal thickness 1.1.0 replaced 1.0.0,
+whose intervals missed H1 on tranche 2, while IOP 1.3.0 failed its comparison with 1.2.0
+([README](../experiments/eye/iop/model-1.3/README.md)) and 1.2.0 stays.
 
 Each component uses its own tested primary methods:
 

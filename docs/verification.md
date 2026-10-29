@@ -83,6 +83,41 @@ Commands run from the repository root; outcomes observed. Start state: main at
   month 0.1 (before 0.23) and month 36 (after 24). `uv run --frozen mypy`: no issues in
   160 source files. `make check-docker`: 925 tests passed in 179.46 s, 89% coverage,
   EXIT=0 (`.peykar/eye-support-check-docker-20261029.log`).
+- Retinal-acuity tranche 2 reserved before triage (commit `233dcd27`; briefs written by
+  `.peykar/write_retina_acuity_tranche2_briefs.py`). `triage_chunks.py --tranche 1
+  --chunks 4` rebuilt the four tranche-1 chunks and id lists byte for byte (`cmp`); the
+  four tranche-2 chunks have no decimal outside DOI and licence lines. Four reviewer
+  sub-agents: 16 + 15 + 17 + 16 admits; `.peykar/write_retina_acuity_tranche2_triage.py`:
+  64 admitted, 56 excluded, reservation 24 development and 64 sealed;
+  `scripts/link_study_authors.py --dataset .../tranche-2 --prefix rac-`: 4 sealed-sealed
+  pairs, no training exclusion (commit `759c42b5`).
+- Custodians: the first start of C1–C4 failed with "Usage limit reached" before any file
+  was written (the sealed folder did not exist); C1, then C2–C5 and C6–C8, ran
+  afterwards. `uv run --frozen python .peykar/verify_retina_acuity_tranche2_custody.py`:
+  64 reserved, 29 records and 35 exclusions, 29/29 rebuilt the same, 64 raw copies
+  equal to the screened sources, 81 series, no problem (commit `afa5a99b`).
+- IOP 1.3 sealed run: log `.peykar/iop13-sealed-test-2026-10-29.log` ends with `EXIT=0`;
+  execution record: 18,215.8 s, protocol SHA `0cac4daf…`, 229 training and 79 sealed
+  record hashes, `report.json` `df84eff4…`, reference `3950f0b0…`.
+  `OMP_NUM_THREADS=1 uv run --frozen python scripts/publish_iop_population_1_3.py
+  --sealed --report .peykar/iop13-sealed-test-2026-10-29/report.json --reference
+  .peykar/iop13-sealed-test-2026-10-29/reference-d0-report.json --output
+  experiments/eye/iop/model-1.3/sealed-test-2026-10-29`: exit 0; H1–H4 pass, H5 fails
+  (initial state 10.94 against 10.69 pp). `.peykar/check_iop_redaction_1_3.py sealed
+  ...`: 86 redacted study reports, 0 leaks; an inline check of the 233 analysis rows of
+  redacted studies: 0 leaks. `.peykar/iop13_sealed_breakdown.py`: per-time and
+  per-context aggregates. The publisher's analysis applied to the reference report
+  (inline): H1–H4 hold for 1.2.0 (coverage 0.774/0.872; 6.67, 8.00, 10.69 pp). The
+  earliest control visit of the 229 training studies is 0.0329 months (inline, months
+  only). `.peykar/cornea-native47/bin/python
+  experiments/eye/iop/model-1.3/sealed-test-2026-10-29/plot-results.py`: exit 0; the
+  pooled values it computes from the public files equal the published ones (6.642,
+  7.923, 10.937; 1.2.0: 6.670, 8.002, 10.691); the figure was inspected and re-rendered
+  twice (legend overlaps).
+- `make check-docker` before the IOP 1.3 results commit: 925 tests passed in 166.32 s,
+  89% coverage, mypy 160 source files, all packages built, EXIT=0
+  (`.peykar/iop13-results-check-docker-20261029.log`); `.peykar/check_frozen_protocols.py`:
+  no problem in any frozen protocol.
 ## Machine restart, retinal-thickness 1.2 round 2 and visual-acuity model 1.0: 2026-10-29 (afternoon)
 Commands run from the repository root; outcomes observed. Start state: main at
 `d7ded65b` (= origin; refraction results committed).

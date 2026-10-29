@@ -167,4 +167,14 @@ forecast-only noise that is large in the first month. It was trained on the 146
 studies of tranches 1 and 2 and tested once on tranche 3, where all five declared
 hypotheses passed. First-month next-observation coverage rose from 0.679/0.817
 (1.1.0, same training) to 0.824/0.939 at the same accuracy (5.89 against 5.88 pp).
-Tranche 4 is reserved and extracted for model 1.3.
+Tranche 4 was reserved and extracted for model 1.3.
+**Model 1.3** ([README](model-1.3/README.md),
+[Persian results](model-1.3/results.fa.md)) nests a sub-procedure (device or
+technique, read from each arm's description) under the procedure. It was trained on
+the 229 studies of tranches 1–3 and tested once on tranche 4: H1–H4 passed (next
+observation 6.64 pp against persistence 8.27; landmark 7.92 against 15.02; initial
+state 10.94 against 15.94), but H5 failed, because its initial state was worse than
+1.2.0's trained on the same studies (10.94 against 10.69 pp). The split helped after
+micropulse cyclophotocoagulation and PreserFlo and hurt after tubes and stents. Model
+1.2.0, which met H1–H4 on tranche 4 as well (reported), stays in `peykar eye`. Only
+tranche 5 (19 articles) is left unread.

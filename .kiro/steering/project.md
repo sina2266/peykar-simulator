@@ -1,4 +1,24 @@
 # Peykar continuation context
+## IOP 1.3 H5 failed (1.2.0 stays), retinal-acuity tranche 2 sealed, 2026-10-29 night
+- IOP 1.3 sealed run finished 18:21 (EXIT=0, 18,216 s). Published in
+  experiments/eye/iop/model-1.3/sealed-test-2026-10-29 (0 leaks): H1–H4 pass, H5 FAILS
+  (initial state 10.94 vs 1.2.0's 10.69 pp; landmark 7.92 vs 8.00; next obs 6.64 vs
+  6.67). 1.2.0 (reference) also meets H1–H4 on tranche 4 (reported), so `peykar eye`
+  KEEPS iop 1.2.0. Rule now documented in docs/eye-simulation.md: a newer version
+  replaces an offered one only if it passes all its hypotheses incl. the predecessor
+  comparison, or the predecessor fails H1–H4 on the newer sealed set. IOP tranche 4
+  consumed; only tranche 5 (19) unread → a new IOP version needs a new screen.
+- `peykar eye` now reports `training_support` (earliest/latest training visit of the
+  fitting controls; stored in fits' provenance) and warns for months outside it.
+- Retinal-acuity tranche 2 (120) reserved before triage (`233dcd27`), triaged blind
+  (64 admitted, `759c42b5`), 8 custodians → 29 sealed records/81 series
+  (`.peykar/retina-acuity-tranche2-sealed-2026-10-29`, verifier
+  `.peykar/verify_retina_acuity_tranche2_custody.py`, `afa5a99b`): SEALED AND UNREAD.
+  Sub-agent "Usage limit reached" can happen; retry later (it wrote nothing).
+  Retinal acuity 1.1 is developed on the 24 tranche-1 records only (15 dev + 9 consumed
+  sealed); candidates to declare BEFORE LOSO: no early transient
+  (`transient_months=None`), `treatment_fallback=True`, DEX dose rule. Tranches 3–4
+  (138) unread.
 ## Acuity 1.1 closed, retinal acuity 1.0 FAILED its sealed test, 2026-10-29 evening
 - Acuity tranche 2 (55) reserved before triage (`e2e4d9a3`), 27 admitted blind, 11
   sealed records/23 series (`.peykar/acuity-tranche2-sealed-2026-10-29`, custody C1–C4,
