@@ -1,0 +1,72 @@
+# Retinal-thickness model 1.2 — development log
+
+Development data: the 128 record studies of tranches 1 and 2 of dataset
+`retina-cst-2026-10-28` (46 tranche-1 development records, 19 tranche-1 sealed records
+consumed by the test of model 1.0.0, 63 tranche-2 sealed records consumed by the test
+of model 1.1.0; 315 series). The tranche-3 reservation lists them as development
+([`tranche-3/split-reservation-1.0.0.json`](../../../data/retina-cst-2026-10-28/tranche-3/split-reservation-1.0.0.json)).
+No tranche-3 value is read before the 1.2 protocol is frozen. Studies of one
+author-overlap cluster (`tranche-3/author-overlap-1.0.0.json`, 10 development
+clusters) leave training together in leave-one-study-out (LOSO). Each round declares
+its change and its adoption rule before its LOSO results are seen.
+
+## Starting point and diagnostics (training data only)
+
+Model 1.1.0 passed H1–H4 of its tranche-2 sealed test and failed H5: model 1.0.0 with
+the same training forecast slightly better, but its intervals were too narrow.
+Out-of-sample errors of 1.1 on all 128 training studies (its development LOSO on
+tranche 1 plus its sealed report on tranche 2; `.peykar/retina12_diag_oos.py`,
+`.peykar/retina12_diag_regimen_bias.py`, `.peykar/retina12_diag_device.py`; control
+group means; signed error = forecast − observed, pp of the baseline thickness):
+
+- Next-observation forecasts were unbiased (−0.02 pp, coverage 0.85/0.91); landmark
+  forecasts nearly so (+0.06 pp).
+- Initial-state forecasts (no follow-up seen) were 3.8 pp too low on average (too much
+  predicted thinning; RMSE 12.57 pp), at every time after treatment. The bias differs
+  by prior treatment (naive −3.1, previously treated −5.5, unstated −8.8, mixed
+  −0.1 pp) and by OCT device (Spectralis −7.2 pp on 219 targets, the others between
+  −2.7 and +2.4 pp).
+- A least-squares fit of the last fraction at or after month 3 on the baseline
+  covariate, indication, measure and device (139 control group means) gave Spectralis
+  series +11.0 pp (SE 3.1) against Cirrus series; the other devices lay between +0.5
+  and +8.6 pp. Published normal values of central thickness are similar for
+  Spectralis and Cirrus (Wolf-Schnurrbusch et al., IOVS 2009), so device normals do not
+  explain this; it may reflect the studies that use each device. A device level lets
+  the data decide.
+- Wear-off of one dexamethasone implant: 28 training series carry the dose rule, most
+  with few visits; in-sample fits do not pin the duration down. No change is proposed.
+- A point rule using the lognormal mean instead of the predictive median was tested
+  for IOP model 1.3 (candidate d2) and rejected there: it removed the initial-state
+  bias without lowering the RMSE and made the other tasks worse. It is not tried here.
+
+## Model
+
+Generic eye model version 2 (`eye_recovery_population2`, unchanged) with the
+configurations of `peykar.model_learning.retina_thickness_population_1_2`; series
+adapters `peykar.validation.eye_retina_data_1_1` (model 1.1's series and dose rule)
+and `peykar.validation.eye_retina_data_1_2` (the same series with a sub-context);
+operator `scripts/evaluate_retina_population_1_2.py`. With a sub-context, a context
+`species/indication/treatment` becomes `species/<sub>/indication|treatment` and the
+grouping is `("treatment", "context")`, so the hierarchy is species → indication and
+treatment (as in 1.1) → sub-context.
+
+## Round 1 — declared before results (2026-10-29)
+
+- **e0**: model 1.1.0 (the frozen candidate `s5`, its series), the reference.
+- **e3**: `s5` with a prior-treatment level (naive, previously treated, mixed,
+  unstated): 53 control contexts on the training records.
+- **e4**: `s5` with an OCT-device level (Spectralis, Cirrus, Topcon, Optovue, Stratus,
+  other, unstated): 66 control contexts on the training records.
+
+Adoption rule (as for model 1.1): a candidate replaces the incumbent only if, on human
+group means, it improves the pooled RMSE of its primary method by at least 0.10 pp in
+at least one task (initial state, next observation, landmark) and loses no more than
+0.05 pp in any. The primary method is the lowest pooled group-mean next-observation
+RMSE among the population variants whose group-mean coverage lies inside both H1
+windows ([0.70, 0.90] and [0.80, 0.97]); ties within 0.05 pp go to the simpler variant
+(Gaussian). If both e3 and e4 are adopted against e0, the one with the larger summed
+gain over the three tasks is the incumbent and round 2 runs **e5**, with both levels
+(prior treatment within device is not possible in two levels, so e5 nests device
+within prior treatment: contexts `species/<prior>:<device>/indication|treatment`),
+adopted if it meets the rule against that incumbent. Each run is split into four shards
+(`--shard i/4`) and joined by `--merge`.
