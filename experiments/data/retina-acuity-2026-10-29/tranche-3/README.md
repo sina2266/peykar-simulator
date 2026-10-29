@@ -53,3 +53,32 @@ articles each) and `--tranche 4 --chunks 1` (18 articles), in
 `.peykar/retina-acuity-tranche4-triage-chunks/`. A pattern check found no decimal, ±
 or percent sign outside the DOI and licence lines of any chunk. Five reviewer
 sub-agents triage them, one chunk each.
+
+## Triage outcome (2026-10-29)
+
+**Triage.** Five reviewer sub-agents worked from masked previews only
+([`triage-1.0.0.json`](triage-1.0.0.json), written by
+`.peykar/write_retina_acuity_tranche34_triage.py`). **70 admitted (59 of tranche 3, 11
+of tranche 4), 68 excluded**, with no owner override. The exclusions were medians or
+IQR only, proportions, lines gained or changes without a baseline value, one follow-up
+time, Snellen means, model-based estimates, groups defined after baseline, baseline-only
+or criteria tables, reviews, out-of-scope surgery or diseases, and two articles without
+a DOI. Context hints of the admits (not binding): neovascular AMD 25, diabetic macular
+edema 21, vein occlusion 12, other 5, myopic CNV 2, postoperative edema 2, uveitic 1,
+not shown 2; anti-VEGF 44, combination 10, steroid implant 6, vitrectomy 4, laser 2,
+steroid injection 1, other 1, not shown 2.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 53 record studies of tranches 1–2 as development (training of model 1.2) and all 70
+admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (run with
+a byte-identical copy of the screening receipts in `screening/`) found 12 linked pairs:
+3 between development studies (they leave leave-one-study-out training together), 7
+between a development and a sealed study (6 sealed studies lose 7 training studies), and
+2 between sealed studies (kept as separate studies of the test and reported as pairs).
+
+**Custody.** Nine custodian sub-agents (C1–C9; 8 or 7 studies each, dealt round-robin
+over the sorted study keys in `.peykar/retina-acuity-tranche34-extraction-assignments.json`,
+SHA-256 `8cb0306e…`) extract the admits into
+`.peykar/retina-acuity-tranche34-sealed-2026-10-29/`.

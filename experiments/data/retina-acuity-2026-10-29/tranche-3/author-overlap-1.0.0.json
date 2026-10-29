@@ -1,0 +1,215 @@
+{
+ "schema": "eye.retina-acuity-author-overlap-1.0.0",
+ "utc": "2026-10-29T19:47:31.782861+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/retina-acuity-2026-10-29/tranche-3/split-reservation-1.0.0.json",
+   "sha256": "5a60376d0e72854cba52cf154b4b22c42bc3a4c7037193ae4a1e574384fcb11d"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-bcva_macular_treatment_abstract_open-0.json",
+    "sha256": "265dddb8997a5bfc05ce041f0ad29d584e11b9c40d5e0ad9e2cd7194c9f0fcf7"
+   },
+   {
+    "file": "search-bcva_macular_treatment_abstract_open-1.json",
+    "sha256": "eb649580d23dc5d916b388c63e4ded95ff2ceb7e09248f586cfec92198a4d667"
+   },
+   {
+    "file": "search-bcva_macular_treatment_abstract_open-2.json",
+    "sha256": "a27754cd76d75cbf0c3806c7f026a91976e4ad4d2e144666979fa3e8c8930987"
+   },
+   {
+    "file": "search-bcva_macular_treatment_abstract_open-3.json",
+    "sha256": "a6b61a2ef7f8ec0e376fb63148d89c7b70d0c29de2d6e3c117dc6e67721cafbc"
+   },
+   {
+    "file": "search-macular_disease_title_bcva_text_open-0.json",
+    "sha256": "53010e2d65704dfdf6edd5fb7b9d21998fc5037a012d4b028bfc1599b1d5af76"
+   },
+   {
+    "file": "search-macular_disease_title_bcva_text_open-1.json",
+    "sha256": "14af6ba9c2eb0ad5a92fcacf18af4308ab72c8fbeeb28bcabd03f809df1fa52d"
+   },
+   {
+    "file": "search-macular_disease_title_bcva_text_open-2.json",
+    "sha256": "cb4dc40326f333ba24ab0dd2a1a9064cf7bdf68b80b822870cf2c57a3f6407b7"
+   },
+   {
+    "file": "search-macular_disease_title_bcva_text_open-3.json",
+    "sha256": "30f61a3caded832beb5cb6abf294170206ff73eda7c7d4393744ab3c01b3cd6c"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "rac-pmc10400688",
+    "rac-pmc6147450"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "rac-pmc10400688",
+    "rac-pmc6483995"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "rac-pmc11978859",
+    "rac-pmc12782608"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "rac-pmc12069189",
+    "rac-pmc7838261"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "rac-pmc3720664",
+    "rac-pmc4852759"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "rac-pmc3910673",
+    "rac-pmc4487941"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "rac-pmc4716754",
+    "rac-pmc6528749"
+   ],
+   "splits": [
+    "sealed_test",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "rac-pmc6147450",
+    "rac-pmc6483995"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "rac-pmc6250630",
+    "rac-pmc6847987"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 6
+  },
+  {
+   "studies": [
+    "rac-pmc6558052",
+    "rac-pmc7093402"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "rac-pmc8238774",
+    "rac-pmc9159049"
+   ],
+   "splits": [
+    "sealed_test",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "rac-pmc9247788",
+    "rac-pmc9329842"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 3
+  }
+ ],
+ "development_clusters": [
+  [
+   "rac-pmc10400688",
+   "rac-pmc6147450"
+  ],
+  [
+   "rac-pmc11978859",
+   "rac-pmc12782608"
+  ],
+  [
+   "rac-pmc3720664",
+   "rac-pmc4852759"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "rac-pmc12069189": [
+   "rac-pmc7838261"
+  ],
+  "rac-pmc4487941": [
+   "rac-pmc3910673"
+  ],
+  "rac-pmc6250630": [
+   "rac-pmc6847987"
+  ],
+  "rac-pmc6483995": [
+   "rac-pmc10400688",
+   "rac-pmc6147450"
+  ],
+  "rac-pmc6558052": [
+   "rac-pmc7093402"
+  ],
+  "rac-pmc9247788": [
+   "rac-pmc9329842"
+  ]
+ }
+}
