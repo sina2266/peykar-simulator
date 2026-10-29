@@ -423,6 +423,34 @@ reserved before triage.
   forecast too optimistically; PK was not in the sealed set. Next version: keep an
   early shortfall in the forecast and test on tranche 2 (55 unread articles).
 
+### 2026-10-29 visual-acuity model 1.1 development (no change adopted)
+- [x] Tranche 2 of the corneal acuity dataset (55 articles) reserved before triage;
+  blind triage (27 admitted), four custodians (11 sealed records, 23 series).
+- [x] Generic eye model 4 (`eye_recovery_population4`): an optional fitted correlation
+  of the long-term level and the transient amplitude, and separate level slopes for
+  named treatment groups; defaults reproduce version 2 bit for bit.
+- [x] Round 1 on the 42 tranche-1 studies: both candidates rejected by the 0.10-letter
+  rule. No 1.1 protocol; tranche 2 stays sealed and unread.
+### 2026-10-29 best-corrected visual acuity after macular treatment (eighth eye component)
+[Model 1.0.0](../experiments/eye/retina-acuity/model-1.0/README.md) was frozen (commit
+`f4352217`, protocol `34494401`) before a one-shot sealed test.
+- [x] Screen 3,655 open-access full texts and 3,623 masked tables; articles kept by
+  other components' untested tranches dropped first; a mechanical rule kept 378 in four
+  tranches; blind triage of tranche 1 (62 admitted); outcome-blind split (41/21); five
+  development extractors (15 records, 52 series) and three custodians (9 sealed
+  records, 11 series), every record rebuilt byte for byte.
+- [x] The additive acuity pattern reused for macular disease; treatment nesting and
+  forecast-only persistent deviations rejected, pooled forecast noise adopted under a
+  declared calibration clause.
+- [x] Sealed result on 11 group-mean forecast series: **all four hypotheses fail**
+  (coverage 67.7%/80.6%, next observation 6.14 vs persistence 4.81 letters, landmark
+  9.17 vs 6.49, initial state 16.40 vs pooled curve 5.18). Not added to `peykar eye`.
+- [ ] Cause found after unsealing: the 7-day early transient had no training visit
+  before day 30 and was fitted at about +2 logMAR at day 1; one sealed study with a
+  day-1 visit carried the failure. Generic fix: a training-time support check in the
+  models and `peykar eye`, and an acuity law without the unidentified term.
+- [ ] Steroid-implant wear-off, a treatment fallback for unseen contexts, and a test
+  on tranches 2–4 (258 unread articles).
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

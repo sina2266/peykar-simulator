@@ -27,7 +27,11 @@ from the preoperative SE (an additive outcome) and is also fitted at forecast ti
 baseline is the preoperative SE and its values are SEs in dioptres. `acuity` works the same way
 on logMAR: its baseline is the preoperative corrected acuity and its values are logMAR
 (lower is better). Epithelial wound
-closure is not included: its models apply to mouse debridement wounds only.
+closure is not included: its models apply to mouse debridement wounds only. Nor is the
+best-corrected acuity after macular treatment: its model 1.0.0 failed all four
+hypotheses of its sealed test
+([README](../experiments/eye/retina-acuity/model-1.0/README.md)), and only components
+that passed are offered.
 
 Each component uses its own tested primary methods:
 

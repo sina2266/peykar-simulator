@@ -1,4 +1,34 @@
 # Peykar continuation context
+## Acuity 1.1 closed, retinal acuity 1.0 FAILED its sealed test, 2026-10-29 evening
+- Acuity tranche 2 (55) reserved before triage (`e2e4d9a3`), 27 admitted blind, 11
+  sealed records/23 series (`.peykar/acuity-tranche2-sealed-2026-10-29`, custody C1–C4,
+  `.peykar/verify_acuity_tranche2_custody.py`): STILL SEALED AND UNREAD. Acuity 1.1
+  round 1: generic eye model 4 (`eye_recovery_population4`, options
+  `random_correlation="level_excess"` and `slope_groups`; defaults = model 2 bit for
+  bit; harness `eye_recovery_evaluation4`, `eye_additive_evaluation2`) candidates b1
+  (+0.08/+0.07/+0.00) and b2 (initial −0.12) rejected: NO 1.1 protocol; a0 stays in
+  `peykar eye`.
+- Retinal acuity 1.0.0, eighth component: BCVA (logMAR, letters) after macular
+  treatment. Dataset experiments/data/retina-acuity-2026-10-29: 378 by the masked-table
+  rule; tranche 1 (120) triaged, 62 admitted; **tranches 2–4 (258) unread**; split salt
+  `peykar-retina-acuity-holdout-v1:` 41/21; 15 dev records (52 series; 2 private in
+  `.peykar/retina-acuity-development-private`), 9 sealed (11 series,
+  `.peykar/retina-acuity-sealed-2026-10-29`, C1–C3). Module
+  `peykar.validation.eye_retina_acuity_data`, configs
+  `peykar.model_learning.retina_acuity_population` (v3 adopted: pooled forecast noise),
+  operator `scripts/evaluate_retina_acuity_population.py`, publisher
+  `scripts/publish_retina_acuity_population.py`. Protocol SHA `34494401…`, freeze
+  `f4352217`. Sealed once (18 s): ALL FOUR FAIL (coverage 0.677/0.806; next obs 6.14
+  vs persistence 4.81; landmark 9.17 vs 6.49; initial 16.40 vs pooled 5.18). Cause:
+  the 7-day early transient had no training visit before day 30 and was fitted at
+  +1.99 logMAR at day 1; the one sealed study with a day-1 visit (rac-pmc5377272,
+  CC BY-NC-ND, contexts human/other/*) carries the failure (post hoc: without it all
+  four pass). NOT in `peykar eye` (only sealed-passing versions go there). Redaction
+  check `.peykar/check_retina_acuity_redaction.py` (0 leaks), breakdown
+  `.peykar/retina_acuity10_sealed_breakdown.py`.
+- Next: a generic time-support guard (earliest training visit per family; warn before
+  it) for `peykar eye`; retinal acuity 1.1 needs tranches 2–4 reserved before triage,
+  a law without the unidentified transient, `treatment_fallback`, a DEX dose rule.
 
 ## Machine restart, retina 1.2 closed, acuity 1.0 tested, 2026-10-29 afternoon
 

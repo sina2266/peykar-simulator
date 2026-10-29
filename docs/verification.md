@@ -1,4 +1,76 @@
 # Verification record
+## Acuity 1.1 (closed), generic eye model 4 and retinal visual-acuity model 1.0: 2026-10-29 (evening)
+Commands run from the repository root; outcomes observed. Start state: main at
+`f6c74736` (= origin; acuity 1.0 results committed). The IOP 1.3 sealed run started at
+13:17 kept running throughout.
+- Acuity tranche 2 (55 articles) was reserved as the sealed set of acuity 1.1 in commit
+  `e2e4d9a3`, before triage. Two reviewer sub-agents read masked previews; the triage,
+  split and author-overlap files (27 admitted, every admit sealed; training = the 42
+  tranche-1 records) were committed in `7e403d4f`. Four custodian sub-agents built 11
+  records with 23 series; `.peykar/verify_acuity_tranche2_custody.py` rebuilt them byte
+  for byte with no problem.
+- `uv run --frozen pytest -q tests/unit/test_eye_recovery_version4.py`: 8 passed
+  (generic eye model 4, whose defaults reproduce version 2 bit for bit).
+  `scripts/evaluate_acuity_population_1_1.py --development` over the 42 tranche-1
+  studies (exit 0 each, `.peykar/acuity-1.1-dev/`): a0 (1.0.0) robust primary
+  5.412/7.136/13.006 letters (next observation / landmark / initial state), pooled-curve
+  increment 6.017/7.167, persistence 5.863/9.846, pooled training curve 14.135; b1
+  (correlated level and transient, fitted ρ median −0.76) gains 0.084/0.067/0.002; b2
+  (cross-linking slope group) loses 0.118 in the initial state. Both rejected by the
+  declared 0.10-letter rule (commits `133eac51`, `fcaf7fbf`); no 1.1 protocol.
+- Retinal acuity screen: `scripts/screen_corneal_wound_literature.py --queries
+  experiments/data/retina-acuity-2026-10-29/screening/queries.json --reuse-fulltext`:
+  3,660 articles, EXIT=0; `scripts/screen_corneal_tables.py`: 3,655 full texts, 3,623
+  masked tables in 2,140 articles; `screening/triage_rule.py`: 378 articles, 119 further
+  ones reserved elsewhere (694 reserved identifiers); tranche order 120/120/120/18.
+  Commit `fa525d83` before triage. Four reviewer sub-agents: 62 admitted, 58 excluded;
+  `scripts/reserve_retina_acuity_split.py`: 41 development, 21 sealed; author overlap 3
+  pairs (commit `a02665d6`).
+- Five development extractors and three custodians (sub-agents), addendum 1 between the
+  waves: `.peykar/rebuild_retina_acuity_records.py development` rebuilt all 15
+  development records byte for byte; `.peykar/verify_retina_acuity_custody.py`: 9
+  sealed records rebuilt the same, 21 raw copies equal to the screened sources (commit
+  `c162fa43`).
+- Development LOSO (`scripts/evaluate_retina_acuity_population.py --development
+  --candidate v0|v1|v2|v3`, exit 0 each): primaries by the declared rule 2.778/3.066/4.737
+  (v0), 2.772/3.031/4.763 (v1), 2.737/3.066/4.737 (v2), 2.794/3.047/4.742 (v3,
+  next-observation coverage 0.841/0.884); v3 adopted under the declared calibration
+  clause (rounds declared in `409d5011` and `515c8f9e` before their runs).
+- `make check-docker` before the freeze: 922 tests passed in 189.71 s, 89% coverage,
+  mypy 160 source files, 18 frontend tests, all packages built, EXIT=0
+  (`.peykar/retina-acuity-freeze-check-docker-20261029.log`). Protocol SHA-256
+  `34494401…` (71 frozen files, 15 training and 9 sealed record hashes); freeze commit
+  `f4352217`, pushed (HEAD = origin).
+- Then, once: `uv run --frozen python scripts/evaluate_retina_acuity_population.py
+  --sealed --protocol experiments/eye/retina-acuity/model-1.0/protocol-1.0.0.json
+  --output .peykar/retina-acuity10-sealed-test-2026-10-29`: protocol check passed, exit
+  0, 18.11 s, `report.json` SHA-256 `88e1b9ef…`.
+- `uv run --frozen python scripts/publish_retina_acuity_population.py --sealed --report
+  .peykar/retina-acuity10-sealed-test-2026-10-29/report.json --output
+  experiments/eye/retina-acuity/model-1.0/sealed-test-2026-10-29`: H1–H4 all fail (11
+  series, 31 targets; 34 initial-state targets): coverage 21/31 and 25/31; next
+  observation 6.14 against persistence 4.81 letters; landmark 9.17 against 6.49; initial
+  state 16.40 against the pooled training curve 5.18.
+- `uv run --frozen python .peykar/check_retina_acuity_redaction.py sealed
+  experiments/eye/retina-acuity/model-1.0/sealed-test-2026-10-29`: 4 public and 5
+  private studies, 5 study reports and 20 analysis rows checked, 0 leaks, exit 0.
+- `uv run --frozen python .peykar/retina_acuity10_sealed_breakdown.py
+  .peykar/retina-acuity10-sealed-test-2026-10-29/report.json`: per-study tables; leaving
+  out one study at a time, only the removal of `rac-pmc5377272` makes all four checks
+  pass (next observation 3.90 against persistence 4.54; landmark 4.69 against 5.59;
+  initial state 4.11 against 4.76; coverage 18/25 and 20/25). Inline reads of the
+  records with `peykar.validation.eye_retina_acuity_data`: the earliest development
+  visit is at 0.986 months; the only sealed series with a visit before month 1 are the
+  two of `rac-pmc5377272` (0.033 months). The fitted transient at day 1 is 1.992 logMAR
+  in every sealed fit and 0.58–4.00 across the development folds.
+- `.peykar/cornea-native47/bin/python
+  experiments/eye/retina-acuity/model-1.0/sealed-test-2026-10-29/plot-results.py`: exit
+  0; the figure was inspected and re-rendered twice (legend and title overlap fixed).
+- `uv run --frozen python .peykar/check_frozen_protocols.py`: no problem in any frozen
+  protocol (retinal acuity 1.0.0 included; retina 1.2.0 has no protocol).
+- `make check-docker` before the retinal acuity results commit: 922 tests passed in
+  186.75 s, 89% coverage, mypy 160 source files, 18 frontend tests, all packages built,
+  EXIT=0 (`.peykar/retina-acuity-results-check-docker-20261029.log`).
 ## Machine restart, retinal-thickness 1.2 round 2 and visual-acuity model 1.0: 2026-10-29 (afternoon)
 Commands run from the repository root; outcomes observed. Start state: main at
 `d7ded65b` (= origin; refraction results committed).
