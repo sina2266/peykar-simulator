@@ -31,8 +31,9 @@
   development a0 failed H2/H3 to the pooled-curve increment; sealed set has no PK; one
   DSAEK group after glaucoma surgery missed by ~24 letters. `peykar eye` forecasts
   `acuity` (AdditiveComponent now takes `scenario_series`).
-- Pending (uncommitted at the time of writing): acuity results/docs commit; then IOP 1.3
-  publication when its sealed run ends.
+- Acuity results/docs/CLI committed and pushed as `f6c74736`. Pending: IOP 1.3
+  publication when its restarted sealed run ends (45/79 d1 studies at 15:06, then 79 d0;
+  about 2.4 min per study); acuity 1.1 starts with the tranche-2 reservation BEFORE triage.
 
 ## IOP 1.3 frozen, refraction 1.0 tested, retina 1.2 round 2 running, 2026-10-29
 
