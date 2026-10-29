@@ -1,0 +1,88 @@
+{
+ "schema": "cornea.refraction-author-overlap-1.0.0",
+ "utc": "2026-10-29T09:11:27.838826+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/cornea-refraction-2026-10-29/split-reservation-1.0.0.json",
+   "sha256": "0b208c2f27d4ccc3683da5d2ade9080f45a9645a938c6c31d0f5b5e86449a600"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-corneal_refractive_surgery_title_open-0.json",
+    "sha256": "c30a6c46ac0d9851799fa307a5c38b0aec931404d0882f8d21402e44f2aec0f8"
+   },
+   {
+    "file": "search-corneal_refractive_surgery_title_open-1.json",
+    "sha256": "548fe69538ad4cd9eec38291402deca297f40afb0b160f680267db98570c82f9"
+   },
+   {
+    "file": "search-corneal_refractive_surgery_title_open-2.json",
+    "sha256": "ed03716be255dadc57f43a687c4ba820e6fffc503004f8bff009b0f50dba3253"
+   },
+   {
+    "file": "search-refraction_after_refractive_surgery_open-0.json",
+    "sha256": "733f3a7e91f1a42829b856ead72fb14aa9dd1eeb2792e39a6bf7c4cb7e62eaed"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "ref-pmc10219954",
+    "ref-pmc9976533"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "ref-pmc7816348",
+    "ref-pmc8213482"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "ref-pmc7816348",
+    "ref-pmc8330115"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "ref-pmc8213482",
+    "ref-pmc8330115"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 8
+  }
+ ],
+ "development_clusters": [
+  [
+   "ref-pmc10219954",
+   "ref-pmc9976533"
+  ],
+  [
+   "ref-pmc7816348",
+   "ref-pmc8213482",
+   "ref-pmc8330115"
+  ]
+ ],
+ "sealed_training_exclusions": {}
+}
