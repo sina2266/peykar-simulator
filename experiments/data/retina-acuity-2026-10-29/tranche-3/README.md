@@ -38,3 +38,18 @@ either tranche had been triaged or read by then.
 At the earlier rates (62 and 64 of 120 articles admitted; 9 of 21 and 29 of 64 admits
 gave a record) tranches 3 and 4 would give about 70 admits and 25–30 records. This is
 an expectation for planning only; it is not a criterion.
+
+## Briefs and chunks (local, not in git; SHA-256 before triage)
+
+| file | SHA-256 |
+|---|---|
+| `.peykar/retina-acuity-tranche34-triage-brief.md` | `01754f784091bb5c9d4e709a1bbebf4a41556a73a703dee209b7b1c2fd2152f8` |
+| `.peykar/retina-acuity-tranche34-extraction-brief.md` | `32a8895b302a61dd14a39813e6c801e1a0538fc7045404788c74104069f25406` |
+| `.peykar/write_retina_acuity_tranche34_briefs.py` (writes both from the tranche-2 briefs) | `007bd8b625e50a4b663553481c68d80c50d2a433cc455904fcf3405de3be39e5` |
+
+The chunks were built with `screening/triage_chunks.py --tranche 3 --chunks 4` (30
+articles each) and `--tranche 4 --chunks 1` (18 articles), in
+`.peykar/retina-acuity-tranche3-triage-chunks/` and
+`.peykar/retina-acuity-tranche4-triage-chunks/`. A pattern check found no decimal, ±
+or percent sign outside the DOI and licence lines of any chunk. Five reviewer
+sub-agents triage them, one chunk each.
