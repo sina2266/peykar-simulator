@@ -1,0 +1,136 @@
+{
+ "schema": "cornea.acuity-author-overlap-1.0.0",
+ "utc": "2026-10-29T12:29:46.359630+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/cornea-acuity-2026-10-29/split-reservation-1.0.0.json",
+   "sha256": "582d6ec4624eaeac66ab1318f3e7de4affbc8e1a629ef9a4a461bfa3069f0c27"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-acuity_after_corneal_surgery_abstract_open-0.json",
+    "sha256": "ab5c18921a276d099d0ca33ad72f49bb8fd014c51ff3c487de3974150c8fcbff"
+   },
+   {
+    "file": "search-acuity_after_corneal_surgery_abstract_open-1.json",
+    "sha256": "5516106c8ddb6c80e9d3c31a1c4cdc14495127ac6ba088d243ef0a3395c55f85"
+   },
+   {
+    "file": "search-acuity_after_corneal_surgery_abstract_open-2.json",
+    "sha256": "d3c089be6da301e79901b649b651bdaa336d91d76215609c0e87fe0afbef0391"
+   },
+   {
+    "file": "search-corneal_surgery_title_acuity_text_open-0.json",
+    "sha256": "f8ca116c1584e9f9cf11dddf7a469f0f054bedf9bc267d2afa4dde40a1f32477"
+   },
+   {
+    "file": "search-corneal_surgery_title_acuity_text_open-1.json",
+    "sha256": "2495ece499e951a24975a3be6225da1d3d6711da157e3c518510c189c67dea99"
+   },
+   {
+    "file": "search-corneal_surgery_title_acuity_text_open-2.json",
+    "sha256": "a5f7783682e0f8e1cf21d70c347f71ca26a8a95f17fedf4f9040ce363641d59d"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "acu-pmc11620334",
+    "acu-pmc8157468"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "acu-pmc11620334",
+    "acu-pmc8203272"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "acu-pmc13303802",
+    "acu-pmc13398343"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "acu-pmc4001359",
+    "acu-pmc7708533"
+   ],
+   "splits": [
+    "sealed_test",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "acu-pmc5845167",
+    "acu-pmc8845528"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "acu-pmc7708533",
+    "acu-pmc8836535"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "acu-pmc8157468",
+    "acu-pmc8203272"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  }
+ ],
+ "development_clusters": [
+  [
+   "acu-pmc11620334",
+   "acu-pmc8157468",
+   "acu-pmc8203272"
+  ],
+  [
+   "acu-pmc13303802",
+   "acu-pmc13398343"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "acu-pmc5845167": [
+   "acu-pmc8845528"
+  ],
+  "acu-pmc7708533": [
+   "acu-pmc8836535"
+  ]
+ }
+}
