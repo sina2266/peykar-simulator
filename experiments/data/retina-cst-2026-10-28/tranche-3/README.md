@@ -60,3 +60,43 @@ all 88 admits as `sealed_test`.
 linked pairs: 19 tranche-3 studies lose linked training studies, 4 pairs link two
 tranche-3 studies, and 10 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-29)
+
+**Custodians.** Seven custodian sub-agents (C1–C7) extracted the 88 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and a tranche-3 addendum
+(`.peykar/retina-tranche3-extraction-brief.md`, SHA-256 ca470207…; the tranche-2
+addendum with tranche-3 paths). Assignments are in
+`.peykar/retina-tranche3-extraction-assignments.json` (SHA-256 5791e80d…; C1–C4 13
+studies, C5–C7 12 each). Records, specs, raw copies and one custody report per
+custodian are private in `.peykar/retina-tranche3-sealed-2026-10-29/`. Reports state
+`contains_outcome_values: false`.
+
+**Result.** 67 records with 134 series (107 group means, 27 individual eyes); 21
+studies excluded. Most exclusions are analysis sets selected after the baseline
+(responders, eyes removed after rescue, extra surgery or a switch, minimum numbers of
+injections received); the others are model (GEE) estimates, medians only, follow-ups
+timed from another event, a postoperative reference and one out-of-scope prophylaxis
+study.
+
+**Blind custody check.** `.peykar/verify_retina_tranche3_custody.py` (the IOP
+tranche-3 check with retina paths) rebuilt every record from the screened full text:
+67 of 67 are identical byte for byte. Every record is declared `sealed_test` and is a
+reserved study; every reserved study was assigned exactly once and reported; every raw
+copy equals its screened source; each report's record hash equals the stored record;
+no stray record file exists. The check prints structure only.
+
+Structure (series per treatment): anti-VEGF 47, steroid implant 34, combination 31,
+steroid injection 9, laser 5, observation 4, vitrectomy 2, photodynamic therapy 1,
+other 1. Indications: DME 73, nAMD 22, RVO 18, postoperative macular oedema 12, other
+8, CSC 1. Fifteen sealed series fall in five contexts that have no training series
+(postoperative oedema with a steroid implant 11, CSC implant, nAMD PDT, other
+observation, other implant). By the custodians' classification 39 records carry a CC
+BY or CC0 licence and 28 do not; the publisher classifies every licence again before
+anything is published.
+
+**Process notes.** The reports use slightly different layouts and decision labels;
+the check reads each one. C6 wrote two temporary text dumps of one article outside
+the sealed folder (in the agent's scratch folder) and deleted them; it says so in its
+report. C6 also issued one build before its spec existed; that build failed and wrote
+nothing.

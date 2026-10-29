@@ -68,3 +68,45 @@ the 229 record studies of tranches 1–3 as development (training of model 1.3) 
 linked pairs: 34 tranche-4 studies lose linked training studies, 17 pairs link two
 tranche-4 studies, and 35 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-29)
+
+**Custodians.** Eight custodian sub-agents (C1–C8) extracted the 94 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and a tranche-4 addendum
+(`.peykar/iop-tranche4-extraction-brief.md`, SHA-256 9a35be97…; the tranche-3
+addendum with tranche-4 paths). Assignments are in
+`.peykar/iop-tranche4-extraction-assignments.json` (SHA-256 35450ea2…; C1–C6 12
+studies, C7–C8 11 each). Records, specs, raw copies and one custody report per
+custodian are private in `.peykar/iop-tranche4-sealed-2026-10-29/`. Reports state
+`contains_outcome_values: false`.
+
+**Result.** 79 records with 222 series (141 group means, 81 individual eyes); 15
+studies excluded. Most exclusions follow the censoring ruling (IOP censored at
+reoperation before the first visit that keeps the full baseline number of eyes). Two
+of the three percent-rule overrides (PMC12708801, PMC9150991) were excluded by the
+percent-reduction ruling (only positive reductions, no absolute series); the third
+(PMC4817329) has an absolute series. The others are medians only, follow-up means over
+6-month intervals, imputed (LOCF) arms and one table that puts every visit in a single
+cell.
+
+**Blind custody check.** `.peykar/verify_iop_tranche4_custody.py` (the tranche-3
+check with tranche-4 paths) rebuilt every record from the screened full text: 79 of
+79 are identical byte for byte. Every record is declared `sealed_test` and is a
+reserved study; every reserved study was assigned exactly once and reported; every raw
+copy equals its screened source; each report's record hash equals the stored record;
+no stray record file exists. The check prints structure only.
+
+Structure (series per context): angle MIGS 82, tube 46, cyclodestruction 42,
+trabeculectomy 27, cataract 6, subconjunctival MIGS 6, non-penetrating 5, other 4,
+rabbit trabeculectomy 4. Every sealed context has training series. References:
+medicated 181, unmedicated 11, unstated 30. By the custodians' classification 34
+records carry a CC BY or CC0 licence and 45 do not; the publisher classifies every
+licence again before anything is published.
+
+**Process notes.** C1 ran one text search across the repository that printed one line
+of another study's triage note (no value) and wrote one temporary structural summary
+in `/tmp`, deleted at once; both are in its report. The task prompts of C2–C8 then
+forbade repository-wide searches and temporary files elsewhere. C6 wrote a record for one
+study, then withdrew it after re-reading the Methods (values are means over 6-month
+intervals) and deleted its own spec, record and raw copy; the report lists their
+hashes.

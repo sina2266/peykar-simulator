@@ -79,6 +79,16 @@ Commands run from the repository root; outcomes observed. Start state: main at
 - `scripts/link_study_authors.py` on both tranche reservations: retina 60 pairs, 19
   sealed studies with training exclusions, 4 sealed–sealed pairs, 10 development
   clusters; IOP 154 pairs, 34, 17 and 35.
+- Seven retina tranche-3 custodian sub-agents, then
+  `uv run --frozen python .peykar/verify_retina_tranche3_custody.py`: 88 reserved
+  studies, 67 records and 21 exclusions, 67/67 records rebuilt byte for byte, 67 raw
+  copies equal to the screened sources, 134 series, no problem. (A first run of the
+  derived check stopped on a covariate the retina validator does not return; the line
+  was removed and the check rerun.)
+- Eight IOP tranche-4 custodian sub-agents, then
+  `uv run --frozen python .peykar/verify_iop_tranche4_custody.py`: 94 reserved
+  studies, 79 records and 15 exclusions, 79/79 rebuilt byte for byte, 79 raw copies
+  equal to the screened sources, 222 series, no problem.
 
 ## Retinal thickness after treatment: dataset, model 1.0.0, protocol freeze and sealed test: 2026-10-28
 
