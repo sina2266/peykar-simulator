@@ -111,3 +111,30 @@ treatment and decides how often the retina is re-treated.
 Adoption rule as in round 1, against e0. Run in eight shards (`--shard i/8`). If e6 is
 rejected, model 1.2 has no adopted change: no 1.2 protocol is frozen, and tranche 3
 stays sealed and unread for a later version.
+
+## Round 2 — results (2026-10-29)
+
+The first run of the eight e6 shards stopped soon after 13:03 CET, when the machine
+hung; the hardware watchdog restarted it at 13:09 (reset report: boot faults
+`wdog,reset_in_1`; cause not determined). The shards had written no report. They were rerun unchanged from 13:18 to 14:24 and
+joined by `--merge` (`.peykar/retina-1.2-dev/round2-e6`). Pooled RMSE in pp of the
+baseline thickness, human group means (`.peykar/compare_iop_12.py`; Gaussian primary
+for both):
+
+| candidate | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|
+| e0 (1.1.0) | 7.193 | 9.376 | 12.892 | 0.880 / 0.931 |
+| e6 (regimen level) | 7.181 | 9.412 | 12.922 | 0.882 / 0.933 |
+
+- **e6 rejected**: its largest gain is 0.012 pp (next observation), below the 0.10 pp
+  threshold, and the initial state is 0.030 pp worse.
+- The regimen biases that motivated e6 remain almost unchanged out of sample
+  (`.peykar/retina12_diag_regimen.py`, initial state, mean signed error e0 → e6):
+  fixed monthly −11.93 → −11.76 pp (10 targets), loading then PRN −5.78 → −5.69
+  (137), treat and extend −5.93 → −6.14 (25), PRN −1.70 → −1.92 (202), single dose
+  −1.91 → −1.55 (127). The regimen level does not separate these groups once their
+  studies are held out: the bias belongs to the held-out studies, not to the regimen.
+
+**Model 1.2 has no adopted change.** No 1.2 protocol is frozen, and retina tranche 3
+(67 records, 134 series) stays sealed and unread for a later version. Tranche 4 stays
+unread.
