@@ -14,9 +14,11 @@ from peykar import eye_simulation
 from peykar.eye_cli import eye_app
 from peykar.model_learning import eye_recovery_population2 as population
 from peykar.model_learning.eye_forecast import (
+    check_support,
     fit_from_json,
     fit_to_json,
     forecast_scenario,
+    time_support,
 )
 from peykar.model_learning.retina_thickness_population_1_1 import DEVELOPMENT_CANDIDATES
 from peykar.validation.eye_retina_data import RetinaSeries
@@ -570,3 +572,127 @@ def test_acuity_component_forecasts_in_logmar(tmp_path: Path) -> None:
     assert forecast["observed"][0]["change"] == pytest.approx(-0.4)
     assert abs(forecast["forecast"][0]["value"]["point"] - 0.3) < 0.15
     assert forecast["warnings"] == ["single-eye forecasts were scored but not tested"]
+
+
+def test_time_support_flags_months_outside_the_training_visits() -> None:
+    series = _series()
+    support = time_support(series)
+    assert support["earliest_month"] == 0.25 and support["latest_month"] == 6.0
+    assert support["contexts"]["human/dme/anti_vegf"] == [0.25, 6.0]
+    fit = population.fit_population(CONFIG, series)
+    common = {"context": "human/dme/anti_vegf", "baseline": 450.0, "group_size": 30}
+    inside = forecast_scenario(CONFIG, fit, months=[1.0, 6.0], support=support, **common)
+    assert not inside["warnings"]
+    assert inside["training_support"] == {
+        "earliest_month": 0.25,
+        "latest_month": 6.0,
+        "context_months": [0.25, 6.0],
+    }
+    outside = forecast_scenario(
+        CONFIG, fit, months=[0.1, 12.0], observed=[(0.05, 430.0)], support=support, **common
+    )
+    texts = outside["warnings"]
+    assert len(texts) == 3
+    assert texts[0].startswith("observed follow-ups before the earliest training visit (0.25")
+    assert texts[1].startswith("forecast months before the earliest training visit (0.25")
+    assert texts[2].startswith("forecast months after the latest training visit (6 months)")
+    # The check only adds warnings: the forecast is the same without it.
+    plain = forecast_scenario(CONFIG, fit, months=[0.1, 12.0], observed=[(0.05, 430.0)], **common)
+    assert plain["forecast"] == outside["forecast"] and plain["training_support"] is None
+    view, none = check_support(
+        support, context="human/csc/laser", targets=[1.0], observed_months=[]
+    )
+    assert view is not None and view["context_months"] is None and none == []
+    with pytest.raises(InvalidRequest):
+        time_support([])
+
+
+def test_cli_stores_the_training_support_and_warns_outside_it(tmp_path: Path) -> None:
+    folder = tmp_path / "records"
+    folder.mkdir()
+    for i in range(6):
+        (folder / f"r{i}.json").write_text(json.dumps(_record(i, "anti_vegf", "ranibizumab")))
+    runner = CliRunner()
+    fit_path = tmp_path / "fit.json"
+    fitted = runner.invoke(
+        eye_app,
+        [
+            "fit",
+            "--component",
+            "retina-thickness",
+            "--records",
+            str(folder),
+            "--output",
+            str(fit_path),
+        ],
+    )
+    assert fitted.exit_code == 0, fitted.output
+    assert json.loads(fitted.output)["training_months"] == [0.5, 6.0]
+    stored = json.loads(fit_path.read_text())
+    assert stored["provenance"]["training_support"]["earliest_month"] == 0.5
+    base = [
+        "forecast",
+        "--component",
+        "retina-thickness",
+        "--context",
+        "human/dme/anti_vegf",
+        "--baseline",
+        "480",
+        "--n",
+        "30",
+    ]
+    early = runner.invoke(eye_app, [*base, "--months", "0.25,2", "--fit", str(fit_path)])
+    assert early.exit_code == 0, early.output
+    payload = json.loads(early.output)
+    assert payload["training_support"]["earliest_month"] == 0.5
+    assert any("before the earliest training visit (0.5 months)" in w for w in payload["warnings"])
+    fresh = runner.invoke(eye_app, [*base, "--months", "2", "--records", str(folder)])
+    assert fresh.exit_code == 0, fresh.output
+    assert json.loads(fresh.output)["warnings"] == []
+    del stored["provenance"]["training_support"]
+    old_fit = tmp_path / "old-fit.json"
+    old_fit.write_text(json.dumps(stored))
+    legacy = runner.invoke(eye_app, [*base, "--months", "2", "--fit", str(old_fit)])
+    assert legacy.exit_code == 0, legacy.output
+    legacy_payload = json.loads(legacy.output)
+    assert legacy_payload["training_support"] is None
+    assert legacy_payload["warnings"] == [
+        "this stored fit does not record its training visit months; refit it to check the "
+        "forecast months against them"
+    ]
+
+
+def test_additive_and_corneal_forecasts_report_the_training_support(tmp_path: Path) -> None:
+    folder = tmp_path / "acuity"
+    folder.mkdir()
+    for i in range(5):
+        (folder / f"a{i}.json").write_text(json.dumps(_acuity_record(i)))
+    runner = CliRunner()
+    base = ["forecast", "--component", "acuity", "--context", "human/dmek", "--baseline", "0.9"]
+    result = runner.invoke(
+        eye_app,
+        [*base, "--months", "24", "--n", "30", "--observed", "0.1:0.8", "--records", str(folder)],
+    )
+    assert result.exit_code == 0, result.output
+    payload = json.loads(result.output)
+    assert payload["training_support"]["earliest_month"] == 0.25
+    assert payload["training_support"]["latest_month"] == 12.0
+    assert len(payload["warnings"]) == 2
+    item = eye_simulation.CORNEAL_COMPONENTS["corneal-thickness"]
+    series = _corneal_series("thickness")
+    support = eye_simulation.training_support(item, series)
+    assert support["earliest_month"] == pytest.approx(0.0329)
+    corneal = eye_simulation.forecast_corneal(
+        item,
+        eye_simulation.fit_corneal(item, series),
+        context="human/cataract",
+        baseline=540.0,
+        months=[1.0, 24.0],
+        group_size=30,
+        support=support,
+    )
+    assert corneal["training_support"]["context_months"] == [pytest.approx(0.0329), 12.0]
+    assert corneal["warnings"] == [
+        "forecast months after the latest training visit (12 months) extrapolate the law "
+        "beyond its training data"
+    ]

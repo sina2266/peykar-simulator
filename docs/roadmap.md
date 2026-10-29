@@ -445,10 +445,14 @@ reserved before triage.
 - [x] Sealed result on 11 group-mean forecast series: **all four hypotheses fail**
   (coverage 67.7%/80.6%, next observation 6.14 vs persistence 4.81 letters, landmark
   9.17 vs 6.49, initial state 16.40 vs pooled curve 5.18). Not added to `peykar eye`.
-- [ ] Cause found after unsealing: the 7-day early transient had no training visit
+- [x] Cause found after unsealing: the 7-day early transient had no training visit
   before day 30 and was fitted at about +2 logMAR at day 1; one sealed study with a
-  day-1 visit carried the failure. Generic fix: a training-time support check in the
-  models and `peykar eye`, and an acuity law without the unidentified term.
+  day-1 visit carried the failure.
+- [x] `peykar eye` reports each forecast's training-time support (earliest and latest
+  training visit, stored with each fit) and warns for observed or forecast months
+  outside it; forecast values are unchanged.
+- [ ] A pre-freeze check of which terms of a law the training visits identify, and an
+  acuity law without the unidentified term.
 - [ ] Steroid-implant wear-off, a treatment fallback for unseen contexts, and a test
   on tranches 2–4 (258 unread articles).
 ## S0 — preservation and platform contracts

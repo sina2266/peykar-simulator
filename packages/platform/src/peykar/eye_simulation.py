@@ -29,9 +29,11 @@ from peykar.model_learning import (
 from peykar.model_learning import eye_recovery_population2 as population
 from peykar.model_learning.eye_forecast import (
     QUANTILES,
+    check_support,
     fit_from_json,
     fit_to_json,
     forecast_scenario,
+    time_support,
 )
 from peykar.validation.cornea_acuity_data import (
     COVARIATE_UNIT_LOGMAR,
@@ -63,6 +65,7 @@ __all__ = [
     "load_fit",
     "load_series",
     "load_series_any",
+    "training_support",
 ]
 
 MAX_RECORDS = 2_000
@@ -182,27 +185,49 @@ def load_series_any(
     return series, hashes
 
 
+def population_series(
+    item: Component | CornealComponent | AdditiveComponent, series: Sequence[Any]
+) -> list[Any]:
+    """The series that fit a component's population, as the harnesses select them:
+    controls (with a baseline value for the generic-model components)."""
+    if isinstance(item, CornealComponent):
+        return [s for s in series if s.role == "control"]
+    return [s for s in series if s.role == "control" and s.reference_value > 0]
+
+
+def training_support(
+    item: Component | CornealComponent | AdditiveComponent, series: Sequence[Any]
+) -> dict[str, Any]:
+    """Visit months of the series that fit the population (``time_support``)."""
+    return time_support(population_series(item, series))
+
+
 def fit_component(
     item: Component | AdditiveComponent, series: Sequence[Any]
 ) -> population.RecoveryFit:
     """The population fit the harness makes: controls with a baseline value fit the
     population; every series gives noise estimates."""
-    controls = [s for s in series if s.role == "control" and s.reference_value > 0]
+    controls = population_series(item, series)
     if len(controls) < 2 or len({s.study_id for s in controls}) < 2:
         raise InvalidRequest("Fitting needs control series from at least two studies")
     return population.fit_population(item.config, controls, noise_series=series)
 
 
-def save_fit(item: Component, fit: population.RecoveryFit, hashes: Mapping[str, str]) -> str:
-    return json.dumps(
-        fit_to_json(
-            fit,
-            component=item.component_id,
-            model_version=item.model_version,
-            record_sha256=dict(sorted(hashes.items())),
-        ),
-        indent=1,
-    )
+def save_fit(
+    item: Component,
+    fit: population.RecoveryFit,
+    hashes: Mapping[str, str],
+    support: Mapping[str, Any] | None = None,
+) -> str:
+    """A stored fit with its record hashes and, if given, its training visit months."""
+    provenance: dict[str, Any] = {
+        "component": item.component_id,
+        "model_version": item.model_version,
+        "record_sha256": dict(sorted(hashes.items())),
+    }
+    if support is not None:
+        provenance["training_support"] = dict(support)
+    return json.dumps(fit_to_json(fit, **provenance), indent=1)
 
 
 def load_fit(item: Component, text: str) -> tuple[population.RecoveryFit, dict[str, Any]]:
@@ -224,8 +249,10 @@ def forecast(
     observed: Sequence[tuple[float, float]] = (),
     regimen: str | None = None,
     agent: str | None = None,
+    support: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Primary forecast of one scenario, with the component's declared dose rule."""
+    """Primary forecast of one scenario, with the component's declared dose rule;
+    ``support`` (:func:`training_support`) adds warnings outside the training visits."""
     duration = None
     if item.dose_rule is not None and regimen is not None:
         treatment = context.rsplit("/", 1)[-1]
@@ -239,6 +266,7 @@ def forecast(
         group_size=group_size,
         observed=observed,
         effect_duration_months=duration,
+        support=support,
     )
     return {
         "component": item.component_id,
@@ -395,6 +423,7 @@ def forecast_corneal(
     group_size: int | None = None,
     observed: Sequence[tuple[float, float]] = (),
     reference_kind: str = "patient_preoperative",
+    support: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The tested primary forecast of one corneal scenario (predictive means)."""
     if not (baseline > 0 and baseline < float("inf")):
@@ -444,6 +473,10 @@ def forecast_corneal(
         warnings.append("single-eye forecasts were reported in the sealed tests, not tested")
     if pairs and min(targets) <= pairs[-1][0]:
         warnings.append("some forecast months are not after the last observed follow-up")
+    view, outside = check_support(
+        support, context=key, targets=targets, observed_months=[m for m, _ in pairs]
+    )
+    warnings.extend(outside)
     return {
         "component": item.component_id,
         "model_version": item.model_version,
@@ -455,6 +488,7 @@ def forecast_corneal(
         "method": item.primary_forecast if pairs else item.primary_initial,
         "point": "predictive mean",
         "baseline": baseline,
+        "training_support": view,
         "group_size": n,
         "observed": [{"month": m, "value": v, "fraction": v / baseline} for m, v in pairs],
         "forecast": [
@@ -635,6 +669,7 @@ def forecast_additive(
     months: Sequence[float],
     group_size: int | None = None,
     observed: Sequence[tuple[float, float]] = (),
+    support: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The tested primary forecast of one additive scenario, in the outcome's unit."""
     if not math.isfinite(baseline):
@@ -691,6 +726,10 @@ def forecast_additive(
         warnings.append(item.single_eye_note)
     if pairs and min(targets) <= pairs[-1][0]:
         warnings.append("some forecast months are not after the last observed follow-up")
+    view, outside = check_support(
+        support, context=context, targets=targets, observed_months=[m for m, _ in pairs]
+    )
+    warnings.extend(outside)
     return {
         "component": item.component_id,
         "model_version": item.model_version,
@@ -702,6 +741,7 @@ def forecast_additive(
         "method": method,
         "point": "predictive median",
         "baseline": baseline,
+        "training_support": view,
         "group_size": n,
         "observed": [{"month": m, "value": v, "change": v - baseline} for m, v in pairs],
         "forecast": [

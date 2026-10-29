@@ -27,7 +27,14 @@ from peykar.model_learning import eye_recovery_population2 as population
 from peykar.model_learning.eye_recovery_population import FamilyFit, NoiseCenters
 from peykar_core.errors import InvalidRequest
 
-__all__ = ["ScenarioSeries", "fit_from_json", "fit_to_json", "forecast_scenario"]
+__all__ = [
+    "ScenarioSeries",
+    "check_support",
+    "fit_from_json",
+    "fit_to_json",
+    "forecast_scenario",
+    "time_support",
+]
 
 FIT_SCHEMA = "eye.recovery-fit-2.0.0"
 QUANTILES = (0.05, 0.1, 0.5, 0.9, 0.95)
@@ -60,6 +67,75 @@ def _positive(value: float, name: str) -> float:
     return number
 
 
+# --- training-time support -------------------------------------------------------------
+
+
+def time_support(series: Sequence[Any]) -> dict[str, Any]:
+    """Visit months of the series that fit a population, overall and per context.
+
+    A law is learned only where training visits exist. A term that acts before the
+    earliest training visit (such as a transient of a few days when every training
+    visit is after a month) is left wherever its priors and the optimiser put it, so
+    forecasts and observations outside these months rely on parts of the law that no
+    data constrain.
+    """
+    by_context: dict[str, list[float]] = {}
+    for item in series:
+        months = [float(m) for m in item.months]
+        if months:
+            by_context.setdefault(item.context, []).extend(months)
+    if not by_context:
+        raise InvalidRequest("The training series have no visit months")
+    every = [m for values in by_context.values() for m in values]
+    return {
+        "earliest_month": min(every),
+        "latest_month": max(every),
+        "contexts": {key: [min(v), max(v)] for key, v in sorted(by_context.items())},
+    }
+
+
+def check_support(
+    support: Mapping[str, Any] | None,
+    *,
+    context: str,
+    targets: Sequence[float],
+    observed_months: Sequence[float],
+) -> tuple[dict[str, Any] | None, list[str]]:
+    """A scenario's view of the training support and warnings for months outside it.
+
+    Nothing is changed in the forecast itself; ``None`` support gives no view and no
+    warning.
+    """
+    if support is None:
+        return None, []
+    earliest = float(support["earliest_month"])
+    latest = float(support["latest_month"])
+    own = support.get("contexts", {}).get(context)
+    view = {
+        "earliest_month": earliest,
+        "latest_month": latest,
+        "context_months": None if own is None else [float(v) for v in own],
+    }
+    warnings = []
+    if any(m < earliest for m in observed_months):
+        warnings.append(
+            f"observed follow-ups before the earliest training visit ({earliest:.3g} months) "
+            "are read through an early part of the law that no training data constrain; "
+            "forecasts from them are not supported"
+        )
+    if any(m < earliest for m in targets):
+        warnings.append(
+            f"forecast months before the earliest training visit ({earliest:.3g} months) "
+            "depend on an early part of the law that no training data constrain"
+        )
+    if any(m > latest for m in targets):
+        warnings.append(
+            f"forecast months after the latest training visit ({latest:.3g} months) "
+            "extrapolate the law beyond its training data"
+        )
+    return view, warnings
+
+
 def forecast_scenario(
     config: population.RecoveryConfig,
     fit: population.RecoveryFit,
@@ -70,9 +146,11 @@ def forecast_scenario(
     group_size: int | None = None,
     observed: Sequence[tuple[float, float]] = (),
     effect_duration_months: float | None = None,
+    support: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Primary forecasts of one scenario; ``observed`` holds (month, value) pairs in the
-    quantity's own unit, after the baseline."""
+    quantity's own unit, after the baseline. ``support`` (:func:`time_support` of the
+    training series) adds warnings for months outside the training visits."""
     baseline = _positive(baseline, "The baseline value")
     targets = [_positive(m, "Every forecast month") for m in months]
     if not targets or len(targets) > MAX_TARGETS:
@@ -125,6 +203,10 @@ def forecast_scenario(
         warnings.append("single-eye forecasts were reported in the sealed tests, not tested")
     if pairs and min(targets) <= pairs[-1][0]:
         warnings.append("some forecast months are not after the last observed follow-up")
+    view, outside = check_support(
+        support, context=context, targets=targets, observed_months=[m for m, _ in pairs]
+    )
+    warnings.extend(outside)
     return {
         "context": context,
         "level_used": level_used,
@@ -133,6 +215,7 @@ def forecast_scenario(
         "baseline": baseline,
         "group_size": n,
         "effect_duration_months": duration,
+        "training_support": view,
         "observed": [{"month": m, "value": v, "fraction": v / baseline} for m, v in pairs],
         "forecast": [
             {

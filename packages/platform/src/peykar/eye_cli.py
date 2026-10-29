@@ -14,6 +14,10 @@ eye_app = typer.Typer(
     help="Eye component forecasts (frozen models with one-shot sealed tests; not clinical)",
 )
 MAX_FIT_BYTES = 50 * 1024 * 1024
+NO_SUPPORT_NOTE = (
+    "this stored fit does not record its training visit months; refit it to check the "
+    "forecast months against them"
+)
 
 
 def _emit(value: Any) -> None:
@@ -66,8 +70,9 @@ def fit(
         raise InvalidRequest("--output must not exist")
     series, hashes = eye_simulation.load_series(item, eye_simulation.record_paths(records))
     fitted = eye_simulation.fit_component(item, series)
+    support = eye_simulation.training_support(item, series)
     with output.open("x", encoding="utf-8") as handle:
-        handle.write(eye_simulation.save_fit(item, fitted, hashes) + "\n")
+        handle.write(eye_simulation.save_fit(item, fitted, hashes, support) + "\n")
     _emit(
         {
             "component": item.component_id,
@@ -75,6 +80,7 @@ def fit(
             "records": len(hashes),
             "training_studies": len(fitted.training_studies),
             "training_series": len(fitted.training_series),
+            "training_months": [support["earliest_month"], support["latest_month"]],
             "output": str(output),
         }
     )
@@ -126,6 +132,7 @@ def forecast(
             group_size=group_size,
             observed=pairs,
             reference_kind=reference_kind,
+            support=eye_simulation.training_support(item, series),
         )
         _emit({**result, "fit_records": len(hashes)})
         return
@@ -141,6 +148,7 @@ def forecast(
             months=targets,
             group_size=group_size,
             observed=pairs,
+            support=eye_simulation.training_support(item, series),
         )
         _emit({**result, "fit_records": len(hashes)})
         return
@@ -149,11 +157,13 @@ def forecast(
             raise InvalidRequest("The stored fit is too large")
         fitted, provenance = eye_simulation.load_fit(item, fit_file.read_text())
         count = len(provenance.get("record_sha256", {}))
+        support = provenance.get("training_support")
     else:
         series, hashes = eye_simulation.load_series(
             item, eye_simulation.record_paths(records or [])
         )
         fitted, count = eye_simulation.fit_component(item, series), len(hashes)
+        support = eye_simulation.training_support(item, series)
     result = eye_simulation.forecast(
         item,
         fitted,
@@ -164,5 +174,8 @@ def forecast(
         observed=pairs,
         regimen=regimen,
         agent=agent,
+        support=support,
     )
+    if support is None:
+        result["warnings"].append(NO_SUPPORT_NOTE)
     _emit({**result, "fit_records": count})

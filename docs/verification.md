@@ -71,6 +71,18 @@ Commands run from the repository root; outcomes observed. Start state: main at
 - `make check-docker` before the retinal acuity results commit: 922 tests passed in
   186.75 s, 89% coverage, mypy 160 source files, 18 frontend tests, all packages built,
   EXIT=0 (`.peykar/retina-acuity-results-check-docker-20261029.log`).
+- Training-time support check in `peykar eye` (`eye_forecast.time_support`,
+  `check_support`; stored fits keep `training_support`): `OMP_NUM_THREADS=1 uv run
+  --frozen pytest -q tests/unit/test_eye_forecast.py`: 10 passed (3 new). On the public
+  development records the earliest training visit is 0.0329 months for `iop`, the two
+  corneal components, `refraction` and `acuity`, and 0.23 months for
+  `retina-thickness` (latest 24–120 months). `uv run --frozen peykar eye forecast
+  --component retina-thickness --records
+  experiments/data/retina-cst-2026-10-28/development/records --context
+  human/dme/anti_vegf --baseline 450 --n 30 --months 0.1,3,36`: exit 0, warnings for
+  month 0.1 (before 0.23) and month 36 (after 24). `uv run --frozen mypy`: no issues in
+  160 source files. `make check-docker`: 925 tests passed in 179.46 s, 89% coverage,
+  EXIT=0 (`.peykar/eye-support-check-docker-20261029.log`).
 ## Machine restart, retinal-thickness 1.2 round 2 and visual-acuity model 1.0: 2026-10-29 (afternoon)
 Commands run from the repository root; outcomes observed. Start state: main at
 `d7ded65b` (= origin; refraction results committed).

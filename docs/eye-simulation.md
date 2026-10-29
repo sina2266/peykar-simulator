@@ -90,8 +90,20 @@ uv run --frozen peykar eye components   # versions, methods, sealed results
 - Warnings name what the sealed tests did not cover: a context without training
   series (the prior then comes from the species or family level), single eyes (no
   `--n`), and forecast months that are not after the last observed follow-up.
-- A stored fit records the configuration and the SHA-256 of every record it used;
-  loading refuses a fit made with another configuration or component.
+- Every forecast also reports `training_support`: the earliest and latest visit month
+  of the control series that fitted the population, and the months of the context's
+  own training series. It warns when an observed follow-up or a forecast month lies
+  before the earliest training visit, where the early part of the law (a transient of
+  one or two weeks) is not constrained by any data, and when a forecast month lies
+  after the latest one. The retinal acuity model 1.0 failed its sealed test this way:
+  no training visit before day 30, and one sealed study with a day-1 visit. The check
+  changes no forecast value. With the public development records the earliest training
+  visit is day 1 for `iop`, the corneal components, `refraction` and `acuity`, and day
+  7 for `retina-thickness`.
+- A stored fit records the configuration, the SHA-256 of every record it used and its
+  training visit months; loading refuses a fit made with another configuration or
+  component. A fit stored before the visit months were recorded gives a note instead
+  of the support check.
 
 ## What the forecasts mean
 
