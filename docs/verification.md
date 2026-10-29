@@ -1,4 +1,35 @@
 # Verification record
+## Generic eye model 3, IOP model 1.3 and retinal-thickness model 1.2: 2026-10-29
+Commands run from the repository root; outcomes observed. Start state: main at
+`e6c077ee` (= origin; IOP 1.2 published, `peykar eye` CLI committed).
+- `uv run --frozen pytest -q tests/unit/test_eye_recovery_version3.py` (7 tests: the
+  point rule, harness 3 with the median reproduces harness 2, the lognormal mean moves
+  only population points, the IOP sub-procedure rules, the 1.3 candidates, and the 1.3
+  publisher's human-only split, initial-state allow-list and H5 rule): passed.
+- IOP 1.3 development, each LOSO run over the 229 training studies in four shards
+  (`scripts/evaluate_iop_population_1_3.py --development --candidate <d0|d1|d2>
+  --shard i/4`, 9,058–11,801 s per shard) joined by `--merge`; human group means,
+  next observation / landmark / initial state (pp): d0 (= 1.2.0) 6.464/8.348/10.209,
+  d1 (sub-procedure level) 6.382/8.061/10.066, d2 (lognormal-mean point)
+  6.528/8.421/10.215 (`.peykar/compare_iop_12.py`, `.peykar/iop13_round1_breakdown.py`).
+  d1 adopted and d2 rejected by the declared rule; d3 not run.
+- `uv run --frozen python scripts/publish_iop_population_1_3.py --development --report
+  .peykar/iop-1.3-dev/round1-d1/report.json --reference
+  .peykar/iop-1.3-dev/round1-d0/report.json --output
+  experiments/eye/iop/model-1.3/development-loso-2026-10-29`: exit 0;
+  `.peykar/check_iop_redaction_1_3.py development …`: 0 leaks in 254 reports of
+  redacted studies (102 public and 127 private training studies).
+- `ruff check .`, `ruff format --check .` (566 files) and `mypy` (149 source files):
+  passed. `make check-docker` before the IOP 1.3 freeze: 897 tests passed in 378.67 s
+  (twelve retina LOSO processes running alongside), 89% coverage, mypy 149 source
+  files, 18 frontend tests, package builds; make finished without error
+  (`.peykar/iop13-freeze-check-docker-20261029.log`).
+- `uv run --frozen python .peykar/write_iop_protocol_1_3.py`: protocol SHA-256
+  `0cac4daf…` (68 frozen files, 229 training and 79 sealed record hashes, 25 sealed
+  studies with author-overlap training exclusions); the 1.3 operator's protocol check
+  returned no problem, and `.peykar/check_frozen_protocols.py` found no problem in any
+  of the ten frozen protocols (corneal 1.0.0 and 2.0.0, endothelium, corneal
+  thickness, IOP 1.0.0–1.3.0, retina 1.0.0 and 1.1.0).
 ## Fresh sealed tranches, generic eye model 2, retinal-thickness model 1.1 and IOP model 1.2: 2026-10-28/29
 Commands run from the repository root; outcomes observed. Start state: main at
 `76c575ce` (= origin; retina tranche 2 and IOP tranche 3 triaged and reserved).
