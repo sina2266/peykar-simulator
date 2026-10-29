@@ -1,4 +1,21 @@
 # Peykar continuation context
+## Retinal acuity 1.2 in progress, 2026-10-29 late night
+- Tranches 3–4 reserved (`a3489c25`), briefs + chunks (`5ad75a7b`), blind triage 70
+  admitted + reservation (53 dev, 70 sealed) + author overlap (`e4033419`). Custody
+  `.peykar/retina-acuity-tranche34-sealed-2026-10-29`, assignments C1–C9: C1–C4 DONE;
+  C5 interrupted (2 specs/records, no report), C6–C9 not started — agent service
+  throttles ("Too many requests"): run custodians ONE at a time, prompt = resume rule
+  for C5. Verifier `.peykar/verify_retina_acuity_tranche34_custody.py`. NEVER read
+  custody reports (huge; use the verifier) and never put read_file in a batch with
+  sub-agents.
+- 1.2 dev (`56a2db0c`, `dfa874b7`, `00e69aeb`): generic `eye_support.SupportConfig` +
+  harness 5 (`eye_recovery_evaluation5`, `eye_additive_evaluation3`); operator
+  `scripts/evaluate_retina_acuity_population_1_2.py`; publisher
+  `scripts/publish_retina_acuity_population_1_2.py` (MODEL 1.2.0-x3, ref 1.1.0-w1). x3 =
+  hold + DEX wear-off chosen (primary population_anchored); dev H2 vs persistence by
+  0.006 letters only. Next: finish custody → protocol writer (adapt
+  `.peykar/write_retina_acuity_protocol_1_1.py`) → check-docker → freeze commit → one
+  sealed run → publish (redaction check adapted to `reference-1.1.0-public.json`).
 ## Retinal acuity 1.1 FAILED its sealed test (H1 only), 2026-10-29 late night
 - Sealed run once (169.7 s, report `eb8110f1…`, reference w0 `bd3cb6b6…` in
   `.peykar/retina-acuity11-sealed-test-2026-10-29`). Published in

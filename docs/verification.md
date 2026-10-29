@@ -1,4 +1,39 @@
 # Verification record
+## Retinal-acuity tranches 3–4 and model 1.2 development: 2026-10-29 (night)
+Commands run from the repository root; outcomes observed. Start state: main at
+`a3489c25` (= origin; tranches 3–4 reserved before triage).
+- `python3 .peykar/write_retina_acuity_tranche34_briefs.py`: wrote the triage brief
+  (`01754f78…`) and the extraction brief (`32a8895b…`) from the tranche-2 briefs, with
+  checks that every criterion line is copied. `triage_chunks.py --tranche 3 --chunks 4`
+  and `--tranche 4 --chunks 1`: 4 × 30 and 1 × 18 articles; a pattern check found no
+  decimal, ± or % outside DOI and licence lines (commit `5ad75a7b`).
+- Five reviewer sub-agents: 15 + 14 + 13 + 17 admits in tranche 3 and 11 in tranche 4.
+  `uv run --frozen python .peykar/write_retina_acuity_tranche34_triage.py`: 70 admitted, 68
+  excluded; reservation 53 development, 70 sealed. `scripts/link_study_authors.py
+  --dataset .../tranche-3 --prefix rac-`: 12 pairs, 3 development clusters, 6 sealed
+  studies with training exclusions (commit `e4033419`).
+- Custodians: C2, C3 and C4 finished (2, 5 and 5 records); C1 and C5 were throttled by
+  the agent service mid-run, and C1 finished on a later attempt after rebuilding its 4
+  earlier records with identical SHA-256 (6 records). C5–C9 are still pending
+  ("Too many requests, client has been throttled" on every retry so far).
+- `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_support.py
+  tests/unit/test_eye_retina_acuity_1_2.py tests/unit/test_eye_retina_acuity_1_1.py`: 9
+  passed (the hold changes no prediction without early visits, holds early initial
+  states at the support month, and leaves comparators unchanged).
+- Round 0–1 declared in commit `56a2db0c` before any run; `OMP_NUM_THREADS=1 uv run
+  --frozen python scripts/evaluate_retina_acuity_population_1_2.py --development
+  --candidate x0|x1|x2|x3 --output .peykar/retina-acuity-1.2-dev/round1-<name>`: EXIT=0
+  each. `.peykar/retina_acuity11_compare.py`: x0 3.628/4.921/5.556, x1 3.477/4.366/5.429,
+  x2 3.482/4.380/5.428, x3 3.228/3.782/5.216 letters; all three adopted. Round 2 declared
+  in `dfa874b7`; x4 3.233/3.806/5.218, not adopted against x3.
+- `uv run --frozen python scripts/publish_retina_acuity_population_1_2.py --development
+  --report .peykar/retina-acuity-1.2-dev/round1-x3/report.json --reference
+  .peykar/retina-acuity-1.2-dev/round1-x0/report.json --output
+  .peykar/retina-acuity-1.2-dev/round1-x3-published`: exit 0; H1–H5 pass on development
+  (H2 3.23 against persistence 3.23; H5 against 1.1.0's frozen primaries 3.58/4.85/5.56).
+- `make check-docker` with the new modules: 934 tests passed in 171.43 s, 89% coverage,
+  mypy 165 source files, all packages built, EXIT=0
+  (`.peykar/retina-acuity12-dev-check-docker-20261029.log`).
 ## Retinal visual-acuity model 1.1: development, protocol freeze and sealed test: 2026-10-29 (night)
 Commands run from the repository root; outcomes observed. Start state: main at
 `93283648` (= origin; IOP 1.3 results committed).
