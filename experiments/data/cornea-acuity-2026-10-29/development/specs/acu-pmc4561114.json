@@ -1,0 +1,82 @@
+{
+ "study_id": "acu-pmc4561114",
+ "doi": "10.1155/2015/321953",
+ "pmcid": "PMC4561114",
+ "title": "One-Year Results of Simultaneous Topography-Guided Photorefractive Keratectomy and Corneal Collagen Cross-Linking in Keratoconus Utilizing a Modern Ablation Software",
+ "species": "human",
+ "procedure": "other",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: Creative Commons Attribution License; no licence URL in the XML)",
+  "url": null,
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC4561114.xml",
+   "sha256": "8c04e1ab1fa301ad2468d3978b66ba26c476993547fdb466e7e6e54cc9da9274",
+   "bytes": 76637,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4561114/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "tg-prk-cxl",
+   "role": "control",
+   "procedure": "other",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 20,
+   "description": "Simultaneous topography-guided PRK (mechanical epithelial removal, Nidek Quest Custom Ablation Transition Zone profile, maximum ablation depth 58 µm, 0.02% mitomycin C for 30 s) immediately followed by standard epithelium-off CXL (0.1% riboflavin 5-phosphate with 20% dextran T500 for 20 min, 370 nm UVA 3 mW/cm2 for 30 min) for grade 1-2 keratoconus (Amsler-Krumeich), 20 eyes of 14 patients aged 18-29 years, prospective nonrandomized, Cairo 2012-2013. Cross-linking combined with a refractive ablation in the same treatment (protocol context 'other'); no cataract surgery."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "tg-prk-cxl/cdva",
+   "group": "tg-prk-cxl",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC4561114.xml::tab1!R5C2",
+    "PMC4561114.xml::tab1!R5C3",
+    "PMC4561114.xml::tab1!R5C4",
+    "PMC4561114.xml::tab1!R5C5",
+    "PMC4561114.xml::tab1!R5C6"
+   ],
+   "baseline_label": "Preoperative LogMAR CDVA (Table 1)",
+   "notes": "Mean ± SD of logMAR CDVA (row 'LogMAR CDVA Mean ± SD'; footnote: CDVA = corrected distance visual acuity; Methods: best spectacle corrected visual acuity). The preoperative cell prints the mean without its leading zero. Table 1 prints no decimal row; the Results text reports decimal means separately, each with its own SD."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 'P value' rows",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Table 1 'Median cylindrical error in D'",
+   "reason": "median; refraction"
+  },
+  {
+   "what": "Decimal acuity means in the Results text",
+   "reason": "decimal acuity is not admissible; the logMAR series of Table 1 is used"
+  },
+  {
+   "what": "Gain or loss of lines of CDVA (text, Figure 3) and efficacy and safety indices",
+   "reason": "lines gained and ratios of decimal means are not admissible"
+  }
+ ],
+ "notes": [
+  "UDVA, Kmax and Kmin (Table 1), per-case sphere, cylinder and spherical equivalent (Table 2), cylindrical correction and haze are mentioned here only.",
+  "The abstract and Results text print a 12-month SD that differs from Table 1; the Table 1 cells are cited as printed."
+ ]
+}

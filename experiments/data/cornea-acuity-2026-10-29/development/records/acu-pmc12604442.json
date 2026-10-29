@@ -1,0 +1,96 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc12604442",
+ "doi": "10.1111/aos.17432",
+ "pmcid": "PMC12604442",
+ "title": "Effects of customized corneal cross‐linking on higher‐order aberrations in progressive keratoconus and low‐grade myopia",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "http://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC12604442.xml",
+   "sha256": "c0175751cbb2bb878e3cbe03298fe29c9e8bd17bdd79b2064bfa29a237135dad",
+   "bytes": 101268,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12604442/fullTextXML",
+   "retrieved_utc": "2026-10-29T11:56:09.785285+00:00"
+  }
+ ],
+ "extractor": "D1",
+ "groups": [
+  {
+   "group": "kc-customized-cxl",
+   "role": "treated",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 38,
+   "description": "Customized epithelium-on CXL in high oxygen (Mosaic system, ParaCel riboflavin, humidified 100% oxygen, pulsed 30 mW/cm2 UVA, peak dose 7.2/10/15 J/cm2 by Kmax plus 5.4 J/cm2 over a 6-mm vertex-centred zone) for progressive keratoconus; 38 eyes of 38 patients (one eye per patient), treated and followed prospectively; the article declares the myopia eyes as its control group, so this keratoconus arm is the arm receiving the evaluated technique; no cataract or other surgery in the described session"
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Myopia group (23 eyes of 23 patients, central 4-mm annular CXL for low-grade myopia; Table 1 Myopia columns C3, C5, C7, C9, C11)",
+   "reason": "healthy (non-diseased) corneas treated for low-grade myopia: the brief excludes healthy eyes and the protocol's corneal indications have no refractive-only category; in addition the group was selected retrospectively for a complete set of good-quality postoperative Pentacam measurements at a maximum number of visits (selection on postoperative data, protocol inclusion 5)"
+  },
+  {
+   "what": "Low-contrast visual acuity 10% and 2.5% (Table 1 rows 24-33)",
+   "reason": "low-contrast acuity is not the corrected distance (high-contrast) acuity of protocol inclusion 1"
+  },
+  {
+   "what": "95% CI, p-value and Cohen's d rows (Table 1 rows 20-22) and correlations (Table 2)",
+   "reason": "not admissible statistics (protocol inclusion 4)"
+  }
+ ],
+ "notes": [
+  "Table 1 also tabulates vertical coma, horizontal coma and spherical aberration; keratometry, astigmatism and trefoil are reported in the text; none of these is used.",
+  "Mixed design: the keratoconus arm was prospective; the myopia arm was collected retrospectively from earlier published studies.",
+  "Role 'treated' because the article declares the myopia eyes as its control group and the keratoconus arm receives the evaluated customized epithelium-on CXL; there is no standard-care keratoconus arm."
+ ],
+ "series": [
+  {
+   "series_id": "kc-customized-cxl/bscva",
+   "group": "kc-customized-cxl",
+   "kind": "group_mean",
+   "n": 38,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    6,
+    12,
+    24
+   ],
+   "baseline_label": "Baseline BSCVA LogMAR, KC column (Table 1)",
+   "notes": "mean in row 18 with SD in parentheses in row 19; BSCVA with a standard logMAR chart, ETDRS-fast protocol (Methods); eyes missing per visit in Table 1 row 23 (KC columns C2, C4, C6, C8, C10): one patient missing at each of the 1-12-month visits and nine at 24 months (Methods), i.e. ordinary attrition",
+   "values": [
+    0.109,
+    0.083,
+    0.01,
+    0.002,
+    0.006
+   ],
+   "source_cells": [
+    "PMC12604442.xml::aos17432-tbl-0001!R18C2",
+    "PMC12604442.xml::aos17432-tbl-0001!R18C4",
+    "PMC12604442.xml::aos17432-tbl-0001!R18C6",
+    "PMC12604442.xml::aos17432-tbl-0001!R18C8",
+    "PMC12604442.xml::aos17432-tbl-0001!R18C10"
+   ],
+   "source_cell_texts": [
+    "0.109",
+    "0.083",
+    "0.010",
+    "0.002",
+    "0.006"
+   ]
+  }
+ ]
+}

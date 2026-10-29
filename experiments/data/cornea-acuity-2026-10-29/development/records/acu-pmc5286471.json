@@ -1,0 +1,93 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc5286471",
+ "doi": "10.1155/2017/5714372",
+ "pmcid": "PMC5286471",
+ "title": "Refractive, Topographic, and Aberrometric Results at 2-Year Follow-Up for Accelerated Corneal Cross-Link for Progressive Keratoconus",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License); public",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC5286471.xml",
+   "sha256": "66d324645df9a30d4d5639db16701dce59b903a73ff890ec297bdc211122efd5",
+   "bytes": 63419,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5286471/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "accelerated-cxl",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 47,
+   "description": "Epithelium-off accelerated riboflavin-UVA cross-linking (30 mW/cm2 for 4 min, 7.2 J/cm2) for progressive mild-to-moderate keratoconus (Amsler-Krumeich grades I-II); 47 eyes of 41 patients; single-arm retrospective chart review without a comparison arm (role control). Same-session cataract surgery is not mentioned (combined null)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "PMC5286471.xml::tab1 columns C6 (p 1) and C8 (p 2)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "Lines of CDVA gained or lost at 24 months (Results text, Figure 1)",
+   "reason": "lines gained and proportions are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "PMC5286471.xml::tab1!R2 (UDVA (LogMAR))",
+   "reason": "uncorrected acuity is not admissible (notes only)"
+  }
+ ],
+ "notes": [
+  "Retrospective chart review of 47 eyes of 41 patients (some patients contributed both eyes); preoperative exclusion criteria only (pachymetry, Kmax above 65 D, previous ocular surgery, scars, herpetic keratitis, coexisting ocular pathology, systemic conditions); no minimum follow-up criterion is stated; visits at baseline and 1, 6, 12 and 24 months.",
+  "Uncorrected acuity, sphere and cylinder, keratometry and central corneal thickness (Table 1) and corneal wavefront aberrations (Table 2) are tabulated: notes only.",
+  "Extracted under extraction protocol 1.0.0, the extraction brief and addendum 1 (development extractor D5)."
+ ],
+ "series": [
+  {
+   "series_id": "accelerated-cxl/cdva",
+   "group": "accelerated-cxl",
+   "kind": "group_mean",
+   "n": 47,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    6,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperative CDVA (LogMAR) (Table 1)",
+   "notes": "mean ± SD as printed; corrected distance visual acuity assessed with ETDRS logMAR charts (Methods); per-visit n not reported",
+   "values": [
+    0.42,
+    0.42,
+    0.36,
+    0.34,
+    0.33
+   ],
+   "source_cells": [
+    "PMC5286471.xml::tab1!R3C2",
+    "PMC5286471.xml::tab1!R3C3",
+    "PMC5286471.xml::tab1!R3C4",
+    "PMC5286471.xml::tab1!R3C5",
+    "PMC5286471.xml::tab1!R3C7"
+   ],
+   "source_cell_texts": [
+    "0.42 ± 0.26",
+    "0.42 ± 0.25",
+    "0.36 ± 0.25",
+    "0.34 ± 0.21",
+    "0.33 ± 0.22"
+   ]
+  }
+ ]
+}

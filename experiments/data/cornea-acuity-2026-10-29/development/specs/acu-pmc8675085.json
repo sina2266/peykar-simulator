@@ -1,0 +1,120 @@
+{
+ "study_id": "acu-pmc8675085",
+ "doi": "10.3389/fphys.2021.716117",
+ "pmcid": "PMC8675085",
+ "title": "Fourier-Domain Optical Coherence Tomographic Assessment of Changes in the Schlemm’s Canal of Nonglaucomatous Subjects After Keratoplasty",
+ "species": "human",
+ "procedure": "pk",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License (CC BY)); public",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8675085.xml",
+   "sha256": "642d1d3191dfce8a983a3bb5b4c6a5fa89f5838a87710f31d556f61f105d9cbf",
+   "bytes": 100938,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8675085/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "pk",
+   "role": "control",
+   "procedure": "pk",
+   "indication": "mixed",
+   "combined": false,
+   "n_reported": 31,
+   "description": "Penetrating keratoplasty in nonglaucomatous eyes; indications (Table 1): corneal stromal dystrophies, keratoconus, corneal leucoma, corneal graft failure (5 repeat grafts reported as an indication) and endothelial decompensation. The surgery types are PK, DALK and triple surgery (PK + ECCE + IOL); cataract extraction belongs to the triple-surgery type only, so this group had none."
+  },
+  {
+   "group": "dalk",
+   "role": "control",
+   "procedure": "dalk",
+   "indication": "mixed",
+   "combined": false,
+   "n_reported": 30,
+   "description": "Deep anterior lamellar keratoplasty; indications (Table 1): keratoconus, corneal leucoma, corneal stromal dystrophies. Cataract extraction belongs to the triple-surgery type only, so this group had none."
+  },
+  {
+   "group": "triple-surgery",
+   "role": "control",
+   "procedure": "pk",
+   "indication": "mixed",
+   "combined": true,
+   "n_reported": 5,
+   "description": "Triple surgery: penetrating keratoplasty with extracapsular cataract extraction and intraocular lens implantation in the same operation; indications (Table 1): corneal leucoma, corneal stromal dystrophies, endothelial decompensation."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "pk/bcva",
+   "group": "pk",
+   "kind": "group_mean",
+   "n": 31,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    0.0329
+   ],
+   "cells": [
+    "PMC8675085.xml::T3!R3C2",
+    "PMC8675085.xml::T3!R3C3"
+   ],
+   "baseline_label": "Baseline LogMAR BCVA, PK (Table 3)",
+   "notes": "mean (SD) as printed; Snellen BCVA converted per eye to logMAR before analysis, counting fingers and hand motion included with the conversions of Schulze et al. 2006 and Lange et al. 2009 cited in the Methods (kept as printed); 1 day = 0.0329 months; per-visit n not reported"
+  },
+  {
+   "series_id": "dalk/bcva",
+   "group": "dalk",
+   "kind": "group_mean",
+   "n": 30,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    0.0329
+   ],
+   "cells": [
+    "PMC8675085.xml::T3!R3C5",
+    "PMC8675085.xml::T3!R3C6"
+   ],
+   "baseline_label": "Baseline LogMAR BCVA, DALK (Table 3)",
+   "notes": "mean (SD) as printed; Snellen BCVA converted per eye to logMAR before analysis, counting fingers and hand motion included with the conversions of Schulze et al. 2006 and Lange et al. 2009 cited in the Methods (kept as printed); 1 day = 0.0329 months; per-visit n not reported"
+  },
+  {
+   "series_id": "triple-surgery/bcva",
+   "group": "triple-surgery",
+   "kind": "group_mean",
+   "n": 5,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    0.0329
+   ],
+   "cells": [
+    "PMC8675085.xml::T3!R3C8",
+    "PMC8675085.xml::T3!R3C9"
+   ],
+   "baseline_label": "Baseline LogMAR BCVA, triple surgery (Table 3)",
+   "notes": "mean (SD) as printed; Snellen BCVA converted per eye to logMAR before analysis, counting fingers and hand motion included with the conversions of Schulze et al. 2006 and Lange et al. 2009 cited in the Methods (kept as printed); 1 day = 0.0329 months; per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "PMC8675085.xml::T2!R2 (logMAR BCVA at baseline, 1 day and 1 week of the merged PK + DALK eyes; triple surgery excluded from the merged statistics)",
+   "reason": "whole-cohort series of the same eyes as the PK and DALK subgroup series of Table 3 (brief: subgroups by procedure are extracted instead of the whole cohort); the 1-week visit is tabulated only for this merged set"
+  },
+  {
+   "what": "PMC8675085.xml::T2 column C5 and T3 columns C4, C7, C10 (p)",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Prospective comparative observational study (August 2018 to December 2020) of 66 nonglaucomatous eyes of 66 patients; examinations preoperatively and 1 day and 1 week after surgery; preoperative exclusions only (concurrent glaucoma, ocular trauma, high axial myopia, keratoconus with acute hydrops); no minimum follow-up criterion.",
+  "IOP and Schlemm's canal parameters (Tables 2, 3) are tabulated: notes only.",
+  "Extracted under extraction protocol 1.0.0, the extraction brief and addendum 1 (development extractor D5)."
+ ]
+}

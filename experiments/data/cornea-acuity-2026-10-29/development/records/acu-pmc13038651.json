@@ -1,0 +1,143 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc13038651",
+ "doi": "10.1007/s10792-025-03919-2",
+ "pmcid": "PMC13038651",
+ "title": "Comparison of conventional corneal crosslinking with the accelerated procedure in progressive keratoconus",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13038651.xml",
+   "sha256": "a951d7158617cf3564eb8615e83f6561f9a1d4fa27b5ef7627e8c1ce061847fc",
+   "bytes": 141227,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13038651/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "s-cxl",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 16,
+   "description": "Standard-protocol corneal cross-linking (S-CXL, 3 mW/cm2 for 30 min) for progressive keratoconus; retrospective cohort enrolled 2009-2013, one eye per patient (Tab1!R3C2). Two standard protocols compared without an investigational arm, so both groups are control."
+  },
+  {
+   "group": "a-cxl",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 45,
+   "description": "Accelerated-protocol corneal cross-linking (A-CXL, 9 mW/cm2 for 10 min) for progressive keratoconus; retrospective cohort enrolled 2009-2013, one eye per patient (Tab1!R3C3)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tab5 P-value columns (R3C8-R3C11, R4C7-R4C10)",
+   "reason": "p-values are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Tab1!R7C2-R7C3 baseline visual acuity (logMAR)",
+   "reason": "the same baseline of the same groups as Table 5; cited from Table 5 only, used here only to establish the unit"
+  },
+  {
+   "what": "Fig. 4 (mean change from baseline of visual acuity) and Fig. 5 (categorized change of visual acuity)",
+   "reason": "figure values and line-change categories are not admissible (protocol inclusion 4); the tabulated means of Table 5 are used"
+  }
+ ],
+ "notes": [
+  "Methods: 'Best-corrected visual acuity was determined'; it is the only acuity measure reported, and the only acuity unit the article states is logMAR (Table 1).",
+  "Inclusion was restricted to subjects whose measurements were all performed with the same Pentacam device (to avoid a device change; the authors say this explains the smaller S-CXL group). This is a measurement criterion defined by the device, not a postoperative-outcome or complete-follow-up selection: losses to follow-up remain in the groups.",
+  "Attrition (Complications section): S-CXL, 4 eyes required CXL retreatment for progression and 2 patients were lost to follow-up (at 3 and 8 years); A-CXL, 5 eyes required repeat CXL, 2 eyes underwent further procedures (alcohol keratectomy, DMEK) and were excluded from subsequent follow-up, and 16 patients were lost to follow-up between 3 and 8 years. Whether visits after a repeat CXL were retained is not stated. Per-visit n is not reported; kept as ordinary attrition with this note.",
+  "Longitudinal tests used a linear mixed model with Bonferroni correction; Table 5 prints descriptive mean ± SD (95% CI of the mean), not model-adjusted estimates.",
+  "Tomography (Kmean, Kmax, ARC, PRC, ISV, IVA, TCT, CCT; Table 2), corneal densitometry (Table 3) and higher-order aberrations (Table 4) are tabulated; not extracted (no such series in schema 1.0.0).",
+  "Supplement 1 (CXL settings, DOCX) is not acquired for this dataset.",
+  "combined = null: the article neither states nor explicitly rules out same-session cataract surgery (addendum 1, point 3)."
+ ],
+ "series": [
+  {
+   "series_id": "s-cxl/bcva",
+   "group": "s-cxl",
+   "kind": "group_mean",
+   "n": 16,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    36,
+    96
+   ],
+   "baseline_label": "Baseline best-corrected visual acuity, S-CXL row (Table 5)",
+   "notes": "Cells print mean ± SD (95% CI of the mean); the leading mean is read. Table 5 (best-corrected visual acuity) prints no unit; the article states the unit of this visual acuity variable as logMAR in Table 1 ('visual acuity (logMAR)', Tab1!R7), whose baseline cell for this group has the same text as Tab5!R3C3. Times are the stated visits (baseline, 6, 12, 36 and 96 months). Per-visit n not reported; n is the number of eyes at baseline.",
+   "values": [
+    0.4,
+    0.42,
+    0.33,
+    0.34,
+    0.2
+   ],
+   "source_cells": [
+    "PMC13038651.xml::Tab5!R3C3",
+    "PMC13038651.xml::Tab5!R3C4",
+    "PMC13038651.xml::Tab5!R3C5",
+    "PMC13038651.xml::Tab5!R3C6",
+    "PMC13038651.xml::Tab5!R3C7"
+   ],
+   "source_cell_texts": [
+    "0.4 ± 0.2(0.3 – 0.5)",
+    "0.42 ± 0.29(0.3 – 0.54)",
+    "0.33 ± 0.32(0.21 – 0.46)",
+    "0.34 ± 0.31(0.22 – 0.47)",
+    "0.2 ± 0.13(0.06 – 0.33)"
+   ]
+  },
+  {
+   "series_id": "a-cxl/bcva",
+   "group": "a-cxl",
+   "kind": "group_mean",
+   "n": 45,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    36,
+    96
+   ],
+   "baseline_label": "Baseline best-corrected visual acuity, A-CXL row (Table 5)",
+   "notes": "Cells print mean ± SD (95% CI of the mean); the leading mean is read. Table 5 prints no unit; unit logMAR from Table 1 ('visual acuity (logMAR)', Tab1!R7), whose baseline cell for this group has the same text as Tab5!R4C2. Row R4 has one cell fewer than R3 because the row-spanning 'Visual acuity' label sits in R3. Per-visit n not reported; n is the number of eyes at baseline.",
+   "values": [
+    0.3,
+    0.31,
+    0.32,
+    0.25,
+    0.2
+   ],
+   "source_cells": [
+    "PMC13038651.xml::Tab5!R4C2",
+    "PMC13038651.xml::Tab5!R4C3",
+    "PMC13038651.xml::Tab5!R4C4",
+    "PMC13038651.xml::Tab5!R4C5",
+    "PMC13038651.xml::Tab5!R4C6"
+   ],
+   "source_cell_texts": [
+    "0.3 ± 0.2(0.2 – 0.4)",
+    "0.31 ± 0.24(0.24 – 0.38)",
+    "0.32 ± 0.32(0.24 – 0.39)",
+    "0.25 ± 0.21(0.18 – 0.33)",
+    "0.2 ± 0.25(0.12 – 0.29)"
+   ]
+  }
+ ]
+}

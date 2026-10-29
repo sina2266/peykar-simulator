@@ -1,0 +1,91 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc13303802",
+ "doi": "10.3390/medicina62061145",
+ "pmcid": "PMC13303802",
+ "title": "Biomechanical and Tomographic Outcomes in Pediatric Keratoconus Treated with Conventional Epithelium-Off Corneal Collagen Cross-Linking",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution (CC BY) license, link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC13303802.xml",
+   "sha256": "7dabbc52f130320928d88338a3726f873cc0d9eadbb78fae942e36a852236806",
+   "bytes": 109887,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13303802/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "pediatric-epi-off-cxl",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 28,
+   "description": "Conventional Dresden epithelium-off CXL (about 9 mm manual de-epithelialization, riboflavin 0.1%-dextran 20% every 3 min for 30 min, UVA 3 mW/cm2 for 30 min, 5.4 J/cm2) for progressive keratoconus (Amsler-Krumeich stages I-IV, Kmax below 65 D) in patients aged 13-18 years; 28 eyes of 23 patients, all pediatric keratoconus eyes treated at the OCULENS Clinic, Cluj-Napoca, 2019-2023; prespecified visits at baseline, 6, 12 and 24 months. Procedure described as cross-linking only (no cataract surgery)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 column 'Delta, 24 Months-Baseline' (medicina-62-01145-t002!R3C6)",
+   "reason": "change column; the absolute series is used"
+  },
+  {
+   "what": "Table 1 baseline BCVA (medicina-62-01145-t001!R10C2)",
+   "reason": "duplicates the baseline of Table 2"
+  },
+  {
+   "what": "Late events after the 24-month window (retreatment, keratoplasty indication)",
+   "reason": "described only; no acuity is tabulated after 24 months"
+  }
+ ],
+ "notes": [
+  "UCVA, Kmax, SP-A1 and thinnest pachymetry (Table 2) and the Corvis ST and Pentacam indices (Table 3) are mentioned here only.",
+  "Three eyes were later retreated (about 3 years) and one patient later had an indication for keratoplasty, all after the 24-month window; the article keeps these eyes in the 24-month analysis.",
+  "Inclusion required the ability to comply with scheduled visits through 24 months; all 28 pediatric eyes treated at the centre in the period form the cohort.",
+  "Five patients contributed both eyes; the analysis is eye-based."
+ ],
+ "series": [
+  {
+   "series_id": "pediatric-epi-off-cxl/bcva",
+   "group": "pediatric-epi-off-cxl",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    24
+   ],
+   "baseline_label": "Baseline BCVA (logMAR) (Table 2, row 'BCVA (logMAR)', column 'Baseline')",
+   "notes": "Mean ± SD (Table 2 caption); unit logMAR (row label; Methods: BCVA recorded on the logMAR scale); repeated-measures analysis of the 28 eyes at every visit.",
+   "values": [
+    0.31,
+    0.29,
+    0.27,
+    0.25
+   ],
+   "source_cells": [
+    "PMC13303802.xml::medicina-62-01145-t002!R3C2",
+    "PMC13303802.xml::medicina-62-01145-t002!R3C3",
+    "PMC13303802.xml::medicina-62-01145-t002!R3C4",
+    "PMC13303802.xml::medicina-62-01145-t002!R3C5"
+   ],
+   "source_cell_texts": [
+    "0.31 ± 0.11",
+    "0.29 ± 0.11",
+    "0.27 ± 0.11",
+    "0.25 ± 0.11"
+   ]
+  }
+ ]
+}

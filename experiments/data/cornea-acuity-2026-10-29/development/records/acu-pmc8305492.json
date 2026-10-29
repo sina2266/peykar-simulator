@@ -1,0 +1,85 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc8305492",
+ "doi": "10.1186/s12886-021-02042-x",
+ "pmcid": "PMC8305492",
+ "title": "Topography-guided corneal surface laser ablation combined with simultaneous accelerated corneal collagen cross-linking for treatment of keratoconus",
+ "species": "human",
+ "procedure": "other",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>, ali:license_ref https://creativecommons.org/licenses/by/4.0/; CC0 waiver for data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC8305492.xml",
+   "sha256": "7088ee3478d30e76eba8744c117841e6ff55da20464c55be05661dd0c6231920",
+   "bytes": 81340,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8305492/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "tg-ablation-accelerated-cxl",
+   "role": "control",
+   "procedure": "other",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 31,
+   "description": "Alcohol-assisted epithelial removal, topography-guided PRK without refractive correction (WaveLight EX500 Topolyzer, compensated cylinder only, ablation depth at most 50 µm, no mitomycin C) followed in the same session by accelerated CXL (0.1% riboflavin for 10 min, UVA 30 mW/cm2 for 4 min, 7.2 J/cm2) for progressive keratoconus (KC1-KC2), 31 eyes of 30 patients aged 12-34 years, prospective, Peking University Third Hospital, 2016-2018. Cross-linking combined with a refractive ablation in the same treatment (protocol context 'other'); no cataract surgery."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 1 columns 'F' and 'P'",
+   "reason": "test statistics and p-values are not admissible"
+  },
+  {
+   "what": "Lines of BSCDVA gained or lost (text, Figure 2)",
+   "reason": "lines gained are not admissible"
+  }
+ ],
+ "notes": [
+  "UDVA (Table 1), manifest refraction (Table 2), keratometry (Table 3), keratoconus indices and thinnest thickness (Table 4), corneal aberrations (Table 5) and endothelial cell parameters (Table 6) are mentioned here only.",
+  "One patient contributed both eyes."
+ ],
+ "series": [
+  {
+   "series_id": "tg-ablation-accelerated-cxl/bscdva",
+   "group": "tg-ablation-accelerated-cxl",
+   "kind": "group_mean",
+   "n": 31,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    6,
+    12
+   ],
+   "baseline_label": "Preoperative BSCDVA(LogMAR) (Table 1)",
+   "notes": "Mean ± SD (caption: n = 31, x ± s); best spectacle-corrected distance visual acuity in logMAR (row label; Statistical analysis: visual acuity was converted to logMAR for statistical analysis). Asterisks and hash marks in the cells are significance markers. BSCDVA was measured at 1, 6 and 12 months.",
+   "values": [
+    0.32,
+    0.24,
+    0.16,
+    0.15
+   ],
+   "source_cells": [
+    "PMC8305492.xml::Tab1!R3C2",
+    "PMC8305492.xml::Tab1!R3C3",
+    "PMC8305492.xml::Tab1!R3C4",
+    "PMC8305492.xml::Tab1!R3C5"
+   ],
+   "source_cell_texts": [
+    "0.32 ± 0.20",
+    "0.24 ± 0.24*",
+    "0.16 ± 0.22*#",
+    "0.15 ± 0.14*#"
+   ]
+  }
+ ]
+}

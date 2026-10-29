@@ -208,3 +208,67 @@ def test_builder_reads_cells_parenthesized_values_and_checks_hashes() -> None:
         acuity_number("0.3", "parenthesized")
     with pytest.raises(InvalidRequest):
         acuity_number("0.3", "trailing")
+
+
+def test_acuity_candidates_read_procedure_indication_and_family_contexts() -> None:
+    from peykar.model_learning.acuity_population import (
+        DEVELOPMENT_CANDIDATES,
+        adapter,
+        operation_family,
+    )
+
+    assert set(DEVELOPMENT_CANDIDATES) == {"a0", "a1", "a2", "a4"}
+    assert DEVELOPMENT_CANDIDATES["a1"].grouping == ("treatment", "context")
+    assert DEVELOPMENT_CANDIDATES["a4"].deviation_fraction == 0.8
+    assert not DEVELOPMENT_CANDIDATES["a4"].deviation_in_population_fit
+    assert DEVELOPMENT_CANDIDATES["a0"].describe() != DEVELOPMENT_CANDIDATES["a2"].describe()
+    record = _record()
+    assert [s.context for s in adapter("a0")(record)] == ["human/dmek", "human/dsaek", "human/cxl"]
+    assert [s.context for s in adapter("a1")(record)][0] == "human/fuchs/dmek"
+    assert [s.context for s in adapter("a2")(record)] == [
+        "human-graft/dmek",
+        "human-graft/dsaek",
+        "human-crosslinking/cxl",
+    ]
+    assert adapter("a4")(record)[0].context == "human/dmek"
+    assert operation_family("other", "keratoconus") == "crosslinking"
+    assert operation_family("other", "fuchs") == "graft"
+    assert operation_family("pk", "keratoconus") == "graft"
+
+
+def test_acuity_publisher_keeps_iop_comparators_and_redacts_initial_states() -> None:
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_acuity_population.py"
+    spec = importlib.util.spec_from_file_location("publish_acuity_population", path)
+    assert spec is not None and spec.loader is not None
+    publish = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publish)
+    assert publish.base.H2_COMPARATORS == (
+        "persistence",
+        "last_two_log_linear",
+        "pooled_curve_ratio",
+        "analog_knn",
+    )
+    assert "baseline_level" in publish.base.REPORTED
+    assert "target_level" not in publish.base.REPORTED
+    entry = {
+        "series_id": "s",
+        "context": "human/cxl",
+        "kind": "group_mean",
+        "reference_value": 0.4,
+        "observed": [1.0],
+        "months": [12.0],
+        "predictions": {"population_initial_state": [1.0]},
+        "scores": {},
+    }
+    redacted = publish.redact({"initial_state": [entry], "next_observation": [], "landmark": []})
+    assert set(redacted["initial_state"][0]) <= publish.INITIAL_STATE_PUBLIC_FIELDS
+    assert "reference_value" not in redacted["initial_state"][0]
+    report = {
+        "studies": [
+            {"study_id": "x", "initial_state": [entry], "next_observation": [], "landmark": []}
+        ]
+    }
+    assert publish.tested_subset(report)["studies"][0]["initial_state"] == [entry]

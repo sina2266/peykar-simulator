@@ -1,0 +1,140 @@
+{
+ "study_id": "acu-pmc3396288",
+ "doi": "10.1007/s00417-012-1927-6",
+ "pmcid": "PMC3396288",
+ "title": "Surgical outcome of Descemet’s stripping automated endothelial keratoplasty for bullous keratopathy secondary to argon laser iridotomy",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "Creative Commons Attribution License, version not stated (article <license>: 'This article is distributed under the terms of the Creative Commons Attribution License which permits any use, distribution, and reproduction in any medium, provided the original author(s) and the source are credited.'); no licence URL in the article; public (CC BY)"
+ },
+ "source_files": [
+  {
+   "name": "PMC3396288.xml",
+   "sha256": "0842ae0f5bbc6af29c8da9954343b441b9783d3a7a636eb944b106b57deb590f",
+   "bytes": 75846,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3396288/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ali-bk",
+   "role": "control",
+   "procedure": "dsaek",
+   "indication": "bullous_keratopathy",
+   "combined": null,
+   "n_reported": 54,
+   "description": "DSAEK for bullous keratopathy secondary to argon laser iridotomy (ALI group); 47 eyes Descemet-stripping DSAEK and 7 eyes non-Descemet-stripping DSAEK (nDSAEK) (Table 2). Simultaneous phacoemulsification with IOL implantation before DSAEK in the same operation in 37 of the 54 eyes (combined left null: only part of the group)."
+  },
+  {
+   "group": "pbk",
+   "role": "control",
+   "procedure": "dsaek",
+   "indication": "bullous_keratopathy",
+   "combined": false,
+   "n_reported": 28,
+   "description": "DSAEK for pseudophakic bullous keratopathy (PBK group); 24 eyes DSAEK and 4 eyes nDSAEK (Table 2). Every eye pseudophakic, so no same-session cataract surgery (none reported; simultaneous cataract surgery stated only for the ALI and FED groups)."
+  },
+  {
+   "group": "fed",
+   "role": "control",
+   "procedure": "dsaek",
+   "indication": "fuchs",
+   "combined": null,
+   "n_reported": 21,
+   "description": "DSAEK for Fuchs endothelial dystrophy (FED group); all 21 eyes Descemet-stripping DSAEK (Table 2). Simultaneous cataract surgery in the same operation in 13 of the 21 eyes (combined left null: only part of the group)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ali-bk/bscva",
+   "group": "ali-bk",
+   "kind": "group_mean",
+   "n": 54,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC3396288.xml::Tab3!R2C2",
+    "PMC3396288.xml::Tab3!R3C2",
+    "PMC3396288.xml::Tab3!R4C2",
+    "PMC3396288.xml::Tab3!R5C2"
+   ],
+   "baseline_label": "Preoperative (Table 3, The average of best spectacle-corrected visual acuity)",
+   "notes": "mean ± SD (range) as printed; the leading number (mean) is read; header 'BSCVA (LogMAR ± SD)'; Methods: decimal BSCVA values were converted to logarithm for statistical analysis (per-eye conversion); per-visit n not reported"
+  },
+  {
+   "series_id": "pbk/bscva",
+   "group": "pbk",
+   "kind": "group_mean",
+   "n": 28,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC3396288.xml::Tab3!R2C3",
+    "PMC3396288.xml::Tab3!R3C3",
+    "PMC3396288.xml::Tab3!R4C3",
+    "PMC3396288.xml::Tab3!R5C3"
+   ],
+   "baseline_label": "Preoperative (Table 3, The average of best spectacle-corrected visual acuity)",
+   "notes": "mean ± SD (range) as printed; the leading number (mean) is read; header 'BSCVA (LogMAR ± SD)'; Methods: decimal BSCVA values were converted to logarithm for statistical analysis (per-eye conversion); per-visit n not reported"
+  },
+  {
+   "series_id": "fed/bscva",
+   "group": "fed",
+   "kind": "group_mean",
+   "n": 21,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "cells": [
+    "PMC3396288.xml::Tab3!R2C4",
+    "PMC3396288.xml::Tab3!R3C4",
+    "PMC3396288.xml::Tab3!R4C4",
+    "PMC3396288.xml::Tab3!R5C4"
+   ],
+   "baseline_label": "Preoperative (Table 3, The average of best spectacle-corrected visual acuity)",
+   "notes": "mean ± SD (range) as printed; the leading number (mean) is read; header 'BSCVA (LogMAR ± SD)'; Methods: decimal BSCVA values were converted to logarithm for statistical analysis (per-eye conversion); per-visit n not reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "PMC3396288.xml::Tab3 ranges printed in parentheses inside each cell",
+   "reason": "ranges are not admissible (protocol inclusion 4); only the leading mean is read"
+  },
+  {
+   "what": "PMC3396288.xml::Tab3!R6 (eyes showing improved BSCVA) and Tab3!R7 (eyes with postoperative BSCVA better than 20/40)",
+   "reason": "counts/proportions reaching a threshold are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "PMC3396288.xml::Tab3 column C5 (P value)",
+   "reason": "p-values are not admissible"
+  },
+  {
+   "what": "PMC3396288.xml::Tab7 (comparison with previous reports)",
+   "reason": "values of other studies, not this cohort"
+  }
+ ],
+ "notes": [
+  "Retrospective review of the medical records of all consecutive patients who underwent DSAEK for ALI-BK, FED or PBK between April 2007 and December 2010; the authors list their exclusions with counts, all preoperative (suspected combined ALI and FED causes, previous penetrating keratoplasty, macular dysfunction after retinal detachment, Axenfeld-Rieger syndrome, end-stage glaucoma, bullous keratopathy from birth injury). The Results statement that every eye was followed for at least 6 months describes the observed follow-up; it is not an inclusion criterion, and no operated eye was left out for lack of follow-up.",
+  "Graft clarity at 6 months, graft rejection and complications are reported (Tables 4, 6); no eye underwent re-keratoplasty within 6 months; how eyes without a clear graft enter the means is not stated.",
+  "Spherical equivalent, induced astigmatism and keratometry (Table 4) and endothelial cell density (Table 5) are tabulated: notes only. Table 1 (demographics) is an image and is not used.",
+  "Extracted under extraction protocol 1.0.0, the extraction brief and addendum 1 (development extractor D5)."
+ ]
+}

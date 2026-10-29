@@ -1,0 +1,124 @@
+{
+ "study_id": "acu-pmc13286017",
+ "doi": "10.2147/OPTH.S612110",
+ "pmcid": "PMC13286017",
+ "title": "Long-Term Clinical Outcomes of nDSAEK and Machine Learning-Based Prediction of Graft Survival in Corneal Endothelial Decompensation",
+ "species": "human",
+ "procedure": "dsaek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>; Dove Medical Press terms incorporating Creative Commons Attribution - Non Commercial unported v4.0)",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "class": "private"
+ },
+ "source_files": [
+  {
+   "name": "PMC13286017.xml",
+   "sha256": "9986f201e74457ccb2677a0b0ece027bc8084226da11012273aebcd5c7501e3b",
+   "bytes": 118571,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13286017/fullTextXML",
+   "retrieved_utc": "2026-10-29T11:56:34.342047+00:00"
+  }
+ ],
+ "extractor": "D1",
+ "groups": [
+  {
+   "group": "fecd",
+   "role": "control",
+   "procedure": "dsaek",
+   "indication": "fuchs",
+   "combined": null,
+   "n_reported": 43,
+   "description": "Fuchs endothelial corneal dystrophy with bullous changes; 43 eyes; non-Descemet-stripping automated endothelial keratoplasty (nDSAEK): 7.5 or 8.0 mm posterior lamellar graft cut with a microkeratome or a femtosecond laser, host Descemet membrane not stripped, glide insertion through a 5-mm temporal tunnel, 10-0 nylon sutures, intracameral air; single surgeon; retrospective 2007-2025; same-session cataract surgery not stated"
+  },
+  {
+   "group": "non-fecd",
+   "role": "control",
+   "procedure": "dsaek",
+   "indication": "mixed",
+   "combined": false,
+   "n_reported": 71,
+   "description": "Corneal endothelial decompensation secondary to cataract surgery (pseudophakic bullous keratopathy), including 6 eyes with prior ocular trauma surgery, 4 post-vitrectomy and 1 after a previous corneal transplantation (a repeat keratoplasty), hence indication mixed; 71 eyes; eyes already operated for cataract, so no same-session cataract surgery; non-Descemet-stripping automated endothelial keratoplasty (nDSAEK): 7.5 or 8.0 mm posterior lamellar graft cut with a microkeratome or a femtosecond laser, host Descemet membrane not stripped, glide insertion through a 5-mm temporal tunnel, 10-0 nylon sutures, intracameral air; single surgeon; retrospective 2007-2025"
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "fecd/bcva",
+   "group": "fecd",
+   "kind": "group_mean",
+   "n": 43,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12,
+    24,
+    36
+   ],
+   "cells": [
+    "PMC13286017.xml::t0002!R2C2",
+    "PMC13286017.xml::t0002!R3C2",
+    "PMC13286017.xml::t0002!R4C2",
+    "PMC13286017.xml::t0002!R5C2",
+    "PMC13286017.xml::t0002!R6C2",
+    "PMC13286017.xml::t0002!R7C2",
+    "PMC13286017.xml::t0002!R8C2"
+   ],
+   "baseline_label": "Preoperative BCVA, FECD column (Table 2)",
+   "notes": "mean ± SD; unit LogMAR from the Table 2 caption, BCVA = best corrected visual acuity (footnote); per-visit n not reported (fewer eyes at later visits are likely: median follow-up 41.50 months, IQR 25.65-55.75)"
+  },
+  {
+   "series_id": "non-fecd/bcva",
+   "group": "non-fecd",
+   "kind": "group_mean",
+   "n": 71,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12,
+    24,
+    36
+   ],
+   "cells": [
+    "PMC13286017.xml::t0002!R2C3",
+    "PMC13286017.xml::t0002!R3C3",
+    "PMC13286017.xml::t0002!R4C3",
+    "PMC13286017.xml::t0002!R5C3",
+    "PMC13286017.xml::t0002!R6C3",
+    "PMC13286017.xml::t0002!R7C3",
+    "PMC13286017.xml::t0002!R8C3"
+   ],
+   "baseline_label": "Preoperative BCVA, Non-FECD column (Table 2)",
+   "notes": "mean ± SD; unit LogMAR from the Table 2 caption, BCVA = best corrected visual acuity (footnote); per-visit n not reported (fewer eyes at later visits are likely: median follow-up 41.50 months, IQR 25.65-55.75)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Whole-cohort BCVA (114 eyes) given in the abstract and text",
+   "reason": "not a tabulated cell; the preoperative-condition subgroups of Table 2 are extracted instead (brief: no whole-cohort series alongside its subgroups)"
+  },
+  {
+   "what": "BCVA threshold counts at the final follow-up and the change in logMAR from baseline to the last follow-up (text and figure)",
+   "reason": "proportions and changes to an undated last visit (protocol inclusion 4; brief: undated final visits excluded)"
+  },
+  {
+   "what": "P value column of Table 2",
+   "reason": "p-values (protocol inclusion 4)"
+  }
+ ],
+ "notes": [
+  "Procedure context dsaek: nDSAEK is the DSAEK graft (automated posterior lamellar stroma-carrying graft) without stripping the host Descemet membrane, a DSAEK variant per the protocol scope; it is not nanothin DSAEK.",
+  "The 15 graft failures, 4 rejections, 7 recurrent bullous changes and 3 rebubblings occurred within the 114-eye cohort, which is not restricted by outcome.",
+  "Exclusion criteria were preoperative (trauma, ocular hypertension, infectious keratitis, systemic disease or immunosuppression, comorbidity limiting visual potential, high failure risk) plus 'patients unable to adhere to the designated follow-up protocols'; follow-up length varies (median 41.50 months, IQR 25.65-55.75), so the set is not restricted to eyes completing every tabulated visit.",
+  "The Statistical Analysis section mentions linear mixed-effects models for BCVA; Table 2 prints mean ± SD with between-group t-test or Mann-Whitney p-values and is read as descriptive group means.",
+  "Table 1 tabulates endothelial cell density and central corneal thickness (preoperative to 36 months); not used.",
+  "114 eyes of 114 patients; the article's Table 3 summarises the indications as BK/PBK 62.3% and Fuchs 37.7%."
+ ]
+}

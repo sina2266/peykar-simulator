@@ -1,0 +1,163 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc9077944",
+ "doi": "10.1186/s12886-022-02425-8",
+ "pmcid": "PMC9077944",
+ "title": "Impact of keratoconus stage on outcome after corneal crosslinking",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9077944.xml",
+   "sha256": "9651ac93b0600157a0e28844e07c574d2bb518f27edbe14335710346ee8c46e2",
+   "bytes": 58866,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9077944/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "stage-i",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": null,
+   "description": "Progressive keratoconus, modified Krumeich group I (preoperative Kmax < 48 D; Vogt striae, no corneal scars, corneal thickness >= 400 um; Tab1!R2), primary corneal cross-linking by a slightly modified Dresden protocol. Patient-condition subgroup defined before surgery, so role control. Group size not reported (124 eyes of 100 patients in total)."
+  },
+  {
+   "group": "stage-ii",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": null,
+   "description": "Progressive keratoconus, modified Krumeich group II (preoperative Kmax 48-53 D; no central scars, corneal thickness >= 400 um; Tab1!R3), primary corneal cross-linking by a slightly modified Dresden protocol. Group size not reported."
+  },
+  {
+   "group": "stage-iii",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": null,
+   "description": "Progressive keratoconus, modified Krumeich group III (preoperative Kmax > 53 D; no central scars, corneal thickness >= 400 um; Tab1!R4), primary corneal cross-linking by a slightly modified Dresden protocol. Group size not reported."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 P value columns (R3C8, R3C12)",
+   "reason": "p-values are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Whole-cohort (124 eyes) BCVA",
+   "reason": "not tabulated; the article reports only the three preoperative-stage subgroups, which are extracted (brief: subgroups by a preoperative condition)"
+  },
+  {
+   "what": "Fig. 1 (BCVA and tomographic values by group)",
+   "reason": "figure values are not extracted; the same means are tabulated in Table 2"
+  }
+ ],
+ "notes": [
+  "Methods: 'Best corrected visual acuity (BCVA) was determined in logMAR before and after CXL by means of refractometry with additional subjective comparison. The patients did not wear rigid contact lenses during visual acuity testing.'",
+  "Cohort: 124 consecutive eyes of 100 patients with progressive keratoconus, November 2008 to September 2018; inclusion required progression, primary CXL and a PREoperative follow-up of at least 12 months (no postoperative minimum follow-up); eyes with previous trauma or corneal procedures were excluded. Both eyes of some patients are included. Group sizes, losses to follow-up and per-visit n are not reported.",
+  "Between-group comparisons used ANCOVA with the baseline value as covariate (p-values only); Table 2 prints descriptive means ± SD (footnote).",
+  "Astigmatism, Kmax, Kmin, minimum and central corneal thickness (Table 2) are tabulated; not extracted (no such series in schema 1.0.0).",
+  "combined = null: same-session cataract surgery is neither stated nor explicitly ruled out (addendum 1, point 3)."
+ ],
+ "series": [
+  {
+   "series_id": "stage-i/bcva",
+   "group": "stage-i",
+   "kind": "group_mean",
+   "n": null,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperative BCVA, group I (Table 2)",
+   "notes": "Row 'BCVA' prints mean ± SD; the leading mean is read. Columns per the two header rows: preop group I C2, 12 months group I C5, 24 months group I C9. Unit logMAR from the Methods ('BCVA was determined in logMAR'). Group n and per-visit n are not reported in the article (n = null).",
+   "values": [
+    0.16,
+    0.1,
+    0.1
+   ],
+   "source_cells": [
+    "PMC9077944.xml::Tab2!R3C2",
+    "PMC9077944.xml::Tab2!R3C5",
+    "PMC9077944.xml::Tab2!R3C9"
+   ],
+   "source_cell_texts": [
+    "0.16 ± 0.17",
+    "0.1 ± 0.12",
+    "0.1 ± 0.14"
+   ]
+  },
+  {
+   "series_id": "stage-ii/bcva",
+   "group": "stage-ii",
+   "kind": "group_mean",
+   "n": null,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperative BCVA, group II (Table 2)",
+   "notes": "Row 'BCVA' prints mean ± SD; the leading mean is read. Columns: preop group II C3, 12 months group II C6, 24 months group II C10. Unit logMAR from the Methods. Group n and per-visit n are not reported (n = null).",
+   "values": [
+    0.26,
+    0.23,
+    0.26
+   ],
+   "source_cells": [
+    "PMC9077944.xml::Tab2!R3C3",
+    "PMC9077944.xml::Tab2!R3C6",
+    "PMC9077944.xml::Tab2!R3C10"
+   ],
+   "source_cell_texts": [
+    "0.26 ± 0.23",
+    "0.23 ± 0.17",
+    "0.26 ± 0.24"
+   ]
+  },
+  {
+   "series_id": "stage-iii/bcva",
+   "group": "stage-iii",
+   "kind": "group_mean",
+   "n": null,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12,
+    24
+   ],
+   "baseline_label": "Preoperative BCVA, group III (Table 2)",
+   "notes": "Row 'BCVA' prints mean ± SD; the leading mean is read. Columns: preop group III C4, 12 months group III C7, 24 months group III C11. Unit logMAR from the Methods. Group n and per-visit n are not reported (n = null).",
+   "values": [
+    0.36,
+    0.25,
+    0.26
+   ],
+   "source_cells": [
+    "PMC9077944.xml::Tab2!R3C4",
+    "PMC9077944.xml::Tab2!R3C7",
+    "PMC9077944.xml::Tab2!R3C11"
+   ],
+   "source_cell_texts": [
+    "0.36 ± 0.14",
+    "0.25 ± 0.11",
+    "0.26 ± 0.12"
+   ]
+  }
+ ]
+}

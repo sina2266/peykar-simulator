@@ -1,0 +1,80 @@
+{
+ "study_id": "acu-pmc8670975",
+ "doi": "10.1155/2021/9680253",
+ "pmcid": "PMC8670975",
+ "title": "Preliminary Characterization of Predictive Factors of the Visual Change after Epi-On and Epi-Off Corneal Collagen Crosslinking Techniques",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8670975.xml",
+   "sha256": "968fa0356dd2057604dd36674c07a7e90a985837275ad26bfb560443da96a125",
+   "bytes": 180874,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8670975/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "epi-on",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 35,
+   "description": "Accelerated transepithelial (epithelium-on) pulsed corneal cross-linking (Paracel riboflavin, 45 mW/cm2 pulsed, 7.2 J/cm2) for progressive keratoconus (Amsler-Krumeich grades 1-4); retrospective cohort, one eye per patient, surgery May 2017 to January 2020. Epithelium-on and epithelium-off accelerated CXL are compared without an investigational arm, so the group is control."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "epi-on/cdva",
+   "group": "epi-on",
+   "kind": "group_mean",
+   "n": 35,
+   "value_kind": "logmar_absolute",
+   "months": [0, 3, 12],
+   "cells": [
+    "PMC8670975.xml::tab2!R15C2",
+    "PMC8670975.xml::tab2!R15C5",
+    "PMC8670975.xml::tab2!R15C8"
+   ],
+   "baseline_label": "Preoperative CDVA (logMAR), epi-on column (Table 2)",
+   "notes": "Row 'CDVA (logMAR)' prints mean (SD); the leading mean is read. Columns per the two header rows: preoperative epi-on C2, 3-month epi-on C5, 12-month epi-on C8. Methods: Snellen acuity was converted to logMAR for the statistical analyses. n = 35 eyes at every visit (no epi-on eye lacked complete follow-up)."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Epi-off group (32 analysed eyes; tab2 columns C3, C6, C9)",
+   "reason": "complete-case set: the inclusion criteria require a minimum follow-up of 12 months (the last tabulated visit), and the two operated eyes without complete follow-up, both epi-off, were excluded from the analysis (addendum 1 point 2; protocol inclusion 5)"
+  },
+  {
+   "what": "Table 2 median (range) row R16 under CDVA",
+   "reason": "medians and ranges are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Table 2 p-value columns (C4, C7, C10)",
+   "reason": "p-values are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Results 3.6: mean CDVA change at 3 and 12 months, changes by contact-lens wear, correlations; Results 3.7: regression equations",
+   "reason": "change values without a series reference in the table, subgroups defined during follow-up, correlation coefficients and model estimates are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Table 2 UDVA (logMAR) rows R3-R4",
+   "reason": "uncorrected acuity is not admissible (protocol inclusion 1); mentioned in notes only"
+  }
+ ],
+ "notes": [
+  "Corrected acuity: Methods record logMAR corrected distance visual acuity (CDVA) measured with a Snellen chart together with manifest refraction, and state that Snellen acuity was converted to logMAR for the statistical analyses (per-eye conversion).",
+  "Cohort: 69 eyes of 69 patients reviewed; two patients without complete 12-month follow-up were excluded, both epi-off (Results 3.1); the epi-on group keeps all 35 reviewed epi-on eyes, so the minimum-follow-up criterion left out no operated epi-on eye (addendum 1 point 2 exception).",
+  "Inclusion also required age at least 18 years, inferior-superior ratio above 1.5 D, highest keratometry 70 D or below, minimum corneal thickness 400 um or more and a clear cornea (preoperative criteria). 9 epi-on patients wore contact lenses during follow-up.",
+  "Manifest refraction (sphere, cylinder, SE, J0, J45; Table 2), tomography and corneal thickness (Table 3), topometric indices (Table 4) and corneal aberrations (Table 5) are tabulated; not extracted (no such series in schema 1.0.0).",
+  "combined = null: same-session cataract surgery is neither stated nor explicitly ruled out (eyes with prior corneal surgery were excluded) (addendum 1, point 3)."
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc11826614",
+ "doi": "10.5935/0004-2749.20210046",
+ "pmcid": "PMC11826614",
+ "title": "Corneal crosslinking efficacy in patients with keratoconus under 18 years of age",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: Creative Commons Attribution License; no licence URL in the XML)",
+  "url": null,
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC11826614.xml",
+   "sha256": "0844b91687025e17ed7d418357b0cf954f20bf51304687d6591897bde5a18d4a",
+   "bytes": 66969,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11826614/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "cxl-under-18",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 12,
+   "description": "Epithelium-off corneal collagen cross-linking by the Dresden protocol (8-10 mm epithelial removal, 0.1% riboflavin-5-phosphate with 20% dextran T-500, 370 nm UVA 3 mW/cm2 for 30 min) for progressive keratoconus in patients under 18 years; 12 eyes of 10 patients, one surgeon, private clinic, 2013-2018, chart review. Inclusion required attendance at all semiannual appointments and at least 2 years of postoperative follow-up; eyes with intrastromal ring implants and patients who missed follow-ups were excluded. Procedure described as cross-linking only (no cataract surgery)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 CDVA at 54 months (t3!R3C5)",
+   "reason": "no data ('--')"
+  },
+  {
+   "what": "Graph 2 (CDVA over time)",
+   "reason": "figure; the tabulated values are used"
+  },
+  {
+   "what": "Text statement of lines of vision gained",
+   "reason": "lines gained are not admissible"
+  },
+  {
+   "what": "Table 4 (per-patient Kmax differences)",
+   "reason": "keratometry, not acuity"
+  }
+ ],
+ "notes": [
+  "Kmax, pachymetry, foveal thickness, uncorrected distance visual acuity and endothelial cell density (Tables 2-3) are mentioned here only.",
+  "The inclusion criterion (all semiannual appointments and at least 2 years of follow-up) is a minimum follow-up shorter than the last tabulated visit; fewer eyes at the 36-60-month visits are kept as ordinary attrition.",
+  "Two patients contributed both eyes (Table 1)."
+ ],
+ "series": [
+  {
+   "series_id": "cxl-under-18/cdva",
+   "group": "cxl-under-18",
+   "kind": "group_mean",
+   "n": 12,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24,
+    36,
+    42,
+    48,
+    60
+   ],
+   "baseline_label": "Pre CDVA (Table 2, row 'CDVA', column 'Pre')",
+   "notes": "Mean ± SD (Methods: numerical variables presented as mean ± standard deviation); unit logMAR (Methods: 'visual acuity with and without correction (logMAR)'). Table 2 (Pre, 6, 12, 18, 24 months) and Table 3 (36, 42, 48, 54, 60 months) report the same 12-eye group. Table 3 footnote: the 60-month value is from one eye; the 54-month cell has no data and is omitted; other per-visit numbers of eyes are not reported.",
+   "values": [
+    0.31,
+    0.19,
+    0.17,
+    0.18,
+    0.26,
+    0.33,
+    0.17,
+    0.2,
+    0.4
+   ],
+   "source_cells": [
+    "PMC11826614.xml::t2!R3C2",
+    "PMC11826614.xml::t2!R3C3",
+    "PMC11826614.xml::t2!R3C4",
+    "PMC11826614.xml::t2!R3C5",
+    "PMC11826614.xml::t2!R3C6",
+    "PMC11826614.xml::t3!R3C2",
+    "PMC11826614.xml::t3!R3C3",
+    "PMC11826614.xml::t3!R3C4",
+    "PMC11826614.xml::t3!R3C6"
+   ],
+   "source_cell_texts": [
+    "0.31 ± 0.19",
+    "0.19 ± 0.14",
+    "0.17 ± 0.14",
+    "0.18 ± 0.14",
+    "0.26 ± 0.19",
+    "0.33 ± 0.25",
+    "0.17 ± 0.12",
+    "0.20 ± 0.14",
+    "0.40*"
+   ]
+  }
+ ]
+}

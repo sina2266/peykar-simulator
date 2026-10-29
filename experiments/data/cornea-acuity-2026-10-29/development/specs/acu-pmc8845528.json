@@ -1,0 +1,117 @@
+{
+ "study_id": "acu-pmc8845528",
+ "doi": "10.1097/j.jcrs.0000000000000733",
+ "pmcid": "PMC8845528",
+ "title": "Transepithelial accelerated corneal crosslinking for keratoconus eyes with maximum keratometry values larger than 58 diopters",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>: 'Creative Commons Attribution-Non Commercial-No Derivatives License 4.0 (CCBY-NC-ND)')",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8845528.xml",
+   "sha256": "e44e7b165cec438af03298df01d5cf9bc30ffbf71d7b62cf20a85b1b1bda5c2a",
+   "bytes": 78299,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "kmax-ge-58",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 20,
+   "description": "Group A: progressive keratoconus with preoperative Kmax of 58.0 D or more (group defined before treatment); transepithelial (epithelium-on) accelerated pulsed CXL (0.1% then 0.25% riboflavin, UVA 45 mW/cm2 for 5 min 20 s, pulsed illumination), one surgeon, prospective recruitment in 2017; same-session cataract surgery not mentioned."
+  },
+  {
+   "group": "kmax-lt-58",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 21,
+   "description": "Group B: progressive keratoconus with preoperative Kmax below 58.0 D (group defined before treatment); same transepithelial accelerated pulsed CXL protocol and surgeon; same-session cataract surgery not mentioned."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "kmax-ge-58/cdva",
+   "group": "kmax-ge-58",
+   "kind": "group_mean",
+   "n": 20,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC8845528.xml::T2!R4C2",
+    "PMC8845528.xml::T2!R4C3",
+    "PMC8845528.xml::T2!R4C4",
+    "PMC8845528.xml::T2!R4C5",
+    "PMC8845528.xml::T2!R4C6"
+   ],
+   "baseline_label": "Preop CDVA (logMAR), Table 2 (Group A)",
+   "notes": "Mean ± SD (Table 2 caption). Columns Preop, 1 mo, 3 mo, 6 mo and 1 y. Snellen acuity converted to logMAR for statistical analysis (Statistical Analyses). Per-visit n not reported; the 1-year proportions in Results are given over 20 eyes."
+  },
+  {
+   "series_id": "kmax-lt-58/cdva",
+   "group": "kmax-lt-58",
+   "kind": "group_mean",
+   "n": 21,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC8845528.xml::T3!R4C2",
+    "PMC8845528.xml::T3!R4C3",
+    "PMC8845528.xml::T3!R4C4",
+    "PMC8845528.xml::T3!R4C5",
+    "PMC8845528.xml::T3!R4C6"
+   ],
+   "baseline_label": "Preop CDVA (logMAR), Table 3 (Group B)",
+   "notes": "Mean ± SD (Table 3 caption). Columns Preop, 1 mo, 3 mo, 6 mo and 1 y. Snellen acuity converted to logMAR for statistical analysis (Statistical Analyses). Per-visit n not reported; the 1-year proportions in Results are given over 21 eyes."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "T2!R4C7 and T3!R4C7 (P values)",
+   "reason": "p-values are not admissible (protocol inclusion 4)."
+  },
+  {
+   "what": "Proportions of eyes gaining 2 or more lines of CDVA or UDVA (Results, Figure 1)",
+   "reason": "Proportions and lines gained are not admissible (protocol inclusion 4)."
+  },
+  {
+   "what": "Tables 4 and 5 (regression coefficients)",
+   "reason": "Model estimates, not acuity series."
+  },
+  {
+   "what": "T2!R3 and T3!R3 (UDVA)",
+   "reason": "Uncorrected acuity is not admissible (protocol inclusion 1)."
+  }
+ ],
+ "notes": [
+  "Table 1 (R8) also gives the preoperative CDVA of both groups; the series cite the Preop column of Tables 2 and 3.",
+  "The whole cohort (41 eyes of 41 patients) is not tabulated as a single series; only the two Kmax subgroups are, and both are extracted.",
+  "No outcome-based or complete-case restriction is stated; the 1-year proportions in Results are given over all 20 and 21 eyes.",
+  "The 1-day visit is not tabulated for CDVA.",
+  "Spherical equivalent, flat, steep and mean keratometry, Kmax, thinnest corneal thickness and endothelial cell density are tabulated (Tables 2 and 3); not extracted (schema 1.0.0).",
+  "No investigational arm is declared; both groups are patient-condition subgroups of the same treatment (role control).",
+  "Licence CC BY-NC-ND 4.0: the record is private; the source XML is not copied to the public raw folder."
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc9156484",
+ "doi": "10.1007/s10792-021-02176-3",
+ "pmcid": "PMC9156484",
+ "title": "Descemet membrane endothelial keratoplasty: analysis of clinical outcomes of patients with 8–10 years follow-up",
+ "species": "human",
+ "procedure": "dmek",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License); public",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9156484.xml",
+   "sha256": "e4755c6817d37f592bae8ccbc799af45a2c73eb624e400f1718d99a926bcf5dd",
+   "bytes": 94484,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9156484/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "all-eyes",
+   "role": "control",
+   "procedure": "dmek",
+   "indication": "mixed",
+   "combined": null,
+   "n_reported": 66,
+   "description": "DMEK performed July 2009 to June 2012 (single centre); the 66 of 450 operated eyes that met the inclusion criterion of at least 8 years of follow-up. Indications: Fuchs endothelial corneal dystrophy 60 eyes, DMEK after failed DSAEK 4 eyes, DMEK after failed DMEK 2 eyes (repeat grafts reported as indications of the cohort, so indication mixed). Triple DMEK (DMEK combined with cataract surgery) in 28 of the 66 eyes (combined left null: only part of the group)."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "PMC9156484.xml::Tab1!R8-R11 (BCVA excluding eyes with comorbidities, 55 eyes)",
+   "reason": "subset of the same eyes as the all-eyes series; its complement (11 eyes with comorbidities) is not tabulated, and the comorbidities are defined as limiting the visual outcome (not all clearly preoperative), so the whole cohort is extracted instead"
+  },
+  {
+   "what": "PMC9156484.xml::Tab1!R4 and R9 (Median), R6 and R11 (P value)",
+   "reason": "medians and p-values are not admissible"
+  },
+  {
+   "what": "Supplemental Table 2 (BCVA of the 21 eyes that completed the 10-year visit)",
+   "reason": "supplementary files are not acquired (addendum 1); also a complete-case set (protocol inclusion 5)"
+  },
+  {
+   "what": "Proportions of eyes reaching 20/40 or 20/25 (Results text)",
+   "reason": "proportions reaching a threshold are not admissible"
+  }
+ ],
+ "notes": [
+  "Retrospective consecutive single-centre case series. Inclusion criterion: minimum postoperative follow-up of 8 years, shorter than the last tabulated visit (10 years), so the group is kept with this note (addendum 2); 66 of 450 operated eyes qualified; participation in all intermediate visits was not required.",
+  "Four eyes had graft failure after the 8-year visit and repeat DMEK at 101-127 months; the article does not state how they enter the later means.",
+  "Per-eye follow-up data and graft survival of all 450 eyes are in supplementary files, which are not acquired (addendum 1); group means of the article's own Table 1 are extracted.",
+  "Endothelial cell density and central corneal thickness (Table 2) are tabulated: notes only.",
+  "Extracted under extraction protocol 1.0.0, the extraction brief and addendum 1 (development extractor D5)."
+ ],
+ "series": [
+  {
+   "series_id": "all-eyes/bcva",
+   "group": "all-eyes",
+   "kind": "group_mean",
+   "n": 66,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12,
+    24,
+    36,
+    48,
+    60,
+    72,
+    84,
+    96,
+    108,
+    120
+   ],
+   "baseline_label": "Baseline, BCVA including all eyes, Mean ± SD (logMAR) (Table 1)",
+   "notes": "mean ± SD as printed; best-corrected distance visual acuity with optimal spectacle correction in logMAR (Methods); per-visit n printed in Tab1!R5 and decreases at later visits (participation in intermediate visits was not required)",
+   "values": [
+    0.63,
+    0.19,
+    0.17,
+    0.17,
+    0.16,
+    0.15,
+    0.14,
+    0.15,
+    0.19,
+    0.18,
+    0.13
+   ],
+   "source_cells": [
+    "PMC9156484.xml::Tab1!R3C2",
+    "PMC9156484.xml::Tab1!R3C3",
+    "PMC9156484.xml::Tab1!R3C4",
+    "PMC9156484.xml::Tab1!R3C5",
+    "PMC9156484.xml::Tab1!R3C6",
+    "PMC9156484.xml::Tab1!R3C7",
+    "PMC9156484.xml::Tab1!R3C8",
+    "PMC9156484.xml::Tab1!R3C9",
+    "PMC9156484.xml::Tab1!R3C10",
+    "PMC9156484.xml::Tab1!R3C11",
+    "PMC9156484.xml::Tab1!R3C12"
+   ],
+   "source_cell_texts": [
+    "0.63 ± 0.43",
+    "0.19 ± 0.14",
+    "0.17 ± 0.16",
+    "0.17 ± 0.15",
+    "0.16 ± 0.15",
+    "0.15 ± 0.18",
+    "0.14 ± 0.18",
+    "0.15 ± 0.16",
+    "0.19 ± 0.21",
+    "0.18 ± 0.20",
+    "0.13 ± 0.18"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "study_id": "acu-pmc4809308",
+ "doi": "10.2147/OPTH.S97158",
+ "pmcid": "PMC4809308",
+ "title": "Combined femtosecond laser-assisted intracorneal ring segment implantation and corneal collagen cross-linking for correction of keratoconus",
+ "species": "human",
+ "procedure": "other",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 3.0 (article <license>: Creative Commons Attribution - Non Commercial (unported, v3.0) License, with Dove Medical Press terms)",
+  "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC4809308.xml",
+   "sha256": "058fe9667c3fe82d770fbc5ed02d8789d40062267db0430f57fbfaa12835a0c9",
+   "bytes": 51020,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4809308/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "icrs-cxl",
+   "role": "control",
+   "procedure": "other",
+   "indication": "keratoconus",
+   "combined": null,
+   "n_reported": 160,
+   "description": "Femtosecond laser-assisted Keraring intracorneal ring segment implantation followed by epithelium-off corneal cross-linking (0.1% riboflavin, 18 mW/cm2 for 5 min) in the same setting, for progressive keratoconus; prospective noncomparative case series of 160 eyes of 100 patients (60 bilateral). Cross-linking combined with a ring segment in one treatment, so procedure 'other'; single arm without an investigational comparator, so role control."
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "icrs-cxl/bcva",
+   "group": "icrs-cxl",
+   "kind": "group_mean",
+   "n": 160,
+   "value_kind": "logmar_absolute",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC4809308.xml::t1-opth-10-521!R4C2",
+    "PMC4809308.xml::t1-opth-10-521!R4C3",
+    "PMC4809308.xml::t1-opth-10-521!R4C4",
+    "PMC4809308.xml::t1-opth-10-521!R4C5"
+   ],
+   "baseline_label": "Preoperative BCVA (in logMAR) (Table 1)",
+   "notes": "Row 'BCVA (in logMAR)'; cells print mean ± SD, followed at postoperative visits by a p-value in parentheses; the leading mean is read. Unit logMAR from the row label; the table has no decimal or Snellen row. Visits are the stated preoperative, 1-, 3- and 6-month examinations. Per-visit n not given in the table; the Results text reports proportions out of 160 eyes at 1, 3 and 6 months."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 p-values printed in parentheses (R4C3-R4C5)",
+   "reason": "p-values are not admissible (protocol inclusion 4); only the leading mean is read"
+  },
+  {
+   "what": "Results text: eyes reaching a BCVA level at 1, 3 and 6 months, eyes gaining two lines or more, lines lost",
+   "reason": "proportions reaching a threshold and lines gained are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Table 1 UCVA (in logMAR), R3",
+   "reason": "uncorrected acuity is not admissible (protocol inclusion 1); mentioned in notes only"
+  },
+  {
+   "what": "Single patient with a broken ring segment (Results)",
+   "reason": "a single case selected for a complication; no separate series"
+  }
+ ],
+ "notes": [
+  "BCVA unit: Table 1 labels the row 'BCVA (in logMAR)' and the abstract reports BCVA in logMAR. The inclusion criterion (BCVA less than 0.7) and a Results sentence on eyes reaching a BCVA level are written in decimal-like notation, but the table prints no decimal mean; the logMAR row is the only tabulated corrected acuity.",
+  "Both eyes of 60 of the 100 patients are included (160 eyes); eyes are not independent.",
+  "Inclusion required progressive keratoconus, poor preoperative BCVA and contact-lens intolerance (preoperative criteria). No loss to follow-up is reported.",
+  "Spherical equivalent, keratometry (K1, K2), pachymetry (Table 1) and UCVA are tabulated; not extracted (no such series in schema 1.0.0).",
+  "combined = null: same-session cataract surgery is neither stated nor explicitly ruled out (addendum 1, point 3)."
+ ]
+}

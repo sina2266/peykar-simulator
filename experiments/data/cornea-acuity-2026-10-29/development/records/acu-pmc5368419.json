@@ -1,0 +1,180 @@
+{
+ "schema": "cornea.acuity-record-1.0.0",
+ "study_id": "acu-pmc5368419",
+ "doi": "10.1155/2017/6490915",
+ "pmcid": "PMC5368419",
+ "title": "Thinner Corneas Appear to Have More Striking Effects of Corneal Collagen Crosslinking in Patients with Progressive Keratoconus",
+ "species": "human",
+ "procedure": "cxl",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License)",
+  "url": "http://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC5368419.xml",
+   "sha256": "78f5fe4690c16bf2a39153eceebdaf502f2cb1f09347b02b6bbe3ba7d0de9e70",
+   "bytes": 69507,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5368419/fullTextXML",
+   "retrieved_utc": "2026-10-29T11:57:43.987517+00:00"
+  }
+ ],
+ "extractor": "D1",
+ "groups": [
+  {
+   "group": "tct-group-1",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 31,
+   "description": "Group 1: preoperative thinnest corneal thickness <= 400 um (Methods: less than 400 um); 31 eyes (Table 2 header); Epithelium-off Dresden CXL (epithelium removed over 9 mm, 0.1% riboflavin every 3 min for 30 min, UVA 370 nm 3.0 mW/cm2 for 30 min; hypo-osmolar 0.1% riboflavin until 400 um when the denuded cornea was thinner than 400 um) for progressive keratoconus; no cataract or other surgery in the described session"
+  },
+  {
+   "group": "tct-group-2",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 41,
+   "description": "Group 2: preoperative thinnest corneal thickness > 400 um and <= 450 um (Methods: between 400 and 450 um); 41 eyes (Table 2 header); Epithelium-off Dresden CXL (epithelium removed over 9 mm, 0.1% riboflavin every 3 min for 30 min, UVA 370 nm 3.0 mW/cm2 for 30 min; hypo-osmolar 0.1% riboflavin until 400 um when the denuded cornea was thinner than 400 um) for progressive keratoconus; no cataract or other surgery in the described session"
+  },
+  {
+   "group": "tct-group-3",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 36,
+   "description": "Group 3: preoperative thinnest corneal thickness > 450 um and <= 500 um (Methods: between 450 and 500 um); 36 eyes (Table 2 header); Epithelium-off Dresden CXL (epithelium removed over 9 mm, 0.1% riboflavin every 3 min for 30 min, UVA 370 nm 3.0 mW/cm2 for 30 min; hypo-osmolar 0.1% riboflavin until 400 um when the denuded cornea was thinner than 400 um) for progressive keratoconus; no cataract or other surgery in the described session"
+  },
+  {
+   "group": "tct-group-4",
+   "role": "control",
+   "procedure": "cxl",
+   "indication": "keratoconus",
+   "combined": false,
+   "n_reported": 15,
+   "description": "Group 4: preoperative thinnest corneal thickness >= 500 um (Methods: 500 um or more); 15 eyes (Table 2 header); Epithelium-off Dresden CXL (epithelium removed over 9 mm, 0.1% riboflavin every 3 min for 30 min, UVA 370 nm 3.0 mW/cm2 for 30 min; hypo-osmolar 0.1% riboflavin until 400 um when the denuded cornea was thinner than 400 um) for progressive keratoconus; no cataract or other surgery in the described session"
+  }
+ ],
+ "extraction_protocol": "acuity-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Whole-cohort BCVA of all 123 eyes (Table 1 row 7: preop, 6 and 12 months)",
+   "reason": "the same eyes are tabulated by preoperative thinnest-corneal-thickness subgroup in Table 2; the subgroups are extracted and the whole-cohort series is not (brief: no whole-cohort series alongside its preoperative-condition subgroups); the 6-month visit exists only for the whole cohort"
+  }
+ ],
+ "notes": [
+  "123 eyes of 101 patients; the Results give the group sizes 31/41/36/15 as 'patients', but they sum to 123 and match the Table 2 header n, so they are eyes.",
+  "The abstract and the Methods word the thickness boundaries slightly differently (abstract: <=400, 400-450, 450-500, >=500 um).",
+  "Contact lens wear was discontinued before each evaluation (Methods).",
+  "Tables 1-2 also tabulate thinnest corneal thickness, K1, K2, Kmax, uncorrected acuity (logMAR), IOP and endothelial cell density; Tables 3-4 tabulate the change in Kmax; none of these is used.",
+  "Retrospective cohort; post-therapy follow-up 12 months."
+ ],
+ "series": [
+  {
+   "series_id": "tct-group-1/bcva",
+   "group": "tct-group-1",
+   "kind": "group_mean",
+   "n": 31,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12
+   ],
+   "baseline_label": "Preop BCVA (logMAR), Group 1 (Table 2)",
+   "notes": "mean ± SD; unit logMAR from the Table 2 row label; per-visit n not reported; asterisk marks significance versus preop",
+   "values": [
+    0.46,
+    0.21
+   ],
+   "source_cells": [
+    "PMC5368419.xml::tab2!R8C2",
+    "PMC5368419.xml::tab2!R8C3"
+   ],
+   "source_cell_texts": [
+    "0.46 ± 0.48",
+    "0.21 ± 0.32∗"
+   ]
+  },
+  {
+   "series_id": "tct-group-2/bcva",
+   "group": "tct-group-2",
+   "kind": "group_mean",
+   "n": 41,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12
+   ],
+   "baseline_label": "Preop BCVA (logMAR), Group 2 (Table 2)",
+   "notes": "mean ± SD; unit logMAR from the Table 2 row label; per-visit n not reported; asterisk marks significance versus preop",
+   "values": [
+    0.49,
+    0.29
+   ],
+   "source_cells": [
+    "PMC5368419.xml::tab2!R8C4",
+    "PMC5368419.xml::tab2!R8C5"
+   ],
+   "source_cell_texts": [
+    "0.49 ± 0.29",
+    "0.29 ± 0.34∗"
+   ]
+  },
+  {
+   "series_id": "tct-group-3/bcva",
+   "group": "tct-group-3",
+   "kind": "group_mean",
+   "n": 36,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12
+   ],
+   "baseline_label": "Preop BCVA (logMAR), Group 3 (Table 2)",
+   "notes": "mean ± SD; unit logMAR from the Table 2 row label; per-visit n not reported; asterisk marks significance versus preop",
+   "values": [
+    0.32,
+    0.15
+   ],
+   "source_cells": [
+    "PMC5368419.xml::tab2!R8C6",
+    "PMC5368419.xml::tab2!R8C7"
+   ],
+   "source_cell_texts": [
+    "0.32 ± 0.33",
+    "0.15 ± 0.18∗"
+   ]
+  },
+  {
+   "series_id": "tct-group-4/bcva",
+   "group": "tct-group-4",
+   "kind": "group_mean",
+   "n": 15,
+   "value_kind": "logmar_absolute",
+   "months": [
+    0,
+    12
+   ],
+   "baseline_label": "Preop BCVA (logMAR), Group 4 (Table 2)",
+   "notes": "mean ± SD; unit logMAR from the Table 2 row label; per-visit n not reported; asterisk marks significance versus preop",
+   "values": [
+    0.1,
+    0.08
+   ],
+   "source_cells": [
+    "PMC5368419.xml::tab2!R8C8",
+    "PMC5368419.xml::tab2!R8C9"
+   ],
+   "source_cell_texts": [
+    "0.10 ± 0.20",
+    "0.08 ± 0.15∗"
+   ]
+  }
+ ]
+}

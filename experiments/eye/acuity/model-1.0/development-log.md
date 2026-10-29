@@ -121,3 +121,32 @@ Student-t variant (`population_assimilation_t4`).
 Adoption rule as in round 1, against a0. If a4 is adopted, it is the model 1.0
 candidate; if it is rejected, a0 is. In either case the protocol keeps the H2 and H3
 comparators of the other eye components, including the pooled-curve increment.
+
+## Round 2 — results (2026-10-29)
+
+LOSO over the same 27 studies (`.peykar/acuity-1.0-dev/round2-a4`): primary
+`population_assimilation_robust`, next observation 5.387 letters (bias −1.02),
+landmark 7.569 (−2.36), initial state 15.918 (unchanged, as declared); next-obs
+coverage 0.780/0.856. **a4 rejected**: its gains are 0.047 and 0.019 letters, below
+the 0.10 threshold. The persistent deviations do not reproduce what the pooled-curve
+increment keeps: the shortfall of the poorly recovering keratoplasty groups is a
+study-level offset of the long-term level (study SD 0.19 logMAR), much larger than
+the residual process the deviations act on.
+
+## Freeze decision (2026-10-29)
+
+Model 1.0.0 is **a0** (contexts `human/procedure`, one hierarchy, a study effect per
+procedure arm), as declared. Primaries: `population_assimilation_robust` for the next
+observation (U2) and the landmark task (U3), `population_initial_state` for the
+initial state (U1). There is no reference candidate, so there is no H5.
+
+The declared hypotheses are those of the other eye components, in letters: H1
+next-observation coverage of the primary inside [0.70, 0.90] and [0.80, 0.97]; H2
+next-observation RMSE lower than persistence, the last-two trend, the pooled-curve
+increment and analog kNN; H3 landmark RMSE lower than persistence, the pooled-curve
+increment and analog kNN; H4 initial-state RMSE lower than the pooled training curve
+over common control group-mean targets. On development (publisher in development
+mode) a0 passes H1 (0.847/0.890) and H4 (15.92 against 16.80 letters) and **fails H2
+and H3** against the pooled-curve increment (5.43 against 5.13 and 7.59 against 7.18
+letters). The sealed test is run to measure model 1.0 on new studies, not because
+development predicts a pass; the comparators are not changed after seeing this.
