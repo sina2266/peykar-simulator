@@ -37,6 +37,7 @@ from peykar.model_learning.retina_thickness_population_1_2 import (
     DEVELOPMENT_CANDIDATES,
     DEVICE_CANDIDATES,
     PRIOR_TREATMENT_CANDIDATES,
+    REGIMEN_CANDIDATES,
 )
 from peykar.validation import eye_recovery_evaluation2 as evaluation
 from peykar.validation import eye_recovery_evaluation3 as evaluation3
@@ -45,6 +46,7 @@ from peykar.validation.eye_retina_data_1_1 import to_retina_series_1_1
 from peykar.validation.eye_retina_data_1_2 import (
     to_retina_series_1_2_device,
     to_retina_series_1_2_prior,
+    to_retina_series_1_2_regimen,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +81,8 @@ def adapter(name: str) -> Callable[[Mapping[str, Any]], list[RetinaSeries]]:
         return to_retina_series_1_2_prior
     if name in DEVICE_CANDIDATES:
         return to_retina_series_1_2_device
+    if name in REGIMEN_CANDIDATES:
+        return to_retina_series_1_2_regimen
     return to_retina_series_1_1
 
 

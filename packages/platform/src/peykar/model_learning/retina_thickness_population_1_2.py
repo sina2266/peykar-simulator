@@ -27,8 +27,14 @@ Candidates:
   3.1) higher than Cirrus series; out of sample the initial state of 1.1 was 7.2 pp
   too low for Spectralis series against about 2 pp for the others.
 
-``PRIOR_TREATMENT_CANDIDATES`` and ``DEVICE_CANDIDATES`` name the candidates whose
-series carry those sub-contexts.
+- ``e6`` (round 2) is ``s5`` with a regimen level in the same place (contexts
+  ``species/<regimen>/indication|treatment``). Out of sample the initial state of 1.1
+  was 5.8 pp too low for loading-then-PRN groups (137 targets), 5.9 for
+  treat-and-extend (25) and 11.9 for fixed monthly dosing (10), against 1.7 for PRN
+  (202) and 1.9 for single doses (127).
+
+``PRIOR_TREATMENT_CANDIDATES``, ``DEVICE_CANDIDATES`` and ``REGIMEN_CANDIDATES`` name
+the candidates whose series carry those sub-contexts.
 
 Each development round of ``experiments/eye/retina/model-1.2/development-log.md`` adds
 a named candidate and never changes an earlier one. Nothing here reads files or claims
@@ -64,7 +70,10 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     "e3": replace(_S5, model_version="1.2.0-e3", grouping=("treatment", "context")),
     # e4: s5 with an OCT-device level (species -> indication|treatment -> device).
     "e4": replace(_S5, model_version="1.2.0-e4", grouping=("treatment", "context")),
+    # e6 (round 2): s5 with a regimen level (species -> indication|treatment -> regimen).
+    "e6": replace(_S5, model_version="1.2.0-e6", grouping=("treatment", "context")),
 }
 
 PRIOR_TREATMENT_CANDIDATES: frozenset[str] = frozenset({"e3"})
 DEVICE_CANDIDATES: frozenset[str] = frozenset({"e4"})
+REGIMEN_CANDIDATES: frozenset[str] = frozenset({"e6"})

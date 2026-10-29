@@ -70,3 +70,44 @@ gain over the three tasks is the incumbent and round 2 runs **e5**, with both le
 within prior treatment: contexts `species/<prior>:<device>/indication|treatment`),
 adopted if it meets the rule against that incumbent. Each run is split into four shards
 (`--shard i/4`) and joined by `--merge`.
+
+## Round 1 — results (2026-10-29)
+
+LOSO over the 128 training studies, human group means (493 next-observation and
+landmark targets, 565 initial-state targets); the selection rule gives the Gaussian
+variant `population_assimilation` as the primary of every candidate. Pooled RMSE in
+pp of the baseline thickness (`.peykar/compare_iop_12.py`):
+
+| candidate | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|
+| e0 (1.1.0) | 7.193 | 9.376 | 12.892 | 0.880 / 0.931 |
+| e3 (prior treatment) | 7.162 | 9.407 | 12.945 | 0.878 / 0.933 |
+| e4 (OCT device) | 7.196 | 9.381 | 12.818 | 0.880 / 0.933 |
+
+Persistence: 8.337 (next observation) and 11.699 (landmark).
+
+- **e3 rejected**: no gain of 0.10 pp (best −0.031, next observation) and the initial
+  state is 0.053 pp worse.
+- **e4 rejected**: its largest gain is 0.074 pp (initial state), below the 0.10 pp
+  threshold.
+- e5 is not run (it was declared only for the case that both are adopted). The
+  out-of-sample biases by prior treatment and device that motivated e3 and e4 are
+  mostly absorbed by shrinkage: the fitted between-sub-context variances are small
+  and the series' own visits dominate once they are seen.
+
+## Round 2 — declared before results (2026-10-29)
+
+Diagnostic on e0's round-1 LOSO (training data only,
+`.peykar/retina12_diag_regimen.py`; initial state, signed error = forecast −
+observed): loading then PRN −5.8 pp (137 targets), treat and extend −5.9 (25), fixed
+monthly −11.9 (10), other −6.9 (37), unstated −8.3 (10), against PRN −1.7 (202),
+single dose −1.9 (127) and fixed interval +2.2 (17). The regimen is set before
+treatment and decides how often the retina is re-treated.
+
+- **e6**: `s5` with a regimen level: contexts `species/<regimen>/indication|treatment`
+  (`eye_retina_data_1_2.to_retina_series_1_2_regimen`), grouping
+  `("treatment", "context")`; 55 control contexts on the training records.
+
+Adoption rule as in round 1, against e0. Run in eight shards (`--shard i/8`). If e6 is
+rejected, model 1.2 has no adopted change: no 1.2 protocol is frozen, and tranche 3
+stays sealed and unread for a later version.
