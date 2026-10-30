@@ -17,9 +17,11 @@ selected targets (by default group means of human series), every forecast row of
 two forecast tasks once, only rows where every member exists. The scale is then chosen
 on the same studies with those weights: over the declared grid, the factor whose pooled
 coverage of the declared interval of the declared task (by default the 80% interval of
-next-observation forecasts) is closest to the nominal level.
+next-observation forecasts) is closest to the nominal level. With per-task scales
+(``HistoryStackingSpec.scale_tasks``) every listed task gets its own factor, chosen the
+same way on that task's own intervals.
 ``nested_stack_report2`` is the development check: each held-out study of a
-leave-one-study-out report is stacked with weights and a scale fitted without it and its
+leave-one-study-out report is stacked with weights and scales fitted without it and its
 linked studies (the report's clusters). ``stack_report2`` applies a frozen stacking to a
 sealed report. Nothing here reads files or claims clinical validity.
 """
@@ -82,16 +84,18 @@ def calibration_rows(
     spec: HistoryStackingSpec,
     weights: Sequence[float],
     exclude: Collection[str] = (),
+    task: str | None = None,
 ) -> list[CalibrationRow]:
     """(observed, stacked point, model point, lower, upper) of the declared interval for
-    every selected row of the calibration task with the model's point and interval."""
+    every selected row of ``task`` (default: the calibration task) with the model's
+    point and interval."""
     members = spec.members
     low_q, high_q = INTERVALS[spec.calibration_level]
     rows = []
     for study in studies:
         if study["study_id"] in exclude:
             continue
-        for entry in study[spec.calibration_task]:
+        for entry in study[task or spec.calibration_task]:
             if not _selected(entry, members):
                 continue
             for row in entry["rows"]:
@@ -140,20 +144,30 @@ def fit_history(
     spec: HistoryStackingSpec,
     exclude: Collection[str] = (),
 ) -> HistoryStacking:
-    """Weights (version 1.0.0's fit) and the interval scale on ``studies`` minus
-    ``exclude``."""
+    """Weights (version 1.0.0's fit) and the interval scale (or one scale per task of
+    ``spec.scale_tasks``) on ``studies`` minus ``exclude``."""
     errors = history_errors(studies, spec.members, exclude)
     if not errors:
         raise InvalidRequest("No complete targets to fit stacking weights on")
     weights = simplex_least_squares(errors)
     scale = calibrate_scale(calibration_rows(studies, spec, weights, exclude), spec)
-    return HistoryStacking(weights=weights, interval_scale=scale)
+    if spec.scale_tasks is None:
+        return HistoryStacking(weights=weights, interval_scale=scale)
+    scales = []
+    for task in spec.scale_tasks:
+        if task == spec.calibration_task:
+            scales.append((task, scale))
+        else:
+            rows = calibration_rows(studies, spec, weights, exclude, task)
+            scales.append((task, calibrate_scale(rows, spec)))
+    return HistoryStacking(weights=weights, interval_scale=scale, task_scales=tuple(scales))
 
 
 def _stack_forecast_entry(
-    entry: Mapping[str, Any], stacking: HistoryStacking, spec: HistoryStackingSpec
+    entry: Mapping[str, Any], stacking: HistoryStacking, spec: HistoryStackingSpec, task: str
 ) -> dict[str, Any]:
     model = spec.members.history_model
+    scale = stacking.scale_for(task)
     rows = []
     for row in entry["rows"]:
         values = history_members(row, spec.members)
@@ -164,9 +178,7 @@ def _stack_forecast_entry(
             predictions[STACKED] = point
             interval = row["intervals"].get(model)
             if interval is not None:
-                intervals[STACKED] = scale_quantiles(
-                    interval, float(values[0]), point, stacking.interval_scale
-                )
+                intervals[STACKED] = scale_quantiles(interval, float(values[0]), point, scale)
         rows.append({**row, "predictions": predictions, "intervals": intervals})
     return {
         **entry,
@@ -184,7 +196,7 @@ def stack_study2(
     recomputed; initial states unchanged."""
     out = dict(study)
     for task in FORECAST_TASKS:
-        out[task] = [_stack_forecast_entry(e, stacking, spec) for e in study[task]]
+        out[task] = [_stack_forecast_entry(e, stacking, spec, task) for e in study[task]]
     out["stacking"] = stacking.describe()
     return out
 
@@ -233,18 +245,24 @@ def stack_report2(
 def _calibration_summary(
     studies: Sequence[Mapping[str, Any]], spec: HistoryStackingSpec, stacking: HistoryStacking
 ) -> dict[str, Any]:
-    rows = calibration_rows(studies, spec, stacking.weights)
-    inside = _inside(rows, stacking.interval_scale)
-    moved = _inside(rows, 1.0)
-    return {
-        "targets": len(rows),
-        "coverage_at_scale": inside / len(rows) if rows else None,
-        "coverage_moved_unscaled": moved / len(rows) if rows else None,
-    }
+    def block(task: str) -> dict[str, Any]:
+        rows = calibration_rows(studies, spec, stacking.weights, task=task)
+        inside = _inside(rows, stacking.scale_for(task))
+        moved = _inside(rows, 1.0)
+        return {
+            "targets": len(rows),
+            "coverage_at_scale": inside / len(rows) if rows else None,
+            "coverage_moved_unscaled": moved / len(rows) if rows else None,
+        }
+
+    out = block(spec.calibration_task)
+    if spec.scale_tasks is not None:
+        out["by_task"] = {task: block(task) for task in spec.scale_tasks}
+    return out
 
 
 def nested_stack_report2(report: Mapping[str, Any], spec: HistoryStackingSpec) -> dict[str, Any]:
-    """Each held-out study stacked with weights and a scale fitted without it and its
+    """Each held-out study stacked with weights and scales fitted without it and its
     linked studies."""
     linked: dict[str, set[str]] = {}
     for cluster in report.get("clusters", []):

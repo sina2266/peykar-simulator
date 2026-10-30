@@ -152,3 +152,37 @@ def test_nested_stacking_fits_weights_and_scale_without_the_held_out_cluster() -
     assert isinstance(comparison["adopted"], bool)
     unscaled = comparison["reported_not_in_rule"]["coverage_next_observation_moved_unscaled"]
     assert unscaled["80"]["n"] == comparison["coverage_next_observation"]["80"]["n"]
+
+
+def test_per_task_scales_change_only_the_other_tasks_intervals() -> None:
+    report = _report()
+    model = SPEC.members.history_model
+    per_task = HistoryStackingSpec(
+        members=SPEC.members, scale_tasks=("next_observation", "landmark")
+    )
+    one = stacking2.fit_history(report["studies"], SPEC)
+    two = stacking2.fit_history(report["studies"], per_task)
+    assert two.weights == one.weights and two.interval_scale == one.interval_scale
+    assert two.scale_for("next_observation") == one.interval_scale
+    rows = stacking2.calibration_rows(report["studies"], per_task, two.weights, task="landmark")
+    assert two.scale_for("landmark") == stacking2.calibrate_scale(rows, per_task)
+    assert HistoryStacking.from_description(two.describe()) == two
+    assert "task_scales" not in one.describe() and "scale_tasks" not in SPEC.describe()
+    first = stacking2.stack_report2(report, one, SPEC)
+    second = stacking2.stack_report2(report, two, per_task)
+    for a, b in zip(first["studies"], second["studies"], strict=True):
+        assert a["next_observation"] == b["next_observation"]
+        for x, y in zip(a["landmark"], b["landmark"], strict=True):
+            for r, s in zip(x["rows"], y["rows"], strict=True):
+                assert r["predictions"] == s["predictions"]
+                if "stacked" in s["intervals"]:
+                    m, p = s["predictions"][model], s["predictions"]["stacked"]
+                    expected = scale_quantiles(
+                        s["intervals"][model], m, p, two.scale_for("landmark")
+                    )
+                    assert s["intervals"]["stacked"] == pytest.approx(expected)
+    for bad in (("landmark",), ("next_observation", "next_observation")):
+        with pytest.raises(InvalidRequest):
+            HistoryStackingSpec(members=SPEC.members, scale_tasks=bad)
+    with pytest.raises(InvalidRequest):
+        HistoryStacking((1.0, 0.0, 0.0), 1.0, task_scales=(("landmark", 0.0),))
