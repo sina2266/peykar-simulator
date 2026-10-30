@@ -48,3 +48,28 @@ its adoption rule before its results are seen.
 - A 1.4 protocol tests H1–H4 as in model 1.3 and an H5 against model 1.2.0 from the
   same fit that names the tasks the adopted change targets. If no candidate is adopted,
   there is no 1.4 protocol and tranche 5 stays sealed.
+
+## Round 1 — declared before the round-0 results (2026-10-30)
+
+Written while the round-0 shards run; no LOSO number over the 308 studies has been seen.
+
+- **d1s** (selective sub-procedure level): model 1.3's sub-procedure contexts
+  (`species/<sub>/procedure` by the frozen keyword rules of `eye_iop_data_1_3`) and
+  grouping `("treatment", "context")`, but only for the procedures selected by the rule
+  below; every other procedure keeps one sub-procedure `all` (as model 1.3 did for
+  procedures without rules). Everything else equals `c1`.
+- **Selection rule**, applied mechanically to d0's round-0 out-of-sample errors
+  (`.peykar/iop14_diagnostics.py`; initial states of human control group means, signed
+  error = forecast − observed in pp, pooled over all months): among the sub-procedures
+  of a procedure with keyword rules (tube, angle MIGS, cyclodestruction,
+  subconjunctival MIGS), excluding `other`, keep those with at least 3 studies. A
+  procedure is selected if the mean signed errors of two kept sub-procedures differ by
+  at least 5 pp. Reason: model 1.3's split helped where such a difference existed in the
+  training diagnostics (micropulse against continuous-wave cyclophotocoagulation,
+  PreserFlo against XEN) and hurt where none existed (valved against non-valved tubes).
+  If no procedure is selected, d1s equals d0 and round 1 has no candidate.
+- **Adoption rule**: as declared in round 0 (at least 0.10 pp gain in one task, at most
+  0.05 pp loss in any, coverage inside both windows), against d0.
+- If d1s is adopted, the 1.4 protocol's H5 against model 1.2.0 from the same fit is:
+  pooled initial-state RMSE of human control group means lower, and pooled
+  next-observation and landmark RMSE each at most 0.05 pp higher.
