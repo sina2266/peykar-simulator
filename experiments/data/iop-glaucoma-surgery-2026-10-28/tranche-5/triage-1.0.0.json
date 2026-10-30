@@ -1,0 +1,182 @@
+{
+ "schema": "eye.iop-triage-1.0.0",
+ "utc": "2026-10-30T03:34:23.374026+00:00",
+ "tranche": 5,
+ "basis": "Masked article-table previews only (data cells hidden; decimals, ±, %, n/N and equations hidden in labels), captions, footnotes and titles; no IOP value read.",
+ "chunks": "experiments/data/iop-glaucoma-surgery-2026-10-28/screening/triage_chunks.py --tranche 5 --chunks 1 (one chunk, rank order)",
+ "tranche_order": "experiments/data/iop-glaucoma-surgery-2026-10-28/tranche-order-1.0.0.json",
+ "reviewers": "one sub-agents following .peykar/iop-tranche5-triage-brief.md (the earlier brief with tranche-5 paths); owner overrides listed per entry",
+ "extraction_protocol": "experiments/data/iop-glaucoma-surgery-2026-10-28/extraction-protocol-1.0.0.md",
+ "studies": [
+  {
+   "pmcid": "PMC13117507",
+   "doi": "10.3390/life16040614",
+   "study_key": null,
+   "fulltext_sha256": "92cce66a80c83675c725e9ddac22c24c10892883fad2f689eb3ffd4cef1e22ff",
+   "decision": "exclude",
+   "reason": "out of scope: travoprost intracameral drug-eluting implant (drug delivery, not a listed outflow procedure)"
+  },
+  {
+   "pmcid": "PMC6586011",
+   "doi": "10.1111/aos.13902",
+   "study_key": "iop-pmc6586011",
+   "fulltext_sha256": "cdc0486726fdb082d02aba6edd7226b60a84b26a6861c9db2a85d0cb89c7d701",
+   "decision": "admit",
+   "reason": "Tab1: mean IOP with CI at baseline and day 1 to month 12 after XEN, all eyes; bleb-morphology columns are postoperative subgroups",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC12965975",
+   "doi": "10.1097/JCMA.0000000000000430",
+   "study_key": null,
+   "fulltext_sha256": "99fd84f62e6a23c60eebf6ed17f50d13a55866121258c4dabac7d6dfe7599a3c",
+   "decision": "exclude",
+   "reason": "only table shown is an odds-ratio regression of factors for success and further surgery"
+  },
+  {
+   "pmcid": "PMC9572517",
+   "doi": "10.3390/jcm11195840",
+   "study_key": "iop-pmc9572517",
+   "fulltext_sha256": "0638221aa89dee186dc1654980740e57075f3ed8d030ccdbe4a9892f06b3b625",
+   "decision": "admit",
+   "reason": "Tab2: IOP baseline and 6/12/24 months, trabeculectomy vs XEN; summary statistic not shown in preview (Wilcoxon/Mann-Whitney tests)",
+   "context_hint": "trabeculectomy,subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC8403082",
+   "doi": "10.2147/OPTH.S320092",
+   "study_key": "iop-pmc8403082",
+   "fulltext_sha256": "07421f19e5e149c55dc5005f2a27f95b9833791790f3d1e5d60816019744d7aa",
+   "decision": "admit",
+   "reason": "Tab2: IOP n/mean/SD preop and 1/2/4/6 months, 1/2 years, phaco-trabeculectomy vs phaco-ECP",
+   "context_hint": "trabeculectomy,cyclodestruction"
+  },
+  {
+   "pmcid": "PMC4127218",
+   "doi": "10.1155/2014/801967",
+   "study_key": "iop-pmc4127218",
+   "fulltext_sha256": "e71353bf79fff8c017a84078653c0e34363dff3400e2bee01613eaae99626c04",
+   "decision": "admit",
+   "reason": "Tab2: per-patient sitting IOP at baseline and 1-24 months after trabeculectomy (postural difference in parentheses)",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC6953161",
+   "doi": "10.1186/s40662-019-0169-7",
+   "study_key": "iop-pmc6953161",
+   "fulltext_sha256": "006ff20aee1153a901ff83c0403b819cbfd80b7ea3b361842a693896fa308d94",
+   "decision": "admit",
+   "reason": "owner override (tranche-1 rule): the masked table shows percent IOP change or reduction from baseline at follow-up times; percent_change is admissible without a reference value under protocol 1.0.0 (the custodian decides extractability)",
+   "reviewer_decision": "exclude",
+   "reviewer_reason": "Tab2: mean IOP and percent reduction at 12/24 months only; no baseline shown in preview"
+  },
+  {
+   "pmcid": "PMC13200206",
+   "doi": "10.2147/OPTH.S607636",
+   "study_key": "iop-pmc13200206",
+   "fulltext_sha256": "02eb9a223b4a234577d09e14c9f33fc50c1b9cc5f2e63c6df415334e9c9a33c7",
+   "decision": "admit",
+   "reason": "Tab2-4: IOP mean (SD) baseline and day 1 to month 6, all eyes, combined-with-cataract and standalone canaloplasty",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC13199026",
+   "doi": "10.3389/fmed.2026.1760525",
+   "study_key": "iop-pmc13199026",
+   "fulltext_sha256": "679801918d384f9f8532a4bde2c49711625126956adf807cf92b76f2961856fa",
+   "decision": "admit",
+   "reason": "Tab3: IOP mean ± SD pre-op and 1 week to 2 years after modified suture trabeculotomy",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC5701565",
+   "doi": "10.2147/OPTH.S145957",
+   "study_key": "iop-pmc5701565",
+   "fulltext_sha256": "4a7ba71c68d13598c24974d5e773f53f18e46589c5e0e0a4eb67e887becb7ad6",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop and 1 day to 12 months, trabeculectomy with subtenon triamcinolone in uveitic glaucoma",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC8166817",
+   "doi": "10.2147/OPTH.S308228",
+   "study_key": "iop-pmc8166817",
+   "fulltext_sha256": "41fe5f48490700e5cfdd724c9bf7a975090645dd26b47061804d3f3c40d17cad",
+   "decision": "admit",
+   "reason": "Tab3: IOP baseline, discharge, 4 weeks, 12 months and last visit, POAG vs SOAG subgroups (t-test)",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC13258555",
+   "doi": "10.3390/jcm15114215",
+   "study_key": "iop-pmc13258555",
+   "fulltext_sha256": "e32bd853b685dee829a5e3284795d8f82cf1ad649971834452401617979b37c2",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD baseline and months 1/3/6/12, standalone iStent infinite",
+   "context_hint": "angle_mims"
+  },
+  {
+   "pmcid": "PMC12921533",
+   "doi": "10.18502/jovr.v21.17046",
+   "study_key": "iop-pmc12921533",
+   "fulltext_sha256": "da53a1ef47bb203396fbf1abffd7cd270ab9808813a5b7a53765e78462195c9a",
+   "decision": "admit",
+   "reason": "Tab1: IOP mean ± SD baseline and 2 hours to 1 year after SLT in pseudoexfoliation glaucoma",
+   "context_hint": "laser_trabeculoplasty"
+  },
+  {
+   "pmcid": "PMC11288689",
+   "doi": "10.1155/2024/2447721",
+   "study_key": "iop-pmc11288689",
+   "fulltext_sha256": "1916adae9019491507f4cffda0789619c0f966d9a5baec0e4cba0d9b7acec377",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD baseline and day 1 to month 12, nested cohorts by available follow-up length",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC13116894",
+   "doi": "10.3390/jcm15083028",
+   "study_key": "iop-pmc13116894",
+   "fulltext_sha256": "064c37727d5ea76b8b83b717f1789d83c66cd242ef6d81f7e2e4df6f6ea81d0c",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean with CI at baseline and years 1-5, XEN63 vs XEN45",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC11204868",
+   "doi": "10.3390/jcm13123406",
+   "study_key": "iop-pmc11204868",
+   "fulltext_sha256": "b31e404743c67400dfd9f1d3222210ccbeed5f482c8f8d1083f113775731a58d",
+   "decision": "admit",
+   "reason": "Tab2: IOP mean ± SD preop and day 1 to month 12, medically controlled vs uncontrolled eyes",
+   "context_hint": "subconjunctival_mims"
+  },
+  {
+   "pmcid": "PMC9842981",
+   "doi": "10.12669/pjms.39.1.6531",
+   "study_key": "iop-pmc9842981",
+   "fulltext_sha256": "7955b638fb902ec1ab0872371381a38b4dfd9051916f7dd412512d71775fbbfc",
+   "decision": "admit",
+   "reason": "Tab-I: IOP preop, 1 week and 1 month after phacoemulsification, glaucomatous vs non-glaucomatous operated eyes",
+   "context_hint": "cataract"
+  },
+  {
+   "pmcid": "PMC11190021",
+   "doi": "10.1016/j.ophtha.2024.01.007",
+   "study_key": "iop-pmc11190021",
+   "fulltext_sha256": "c85b1eea65a3fcaeced28216c414b3c7b19cf5ca4671662535bcd63d9ed8b93d",
+   "decision": "admit",
+   "reason": "Tab4: IOP mean ± SD at diagnosis/baseline and 4/12/24/60 months, trabeculectomy arm (medical arm unoperated)",
+   "context_hint": "trabeculectomy"
+  },
+  {
+   "pmcid": "PMC6835818",
+   "doi": "10.3390/vision1020015",
+   "study_key": "iop-pmc6835818",
+   "fulltext_sha256": "5a245fe1164cef6a94b35d49b85c53c54024667f4faff4141e198a8d95755db5",
+   "decision": "admit",
+   "reason": "Tab2: IOP and reduction at baseline and follow-ups to 12 months, Baerveldt vs trabeculectomy with ExPress",
+   "context_hint": "tube,trabeculectomy"
+  }
+ ]
+}
