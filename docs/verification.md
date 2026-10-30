@@ -1,4 +1,76 @@
 # Verification record
+## Retina tranche 4, stacking 2.0.0, retinal-thickness model 1.4 and IOP tranche 5: 2026-10-30
+Commands run from the repository root; outcomes observed. Start state: main at
+`0b09ae1e` (= origin).
+- Retina tranche 4 (35 articles), reserved before triage (commit `cd04f431`): the
+  unchanged `screening/triage_chunks.py` rebuilt the tranche-1 to tranche-3 chunks byte
+  for byte and built two tranche-4 chunks (18 and 17 articles); two reviewer sub-agents
+  admitted 22 and excluded 13; `.peykar/write_tranche_triage_reservation.py retina-t4`
+  wrote 195 development and 22 sealed studies; `scripts/link_study_authors.py` found 82
+  pairs, 21 development clusters and 8 sealed studies with training exclusions (commit
+  `57674f37`). Three custodians wrote 17 records with 26 series;
+  `.peykar/verify_retina_tranche4_custody.py`: 17/17 rebuilt identical, no problem
+  (commit `91dcee7f`). The developer read the three custody reports (disclosed in the
+  tranche-4 README).
+- `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_stacking2.py
+  tests/unit/test_eye_stacking.py`: 10 passed; ruff and mypy on `eye_stacking2`,
+  `eye_stacking_evaluation2`, `retina_thickness_population_1_4` and the 1.4 operator and
+  publisher passed. Commit `6ef76603` (code, tests and the round 0–1 declarations,
+  before any run), pushed.
+- `... evaluate_retina_population_1_4.py --development --candidate e0 --shard i/16`
+  for i = 0..15 (detached; 4,131–4,706 s each), `--merge` (exit 0; report
+  `e4152c3a…`): e0 next observation 6.752 pp, landmark 8.850 (750 human group-mean
+  targets each), coverage of its own intervals 0.861/0.931 and 0.805/0.903.
+- `... --stack --candidate k2 --report .peykar/retina-1.4-dev/round0-e0/report.json
+  --output .peykar/retina-1.4-dev/round1-k2`: exit 0; 6.623/8.673 pp; next-observation
+  coverage 598/750 and 658/750; adopted by the declared rule; weights
+  0.729/0.212/0.058, scale 0.79; landmark coverage 519/750 = 0.692 (reported).
+- Round 2 code (one scale per task) and a sixth unit test: 6 passed. The k2 rerun with
+  the new code (`round2-k2-rerun`) gave a report and comparison identical byte for byte
+  (`cmp`). Commit `3031396e` (round-1 results and the round-2 declaration, before the k3
+  run), pushed. `... --stack --candidate k3`: exit 0; points and next-observation
+  entries identical to k2's; landmark coverage 593/750 and 673/750; scales 0.79/1.00.
+  `publish_retina_population_1_4.py --development` with e0's report as reference: H1–H5
+  pass.
+- `make check-docker` before the freeze: 945 tests passed in 203.30 s, 89% coverage,
+  mypy 174 source files, all packages built, EXIT=0
+  (`.peykar/retina14-prefreeze-check-docker.log`).
+- `uv run --frozen python .peykar/write_retina_protocol_1_4.py`: protocol SHA-256
+  `ea054039…`, 81 frozen files; `.peykar/check_frozen_protocols.py`: no problem in any
+  of the 17 frozen protocols. Freeze commit `c1dbd266`, pushed (remote SHA equal).
+- Then, once: `... evaluate_retina_population_1_4.py --sealed --protocol
+  experiments/eye/retina/model-1.4/protocol-1.4.0.json --output
+  .peykar/retina14-sealed-test-2026-10-30` (detached; EXIT=0, 1,760.1 s; report
+  `dd3803cc…`, reference e0 `e3a2baae…`).
+- `publish_retina_population_1_4.py --sealed --report ... --reference
+  .../reference-e0-report.json --output experiments/eye/retina/model-1.4/sealed-test-2026-10-30`:
+  exit 0; H1 passes (69/87 and 73/87), H2 passes (5.84 against 7.00/13.78/6.65/6.58), H3
+  fails (10.58 against 16.13/9.80/11.65), H4 passes (10.98 against 15.14), H5 fails
+  (landmark 10.58 against 9.99). `.peykar/check_stacking_redaction.py ... sealed`: 6
+  public and 11 private studies, 22 redacted study reports and 48 analysis rows checked,
+  0 leaks. `.peykar/stacking_drop_one.py`: no single study flips H5.
+  `.peykar/posthoc_stacking_14.py` (post hoc, not a test): landmark-only weights 10.63
+  pp, band-fitted weights no better; e0's own landmark coverage 0.713/0.793.
+- The figure was rendered with `.peykar/cornea-native47/bin/python .../plot-results.py`
+  (exit 0) twice (overlapping tick labels, a clipped bar label) and inspected as an
+  image.
+- IOP tranche 5: `.peykar/check_iop_tranche5_exposure.py` and `..._exposure2.py`
+  (file names and status fields only; the first attempt timed out after 10 minutes and
+  was narrowed); reservation commit `6c12224e` before triage. `triage_chunks.py
+  --check-tranche-1`: 3/3 chunks identical; `--tranche 5 --chunks 1`: 19 articles;
+  `.peykar/check_iop_tranche5_chunk.py`: 10 decimal matches, all licence version
+  numbers on species/licence lines, 0 ± digits, 0 digit %. One reviewer sub-agent: 16
+  admitted, 3 excluded; `write_tranche_triage_reservation.py iop-t5` (one owner
+  override): 17 admitted, 2 excluded, 308 development and 17 sealed;
+  `link_study_authors.py`: 135 pairs, 43 development clusters, 5 sealed studies with
+  training exclusions (commit `559dde92`). Two custodians: 14 records, 24 series;
+  `.peykar/verify_iop_tranche5_custody.py`: 14/14 rebuilt identical, no problem (commit
+  `0b690e9d`). The developer opened C1's custody report (disclosed in the tranche-5
+  README).
+- `make check-docker` before the results commit: 945 tests passed in 236.10 s, 89%
+  coverage, mypy 174 source files, all packages built, EXIT=0
+  (`.peykar/retina14-results-check-docker.log`); `check_frozen_protocols.py`: no
+  problem (retina 1.2.0 has no protocol, as before).
 ## Forecast stacking: acuity model 1.2 and retinal-thickness model 1.3, development, freeze and sealed tests: 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `22bdc4ee` (= origin).

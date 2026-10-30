@@ -50,3 +50,20 @@ coverage 0.911, above its window) and H5 failed (initial state 11.62 vs 11.61 fo
 7.72 vs 7.98) ([Persian results](model-1.3/results.fa.md)). Model 1.1.0 stays the
 component's model; on tranche 3 its own 80% coverage was 0.903, just above the window.
 Tranche 3 is now consumed; tranche 4 (35 articles) stays untriaged and unread.
+
+## Model 1.4 (history-only stacking, scaled intervals, 2026-10-30)
+
+[`model-1.4/`](model-1.4/README.md): model 1.1.0's fit with stacking 2.0.0
+(`eye_stacking2`): only the forecasts from follow-up are stacked (fixed weights
+0.729/0.212/0.058 on the model, persistence and the pooled-curve increment), initial
+states stay model 1.1.0's own, and each stacked interval is model 1.1.0's scaled
+around the stacked point (0.79 for the next observation, 1.00 for the landmark),
+fitted on the 195 training studies of tranches 1–3. Tested once on tranche 4 (17
+records, 24 group-mean series): H1 passed (coverage 0.793/0.839), H2 passed (next
+observation 5.84 vs persistence 7.00 pp) and H4 passed (initial state 10.98 vs 15.14);
+H3 failed (landmark 10.58 vs the pooled-curve increment 9.80) and H5 failed (landmark
+10.58 vs model 1.1.0's 9.99 from the same fit) ([Persian results](model-1.4/results.fa.md)).
+On tranche 4 thickness kept changing after the first post-treatment visit, so the
+persistence weight hurt the long-range forecasts. Model 1.1.0 stays the component's
+model; its own H3 also fails on tranche 4 (9.99 vs 9.80). Tranche 4 is consumed and no
+unread article of this dataset remains.

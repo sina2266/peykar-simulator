@@ -514,9 +514,32 @@ sealed tests on the two unread sets (acuity tranche 2, retina tranche 3).
 - [x] Lesson from both tests: stacking the forecasts from follow-up transfers; stacking
   initial states with a pooled curve that ignores the baseline does not; an interval
   moved to a better point must also be narrowed.
-- [ ] A stacked version that combines only the forecasts from follow-up and scales its
-  intervals to the stacked errors on development; tested on retina tranche 4 (35 unread
-  articles, to be reserved before triage) or on a new screen.
+- [x] A stacked version that combines only the forecasts from follow-up and scales its
+  intervals to the stacked errors on development: retinal thickness 1.4.0 (below).
+
+### 2026-10-30 history-only stacking with scaled intervals (retinal thickness 1.4)
+
+[Retinal thickness 1.4.0](../experiments/eye/retina/model-1.4/README.md) was frozen
+(commit `c1dbd266`; protocol `ea054039`) before its one-shot sealed test on retina
+tranche 4, reserved before triage (22 admitted, 17 custodian records).
+
+- [x] Generic `eye_stacking2` 2.0.0 and `eye_stacking_evaluation2` 2.0.0: stacking
+  1.0.0's weights for forecasts from follow-up only, initial states left to the model,
+  stacked intervals scaled around the stacked point by a factor chosen on development
+  (one factor, or one per forecast task).
+- [x] Development on the 195 studies of tranches 1–3: one scale (k2) under-covered the
+  landmark intervals (0.692); one scale per task (k3, 0.79/1.00) adopted: 6.623/8.673 pp
+  against 6.752/8.850, coverage 0.797/0.877 and landmark 0.791/0.897.
+- [x] Sealed: H1 (0.793/0.839), H2 (5.84 vs persistence 7.00) and H4 pass; H3 fails
+  (landmark 10.58 vs the pooled-curve increment 9.80) and H5 fails (landmark 10.58 vs
+  1.1.0's 9.99). `peykar eye` keeps retina 1.1.0, whose own H3 also fails there.
+- [x] Lesson from three stacking tests: forecasts from follow-up gained twice and lost
+  once; a fixed persistence weight hurts when new trajectories change more after the
+  first visit than the development ones did. Scaling the next-observation interval on
+  development worked (80% coverage 0.793).
+- [ ] A forecast that adapts how much it trusts the last observation to the series' own
+  observed change, rather than a fixed persistence weight; it needs a new retina screen
+  with a test part reserved before triage (no unread retina article remains).
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
