@@ -1,4 +1,88 @@
 # Verification record
+## Myopia tranche 2 and myopia model 1.1 (one-shot sealed test): 2026-10-30
+Commands run from the repository root; outcomes observed. Start state: main at
+`f5f5bbcd` (= origin).
+- Tranche 2: reservation declared in `tranche-2/README.md` before triage (commit
+  `d363a07b`, pushed). `screening/triage_chunks.py` rebuilt the four tranche-1 chunks
+  byte for byte and built three tranche-2 chunks (32, 31 and 31 articles; no decimal, no
+  ± followed by a digit, no digit followed by % outside identifier lines); three reviewer
+  sub-agents admitted 42 of 94; `.peykar/write_tranche_triage_reservation.py` (config
+  `myopia-t2`) wrote the triage and the reservation (33 development, 42 sealed);
+  `scripts/link_study_authors.py`: 20 pairs, 2 development clusters, 7 sealed studies
+  with training exclusions. Commit `59c1d3e2`, pushed.
+- Six custodian sub-agents (C1–C6) wrote 26 records (60 series) and excluded 16 studies;
+  `.peykar/verify_myopia_tranche2_custody.py`: every reserved study assigned and
+  reported once, 42 sources equal to their assignment hashes, 26 records rebuilt
+  identical, 26 raw copies equal to their sources, 0 value-like report keys, no problem.
+  Commit `a99fd31a`, pushed.
+- `uv run --frozen python .peykar/myopia11_dev_summary.py`: 33 records (12 public
+  development, 10 private development, 11 consumed sealed), 82 group-mean series, 58 with
+  two or more follow-ups.
+- `ruff format`, `ruff check` and `mypy` on `myopia_population_1_1.py` and the 1.1
+  operator passed; `uv run --frozen pytest -q tests/unit/test_myopia_population_1_1.py`:
+  the first run failed (the synthetic atropine group lacked its concentration, which the
+  record validator requires), then 2 passed. A dry load of the operator read 82 series of
+  33 studies, and n0 differed from the frozen m4 in `model_version` only. Commit
+  `9a42ba74` (round-0 declaration, before any 1.1 run), pushed.
+- Round 0: `OMP_NUM_THREADS=1 uv run --frozen python
+  scripts/evaluate_myopia_population_1_1.py --development --candidate n0 --output
+  .peykar/myopia-1.1-dev/round0-n0` (43 s, exit 0); `.peykar/myopia_compare.py`,
+  `.peykar/myopia11_diagnostics.py` and `.peykar/myopia11_common.py`: next observation
+  10.035, landmark 13.217, initial state 13.982 pp, coverage 0.800/0.904; groups of 150 or
+  more children 0.50/0.67.
+- Round-1 candidates: mypy flagged `replace(..., start=...)` on a configuration typed as
+  version 2 (fixed with a checked accessor); `pytest -q
+  tests/unit/test_myopia_population_1_1.py`: 4 passed (each candidate differs from n0 in
+  its declared setting only; n1, n2 and n3 run through the additive evaluation on
+  synthetic data). Commit `959ec74d` (round-0 results and the round-1 declaration, before
+  any round-1 run), pushed.
+- Round 1: `... --development --candidate n1|n2|n3` in parallel (each exit 0);
+  `.peykar/myopia11_compare.py round0-n0 round1-n1 round1-n2 round1-n3`: n3 meets the rule
+  by both clauses (gains +0.000/+0.646/+0.352 pp, interval score 9.46% lower, coverage
+  0.843/0.922); n1 (−0.085/−0.061/−0.219, interval score 2.01% higher) and n2
+  (−0.386/+0.362/−1.481) do not.
+- `scripts/publish_myopia_population_1_1.py --development --report
+  .peykar/myopia-1.1-dev/round1-n3/report.json --reference
+  .peykar/myopia-1.1-dev/round0-n0/report.json`: H1–H5 pass (97/115 and 106/115; 9.39
+  against 18.22/14.71/14.33 and 9.07 against analog kNN 9.80; 12.86 against 38.17/21.75
+  and 12.61 against 15.18; 13.98 against 18.89; H5 9.39 against 10.04 and 12.86 against
+  13.22). The first version also wrote the development reference as a public file; it was
+  changed to write the reference only in sealed mode before the publication was rerun.
+  `.peykar/check_myopia11_redaction.py development`: 16 private studies, 0 leaks.
+- `make check-docker` before the freeze: 966 tests passed in 212.76 s, 89% coverage,
+  mypy 184 source files, 18 frontend tests, all packages built, EXIT=0
+  (`.peykar/myopia11-freeze-check-docker-20261030.log`).
+- `.peykar/write_myopia_protocol_1_1.py`: protocol SHA-256 `857d4c4a…`, 117 pinned
+  files, 33 training and 26 sealed record hashes; its dry run of the operator's protocol
+  check found no problem. `.peykar/check_frozen_protocols.py`: no problem in any of the 23
+  frozen protocols (retina 1.2.0 has none). Freeze commit `b5195458`, pushed (remote SHA
+  equal).
+- Then, once: `OMP_NUM_THREADS=1 uv run --frozen python
+  scripts/evaluate_myopia_population_1_1.py --sealed --protocol
+  experiments/eye/myopia/model-1.1/protocol-1.1.0.json --output
+  .peykar/myopia11-sealed-test-2026-10-30` (detached; EXIT=0, 66.5 s; report `89d55464…`,
+  reference 1.0.0 `7a926c57…`).
+- `publish_myopia_population_1_1.py --sealed --report ... --reference
+  .../reference-1.0.0-report.json --output
+  experiments/eye/myopia/model-1.1/sealed-test-2026-10-30`: exit 0; H1 fails (68/75 and
+  73/75, above both windows), H2 passes (6.80 against 12.44/18.16/8.19/8.28), H3 passes
+  (8.93 against 20.68/10.76/11.43), H4 fails (11.31 against 11.10), H5 fails (6.80
+  against 6.88 within, 8.93 against 8.66 not within 0.05 pp).
+  `check_myopia11_redaction.py sealed`: 15 private studies, 30 redacted study reports
+  checked in two public reports, 0 leaks. `.peykar/myopia11_sealed_breakdown.py` (post
+  hoc): without myo-pmc9253228 H1 would pass (0.892/0.969), without myo-pmc6296196 H4
+  (10.44 against 10.71), without myo-pmc11253518 the landmark part of H5 (7.50 against
+  7.87); no single study changes H2 or H3. A computation of the noise centres on all 33
+  training records gave a pooled forecast centre of 0.075 mm against a median of 0.045 mm
+  at 40 children, 46% of the pooled variance from myo-pmc7447800 and 22% from
+  myo-pmc6990884.
+- The myopia 1.1 figure was rendered with `.peykar/cornea-native47/bin/python
+  .../plot-results.py` (exit 0) three times (one axis label was cut off; the first rerun
+  after the fix wrote an identical file and the second the corrected one, checked by
+  SHA-256) and inspected as an image. `ruff format --check .` then found the script
+  re-wrapped by the editor; after `ruff format` the script was rerun and wrote the same
+  figure (SHA-256 equal); `ruff check .` and `ruff format --check .` passed (762 files).
+  `.peykar/check_frozen_protocols.py` after the results files: 23 protocols, no problem.
 ## Myopia axial-length dataset 1.0.0, IOP model 1.4, generic eye model 5 and myopia model 1.0 (one-shot sealed tests): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `80eea0c5` (= origin).

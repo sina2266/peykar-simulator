@@ -128,8 +128,8 @@ Reported, not tested (post hoc, `.peykar/myopia10_sealed_breakdown.py`; RMSE in 
   half of a group lost by month 24) are not the trajectory of one group of children. The
   extraction protocol admitted them as ordinary attrition; a next protocol should record
   the number of children at each visit and test such series separately.
-- Tranche 2 of the dataset (94 articles that passed the rule) is untriaged and unread. A
-  model 1.1 can be developed on the 33 consumed records (22 development and 11 sealed)
-  and tested on it once.
+- Tranche 2 of the dataset (94 articles that passed the rule) was untriaged and unread
+  at this test. Model 1.1 was then developed on the 33 consumed records (22 development
+  and 11 sealed) and tested on it once ([`../model-1.1/`](../model-1.1/README.md)).
 - Treatment effects against a control, single eyes, rebound after stopping a treatment,
   refraction and choroidal thickness are out of scope.

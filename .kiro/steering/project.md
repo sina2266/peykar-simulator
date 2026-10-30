@@ -1,4 +1,27 @@
 # Peykar continuation context
+## Myopia 1.1 passed H2/H3, FAILED H1/H4/H5; tranche 2 consumed, 2026-10-30 late night
+- Tranche 2 (94) reserved before triage (`d363a07b`), 42 admitted blind (`59c1d3e2`),
+  six custodians → 26 records / 60 series (`.peykar/myopia-tranche2-sealed-2026-10-30`,
+  `a99fd31a`). Developer opened C4's custody report once (structure; disclosed).
+- 1.1 config `peykar.model_learning.myopia_population_1_1` (n0 = m4 with version
+  1.1.0-n0; n1 max_noise_exponent 0; n2 zero_rate; n3 OU deviations 0.8/12 mo
+  forecast-only; `REFERENCES["1.0.0"]` = frozen m4), operator
+  `scripts/evaluate_myopia_population_1_1.py` (training = 33 tranche-1 records checked
+  against both reservations), publisher `scripts/publish_myopia_population_1_1.py`
+  (H5 vs 1.0.0), compare `.peykar/myopia11_compare.py` (1.0 RMSE rule OR interval-score
+  clause ≥1% lower), diagnostics `.peykar/myopia11_diagnostics.py`, dev log
+  `experiments/eye/myopia/model-1.1/development-log.md` (all PINNED by protocol 1.1).
+- Round 0 n0: 10.035/13.217/13.982, cov 0.800/0.904; groups ≥150 cov 0.50/0.67. Round 1:
+  n3 adopted (9.389/12.865/13.982, cov 0.843/0.922, IS −9.46%); n1, n2 rejected.
+  Protocol `857d4c4a` (117 pins), freeze `b5195458`. Sealed once (66.5 s,
+  `.peykar/myopia11-sealed-test-2026-10-30`, report `89d55464`, ref `7a926c57`): H1 FAIL
+  0.907/0.973 (too WIDE; 1.0.0 ref 0.920/0.973 too); H2 pass 6.80 vs 8.19/8.28; H3 pass
+  8.93 vs 10.76/11.43; H4 FAIL 11.31 vs 11.10; H5 FAIL landmark 8.93 vs 8.66.
+- Post hoc (`.peykar/myopia11_sealed_breakdown.py`): pooled forecast noise 0.075 mm vs
+  median 0.045, 46% myo-pmc7447800 + 22% myo-pmc6990884; H5 decided by myo-pmc11253518
+  (ortho-k, visits 1/3/6 mo), H4 by myo-pmc6296196, H1 by myo-pmc9253228. NOT in
+  `peykar eye`. Published `experiments/eye/myopia/model-1.1/` (redaction clean). Dataset
+  fully consumed; next myopia version needs a new screen + LOSO-calibrated forecast noise.
 ## Myopia 1.0 FAILED all four (tenth component); generic eye model 5, 2026-10-30 night
 - Generic eye model 5 `peykar.model_learning.eye_recovery_population5` (harness
   `validation/eye_recovery_evaluation7`, additive `eye_additive_evaluation5` 5.0.0):

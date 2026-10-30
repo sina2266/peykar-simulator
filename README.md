@@ -305,7 +305,7 @@ The tenth eye component is
 [outcome-blind dataset](experiments/data/myopia-axial-2026-10-30/README.md) comes from
 1,004 screened open-access articles: 214 passed a masked-table rule, the 120 of tranche 1
 were triaged blind (54 admitted, split 34/20 before any value was read) and the 94 of
-tranche 2 stay unread for the next version. With the free start of the generic model the
+tranche 2 were reserved for the next version before triage. With the free start of the generic model the
 population read a shortening of 0.66 mm at day 1, so generic eye model version 5 adds
 laws that are unchanged at the start. **Myopia model 1.0.0** (such a law with a
 treatment-family hierarchy; frozen and pushed as `17ba8feb`) failed all four
@@ -317,6 +317,17 @@ retrospective cohort that lost half or more of its atropine children by month 24
 offered by `peykar eye`
 ([model 1.0](experiments/eye/myopia/model-1.0/README.md),
 [Persian results](experiments/eye/myopia/model-1.0/results.fa.md)).
+**Myopia model 1.1.0** (developed on all 33 tranche-1 records: model 1.0.0 with
+persistent deviations in forecasting only; frozen and pushed as `b5195458`) was tested
+once on tranche 2 (26 records, 42 group-mean forecast series). Its forecasts beat every
+comparator (next follow-up 0.068 mm against 0.082 mm for the pooled-curve increment;
+landmark 0.089 mm against 0.108 mm), but it failed H1 (coverage 90.7%/97.3%, intervals
+slightly too wide), H4 (initial state 0.113 mm against 0.111 mm for the pooled curve)
+and H5 (landmark 0.089 mm against 0.087 mm for model 1.0.0 on the same training). The
+pooled forecast noise is dominated by the two studies that had failed model 1.0; axial
+length stays out of `peykar eye`
+([model 1.1](experiments/eye/myopia/model-1.1/README.md),
+[Persian results](experiments/eye/myopia/model-1.1/results.fa.md)).
 The tested eye components can be run as forecasters with `peykar eye`
 ([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
 follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%

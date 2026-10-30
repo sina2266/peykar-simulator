@@ -590,9 +590,26 @@ custodian records (23 series) reserved before any value was read.
   analog kNN 10.20), H3 (18.07 against 17.11) and H4 (19.15 against 17.32) fail. A
   retrospective cohort with heavy attrition decides H1–H3 and a 4-year trial whose
   controls grew steadily decides H4. Not offered by `peykar eye`.
-- [ ] Myopia 1.1 developed on the 33 consumed records and tested once on tranche 2: a law
-  whose slowing depends on age rather than on the time since baseline, and per-visit
-  group sizes recorded so that cohorts whose membership changes are tested separately.
+- [x] Myopia 1.1 developed on the 33 consumed records and tested once on tranche 2
+  (below). Per-visit group sizes (`n_by_visit`) were recorded for 19 tranche-2 series; an
+  age-dependent law was not tried (age is missing for 22 of the 82 training series).
+### 2026-10-30 myopia 1.1 (forecast-only persistent deviations)
+[Myopia 1.1.0](../experiments/eye/myopia/model-1.1/README.md) was frozen (commit
+`b5195458`; protocol `857d4c4a`, 117 pinned files) before its one-shot sealed test on the
+26 tranche-2 records (60 series), which were reserved before triage.
+- [x] Tranche 2: reserved before triage, 42 of 94 admitted blind, six custodians, 26
+  records rebuilt byte for byte; author overlap removes 7 training studies from 6 sealed
+  studies' training sets.
+- [x] Development on the 33 tranche-1 records: round 0 refitted 1.0.0 (n0); round 1
+  (1.0 RMSE rule or a new interval-score clause) rejected noise not scaled by group size
+  (n1) and the zero-rate law (n2) and adopted forecast-only Ornstein–Uhlenbeck
+  deviations (n3, 0.8 and 12 months): 9.389/12.865/13.982 pp against 10.035/13.217/13.982.
+- [x] Sealed: H2 (6.80 against 8.19 and 8.28) and H3 (8.93 against 10.76 and 11.43) pass;
+  H1 (0.907/0.973, intervals too wide), H4 (11.31 against 11.10) and H5 (landmark 8.93
+  against 1.0.0's 8.66) fail. Not offered by `peykar eye`; tranche 2 consumed.
+- [ ] A forecast noise calibrated on leave-one-study-out residuals or pooled robustly
+  (the pooled residual variance is 46% one attrition cohort), calibration tested by
+  group size, and a new myopia screen with a test part reserved before triage.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.
