@@ -59,3 +59,29 @@ evaluation protocol is frozen.
 No Kmax value of these articles had been read by the model developer when the queries,
 the rule, the reserved list, the tranche order and the extraction protocol were
 committed.
+
+## Triage and split (2026-10-30)
+
+[Triage 1.0.0](triage-1.0.0.json): `screening/triage_chunks.py --tranche 1 --chunks 3`
+built three chunks of 34 articles (no decimal, no ± followed by a digit and no digit
+followed by % outside the identifier lines). Three reviewer sub-agents followed
+`.peykar/kmax-triage-brief.md` (SHA-256 25911943…) and saw masked previews only; there
+is no owner override rule. **62 admitted, 40 excluded.** The exclusions were out-of-scope
+treatments (keratoplasty, refractive surgery or ablation without cross-linking,
+laser asymmetric keratectomy, phakic lenses, ring segments in non-ectatic corneas,
+lenticule implants, wedge resection), only K1/K2/Kmean or a change without its
+baseline, medians only, model-adjusted means, baseline-only tables, reviews and
+meta-analyses, a follow-up given only as a range, and outcome-selected eyes or single
+cases.
+
+[`split-reservation-1.0.0.json`](split-reservation-1.0.0.json)
+(`scripts/reserve_kmax_split.py`, salt `peykar-kmax-holdout-v1:`): **40 development
+and 22 sealed-test studies.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json)
+(`scripts/link_study_authors.py` over the Europe PMC search results of both screening
+rounds): 11 linked pairs; 7 sealed studies lose linked training studies, one pair
+links two sealed studies, and 2 development clusters leave training together.
+
+Extraction (next): development extractors D1–D4 (10 studies each) and sealed
+custodians C1–C3 (8, 7 and 7) under `.peykar/kmax-extraction-brief.md` (SHA-256
+536059c9…) with assignments `.peykar/kmax-extraction-assignments.json` (SHA-256
+fbf1f10a…).

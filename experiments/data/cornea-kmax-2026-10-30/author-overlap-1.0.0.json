@@ -1,0 +1,199 @@
+{
+ "schema": "cornea.kmax-author-overlap-1.0.0",
+ "utc": "2026-10-30T08:30:26.388537+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/cornea-kmax-2026-10-30/split-reservation-1.0.0.json",
+   "sha256": "6de9255f8ef32c5451bbf6ded8b37f06699c7f0dd187788be95561e098429f0f"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-keratoconus_title_kmax_text_open-0.json",
+    "sha256": "7cbbb1d8d6777864dcc5f8b3bc0532ccbd96aef8ce9fa7ef7419e3951cf4f4e2"
+   },
+   {
+    "file": "search-keratoconus_title_kmax_text_open-1.json",
+    "sha256": "bbc04c4d9ad129cc841f4706b756a8512f456fbf1c3c83b9bdaec06cd5d9df87"
+   },
+   {
+    "file": "search-keratoconus_title_kmax_text_open-2.json",
+    "sha256": "139a1cca71a965048a0f7920e9437abfdcc7bbb5350af9e15a23e2b7c35ef35b"
+   },
+   {
+    "file": "search-kmax_after_crosslinking_or_rings_abstract_open-0.json",
+    "sha256": "304204d28fc4e37c117f46d34d17f794f1c1b12dcc92e6f1adef001f89674f9b"
+   },
+   {
+    "file": "search-kmax_keratoconus_fulltext_open-0.json",
+    "sha256": "27e26906bc78b9b1ee931e0bd1fd04658293ae95990e7ceb903d12f8d42526e9"
+   },
+   {
+    "file": "search-kmax_keratoconus_fulltext_open-1.json",
+    "sha256": "0b687d46302d35d6e189fa23591d81fa1d39b91390a3fb39a61023192f2fcf6d"
+   },
+   {
+    "file": "search-kmax_keratoconus_fulltext_open-2.json",
+    "sha256": "2a1bb703384ddfa6e47ae40da78c167bcc0f569d55f8a8828293c6f5666111ab"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "kmx-pmc11523831",
+    "kmx-pmc12448536"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "kmx-pmc13089007",
+    "kmx-pmc8938138"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "kmx-pmc13178756",
+    "kmx-pmc13303802"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "kmx-pmc13178756",
+    "kmx-pmc13398343"
+   ],
+   "splits": [
+    "sealed_test",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "kmx-pmc13303802",
+    "kmx-pmc13398343"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "kmx-pmc13529049",
+    "kmx-pmc8843789"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 4
+  },
+  {
+   "studies": [
+    "kmx-pmc5845167",
+    "kmx-pmc8845528"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "kmx-pmc5845167",
+    "kmx-pmc8905293"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 5
+  },
+  {
+   "studies": [
+    "kmx-pmc6050682",
+    "kmx-pmc6470445"
+   ],
+   "splits": [
+    "development",
+    "sealed_test"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "kmx-pmc7396097",
+    "kmx-pmc8434931"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "kmx-pmc8845528",
+    "kmx-pmc8905293"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 6
+  }
+ ],
+ "development_clusters": [
+  [
+   "kmx-pmc11523831",
+   "kmx-pmc12448536"
+  ],
+  [
+   "kmx-pmc5845167",
+   "kmx-pmc8905293"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "kmx-pmc13178756": [
+   "kmx-pmc13303802"
+  ],
+  "kmx-pmc13398343": [
+   "kmx-pmc13303802"
+  ],
+  "kmx-pmc6470445": [
+   "kmx-pmc6050682"
+  ],
+  "kmx-pmc7396097": [
+   "kmx-pmc8434931"
+  ],
+  "kmx-pmc8843789": [
+   "kmx-pmc13529049"
+  ],
+  "kmx-pmc8845528": [
+   "kmx-pmc5845167",
+   "kmx-pmc8905293"
+  ],
+  "kmx-pmc8938138": [
+   "kmx-pmc13089007"
+  ]
+ }
+}
