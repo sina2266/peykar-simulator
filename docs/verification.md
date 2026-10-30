@@ -60,7 +60,32 @@ Commands run from the repository root; outcomes observed. Start state: main at
   --check` (the editor had re-wrapped `eye_simulation.py` after its text change); after
   `ruff format` (diff: the intended text only), 957 tests passed in 204.59 s, 89%
   coverage, mypy 180 source files, all packages built, EXIT=0
-  (`.peykar/iop14-results-check-docker-20261030.log`).
+  (`.peykar/iop14-results-check-docker-20261030.log`). Commit `bae81a21`, pushed.
+- Generic eye model 5, harness 7 and additive evaluation 5: `OMP_NUM_THREADS=1 uv run
+  --frozen pytest -q tests/unit/test_eye_recovery_version5.py
+  tests/unit/test_myopia_axial.py`: 10 passed (a free start reproduces version 2's fit,
+  priors, posterior and predictive exactly; harness 7 with a free start equals harness 6;
+  a zero-rate fit recovers synthetic rates within 0.03 mm per year); ruff and mypy on the
+  changed files passed. Commit `d1178fdd` (round-1 results and the round-2 declaration,
+  before any round-2 run), pushed.
+- Myopia round 2: `... evaluate_myopia_population.py --development --candidate m1`
+  through the new additive evaluation (`round2-m1-rerun`): report equal to round 1's apart
+  from the evaluation-version fields; m3 and m4 (detached, each under one minute, EXIT=0);
+  `.peykar/myopia_compare.py round1-m1 round2-m3 round2-m4`: both meet the rule (summed
+  gains 36.588 and 38.532 pp); m4 adopted by the declared tie-break.
+- `scripts/publish_myopia_population.py --development --report
+  .peykar/myopia-1.0-dev/round2-m4/report.json`: H1 passes (50/68 and 58/68), H2 passes
+  (9.72 against 18.53/15.75/18.33 and 8.57 against analog kNN 9.14), H3 fails (10.11
+  against analog kNN 9.92 on 64 targets), H4 passes (14.03 against 21.72);
+  `.peykar/check_myopia_redaction.py development`: 10 private studies, 0 leaks. The
+  editor had re-wrapped the publisher after its constants were set; after `ruff format`
+  the publication was rerun and its three files compared equal with `cmp`.
+- `make check-docker` before the freeze: 962 tests passed in 236.87 s, 89% coverage,
+  mypy 183 source files, 18 frontend tests, all packages built, EXIT=0
+  (`.peykar/myopia-freeze-check-docker-20261030.log`).
+- `.peykar/write_myopia_protocol.py`: protocol SHA-256 `da2a3a89…`, 89 pinned files, 22
+  training and 11 sealed record hashes; `.peykar/check_frozen_protocols.py`: no problem in
+  any of the 22 frozen protocols (retina 1.2.0 has none).
 ## IOP model 1.4 round 0, Kmax dataset 1.0.0 and Kmax model 1.0 (one-shot sealed test): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `2d1e965d` (= origin).

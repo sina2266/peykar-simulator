@@ -41,13 +41,14 @@ RECORD_DIRS = {
     "development": [DATASET / "development/records", PRIVATE_DEVELOPMENT],
     "sealed": [ROOT / ".peykar/myopia-sealed-2026-10-30/records"],
 }
-# Set by the development rounds before the freeze (see the 1.0 development log).
+# Set by the development rounds before the freeze (see the 1.0 development log): m4
+# was adopted in round 2 and its Gaussian variant is the primary by the declared rule.
 PRIMARY = {
-    "next_observation": "population_assimilation_t4",
-    "landmark": "population_assimilation_t4",
+    "next_observation": "population_assimilation",
+    "landmark": "population_assimilation",
     "initial_state": "population_initial_state",
 }
-MODEL_VERSION = "1.0.0-m0"
+MODEL_VERSION = "1.0.0-m4"
 TASKS = ("initial_state", "next_observation", "landmark")
 TESTED_PREFIX = "human/"
 UNIT = "1 pp = 0.01 mm of axial-length change from the baseline axial length"

@@ -179,3 +179,66 @@ versions. Adoption rule as in round 1, against m1. If both meet it, the one with
 larger summed gain is adopted; if neither, m1 stays the model 1.0 candidate and the
 freeze decision records its development failures. A round 3, if any, is declared here
 before it runs.
+
+## Round 2 — results (2026-10-30)
+
+The m1 rerun through `eye_additive_evaluation5` (`.peykar/myopia-1.0-dev/round2-m1-rerun`)
+equals its round-1 report apart from the three evaluation-version fields. LOSO over the
+same 22 studies (`.peykar/myopia-1.0-dev/round2-m3`, `round2-m4`,
+`.peykar/myopia-1.0-dev/round2-compare.txt`; each run under a minute):
+
+| candidate | primary | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|---|
+| m1 (adopted in round 1) | anchored Student-t | 15.143 (+2.65) | 27.320 (+3.29) | 35.480 (−24.94) | 0.838 / 0.912 |
+| m3 (zero start, rate) | robust | 8.975 (−2.90) | 17.066 (−6.47) | 15.314 (+2.98) | 0.794 / 0.912 |
+| m4 (zero start, level) | Gaussian | 9.722 (−3.80) | 15.663 (−7.27) | 14.026 (−2.02) | 0.735 / 0.853 |
+
+- **Both meet the rule** against m1 (m3 gains 20.166, 6.168 and 10.254 pp in the
+  initial state, next observation and landmark, summed 36.588; m4 21.454, 5.421 and
+  11.657, summed 38.532). **m4 is adopted** by the declared tie-break (larger summed
+  gain).
+- The zero start removes the shortening at day 1: under m4 the species law gives a
+  change of 0.22 mm at 12 months (median over the LOSO fits), a time constant of 38
+  months (31 to 46) and a long-term change of 0.82 mm at a baseline of 24.5 mm; under m3
+  an initial rate of 0.38 mm per year and a time constant of 22 months. The initial state
+  of m4 is better than the pooled training curve for single vision (20.7 against 35.3
+  pp), orthokeratology (11.7 against 21.5) and `other` (8.1 against 17.0), and about equal
+  for atropine (14.8 against 14.3), combinations (8.2 against 8.8), defocus spectacles
+  (12.0 against 11.8) and the red-light series (13.4 against 13.5).
+- On the 64 targets with an analog forecast, next observation: m4 8.57 and m3 8.47 pp
+  against analog kNN 9.14; landmark: m4 10.11 and m3 9.81 against analog kNN 9.92. The
+  difference between m3 and m4 in the pooled landmark RMSE comes from the 84- and
+  132-month visits of the 11-year study (m3's shorter time constant levels off earlier).
+
+## Freeze decision (2026-10-30)
+
+Model 1.0.0 is **m4** (generic eye model 5 with the zero-start law in the long-term
+change, `change(t)/1 mm = ell (1 − r(t))`, `ell = context level + b (AL0 − 24.5 mm)/1 mm`;
+hierarchy species → treatment family → treatment; a study effect per family; forecast-only
+pooled noise), as the round-2 rule decided. Primaries: `population_assimilation` for the
+next observation (U2) and the landmark task (U3), `population_initial_state` for the
+initial state (U1). The development analysis by the frozen publisher
+(`development-loso-2026-10-30/`, `scripts/publish_myopia_population.py --development`) is
+the development reference of the protocol:
+
+- H1 passes: 50/68 = 0.735 of next-observation targets inside the 80% interval (window
+  0.70–0.90) and 58/68 = 0.853 inside the 90% interval (window 0.80–0.97); both are near
+  the lower edges.
+- H2 passes: 9.72 pp against persistence 18.53, the last-two trend 15.75 and the
+  pooled-curve increment 18.33 on 68 targets, and 8.57 against analog kNN 9.14 on 64.
+- **H3 fails**: 15.66 pp against persistence 34.83 and the pooled-curve increment 27.04
+  on 68 targets, but 10.11 against analog kNN 9.92 on 64.
+- H4 passes: 14.03 pp against the pooled training curve's 21.72 over 127 targets of 59
+  control group means; 19/59 groups within 5/10 pp (pooled curve 14/59).
+- Reported only: landmark coverage 0.735/0.809; initial-state coverage 0.795/0.890; per
+  series 23/40 within 5/10 pp for the next observation and 21/40 for the landmark task.
+
+The protocol keeps H1–H4 with the comparators of the other eye components; the H3
+failure on development is recorded as its development reference, as acuity 1.0 recorded
+its H2 and H3 failures. There is no earlier myopia version, hence no H5.
+`.peykar/check_myopia_redaction.py development` found no value of the 10 private
+studies in the public development files. The sealed set (structure seen through the
+custody verifier only, as disclosed above) has 23 series, 18 with forecast targets:
+atropine 6, single vision 5, orthokeratology 4, combinations 2, multifocal contact
+lenses 2 (an untrained treatment, which uses the optical family), red light 2,
+defocus spectacles 1 and `other` 1.
