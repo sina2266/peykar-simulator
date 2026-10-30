@@ -62,3 +62,42 @@ dataset's screening receipts copied to `screening/` for the link script) found 2
 pairs: 7 tranche-2 studies lose 9 linked training studies, 7 pairs link two tranche-2
 studies, and the 2 development clusters of tranche 1 (3 and 2 studies) leave training
 together in leave-one-study-out.
+
+## Extraction outcome (2026-10-30)
+
+**Custodians.** Six custodian sub-agents (C1–C6, seven studies each) extracted the 42
+reserved studies under extraction protocol 1.0.0 and the tranche-2 brief
+(`.peykar/myopia-tranche2-extraction-brief.md`, SHA-256 6dbb6068…; the tranche-1 brief
+with tranche-2 paths, the settled tranche-1 readings copied verbatim and the reporting
+field `n_by_visit`). Assignments are in `.peykar/myopia-tranche2-extraction-assignments.json`
+(SHA-256 a34b7792…). Records, specs, raw copies and one custody report per custodian are
+private in `.peykar/myopia-tranche2-sealed-2026-10-30/`; the reports state
+`contains_outcome_values: false`.
+
+**Result.** **26 records with 60 series** (56 group means and 4 per-child series, all
+role `control`); 16 studies have no record: eleven complete-case sets (mostly
+retrospective cohorts whose inclusion required the last tabulated visit, with no number
+of children who started), outcome-selected analysis sets or groups (three), a table with
+model-adjusted values only (one) and a longitudinal sample of mixed refraction and age
+(one).
+
+**Blind custody check.** `.peykar/verify_myopia_tranche2_custody.py` (the tranche-1 check
+with tranche-2 paths; output `.peykar/myopia-tranche2-custody-check.json`) found every
+reserved study assigned once and reported once, all 42 screened sources equal to their
+assignment hashes, all 26 records rebuilt byte for byte from their specs, all raw copies
+equal to their sources, no record outside a record decision and no value-like key in the
+custody reports. Structure (series per context): orthokeratology 15, defocus spectacles
+14, single vision 12, atropine 7, multifocal contact lenses 6, combinations 5, `other` 1;
+no red-light series. East Asia 38, Europe 12, Middle East 4, Southeast Asia 4, Africa 2;
+38 absolute and 22 change series; 18 series have one follow-up visit and 42 have two or
+more; 11 records in the public licence class and 15 in the private class; per-visit
+numbers (`n_by_visit`) are given for 19 series.
+
+**Process notes.** Two custodians ran a builder call in the same tool batch as the spec
+write; both checked that their record equals a rebuild from the spec on disk, and the
+custody check rebuilt all records identically. Contrary to the practice of earlier
+tranches, the model developer opened custodian C4's custody report once (structure,
+decisions and hashes of its seven studies: groups, reported group sizes, devices, months,
+licences and exclusion reasons; no axial-length value, as the report states). The other
+five reports were not opened. No tranche-2 value is read before the model 1.1 protocol is
+frozen.
