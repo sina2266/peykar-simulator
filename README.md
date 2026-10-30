@@ -279,8 +279,13 @@ The eighth eye component,
 failed its sealed tests in three versions (1.0.0 all four hypotheses, 1.1.0 four of five,
 1.2.0 all five) and is not offered. Later versions of tested components that did not
 pass all their hypotheses (retinal thickness 1.3.0 and 1.4.0, acuity 1.2.0 with forecast
-stacking, IOP 1.3.0) left their predecessors in place; their results are in
-[the status table](docs/status.md). The ninth eye component, and the sixth corneal one,
+stacking, IOP 1.3.0 and 1.4.0) left their predecessors in place; their results are in
+[the status table](docs/status.md). IOP 1.4.0, which kept a sub-procedure level only for
+the two procedures whose training errors differed by device, passed H1–H4 on the last
+reserved IOP tranche but missed its comparison with 1.2.0 by 0.007 pp in the next
+follow-up and 0.13 pp in the landmark task, decided by one study
+([model 1.4](experiments/eye/iop/model-1.4/README.md),
+[Persian results](experiments/eye/iop/model-1.4/results.fa.md)). The ninth eye component, and the sixth corneal one,
 is [maximum keratometry (Kmax) after cross-linking or ring segments](experiments/eye/kmax/README.md),
 built from an [outcome-blind dataset](experiments/data/cornea-kmax-2026-10-30/README.md)
 of 1,526 screened open-access full texts (102 passed a masked-table rule, 62 admitted

@@ -557,6 +557,22 @@ custodian records (33 series) reserved before any value was read.
 - [ ] A Kmax law with a slow long-term component (or a law in log time) learned from the
   long series, with age as a covariate, tested on a new screen with a test part reserved
   before triage (every article of this dataset is consumed).
+### 2026-10-30 selective sub-procedure level (IOP 1.4)
+[IOP 1.4.0](../experiments/eye/iop/model-1.4/README.md) was frozen (commit `dfd88dbb`;
+protocol `a0499d76`) before its one-shot sealed test on IOP tranche 5, reserved before
+triage (17 admitted, 14 custodian records).
+- [x] Development on the 308 studies of tranches 1–4: a selection rule declared before
+  the diagnostics kept model 1.3's sub-procedure level for cyclodestruction and
+  subconjunctival MIGS only; d1s adopted (6.512/8.087/10.054 pp against 1.2.0
+  6.553/8.232/10.268).
+- [x] Sealed: H1–H4 pass (coverage 0.764/0.903; next observation 8.34 pp against
+  persistence 10.86; landmark 9.14 against 18.06; initial state 9.46 against 15.59);
+  H5 fails (next observation +0.057 pp and landmark +0.182 pp against 1.2.0, allowed
+  +0.05). One study with the only sealed endoscopic cyclophotocoagulation arm decides
+  H5. `peykar eye` keeps IOP 1.2.0, which met H1–H4 on tranches 3, 4 and 5.
+- [ ] A sub-procedure reader tested on device names with numerals (the frozen rule
+  read XEN45 as `other`), and a new IOP screen with a test part reserved before triage
+  (every article of the 2026-10-28 screen is consumed).
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

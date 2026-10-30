@@ -1,4 +1,29 @@
 # Peykar continuation context
+## IOP 1.4 FAILED H5; myopia axial length (tenth component) in development, 2026-10-30 evening
+- IOP 1.4.0 (d1s) frozen `dfd88dbb` (protocol `a0499d76`, 69 pins), sealed once on
+  tranche 5 (5,427 s; `.peykar/iop14-sealed-test-2026-10-30`): H1–H4 pass (0.764/0.903;
+  8.34 vs persistence 10.86; landmark 9.14 vs 18.06; initial 9.46 vs 15.59); H5 FAILS
+  (next obs 8.34 vs 1.2.0 8.28, +0.057 > 0.05; landmark 9.14 vs 8.95). One private
+  phaco-ECP study decides it (`.peykar/iop14_sealed_breakdown.py`); the frozen rule
+  `\bxen\b` reads XEN45 as `other`. `peykar eye` keeps IOP 1.2.0 (sealed_result text now
+  cites its tranche-5 reference result). ALL IOP tranches consumed. Published in
+  `experiments/eye/iop/model-1.4/` (README, results.fa.md, figure; redaction clean).
+- Myopia dataset `experiments/data/myopia-axial-2026-10-30` (module
+  `peykar.validation.myopia_axial_data`, 1 pp = 0.01 mm): 214 by the rule; tranche 1
+  (120) triaged (54), tranche 2 (94) UNREAD; split 34/20; 22 dev records (59 series; 10
+  private in `.peykar/myopia-development-private/records`), 11 sealed (23 series,
+  `.peykar/myopia-sealed-2026-10-30`, custody reports C1–C3 NOT opened; verifier
+  `.peykar/verify_myopia_custody.py` clean).
+- Myopia model `peykar.model_learning.myopia_population` (m0, m1, m2 declared in
+  `51d8f585`), operator `scripts/evaluate_myopia_population.py` (runs take < 1 min),
+  publisher `scripts/publish_myopia_population.py`, compare `.peykar/myopia_compare.py`.
+  Round 1: m1 (family level) meets the rule vs m0 (+0.396/+0.242/+0.176), m2 does not.
+  But the free-start law reads a −0.66 mm change at day 1 (no data before month 1):
+  initial state 35.5 pp vs pooled curve 21.7; next obs 15.1 vs kNN 9.1 / pooled-curve
+  increment 9.4. Planned fix: generic model 5 with a zero-start law
+  `ln f = ell (1 − r(t))` (a new module; v2 is pinned), declared as round 2 BEFORE running.
+- Image viewer quirk: a re-rendered PNG at an already-read path is served from cache
+  ("unchanged"); `read_file` with `offset: 1` re-reads it. New paths may give ENOENT.
 ## Kmax 1.0 FAILED H3/H4 (ninth component); IOP 1.4 d1s running, 2026-10-30 midday
 - Kmax dataset `experiments/data/cornea-kmax-2026-10-30` (module
   `peykar.validation.cornea_kmax_data`, builder `scripts/build_kmax_record.py`): 102

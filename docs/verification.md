@@ -1,4 +1,66 @@
 # Verification record
+## Myopia axial-length dataset 1.0.0, IOP model 1.4 (one-shot sealed test) and myopia model 1.0 round 1: 2026-10-30
+Commands run from the repository root; outcomes observed. Start state: main at
+`80eea0c5` (= origin).
+- Myopia screen: `scripts/screen_corneal_wound_literature.py --queries
+  experiments/data/myopia-axial-2026-10-30/screening/queries.json` (1,004 articles and
+  full texts); `.peykar/run_myopia_table_screen.py` (masked previews of 1,190 tables in
+  568 articles); `screening/triage_rule.py`: 214 articles (186 by one table, 28 by a
+  change table and a baseline table); `screening/tranche_order.py`: 120 in tranche 1, 94
+  in tranche 2. `make check-docker`: 955 tests passed in 436.00 s, 89% coverage, mypy 179
+  source files, 18 frontend tests, packages built
+  (`.peykar/myopia-screen-check-docker-20261030.log`). Commit `766a4ed4`, pushed.
+- `screening/triage_chunks.py --tranche 1 --chunks 4`; four reviewer sub-agents admitted
+  54 of 120; `scripts/reserve_myopia_split.py`: 34 development and 20 sealed;
+  `scripts/link_study_authors.py`: 5 pairs, 2 development clusters, 1 sealed study with a
+  training exclusion. Commit `fb4c0ef0`, pushed.
+- IOP 1.4: the 16 d1s shards exited 0 and were joined by `--merge`;
+  `.peykar/compare_iop_12.py round0-d0 round1-d1s`: d1s meets the declared rule
+  (6.512/8.087/10.054 against 6.553/8.232/10.268 pp, coverage 0.796/0.895).
+  `scripts/publish_iop_population_1_4.py --development` (reference d0): H1–H5 pass;
+  `.peykar/check_iop_redaction_1_4.py development`: 340 private study reports, 0 leaks.
+  `make check-docker`: 955 tests passed in 231.06 s, 89% coverage, mypy 179 source files,
+  packages built (`.peykar/iop14-freeze-check-docker-20261030.log`).
+  `.peykar/write_iop_protocol_1_4.py`: protocol SHA-256 `a0499d76…`, 69 pinned files;
+  `.peykar/check_frozen_protocols.py`: no problem in any of the 21 frozen protocols.
+  Freeze commit `dfd88dbb`, pushed (remote SHA equal).
+- Then, once: `... evaluate_iop_population_1_4.py --sealed --protocol
+  experiments/eye/iop/model-1.4/protocol-1.4.0.json --output
+  .peykar/iop14-sealed-test-2026-10-30` (detached; EXIT=0, 5,427.1 s; report
+  `750348ec…`, reference d0 `8f9b1832…`).
+- Myopia extraction: four development extractors (22 records, 59 series) and three
+  custodians (11 records, 23 series), all sub-agents; `.peykar/verify_myopia_custody.py`:
+  20 reserved studies, 11 records rebuilt identical, 11 raw copies equal to their
+  sources, 0 value-like report keys, no problem. Commit `da95a250`, pushed.
+- Myopia model round 1: `ruff format`, `ruff check` and `mypy` on
+  `myopia_population.py`, the operator and the publisher passed after rewrapping two
+  docstring lines and typing one nested function; `uv run --frozen pytest -q
+  tests/unit/test_myopia_axial.py`: 5 passed. Commit `51d8f585` (declaration, before any
+  run), pushed. `... evaluate_myopia_population.py --development --candidate mX` for
+  m0, m1, m2 (detached; each under one minute, EXIT=0); `.peykar/myopia_compare.py`: m1
+  meets the rule against m0 (gains +0.396/+0.242/+0.176 pp, coverage 0.838/0.912), m2
+  does not (−0.001 in every task).
+- IOP 1.4 sealed publication: `publish_iop_population_1_4.py --sealed --report
+  .peykar/iop14-sealed-test-2026-10-30/report.json --reference
+  .../reference-d0-report.json --output experiments/eye/iop/model-1.4/sealed-test-2026-10-30`:
+  exit 0; H1 passes (55/72 and 65/72), H2 passes (8.34 against 10.86/54.22/11.57/11.06),
+  H3 passes (9.14 against 18.06/20.20/16.26), H4 passes (9.46 against 15.59), H5 fails
+  (next observation 8.34 against 8.28, landmark 9.14 against 8.95, initial state 9.46
+  against 9.57). `check_iop_redaction_1_4.py sealed`: 10 redacted study reports, 0 leaks.
+  `.peykar/iop14_sealed_breakdown.py` (post hoc): without iop-pmc8403082 H5 would pass
+  (+0.026/+0.026/−0.025); no other single study changes it.
+  `.peykar/iop14_reference_analysis.py`: the 1.2.0 reference meets H1–H4 there.
+- The IOP 1.4 figure was rendered with `.peykar/cornea-native47/bin/python
+  .../plot-results.py` (exit 0; the script checks that the published per-series scores
+  reproduce the declared H5 values) twice (the legend covered a bar label and a value
+  label overlapped the axis) and inspected as an image.
+  `.peykar/check_frozen_protocols.py` after the documentation and `peykar eye` text
+  changes: 21 protocols, no problem.
+- `make check-docker` for the IOP 1.4 results: the first run failed at `ruff format
+  --check` (the editor had re-wrapped `eye_simulation.py` after its text change); after
+  `ruff format` (diff: the intended text only), 957 tests passed in 204.59 s, 89%
+  coverage, mypy 180 source files, all packages built, EXIT=0
+  (`.peykar/iop14-results-check-docker-20261030.log`).
 ## IOP model 1.4 round 0, Kmax dataset 1.0.0 and Kmax model 1.0 (one-shot sealed test): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `2d1e965d` (= origin).

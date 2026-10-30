@@ -13,7 +13,7 @@ version, its sealed-test result and its context of use.
 | component | model | quantity (unit) | context | sealed test |
 |---|---|---|---|---|
 | `retina-thickness` | 1.1.0 (`s5`) | central retinal thickness (µm) | `human/<indication>/<treatment>` | tranche 2: H1–H4 pass, H5 fails; tranche 3 (reference of the 1.3 test, reported): H2–H4 hold, 80% coverage 0.903, just above its window; tranche 4 (reference of the 1.4 test, reported): H1, H2 and H4 hold, H3 fails narrowly (landmark 9.99 vs the pooled-curve increment 9.80 pp) ([README](../experiments/eye/retina/model-1.1/README.md)) |
-| `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass; tranche 4 (reference of the 1.3 test, reported): H1–H4 hold ([README](../experiments/eye/iop/model-1.2/README.md)) |
+| `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass; tranches 4 and 5 (references of the 1.3 and 1.4 tests, reported): H1–H4 hold ([README](../experiments/eye/iop/model-1.2/README.md)) |
 | `corneal-endothelium` | 1.0.0 | endothelial cell density (cells/mm²) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/endothelium/README.md)) |
 | `corneal-thickness` | 1.0.0 | central corneal thickness (µm) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/thickness/README.md)) |
 | `refraction` | 1.0.0 (`f1`) | spherical equivalent after laser refractive surgery (D) | `human/<refractive error>/<procedure>` | all five hypotheses pass on 13 series ([README](../experiments/eye/refraction/model-1.0/README.md)) |
@@ -36,8 +36,9 @@ four of five on a fresh set
 that passed are offered. A newer version replaces an offered one only when it passes
 all its declared hypotheses, including the comparison with its predecessor, or when the
 predecessor fails H1–H4 on the newer sealed set: retinal thickness 1.1.0 replaced 1.0.0,
-whose intervals missed H1 on tranche 2, while IOP 1.3.0 failed its comparison with 1.2.0
-([README](../experiments/eye/iop/model-1.3/README.md)) and 1.2.0 stays. Acuity 1.2.0
+whose intervals missed H1 on tranche 2, while IOP 1.3.0 and 1.4.0 failed their comparisons
+with 1.2.0 ([1.3](../experiments/eye/iop/model-1.3/README.md),
+[1.4](../experiments/eye/iop/model-1.4/README.md)) and 1.2.0 stays. Acuity 1.2.0
 (model 1.0.0 with forecast stacking) improved both forecast tasks on tranche 2 but its
 stacked initial state was worse than 1.0.0's from the same fit
 ([README](../experiments/eye/acuity/model-1.2/README.md)), so 1.0.0 stays. Retinal

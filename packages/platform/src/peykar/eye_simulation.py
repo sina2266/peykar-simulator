@@ -141,7 +141,10 @@ COMPONENTS: dict[str, Component] = {
             "0.679/0.817 at the same accuracy); as the reference of the tranche-4 test of "
             "model 1.3 (reported, 133 group means) it met H1-H4 again (next observation "
             "6.67 vs persistence 8.27 pp; initial state 10.69 vs 16.33), and 1.3.0 failed "
-            "its H5 against it"
+            "its H5 against it; as the reference of the tranche-5 test of model 1.4 "
+            "(reported, 20 group means) it met H1-H4 again (next observation 8.28 vs "
+            "persistence 10.86 pp; initial state 9.57 vs 15.15), and 1.4.0 failed its H5 "
+            "against it"
         ),
         context_of_use=(
             "human group means after glaucoma procedures; single eyes, non-human species "
