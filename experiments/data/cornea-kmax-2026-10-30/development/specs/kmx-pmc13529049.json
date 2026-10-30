@@ -1,0 +1,100 @@
+{
+ "study_id": "kmx-pmc13529049",
+ "doi": "10.4103/IJO.IJO_1965_25",
+ "pmcid": "PMC13529049",
+ "title": "Comparison of accelerated corneal collagen cross-linking under normal and increased oxygen concentrations: A pilot study",
+ "species": "human",
+ "procedure": "cxl_accelerated",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License)",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13529049.xml",
+   "sha256": "2a0b4bfc6cba8517e01e36b02700f270c96968a38782f71b4aae92883ddb0415",
+   "bytes": 76356,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13529049/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "oxygen-supplemented",
+   "role": "treated",
+   "procedure": "cxl_accelerated",
+   "indication": "keratoconus",
+   "age_group": "adult",
+   "n_reported": 10,
+   "description": "Group 1 (Cases), randomized: accelerated epithelium-off CXL (alcohol-assisted debridement, 0.1% iso-osmolar riboflavin-dextran, 9 mW for 10 minutes continuous, 5.4 J/cm2, PXL Platinum 330; Table 1 of the XML, IJO.IJO_1965_25-T1) with local oxygen supplementation through a goggle apparatus at 5 L/min, the investigational arm; progressive keratoconus; inclusion required age older than 18 years."
+  },
+  {
+   "group": "room-air",
+   "role": "control",
+   "procedure": "cxl_accelerated",
+   "indication": "keratoconus",
+   "age_group": "adult",
+   "n_reported": 10,
+   "description": "Group 2 (Controls), randomized: the same accelerated epithelium-off CXL protocol under room-air oxygen; progressive keratoconus; inclusion required age older than 18 years."
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "oxygen-supplemented/kmax",
+   "group": "oxygen-supplemented",
+   "kind": "group_mean",
+   "n": 10,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6
+   ],
+   "cells": [
+    "PMC13529049.xml::IJO.IJO_1965_25-T3!R6C3",
+    "PMC13529049.xml::IJO.IJO_1965_25-T3!R6C5"
+   ],
+   "baseline_label": "Steepest Keratometry (Kmax in Diopters), Group 1 (Cases) Baseline column, table IJO.IJO_1965_25-T3",
+   "notes": "mean±SD as printed (Statistical analysis: normally distributed data as mean ± SD); Oculus Pentacam; n = 10 eyes at baseline (Abstract, Results); per-visit n not reported."
+  },
+  {
+   "series_id": "room-air/kmax",
+   "group": "room-air",
+   "kind": "group_mean",
+   "n": 10,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6
+   ],
+   "cells": [
+    "PMC13529049.xml::IJO.IJO_1965_25-T3!R6C9",
+    "PMC13529049.xml::IJO.IJO_1965_25-T3!R6C11"
+   ],
+   "baseline_label": "Steepest Keratometry (Kmax in Diopters), Group 2 (Controls) Baseline column, table IJO.IJO_1965_25-T3",
+   "notes": "mean±SD as printed (Statistical analysis: normally distributed data as mean ± SD); Oculus Pentacam; n = 10 eyes at baseline (Abstract, Results); per-visit n not reported."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "P columns of the Kmax row (IJO.IJO_1965_25-T3!R6C7, R6C13, R6C15, R6C17)",
+   "reason": "p-values are not admissible values (protocol inclusion 4)"
+  },
+  {
+   "what": "Flat K (K1) and Steep K (K2) rows of IJO.IJO_1965_25-T3",
+   "reason": "K1 and K2 are not Kmax (protocol inclusion 1)"
+  },
+  {
+   "what": "1 week, 1 month and 3 months visits",
+   "reason": "Kmax is tabulated only at baseline and 6 months; earlier visits appear only in figures of other parameters"
+  }
+ ],
+ "notes": [
+  "Table numbering in the XML differs from the in-text references: the cross-linking method is table-wrap IJO.IJO_1965_25-T1, visual and refractive outcomes IJO.IJO_1965_25-T2 (median and IQR), tomography and biomechanics IJO.IJO_1965_25-T3; the 'median (inter-quartile range)' footnote attached to T1 refers to the visual-outcome variables it names, while the Kmax cells of T3 are printed as mean±SD.",
+  "Other tabulated parameters (UDVA, CDVA, MRSE in T2; corneal astigmatism, densitometry, posterior elevation, thinnest pachymetry, integrated radius and stress-strain index in T3) and endothelial cell density in the text are not used.",
+  "Licence CC BY-NC-ND 4.0: the record and source XML are kept private."
+ ]
+}

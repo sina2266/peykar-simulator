@@ -1,0 +1,93 @@
+{
+ "schema": "cornea.kmax-record-1.0.0",
+ "study_id": "kmx-pmc8381497",
+ "doi": "10.1186/s12886-021-02066-3",
+ "pmcid": "PMC8381497",
+ "title": "Factors influencing haze formation and corneal flattening, and the impact of haze on visual acuity after conventional collagen cross-linking: a 12-month retrospective study",
+ "species": "human",
+ "procedure": "cxl_epi_off",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License; CC0 waiver for data made available in the article)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8381497.xml",
+   "sha256": "8e9256005768909561c12963dd1ee6b3e970948a0688c0bee8eea1adcc2428be",
+   "bytes": 112002,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8381497/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "conventional-cxl",
+   "role": "control",
+   "procedure": "cxl_epi_off",
+   "indication": "keratoconus",
+   "age_group": "mixed",
+   "n_reported": 47,
+   "description": "47 eyes of 47 patients with progressive keratoconus (Kmax increase >= 1.0 D in 1 year and/or loss of >= 2 lines of BCDVA) treated 2017-2018 with conventional epithelium-off CXL by the Dresden protocol (8 mm debridement, 0.1% riboflavin, 3 mW/cm2 for 30 min, CSO Vega X Linker), one surgeon, Semmelweis University; patients under 18 years excluded, age range 18-38 years (Results)."
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Kmean row (Tab1 R8)",
+   "reason": "mean keratometry is not Kmax (protocol inclusion 1)"
+  },
+  {
+   "what": "Change in Kmax (ΔKmax) and Spearman correlations in the Results text",
+   "reason": "text-only summary statistics and correlations, not tabulated Kmax values (protocol inclusion 4)"
+  },
+  {
+   "what": "Table 3 generalized estimating equations",
+   "reason": "model coefficients, not Kmax values"
+  }
+ ],
+ "notes": [
+  "Age group 'mixed' by the protocol definition: patients under 18 years were excluded and the age range is 18-38 years, so the youngest patients are 18 (not older than 18).",
+  "Other tabulated parameters (BCDVA, UCDVA, SEQ, ThCT in Table 1; corrected densitometry in Table 2) are not used."
+ ],
+ "series": [
+  {
+   "series_id": "conventional-cxl/kmax",
+   "group": "conventional-cxl",
+   "kind": "group_mean",
+   "n": 47,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Kmax (D), 'Preoperative' column, Table 1",
+   "notes": "mean ± SD (Table 1 footnote); the dagger marks a Bonferroni-adjusted post hoc difference from baseline and is not part of the value; Pentacam HR, only scans of quality 'OK' accepted; n = 47 eyes at baseline; per-visit n not reported.",
+   "values": [
+    56.41,
+    57.15,
+    56.01,
+    55.75,
+    55.35
+   ],
+   "source_cells": [
+    "PMC8381497.xml::Tab1!R7C2",
+    "PMC8381497.xml::Tab1!R7C3",
+    "PMC8381497.xml::Tab1!R7C4",
+    "PMC8381497.xml::Tab1!R7C5",
+    "PMC8381497.xml::Tab1!R7C6"
+   ],
+   "source_cell_texts": [
+    "56.41 ± 5.41",
+    "57.15 ± 5.74†",
+    "56.01 ± 6.03",
+    "55.75 ± 5.67",
+    "55.35 ± 5.18†"
+   ]
+  }
+ ]
+}

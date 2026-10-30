@@ -1,0 +1,77 @@
+{
+ "study_id": "kmx-pmc13303802",
+ "doi": "10.3390/medicina62061145",
+ "pmcid": "PMC13303802",
+ "title": "Biomechanical and Tomographic Outcomes in Pediatric Keratoconus Treated with Conventional Epithelium-Off Corneal Collagen Cross-Linking",
+ "species": "human",
+ "procedure": "cxl_epi_off",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license-p>: Creative Commons Attribution (CC BY) license, ext-link https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "class": "public"
+ },
+ "source_files": [
+  {
+   "name": "PMC13303802.xml",
+   "sha256": "7dabbc52f130320928d88338a3726f873cc0d9eadbb78fae942e36a852236806",
+   "bytes": 109887,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "dresden-pediatric",
+   "role": "control",
+   "procedure": "cxl_epi_off",
+   "indication": "keratoconus",
+   "age_group": "pediatric",
+   "n_reported": 28,
+   "description": "28 eyes of 23 patients aged 13-18 years with progressive keratoconus (Amsler-Krumeich stages I-IV, Kmax below 65.0 D), all paediatric keratoconus eyes treated at the centre in 2019-2023; conventional Dresden epithelium-off CXL, riboflavin 0.1% with dextran 20% for 30 minutes, UVA 3 mW/cm2 for 30 minutes (5.4 J/cm2); single-centre observational cohort, visits at baseline, 6, 12 and 24 months"
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "dresden-pediatric/kmax",
+   "group": "dresden-pediatric",
+   "kind": "group_mean",
+   "n": 28,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [0, 6, 12, 24],
+   "cells": [
+    "PMC13303802.xml::medicina-62-01145-t002!R4C2",
+    "PMC13303802.xml::medicina-62-01145-t002!R4C3",
+    "PMC13303802.xml::medicina-62-01145-t002!R4C4",
+    "PMC13303802.xml::medicina-62-01145-t002!R4C5"
+   ],
+   "baseline_label": "Baseline Kmax (D) (Table 2, column 'Baseline')",
+   "notes": "mean ± SD (Table 2 caption); unit D in the row label; Pentacam tomography per Methods; columns '6 Months', '12 Months', '24 Months'; all 28 eyes analysed at every visit (analytic cohort of 28 treated eyes)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 2 column 'Delta, 24 Months-Baseline' (medicina-62-01145-t002!R4C6)",
+   "reason": "the table gives the absolute series, which is used instead of the change"
+  },
+  {
+   "what": "Table 1 'Baseline Kmax (D)' (medicina-62-01145-t001!R11C2)",
+   "reason": "duplicates the baseline cell of Table 2; Table 2 is cited"
+  },
+  {
+   "what": "Table 4 repeated-measures ANOVA statistics and Kmax-SP-A1 correlations",
+   "reason": "test statistics, p-values and correlations are not admissible values"
+  },
+  {
+   "what": "post-24-month course of three retreated eyes and one keratoplasty indication (Results text)",
+   "reason": "events after the tabulated follow-up; no Kmax values tabulated after 24 months"
+  }
+ ],
+ "notes": [
+  "Three eyes were retreated at about 3 years and one patient later had a keratoplasty indication; these events occurred after the 24-month visit, the tabulated values up to 24 months precede them, and the authors kept these eyes in the 24-month analysis.",
+  "Inclusion required the ability to comply with follow-up through 24 months; the cohort is all 28 paediatric keratoconus eyes treated at the centre during 2019-2023, so no larger treated group exists.",
+  "Table 2 also gives UCVA, BCVA, SP-A1 and thinnest pachymetry; Table 3 gives Corvis ST indices (DA, A1T, A2T, HC radius) and BAD-D (not extracted).",
+  "Licence CC BY 4.0: the record and the source XML are public."
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "study_id": "kmx-pmc6644189",
+ "doi": "10.4103/ijp.IJP_75_19",
+ "pmcid": "PMC6644189",
+ "title": "Safety and efficacy of riboflavin-assisted collagen cross-linking of cornea in progressive keratoconus patients: A prospective study in North East India",
+ "species": "human",
+ "procedure": "cxl_epi_off",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license-p>: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License; the XML gives no licence URL)",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "class": "private"
+ },
+ "source_files": [
+  {
+   "name": "PMC6644189.xml",
+   "sha256": "3a80e43285d139d015379f9691f8b6e75aeee9376e98508a716a26b80dc45e64",
+   "bytes": 113292,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "c3r-dresden",
+   "role": "control",
+   "procedure": "cxl_epi_off",
+   "indication": "keratoconus",
+   "age_group": "unstated",
+   "n_reported": 39,
+   "description": "One eye (allocated by coin toss) of each of 39 patients with bilateral progressive keratoconus (age criterion 15-50 years, Kmax not above 60 D, CCT above 400 um); epithelium-off Dresden CXL, riboflavin 0.1% in 20% dextran for 30 minutes, UVA 365 nm at 3 mW/cm2 for 30 minutes; prospective parallel-group study (CTRI REF/2018/05/020083)"
+  },
+  {
+   "group": "fellow-eye-observation",
+   "role": "control",
+   "procedure": "observation",
+   "indication": "keratoconus",
+   "age_group": "unstated",
+   "n_reported": 39,
+   "description": "The fellow eye of the same 39 patients, allocated by coin toss before follow-up as the control eye; no cross-linking during the 6-month follow-up (artificial tear drops only)"
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "c3r-dresden/kmax",
+   "group": "c3r-dresden",
+   "kind": "group_mean",
+   "n": 39,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC6644189.xml::T1!R3C2",
+    "PMC6644189.xml::T1!R3C3",
+    "PMC6644189.xml::T1!R3C5",
+    "PMC6644189.xml::T1!R3C7"
+   ],
+   "baseline_label": "Baseline K Max, C3R row (Table 1, column 'Baseline'; row R3 is shifted left by the rowspan of the parameter label)",
+   "notes": "means with ± (dispersion statistic not named); unit D from the Methods (Kmax > 60 D exclusion) and the Results text; Kmax measured with Pentacam HR per Methods; columns '1 month', '3 months', '6 months'; 39 eyes per group, no attrition reported"
+  },
+  {
+   "series_id": "fellow-eye-observation/kmax",
+   "group": "fellow-eye-observation",
+   "kind": "group_mean",
+   "n": 39,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [0, 1, 3, 6],
+   "cells": [
+    "PMC6644189.xml::T1!R2C3",
+    "PMC6644189.xml::T1!R2C4",
+    "PMC6644189.xml::T1!R2C6",
+    "PMC6644189.xml::T1!R2C8"
+   ],
+   "baseline_label": "Baseline K Max, Control row (Table 1, column 'Baseline')",
+   "notes": "means with ± (dispersion statistic not named); unit D from the Methods and the Results text; Pentacam HR per Methods; columns '1 month', '3 months', '6 months'; 39 eyes, no attrition reported"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 1 p-value columns P$ and P# and the between-group p* row (T1!R2C5, R2C7, R2C9, R2C10, R3C4, R3C6, R3C8, R4)",
+   "reason": "p-values are not admissible values"
+  },
+  {
+   "what": "Table 1 K Min and Sim K rows",
+   "reason": "minimum keratometry and simulated keratometry are not Kmax"
+  }
+ ],
+ "notes": [
+  "Fellow-eye design: the untreated control eyes were allocated before follow-up by coin toss and declared as the control group, so they are kept as an observation group.",
+  "Roles: the Dresden protocol is a standard treatment and the control eyes are observation; neither is an investigational agent, device or protocol, so both groups are role control.",
+  "Age group unstated: the age criterion is 15-50 years and only the mean age 23.795 +/- 5.44 years is reported, without a range.",
+  "Disease progression was recorded as an adverse event in the control group; the article does not report treatment of control eyes within the 6-month follow-up.",
+  "Table 1 also gives K Min, Sim K, cylinder, sphere, spherical equivalent, BCVA, UCVA, contrast sensitivity, IOP, endothelial cell count and hexagonality; Table 2 gives adverse events (not extracted).",
+  "Licence is non-commercial share-alike: the record is private and the XML is not copied into the repository."
+ ]
+}

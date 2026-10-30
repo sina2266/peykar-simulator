@@ -1,0 +1,94 @@
+{
+ "schema": "cornea.kmax-record-1.0.0",
+ "study_id": "kmx-pmc8905293",
+ "doi": "10.3389/fbioe.2022.830776",
+ "pmcid": "PMC8905293",
+ "title": "Topography-Guided Transepithelial Accelerated Corneal Collagen Cross-Linking for Low Refractive Error Correction in Keratoconus Treatment: A Pilot Study",
+ "species": "human",
+ "procedure": "cxl_epi_on",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: 'distributed under the terms of the Creative Commons Attribution License (CC BY)'; no licence URL in the XML)"
+ },
+ "source_files": [
+  {
+   "name": "PMC8905293.xml",
+   "sha256": "18d5fa40d6f7686ce4a0af108594f54f32c57582b69054ff8fe4fc509d723b69",
+   "bytes": 51440,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8905293/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "tg-te-acxl",
+   "role": "treated",
+   "procedure": "cxl_epi_on",
+   "indication": "keratoconus",
+   "age_group": "adult",
+   "n_reported": 18,
+   "description": "Prospective self-controlled pilot study (Fudan University EENT Hospital): 18 eyes of 18 patients with keratoconus stable for 12 months, low refractive error (SE 0 to -3.00 D), aged at least 18 years (mean 24.88 ± 4.64 years), treated with the investigational topography-guided transepithelial accelerated CXL (0.1% then 0.25% riboflavin without epithelial removal, pulsed UVA 45 mW/cm2 in three concentric zones centred on the maximum posterior elevation, total dose 5.4, 10 or 15 J by corneal curvature, KXL II); one surgeon."
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Steep K (R5) and Flat K (R6) rows of Table 1",
+   "reason": "K2 and K1 are not Kmax (protocol inclusion 1)"
+  },
+  {
+   "what": "Kmax decrease of two eyes stated in the Results text",
+   "reason": "text-only statement, not a tabulated series"
+  }
+ ],
+ "notes": [
+  "Procedure classified cxl_epi_on: the cross-linking is transepithelial (riboflavin applied without epithelial removal), which fits the epithelium-on context; the topography-guided, zonal irradiation pattern is recorded in the group description.",
+  "Role 'treated': single-arm pilot of an investigational customized protocol, each eye compared with its own preoperative values.",
+  "Age group 'adult': inclusion required age at least 18 years and no patient is reported as 18 or younger; the age range is not stated.",
+  "Other tabulated parameters (UDVA, CDVA, SE, TCT, ECD in Table 1) are not used."
+ ],
+ "series": [
+  {
+   "series_id": "tg-te-acxl/kmax",
+   "group": "tg-te-acxl",
+   "kind": "group_mean",
+   "n": 17,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    0.23,
+    1,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "K max(D) (mean ± SD), 'pre' column, Table 1",
+   "notes": "mean ± SD; Pentacam (Oculus); 18 eyes treated, one patient withdrew for personal reasons after the operation, so 17 eyes were analysed (baseline n = 17); one patient was lost after the 6-month visit (1-year n presumably 16, not tabulated); 1 week converted as 7/30.4375 = 0.23 months.",
+   "values": [
+    49.13,
+    48.98,
+    49.11,
+    48.76,
+    48.77,
+    48.82
+   ],
+   "source_cells": [
+    "PMC8905293.xml::T1!R7C2",
+    "PMC8905293.xml::T1!R7C3",
+    "PMC8905293.xml::T1!R7C4",
+    "PMC8905293.xml::T1!R7C5",
+    "PMC8905293.xml::T1!R7C6",
+    "PMC8905293.xml::T1!R7C7"
+   ],
+   "source_cell_texts": [
+    "49.13 ± 1.22",
+    "48.98 ± 1.22",
+    "49.11 ± 1.31",
+    "48.76 ± 1.09",
+    "48.77 ± 1.14",
+    "48.82 ± 1.16"
+   ]
+  }
+ ]
+}

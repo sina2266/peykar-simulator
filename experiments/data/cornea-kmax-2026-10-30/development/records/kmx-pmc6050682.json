@@ -1,0 +1,125 @@
+{
+ "schema": "cornea.kmax-record-1.0.0",
+ "study_id": "kmx-pmc6050682",
+ "doi": "10.1186/s12886-018-0849-4",
+ "pmcid": "PMC6050682",
+ "title": "Combined transepithelial phototherapeutic keratectomy and corneal collagen cross-linking for corneal ectasia after small-incision lenticule extraction—preoperative and 3-year postoperative results: a case report",
+ "species": "human",
+ "procedure": "cxl_combined",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>; CC0 waiver for data); public",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC6050682.xml",
+   "sha256": "d7609c89ebc0b2f309171801ac4a927dac9236a84acac43d299273e8be60a31b",
+   "bytes": 47986,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ptk-cxl",
+   "role": "control",
+   "procedure": "cxl_combined",
+   "indication": "ectasia_after_refractive",
+   "age_group": "adult",
+   "n_reported": 2,
+   "description": "Case report: both eyes of one male patient (19 years old at bilateral SMILE for myopia) with corneal ectasia after SMILE (forme fruste keratoconus diagnosed retrospectively on the pre-SMILE topography), treated in both eyes about 14 months after SMILE with simultaneous transepithelial PTK (9.0-mm zone, 50 µm depth, WaveLight EX500) followed by epithelium-off cross-linking at 3 mW/cm2 for 30 minutes (riboflavin 0.1%, Dresden protocol)"
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Kmax rows pre-SMILE, post-SMILE month 1 and post-SMILE month 7.5 (Table 1 R2-R7), both eyes",
+   "reason": "before the in-scope treatment: refractive surgery alone is out of scope and the untreated post-SMILE interval is not an observation group declared before follow-up"
+  }
+ ],
+ "notes": [
+  "Case report of one patient with both eyes treated; per-eye rows are extracted as individual series",
+  "The case is selected for its indication (ectasia after SMILE), not for a complication of or progression after the in-scope treatment, so the single-case exclusion is not applied",
+  "Transepithelial PTK at 50 µm depth is an excimer ablation in the same session as cross-linking, so the procedure is cxl_combined; the combination is described as an existing technique, not an investigational arm, so the role is control",
+  "Age group adult: the patient was 19 years old at SMILE, about 14 months before PTK + CXL",
+  "Table 1 also gives Kmean, thinnest corneal thickness, spherical equivalent and UDVA: other keratometry, thickness, refraction and visual acuity, not extracted"
+ ],
+ "series": [
+  {
+   "series_id": "ptk-cxl/od/kmax",
+   "group": "ptk-cxl",
+   "kind": "individual",
+   "n": 1,
+   "device": "unstated",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36
+   ],
+   "baseline_label": "Kmax(D), post-SMILE month 14, OD (Table 1): last measurement before PTK + CXL",
+   "notes": "right eye; unit D in the column header (footnote: Kmax maximum corneal keratometry); baseline is the 'post-SMILE month 14' row because the Results state that PTK + CXL was performed at 14 months after SMILE and the Discussion uses the 14-month values as the pre-CXL reference; follow-up months are the 'post-CXL month' labels; no topographer is named in the article",
+   "values": [
+    46.9,
+    46.4,
+    45.5,
+    43.9,
+    44.3
+   ],
+   "source_cells": [
+    "PMC6050682.xml::Tab1!R8C4",
+    "PMC6050682.xml::Tab1!R10C4",
+    "PMC6050682.xml::Tab1!R12C4",
+    "PMC6050682.xml::Tab1!R14C4",
+    "PMC6050682.xml::Tab1!R16C4"
+   ],
+   "source_cell_texts": [
+    "46.90",
+    "46.40",
+    "45.50",
+    "43.90",
+    "44.30"
+   ]
+  },
+  {
+   "series_id": "ptk-cxl/os/kmax",
+   "group": "ptk-cxl",
+   "kind": "individual",
+   "n": 1,
+   "device": "unstated",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36
+   ],
+   "baseline_label": "Kmax(D), post-SMILE month 14, OS (Table 1): last measurement before PTK + CXL",
+   "notes": "left eye (OS rows have no follow-up cell because of the row span, so Kmax is cell C3); unit D in the column header; baseline as for the right eye; no topographer is named in the article",
+   "values": [
+    49.6,
+    48.3,
+    47.6,
+    45.7,
+    45.6
+   ],
+   "source_cells": [
+    "PMC6050682.xml::Tab1!R9C3",
+    "PMC6050682.xml::Tab1!R11C3",
+    "PMC6050682.xml::Tab1!R13C3",
+    "PMC6050682.xml::Tab1!R15C3",
+    "PMC6050682.xml::Tab1!R17C3"
+   ],
+   "source_cell_texts": [
+    "49.60",
+    "48.30",
+    "47.60",
+    "45.70",
+    "45.60"
+   ]
+  }
+ ]
+}

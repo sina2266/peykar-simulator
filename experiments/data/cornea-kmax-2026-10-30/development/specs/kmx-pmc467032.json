@@ -1,0 +1,84 @@
+{
+ "study_id": "kmx-pmc467032",
+ "doi": "10.4103/IJO.IJO_2944_23",
+ "pmcid": "PMC467032",
+ "title": "Evaluation of dynamic corneal response parameters and the biomechanical E-staging after Intacs® SK implantation in keratoconus",
+ "species": "human",
+ "procedure": "icrs",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license>: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License)",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC467032.xml",
+   "sha256": "915bb9e502b16bda96cb080c4bcf4b20032d2510083c9c006aa31d7d7a4da12c",
+   "bytes": 74045,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC467032/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "intacs-sk",
+   "role": "control",
+   "procedure": "icrs",
+   "indication": "keratoconus",
+   "age_group": "adult",
+   "n_reported": 49,
+   "description": "49 keratoconic corneas of 41 contact-lens-intolerant adult patients (Results: older than 18 years; Methods: adult patients >= 18 years) treated with femtosecond-laser-assisted Intacs SK intracorneal ring segment implantation (2017-2021), one surgeon; no prior or simultaneous cross-linking; inclusion required TCT > 450 µm and Kmax < 65 D."
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "intacs-sk/kmax-paired-3mo",
+   "group": "intacs-sk",
+   "kind": "group_mean",
+   "n": 35,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    3
+   ],
+   "cells": [
+    "PMC467032.xml::IJO.IJO_2944_23-T1!R3C3",
+    "PMC467032.xml::IJO.IJO_2944_23-T1!R3C5"
+   ],
+   "baseline_label": "Kmax 'Preoperatively' column of block A (35 corneas of 28 patients), Table 1",
+   "notes": "mean±SD as printed; unit dioptres from the Methods (inclusion criterion Kmax < 65 D) and the Abstract; Pentacam (Oculus). Block A pairs the preoperative and 3-month values of the 35 corneas measured at 3 months (actual interval 2.8 ± 0.7 months, Results)."
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "P column of each Kmax row (IJO.IJO_2944_23-T1!R3C7, R19C7, R35C7)",
+   "reason": "p-values are not admissible values (protocol inclusion 4)"
+  },
+  {
+   "what": "ARC rows (R4, R20, R36)",
+   "reason": "anterior radius of curvature (the 'A' parameter of the ABCD classification), not Kmax (protocol inclusion 1)"
+  },
+  {
+   "what": "Fig. 1 single-case Kmax readings",
+   "reason": "one illustrative case in a figure legend, not a tabulated group series"
+  },
+  {
+   "what": "series intacs-sk/kmax-paired-6mo (33 corneas)",
+   "reason": "nested follow-up cohort of the same eyes (extraction brief addendum 1: the block with the most visits, then the most eyes, is kept)"
+  },
+  {
+   "what": "series intacs-sk/kmax-paired-11mo (29 corneas)",
+   "reason": "nested follow-up cohort of the same eyes (extraction brief addendum 1: the block with the most visits, then the most eyes, is kept)"
+  }
+ ],
+ "notes": [
+  "Table 1 reports three paired blocks (A, B, C), each comparing the preoperative values with one follow-up for the corneas measured at that follow-up; the blocks overlap in eyes (35, 33 and 29 of the 49 corneas) and each block carries its own preoperative Kmax, so each block is extracted as its own two-point series with its own same-eye baseline; the eyes of the three series are not independent.",
+  "Missing follow-ups are ordinary attrition (measurements available for 35, 33 and 29 of 49 corneas; inclusion required Pentacam and Corvis ST examinations of quality 'OK' before and after surgery, a data-quality criterion, not an outcome-defined selection).",
+  "Visit times are the nominal times stated in the Table 1 headers and footnote (3, 6 and 11 months); preoperative measurements were taken 1.9 ± 1.1 months before surgery (Results).",
+  "Other tabulated parameters (TCT, BAD-D, ARTh, SP-A1, IR, DA ratio 2 mm, A1 velocity, SSI, CBiF, E-staging) are not used.",
+  "Licence CC BY-NC-SA 4.0: the record and source XML are kept private.",
+  "Curated by the model developer after extraction under extraction brief addendum 1 (2026-10-30): blocks B and C removed as nested cohorts of block A's eyes."
+ ]
+}

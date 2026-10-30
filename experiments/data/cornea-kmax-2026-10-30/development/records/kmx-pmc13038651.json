@@ -1,0 +1,151 @@
+{
+ "schema": "cornea.kmax-record-1.0.0",
+ "study_id": "kmx-pmc13038651",
+ "doi": "10.1007/s10792-025-03919-2",
+ "pmcid": "PMC13038651",
+ "title": "Comparison of conventional corneal crosslinking with the accelerated procedure in progressive keratoconus",
+ "species": "human",
+ "procedure": "cxl_epi_off",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13038651.xml",
+   "sha256": "a951d7158617cf3564eb8615e83f6561f9a1d4fa27b5ef7627e8c1ce061847fc",
+   "bytes": 141227,
+   "origin": "Europe PMC fullTextXML",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13038651/fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "s-cxl",
+   "role": "control",
+   "procedure": "cxl_epi_off",
+   "indication": "keratoconus",
+   "age_group": "mixed",
+   "n_reported": 16,
+   "description": "Standard CXL protocol (S-CXL, 3 mW/cm2 for 30 min; Abstract '3*30', Introduction 5.4 J/cm2) for progressive keratoconus (Kmax increase >= 1 D within one year); one eye per patient; TU Dresden, enrolled 2009-2013. Age group 'mixed': mean age 23.4 +/- 8.3 years (Results) and the Complications paragraph places S-CXL patients aged 17 to 25 years."
+  },
+  {
+   "group": "a-cxl",
+   "role": "control",
+   "procedure": "cxl_accelerated",
+   "indication": "keratoconus",
+   "age_group": "unstated",
+   "n_reported": 45,
+   "description": "Accelerated CXL protocol (A-CXL, 9 mW/cm2 for 10 min; Abstract '9*10', Introduction) for progressive keratoconus; one eye per patient; same centre and period. Mean age 28.1 +/- 10.9 years; age range not stated."
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tab2 P-value columns (Tab2!R5C8-R5C11, Tab2!R6C7-R6C10)",
+   "reason": "p-values are not admissible values (protocol inclusion 4)"
+  },
+  {
+   "what": "Tab1!R14C2-C3 baseline Kmax",
+   "reason": "duplicates the Table 2 baseline cells of the same groups; the Table 2 series is used"
+  },
+  {
+   "what": "Kmean rows (Tab2 R3-R4)",
+   "reason": "mean keratometry is not Kmax (protocol inclusion 1)"
+  },
+  {
+   "what": "ARC and PRC rows (Tab1 R15-R16, Tab2 R7-R10)",
+   "reason": "radius of curvature in millimetres, not Kmax (protocol inclusion 2)"
+  },
+  {
+   "what": "Fig. 2 categorized change of Kmax",
+   "reason": "proportions in a figure, not tabulated Kmax values (protocol inclusion 4)"
+  }
+ ],
+ "notes": [
+  "Inclusion required one eye per patient and all measurements on the same Pentacam HR (device-consistency criterion stated in Methods, not an outcome-defined selection); losses to follow-up are retained as ordinary attrition.",
+  "Analysis used a linear mixed model with Bonferroni correction for p-values; the Table 2 values are the reported descriptive means +/- SD with 95% CI of the mean, not model-adjusted means.",
+  "Epithelium removal is not restated for either protocol in the article text (procedure described in reference [9] and Supplement 1, not available here); A-CXL is classified cxl_accelerated as the accelerated version (stated 9 mW/cm2) of the standard protocol, with no transepithelial technique described.",
+  "Other tabulated parameters (ISV, IVA, TCT, CCT in Table 2; densitometry in Table 3; higher-order aberrations in Table 4; best-corrected visual acuity in Table 5) are not used.",
+  "Retreatment handling: the article reports retreatments in both groups during follow-up but not whether post-retreatment visits are included or censored in Table 2 (the Discussion mentions dropouts from follow-up treatments); the series are kept with this note."
+ ],
+ "series": [
+  {
+   "series_id": "s-cxl/kmax",
+   "group": "s-cxl",
+   "kind": "group_mean",
+   "n": 16,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    36,
+    96
+   ],
+   "baseline_label": "Baseline Kmax (D), Table 2 'Baseline' column, S-CXL row",
+   "notes": "mean +/- SD (95% CI of the mean), Pentacam HR; n = 16 eyes at baseline (Table 1); per-visit n not reported; 2 patients lost to follow-up 3 and 8 years after CXL; 4 patients needed CXL retreatment after a mean follow-up of 61.3 +/- 23.9 months and the article does not state whether their later measurements are in the Table 2 means.",
+   "values": [
+    59.1,
+    59.1,
+    57.7,
+    56.6,
+    55.5
+   ],
+   "source_cells": [
+    "PMC13038651.xml::Tab2!R5C3",
+    "PMC13038651.xml::Tab2!R5C4",
+    "PMC13038651.xml::Tab2!R5C5",
+    "PMC13038651.xml::Tab2!R5C6",
+    "PMC13038651.xml::Tab2!R5C7"
+   ],
+   "source_cell_texts": [
+    "59.1 ± 5.5(56.3 – 61.9)",
+    "59.1 ± 5.1(56.3 – 61.9)",
+    "57.7 ± 6.5(54.9 – 60.5)",
+    "56.6 ± 6.8(53.6 – 59.2)",
+    "55.5 ± 5.3(53.2 – 58.9)"
+   ]
+  },
+  {
+   "series_id": "a-cxl/kmax",
+   "group": "a-cxl",
+   "kind": "group_mean",
+   "n": 45,
+   "device": "pentacam",
+   "value_kind": "kmax_absolute",
+   "months": [
+    0,
+    6,
+    12,
+    36,
+    96
+   ],
+   "baseline_label": "Baseline Kmax (D), Table 2 'Baseline' column, A-CXL row",
+   "notes": "mean +/- SD (95% CI of the mean), Pentacam HR; n = 45 eyes at baseline (Table 1); per-visit n not reported; 16 patients lost to follow-up between 3 and 8 years; 2 patients excluded from subsequent follow-up after further procedures (alcohol keratectomy, DMEK); 5 patients needed repeat CXL after a mean follow-up of 46.4 +/- 29.1 months and one more was indicated for retreatment after 96 months; the article does not state whether measurements after retreatment are in the Table 2 means.",
+   "values": [
+    55.9,
+    56.1,
+    54.9,
+    54.0,
+    52.6
+   ],
+   "source_cells": [
+    "PMC13038651.xml::Tab2!R6C2",
+    "PMC13038651.xml::Tab2!R6C3",
+    "PMC13038651.xml::Tab2!R6C4",
+    "PMC13038651.xml::Tab2!R6C5",
+    "PMC13038651.xml::Tab2!R6C6"
+   ],
+   "source_cell_texts": [
+    "55.9 ± 5.5(54.2 ± 57.6)",
+    "56.1 ± 5.7(54.4 – 57.8)",
+    "54.9 ± 5.6(53.1 – 56.5)",
+    "54 ± 5.7(52.3 – 55.7)",
+    "52.6 ± 5.1(50.9 – 54.4)"
+   ]
+  }
+ ]
+}

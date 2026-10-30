@@ -81,7 +81,76 @@ and 22 sealed-test studies.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0
 rounds): 11 linked pairs; 7 sealed studies lose linked training studies, one pair
 links two sealed studies, and 2 development clusters leave training together.
 
-Extraction (next): development extractors D1–D4 (10 studies each) and sealed
-custodians C1–C3 (8, 7 and 7) under `.peykar/kmax-extraction-brief.md` (SHA-256
-536059c9…) with assignments `.peykar/kmax-extraction-assignments.json` (SHA-256
-fbf1f10a…).
+## Extraction outcome (2026-10-30)
+
+Four development extractors (D1–D4, 10 studies each) and three sealed custodians
+(C1–C3: 8, 7 and 7 studies), all sub-agents, followed `.peykar/kmax-extraction-brief.md`
+(SHA-256 536059c9…) with assignments `.peykar/kmax-extraction-assignments.json`
+(SHA-256 fbf1f10a…). After D1 and D2 had finished,
+`.peykar/kmax-extraction-brief-addendum-1.md` (SHA-256 2c221633…) added one rule the
+protocol did not name, written after D2 reported three nested blocks: when a table tabulates
+the same eyes again for the subset that reached a later visit, each block with its own
+baseline, only one block per group is extracted (the one with the most visits, then the
+most eyes). D3, D4 and all three custodians worked under it. D2 had extracted three
+nested blocks of the same eyes for `kmx-pmc467032`; the developer applied the addendum
+to that record (`.peykar/curate_kmax_pmc467032.py`): the spec keeps block A (35
+corneas, months 0 and 3), lists blocks B and C in its exclusions with a note, and the
+private record was rebuilt with the unchanged builder.
+
+**Development: 25 records with 35 series**: 27 group means and 8 per-eye series (two
+studies), 33 control and 2 treated; contexts cross-linking epithelium-off 11 series
+(6 studies), accelerated cross-linking 7 (6), ring segments 7 (6), cross-linking
+combined with another treatment 4 (3), transepithelial cross-linking 3 (3) and
+observation 3 (3); keratoconus 33 series, ectasia after refractive surgery 2; Pentacam
+27, Sirius 4, device not stated 3, other 1; 34 absolute series and 1 change series;
+13 series have one follow-up visit and 22 have two or more. The 12 CC BY records are in
+`development/records/` with their source XML in `development/raw/`; the 13 records
+under non-commercial or share-alike licences are private
+(`.peykar/kmax-development-private/records/`). Specs (`development/specs/`) cite cells
+and copy no values. Fifteen development studies have no record. Their reasons were
+restated afterwards from the binding rules by a development reviewer sub-agent, because
+the extractors' replies were not saved to a file
+([`development/no-record-reasons-1.0.0.json`](development/no-record-reasons-1.0.0.json)):
+
+- complete-case analysis sets (a minimum follow-up equal to the last tabulated visit,
+  or only the eyes seen at the last visit, out of more treated eyes):
+  `kmx-pmc12885941`, `kmx-pmc10302271`, `kmx-pmc11142646`, `kmx-pmc12027619`,
+  `kmx-pmc10352124`, `kmx-pmc12028667` (its scleral-lens arm is also out of scope),
+  `kmx-pmc12565262`, `kmx-pmc9231688`, `kmx-pmc12803647`, `kmx-pmc4314761`,
+  `kmx-pmc9672700`;
+- an analysis set selected by a post-treatment outcome (eyes stable after
+  cross-linking, then given a phakic lens): `kmx-pmc4383407`;
+- a follow-up given only as a cohort mean ± SD of months, and a recomputed tangential
+  maximum instead of the device's Kmax: `kmx-pmc12468094`;
+- "maximum keratometry" rows that the Results define as the steep meridian K:
+  `kmx-pmc4128847`;
+- `kmx-pmc8434931`: the review found its Kmax table otherwise admissible, but the two
+  group labels of that table conflict with the article's other table and its Results.
+  No binding rule resolves conflicting labels, the context of each column depends on
+  which label is right, and the study stays without a record, as D3 left it.
+
+**Sealed:** the custodians built **17 records with 33 series** (all group means, all
+control; contexts cross-linking epithelium-off 15, accelerated 11, transepithelial 4,
+combined 1, observation 1, other 1; all keratoconus; Pentacam 16, Placido topography 6,
+Orbscan 5, Sirius 2, other 2, Galilei 1, not stated 1; 31 absolute and 2 change
+series; 13 series with one follow-up visit and 20 with two or more; 10 records in the
+public licence class, CC BY or CC0, and 7 in the private class) and reported only
+structure and hashes. Five sealed
+studies have no record: two complete-case sets, one with simulated keratometry only, one
+with model-based estimates only and one whose follow-up is given only as intervals.
+`.peykar/verify_kmax_custody.py` (output `.peykar/kmax-custody-check.json`) found every
+reserved sealed study assigned once and reported once, every screened source and raw
+copy equal to its assignment hash, all 17 records rebuilt byte for byte from their
+specs, no record outside a record decision, and no key in the custody reports that
+usually holds a value.
+
+Process note: the developer opened custody report C1 once, by mistake, while checking
+its format. By design a custody report holds structure only (decisions, groups, eye
+counts, months and numbers of cited cells, no Kmax value); reports C2 and C3 were
+checked only through the verifier.
+
+No Kmax value of these articles had been read by the model developer when the rule,
+the tranche order, the extraction protocol, the triage and the split were committed
+(commits `7ddf3da7`, `fe6446c1`). Development records are now read for model
+development; sealed records stay private and unread until the evaluation protocol is
+frozen.

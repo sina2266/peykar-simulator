@@ -1,0 +1,98 @@
+{
+ "study_id": "kmx-pmc10244573",
+ "doi": "10.3389/fmed.2023.1152266",
+ "pmcid": "PMC10244573",
+ "title": "Medium to long term follow up study of the efficacy of cessation of eye-rubbing to halt progression of keratoconus",
+ "species": "human",
+ "procedure": "observation",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License (CC BY))",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC10244573.xml",
+   "sha256": "dd8863818b7d455ffce068f63f95112869d3066f046a2f60435c3afb9a8f9112",
+   "bytes": 138844,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "eye-rubbing-cessation",
+   "role": "control",
+   "procedure": "observation",
+   "indication": "keratoconus",
+   "age_group": "mixed",
+   "n_reported": 153,
+   "description": "153 eyes of 77 consecutive treatment-naive keratoconus patients aged 12-40 years at the first visit, minimum 3-year follow-up; instructed to stop eye rubbing and monitored without cross-linking or surgery (prior cross-linking or surgery excluded) (Methods, Table 1)"
+  }
+ ],
+ "extraction_protocol": "kmax-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "eye-rubbing-cessation/kmax",
+   "group": "eye-rubbing-cessation",
+   "kind": "group_mean",
+   "n": 153,
+   "device": "pentacam",
+   "value_kind": "kmax_change",
+   "months": [
+    0,
+    6,
+    12,
+    24,
+    36,
+    48
+   ],
+   "cells": [
+    {
+     "definition": "definition:Statistical analysis (DeltaKmax = value at the visit minus the baseline value); Table 3 baseline row",
+     "value": 0
+    },
+    "PMC10244573.xml::tab3!R3C2",
+    "PMC10244573.xml::tab3!R4C2",
+    "PMC10244573.xml::tab3!R5C2",
+    "PMC10244573.xml::tab3!R6C2",
+    "PMC10244573.xml::tab3!R7C2"
+   ],
+   "reference_cell": "PMC10244573.xml::tab1!R7C2",
+   "baseline_label": "Kmax at the first visit to the centre (Table 1, all 153 keratoconus eyes)",
+   "notes": "Table 3 mean of DeltaKmax (visit minus baseline) with SD; per-visit N in Table 3 (78 at 6, 107 at 12, 90 at 24, 116 at 36, 72 at 48 months); n is the 153 eyes at baseline; dioptres from the Methods (progression criterion > 1.0 D), no unit in the tables"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "PMC10244573.xml::tab3!R8 (Delta > M48)",
+   "reason": "time is a range (more than 48 months), not a dated visit"
+  },
+  {
+   "what": "PMC10244573.xml::tab5 sub-group series (No ARB/RER, RER only, ARB only, ARB & RER)",
+   "reason": "sub-groups defined by at-risk behaviour and eye rubbing reported during follow-up (whether patients stopped), not a pre-treatment condition or protocol; the whole cohort (Table 3) is extracted and the sub-groups would count the same eyes twice"
+  },
+  {
+   "what": "PMC10244573.xml::tab9 (patients with and without progression)",
+   "reason": "groups selected by a post-treatment outcome (progression)"
+  },
+  {
+   "what": "PMC10244573.xml::tab10",
+   "reason": "proportions of progression"
+  },
+  {
+   "what": "PMC10244573.xml::tab3 column p",
+   "reason": "p-values (each timepoint against the previous one)"
+  },
+  {
+   "what": "Figures 2A,B (per-eye DeltaKmax at the end of follow-up)",
+   "reason": "figure only and undated final visit; no table cells"
+  }
+ ],
+ "notes": [
+  "Observation context: no cross-linking or ring segment during follow-up; patients were counselled to stop eye rubbing, offered topical antihistamines or lubricants for itch and a rigid night-time eye shield (Methods).",
+  "Baseline is the first visit to the centre; follow-up visits at 6 months, 1, 2, 3 years and yearly afterwards (Methods).",
+  "Inclusion required a minimum follow-up of 3 years (77 of 176 eligible patients); kept under the protocol because the minimum follow-up is shorter than the last tabulated visit (48 months).",
+  "Both eyes of most patients are included (153 eyes of 77 patients).",
+  "Kmean (Tables 4, 6), thinnest pachymetry (Tables 7, 8) and sub-group baseline characteristics (Table 2) are tabulated and not used."
+ ]
+}
