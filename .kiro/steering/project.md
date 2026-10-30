@@ -1,4 +1,32 @@
 # Peykar continuation context
+## Kmax 1.0 FAILED H3/H4 (ninth component); IOP 1.4 d1s running, 2026-10-30 midday
+- Kmax dataset `experiments/data/cornea-kmax-2026-10-30` (module
+  `peykar.validation.cornea_kmax_data`, builder `scripts/build_kmax_record.py`): 102
+  articles by the masked-table rule (one follow-up time), triage 62, split salt
+  `peykar-kmax-holdout-v1:` 40/22; 25 dev records (35 series; 12 public, 13 private in
+  `.peykar/kmax-development-private/records`; reasons for the 15 without a record in
+  `development/no-record-reasons-1.0.0.json`); 17 sealed records (33 series,
+  `.peykar/kmax-sealed-2026-10-30`, C1–C3, verifier `.peykar/verify_kmax_custody.py`
+  clean). The developer opened C1's custody report once (disclosed). ALL CONSUMED.
+- Model `peykar.model_learning.kmax_population` (generic model 2; covariate centred at
+  55 D via `covariate_reference = exp(11)`; candidates k0–k7, PINNED by the protocol),
+  operator `scripts/evaluate_kmax_population.py` (scoring `eye_additive_evaluation4`),
+  publisher `scripts/publish_kmax_population.py`, private helpers `.peykar/kmax_compare.py`,
+  `kmax_diagnostics.py`, `check_kmax_redaction.py`, `kmax10_sealed_breakdown.py`,
+  `write_kmax_protocol.py` (pins the import closure). k6 adopted (no 7-day transient,
+  forecast-only pooled noise). Protocol `9a20b859`, freeze `9fe023ae`. Sealed once
+  (43.5 s): H1 0.745/0.855 pass, H2 10.20 vs 11.91/10.73 pass, H3 FAIL 12.60 vs
+  pooled-curve increment 12.35, H4 FAIL 14.61 vs pooled curve 14.17. One CC BY pediatric
+  study (kmx-pmc11826614, flattening for 5 years) carries both. NOT in `peykar eye`.
+  Next idea: a slow second component or log-time law, age covariate, new screen.
+- IOP 1.4: round 0 d0 merged (`d1f7f315`); d1s LOSO in 16 shards
+  (`.peykar/iop-1.4-dev/round1-d1s-shard{0..15}`, started 10:30, ETA about 14:00).
+  Merge with `scripts/evaluate_iop_population_1_4.py --merge <16 dirs> --output
+  .peykar/iop-1.4-dev/round1-d1s`, then apply the declared rule against d0.
+- Quirks seen again: the editor re-wraps Python files after `fs_append`/`str_replace`
+  (run `ruff format` and re-check before `make check-docker`), and a write plus its run
+  in one tool batch runs the OLD file. Persian docs contain ZWNJ (U+200C): match them
+  in Python with `\u200c`.
 ## Retina 1.4 (stacking 2.0.0) FAILED H3/H5; IOP tranche 5 in custody, 2026-10-30 morning
 - New generic `peykar.model_learning.eye_stacking2` 2.0.0 (HistoryStackingSpec with
   optional `scale_tasks`, HistoryStackedCandidate, HistoryStacking with optional

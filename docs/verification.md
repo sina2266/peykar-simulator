@@ -1,4 +1,66 @@
 # Verification record
+## IOP model 1.4 round 0, Kmax dataset 1.0.0 and Kmax model 1.0 (one-shot sealed test): 2026-10-30
+Commands run from the repository root; outcomes observed. Start state: main at
+`2d1e965d` (= origin).
+- IOP 1.4 round 0 (declared in `5580c041`): `... evaluate_iop_population_1_4.py
+  --development --candidate d0 --shard i/16` for i = 0..15 (detached, 7,118–7,894 s
+  each), `--merge` (report `d1f7f315…`); `.peykar/iop14_diagnostics.py`: next observation
+  6.55 pp (80% coverage 0.79), landmark 8.23, initial state 10.27 (mean signed error
+  −1.46). The round-1 rule declared in `2a27fe52` selected cyclodestruction (16.65 pp
+  between kept sub-procedures) and subconjunctival MIGS (10.06); commit `03137a6a`. The
+  d1s run (16 shards via `.peykar/launch_iop14_round0.py d1s round1`) was still running
+  when this section was written.
+- Kmax screen: `scripts/screen_corneal_wound_literature.py --queries
+  screening/queries.json` (1,147 articles and full texts) and `queries-round2.json` (384
+  new articles, 379 full texts); `.peykar/run_kmax_table_screen.py`: masked previews of
+  586 tables in 368 articles; `screening/triage_rule.py`: 102 articles (68 with two
+  follow-up times); `screening/tranche_order.py`: all 102 in tranche 1;
+  `uv run --frozen pytest -q tests/unit/test_cornea_kmax.py`: 3 passed. Commit
+  `7ddf3da7`. `screening/triage_chunks.py --tranche 1 --chunks 3` (34 articles each);
+  three reviewer sub-agents admitted 20/14, 20/14 and 22/12 (62 admitted, 40 excluded);
+  `scripts/reserve_kmax_split.py`: 40 development and 22 sealed; `link_study_authors.py`:
+  11 pairs, 2 development clusters, 7 sealed studies with training exclusions. Commit
+  `fe6446c1`.
+- Kmax extraction: four development sub-agents wrote 25 records (37 series as extracted);
+  `.peykar/curate_kmax_pmc467032.py` applied addendum 1 to one record (exit 0; 3 → 1
+  series), leaving 35 series. A development reviewer sub-agent restated the reasons of
+  the 15 studies without a record (`no-record-reasons-1.0.0.json`, SHA `b9869695…`).
+  Three custodian sub-agents (C1–C3) wrote 17 sealed records with 33 series;
+  `.peykar/verify_kmax_custody.py`: 22 reserved studies, 17 records rebuilt identical,
+  17 raw copies equal to their sources, 0 value-like report keys, no problem. The
+  developer had opened custody report C1 once (disclosed in the dataset README).
+- `make check-docker`: 950 tests passed in 434.25 s, 89% coverage, mypy 177 source files,
+  18 frontend tests, all packages built, EXIT=0
+  (`.peykar/kmax-extraction-check-docker-20261030.log`). Commit `735f6882`, pushed.
+- Kmax model round 1 (declared in `ca17211a` before any run): `...
+  evaluate_kmax_population.py --development --candidate kX` for k0–k5 (detached, about
+  two minutes each, EXIT=0); `.peykar/kmax_compare.py`: no candidate met the rule (k1 and
+  k3 gained in every task but had no population variant inside both coverage windows).
+  Round 2 (declared in `a9f8283d`): k6 met the rule (gains 0.162/0.909/0.320 pp,
+  coverage 0.718/0.872), k7 did not.
+- `scripts/publish_kmax_population.py --development --report
+  .peykar/kmax-1.0-dev/round2-k6/report.json`: H1–H3 pass, H4 fails (15.41 against
+  13.89 pp); `.peykar/check_kmax_redaction.py development`: 13 private studies, 0 leaks.
+  `pytest -q tests/unit/test_cornea_kmax.py`: 5 passed.
+- `make check-docker` before the freeze: the first run failed at `ruff format --check`
+  (the editor had re-wrapped the test file after it was written); after `ruff format`,
+  952 tests passed in 414.05 s, 89% coverage, mypy 178 source files, EXIT=0
+  (`.peykar/kmax-freeze-check-docker-20261030.log`).
+- `.peykar/write_kmax_protocol.py`: protocol SHA-256 `9a20b859…`, 82 pinned files;
+  `.peykar/check_frozen_protocols.py`: no problem in any of the 20 frozen protocols
+  (retina 1.2.0 has none). Freeze commit `9fe023ae`, pushed (remote SHA equal).
+- Then, once: `... evaluate_kmax_population.py --sealed --protocol
+  experiments/eye/kmax/model-1.0/protocol-1.0.0.json --output
+  .peykar/kmax10-sealed-test-2026-10-30` (detached; EXIT=0, 43.5 s; report `13d80e8b…`).
+- `publish_kmax_population.py --sealed --report ... --output
+  experiments/eye/kmax/model-1.0/sealed-test-2026-10-30`: exit 0; H1 passes (41/55 and
+  47/55), H2 passes (10.20 against 11.91/27.40/10.73/12.07), H3 fails (12.60 against
+  16.65/12.35/14.28), H4 fails (14.61 against 14.17). `check_kmax_redaction.py sealed`:
+  7 private studies, 0 leaks. `.peykar/kmax10_sealed_breakdown.py` (post hoc): without
+  kmx-pmc11826614 H3 and H4 would pass; no other single study flips a verdict.
+- The figure was rendered with `.peykar/cornea-native47/bin/python .../plot-results.py`
+  (exit 0) twice (a legend covered a bar label, a panel title gave 3 instead of 5 years)
+  and inspected as an image.
 ## Retina tranche 4, stacking 2.0.0, retinal-thickness model 1.4 and IOP tranche 5: 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `0b09ae1e` (= origin).

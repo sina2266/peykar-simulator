@@ -540,6 +540,23 @@ tranche 4, reserved before triage (22 admitted, 17 custodian records).
 - [ ] A forecast that adapts how much it trusts the last observation to the series' own
   observed change, rather than a fixed persistence weight; it needs a new retina screen
   with a test part reserved before triage (no unread retina article remains).
+### 2026-10-30 maximum keratometry after cross-linking or ring segments (Kmax 1.0)
+[Kmax 1.0.0](../experiments/eye/kmax/model-1.0/README.md), the ninth eye component, was
+frozen (commit `9fe023ae`; protocol `9a20b859`) before its one-shot sealed test on 17
+custodian records (33 series) reserved before any value was read.
+- [x] Dataset `cornea-kmax-2026-10-30`: 1,526 screened full texts, 102 articles by the
+  masked-table rule with one follow-up time, blind triage (62 admitted), salted split
+  40/22, 25 development records (35 series) and 17 sealed records.
+- [x] Development: the generic 7-day transient was read from almost no data and the
+  intervals were too narrow; k6 (no transient, forecast-only pooled noise) adopted in
+  round 2 (6.145/11.113/15.412 pp against 7.053/11.433/15.574); development H4 fails.
+- [x] Sealed: H1 (0.745/0.855) and H2 (10.20 pp against persistence 11.91 and the
+  pooled-curve increment 10.73) pass; H3 (landmark 12.60 against 12.35) and H4 (initial
+  state 14.61 against 14.17) fail. One study of eyes treated under 18 years, which kept
+  flattening for five years, carries both failures. Not offered by `peykar eye`.
+- [ ] A Kmax law with a slow long-term component (or a law in log time) learned from the
+  long series, with age as a covariate, tested on a new screen with a test part reserved
+  before triage (every article of this dataset is consumed).
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

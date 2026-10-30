@@ -274,6 +274,26 @@ for their preoperative acuity (one DSAEK group after glaucoma surgery in the sea
 set) are still forecast too optimistically
 ([model 1.0](experiments/eye/acuity/model-1.0/README.md),
 [Persian results](experiments/eye/acuity/model-1.0/results.fa.md)).
+The eighth eye component,
+[best-corrected acuity after macular treatment](experiments/eye/retina-acuity/README.md),
+failed its sealed tests in three versions (1.0.0 all four hypotheses, 1.1.0 four of five,
+1.2.0 all five) and is not offered. Later versions of tested components that did not
+pass all their hypotheses (retinal thickness 1.3.0 and 1.4.0, acuity 1.2.0 with forecast
+stacking, IOP 1.3.0) left their predecessors in place; their results are in
+[the status table](docs/status.md). The ninth eye component, and the sixth corneal one,
+is [maximum keratometry (Kmax) after cross-linking or ring segments](experiments/eye/kmax/README.md),
+built from an [outcome-blind dataset](experiments/data/cornea-kmax-2026-10-30/README.md)
+of 1,526 screened open-access full texts (102 passed a masked-table rule, 62 admitted
+blind, split 40/22 before any value was read; 25 development and 17 custodian-extracted
+sealed records). **Kmax model 1.0.0** (no early transient, forecast-only pooled noise)
+was frozen and pushed (`9fe023ae`) and tested once: coverage 74.5%/85.5% and the next
+follow-up (1.02 D against 1.19 D for persistence) passed, but the landmark (1.26 D
+against 1.24 D for the pooled-curve increment) and the initial state (1.46 D against
+1.42 D for the pooled training curve) failed. One study of eyes treated under 18 years
+kept flattening for five years while the law levelled off after the first year; it is
+not offered by `peykar eye`
+([model 1.0](experiments/eye/kmax/model-1.0/README.md),
+[Persian results](experiments/eye/kmax/model-1.0/results.fa.md)).
 The tested eye components can be run as forecasters with `peykar eye`
 ([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
 follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%

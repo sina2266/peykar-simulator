@@ -47,7 +47,7 @@ thickness 1.3.0 (1.1.0 with forecast stacking) improved both forecast tasks on t
 thickness 1.4.0 (1.1.0 with stacked forecasts from follow-up and scaled intervals)
 passed H1, H2 and H4 on tranche 4 but its landmark forecasts were worse than 1.1.0's
 (10.58 against 9.99 pp) ([README](../experiments/eye/retina/model-1.4/README.md)), so
-1.1.0 stays.
+1.1.0 stays. Maximum keratometry (Kmax) after cross-linking or ring segments is not offered either: its model 1.0.0 passed H1 and H2 but failed H3 (landmark 12.60 against the pooled-curve increment 12.35 pp) and H4 (initial state 14.61 against the pooled training curve 14.17) ([README](../experiments/eye/kmax/model-1.0/README.md)).
 
 Each component uses its own tested primary methods:
 
