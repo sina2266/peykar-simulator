@@ -54,8 +54,8 @@ Commands run from the repository root; outcomes observed. Start state: main at
   (`.peykar/myopia11-freeze-check-docker-20261030.log`).
 - `.peykar/write_myopia_protocol_1_1.py`: protocol SHA-256 `857d4c4a…`, 117 pinned
   files, 33 training and 26 sealed record hashes; its dry run of the operator's protocol
-  check found no problem. `.peykar/check_frozen_protocols.py`: no problem in any of the 23
-  frozen protocols (retina 1.2.0 has none). Freeze commit `b5195458`, pushed (remote SHA
+  check found no problem. `.peykar/check_frozen_protocols.py`: 23 entries, no problem in
+  any of the 22 frozen protocols (retina 1.2.0 has none). Freeze commit `b5195458`, pushed (remote SHA
   equal).
 - Then, once: `OMP_NUM_THREADS=1 uv run --frozen python
   scripts/evaluate_myopia_population_1_1.py --sealed --protocol
@@ -82,7 +82,8 @@ Commands run from the repository root; outcomes observed. Start state: main at
   SHA-256) and inspected as an image. `ruff format --check .` then found the script
   re-wrapped by the editor; after `ruff format` the script was rerun and wrote the same
   figure (SHA-256 equal); `ruff check .` and `ruff format --check .` passed (762 files).
-  `.peykar/check_frozen_protocols.py` after the results files: 23 protocols, no problem.
+  `.peykar/check_frozen_protocols.py` after the results files: 22 frozen protocols, no
+  problem.
 ## Myopia axial-length dataset 1.0.0, IOP model 1.4, generic eye model 5 and myopia model 1.0 (one-shot sealed tests): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `80eea0c5` (= origin).
