@@ -72,3 +72,41 @@ dataset's screening receipts copied to `screening/` for the link script) found 1
 linked pairs: 5 tranche-5 studies lose linked training studies (9 pairs), no pair links
 two tranche-5 studies, and 43 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-30)
+
+**Custodians.** Two custodian sub-agents (C1, C2) extracted the 17 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and a tranche-5 addendum
+(`.peykar/iop-tranche5-extraction-brief.md`, SHA-256 77cee37a…; the tranche-4 addendum
+with tranche-5 paths, every ruling copied verbatim). Assignments are in
+`.peykar/iop-tranche5-extraction-assignments.json` (SHA-256 04ecf3ee…; C1 9 studies,
+C2 8). Records, specs, raw copies and one custody report per custodian are private in
+`.peykar/iop-tranche5-sealed-2026-10-30/`. Reports state
+`contains_outcome_values: false`.
+
+**Result.** 14 records with 24 series (all group means; 23 control, 1 treated); 3
+studies excluded: follow-up means from multiple imputation only (1), the only
+follow-up table restricted to eyes that needed needle revision (an outcome-selected
+set, 1), and a table whose every cell starts with a parenthesis, which the frozen
+builder cannot read without editing cell text (1). The percent-rule override
+(PMC6953161) has a mmHg change series with a cited preoperative reference and was
+extracted from it.
+
+**Blind custody check.** `.peykar/verify_iop_tranche5_custody.py` (the tranche-4
+check with tranche-5 paths) rebuilt every record from the screened full text: 14 of
+14 are identical byte for byte. Every record is declared `sealed_test` and is a
+reserved study; every reserved study was assigned exactly once and reported; every raw
+copy equals its screened source; no stray record file exists. The check prints
+structure only.
+
+Structure (series per context): angle MIGS 8, trabeculectomy 7, subconjunctival MIGS
+5, cataract 2, cyclodestruction 1, tube 1. References: medicated 23, unmedicated 1.
+By the custodians' classification 9 records carry a CC BY or CC0 licence and 5 do not.
+
+**Process notes.** C1 sometimes issued a spec write and a build in one tool batch; one
+build ran before its raw copy existed and failed without writing anything, and every
+record was rebuilt with an identical SHA-256. Contrary to rule 5 above, the model
+developer opened C1's custody report (structure, decisions and hashes of its nine
+studies: groups, months, eye counts, licences and exclusion reasons; no IOP value, as
+the report states). C2's report was not opened. IOP model 1.4's design (declared in
+its development log) does not use the structure of the sealed set.
