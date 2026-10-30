@@ -1,0 +1,5289 @@
+{
+ "mode": "development",
+ "status": "development reference only",
+ "model_version": "1.0.0-k6",
+ "source_report_sha256": "7fb7619d0c082757a495fa80ee36c2dba218ee970db63358f7e97ea7f23afcd8",
+ "tested_subset": "human series (contexts human/...)",
+ "unit": "1 pp = 0.1 D of maximum keratometry (Kmax) change from the baseline Kmax",
+ "studies_with_redacted_values": [
+  "kmx-pmc10391506",
+  "kmx-pmc10836791",
+  "kmx-pmc11523831",
+  "kmx-pmc11662518",
+  "kmx-pmc12358722",
+  "kmx-pmc12448536",
+  "kmx-pmc13089007",
+  "kmx-pmc13529039",
+  "kmx-pmc13529049",
+  "kmx-pmc467032",
+  "kmx-pmc5587223",
+  "kmx-pmc6644189",
+  "kmx-pmc8842066"
+ ],
+ "primary_methods": {
+  "next_observation": "population_assimilation_t4",
+  "landmark": "population_assimilation_t4",
+  "initial_state": "population_initial_state"
+ },
+ "verdicts": {
+  "H1_calibration_next_observation_group_means": true,
+  "H2_accuracy_next_observation_group_means": true,
+  "H3_landmark_group_means": true,
+  "H4_initial_state_control_group_means": false
+ },
+ "H1_calibration_next_observation_group_means": {
+  "80": {
+   "inside": 28,
+   "n": 39,
+   "coverage": 0.717948717948718,
+   "window": [
+    0.7,
+    0.9
+   ],
+   "within_window": true
+  },
+  "90": {
+   "inside": 34,
+   "n": 39,
+   "coverage": 0.8717948717948718,
+   "window": [
+    0.8,
+    0.97
+   ],
+   "within_window": true
+  }
+ },
+ "H2_accuracy_next_observation_group_means": {
+  "persistence": {
+   "common_targets": 39,
+   "population_assimilation_t4_rmse_pp": 6.144910667572258,
+   "persistence_rmse_pp": 6.592069827860188,
+   "population_assimilation_t4_lower": true
+  },
+  "last_two_log_linear": {
+   "common_targets": 39,
+   "population_assimilation_t4_rmse_pp": 6.144910667572258,
+   "last_two_log_linear_rmse_pp": 22.21712998999279,
+   "population_assimilation_t4_lower": true
+  },
+  "pooled_curve_ratio": {
+   "common_targets": 39,
+   "population_assimilation_t4_rmse_pp": 6.144910667572258,
+   "pooled_curve_ratio_rmse_pp": 7.991831067754398,
+   "population_assimilation_t4_lower": true
+  },
+  "analog_knn": {
+   "common_targets": 37,
+   "population_assimilation_t4_rmse_pp": 5.565449630948766,
+   "analog_knn_rmse_pp": 7.408524919143212,
+   "population_assimilation_t4_lower": true
+  }
+ },
+ "H3_landmark_group_means": {
+  "comparisons": {
+   "persistence": {
+    "common_targets": 39,
+    "population_assimilation_t4_rmse_pp": 11.113399426555135,
+    "persistence_rmse_pp": 12.363977867901122,
+    "population_assimilation_t4_lower": true
+   },
+   "pooled_curve_ratio": {
+    "common_targets": 39,
+    "population_assimilation_t4_rmse_pp": 11.113399426555135,
+    "pooled_curve_ratio_rmse_pp": 12.1750829640739,
+    "population_assimilation_t4_lower": true
+   },
+   "analog_knn": {
+    "common_targets": 37,
+    "population_assimilation_t4_rmse_pp": 9.100165867354386,
+    "analog_knn_rmse_pp": 17.451573979229533,
+    "population_assimilation_t4_lower": true
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 23,
+    "n": 39,
+    "coverage": 0.5897435897435898,
+    "window": [
+     0.7,
+     0.9
+    ],
+    "within_window": false
+   },
+   "90": {
+    "inside": 30,
+    "n": 39,
+    "coverage": 0.7692307692307693,
+    "window": [
+     0.8,
+     0.97
+    ],
+    "within_window": false
+   }
+  }
+ },
+ "H4_initial_state_control_group_means": {
+  "summary": {
+   "pooled_training_curve": {
+    "series": 25,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 13.889436921904318,
+    "pooled_max_abs_pp": 37.88,
+    "targets": 60
+   },
+   "population_initial_state": {
+    "series": 25,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 15.412232007918554,
+    "pooled_max_abs_pp": 45.33289336766118,
+    "targets": 60
+   },
+   "population_initial_state_t4": {
+    "series": 25,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 15.359394967312786,
+    "pooled_max_abs_pp": 45.24906036461702,
+    "targets": 60
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 42,
+    "n": 60,
+    "window": [
+     0.7,
+     0.9
+    ]
+   },
+   "90": {
+    "inside": 50,
+    "n": 60,
+    "window": [
+     0.8,
+     0.97
+    ]
+   }
+  }
+ },
+ "reported_not_tested": {
+  "single_eyes": {
+   "next_observation": {
+    "persistence": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "persistence_rmse_pp": 12.959070182694436,
+     "population_assimilation_t4_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "last_two_log_linear_rmse_pp": 39.42724320929894,
+     "population_assimilation_t4_lower": true
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "reference_to_last_log_linear_rmse_pp": 37.76407859441575,
+     "population_assimilation_t4_lower": true
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "pooled_curve_ratio_rmse_pp": 12.347298856936279,
+     "population_assimilation_t4_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "analog_knn_rmse_pp": 16.18941784874371,
+     "population_assimilation_t4_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 14.01951300798839,
+     "baseline_level_rmse_pp": 23.425413550244958,
+     "population_assimilation_t4_lower": true
+    }
+   },
+   "landmark": {
+    "persistence": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "persistence_rmse_pp": 16.42787265594665,
+     "population_assimilation_t4_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "last_two_log_linear_rmse_pp": 60.628015220957245,
+     "population_assimilation_t4_lower": true
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "reference_to_last_log_linear_rmse_pp": 60.628015220957245,
+     "population_assimilation_t4_lower": true
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "pooled_curve_ratio_rmse_pp": 13.079709775545478,
+     "population_assimilation_t4_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "analog_knn_rmse_pp": 17.246272310692376,
+     "population_assimilation_t4_lower": false
+    },
+    "baseline_level": {
+     "common_targets": 16,
+     "population_assimilation_t4_rmse_pp": 18.710799603862664,
+     "baseline_level_rmse_pp": 23.425413550244958,
+     "population_assimilation_t4_lower": true
+    }
+   },
+   "coverage_next_observation": {
+    "80": {
+     "inside": 10,
+     "n": 16,
+     "coverage": 0.625,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 10,
+     "n": 16,
+     "coverage": 0.625,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "coverage_landmark": {
+    "80": {
+     "inside": 7,
+     "n": 16,
+     "coverage": 0.4375,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 8,
+     "n": 16,
+     "coverage": 0.5,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "initial_state": {
+    "pooled_training_curve": {
+     "series": 8,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 15.360195277350263,
+     "pooled_max_abs_pp": 51.875000000000014,
+     "targets": 24
+    },
+    "population_initial_state": {
+     "series": 8,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.170481087399498,
+     "pooled_max_abs_pp": 56.72686243459284,
+     "targets": 24
+    },
+    "population_initial_state_t4": {
+     "series": 8,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.096925710223765,
+     "pooled_max_abs_pp": 56.617161004358174,
+     "targets": 24
+    }
+   }
+  },
+  "all_series_coverage": {
+   "next_observation": {
+    "80": {
+     "inside": 38,
+     "n": 55,
+     "coverage": 0.6909090909090909,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 44,
+     "n": 55,
+     "coverage": 0.8,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   },
+   "landmark": {
+    "80": {
+     "inside": 30,
+     "n": 55,
+     "coverage": 0.5454545454545454,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 38,
+     "n": 55,
+     "coverage": 0.6909090909090909,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   }
+  },
+  "group_mean_other_comparators": {
+   "next_observation": {
+    "reference_to_last_log_linear": {
+     "common_targets": 39,
+     "population_assimilation_t4_rmse_pp": 6.144910667572258,
+     "reference_to_last_log_linear_rmse_pp": 20.593072715415556,
+     "population_assimilation_t4_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 39,
+     "population_assimilation_t4_rmse_pp": 6.144910667572258,
+     "baseline_level_rmse_pp": 18.132044166089653,
+     "population_assimilation_t4_lower": true
+    }
+   },
+   "landmark": {
+    "last_two_log_linear": {
+     "common_targets": 39,
+     "population_assimilation_t4_rmse_pp": 11.113399426555135,
+     "last_two_log_linear_rmse_pp": 37.984905587165045,
+     "population_assimilation_t4_lower": true
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 39,
+     "population_assimilation_t4_rmse_pp": 11.113399426555135,
+     "reference_to_last_log_linear_rmse_pp": 37.984905587165045,
+     "population_assimilation_t4_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 39,
+     "population_assimilation_t4_rmse_pp": 11.113399426555135,
+     "baseline_level_rmse_pp": 18.132044166089653,
+     "population_assimilation_t4_lower": true
+    }
+   }
+  }
+ },
+ "pass_counts": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 22,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 10.836997198773128,
+    "pooled_max_abs_pp": 39.59000000000004,
+    "targets": 53
+   },
+   "baseline_level": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 19.818297330772623,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 55
+   },
+   "last_two_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 28.32363415564676,
+    "pooled_max_abs_pp": 105.00000000000003,
+    "targets": 55
+   },
+   "persistence": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 8.92571362056635,
+    "pooled_max_abs_pp": 33.00000000000003,
+    "targets": 55
+   },
+   "pooled_curve_ratio": {
+    "series": 22,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 9.46783820367713,
+    "pooled_max_abs_pp": 36.005000000000024,
+    "targets": 55
+   },
+   "population_anchored": {
+    "series": 22,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 10.13906477378709,
+    "pooled_max_abs_pp": 39.33765371249871,
+    "targets": 55
+   },
+   "population_anchored_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.70422202097367,
+    "pooled_max_abs_pp": 39.4023570790069,
+    "targets": 55
+   },
+   "population_assimilation": {
+    "series": 22,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.578333087294663,
+    "pooled_max_abs_pp": 43.176675021541776,
+    "targets": 55
+   },
+   "population_assimilation_robust": {
+    "series": 22,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.228827447599981,
+    "pooled_max_abs_pp": 42.92633880523569,
+    "targets": 55
+   },
+   "population_assimilation_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.162557282057113,
+    "pooled_max_abs_pp": 42.95109253792497,
+    "targets": 55
+   },
+   "reference_to_last_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 26.750334313627715,
+    "pooled_max_abs_pp": 105.00000000000003,
+    "targets": 55
+   },
+   "weak_prior": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 8.982785251301241,
+    "pooled_max_abs_pp": 35.819035224127504,
+    "targets": 55
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 17.389851523705754,
+    "pooled_max_abs_pp": 41.50000000000003,
+    "targets": 53
+   },
+   "baseline_level": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 19.818297330772623,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 55
+   },
+   "last_two_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 45.74303100826891,
+    "pooled_max_abs_pp": 173.99999999999997,
+    "targets": 55
+   },
+   "persistence": {
+    "series": 22,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 13.671370217954147,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 55
+   },
+   "pooled_curve_ratio": {
+    "series": 22,
+    "series_within_5_10_pp": 5,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 12.445031200589996,
+    "pooled_max_abs_pp": 34.93242424242424,
+    "targets": 55
+   },
+   "population_anchored": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 15.500168472935,
+    "pooled_max_abs_pp": 41.29211437400328,
+    "targets": 55
+   },
+   "population_anchored_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 15.265348239019119,
+    "pooled_max_abs_pp": 40.40972476226061,
+    "targets": 55
+   },
+   "population_assimilation": {
+    "series": 22,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 13.885318789791022,
+    "pooled_max_abs_pp": 48.23276928730596,
+    "targets": 55
+   },
+   "population_assimilation_robust": {
+    "series": 22,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 13.726657464897489,
+    "pooled_max_abs_pp": 47.44218490358454,
+    "targets": 55
+   },
+   "population_assimilation_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 13.763127667005849,
+    "pooled_max_abs_pp": 47.77220578758422,
+    "targets": 55
+   },
+   "reference_to_last_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 45.74303100826891,
+    "pooled_max_abs_pp": 173.99999999999997,
+    "targets": 55
+   },
+   "weak_prior": {
+    "series": 22,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 13.691373481113988,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 55
+   }
+  }
+ },
+ "pass_counts_group_means": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 14,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 7.408524919143211,
+    "pooled_max_abs_pp": 14.389999999999992,
+    "targets": 37
+   },
+   "baseline_level": {
+    "series": 14,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.132044166089656,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 39
+   },
+   "last_two_log_linear": {
+    "series": 14,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 22.217129989992788,
+    "pooled_max_abs_pp": 87.7000000000001,
+    "targets": 39
+   },
+   "persistence": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 6.592069827860188,
+    "pooled_max_abs_pp": 13.99999999999999,
+    "targets": 39
+   },
+   "pooled_curve_ratio": {
+    "series": 14,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 7.991831067754398,
+    "pooled_max_abs_pp": 19.649999999999977,
+    "targets": 39
+   },
+   "population_anchored": {
+    "series": 14,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 6.785679942428997,
+    "pooled_max_abs_pp": 15.73552398162822,
+    "targets": 39
+   },
+   "population_anchored_t4": {
+    "series": 14,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 6.40149671984146,
+    "pooled_max_abs_pp": 15.335992362252238,
+    "targets": 39
+   },
+   "population_assimilation": {
+    "series": 14,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.4974546836776845,
+    "pooled_max_abs_pp": 13.998365360637887,
+    "targets": 39
+   },
+   "population_assimilation_robust": {
+    "series": 14,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.215130110010585,
+    "pooled_max_abs_pp": 13.839886877209373,
+    "targets": 39
+   },
+   "population_assimilation_t4": {
+    "series": 14,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 6.144910667572258,
+    "pooled_max_abs_pp": 13.872713771671098,
+    "targets": 39
+   },
+   "reference_to_last_log_linear": {
+    "series": 14,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 20.59307271541556,
+    "pooled_max_abs_pp": 87.7000000000001,
+    "targets": 39
+   },
+   "weak_prior": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 6.1993298563558366,
+    "pooled_max_abs_pp": 13.99999999999999,
+    "targets": 39
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 14,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 17.451573979229533,
+    "pooled_max_abs_pp": 41.50000000000003,
+    "targets": 37
+   },
+   "baseline_level": {
+    "series": 14,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.132044166089656,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 39
+   },
+   "last_two_log_linear": {
+    "series": 14,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 37.984905587165045,
+    "pooled_max_abs_pp": 87.7000000000001,
+    "targets": 39
+   },
+   "persistence": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 12.363977867901122,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 39
+   },
+   "pooled_curve_ratio": {
+    "series": 14,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 12.1750829640739,
+    "pooled_max_abs_pp": 34.93242424242424,
+    "targets": 39
+   },
+   "population_anchored": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 12.423261328335885,
+    "pooled_max_abs_pp": 33.62616667365806,
+    "targets": 39
+   },
+   "population_anchored_t4": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 12.264695800818865,
+    "pooled_max_abs_pp": 33.72311305059738,
+    "targets": 39
+   },
+   "population_assimilation": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 11.08234056813178,
+    "pooled_max_abs_pp": 29.07457633035363,
+    "targets": 39
+   },
+   "population_assimilation_robust": {
+    "series": 14,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 11.006884267360556,
+    "pooled_max_abs_pp": 29.8671274500521,
+    "targets": 39
+   },
+   "population_assimilation_t4": {
+    "series": 14,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 11.113399426555135,
+    "pooled_max_abs_pp": 29.891165858440715,
+    "targets": 39
+   },
+   "reference_to_last_log_linear": {
+    "series": 14,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 37.984905587165045,
+    "pooled_max_abs_pp": 87.7000000000001,
+    "targets": 39
+   },
+   "weak_prior": {
+    "series": 14,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 12.350387914116356,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 39
+   }
+  }
+ },
+ "pass_counts_controls": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 21,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.18262097198577,
+    "pooled_max_abs_pp": 39.59000000000004,
+    "targets": 49
+   },
+   "baseline_level": {
+    "series": 21,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 20.56351709445925,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 51
+   },
+   "last_two_log_linear": {
+    "series": 21,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 29.37472203067928,
+    "pooled_max_abs_pp": 105.00000000000003,
+    "targets": 51
+   },
+   "persistence": {
+    "series": 21,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 9.254103488320682,
+    "pooled_max_abs_pp": 33.00000000000003,
+    "targets": 51
+   },
+   "pooled_curve_ratio": {
+    "series": 21,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 9.806545925730527,
+    "pooled_max_abs_pp": 36.005000000000024,
+    "targets": 51
+   },
+   "population_anchored": {
+    "series": 21,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 10.50418718710714,
+    "pooled_max_abs_pp": 39.33765371249871,
+    "targets": 51
+   },
+   "population_anchored_t4": {
+    "series": 21,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 10.052568804312983,
+    "pooled_max_abs_pp": 39.4023570790069,
+    "targets": 51
+   },
+   "population_assimilation": {
+    "series": 21,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.931434181849054,
+    "pooled_max_abs_pp": 43.176675021541776,
+    "targets": 51
+   },
+   "population_assimilation_robust": {
+    "series": 21,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.568289021799727,
+    "pooled_max_abs_pp": 42.92633880523569,
+    "targets": 51
+   },
+   "population_assimilation_t4": {
+    "series": 21,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.499101894482962,
+    "pooled_max_abs_pp": 42.95109253792497,
+    "targets": 51
+   },
+   "reference_to_last_log_linear": {
+    "series": 21,
+    "series_within_5_10_pp": 1,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 27.751027834122873,
+    "pooled_max_abs_pp": 105.00000000000003,
+    "targets": 51
+   },
+   "weak_prior": {
+    "series": 21,
+    "series_within_5_10_pp": 7,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 9.31414945203191,
+    "pooled_max_abs_pp": 35.819035224127504,
+    "targets": 51
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 21,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 17.559145526977193,
+    "pooled_max_abs_pp": 41.50000000000003,
+    "targets": 49
+   },
+   "baseline_level": {
+    "series": 21,
+    "series_within_5_10_pp": 2,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 20.56351709445925,
+    "pooled_max_abs_pp": 63.800000000000026,
+    "targets": 51
+   },
+   "last_two_log_linear": {
+    "series": 21,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 45.992354672024454,
+    "pooled_max_abs_pp": 173.99999999999997,
+    "targets": 51
+   },
+   "persistence": {
+    "series": 21,
+    "series_within_5_10_pp": 6,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 14.188057668058613,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 51
+   },
+   "pooled_curve_ratio": {
+    "series": 21,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 12.890041081831711,
+    "pooled_max_abs_pp": 34.93242424242424,
+    "targets": 51
+   },
+   "population_anchored": {
+    "series": 21,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 15.975987201012448,
+    "pooled_max_abs_pp": 41.29211437400328,
+    "targets": 51
+   },
+   "population_anchored_t4": {
+    "series": 21,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 15.74524698518327,
+    "pooled_max_abs_pp": 40.40972476226061,
+    "targets": 51
+   },
+   "population_assimilation": {
+    "series": 21,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 14.4014630642847,
+    "pooled_max_abs_pp": 48.23276928730596,
+    "targets": 51
+   },
+   "population_assimilation_robust": {
+    "series": 21,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 14.240597765939567,
+    "pooled_max_abs_pp": 47.44218490358454,
+    "targets": 51
+   },
+   "population_assimilation_t4": {
+    "series": 21,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 14.275737878631542,
+    "pooled_max_abs_pp": 47.77220578758422,
+    "targets": 51
+   },
+   "reference_to_last_log_linear": {
+    "series": 21,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 2,
+    "pooled_rmse_pp": 45.992354672024454,
+    "pooled_max_abs_pp": 173.99999999999997,
+    "targets": 51
+   },
+   "weak_prior": {
+    "series": 21,
+    "series_within_5_10_pp": 6,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 14.208126655408241,
+    "pooled_max_abs_pp": 36.00000000000001,
+    "targets": 51
+   }
+  }
+ },
+ "by_context": {
+  "human/cxl_accelerated": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 6,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 10.849956704698284,
+     "pooled_max_abs_pp": 19.71999999999994,
+     "targets": 9
+    },
+    "population_initial_state": {
+     "series": 6,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 10.926942831445922,
+     "pooled_max_abs_pp": 19.409533753018692,
+     "targets": 9
+    },
+    "population_initial_state_t4": {
+     "series": 6,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 10.880145170193954,
+     "pooled_max_abs_pp": 19.42277143630423,
+     "targets": 9
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.088688024131987,
+     "pooled_max_abs_pp": 12.390000000000024,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.730302828309743,
+     "pooled_max_abs_pp": 32.99999999999997,
+     "targets": 3
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 24.42164340634493,
+     "pooled_max_abs_pp": 39.00000000000014,
+     "targets": 3
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.846237095944574,
+     "pooled_max_abs_pp": 13.99999999999999,
+     "targets": 3
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.561173847872926,
+     "pooled_max_abs_pp": 13.99999999999999,
+     "targets": 3
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.500749268912163,
+     "pooled_max_abs_pp": 13.726699768158369,
+     "targets": 3
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.365600705367171,
+     "pooled_max_abs_pp": 13.642592346316828,
+     "targets": 3
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.690318695896941,
+     "pooled_max_abs_pp": 13.89405445512063,
+     "targets": 3
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.795785424864674,
+     "pooled_max_abs_pp": 13.839886877209373,
+     "targets": 3
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.792481680215303,
+     "pooled_max_abs_pp": 13.872713771671098,
+     "targets": 3
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.481149944106798,
+     "pooled_max_abs_pp": 17.666666666666654,
+     "targets": 3
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.399356806431014,
+     "pooled_max_abs_pp": 13.246875883979104,
+     "targets": 3
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.44745604927141,
+     "pooled_max_abs_pp": 12.390000000000024,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.730302828309743,
+     "pooled_max_abs_pp": 32.99999999999997,
+     "targets": 3
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 42.35563716909503,
+     "pooled_max_abs_pp": 65.00000000000047,
+     "targets": 3
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 24.562844569254057,
+     "pooled_max_abs_pp": 35.0,
+     "targets": 3
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 22.79054514811238,
+     "pooled_max_abs_pp": 32.28,
+     "targets": 3
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 23.36295684746045,
+     "pooled_max_abs_pp": 33.62616667365806,
+     "targets": 3
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 23.448927295127728,
+     "pooled_max_abs_pp": 33.72311305059738,
+     "targets": 3
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 19.583443495542056,
+     "pooled_max_abs_pp": 29.07457633035363,
+     "targets": 3
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 20.2590412037729,
+     "pooled_max_abs_pp": 29.8671274500521,
+     "targets": 3
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 20.263913575248115,
+     "pooled_max_abs_pp": 29.891165858440715,
+     "targets": 3
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 42.35563716909503,
+     "pooled_max_abs_pp": 65.00000000000047,
+     "targets": 3
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 24.52903799475503,
+     "pooled_max_abs_pp": 34.96081034573263,
+     "targets": 3
+    }
+   }
+  },
+  "human/cxl_combined": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 2,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.740251536793057,
+     "pooled_max_abs_pp": 13.649999999999963,
+     "targets": 2
+    },
+    "population_initial_state": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.870645166963115,
+     "pooled_max_abs_pp": 13.322722924725838,
+     "targets": 2
+    },
+    "population_initial_state_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.067287337350821,
+     "pooled_max_abs_pp": 13.560196878367892,
+     "targets": 2
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.267126427938967,
+     "pooled_max_abs_pp": 16.259999999999984,
+     "targets": 6
+    },
+    "baseline_level": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 29.70129065658034,
+     "pooled_max_abs_pp": 40.0,
+     "targets": 6
+    },
+    "last_two_log_linear": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.583033569262703,
+     "pooled_max_abs_pp": 19.999999999999996,
+     "targets": 6
+    },
+    "persistence": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.284207253207164,
+     "pooled_max_abs_pp": 18.999999999999993,
+     "targets": 6
+    },
+    "pooled_curve_ratio": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.647928461005359,
+     "pooled_max_abs_pp": 12.599999999999966,
+     "targets": 6
+    },
+    "population_anchored": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.78342679539627,
+     "pooled_max_abs_pp": 16.833749653702434,
+     "targets": 6
+    },
+    "population_anchored_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.191917218773794,
+     "pooled_max_abs_pp": 16.898809996906383,
+     "targets": 6
+    },
+    "population_assimilation": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.791306760469734,
+     "pooled_max_abs_pp": 17.397319029602244,
+     "targets": 6
+    },
+    "population_assimilation_robust": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.771950468592417,
+     "pooled_max_abs_pp": 17.404885200556187,
+     "targets": 6
+    },
+    "population_assimilation_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.765824591479147,
+     "pooled_max_abs_pp": 17.53708970211224,
+     "targets": 6
+    },
+    "reference_to_last_log_linear": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.256479615462963,
+     "pooled_max_abs_pp": 18.999999999999982,
+     "targets": 6
+    },
+    "weak_prior": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.8530425527636,
+     "pooled_max_abs_pp": 19.13805258507044,
+     "targets": 6
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 13.823999622567195,
+     "pooled_max_abs_pp": 19.139999999999958,
+     "targets": 6
+    },
+    "baseline_level": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 29.70129065658034,
+     "pooled_max_abs_pp": 40.0,
+     "targets": 6
+    },
+    "last_two_log_linear": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.228851770600897,
+     "pooled_max_abs_pp": 38.00000000000027,
+     "targets": 6
+    },
+    "persistence": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 20.82066281365699,
+     "pooled_max_abs_pp": 26.999999999999957,
+     "targets": 6
+    },
+    "pooled_curve_ratio": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.680564721819342,
+     "pooled_max_abs_pp": 15.199999999999958,
+     "targets": 6
+    },
+    "population_anchored": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 18.39943400246341,
+     "pooled_max_abs_pp": 24.148448245600264,
+     "targets": 6
+    },
+    "population_anchored_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 18.59179398847736,
+     "pooled_max_abs_pp": 24.377820102262106,
+     "targets": 6
+    },
+    "population_assimilation": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.155058132221033,
+     "pooled_max_abs_pp": 23.560522953675445,
+     "targets": 6
+    },
+    "population_assimilation_robust": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.42187632757226,
+     "pooled_max_abs_pp": 23.772474947239186,
+     "targets": 6
+    },
+    "population_assimilation_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.200198666778377,
+     "pooled_max_abs_pp": 23.52531125006919,
+     "targets": 6
+    },
+    "reference_to_last_log_linear": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 17.228851770600897,
+     "pooled_max_abs_pp": 38.00000000000027,
+     "targets": 6
+    },
+    "weak_prior": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 20.98514701953045,
+     "pooled_max_abs_pp": 27.269357670858806,
+     "targets": 6
+    }
+   }
+  },
+  "human/cxl_epi_off": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 5,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 10.661250890432775,
+     "pooled_max_abs_pp": 27.78666666666667,
+     "targets": 15
+    },
+    "population_initial_state": {
+     "series": 5,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 9.149174395328604,
+     "pooled_max_abs_pp": 21.457561124229652,
+     "targets": 15
+    },
+    "population_initial_state_t4": {
+     "series": 5,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 9.07319381113485,
+     "pooled_max_abs_pp": 21.475990420420043,
+     "targets": 15
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.818311065578877,
+     "pooled_max_abs_pp": 39.59000000000004,
+     "targets": 19
+    },
+    "baseline_level": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.886335566571482,
+     "pooled_max_abs_pp": 43.000000000000036,
+     "targets": 20
+    },
+    "last_two_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 37.25341770452971,
+     "pooled_max_abs_pp": 105.00000000000003,
+     "targets": 20
+    },
+    "persistence": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.538435769202,
+     "pooled_max_abs_pp": 33.00000000000003,
+     "targets": 20
+    },
+    "pooled_curve_ratio": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.609200274877553,
+     "pooled_max_abs_pp": 36.005000000000024,
+     "targets": 20
+    },
+    "population_anchored": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 13.700991201109835,
+     "pooled_max_abs_pp": 39.33765371249871,
+     "targets": 20
+    },
+    "population_anchored_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 12.935635542038439,
+     "pooled_max_abs_pp": 39.4023570790069,
+     "targets": 20
+    },
+    "population_assimilation": {
+     "series": 10,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 12.801293849039547,
+     "pooled_max_abs_pp": 43.176675021541776,
+     "targets": 20
+    },
+    "population_assimilation_robust": {
+     "series": 10,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 12.245453036735572,
+     "pooled_max_abs_pp": 42.92633880523569,
+     "targets": 20
+    },
+    "population_assimilation_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 12.151281497779998,
+     "pooled_max_abs_pp": 42.95109253792497,
+     "targets": 20
+    },
+    "reference_to_last_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 34.93908596243453,
+     "pooled_max_abs_pp": 105.00000000000003,
+     "targets": 20
+    },
+    "weak_prior": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.590447683230924,
+     "pooled_max_abs_pp": 35.819035224127504,
+     "targets": 20
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 15.634508732419242,
+     "pooled_max_abs_pp": 33.91999999999998,
+     "targets": 19
+    },
+    "baseline_level": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 17.886335566571482,
+     "pooled_max_abs_pp": 43.000000000000036,
+     "targets": 20
+    },
+    "last_two_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 57.838322547486456,
+     "pooled_max_abs_pp": 173.99999999999997,
+     "targets": 20
+    },
+    "persistence": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.548922792270858,
+     "pooled_max_abs_pp": 36.00000000000001,
+     "targets": 20
+    },
+    "pooled_curve_ratio": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.39389654897733,
+     "pooled_max_abs_pp": 34.93242424242424,
+     "targets": 20
+    },
+    "population_anchored": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 18.495920379585183,
+     "pooled_max_abs_pp": 41.29211437400328,
+     "targets": 20
+    },
+    "population_anchored_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 18.121598311106595,
+     "pooled_max_abs_pp": 40.40972476226061,
+     "targets": 20
+    },
+    "population_assimilation": {
+     "series": 10,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 16.35789737983806,
+     "pooled_max_abs_pp": 48.23276928730596,
+     "targets": 20
+    },
+    "population_assimilation_robust": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 16.065458659051078,
+     "pooled_max_abs_pp": 47.44218490358454,
+     "targets": 20
+    },
+    "population_assimilation_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 16.103440131437235,
+     "pooled_max_abs_pp": 47.77220578758422,
+     "targets": 20
+    },
+    "reference_to_last_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 57.838322547486456,
+     "pooled_max_abs_pp": 173.99999999999997,
+     "targets": 20
+    },
+    "weak_prior": {
+     "series": 10,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.524879741487085,
+     "pooled_max_abs_pp": 36.00000000000001,
+     "targets": 20
+    }
+   }
+  },
+  "human/cxl_epi_on": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 2,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 8.340991935294465,
+     "pooled_max_abs_pp": 15.600000000000103,
+     "targets": 11
+    },
+    "population_initial_state": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.950724255451677,
+     "pooled_max_abs_pp": 22.386293046356776,
+     "targets": 11
+    },
+    "population_initial_state_t4": {
+     "series": 2,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.877323056827933,
+     "pooled_max_abs_pp": 22.34591670901849,
+     "targets": 11
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.3041794453996305,
+     "pooled_max_abs_pp": 13.800000000000011,
+     "targets": 13
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.079597197840382,
+     "pooled_max_abs_pp": 8.300000000000063,
+     "targets": 13
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.97022966596522,
+     "pooled_max_abs_pp": 22.900000000000208,
+     "targets": 13
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.63573079459971,
+     "pooled_max_abs_pp": 8.000000000000052,
+     "targets": 13
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.736648703704735,
+     "pooled_max_abs_pp": 8.000000000000052,
+     "targets": 13
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.26823471749251,
+     "pooled_max_abs_pp": 11.039407194230277,
+     "targets": 13
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.292896139769667,
+     "pooled_max_abs_pp": 10.943127616954285,
+     "targets": 13
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.266644341106638,
+     "pooled_max_abs_pp": 11.58402351059189,
+     "targets": 13
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.2054423469851585,
+     "pooled_max_abs_pp": 11.474831738780168,
+     "targets": 13
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.254614641813032,
+     "pooled_max_abs_pp": 11.489986955229103,
+     "targets": 13
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.181874329490695,
+     "pooled_max_abs_pp": 22.900000000000208,
+     "targets": 13
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.972695924079611,
+     "pooled_max_abs_pp": 10.600581757223226,
+     "targets": 13
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 23.87744384820334,
+     "pooled_max_abs_pp": 41.50000000000003,
+     "targets": 13
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.079597197840382,
+     "pooled_max_abs_pp": 8.300000000000063,
+     "targets": 13
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 43.19605361083175,
+     "pooled_max_abs_pp": 75.16086956522041,
+     "targets": 13
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.145417304476074,
+     "pooled_max_abs_pp": 13.000000000000057,
+     "targets": 13
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.226465935924496,
+     "pooled_max_abs_pp": 14.400000000000057,
+     "targets": 13
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.754979866190867,
+     "pooled_max_abs_pp": 19.033289612237393,
+     "targets": 13
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.295316688168384,
+     "pooled_max_abs_pp": 18.484433048900883,
+     "targets": 13
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.130974976636647,
+     "pooled_max_abs_pp": 19.350353784214224,
+     "targets": 13
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.843728223083207,
+     "pooled_max_abs_pp": 18.958396452933503,
+     "targets": 13
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 10.137948412325402,
+     "pooled_max_abs_pp": 19.37967105366506,
+     "targets": 13
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 43.19605361083175,
+     "pooled_max_abs_pp": 75.16086956522041,
+     "targets": 13
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.114197068462432,
+     "pooled_max_abs_pp": 12.916329839662065,
+     "targets": 13
+    }
+   }
+  },
+  "human/icrs": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 7,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 24.326884495538252,
+     "pooled_max_abs_pp": 37.88,
+     "targets": 12
+    },
+    "population_initial_state": {
+     "series": 7,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 25.20080038232928,
+     "pooled_max_abs_pp": 45.33289336766118,
+     "targets": 12
+    },
+    "population_initial_state_t4": {
+     "series": 7,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 25.17513277707461,
+     "pooled_max_abs_pp": 45.24906036461702,
+     "targets": 12
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.141443932223954,
+     "pooled_max_abs_pp": 12.295151515151526,
+     "targets": 5
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 38.72260321827552,
+     "pooled_max_abs_pp": 63.800000000000026,
+     "targets": 5
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 48.88821943986102,
+     "pooled_max_abs_pp": 87.7000000000001,
+     "targets": 5
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.2969194269498716,
+     "pooled_max_abs_pp": 2.500000000000002,
+     "targets": 5
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 13.763894071083211,
+     "pooled_max_abs_pp": 19.649999999999977,
+     "targets": 5
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 1.0129670272452453,
+     "pooled_max_abs_pp": 1.9332120007976017,
+     "targets": 5
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 0.9185976332603246,
+     "pooled_max_abs_pp": 1.754830189417167,
+     "targets": 5
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.1390801721236645,
+     "pooled_max_abs_pp": 6.228508846154169,
+     "targets": 5
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.8802260393503705,
+     "pooled_max_abs_pp": 4.282294734091241,
+     "targets": 5
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.166316922804358,
+     "pooled_max_abs_pp": 4.32690813803267,
+     "targets": 5
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 49.12430039083401,
+     "pooled_max_abs_pp": 87.7000000000001,
+     "targets": 5
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.0312706070355526,
+     "pooled_max_abs_pp": 3.686460303007022,
+     "targets": 5
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.332027416553926,
+     "pooled_max_abs_pp": 12.295151515151526,
+     "targets": 5
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 38.72260321827552,
+     "pooled_max_abs_pp": 63.800000000000026,
+     "targets": 5
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 56.23040103004789,
+     "pooled_max_abs_pp": 87.7000000000001,
+     "targets": 5
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.7555625878902583,
+     "pooled_max_abs_pp": 2.500000000000002,
+     "targets": 5
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.2202045809389,
+     "pooled_max_abs_pp": 19.649999999999977,
+     "targets": 5
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 1.2665791785726055,
+     "pooled_max_abs_pp": 1.9332120007976017,
+     "targets": 5
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 1.0841948214510437,
+     "pooled_max_abs_pp": 1.754830189417167,
+     "targets": 5
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.545149790354756,
+     "pooled_max_abs_pp": 9.180863974804732,
+     "targets": 5
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.252725648551434,
+     "pooled_max_abs_pp": 7.905272304848787,
+     "targets": 5
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.4654682712379135,
+     "pooled_max_abs_pp": 7.985974083946923,
+     "targets": 5
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 56.23040103004789,
+     "pooled_max_abs_pp": 87.7000000000001,
+     "targets": 5
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.443160910902045,
+     "pooled_max_abs_pp": 3.686460303007022,
+     "targets": 5
+    }
+   }
+  },
+  "human/observation": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.278960494451375,
+     "pooled_max_abs_pp": 13.699999999999946,
+     "targets": 11
+    },
+    "population_initial_state": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.910522100491551,
+     "pooled_max_abs_pp": 27.885408765578056,
+     "targets": 11
+    },
+    "population_initial_state_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 11.766869438401407,
+     "pooled_max_abs_pp": 27.460503367040157,
+     "targets": 11
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.273509631609159,
+     "pooled_max_abs_pp": 14.386666666666702,
+     "targets": 8
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.124192267542654,
+     "pooled_max_abs_pp": 13.699999999999978,
+     "targets": 8
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.134801780006688,
+     "pooled_max_abs_pp": 13.5,
+     "targets": 8
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.548310553673064,
+     "pooled_max_abs_pp": 9.200000000000031,
+     "targets": 8
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 4.273978516688056,
+     "pooled_max_abs_pp": 6.874999999999987,
+     "targets": 8
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.864715743087125,
+     "pooled_max_abs_pp": 15.73552398162822,
+     "targets": 8
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.05328809844729,
+     "pooled_max_abs_pp": 15.335992362252238,
+     "targets": 8
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.62651739749543,
+     "pooled_max_abs_pp": 12.993239854444806,
+     "targets": 8
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.338627673865413,
+     "pooled_max_abs_pp": 12.168035288151046,
+     "targets": 8
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.02971971807081,
+     "pooled_max_abs_pp": 12.039813591450411,
+     "targets": 8
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.989210434662848,
+     "pooled_max_abs_pp": 13.400000000000045,
+     "targets": 8
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.496659351979687,
+     "pooled_max_abs_pp": 9.14859484974797,
+     "targets": 8
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 16.933799636788233,
+     "pooled_max_abs_pp": 28.766666666666662,
+     "targets": 8
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.124192267542654,
+     "pooled_max_abs_pp": 13.699999999999978,
+     "targets": 8
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 10.891280916402833,
+     "pooled_max_abs_pp": 26.300000000000022,
+     "targets": 8
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.117111555227016,
+     "pooled_max_abs_pp": 15.799999999999992,
+     "targets": 8
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 5.394855123685491,
+     "pooled_max_abs_pp": 11.758333333333336,
+     "targets": 8
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 12.20456747213432,
+     "pooled_max_abs_pp": 27.583125055513257,
+     "targets": 8
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 11.945562658473923,
+     "pooled_max_abs_pp": 26.913613417243198,
+     "targets": 8
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.922933193157773,
+     "pooled_max_abs_pp": 21.040439872451742,
+     "targets": 8
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.689706536443895,
+     "pooled_max_abs_pp": 20.400299147003544,
+     "targets": 8
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.614160240197311,
+     "pooled_max_abs_pp": 20.156035163660192,
+     "targets": 8
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 10.891280916402833,
+     "pooled_max_abs_pp": 26.300000000000022,
+     "targets": 8
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.111775162538558,
+     "pooled_max_abs_pp": 15.732214353857222,
+     "targets": 8
+    }
+   }
+  }
+ },
+ "per_series": {
+  "next_observation": [
+   {
+    "study_id": "kmx-pmc10244573",
+    "series_id": "kmx-pmc10244573/eye-rubbing-cessation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.908013429141996,
+     "max_abs_pp": 6.193268714825672,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 3.3071891388307137,
+     "max_abs_pp": 6.199999999999961,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 5.069270164431901,
+     "max_abs_pp": 7.299999999999951,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 3.909363758976602,
+     "max_abs_pp": 6.449999999999944,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.3071891388307137,
+     "max_abs_pp": 6.199999999999961,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.5489806550479,
+     "max_abs_pp": 7.519999999999971,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.756993478833835,
+     "max_abs_pp": 5.699999999999994,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc11662518",
+    "series_id": "kmx-pmc11662518/symmetric-kerarings/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.6241189641960565,
+     "max_abs_pp": 4.32690813803267,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.8164965809277086,
+     "max_abs_pp": 1.000000000000023,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 9.831920802501758,
+     "max_abs_pp": 17.000000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 11.628907149061007,
+     "max_abs_pp": 17.000000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.410350446814233,
+     "max_abs_pp": 19.649999999999977,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.0051487153971035,
+     "max_abs_pp": 4.942727272727265,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 19.67231557290602,
+     "max_abs_pp": 19.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc11818551",
+    "series_id": "kmx-pmc11818551/sham-control/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 6.290974919384017,
+     "max_abs_pp": 8.888443542123392,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 6.095900261651259,
+     "max_abs_pp": 8.599999999999985,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 9.879524280045064,
+     "max_abs_pp": 13.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.655922827752114,
+     "max_abs_pp": 11.70000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.9542742345748048,
+     "max_abs_pp": 3.9833333333333165,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 6.688020488571757,
+     "max_abs_pp": 9.243333333333336,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 10.804165863221451,
+     "max_abs_pp": 11.099999999999998,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/s-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 10.347405294407404,
+     "max_abs_pp": 11.581816567074021,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 12.083045973594574,
+     "max_abs_pp": 13.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 28.828515975216817,
+     "max_abs_pp": 44.99999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 21.79789320434769,
+     "max_abs_pp": 30.666666666666654,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 11.953705437066596,
+     "max_abs_pp": 15.229090909090903,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 10.873097534741417,
+     "max_abs_pp": 14.389999999999992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 26.564387187862373,
+     "max_abs_pp": 36.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/a-cxl/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_assimilation_t4": {
+     "rmse_pp": 9.792481680215303,
+     "max_abs_pp": 13.872713771671098,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 11.846237095944574,
+     "max_abs_pp": 13.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 24.42164340634493,
+     "max_abs_pp": 39.00000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 14.481149944106798,
+     "max_abs_pp": 17.666666666666654,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 11.561173847872926,
+     "max_abs_pp": 13.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 9.088688024131987,
+     "max_abs_pp": 12.390000000000024,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 22.730302828309743,
+     "max_abs_pp": 32.99999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13303802",
+    "series_id": "kmx-pmc13303802/dresden-pediatric/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 1.7356768624078138,
+     "max_abs_pp": 2.089475310348965,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 2.392697222801097,
+     "max_abs_pp": 3.200000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.005621050473895,
+     "max_abs_pp": 5.2999999999999385,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 5.352102390649786,
+     "max_abs_pp": 7.299999999999896,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.962309979597778,
+     "max_abs_pp": 11.083333333333279,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.419744142476108,
+     "max_abs_pp": 4.619999999999925,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 8.966883516584788,
+     "max_abs_pp": 9.50000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13529039",
+    "series_id": "kmx-pmc13529039/icrs-plus-hm-icrs/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.8206307957266983,
+     "max_abs_pp": 3.8206307957266983,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.500000000000002,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 87.7000000000001,
+     "max_abs_pp": 87.7000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 87.7000000000001,
+     "max_abs_pp": 87.7000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 16.62,
+     "max_abs_pp": 16.62,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 12.295151515151526,
+     "max_abs_pp": 12.295151515151526,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 47.60000000000005,
+     "max_abs_pp": 47.60000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc5845167",
+    "series_id": "kmx-pmc5845167/ate-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 1.7929270854403194,
+     "max_abs_pp": 1.7957775148116806,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.2589678312014183,
+     "max_abs_pp": 1.4000000000000012,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 16.192844098551827,
+     "max_abs_pp": 22.900000000000208,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 16.50242406436112,
+     "max_abs_pp": 22.900000000000208,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.290590656480443,
+     "max_abs_pp": 2.8166666666666673,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 9.885787778422122,
+     "max_abs_pp": 13.800000000000011,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 6.637017402418087,
+     "max_abs_pp": 7.30000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt1-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 11.069114365943724,
+     "max_abs_pp": 14.463480515684967,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 5.147815070493479,
+     "max_abs_pp": 6.999999999999962,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 58.15909215247429,
+     "max_abs_pp": 81.99999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 58.41232746604091,
+     "max_abs_pp": 81.99999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 10.27042477213087,
+     "max_abs_pp": 13.634999999999952,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 24.392671030455016,
+     "max_abs_pp": 33.91999999999998,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.071067811865506,
+     "max_abs_pp": 8.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt3-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 4.2249873836762815,
+     "max_abs_pp": 5.941891875293026,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 13.509256086106285,
+     "max_abs_pp": 18.999999999999982,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 16.02560451277895,
+     "max_abs_pp": 20.79999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 14.866068747318517,
+     "max_abs_pp": 18.99999999999992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.772207532884744,
+     "max_abs_pp": 12.364999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 9.367521016789842,
+     "max_abs_pp": 13.049999999999962,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 22.022715545545193,
+     "max_abs_pp": 22.999999999999964,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 4.18714289247748,
+     "max_abs_pp": 4.18714289247748,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 11.000000000000021,
+     "max_abs_pp": 11.000000000000021,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.000000000000039,
+     "max_abs_pp": 7.000000000000039,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.000000000000039,
+     "max_abs_pp": 7.000000000000039,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.995000000000029,
+     "max_abs_pp": 7.995000000000029,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.200000000000029,
+     "max_abs_pp": 7.200000000000029,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 15.000000000000002,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 7.42851489893882,
+     "max_abs_pp": 7.42851489893882,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 5.000000000000004,
+     "max_abs_pp": 5.000000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 105.00000000000003,
+     "max_abs_pp": 105.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 105.00000000000003,
+     "max_abs_pp": 105.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.639999999999988,
+     "max_abs_pp": 4.639999999999988,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.266666666666676,
+     "max_abs_pp": 6.266666666666676,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 15.000000000000002,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt5-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 30.667150473081392,
+     "max_abs_pp": 42.95109253792497,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 25.63201123595261,
+     "max_abs_pp": 33.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 48.06121156069284,
+     "max_abs_pp": 51.000000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 35.691456354170725,
+     "max_abs_pp": 44.930614433405495,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 26.137456360556605,
+     "max_abs_pp": 36.005000000000024,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 29.728694892309036,
+     "max_abs_pp": 39.59000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 31.216982557575957,
+     "max_abs_pp": 43.000000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt7-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 13.002020651212518,
+     "max_abs_pp": 15.242834127706983,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 4.743416490252552,
+     "max_abs_pp": 5.99999999999995,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 23.396153530014367,
+     "max_abs_pp": 33.00000000000012,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 24.18677324489572,
+     "max_abs_pp": 33.00000000000012,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.325321710268215,
+     "max_abs_pp": 9.635000000000037,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 15.06769391778319,
+     "max_abs_pp": 18.72000000000006,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.999999999999975,
+     "max_abs_pp": 2.9999999999999805,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/od/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_assimilation_t4": {
+     "rmse_pp": 8.749708453950666,
+     "max_abs_pp": 13.14924585290207,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 10.847426730181988,
+     "max_abs_pp": 16.000000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.832159566199227,
+     "max_abs_pp": 19.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 11.269427669584633,
+     "max_abs_pp": 18.999999999999982,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.305195681266813,
+     "max_abs_pp": 12.599999999999966,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 8.76019215923182,
+     "max_abs_pp": 13.260000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 24.303634844744256,
+     "max_abs_pp": 30.000000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/os/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_assimilation_t4": {
+     "rmse_pp": 10.685750412298706,
+     "max_abs_pp": 17.53708970211224,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 11.704699910719611,
+     "max_abs_pp": 18.999999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.328430311977627,
+     "max_abs_pp": 17.99999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 11.243516650348623,
+     "max_abs_pp": 18.49999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.936413967697657,
+     "max_abs_pp": 10.40000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 9.747732956751689,
+     "max_abs_pp": 16.259999999999984,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 34.25881881598761,
+     "max_abs_pp": 40.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/c3r-dresden/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 4.093022680850217,
+     "max_abs_pp": 5.352142515403557,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.292767933567209,
+     "max_abs_pp": 11.500000000000055,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 11.527196103129432,
+     "max_abs_pp": 14.95000000000013,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 9.464142856064749,
+     "max_abs_pp": 11.700000000000088,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 5.948738620123118,
+     "max_abs_pp": 8.395252525252584,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 6.05732109838082,
+     "max_abs_pp": 6.313333333333382,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 15.193584172274862,
+     "max_abs_pp": 16.300000000000026,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/fellow-eye-observation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 11.293641303738449,
+     "max_abs_pp": 12.039813591450411,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 8.00624756049924,
+     "max_abs_pp": 9.200000000000031,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 10.756393447619937,
+     "max_abs_pp": 13.400000000000045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 9.481824718903036,
+     "max_abs_pp": 13.400000000000045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 5.962909082169736,
+     "max_abs_pp": 6.874999999999987,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 11.20266492352999,
+     "max_abs_pp": 14.386666666666702,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 10.91100362019919,
+     "max_abs_pp": 13.699999999999978,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6803737",
+    "series_id": "kmx-pmc6803737/keraring-355/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.8565001732362103,
+     "max_abs_pp": 3.8565001732362103,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.39999999999998925,
+     "max_abs_pp": 0.39999999999998925,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 63.00000000000004,
+     "max_abs_pp": 63.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 63.00000000000004,
+     "max_abs_pp": 63.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.930000000000025,
+     "max_abs_pp": 6.930000000000025,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 8.760000000000012,
+     "max_abs_pp": 8.760000000000012,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 63.800000000000026,
+     "max_abs_pp": 63.800000000000026,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8381497",
+    "series_id": "kmx-pmc8381497/conventional-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.570064468909702,
+     "max_abs_pp": 4.227689660980893,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.134890795707154,
+     "max_abs_pp": 11.40000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 17.30250463564936,
+     "max_abs_pp": 26.200000000000045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 15.222351986470448,
+     "max_abs_pp": 26.200000000000045,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 5.120320030765727,
+     "max_abs_pp": 8.275252525252519,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.315878279468567,
+     "max_abs_pp": 12.559999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.570116687784016,
+     "max_abs_pp": 10.599999999999943,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8836535",
+    "series_id": "kmx-pmc8836535/iontophoresis-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 6.938589813298784,
+     "max_abs_pp": 11.489986955229103,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 6.117889458675395,
+     "max_abs_pp": 8.000000000000052,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 9.650240559547878,
+     "max_abs_pp": 14.000000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.198468715907513,
+     "max_abs_pp": 13.699999999999967,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.0422323216317615,
+     "max_abs_pp": 8.000000000000052,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 7.571172064388156,
+     "max_abs_pp": 11.82000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 5.490641388503073,
+     "max_abs_pp": 8.300000000000063,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8905293",
+    "series_id": "kmx-pmc8905293/tg-te-acxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 1.9688385023612316,
+     "max_abs_pp": 3.6766183266755847,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.8841443681416863,
+     "max_abs_pp": 3.500000000000014,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 5.3843484911639505,
+     "max_abs_pp": 6.876623376623458,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 4.495119176208601,
+     "max_abs_pp": 6.321739130435001,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.5304308496226913,
+     "max_abs_pp": 3.4999999999999365,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.920552835245704,
+     "max_abs_pp": 6.5999999999999615,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.012474066278433,
+     "max_abs_pp": 3.7000000000000477,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "landmark": [
+   {
+    "study_id": "kmx-pmc10244573",
+    "series_id": "kmx-pmc10244573/eye-rubbing-cessation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.083295424244317,
+     "max_abs_pp": 4.15770322133292,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.7033768374282405,
+     "max_abs_pp": 5.600000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 3.33541601603165,
+     "max_abs_pp": 5.1000000000001044,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 3.33541601603165,
+     "max_abs_pp": 5.1000000000001044,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.7033768374282405,
+     "max_abs_pp": 5.600000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 16.592083390882557,
+     "max_abs_pp": 21.525000000000016,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.756993478833835,
+     "max_abs_pp": 5.699999999999994,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc11662518",
+    "series_id": "kmx-pmc11662518/symmetric-kerarings/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 6.321574272708648,
+     "max_abs_pp": 7.985974083946923,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.732050807568849,
+     "max_abs_pp": 1.9999999999999574,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 37.188707963574224,
+     "max_abs_pp": 52.00000000000017,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 37.188707963574224,
+     "max_abs_pp": 52.00000000000017,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 11.866166187947984,
+     "max_abs_pp": 19.649999999999977,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.691647301903723,
+     "max_abs_pp": 4.942727272727265,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 19.67231557290602,
+     "max_abs_pp": 19.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc11818551",
+    "series_id": "kmx-pmc11818551/sham-control/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 8.666224941267165,
+     "max_abs_pp": 8.888443542123415,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 8.30541991713842,
+     "max_abs_pp": 8.599999999999985,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.074923312161849,
+     "max_abs_pp": 4.500000000000037,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 4.074923312161849,
+     "max_abs_pp": 4.500000000000037,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.8169440198752698,
+     "max_abs_pp": 3.9833333333333165,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 8.89781847483476,
+     "max_abs_pp": 9.243333333333336,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 10.804165863221451,
+     "max_abs_pp": 11.099999999999998,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/s-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 20.722911360375168,
+     "max_abs_pp": 29.31270600406736,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 26.564387187862373,
+     "max_abs_pp": 36.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 26.564387187862373,
+     "max_abs_pp": 36.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 26.564387187862373,
+     "max_abs_pp": 36.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 25.980508100557742,
+     "max_abs_pp": 34.93242424242424,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.40500780978615,
+     "max_abs_pp": 14.42000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 26.564387187862373,
+     "max_abs_pp": 36.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/a-cxl/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_assimilation_t4": {
+     "rmse_pp": 20.263913575248115,
+     "max_abs_pp": 29.891165858440715,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 24.562844569254057,
+     "max_abs_pp": 35.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 42.35563716909503,
+     "max_abs_pp": 65.00000000000047,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 42.35563716909503,
+     "max_abs_pp": 65.00000000000047,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 22.79054514811238,
+     "max_abs_pp": 32.28,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 11.44745604927141,
+     "max_abs_pp": 12.390000000000024,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 22.730302828309743,
+     "max_abs_pp": 32.99999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13303802",
+    "series_id": "kmx-pmc13303802/dresden-pediatric/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.973191106805351,
+     "max_abs_pp": 3.6488112643181414,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.7901187316494864,
+     "max_abs_pp": 4.30000000000007,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.114493206602479,
+     "max_abs_pp": 11.29999999999981,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.114493206602479,
+     "max_abs_pp": 11.29999999999981,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.582618320832431,
+     "max_abs_pp": 9.09424242424235,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.844321417907718,
+     "max_abs_pp": 6.699999999999918,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 8.966883516584788,
+     "max_abs_pp": 9.50000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13529039",
+    "series_id": "kmx-pmc13529039/icrs-plus-hm-icrs/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.8206307957266983,
+     "max_abs_pp": 3.8206307957266983,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.500000000000002,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 87.7000000000001,
+     "max_abs_pp": 87.7000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 87.7000000000001,
+     "max_abs_pp": 87.7000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 16.62,
+     "max_abs_pp": 16.62,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 12.295151515151526,
+     "max_abs_pp": 12.295151515151526,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 47.60000000000005,
+     "max_abs_pp": 47.60000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc5845167",
+    "series_id": "kmx-pmc5845167/ate-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.7051934799367934,
+     "max_abs_pp": 3.381092329865787,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.9313207915827983,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 39.080046059338606,
+     "max_abs_pp": 50.300000000000445,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 39.080046059338606,
+     "max_abs_pp": 50.300000000000445,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.7040893317761103,
+     "max_abs_pp": 4.416666666666624,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 11.523454403471602,
+     "max_abs_pp": 13.800000000000011,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 6.637017402418087,
+     "max_abs_pp": 7.30000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt1-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 16.509553106149184,
+     "max_abs_pp": 18.328622940688177,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 8.062257748298524,
+     "max_abs_pp": 8.999999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 136.0147050873544,
+     "max_abs_pp": 173.99999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 136.0147050873544,
+     "max_abs_pp": 173.99999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 16.330383109406796,
+     "max_abs_pp": 18.63999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 27.940151912416084,
+     "max_abs_pp": 33.91999999999998,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.071067811865506,
+     "max_abs_pp": 8.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt3-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 5.163529344719767,
+     "max_abs_pp": 5.941891875293015,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 20.02498439450078,
+     "max_abs_pp": 21.000000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.403124237432956,
+     "max_abs_pp": 9.000000000000208,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 6.403124237432956,
+     "max_abs_pp": 9.000000000000208,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 11.873138275114975,
+     "max_abs_pp": 12.364999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 11.16677835765036,
+     "max_abs_pp": 13.049999999999962,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 22.022715545545193,
+     "max_abs_pp": 22.999999999999964,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 4.18714289247748,
+     "max_abs_pp": 4.18714289247748,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 11.000000000000021,
+     "max_abs_pp": 11.000000000000021,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.000000000000039,
+     "max_abs_pp": 7.000000000000039,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.000000000000039,
+     "max_abs_pp": 7.000000000000039,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.995000000000029,
+     "max_abs_pp": 7.995000000000029,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.200000000000029,
+     "max_abs_pp": 7.200000000000029,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 15.000000000000002,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 7.42851489893882,
+     "max_abs_pp": 7.42851489893882,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 5.000000000000004,
+     "max_abs_pp": 5.000000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 105.00000000000003,
+     "max_abs_pp": 105.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 105.00000000000003,
+     "max_abs_pp": 105.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.639999999999988,
+     "max_abs_pp": 4.639999999999988,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.266666666666676,
+     "max_abs_pp": 6.266666666666676,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 15.000000000000002,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt5-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 34.046552923072355,
+     "max_abs_pp": 47.77220578758422,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 16.56804152578091,
+     "max_abs_pp": 18.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 32.87171789032274,
+     "max_abs_pp": 44.930614433405495,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 32.87171789032274,
+     "max_abs_pp": 44.930614433405495,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 20.419877876716125,
+     "max_abs_pp": 27.640000000000022,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 21.786915798249186,
+     "max_abs_pp": 27.370000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 31.216982557575957,
+     "max_abs_pp": 43.000000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt7-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 20.456271101848557,
+     "max_abs_pp": 24.588087817881643,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 6.708203932499377,
+     "max_abs_pp": 8.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 57.939623747484035,
+     "max_abs_pp": 75.00000000000016,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 57.939623747484035,
+     "max_abs_pp": 75.00000000000016,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.837163222799699,
+     "max_abs_pp": 18.63999999999998,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 19.508667019786103,
+     "max_abs_pp": 20.266666666666666,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.999999999999975,
+     "max_abs_pp": 2.9999999999999805,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/od/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_assimilation_t4": {
+     "rmse_pp": 15.085195327151494,
+     "max_abs_pp": 20.103799791193666,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 19.55334583474996,
+     "max_abs_pp": 25.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.63324958071079,
+     "max_abs_pp": 9.999999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 6.63324958071079,
+     "max_abs_pp": 9.999999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.136739024400352,
+     "max_abs_pp": 14.200000000000024,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 12.605724889906185,
+     "max_abs_pp": 18.14000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 24.303634844744256,
+     "max_abs_pp": 30.000000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/os/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_assimilation_t4": {
+     "rmse_pp": 19.082205068989698,
+     "max_abs_pp": 23.52531125006919,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 22.01514630127778,
+     "max_abs_pp": 26.999999999999957,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 23.444971031474438,
+     "max_abs_pp": 38.00000000000027,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 23.444971031474438,
+     "max_abs_pp": 38.00000000000027,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 10.195423810056456,
+     "max_abs_pp": 15.199999999999958,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.943280467470174,
+     "max_abs_pp": 19.139999999999958,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 34.25881881598761,
+     "max_abs_pp": 40.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/c3r-dresden/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 4.353465460672055,
+     "max_abs_pp": 5.352142515403546,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 12.702165169765388,
+     "max_abs_pp": 13.800000000000024,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.687216658103232,
+     "max_abs_pp": 6.500000000000061,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 4.687216658103232,
+     "max_abs_pp": 6.500000000000061,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.670941596318677,
+     "max_abs_pp": 8.938131313131347,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 4.50292250778441,
+     "max_abs_pp": 6.313333333333382,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 15.193584172274862,
+     "max_abs_pp": 16.300000000000026,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/fellow-eye-observation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_assimilation_t4": {
+     "rmse_pp": 16.601549096930395,
+     "max_abs_pp": 20.156035163660192,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 12.928263611173781,
+     "max_abs_pp": 15.799999999999992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.87163146474183,
+     "max_abs_pp": 26.300000000000022,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 20.87163146474183,
+     "max_abs_pp": 26.300000000000022,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.002925836144122,
+     "max_abs_pp": 11.758333333333336,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 22.743101029640723,
+     "max_abs_pp": 28.766666666666662,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 10.91100362019919,
+     "max_abs_pp": 13.699999999999978,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6803737",
+    "series_id": "kmx-pmc6803737/keraring-355/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_assimilation_t4": {
+     "rmse_pp": 3.8565001732362103,
+     "max_abs_pp": 3.8565001732362103,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.39999999999998925,
+     "max_abs_pp": 0.39999999999998925,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 63.00000000000004,
+     "max_abs_pp": 63.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 63.00000000000004,
+     "max_abs_pp": 63.00000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.930000000000025,
+     "max_abs_pp": 6.930000000000025,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 8.760000000000012,
+     "max_abs_pp": 8.760000000000012,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 63.800000000000026,
+     "max_abs_pp": 63.800000000000026,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8381497",
+    "series_id": "kmx-pmc8381497/conventional-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.3158956396620187,
+     "max_abs_pp": 2.802448372472477,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 14.719148526098001,
+     "max_abs_pp": 17.99999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 50.271600425487605,
+     "max_abs_pp": 65.53061443340545,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 50.271600425487605,
+     "max_abs_pp": 65.53061443340545,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 10.041040890163861,
+     "max_abs_pp": 12.237222222222188,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 13.285313145363569,
+     "max_abs_pp": 15.269999999999984,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 7.570116687784016,
+     "max_abs_pp": 10.599999999999943,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8836535",
+    "series_id": "kmx-pmc8836535/iontophoresis-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 13.610954342300923,
+     "max_abs_pp": 19.37967105366506,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 8.194074514114297,
+     "max_abs_pp": 13.000000000000057,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 44.71968246756673,
+     "max_abs_pp": 65.09999999999988,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 44.71968246756673,
+     "max_abs_pp": 65.09999999999988,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.311436900009445,
+     "max_abs_pp": 14.400000000000057,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 29.824315583094293,
+     "max_abs_pp": 41.50000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 5.490641388503073,
+     "max_abs_pp": 8.300000000000063,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8905293",
+    "series_id": "kmx-pmc8905293/tg-te-acxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_assimilation_t4": {
+     "rmse_pp": 2.4835098075826494,
+     "max_abs_pp": 2.9517936252818178,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.8371173070873594,
+     "max_abs_pp": 2.199999999999991,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 42.43594472304121,
+     "max_abs_pp": 75.16086956522041,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 42.43594472304121,
+     "max_abs_pp": 75.16086956522041,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.336276871171092,
+     "max_abs_pp": 5.919833333333324,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 15.163373788800772,
+     "max_abs_pp": 24.05866666666675,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.012474066278433,
+     "max_abs_pp": 3.7000000000000477,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "initial_state": [
+   {
+    "study_id": "kmx-pmc10244573",
+    "series_id": "kmx-pmc10244573/eye-rubbing-cessation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_initial_state": {
+     "rmse_pp": 9.98138762723272,
+     "max_abs_pp": 12.527434967507034,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 10.841217643788877,
+     "max_abs_pp": 13.699999999999946,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc10391506",
+    "series_id": "kmx-pmc10391506/accelerated-cxl/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 1.2904220414132639,
+     "max_abs_pp": 1.2904220414132639,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.1333333333333537,
+     "max_abs_pp": 2.1333333333333537,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc10836791",
+    "series_id": "kmx-pmc10836791/rt-tprk-plus-acxl/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_combined",
+    "population_initial_state": {
+     "rmse_pp": 10.21418069307931,
+     "max_abs_pp": 10.21418069307931,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 13.649999999999963,
+     "max_abs_pp": 13.649999999999963,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc11523831",
+    "series_id": "kmx-pmc11523831/icrs-cxl-same-session/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_combined",
+    "population_initial_state": {
+     "rmse_pp": 13.322722924725838,
+     "max_abs_pp": 13.322722924725838,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 1.849999999999996,
+     "max_abs_pp": 1.849999999999996,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc11662518",
+    "series_id": "kmx-pmc11662518/symmetric-kerarings/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 19.781458152297116,
+     "max_abs_pp": 20.454685793189885,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 24.798698050502562,
+     "max_abs_pp": 36.24999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc11818551",
+    "series_id": "kmx-pmc11818551/sham-control/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_initial_state": {
+     "rmse_pp": 7.123722771272647,
+     "max_abs_pp": 8.946592571652179,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 5.232240685652043,
+     "max_abs_pp": 7.524999999999982,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc12358722",
+    "series_id": "kmx-pmc12358722/accelerated-12mw/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 11.114990983614526,
+     "max_abs_pp": 11.114990983614526,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 9.760000000000025,
+     "max_abs_pp": 9.760000000000025,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc12448536",
+    "series_id": "kmx-pmc12448536/bioring/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 12.253500274615291,
+     "max_abs_pp": 12.253500274615291,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.49999999999997,
+     "max_abs_pp": 3.49999999999997,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc12448536",
+    "series_id": "kmx-pmc12448536/keraring/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 30.84710016252201,
+     "max_abs_pp": 30.84710016252201,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 14.099999999999934,
+     "max_abs_pp": 14.099999999999934,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/s-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 13.061252556926684,
+     "max_abs_pp": 21.457561124229652,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 17.104773831678518,
+     "max_abs_pp": 27.78666666666667,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13038651",
+    "series_id": "kmx-pmc13038651/a-cxl/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 12.273453869305994,
+     "max_abs_pp": 19.409533753018692,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 12.043893796350801,
+     "max_abs_pp": 19.71999999999994,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13089007",
+    "series_id": "kmx-pmc13089007/a-cxl-30mw-4min/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 0.005384465402946681,
+     "max_abs_pp": 0.005384465402946681,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 5.066666666666675,
+     "max_abs_pp": 5.066666666666675,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc13303802",
+    "series_id": "kmx-pmc13303802/dresden-pediatric/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 4.371246509189683,
+     "max_abs_pp": 5.676274328418107,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 5.830780619469765,
+     "max_abs_pp": 9.999999999999964,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc13529039",
+    "series_id": "kmx-pmc13529039/icrs-plus-hm-icrs/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 20.888860335007383,
+     "max_abs_pp": 21.162241370004466,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 28.469791007311635,
+     "max_abs_pp": 35.54000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc13529049",
+    "series_id": "kmx-pmc13529049/room-air/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 16.91499074613111,
+     "max_abs_pp": 16.91499074613111,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 16.960000000000054,
+     "max_abs_pp": 16.960000000000054,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc467032",
+    "series_id": "kmx-pmc467032/intacs-sk/kmax-paired-3mo",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 11.45777952799607,
+     "max_abs_pp": 11.45777952799607,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 19.000000000000085,
+     "max_abs_pp": 19.000000000000085,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc5587223",
+    "series_id": "kmx-pmc5587223/single-segment-intacs/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 4.141506794184934,
+     "max_abs_pp": 4.141506794184934,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 7.466666666666654,
+     "max_abs_pp": 7.466666666666654,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc5804401",
+    "series_id": "kmx-pmc5804401/accelerated-18mw-pediatric/kmax",
+    "context": "human/cxl_accelerated",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_accelerated",
+    "population_initial_state": {
+     "rmse_pp": 7.79146216716039,
+     "max_abs_pp": 7.79146216716039,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.133333333333347,
+     "max_abs_pp": 8.133333333333347,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5845167",
+    "series_id": "kmx-pmc5845167/ate-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_initial_state": {
+     "rmse_pp": 13.946235311058995,
+     "max_abs_pp": 18.10215189463339,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.431296712395228,
+     "max_abs_pp": 4.016666666666713,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt1-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 15.712751096603983,
+     "max_abs_pp": 26.426952627570877,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 9.333412202047722,
+     "max_abs_pp": 15.764999999999995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt3-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 13.295431112822348,
+     "max_abs_pp": 14.813394727825413,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 12.0565023949734,
+     "max_abs_pp": 15.129999999999955,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 2.841834730976203,
+     "max_abs_pp": 3.7277599532830608,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.528384093691718,
+     "max_abs_pp": 6.125000000000025,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt4-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 14.394798715301796,
+     "max_abs_pp": 20.30183748090414,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.757877882226953,
+     "max_abs_pp": 10.764999999999992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt5-os/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 35.418848119452015,
+     "max_abs_pp": 56.72686243459284,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 34.30358460375049,
+     "max_abs_pp": 51.875000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc5988782",
+    "series_id": "kmx-pmc5988782/pt7-od/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 13.704523373159592,
+     "max_abs_pp": 16.8970098025746,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 8.062624676038592,
+     "max_abs_pp": 11.874999999999957,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/od/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_initial_state": {
+     "rmse_pp": 8.665016714589793,
+     "max_abs_pp": 11.29297685029046,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.982120021884475,
+     "max_abs_pp": 12.800000000000011,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6050682",
+    "series_id": "kmx-pmc6050682/ptk-cxl/os/kmax",
+    "context": "human/cxl_combined",
+    "role": "control",
+    "kind": "single_eye",
+    "level_used": "human/cxl_combined",
+    "population_initial_state": {
+     "rmse_pp": 13.665688191810291,
+     "max_abs_pp": 19.384939136691827,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 14.580809305384948,
+     "max_abs_pp": 21.799999999999997,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/c3r-dresden/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 11.38483506428912,
+     "max_abs_pp": 13.772541868774546,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 10.118070270748767,
+     "max_abs_pp": 12.414242424242461,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6644189",
+    "series_id": "kmx-pmc6644189/fellow-eye-observation/kmax",
+    "context": "human/observation",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/observation",
+    "population_initial_state": {
+     "rmse_pp": 17.417262802346958,
+     "max_abs_pp": 27.885408765578056,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 5.296666491853724,
+     "max_abs_pp": 8.400000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "kmx-pmc6803737",
+    "series_id": "kmx-pmc6803737/keraring-355/kmax",
+    "context": "human/icrs",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/icrs",
+    "population_initial_state": {
+     "rmse_pp": 44.344819948612745,
+     "max_abs_pp": 45.33289336766118,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 34.58899319147638,
+     "max_abs_pp": 37.88,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8381497",
+    "series_id": "kmx-pmc8381497/conventional-cxl/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 1.9744457041682089,
+     "max_abs_pp": 2.790886962200012,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.635077980648786,
+     "max_abs_pp": 8.403888888888911,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8836535",
+    "series_id": "kmx-pmc8836535/iontophoresis-cxl/kmax",
+    "context": "human/cxl_epi_on",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_on",
+    "population_initial_state": {
+     "rmse_pp": 15.3104264936259,
+     "max_abs_pp": 22.386293046356776,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 9.666695402256197,
+     "max_abs_pp": 15.600000000000103,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "kmx-pmc8842066",
+    "series_id": "kmx-pmc8842066/dresden/kmax",
+    "context": "human/cxl_epi_off",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl_epi_off",
+    "population_initial_state": {
+     "rmse_pp": 10.55770185733661,
+     "max_abs_pp": 10.55770185733661,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.291666666666639,
+     "max_abs_pp": 6.291666666666639,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   }
+  ]
+ }
+}

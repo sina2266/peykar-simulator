@@ -209,3 +209,66 @@ def test_builder_reads_cells_and_checks_hashes() -> None:
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
     assert kmax_number("\u2212.5 \u00b1 .2") == pytest.approx(-0.5)
+
+
+def test_kmax_candidates_centre_the_covariate_and_read_family_contexts() -> None:
+    from peykar.model_learning.eye_recovery_population import level_covariate
+    from peykar.model_learning.eye_support import SupportConfig
+    from peykar.model_learning.kmax_population import (
+        DEVELOPMENT_CANDIDATES,
+        adapter,
+        family_context,
+    )
+
+    assert set(DEVELOPMENT_CANDIDATES) == {"k0", "k1", "k2", "k3", "k4", "k5", "k6", "k7"}
+    adopted = DEVELOPMENT_CANDIDATES["k6"]
+    assert adopted.transient_months is None and adopted.dimensions == 3
+    assert adopted.forecast_noise_pooling == "pooled" and adopted.noise_pooling == "median"
+    assert DEVELOPMENT_CANDIDATES["k7"].noise_pooling == "pooled"
+    assert DEVELOPMENT_CANDIDATES["k2"].grouping == ("treatment", "context")
+    assert isinstance(DEVELOPMENT_CANDIDATES["k3"], SupportConfig)
+    assert DEVELOPMENT_CANDIDATES["k5"].transient_months == 1.0
+    series = adapter("k6")(_record())
+    # The level covariate is (Kmax0 - 55 D) / 5 D.
+    assert level_covariate(adopted, series[0]) == pytest.approx((58.2 - 55.0) / 5.0)
+    assert [s.context for s in series] == [
+        "human/cxl_epi_off",
+        "human/cxl_accelerated",
+        "human/observation",
+    ]
+    assert [s.context for s in adapter("k2")(_record())] == [
+        "human/cxl_epi_off/cxl",
+        "human/cxl_accelerated/cxl",
+        "human/observation/observation",
+    ]
+    assert family_context("human/other") == "human/other/cxl"
+    assert family_context("human/icrs") == "human/icrs/icrs"
+
+
+def test_kmax_publisher_keeps_iop_comparators_and_redacts_initial_states() -> None:
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_kmax_population.py"
+    spec = importlib.util.spec_from_file_location("publish_kmax_population", path)
+    assert spec is not None and spec.loader is not None
+    publish = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publish)
+    assert publish.base.H3_COMPARATORS == ("persistence", "pooled_curve_ratio", "analog_knn")
+    assert publish.base.PRIMARY["next_observation"] == "population_assimilation_t4"
+    assert "baseline_level" in publish.base.REPORTED
+    entry = {
+        "series_id": "s",
+        "context": "human/cxl_epi_off",
+        "kind": "group_mean",
+        "reference_value": 56.0,
+        "observed": [0.9],
+        "months": [12.0],
+        "predictions": {"population_initial_state": [0.92]},
+        "initial_state_intervals": {"population_initial_state": {"0.1": [0.8]}},
+        "scores": {},
+    }
+    redacted = publish.redact({"initial_state": [entry], "next_observation": [], "landmark": []})
+    assert set(redacted["initial_state"][0]) <= publish.INITIAL_STATE_PUBLIC_FIELDS
+    assert "reference_value" not in redacted["initial_state"][0]
+    assert "initial_state_intervals" not in redacted["initial_state"][0]

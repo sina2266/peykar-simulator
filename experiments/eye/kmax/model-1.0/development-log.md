@@ -149,3 +149,57 @@ target its interval coverage:
 Adoption rule as in round 1, against k0. If both meet it, the one with the larger
 summed gain is adopted. If neither meets it, k0 stays the model 1.0 candidate and the
 freeze decision records its development failures. No round 3 is planned.
+
+## Round 2 — results (2026-10-30)
+
+LOSO over the same 25 studies (`.peykar/kmax-1.0-dev/round2-k6`, `round2-k7`,
+`.peykar/kmax-1.0-dev/round2-compare.txt`):
+
+| candidate | primary | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|---|
+| k6 (k1 + forecast-only pooled noise) | Student-t | 6.145 (+0.07) | 11.113 (−0.43) | 15.412 (+2.48) | 0.718 / 0.872 |
+| k7 (k1 + pooled noise) | Gaussian (none inside) | 7.723 (−0.55) | 11.548 (−1.92) | 16.183 (+3.39) | 0.692 / 0.744 |
+
+- **k6 meets the rule** against k0: it gains 0.162 pp (initial state), 0.909 pp (next
+  observation) and 0.320 pp (landmark), and its Student-t variant
+  (`population_assimilation_t4`) lies inside both windows (the Gaussian variant does not:
+  0.692 at 80%). The pooled noise widens the forecast intervals; the point forecasts are
+  those of k1 to within the change of the variant.
+- **k7 rejected**: it loses 0.609, 0.670 and 0.115 pp. With the larger noise in the
+  likelihood, each series' own visits move its posterior less, so the forecasts follow
+  the context curve more and the series less.
+
+## Freeze decision (2026-10-30)
+
+Model 1.0.0 is **k6** (contexts `human/procedure`, one hierarchy, a study effect per
+procedure arm, no 7-day transient, the level covariate centred at a baseline Kmax of
+55 D, forecast-only pooled noise), as the round-2 rule decided. Primaries:
+`population_assimilation_t4` for the next observation (U2) and the landmark task (U3),
+`population_initial_state` for the initial state (U1). The development analysis by the
+frozen publisher (`development-loso-2026-10-30/`, `scripts/publish_kmax_population.py
+--development`) is the development reference of the protocol:
+
+- H1 passes: 28/39 = 0.718 of next-observation targets inside the 80% interval (window
+  0.70–0.90; one target above the floor) and 34/39 = 0.872 inside the 90% interval
+  (window 0.80–0.97).
+- H2 passes: 6.14 pp against persistence 6.59, the last-two trend 22.22 and the
+  pooled-curve increment 7.99 on 39 common targets, and 5.57 against analog kNN 7.41 on
+  37.
+- H3 passes: 11.11 pp against persistence 12.36 and the pooled-curve increment 12.18 on
+  39 targets, and 9.10 against analog kNN 17.45 on 37.
+- **H4 fails**: the population initial state has 15.41 pp against 13.89 for the pooled
+  training curve over 60 targets of 25 control group means. The law is better for
+  epithelium-off cross-linking (9.15 against 10.66 pp) and close for accelerated
+  cross-linking (10.93 against 10.85); it is worse for transepithelial cross-linking,
+  observation and the combined treatments, and both are poor for ring segments
+  (25.20 and 24.33 pp).
+- Reported only: landmark coverage 23/39 = 0.590 (80%) and 30/39 = 0.769 (90%);
+  initial-state coverage 0.700 and 0.833 (60 targets).
+
+The protocol keeps H1–H4 with the comparators of the other eye components; the H4
+failure on development is recorded as its development reference, as acuity 1.0
+recorded its H2 and H3 failures. There is no earlier Kmax version, hence no H5. The
+sealed set (structure seen through the custody verifier only) is mostly cross-linking:
+epithelium-off 15 series, accelerated 11, transepithelial 4, combined 1, observation 1
+and `other` 1; it has no ring-segment study. The `other` context has no training study,
+so that series uses the species mean with the between-context variance added.
