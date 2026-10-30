@@ -37,3 +37,16 @@ gained 0.10 pp (the regimen level, declared from an out-of-sample bias by regime
 gained 0.012 pp and left those biases almost unchanged), so **no 1.2 protocol was
 frozen**. Tranche 3 (67 extracted records) stays sealed and unread for a later version;
 see the [development log](model-1.2/development-log.md).
+## Model 1.3 (forecast stacking, 2026-10-30)
+[`model-1.3/`](model-1.3/README.md): model 1.1.0's fit with forecast stacking
+(`eye_stacking` 1.0.0: fixed weights 0.742/0.233/0.025 on the model, persistence and
+the pooled-curve increment, and 0.839/0.161 on the model and the pooled training curve
+for initial states, fitted on the 128 training studies' leave-one-study-out forecasts).
+Tested once on tranche 3 (67 records): H2–H4 passed on 96 group-mean series (next
+observation 5.70 vs persistence 6.43 pp; landmark 7.72 vs 10.41 for the pooled-curve
+increment; initial state 11.62 vs the pooled training curve 15.44); H1 failed (80%
+coverage 0.911, above its window) and H5 failed (initial state 11.62 vs 11.61 for model
+1.1.0 from the same fit; next observation and landmark were better, 5.70 vs 6.08 and
+7.72 vs 7.98) ([Persian results](model-1.3/results.fa.md)). Model 1.1.0 stays the
+component's model; on tranche 3 its own 80% coverage was 0.903, just above the window.
+Tranche 3 is now consumed; tranche 4 (35 articles) stays untriaged and unread.

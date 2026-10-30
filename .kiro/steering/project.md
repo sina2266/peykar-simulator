@@ -1,4 +1,26 @@
 # Peykar continuation context
+## Forecast stacking: acuity 1.2 and retina 1.3 sealed tests, 2026-10-30 night
+- New generic `peykar.model_learning.eye_stacking` 1.0.0 (StackingSpec, StackedCandidate,
+  StackingWeights, simplex_least_squares, combine, shift_quantiles) and
+  `peykar.validation.eye_stacking_evaluation` 1.0.0 (fit_weights, stack_report,
+  nested_stack_report, summarize_stacked, development_comparison); harness 6
+  `eye_recovery_evaluation6` (= harness 2 + `initial_state_intervals`) and
+  `eye_additive_evaluation4`. All PINNED by both protocols: never edit; make new
+  versions. Tests `tests/unit/test_eye_stacking.py` (5).
+- Acuity 1.2 (`acuity_population_1_2`, k1 = a0 stacked; operator/publisher
+  `scripts/evaluate|publish_acuity_population_1_2.py`): protocol `484c1694`, sealed on
+  tranche 2 (69.5 s): H1–H4 pass, H5 FAILS (initial 9.83 vs a0 9.01; forecasts better
+  3.72 vs 4.06, 5.74 vs 6.66). Acuity dataset fully consumed. `peykar eye` keeps 1.0.0.
+- Retina 1.3 (`retina_thickness_population_1_3`, k1 = s5 stacked; operator/publisher
+  `scripts/evaluate|publish_retina_population_1_3.py`): protocol `9fe7bcff`, sealed on
+  tranche 3 (5,504 s): H2–H4 pass, H1 FAILS (80% coverage 0.911), H5 FAILS (initial
+  11.62 vs 11.61). Tranche 3 consumed; tranche 4 (35) unread. `peykar eye` keeps 1.1.0.
+- Lesson: stack only forecasts from follow-up; the pooled curve ignores the baseline
+  (no help for initial states); rescale moved intervals. Freeze commit `fc3590ac`.
+  Private helpers: `.peykar/stacking_sealed_breakdown.py`, `stacking_drop_one.py`,
+  `check_stacking_redaction.py`, `posthoc_stacking.py`, `compare_harness6.py`,
+  `write_acuity_protocol_1_2.py`, `write_retina_protocol_1_3.py`.
+- Never batch a PNG render with its Playwright view (the view loads the old file).
 ## Retinal acuity 1.2 FAILED all five (third failure), 2026-10-29 late night
 - Sealed run once (234 s, report `495c5f9f…`, ref x0 `bd8ec333…`); published in
   experiments/eye/retina-acuity/model-1.2/sealed-test-2026-10-29 (0 leaks). Coverage

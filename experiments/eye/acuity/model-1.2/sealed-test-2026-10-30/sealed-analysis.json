@@ -1,0 +1,5011 @@
+{
+ "mode": "sealed",
+ "status": "declared sealed-test analysis",
+ "model_version": "1.2.0-k1",
+ "stacking": {
+  "evaluation_id": "eye.stacking-evaluation",
+  "evaluation_version": "1.0.0",
+  "stacking_id": "eye.forecast-stacking",
+  "stacking_version": "1.0.0",
+  "mode": "frozen weights",
+  "spec": {
+   "history_model": "population_assimilation_robust",
+   "initial_model": "population_initial_state",
+   "context_prefix": "human/",
+   "kind": "group_mean"
+  },
+  "weights": {
+   "stacking_id": "eye.forecast-stacking",
+   "stacking_version": "1.0.0",
+   "history": {
+    "model": 0.5436892665824574,
+    "persistence": 0.2329686283383571,
+    "pooled_curve_increment": 0.22334210507918545
+   },
+   "initial": {
+    "model": 0.58192110413252,
+    "pooled_training_curve": 0.41807889586748
+   }
+  }
+ },
+ "source_report_sha256": "c8c5fff3c41eac979ee7cfbc5a1c798d93a4056d2e1c79fbfac7e5d481cdf23d",
+ "reference_report_sha256": "77db13c4224e50a0882932d6dc39b9cf2b07a3d68ed726fca1efb28f44a1cbb2",
+ "tested_subset": "human series (contexts human/...)",
+ "unit": "1 pp = 1 ETDRS letter (0.02 logMAR) of corrected distance acuity change from the preoperative acuity",
+ "studies_with_redacted_values": [
+  "acu-pmc12220558",
+  "acu-pmc12948762",
+  "acu-pmc7774118",
+  "acu-pmc7936678"
+ ],
+ "primary_methods": {
+  "next_observation": "stacked",
+  "landmark": "stacked",
+  "initial_state": "stacked_initial_state"
+ },
+ "verdicts": {
+  "H1_calibration_next_observation_group_means": true,
+  "H2_accuracy_next_observation_group_means": true,
+  "H3_landmark_group_means": true,
+  "H4_initial_state_control_group_means": true,
+  "H5_landmark_and_initial_state_lower_next_observation_within_0_05_pp": false
+ },
+ "H1_calibration_next_observation_group_means": {
+  "80": {
+   "inside": 59,
+   "n": 66,
+   "coverage": 0.8939393939393939,
+   "window": [
+    0.7,
+    0.9
+   ],
+   "within_window": true
+  },
+  "90": {
+   "inside": 61,
+   "n": 66,
+   "coverage": 0.9242424242424242,
+   "window": [
+    0.8,
+    0.97
+   ],
+   "within_window": true
+  }
+ },
+ "H2_accuracy_next_observation_group_means": {
+  "persistence": {
+   "common_targets": 66,
+   "stacked_rmse_pp": 3.7222613277010588,
+   "persistence_rmse_pp": 5.026490431763107,
+   "stacked_lower": true
+  },
+  "last_two_log_linear": {
+   "common_targets": 66,
+   "stacked_rmse_pp": 3.7222613277010588,
+   "last_two_log_linear_rmse_pp": 18.593980342420014,
+   "stacked_lower": true
+  },
+  "pooled_curve_ratio": {
+   "common_targets": 66,
+   "stacked_rmse_pp": 3.7222613277010588,
+   "pooled_curve_ratio_rmse_pp": 5.049472864538625,
+   "stacked_lower": true
+  },
+  "analog_knn": {
+   "common_targets": 66,
+   "stacked_rmse_pp": 3.7222613277010588,
+   "analog_knn_rmse_pp": 5.948945397841645,
+   "stacked_lower": true
+  }
+ },
+ "H3_landmark_group_means": {
+  "comparisons": {
+   "persistence": {
+    "common_targets": 66,
+    "stacked_rmse_pp": 5.737821934770952,
+    "persistence_rmse_pp": 11.583949187901284,
+    "stacked_lower": true
+   },
+   "pooled_curve_ratio": {
+    "common_targets": 66,
+    "stacked_rmse_pp": 5.737821934770952,
+    "pooled_curve_ratio_rmse_pp": 7.007015615830606,
+    "stacked_lower": true
+   },
+   "analog_knn": {
+    "common_targets": 66,
+    "stacked_rmse_pp": 5.737821934770952,
+    "analog_knn_rmse_pp": 16.254243417006556,
+    "stacked_lower": true
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 55,
+    "n": 66,
+    "coverage": 0.8333333333333334,
+    "window": [
+     0.7,
+     0.9
+    ],
+    "within_window": true
+   },
+   "90": {
+    "inside": 58,
+    "n": 66,
+    "coverage": 0.8787878787878788,
+    "window": [
+     0.8,
+     0.97
+    ],
+    "within_window": true
+   }
+  }
+ },
+ "H4_initial_state_control_group_means": {
+  "summary": {
+   "pooled_training_curve": {
+    "series": 22,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 10,
+    "pooled_rmse_pp": 14.585267576883169,
+    "pooled_max_abs_pp": 52.275000000000006,
+    "targets": 85
+   },
+   "population_initial_state": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 9.011822623343388,
+    "pooled_max_abs_pp": 31.790034517774323,
+    "targets": 85
+   },
+   "population_initial_state_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 9.002250326043011,
+    "pooled_max_abs_pp": 31.59578462171021,
+    "targets": 85
+   },
+   "stacked_initial_state": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 9.829259061762952,
+    "pooled_max_abs_pp": 34.95692974152894,
+    "targets": 85
+   }
+  },
+  "calibration_reported": {
+   "80": {
+    "inside": 74,
+    "n": 85,
+    "window": [
+     0.7,
+     0.9
+    ]
+   },
+   "90": {
+    "inside": 79,
+    "n": 85,
+    "window": [
+     0.8,
+     0.97
+    ]
+   }
+  }
+ },
+ "reported_not_tested": {
+  "single_eyes": {
+   "next_observation": {
+    "persistence": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "persistence_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "last_two_log_linear_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "reference_to_last_log_linear_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "pooled_curve_ratio_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "analog_knn_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "baseline_level": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "baseline_level_rmse_pp": null,
+     "stacked_lower": false
+    }
+   },
+   "landmark": {
+    "persistence": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "persistence_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "last_two_log_linear": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "last_two_log_linear_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "reference_to_last_log_linear_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "pooled_curve_ratio_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "analog_knn": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "analog_knn_rmse_pp": null,
+     "stacked_lower": false
+    },
+    "baseline_level": {
+     "common_targets": 0,
+     "stacked_rmse_pp": null,
+     "baseline_level_rmse_pp": null,
+     "stacked_lower": false
+    }
+   },
+   "coverage_next_observation": {
+    "80": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "coverage_landmark": {
+    "80": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": false
+    },
+    "90": {
+     "inside": 0,
+     "n": 0,
+     "coverage": null,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": false
+    }
+   },
+   "initial_state": {}
+  },
+  "all_series_coverage": {
+   "next_observation": {
+    "80": {
+     "inside": 59,
+     "n": 66,
+     "coverage": 0.8939393939393939,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": true
+    },
+    "90": {
+     "inside": 61,
+     "n": 66,
+     "coverage": 0.9242424242424242,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   },
+   "landmark": {
+    "80": {
+     "inside": 55,
+     "n": 66,
+     "coverage": 0.8333333333333334,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": true
+    },
+    "90": {
+     "inside": 58,
+     "n": 66,
+     "coverage": 0.8787878787878788,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   }
+  },
+  "group_mean_other_comparators": {
+   "next_observation": {
+    "reference_to_last_log_linear": {
+     "common_targets": 66,
+     "stacked_rmse_pp": 3.7222613277010588,
+     "reference_to_last_log_linear_rmse_pp": 25.184671207524786,
+     "stacked_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 66,
+     "stacked_rmse_pp": 3.7222613277010588,
+     "baseline_level_rmse_pp": 28.53737315638331,
+     "stacked_lower": true
+    }
+   },
+   "landmark": {
+    "last_two_log_linear": {
+     "common_targets": 66,
+     "stacked_rmse_pp": 5.737821934770952,
+     "last_two_log_linear_rmse_pp": 118.03285941392691,
+     "stacked_lower": true
+    },
+    "reference_to_last_log_linear": {
+     "common_targets": 66,
+     "stacked_rmse_pp": 5.737821934770952,
+     "reference_to_last_log_linear_rmse_pp": 118.03285941392691,
+     "stacked_lower": true
+    },
+    "baseline_level": {
+     "common_targets": 66,
+     "stacked_rmse_pp": 5.737821934770952,
+     "baseline_level_rmse_pp": 28.53737315638331,
+     "stacked_lower": true
+    }
+   }
+  }
+ },
+ "pass_counts": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.948945397841644,
+    "pooled_max_abs_pp": 18.058333333333344,
+    "targets": 66
+   },
+   "baseline_level": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 28.53737315638331,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "last_two_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.593980342420014,
+    "pooled_max_abs_pp": 51.0,
+    "targets": 66
+   },
+   "persistence": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 5.026490431763107,
+    "pooled_max_abs_pp": 15.000000000000002,
+    "targets": 66
+   },
+   "pooled_curve_ratio": {
+    "series": 23,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 5.049472864538625,
+    "pooled_max_abs_pp": 14.644999999999985,
+    "targets": 66
+   },
+   "population_anchored": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.816784319586063,
+    "pooled_max_abs_pp": 13.215714205982664,
+    "targets": 66
+   },
+   "population_anchored_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.622869989002158,
+    "pooled_max_abs_pp": 13.293615305851292,
+    "targets": 66
+   },
+   "population_assimilation": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.244372999536,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 66
+   },
+   "population_assimilation_robust": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.064602559884613,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 66
+   },
+   "population_assimilation_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 4.0829550023733745,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 66
+   },
+   "reference_to_last_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 25.184671207524786,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "stacked": {
+    "series": 23,
+    "series_within_5_10_pp": 19,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 3.7222613277010588,
+    "pooled_max_abs_pp": 13.68517934127526,
+    "targets": 66
+   },
+   "weak_prior": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 5.176860008618025,
+    "pooled_max_abs_pp": 15.913409151950585,
+    "targets": 66
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 23,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 16.254243417006556,
+    "pooled_max_abs_pp": 50.17538333333332,
+    "targets": 66
+   },
+   "baseline_level": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 28.53737315638331,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "last_two_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 118.03285941392691,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 66
+   },
+   "persistence": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.583949187901284,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 66
+   },
+   "pooled_curve_ratio": {
+    "series": 23,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 7.007015615830607,
+    "pooled_max_abs_pp": 19.54318181818181,
+    "targets": 66
+   },
+   "population_anchored": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.85074818855828,
+    "pooled_max_abs_pp": 27.706339762700594,
+    "targets": 66
+   },
+   "population_anchored_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.647969163517045,
+    "pooled_max_abs_pp": 27.372644092949837,
+    "targets": 66
+   },
+   "population_assimilation": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 6.858090266174507,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 66
+   },
+   "population_assimilation_robust": {
+    "series": 23,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 6.6617518810356975,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 66
+   },
+   "population_assimilation_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 6.673817685166175,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 66
+   },
+   "reference_to_last_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 118.03285941392691,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 66
+   },
+   "stacked": {
+    "series": 23,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.737821934770952,
+    "pooled_max_abs_pp": 15.612262905721941,
+    "targets": 66
+   },
+   "weak_prior": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.414784362391908,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 66
+   }
+  }
+ },
+ "pass_counts_group_means": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.948945397841644,
+    "pooled_max_abs_pp": 18.058333333333344,
+    "targets": 66
+   },
+   "baseline_level": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 28.53737315638331,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "last_two_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 18.593980342420014,
+    "pooled_max_abs_pp": 51.0,
+    "targets": 66
+   },
+   "persistence": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 5.026490431763107,
+    "pooled_max_abs_pp": 15.000000000000002,
+    "targets": 66
+   },
+   "pooled_curve_ratio": {
+    "series": 23,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 5.049472864538625,
+    "pooled_max_abs_pp": 14.644999999999985,
+    "targets": 66
+   },
+   "population_anchored": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.816784319586063,
+    "pooled_max_abs_pp": 13.215714205982664,
+    "targets": 66
+   },
+   "population_anchored_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.622869989002158,
+    "pooled_max_abs_pp": 13.293615305851292,
+    "targets": 66
+   },
+   "population_assimilation": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.244372999536,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 66
+   },
+   "population_assimilation_robust": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 4.064602559884613,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 66
+   },
+   "population_assimilation_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 4.0829550023733745,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 66
+   },
+   "reference_to_last_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 25.184671207524786,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "stacked": {
+    "series": 23,
+    "series_within_5_10_pp": 19,
+    "series_meeting_criteria": 8,
+    "pooled_rmse_pp": 3.7222613277010588,
+    "pooled_max_abs_pp": 13.68517934127526,
+    "targets": 66
+   },
+   "weak_prior": {
+    "series": 23,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 5.176860008618025,
+    "pooled_max_abs_pp": 15.913409151950585,
+    "targets": 66
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 23,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 16.254243417006556,
+    "pooled_max_abs_pp": 50.17538333333332,
+    "targets": 66
+   },
+   "baseline_level": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 4,
+    "pooled_rmse_pp": 28.53737315638331,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 66
+   },
+   "last_two_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 118.03285941392691,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 66
+   },
+   "persistence": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.583949187901284,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 66
+   },
+   "pooled_curve_ratio": {
+    "series": 23,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 7.007015615830607,
+    "pooled_max_abs_pp": 19.54318181818181,
+    "targets": 66
+   },
+   "population_anchored": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.85074818855828,
+    "pooled_max_abs_pp": 27.706339762700594,
+    "targets": 66
+   },
+   "population_anchored_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.647969163517045,
+    "pooled_max_abs_pp": 27.372644092949837,
+    "targets": 66
+   },
+   "population_assimilation": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 6.858090266174507,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 66
+   },
+   "population_assimilation_robust": {
+    "series": 23,
+    "series_within_5_10_pp": 10,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 6.6617518810356975,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 66
+   },
+   "population_assimilation_t4": {
+    "series": 23,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 6.673817685166175,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 66
+   },
+   "reference_to_last_log_linear": {
+    "series": 23,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 118.03285941392691,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 66
+   },
+   "stacked": {
+    "series": 23,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.737821934770952,
+    "pooled_max_abs_pp": 15.612262905721941,
+    "targets": 66
+   },
+   "weak_prior": {
+    "series": 23,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.414784362391908,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 66
+   }
+  }
+ },
+ "pass_counts_controls": {
+  "next_observation": {
+   "analog_knn": {
+    "series": 22,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.76496070108437,
+    "pooled_max_abs_pp": 18.058333333333344,
+    "targets": 63
+   },
+   "baseline_level": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 29.190382195141137,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 63
+   },
+   "last_two_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 4,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 17.91348792899513,
+    "pooled_max_abs_pp": 51.0,
+    "targets": 63
+   },
+   "persistence": {
+    "series": 22,
+    "series_within_5_10_pp": 16,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 4.925283006936017,
+    "pooled_max_abs_pp": 15.000000000000002,
+    "targets": 63
+   },
+   "pooled_curve_ratio": {
+    "series": 22,
+    "series_within_5_10_pp": 14,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 4.977397952314589,
+    "pooled_max_abs_pp": 14.644999999999985,
+    "targets": 63
+   },
+   "population_anchored": {
+    "series": 22,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 4.894328395075866,
+    "pooled_max_abs_pp": 13.215714205982664,
+    "targets": 63
+   },
+   "population_anchored_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 4.696604960753385,
+    "pooled_max_abs_pp": 13.293615305851292,
+    "targets": 63
+   },
+   "population_assimilation": {
+    "series": 22,
+    "series_within_5_10_pp": 15,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 4.321126818672084,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 63
+   },
+   "population_assimilation_robust": {
+    "series": 22,
+    "series_within_5_10_pp": 15,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 4.141815912190672,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 63
+   },
+   "population_assimilation_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 15,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 4.1562862302205,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 63
+   },
+   "reference_to_last_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 3,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 25.155737179845907,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 63
+   },
+   "stacked": {
+    "series": 22,
+    "series_within_5_10_pp": 18,
+    "series_meeting_criteria": 7,
+    "pooled_rmse_pp": 3.7459705870675317,
+    "pooled_max_abs_pp": 13.68517934127526,
+    "targets": 63
+   },
+   "weak_prior": {
+    "series": 22,
+    "series_within_5_10_pp": 13,
+    "series_meeting_criteria": 1,
+    "pooled_rmse_pp": 5.143429916394844,
+    "pooled_max_abs_pp": 15.913409151950585,
+    "targets": 63
+   }
+  },
+  "landmark": {
+   "analog_knn": {
+    "series": 22,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 9,
+    "pooled_rmse_pp": 16.32162713283155,
+    "pooled_max_abs_pp": 50.17538333333332,
+    "targets": 63
+   },
+   "baseline_level": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 3,
+    "pooled_rmse_pp": 29.190382195141137,
+    "pooled_max_abs_pp": 81.0,
+    "targets": 63
+   },
+   "last_two_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 120.19509107506533,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 63
+   },
+   "persistence": {
+    "series": 22,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.435221279637998,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 63
+   },
+   "pooled_curve_ratio": {
+    "series": 22,
+    "series_within_5_10_pp": 11,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 6.61190479400093,
+    "pooled_max_abs_pp": 19.54318181818181,
+    "targets": 63
+   },
+   "population_anchored": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 10.005758916820554,
+    "pooled_max_abs_pp": 27.706339762700594,
+    "targets": 63
+   },
+   "population_anchored_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 9.803501120934996,
+    "pooled_max_abs_pp": 27.372644092949837,
+    "targets": 63
+   },
+   "population_assimilation": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 7.004331982125813,
+    "pooled_max_abs_pp": 14.274566452586225,
+    "targets": 63
+   },
+   "population_assimilation_robust": {
+    "series": 22,
+    "series_within_5_10_pp": 9,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 6.806261365441101,
+    "pooled_max_abs_pp": 14.266654731200369,
+    "targets": 63
+   },
+   "population_assimilation_t4": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 5,
+    "pooled_rmse_pp": 6.817477281258694,
+    "pooled_max_abs_pp": 14.299699074273619,
+    "targets": 63
+   },
+   "reference_to_last_log_linear": {
+    "series": 22,
+    "series_within_5_10_pp": 0,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 120.19509107506533,
+    "pooled_max_abs_pp": 615.0,
+    "targets": 63
+   },
+   "stacked": {
+    "series": 22,
+    "series_within_5_10_pp": 12,
+    "series_meeting_criteria": 6,
+    "pooled_rmse_pp": 5.745443120610701,
+    "pooled_max_abs_pp": 15.612262905721941,
+    "targets": 63
+   },
+   "weak_prior": {
+    "series": 22,
+    "series_within_5_10_pp": 8,
+    "series_meeting_criteria": 0,
+    "pooled_rmse_pp": 11.371905441617683,
+    "pooled_max_abs_pp": 31.499999999999993,
+    "targets": 63
+   }
+  }
+ },
+ "by_context": {
+  "human/cxl": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 9,
+     "series_within_5_10_pp": 9,
+     "series_meeting_criteria": 9,
+     "pooled_rmse_pp": 3.2245268032216208,
+     "pooled_max_abs_pp": 7.322090643274848,
+     "targets": 35
+    },
+    "population_initial_state": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 9.734916618620048,
+     "pooled_max_abs_pp": 31.790034517774323,
+     "targets": 35
+    },
+    "population_initial_state_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 9.65489376624043,
+     "pooled_max_abs_pp": 31.59578462171021,
+     "targets": 35
+    },
+    "stacked_initial_state": {
+     "series": 9,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 7,
+     "pooled_rmse_pp": 6.087210155442694,
+     "pooled_max_abs_pp": 19.631014783336898,
+     "targets": 35
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 6.2134973720183195,
+     "pooled_max_abs_pp": 18.058333333333344,
+     "targets": 29
+    },
+    "baseline_level": {
+     "series": 10,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.214097850033286,
+     "pooled_max_abs_pp": 8.499999999999996,
+     "targets": 29
+    },
+    "last_two_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.569774150977247,
+     "pooled_max_abs_pp": 44.47826086956521,
+     "targets": 29
+    },
+    "persistence": {
+     "series": 10,
+     "series_within_5_10_pp": 9,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.1568207490098827,
+     "pooled_max_abs_pp": 11.00000000000001,
+     "targets": 29
+    },
+    "pooled_curve_ratio": {
+     "series": 10,
+     "series_within_5_10_pp": 9,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 3.0717492174443337,
+     "pooled_max_abs_pp": 10.672399285250167,
+     "targets": 29
+    },
+    "population_anchored": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 5.526580421495813,
+     "pooled_max_abs_pp": 13.048070455335491,
+     "targets": 29
+    },
+    "population_anchored_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 5.154496324141943,
+     "pooled_max_abs_pp": 12.999174476534858,
+     "targets": 29
+    },
+    "population_assimilation": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 3.9168837642576544,
+     "pooled_max_abs_pp": 8.647751607883158,
+     "targets": 29
+    },
+    "population_assimilation_robust": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 3.583597899408729,
+     "pooled_max_abs_pp": 8.157697370159712,
+     "targets": 29
+    },
+    "population_assimilation_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 3.6000978898247338,
+     "pooled_max_abs_pp": 8.26894330891954,
+     "targets": 29
+    },
+    "reference_to_last_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.013671220055645,
+     "pooled_max_abs_pp": 44.47826086956521,
+     "targets": 29
+    },
+    "stacked": {
+     "series": 10,
+     "series_within_5_10_pp": 10,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 2.359384954698873,
+     "pooled_max_abs_pp": 5.454010127878051,
+     "targets": 29
+    },
+    "weak_prior": {
+     "series": 10,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 2.888469186456884,
+     "pooled_max_abs_pp": 9.299849773013014,
+     "targets": 29
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 10,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 18.634126219260597,
+     "pooled_max_abs_pp": 50.17538333333332,
+     "targets": 29
+    },
+    "baseline_level": {
+     "series": 10,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 4.214097850033286,
+     "pooled_max_abs_pp": 8.499999999999996,
+     "targets": 29
+    },
+    "last_two_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 57.09397040965822,
+     "pooled_max_abs_pp": 177.60869565217376,
+     "targets": 29
+    },
+    "persistence": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.039382247468239,
+     "pooled_max_abs_pp": 16.500000000000014,
+     "targets": 29
+    },
+    "pooled_curve_ratio": {
+     "series": 10,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 5.226086338203684,
+     "pooled_max_abs_pp": 13.78042397660818,
+     "targets": 29
+    },
+    "population_anchored": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.832744788877784,
+     "pooled_max_abs_pp": 27.706339762700594,
+     "targets": 29
+    },
+    "population_anchored_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.562549139075932,
+     "pooled_max_abs_pp": 27.372644092949837,
+     "targets": 29
+    },
+    "population_assimilation": {
+     "series": 10,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 7.288174586574588,
+     "pooled_max_abs_pp": 14.154420215835728,
+     "targets": 29
+    },
+    "population_assimilation_robust": {
+     "series": 10,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 6.975413866940232,
+     "pooled_max_abs_pp": 12.920976968497232,
+     "targets": 29
+    },
+    "population_assimilation_t4": {
+     "series": 10,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 6.921794005708304,
+     "pooled_max_abs_pp": 13.021128439405416,
+     "targets": 29
+    },
+    "reference_to_last_log_linear": {
+     "series": 10,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 57.09397040965822,
+     "pooled_max_abs_pp": 177.60869565217376,
+     "targets": 29
+    },
+    "stacked": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 4.136184834671983,
+     "pooled_max_abs_pp": 8.298210238226966,
+     "targets": 29
+    },
+    "weak_prior": {
+     "series": 10,
+     "series_within_5_10_pp": 7,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.314696816043536,
+     "pooled_max_abs_pp": 14.14687688634334,
+     "targets": 29
+    }
+   }
+  },
+  "human/dmek": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 21.004477483717878,
+     "pooled_max_abs_pp": 52.275000000000006,
+     "targets": 30
+    },
+    "population_initial_state": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 9.82665478628432,
+     "pooled_max_abs_pp": 23.420701467678295,
+     "targets": 30
+    },
+    "population_initial_state_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 9.897173087804298,
+     "pooled_max_abs_pp": 23.540899725669284,
+     "targets": 30
+    },
+    "stacked_initial_state": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.028620694900086,
+     "pooled_max_abs_pp": 34.95692974152894,
+     "targets": 30
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 9,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 6.2442261626573154,
+     "pooled_max_abs_pp": 17.798666666666673,
+     "targets": 21
+    },
+    "baseline_level": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 47.24215732342701,
+     "pooled_max_abs_pp": 81.0,
+     "targets": 21
+    },
+    "last_two_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 26.376774680450858,
+     "pooled_max_abs_pp": 51.0,
+     "targets": 21
+    },
+    "persistence": {
+     "series": 9,
+     "series_within_5_10_pp": 4,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.974443142133796,
+     "pooled_max_abs_pp": 15.000000000000002,
+     "targets": 21
+    },
+    "pooled_curve_ratio": {
+     "series": 9,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 7.3440014530476345,
+     "pooled_max_abs_pp": 14.644999999999985,
+     "targets": 21
+    },
+    "population_anchored": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 5.231779556873051,
+     "pooled_max_abs_pp": 13.215714205982664,
+     "targets": 21
+    },
+    "population_anchored_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 5,
+     "pooled_rmse_pp": 5.244122139354119,
+     "pooled_max_abs_pp": 13.293615305851292,
+     "targets": 21
+    },
+    "population_assimilation": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 5.613505928062674,
+     "pooled_max_abs_pp": 14.274566452586225,
+     "targets": 21
+    },
+    "population_assimilation_robust": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 4,
+     "pooled_rmse_pp": 5.532096702596018,
+     "pooled_max_abs_pp": 14.266654731200369,
+     "targets": 21
+    },
+    "population_assimilation_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.534776407587382,
+     "pooled_max_abs_pp": 14.299699074273619,
+     "targets": 21
+    },
+    "reference_to_last_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 39.10762735373082,
+     "pooled_max_abs_pp": 81.0,
+     "targets": 21
+    },
+    "stacked": {
+     "series": 9,
+     "series_within_5_10_pp": 5,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.705775667038479,
+     "pooled_max_abs_pp": 13.68517934127526,
+     "targets": 21
+    },
+    "weak_prior": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 7.464766515957409,
+     "pooled_max_abs_pp": 15.913409151950585,
+     "targets": 21
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 9,
+     "series_within_5_10_pp": 6,
+     "series_meeting_criteria": 6,
+     "pooled_rmse_pp": 11.533816424695013,
+     "pooled_max_abs_pp": 26.370333333333342,
+     "targets": 21
+    },
+    "baseline_level": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 47.24215732342701,
+     "pooled_max_abs_pp": 81.0,
+     "targets": 21
+    },
+    "last_two_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 84.74243813355523,
+     "pooled_max_abs_pp": 183.0,
+     "targets": 21
+    },
+    "persistence": {
+     "series": 9,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.462595433277757,
+     "pooled_max_abs_pp": 30.000000000000004,
+     "targets": 21
+    },
+    "pooled_curve_ratio": {
+     "series": 9,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 9.539502052659591,
+     "pooled_max_abs_pp": 19.54318181818181,
+     "targets": 21
+    },
+    "population_anchored": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.459590227923549,
+     "pooled_max_abs_pp": 14.349125254743223,
+     "targets": 21
+    },
+    "population_anchored_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.4605251112095665,
+     "pooled_max_abs_pp": 14.389674471035452,
+     "targets": 21
+    },
+    "population_assimilation": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.725068624716725,
+     "pooled_max_abs_pp": 14.274566452586225,
+     "targets": 21
+    },
+    "population_assimilation_robust": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.72880332757039,
+     "pooled_max_abs_pp": 14.266654731200369,
+     "targets": 21
+    },
+    "population_assimilation_t4": {
+     "series": 9,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 7.746079909847202,
+     "pooled_max_abs_pp": 14.299699074273619,
+     "targets": 21
+    },
+    "reference_to_last_log_linear": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 84.74243813355523,
+     "pooled_max_abs_pp": 183.0,
+     "targets": 21
+    },
+    "stacked": {
+     "series": 9,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 8.253946169231536,
+     "pooled_max_abs_pp": 15.612262905721941,
+     "targets": 21
+    },
+    "weak_prior": {
+     "series": 9,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 14.37972308472151,
+     "pooled_max_abs_pp": 28.839917592469643,
+     "targets": 21
+    }
+   }
+  },
+  "human/dsaek": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 15.99380447144547,
+     "pooled_max_abs_pp": 27.0,
+     "targets": 17
+    },
+    "population_initial_state": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.00689161455271,
+     "pooled_max_abs_pp": 9.362696576022078,
+     "targets": 17
+    },
+    "population_initial_state_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.02233584075759,
+     "pooled_max_abs_pp": 9.494042716189643,
+     "targets": 17
+    },
+    "stacked_initial_state": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 6.89861231813156,
+     "pooled_max_abs_pp": 11.846727020542215,
+     "targets": 17
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.281989498827327,
+     "pooled_max_abs_pp": 15.000000000000002,
+     "targets": 14
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 21.257771688087566,
+     "pooled_max_abs_pp": 32.00000000000001,
+     "targets": 14
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 12.040089550542412,
+     "pooled_max_abs_pp": 32.96103896103896,
+     "targets": 14
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.039132578416363,
+     "pooled_max_abs_pp": 15.000000000000002,
+     "targets": 14
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 4.34499688689744,
+     "pooled_max_abs_pp": 6.7916666666666625,
+     "targets": 14
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.0733027955855627,
+     "pooled_max_abs_pp": 4.649767386384385,
+     "targets": 14
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 1.9484252880286483,
+     "pooled_max_abs_pp": 4.633324166259523,
+     "targets": 14
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.1522349304014523,
+     "pooled_max_abs_pp": 4.426740225814985,
+     "targets": 14
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.064231107002875,
+     "pooled_max_abs_pp": 4.425764947750199,
+     "targets": 14
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.143039050728595,
+     "pooled_max_abs_pp": 4.374120172010176,
+     "targets": 14
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 16.951406389188737,
+     "pooled_max_abs_pp": 25.99999999999999,
+     "targets": 14
+    },
+    "stacked": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 2.1199501485309167,
+     "pooled_max_abs_pp": 3.885934368888444,
+     "targets": 14
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 5.038399892144959,
+     "pooled_max_abs_pp": 15.000000000000002,
+     "targets": 14
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 18.063686602683003,
+     "pooled_max_abs_pp": 30.594250000000002,
+     "targets": 14
+    },
+    "baseline_level": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 21.257771688087566,
+     "pooled_max_abs_pp": 32.00000000000001,
+     "targets": 14
+    },
+    "last_two_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 219.4160675845908,
+     "pooled_max_abs_pp": 615.0,
+     "targets": 14
+    },
+    "persistence": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.595901476257888,
+     "pooled_max_abs_pp": 31.499999999999993,
+     "targets": 14
+    },
+    "pooled_curve_ratio": {
+     "series": 3,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 1,
+     "pooled_rmse_pp": 6.065132879180079,
+     "pooled_max_abs_pp": 10.465277777777793,
+     "targets": 14
+    },
+    "population_anchored": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.606871163456643,
+     "pooled_max_abs_pp": 9.5745321500603,
+     "targets": 14
+    },
+    "population_anchored_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 5.213771470986556,
+     "pooled_max_abs_pp": 9.105538027691418,
+     "targets": 14
+    },
+    "population_assimilation": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 4.387957479836464,
+     "pooled_max_abs_pp": 6.534238260406955,
+     "targets": 14
+    },
+    "population_assimilation_robust": {
+     "series": 3,
+     "series_within_5_10_pp": 3,
+     "series_meeting_criteria": 3,
+     "pooled_rmse_pp": 4.033417632178458,
+     "pooled_max_abs_pp": 6.052875488354248,
+     "targets": 14
+    },
+    "population_assimilation_t4": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 4.236337499489023,
+     "pooled_max_abs_pp": 6.263291268022719,
+     "targets": 14
+    },
+    "reference_to_last_log_linear": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 219.4160675845908,
+     "pooled_max_abs_pp": 615.0,
+     "targets": 14
+    },
+    "stacked": {
+     "series": 3,
+     "series_within_5_10_pp": 2,
+     "series_meeting_criteria": 2,
+     "pooled_rmse_pp": 4.046424424697796,
+     "pooled_max_abs_pp": 8.958409180447923,
+     "targets": 14
+    },
+    "weak_prior": {
+     "series": 3,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 15.66890453115769,
+     "pooled_max_abs_pp": 31.499999999999993,
+     "targets": 14
+    }
+   }
+  },
+  "human/other": {
+   "initial_state_group_mean": {
+    "pooled_training_curve": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 6.679945109554923,
+     "pooled_max_abs_pp": 9.000000000000007,
+     "targets": 3
+    },
+    "population_initial_state": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.36541027749242,
+     "pooled_max_abs_pp": 10.544156925224513,
+     "targets": 3
+    },
+    "population_initial_state_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 9.28121263665867,
+     "pooled_max_abs_pp": 10.423592958788419,
+     "targets": 3
+    },
+    "stacked_initial_state": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.210023598962016,
+     "pooled_max_abs_pp": 9.898577502880535,
+     "targets": 3
+    }
+   },
+   "next_observation": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.8341891941672737,
+     "pooled_max_abs_pp": 2.3299999999999987,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.440720662234901,
+     "pooled_max_abs_pp": 4.999999999999993,
+     "targets": 2
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.361547262794315,
+     "pooled_max_abs_pp": 4.399999999999993,
+     "targets": 2
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.8746427842267863,
+     "pooled_max_abs_pp": 1.19999999999999,
+     "targets": 2
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.475126259405776,
+     "pooled_max_abs_pp": 3.2500000000000084,
+     "targets": 2
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.297982566724092,
+     "pooled_max_abs_pp": 3.224342582658679,
+     "targets": 2
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.1585674309552005,
+     "pooled_max_abs_pp": 3.0227526100097157,
+     "targets": 2
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.954905296016333,
+     "pooled_max_abs_pp": 4.1786896521397,
+     "targets": 2
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.794806381969877,
+     "pooled_max_abs_pp": 3.949437476367179,
+     "targets": 2
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.8972923546402405,
+     "pooled_max_abs_pp": 4.096278975352552,
+     "targets": 2
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.6138621999185307,
+     "pooled_max_abs_pp": 4.399999999999993,
+     "targets": 2
+    },
+    "stacked": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.79149102946085,
+     "pooled_max_abs_pp": 2.5075020900437894,
+     "targets": 2
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.7948354273706886,
+     "pooled_max_abs_pp": 1.0952176651210177,
+     "targets": 2
+    }
+   },
+   "landmark": {
+    "analog_knn": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 1.6995587662684684,
+     "pooled_max_abs_pp": 2.3299999999999987,
+     "targets": 2
+    },
+    "baseline_level": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.440720662234901,
+     "pooled_max_abs_pp": 4.999999999999993,
+     "targets": 2
+    },
+    "last_two_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.640601830891177,
+     "pooled_max_abs_pp": 11.399999999999999,
+     "targets": 2
+    },
+    "persistence": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.670820393249935,
+     "pooled_max_abs_pp": 0.9000000000000008,
+     "targets": 2
+    },
+    "pooled_curve_ratio": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.3460797958207746,
+     "pooled_max_abs_pp": 4.549999999999999,
+     "targets": 2
+    },
+    "population_anchored": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 3.168890411652412,
+     "pooled_max_abs_pp": 3.224342582658679,
+     "targets": 2
+    },
+    "population_anchored_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.9471081125563776,
+     "pooled_max_abs_pp": 3.0227526100097157,
+     "targets": 2
+    },
+    "population_assimilation": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.529270415326407,
+     "pooled_max_abs_pp": 4.854599240040591,
+     "targets": 2
+    },
+    "population_assimilation_robust": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.230456762479452,
+     "pooled_max_abs_pp": 4.49393730026163,
+     "targets": 2
+    },
+    "population_assimilation_t4": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 4.411080371877312,
+     "pooled_max_abs_pp": 4.704865423198323,
+     "targets": 2
+    },
+    "reference_to_last_log_linear": {
+     "series": 1,
+     "series_within_5_10_pp": 0,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 8.640601830891177,
+     "pooled_max_abs_pp": 11.399999999999999,
+     "targets": 2
+    },
+    "stacked": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 2.9025013889336635,
+     "pooled_max_abs_pp": 3.2498402874525656,
+     "targets": 2
+    },
+    "weak_prior": {
+     "series": 1,
+     "series_within_5_10_pp": 1,
+     "series_meeting_criteria": 0,
+     "pooled_rmse_pp": 0.6995515478552442,
+     "pooled_max_abs_pp": 0.9564098269044363,
+     "targets": 2
+    }
+   }
+  }
+ },
+ "per_series": {
+  "next_observation": [
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-2/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 3.5128532184363195,
+     "max_abs_pp": 4.259949503990523,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.911720676097119,
+     "max_abs_pp": 5.999999999999995,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 18.42878183711555,
+     "max_abs_pp": 26.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 19.039432764659768,
+     "max_abs_pp": 26.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.99176618636635,
+     "max_abs_pp": 4.083333333333328,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 2.426703296426833,
+     "max_abs_pp": 3.399999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 3.6055512754639842,
+     "max_abs_pp": 4.999999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-3/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 3.2002284256147377,
+     "max_abs_pp": 4.513170567495772,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.274754878398193,
+     "max_abs_pp": 1.5000000000000013,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.507193859716654,
+     "max_abs_pp": 29.000000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 20.87163146474181,
+     "max_abs_pp": 29.000000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.0274255133536552,
+     "max_abs_pp": 1.3919753086419795,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 12.79733180740771,
+     "max_abs_pp": 18.058333333333344,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.786205751198715,
+     "max_abs_pp": 8.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-4/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 3.240059122992221,
+     "max_abs_pp": 3.775272853078282,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.850438562747844,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 15.822294397463336,
+     "max_abs_pp": 21.499999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 16.918924315688617,
+     "max_abs_pp": 21.499999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.8781935736184203,
+     "max_abs_pp": 3.916666666666657,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 7.026181197650842,
+     "max_abs_pp": 9.666666666666668,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.566372975210778,
+     "max_abs_pp": 8.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12948762",
+    "series_id": "acu-pmc12948762/am-treatment/bcva",
+    "context": "human/cxl",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 3.183840164753609,
+     "max_abs_pp": 5.454010127878051,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 6.812977811989906,
+     "max_abs_pp": 11.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 29.452338854619068,
+     "max_abs_pp": 44.47826086956521,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 25.784786793644397,
+     "max_abs_pp": 44.47826086956521,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.377584082068012,
+     "max_abs_pp": 10.672399285250167,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 8.980463241784195,
+     "max_abs_pp": 14.798666666666671,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.7696960070847325,
+     "max_abs_pp": 6.500000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12948762",
+    "series_id": "acu-pmc12948762/bcl-control/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 1.3466220875644885,
+     "max_abs_pp": 2.0436272802842104,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.339738855430512,
+     "max_abs_pp": 6.000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 19.405134320823613,
+     "max_abs_pp": 31.108695652173914,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 18.53151320660372,
+     "max_abs_pp": 31.108695652173914,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.822777311567651,
+     "max_abs_pp": 5.672399285250163,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 6.153142048910787,
+     "max_abs_pp": 9.798666666666666,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.79880927062444,
+     "max_abs_pp": 3.499999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/c-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 1.1910562553323194,
+     "max_abs_pp": 1.8116866964894451,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 1.7320508075688787,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 2.5980762113533182,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.613700775167181,
+     "max_abs_pp": 3.9270833333333366,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.5420344906552401,
+     "max_abs_pp": 2.649999999999997,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.0000000000000027,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/a-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 1.1871323195208865,
+     "max_abs_pp": 1.8044948207528777,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 1.4433756729740657,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 2.1650635094610977,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.6137007751671755,
+     "max_abs_pp": 3.9270833333333255,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.078037713984216,
+     "max_abs_pp": 3.416666666666668,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.500000000000002,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc4545854",
+    "series_id": "acu-pmc4545854/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 2.65785457533737,
+     "max_abs_pp": 3.331820323634449,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.5355339059327404,
+     "max_abs_pp": 4.0000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 15.264337522473742,
+     "max_abs_pp": 20.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 23.63260459619294,
+     "max_abs_pp": 25.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.770138436009609,
+     "max_abs_pp": 6.729166666666675,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.318220950717079,
+     "max_abs_pp": 4.066666666666663,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 30.536862969204947,
+     "max_abs_pp": 32.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc5866901",
+    "series_id": "acu-pmc5866901/dsaek/bscva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 1.7048597952848328,
+     "max_abs_pp": 2.591262917558357,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.9364916731037105,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 5.082357439501592,
+     "max_abs_pp": 11.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 10.699816420321026,
+     "max_abs_pp": 14.500000000000012,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.838793013146367,
+     "max_abs_pp": 6.7916666666666625,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.6809601275098682,
+     "max_abs_pp": 7.223333333333326,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 14.5209208680835,
+     "max_abs_pp": 16.500000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc6397964",
+    "series_id": "acu-pmc6397964/ptk-prk-cxl/cdva",
+    "context": "human/other",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/other",
+    "stacked": {
+     "rmse_pp": 1.79149102946085,
+     "max_abs_pp": 2.5075020900437894,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.8746427842267863,
+     "max_abs_pp": 1.19999999999999,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 3.361547262794315,
+     "max_abs_pp": 4.399999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 3.6138621999185307,
+     "max_abs_pp": 4.399999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.475126259405776,
+     "max_abs_pp": 3.2500000000000084,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.8341891941672737,
+     "max_abs_pp": 2.3299999999999987,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.440720662234901,
+     "max_abs_pp": 4.999999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7318888",
+    "series_id": "acu-pmc7318888/ate-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.630040942266825,
+     "max_abs_pp": 3.199595574893843,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.6007810593582144,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 7.081838726263224,
+     "max_abs_pp": 11.717391304347824,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 7.78696441142513,
+     "max_abs_pp": 11.717391304347824,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.8878861107890994,
+     "max_abs_pp": 2.9722222222222316,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.777413575025833,
+     "max_abs_pp": 11.686033333333334,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.5345892868042625,
+     "max_abs_pp": 6.000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/pbk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 4.624302798535486,
+     "max_abs_pp": 5.1219497761606005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 4.609772228646442,
+     "max_abs_pp": 5.499999999999994,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 33.30540496676178,
+     "max_abs_pp": 46.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 50.38973109672248,
+     "max_abs_pp": 53.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.591802730468381,
+     "max_abs_pp": 10.645000000000005,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.50218020636484,
+     "max_abs_pp": 2.760000000000007,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 59.275838247974185,
+     "max_abs_pp": 61.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/fuchs/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 2.96978768518982,
+     "max_abs_pp": 3.6910050734931588,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.8504385627478475,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 21.854633376014338,
+     "max_abs_pp": 30.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 33.09456148674582,
+     "max_abs_pp": 35.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.480478767960241,
+     "max_abs_pp": 9.145000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.9836330305779835,
+     "max_abs_pp": 2.100000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 38.51298482330343,
+     "max_abs_pp": 39.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/graft-failure/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 4.119922401770871,
+     "max_abs_pp": 4.341250862798141,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 4.911720676097123,
+     "max_abs_pp": 5.999999999999995,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 23.412069536886307,
+     "max_abs_pp": 31.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 36.49828763106565,
+     "max_abs_pp": 40.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.645885142181901,
+     "max_abs_pp": 10.644999999999992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.1517931404202324,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 45.78345771127385,
+     "max_abs_pp": 47.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/abk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 7.706755038802749,
+     "max_abs_pp": 8.491595648795268,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.284020762890448,
+     "max_abs_pp": 9.000000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 22.80898945591408,
+     "max_abs_pp": 30.499999999999982,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 36.13343327169451,
+     "max_abs_pp": 41.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 10.919437030450943,
+     "max_abs_pp": 14.644999999999985,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 6.259138509094769,
+     "max_abs_pp": 6.76,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 52.384396531791786,
+     "max_abs_pp": 55.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/ice/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 4.51766171673032,
+     "max_abs_pp": 6.210428319443196,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 3.824264635194592,
+     "max_abs_pp": 4.5000000000000036,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 20.886598574205426,
+     "max_abs_pp": 29.500000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 30.259296092275516,
+     "max_abs_pp": 31.000000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.271034648270584,
+     "max_abs_pp": 11.644999999999994,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.7694561942009615,
+     "max_abs_pp": 4.759999999999998,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 37.81699353465317,
+     "max_abs_pp": 40.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/phakic-bk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 7.118893361773538,
+     "max_abs_pp": 9.884000430202878,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 8.48528137423857,
+     "max_abs_pp": 12.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 18.523633552842714,
+     "max_abs_pp": 24.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 25.500000000000007,
+     "max_abs_pp": 34.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.531012582417382,
+     "max_abs_pp": 7.898181818181826,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.0667071542333302,
+     "max_abs_pp": 1.4318181818181897,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 34.50000000000001,
+     "max_abs_pp": 34.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/failed-dsek/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 5.739522636867478,
+     "max_abs_pp": 7.772377694405924,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 6.363961030678926,
+     "max_abs_pp": 8.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 31.662280397975127,
+     "max_abs_pp": 41.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 50.80354318352215,
+     "max_abs_pp": 59.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.125488148872995,
+     "max_abs_pp": 7.145000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.07453247330698,
+     "max_abs_pp": 5.714545454545461,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 59.0,
+     "max_abs_pp": 59.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/tass/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 10.09479913242657,
+     "max_abs_pp": 13.68517934127526,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 10.606601717798215,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 41.83897704294406,
+     "max_abs_pp": 51.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 67.68308503607086,
+     "max_abs_pp": 81.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.214699993546962,
+     "max_abs_pp": 10.898181818181818,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.241703488923556,
+     "max_abs_pp": 10.214545454545455,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 81.0,
+     "max_abs_pp": 81.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 2.3851385919167667,
+     "max_abs_pp": 3.885934368888444,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.800640999302557,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 16.629372143235766,
+     "max_abs_pp": 32.96103896103896,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 20.515847533065756,
+     "max_abs_pp": 24.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.3136114767476057,
+     "max_abs_pp": 5.2291666666666625,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 7.398977363694694,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 24.43562972382746,
+     "max_abs_pp": 31.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dmek/bcva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 3.4252035739982767,
+     "max_abs_pp": 5.066827851424771,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.720103626247512,
+     "max_abs_pp": 13.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 21.143174281118434,
+     "max_abs_pp": 33.363636363636374,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 20.579294749839125,
+     "max_abs_pp": 29.065217391304344,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.07070254195068,
+     "max_abs_pp": 6.196436301793451,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 10.309252441914063,
+     "max_abs_pp": 17.798666666666673,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 19.33520105920805,
+     "max_abs_pp": 25.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc8381497",
+    "series_id": "acu-pmc8381497/conventional-cxl/bcdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 1.4980242419363903,
+     "max_abs_pp": 1.7496523066346192,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 2.0412414523193214,
+     "max_abs_pp": 2.5000000000000133,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 6.070763268870453,
+     "max_abs_pp": 9.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 5.873670062235363,
+     "max_abs_pp": 9.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.1010348725081793,
+     "max_abs_pp": 1.336728395061737,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.904233101199464,
+     "max_abs_pp": 2.1600000000000064,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 1.1902380714238092,
+     "max_abs_pp": 1.5000000000000013,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc8905293",
+    "series_id": "acu-pmc8905293/tg-te-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.0334689830919346,
+     "max_abs_pp": 2.552846483832105,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.829156197588844,
+     "max_abs_pp": 1.4999999999999902,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 4.376941868340324,
+     "max_abs_pp": 7.869565217391294,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 5.504090676732509,
+     "max_abs_pp": 7.869565217391294,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.7542538806892078,
+     "max_abs_pp": 2.830392156862749,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.275739244995015,
+     "max_abs_pp": 7.9943833333333325,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.704163456597991,
+     "max_abs_pp": 3.499999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "landmark": [
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-2/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.180909593688642,
+     "max_abs_pp": 2.555994071199641,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.158910531638165,
+     "max_abs_pp": 9.499999999999986,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 45.590569200219484,
+     "max_abs_pp": 59.00000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 45.590569200219484,
+     "max_abs_pp": 59.00000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.75352613266422,
+     "max_abs_pp": 5.191358024691361,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.3866568241326767,
+     "max_abs_pp": 4.766666666666664,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 3.6055512754639842,
+     "max_abs_pp": 4.999999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-3/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 4.475893751816877,
+     "max_abs_pp": 4.513170567495772,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.9039432764659685,
+     "max_abs_pp": 2.499999999999991,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 49.36218188046394,
+     "max_abs_pp": 63.500000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 49.36218188046394,
+     "max_abs_pp": 63.500000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.6138124201277746,
+     "max_abs_pp": 1.8086419753086558,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 23.155935944039157,
+     "max_abs_pp": 27.318333333333335,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.786205751198715,
+     "max_abs_pp": 8.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-4/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 4.843386733124656,
+     "max_abs_pp": 6.338257565564486,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 2.6925824035672576,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 40.77070026379234,
+     "max_abs_pp": 53.49999999999995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 40.77070026379234,
+     "max_abs_pp": 53.49999999999995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.134969374736395,
+     "max_abs_pp": 2.8086419753086345,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.73876219738656,
+     "max_abs_pp": 18.466666666666665,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 7.566372975210778,
+     "max_abs_pp": 8.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12948762",
+    "series_id": "acu-pmc12948762/am-treatment/bcva",
+    "context": "human/cxl",
+    "role": "treated",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 5.575371065446784,
+     "max_abs_pp": 5.913400917046685,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 14.35560285509925,
+     "max_abs_pp": 16.500000000000014,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 55.80834652634059,
+     "max_abs_pp": 61.43061443340551,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 55.80834652634059,
+     "max_abs_pp": 61.43061443340551,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 12.731806917609337,
+     "max_abs_pp": 13.78042397660818,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 14.768333750893426,
+     "max_abs_pp": 15.225333333333335,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.7696960070847325,
+     "max_abs_pp": 6.500000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12948762",
+    "series_id": "acu-pmc12948762/bcl-control/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 0.9538279398990306,
+     "max_abs_pp": 1.553627756970588,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 9.438396756511843,
+     "max_abs_pp": 10.999999999999988,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 50.78662467250201,
+     "max_abs_pp": 58.430614433405495,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 50.78662467250201,
+     "max_abs_pp": 58.430614433405495,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.786867501202612,
+     "max_abs_pp": 9.009127680311902,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 9.795878589148257,
+     "max_abs_pp": 10.725333333333342,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.79880927062444,
+     "max_abs_pp": 3.499999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/c-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.0525473358404294,
+     "max_abs_pp": 2.5308901057074396,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 10.246950765959593,
+     "max_abs_pp": 14.999999999999991,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 10.246950765959593,
+     "max_abs_pp": 14.999999999999991,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.160903331894323,
+     "max_abs_pp": 3.044730392156858,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.7968401482413667,
+     "max_abs_pp": 2.9333333333333322,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 3.0000000000000027,
+     "max_abs_pp": 3.0000000000000027,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/a-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.0420408792233484,
+     "max_abs_pp": 2.5190784115533216,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.0,
+     "max_abs_pp": 0.0,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.539125638299664,
+     "max_abs_pp": 12.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.539125638299664,
+     "max_abs_pp": 12.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 2.160903331894323,
+     "max_abs_pp": 3.044730392156858,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.06148414746593,
+     "max_abs_pp": 3.416666666666668,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.500000000000002,
+     "max_abs_pp": 2.500000000000002,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc4545854",
+    "series_id": "acu-pmc4545854/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 3.865175742531451,
+     "max_abs_pp": 5.181873389326208,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 5.700877125495695,
+     "max_abs_pp": 7.000000000000006,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 50.32395056034453,
+     "max_abs_pp": 68.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 50.32395056034453,
+     "max_abs_pp": 68.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.434324560081094,
+     "max_abs_pp": 6.2529761904762005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 3.735212696606297,
+     "max_abs_pp": 4.735,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 30.536862969204947,
+     "max_abs_pp": 32.00000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc5866901",
+    "series_id": "acu-pmc5866901/dsaek/bscva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 2.5987086818334393,
+     "max_abs_pp": 3.9974402057370684,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.118888356237334,
+     "max_abs_pp": 9.000000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 308.44245816683537,
+     "max_abs_pp": 615.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 308.44245816683537,
+     "max_abs_pp": 615.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.9146613319799615,
+     "max_abs_pp": 10.465277777777793,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 17.719938208046944,
+     "max_abs_pp": 27.91166666666667,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 14.5209208680835,
+     "max_abs_pp": 16.500000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc6397964",
+    "series_id": "acu-pmc6397964/ptk-prk-cxl/cdva",
+    "context": "human/other",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/other",
+    "stacked": {
+     "rmse_pp": 2.9025013889336635,
+     "max_abs_pp": 3.2498402874525656,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.670820393249935,
+     "max_abs_pp": 0.9000000000000008,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 8.640601830891177,
+     "max_abs_pp": 11.399999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 8.640601830891177,
+     "max_abs_pp": 11.399999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.3460797958207746,
+     "max_abs_pp": 4.549999999999999,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 1.6995587662684684,
+     "max_abs_pp": 2.3299999999999987,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.440720662234901,
+     "max_abs_pp": 4.999999999999993,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7318888",
+    "series_id": "acu-pmc7318888/ate-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 5.575865572794099,
+     "max_abs_pp": 7.232501503186239,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 1.4790199457749091,
+     "max_abs_pp": 2.5000000000000133,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 100.96804658874535,
+     "max_abs_pp": 177.60869565217376,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 100.96804658874535,
+     "max_abs_pp": 177.60869565217376,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 1.8539410232894675,
+     "max_abs_pp": 3.179182098765432,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 32.40231286954532,
+     "max_abs_pp": 50.17538333333332,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 4.5345892868042625,
+     "max_abs_pp": 6.000000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/pbk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 7.028594952831313,
+     "max_abs_pp": 9.070188023759872,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 7.458216945088145,
+     "max_abs_pp": 8.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 109.02121353204616,
+     "max_abs_pp": 147.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 109.02121353204616,
+     "max_abs_pp": 147.00000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.57301407623011,
+     "max_abs_pp": 12.043181818181814,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.004008341483505,
+     "max_abs_pp": 3.625454545454543,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 59.275838247974185,
+     "max_abs_pp": 61.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/fuchs/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 4.137608779439118,
+     "max_abs_pp": 5.497622530305746,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 4.609772228646448,
+     "max_abs_pp": 5.500000000000005,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 71.56290938747529,
+     "max_abs_pp": 96.49999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 71.56290938747529,
+     "max_abs_pp": 96.49999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 6.055912016471152,
+     "max_abs_pp": 8.543181818181822,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 5.252718461869944,
+     "max_abs_pp": 7.125454545454534,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 38.51298482330343,
+     "max_abs_pp": 39.5,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/graft-failure/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 6.732985975477936,
+     "max_abs_pp": 8.692821069853206,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 7.945124291035347,
+     "max_abs_pp": 9.499999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 77.27952510206052,
+     "max_abs_pp": 104.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 77.27952510206052,
+     "max_abs_pp": 104.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 8.97035407157496,
+     "max_abs_pp": 12.543181818181814,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 3.3180164342346528,
+     "max_abs_pp": 3.500000000000003,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 45.78345771127385,
+     "max_abs_pp": 47.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/abk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 12.050388019291447,
+     "max_abs_pp": 15.612262905721941,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 13.290033860002017,
+     "max_abs_pp": 16.500000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 75.28030951052203,
+     "max_abs_pp": 101.99999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 75.28030951052203,
+     "max_abs_pp": 101.99999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.24654590949117,
+     "max_abs_pp": 19.54318181818181,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.882014555048208,
+     "max_abs_pp": 5.714545454545461,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 52.384396531791786,
+     "max_abs_pp": 55.99999999999999,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/ice/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 5.403168340473639,
+     "max_abs_pp": 7.49261912606759,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 5.711829829397937,
+     "max_abs_pp": 7.500000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 66.97107584621887,
+     "max_abs_pp": 90.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 66.97107584621887,
+     "max_abs_pp": 90.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 7.495755003901364,
+     "max_abs_pp": 10.543181818181813,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.001892320985203,
+     "max_abs_pp": 5.125454545454544,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 37.81699353465317,
+     "max_abs_pp": 40.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/phakic-bk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 10.557580311674267,
+     "max_abs_pp": 11.190689861248659,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 12.0,
+     "max_abs_pp": 12.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 39.940580867083064,
+     "max_abs_pp": 55.50000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 39.940580867083064,
+     "max_abs_pp": 55.50000000000003,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 12.014129083040809,
+     "max_abs_pp": 15.043181818181816,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 2.6042068040983968,
+     "max_abs_pp": 3.393181818181812,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 34.50000000000001,
+     "max_abs_pp": 34.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/failed-dsek/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 8.571457040915028,
+     "max_abs_pp": 9.30214473032992,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 8.999999999999996,
+     "max_abs_pp": 8.999999999999996,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 103.83159442096611,
+     "max_abs_pp": 141.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 103.83159442096611,
+     "max_abs_pp": 141.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 9.193215254462174,
+     "max_abs_pp": 12.043181818181814,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 4.7853918550743195,
+     "max_abs_pp": 5.714545454545461,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 59.0,
+     "max_abs_pp": 59.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/tass/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 14.46528727725934,
+     "max_abs_pp": 15.205424638082777,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 15.000000000000002,
+     "max_abs_pp": 15.000000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 134.33167906342868,
+     "max_abs_pp": 183.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 134.33167906342868,
+     "max_abs_pp": 183.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 14.905146377444867,
+     "max_abs_pp": 18.043181818181818,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 7.415369342071832,
+     "max_abs_pp": 10.214545454545455,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 81.0,
+     "max_abs_pp": 81.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked": {
+     "rmse_pp": 5.515025548708,
+     "max_abs_pp": 8.958409180447923,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 24.43562972382746,
+     "max_abs_pp": 31.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 24.43562972382746,
+     "max_abs_pp": 31.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 24.43562972382746,
+     "max_abs_pp": 31.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 5.310131030952592,
+     "max_abs_pp": 8.2354365079365,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 21.64383391667244,
+     "max_abs_pp": 30.594250000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 24.43562972382746,
+     "max_abs_pp": 31.499999999999993,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dmek/bcva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked": {
+     "rmse_pp": 3.736471082347151,
+     "max_abs_pp": 6.33091719897394,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 23.63895090734781,
+     "max_abs_pp": 30.000000000000004,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 68.85041356042548,
+     "max_abs_pp": 80.43061443340551,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 68.85041356042548,
+     "max_abs_pp": 80.43061443340551,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 4.678283645088672,
+     "max_abs_pp": 7.952492849412495,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 22.1328764005294,
+     "max_abs_pp": 26.370333333333342,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 19.33520105920805,
+     "max_abs_pp": 25.50000000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc8381497",
+    "series_id": "acu-pmc8381497/conventional-cxl/bcdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 2.1160026312770293,
+     "max_abs_pp": 2.963495987457132,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "persistence": {
+     "rmse_pp": 3.5355339059327515,
+     "max_abs_pp": 5.000000000000016,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 28.180962841369844,
+     "max_abs_pp": 43.500000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 28.180962841369844,
+     "max_abs_pp": 43.500000000000036,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 0.871108116981368,
+     "max_abs_pp": 1.336728395061737,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "analog_knn": {
+     "rmse_pp": 1.2751819042351993,
+     "max_abs_pp": 2.1266666666666767,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "baseline_level": {
+     "rmse_pp": 1.1902380714238092,
+     "max_abs_pp": 1.5000000000000013,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": true
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc8905293",
+    "series_id": "acu-pmc8905293/tg-te-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked": {
+     "rmse_pp": 5.931065401266985,
+     "max_abs_pp": 8.298210238226966,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "persistence": {
+     "rmse_pp": 0.661437827766144,
+     "max_abs_pp": 0.9999999999999898,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "last_two_log_linear": {
+     "rmse_pp": 73.14570760877153,
+     "max_abs_pp": 128.4347826086956,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "reference_to_last_log_linear": {
+     "rmse_pp": 73.14570760877153,
+     "max_abs_pp": 128.4347826086956,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "pooled_curve_ratio": {
+     "rmse_pp": 3.0536843505907,
+     "max_abs_pp": 5.1791820987654225,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "analog_knn": {
+     "rmse_pp": 28.903294567925606,
+     "max_abs_pp": 36.01938333333332,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "baseline_level": {
+     "rmse_pp": 2.704163456597991,
+     "max_abs_pp": 3.499999999999992,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": false
+    },
+    "values_public": true
+   }
+  ],
+  "initial_state": [
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-2/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 1.9256515619628136,
+     "max_abs_pp": 3.2492121604601465,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.3890232260660254,
+     "max_abs_pp": 4.649691358024677,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-3/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 4.623134505597797,
+     "max_abs_pp": 7.858694640323383,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.845544921606741,
+     "max_abs_pp": 5.850308641975321,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12220558",
+    "series_id": "acu-pmc12220558/tkc-4/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 3.4166402485839966,
+     "max_abs_pp": 4.419863291507442,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 4.589685276476274,
+     "max_abs_pp": 5.958333333333332,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc12948762",
+    "series_id": "acu-pmc12948762/bcl-control/bcva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 2.6809937379309723,
+     "max_abs_pp": 4.3255913494798515,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.876176908604239,
+     "max_abs_pp": 7.322090643274848,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/c-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 1.584924380086945,
+     "max_abs_pp": 2.2887965574877267,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 1.6952908652901066,
+     "max_abs_pp": 2.67708333333333,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc13178756",
+    "series_id": "acu-pmc13178756/a-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 1.6458160693783952,
+     "max_abs_pp": 2.4400514137294382,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 1.9479285772633155,
+     "max_abs_pp": 3.1770833333333304,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc4545854",
+    "series_id": "acu-pmc4545854/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked_initial_state": {
+     "rmse_pp": 4.405954272622025,
+     "max_abs_pp": 6.3106384519032055,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.8119013073410657,
+     "max_abs_pp": 4.666666666666663,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc5866901",
+    "series_id": "acu-pmc5866901/dsaek/bscva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked_initial_state": {
+     "rmse_pp": 8.583170806636069,
+     "max_abs_pp": 11.846727020542215,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 22.382170951124014,
+     "max_abs_pp": 27.0,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc6397964",
+    "series_id": "acu-pmc6397964/ptk-prk-cxl/cdva",
+    "context": "human/other",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/other",
+    "stacked_initial_state": {
+     "rmse_pp": 8.210023598962016,
+     "max_abs_pp": 9.898577502880535,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.679945109554923,
+     "max_abs_pp": 9.000000000000007,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7318888",
+    "series_id": "acu-pmc7318888/ate-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 9.875815620383836,
+     "max_abs_pp": 17.99526601964734,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.876926935506681,
+     "max_abs_pp": 3.706959876543192,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/pbk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 16.578506166764793,
+     "max_abs_pp": 21.049330607035543,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 25.290703113609084,
+     "max_abs_pp": 32.275,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/fuchs/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 6.322905004272523,
+     "max_abs_pp": 9.100734432202561,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.422318828291805,
+     "max_abs_pp": 10.775000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/graft-failure/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 5.2733669125031675,
+     "max_abs_pp": 8.7020059905491,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 12.348185870148972,
+     "max_abs_pp": 18.77500000000001,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/abk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 9.788809988102276,
+     "max_abs_pp": 15.884664359590694,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 17.918552186646235,
+     "max_abs_pp": 27.274999999999995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/ice/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 6.617253034418503,
+     "max_abs_pp": 10.424204493190892,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.526818593343409,
+     "max_abs_pp": 11.275000000000002,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/phakic-bk/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 5.013153685209738,
+     "max_abs_pp": 6.889928538812207,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 6.3541776078124625,
+     "max_abs_pp": 9.268181818181809,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/failed-dsek/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 19.79923112950087,
+     "max_abs_pp": 23.166126195373028,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 24.385594922787753,
+     "max_abs_pp": 30.274999999999995,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7774118",
+    "series_id": "acu-pmc7774118/tass/bscva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 29.949370977696656,
+     "max_abs_pp": 34.95692974152894,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 44.501722442444326,
+     "max_abs_pp": 52.275000000000006,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dsaek/bcva",
+    "context": "human/dsaek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dsaek",
+    "stacked_initial_state": {
+     "rmse_pp": 5.187173518167582,
+     "max_abs_pp": 6.555843063634981,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 7.0397194355865755,
+     "max_abs_pp": 10.263214285714284,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc7936678",
+    "series_id": "acu-pmc7936678/dmek/bcva",
+    "context": "human/dmek",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/dmek",
+    "stacked_initial_state": {
+     "rmse_pp": 9.264790044843842,
+     "max_abs_pp": 13.679405760123831,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 17.31223872977107,
+     "max_abs_pp": 21.71450602968461,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": false
+   },
+   {
+    "study_id": "acu-pmc8381497",
+    "series_id": "acu-pmc8381497/conventional-cxl/bcdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 2.3539597435834794,
+     "max_abs_pp": 4.106564110561717,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 3.1609011201620745,
+     "max_abs_pp": 3.649691358024698,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   },
+   {
+    "study_id": "acu-pmc8905293",
+    "series_id": "acu-pmc8905293/tg-te-cxl/cdva",
+    "context": "human/cxl",
+    "role": "control",
+    "kind": "group_mean",
+    "level_used": "human/cxl",
+    "stacked_initial_state": {
+     "rmse_pp": 11.199756965233744,
+     "max_abs_pp": 19.631014783336898,
+     "meets_5_10_pp": false,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "pooled_training_curve": {
+     "rmse_pp": 2.353873834182179,
+     "max_abs_pp": 2.9297385620915106,
+     "meets_5_10_pp": true,
+     "improves_persistence_by_0_5_pp": null
+    },
+    "values_public": true
+   }
+  ]
+ },
+ "H5_versus_model_1_0_same_fit": {
+  "initial_state": {
+   "common_targets": 85,
+   "model_1_2_rmse_pp": 9.829259061762952,
+   "model_1_0_rmse_pp": 9.011822623343388,
+   "model_1_2_lower": false
+  },
+  "next_observation": {
+   "common_targets": 66,
+   "model_1_2_rmse_pp": 3.7222613277010588,
+   "model_1_0_rmse_pp": 4.064602559884614,
+   "model_1_2_lower": true
+  },
+  "landmark": {
+   "common_targets": 66,
+   "model_1_2_rmse_pp": 5.737821934770952,
+   "model_1_0_rmse_pp": 6.6617518810356975,
+   "model_1_2_lower": true
+  }
+ },
+ "model_1_0_own_H1_H4_reported_not_tested": {
+  "primary_methods": {
+   "next_observation": "population_assimilation_robust",
+   "landmark": "population_assimilation_robust",
+   "initial_state": "population_initial_state"
+  },
+  "verdicts": {
+   "H1_calibration_next_observation_group_means": true,
+   "H2_accuracy_next_observation_group_means": true,
+   "H3_landmark_group_means": true,
+   "H4_initial_state_control_group_means": true
+  },
+  "H1_calibration_next_observation_group_means": {
+   "80": {
+    "inside": 57,
+    "n": 66,
+    "coverage": 0.8636363636363636,
+    "window": [
+     0.7,
+     0.9
+    ],
+    "within_window": true
+   },
+   "90": {
+    "inside": 63,
+    "n": 66,
+    "coverage": 0.9545454545454546,
+    "window": [
+     0.8,
+     0.97
+    ],
+    "within_window": true
+   }
+  },
+  "H2_accuracy_next_observation_group_means": {
+   "persistence": {
+    "common_targets": 66,
+    "population_assimilation_robust_rmse_pp": 4.064602559884614,
+    "persistence_rmse_pp": 5.026490431763107,
+    "population_assimilation_robust_lower": true
+   },
+   "last_two_log_linear": {
+    "common_targets": 66,
+    "population_assimilation_robust_rmse_pp": 4.064602559884614,
+    "last_two_log_linear_rmse_pp": 18.593980342420014,
+    "population_assimilation_robust_lower": true
+   },
+   "pooled_curve_ratio": {
+    "common_targets": 66,
+    "population_assimilation_robust_rmse_pp": 4.064602559884614,
+    "pooled_curve_ratio_rmse_pp": 5.049472864538625,
+    "population_assimilation_robust_lower": true
+   },
+   "analog_knn": {
+    "common_targets": 66,
+    "population_assimilation_robust_rmse_pp": 4.064602559884614,
+    "analog_knn_rmse_pp": 5.948945397841645,
+    "population_assimilation_robust_lower": true
+   }
+  },
+  "H3_landmark_group_means": {
+   "comparisons": {
+    "persistence": {
+     "common_targets": 66,
+     "population_assimilation_robust_rmse_pp": 6.6617518810356975,
+     "persistence_rmse_pp": 11.583949187901284,
+     "population_assimilation_robust_lower": true
+    },
+    "pooled_curve_ratio": {
+     "common_targets": 66,
+     "population_assimilation_robust_rmse_pp": 6.6617518810356975,
+     "pooled_curve_ratio_rmse_pp": 7.007015615830606,
+     "population_assimilation_robust_lower": true
+    },
+    "analog_knn": {
+     "common_targets": 66,
+     "population_assimilation_robust_rmse_pp": 6.6617518810356975,
+     "analog_knn_rmse_pp": 16.254243417006556,
+     "population_assimilation_robust_lower": true
+    }
+   },
+   "calibration_reported": {
+    "80": {
+     "inside": 53,
+     "n": 66,
+     "coverage": 0.803030303030303,
+     "window": [
+      0.7,
+      0.9
+     ],
+     "within_window": true
+    },
+    "90": {
+     "inside": 60,
+     "n": 66,
+     "coverage": 0.9090909090909091,
+     "window": [
+      0.8,
+      0.97
+     ],
+     "within_window": true
+    }
+   }
+  },
+  "H4_initial_state_control_group_means": {
+   "summary": {
+    "pooled_training_curve": {
+     "series": 22,
+     "series_within_5_10_pp": 10,
+     "series_meeting_criteria": 10,
+     "pooled_rmse_pp": 14.585267576883169,
+     "pooled_max_abs_pp": 52.275000000000006,
+     "targets": 85
+    },
+    "population_initial_state": {
+     "series": 22,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 9.011822623343388,
+     "pooled_max_abs_pp": 31.790034517774323,
+     "targets": 85
+    },
+    "population_initial_state_t4": {
+     "series": 22,
+     "series_within_5_10_pp": 8,
+     "series_meeting_criteria": 8,
+     "pooled_rmse_pp": 9.002250326043011,
+     "pooled_max_abs_pp": 31.59578462171021,
+     "targets": 85
+    }
+   }
+  }
+ }
+}

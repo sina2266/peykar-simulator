@@ -14,7 +14,8 @@ closure, endothelial cell density, central corneal thickness and refraction.
   development records with 62 series and 15 custodian-extracted sealed records with 25
   series). Tranche 2 (55 articles) was reserved before triage as the sealed test set
   of the next version ([tranche-2 README](../../data/cornea-acuity-2026-10-29/tranche-2/README.md)):
-  27 admitted blind, 11 custodian records with 23 series, **still sealed and unread**.
+  27 admitted blind, 11 custodian records with 23 series, consumed by the one-shot test
+  of model 1.2.0 on 2026-10-30. No unread article is left in this dataset.
 - Model 1.0: [`model-1.0/`](model-1.0/README.md), generic eye model version 2 on the
   change of acuity through an exact pseudo-fraction, scored in ETDRS letters by
   `peykar.validation.eye_additive_evaluation`. Its one-shot sealed test passed all four
@@ -31,8 +32,17 @@ closure, endothelial cell density, central corneal thickness and refraction.
   generic eye model 4 (`eye_recovery_population4`) were declared and rejected by the
   0.10-letter rule: correlated long-term level and transient amplitude (gains 0.08,
   0.07 and 0.00 letters) and a separate cross-linking slope (initial state 0.12
-  letters worse, because the keratoplasty slope steepened). There is no 1.1 protocol;
-  model 1.0.0 stays the component's model.
+  letters worse, because the keratoplasty slope steepened). There is no 1.1 protocol.
+- Model 1.2: [`model-1.2/`](model-1.2/README.md), model 1.0.0's fit with forecast
+  stacking (`eye_stacking` 1.0.0: fixed weights on the model, persistence and the
+  pooled-curve increment, and on the model and the pooled training curve for initial
+  states). Its one-shot sealed test on tranche 2 passed H1–H4 (next observation 3.72
+  letters against persistence 5.03; landmark 5.74 against 7.01 for the pooled-curve
+  increment; initial state 9.83 against the pooled training curve 14.59) and failed H5:
+  the stacked initial state was worse than model 1.0.0 from the same fit (9.83 against
+  9.01 letters), because the pooled curve, which ignores the preoperative acuity, pulls
+  keratoplasty groups the wrong way ([Persian results](model-1.2/results.fa.md)). Model
+  1.0.0 passed its own H1–H4 there and stays the component's model.
 
 The dataset README is pinned by protocol 1.0.0. Articles kept by other components for
 untested or unread tranches (retinal thickness tranches 3–4, IOP tranches 4–5) were

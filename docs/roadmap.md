@@ -495,6 +495,28 @@ reserved before triage.
 - [ ] A model that starts from the pooled training curve's increments (flexible shared
   time course, context offsets only where supported) instead of a fast exponential to a
   level; it needs a new literature screen with a test part reserved before triage.
+### 2026-10-30 forecast stacking (corneal acuity 1.2, retinal thickness 1.3)
+[Acuity 1.2.0](../experiments/eye/acuity/model-1.2/README.md) and
+[retinal thickness 1.3.0](../experiments/eye/retina/model-1.3/README.md) were frozen
+together (commit `fc3590ac`; protocols `484c1694` and `9fe7bcff`) before their one-shot
+sealed tests on the two unread sets (acuity tranche 2, retina tranche 3).
+- [x] Generic `eye_stacking` 1.0.0 and `eye_stacking_evaluation` 1.0.0: convex
+  least-squares weights on leave-one-study-out forecasts, nested LOSO for development,
+  stacked intervals moved from the model's; harness 6 and `eye_additive_evaluation4`
+  keep initial-state intervals and reproduce harness 2 with 0 differences.
+- [x] Development: both stacked candidates adopted by the declared 0.10 rule (acuity
+  5.11/6.86/12.92 against 5.41/7.14/13.01 letters; retina 7.154/9.228/12.854 against
+  7.193/9.376/12.892 pp).
+- [x] Sealed acuity: H1–H4 pass, H5 fails (forecasts 3.72 vs 4.06 and 5.74 vs 6.66
+  letters better, initial state 9.83 vs 9.01 worse). Sealed retina: H2–H4 pass, H1 fails
+  (80% coverage 0.911), H5 fails (initial state 11.62 vs 11.61; forecasts 5.70 vs 6.08
+  and 7.72 vs 7.98 better). `peykar eye` keeps acuity 1.0.0 and retina 1.1.0.
+- [x] Lesson from both tests: stacking the forecasts from follow-up transfers; stacking
+  initial states with a pooled curve that ignores the baseline does not; an interval
+  moved to a better point must also be narrowed.
+- [ ] A stacked version that combines only the forecasts from follow-up and scales its
+  intervals to the stacked errors on development; tested on retina tranche 4 (35 unread
+  articles, to be reserved before triage) or on a new screen.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

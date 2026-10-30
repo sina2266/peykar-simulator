@@ -1,4 +1,82 @@
 # Verification record
+## Forecast stacking: acuity model 1.2 and retinal-thickness model 1.3, development, freeze and sealed tests: 2026-10-30
+Commands run from the repository root; outcomes observed. Start state: main at
+`22bdc4ee` (= origin).
+- Before this work, `.peykar/support_diagnostic.py` on the development LOSO reports of
+  retinal thickness 1.1.0 (128 studies) and corneal acuity 1.0.0 (42 studies): errors of
+  forecasts from origins before a context's first training visit, retina next
+  observation 7.08 pp (n = 17) and landmark 8.19 (n = 24) against 7.20 and 9.43 inside;
+  acuity only 2/3/6 such targets. No support-hold candidate was declared.
+- `OMP_NUM_THREADS=1 uv run --frozen pytest -q tests/unit/test_eye_stacking.py`: 5 passed
+  (the face solver first returned the model alone for two members whose errors cancel;
+  fixed by solving each face's optimality system; one test expectation was corrected to
+  the analytic optimum 100/100.04). Ruff and mypy (6 new modules) passed. Commit
+  `a9d9386a` (code and the round 0–1 declarations of both development logs, before any
+  run), pushed.
+- `OMP_NUM_THREADS=1 uv run --frozen python scripts/evaluate_acuity_population_1_2.py
+  --development --candidate a0 --output .peykar/acuity-1.2-dev/round0-a0` (detached;
+  EXIT=0, 375.4 s). `python3 .peykar/compare_harness6.py
+  .peykar/acuity-1.1-dev/round0-a0/report.json .peykar/acuity-1.2-dev/round0-a0/report.json`:
+  42/42 studies, 84 initial-state entries with intervals, 0 differences.
+- `... evaluate_retina_population_1_3.py --development --candidate e0 --shard i/16` for
+  i = 0..15 (detached; 1,357–1,594 s each, 23,538 s in all), `--merge` (exit 0);
+  `compare_harness6.py` against `.peykar/retina-1.2-dev/round1-e0/report.json`: 128/128
+  studies, 259 entries with intervals, 0 differences.
+- `... evaluate_acuity_population_1_2.py --stack --candidate k1 --report
+  .peykar/acuity-1.2-dev/round0-a0/report.json --output .peykar/acuity-1.2-dev/round1-k1`:
+  exit 0; nested LOSO 5.114/6.862/12.919 letters against a0 5.412/7.136/13.006; coverage
+  122/159 and 130/159; adopted; weights 0.544/0.233/0.223 and 0.582/0.418.
+  `publish_acuity_population_1_2.py --development` with a0's report as reference: H1–H5
+  pass; `.peykar/check_stacking_redaction.py ... development`: 0 leaks.
+- `... evaluate_retina_population_1_3.py --stack --candidate k1 --report
+  .peykar/retina-1.3-dev/round0-e0/report.json --output .peykar/retina-1.3-dev/round1-k1`:
+  exit 0; 7.154/9.228/12.854 pp against e0 7.193/9.376/12.892; coverage 427/493 and
+  462/493; adopted; weights 0.742/0.233/0.025 and 0.839/0.161. Development publication:
+  H1–H5 pass; redaction check 0 leaks. A dry run applying the all-study weights to the
+  development reports through both publishers exited 0 (in-sample acuity initial state
+  11.68 against 12.92 nested: the initial-state weight is unstable).
+- `make check-docker` before the freeze: 939 tests passed in 203.47 s, 89% coverage,
+  mypy 171 source files, 18 frontend tests, all packages built, EXIT=0
+  (`.peykar/stacking-freeze-check-docker-20261030.log`).
+- `uv run --frozen python .peykar/write_acuity_protocol_1_2.py`: protocol SHA-256
+  `484c1694…`, 86 frozen files; `.peykar/write_retina_protocol_1_3.py`: `9fe7bcff…`, 75
+  frozen files; both operator checks passed first. `.peykar/check_frozen_protocols.py`:
+  no problem in any frozen protocol. Freeze commit `fc3590ac`, pushed (remote SHA equal).
+- Then, once each: `... evaluate_acuity_population_1_2.py --sealed --protocol
+  experiments/eye/acuity/model-1.2/protocol-1.2.0.json --output
+  .peykar/acuity12-sealed-test-2026-10-30` (EXIT=0, 69.5 s; report `c8c5fff3…`,
+  reference a0 `77db13c4…`) and `... evaluate_retina_population_1_3.py --sealed
+  --protocol experiments/eye/retina/model-1.3/protocol-1.3.0.json --output
+  .peykar/retina13-sealed-test-2026-10-30` (EXIT=0, 5,504.2 s; report `dd6876d9…`,
+  reference e0 `32f02efc…`; 128 training and 67 sealed record hashes).
+- `publish_acuity_population_1_2.py --sealed --report ... --reference
+  .../reference-a0-report.json --output experiments/eye/acuity/model-1.2/sealed-test-2026-10-30`:
+  exit 0; H1–H4 pass (59/66 and 61/66; 3.72 against 5.03/18.59/5.05/5.95; 5.74 against
+  11.58/7.01/16.25; 9.83 against 14.59), H5 fails (initial state 9.83 against 9.01).
+  Redaction check: 7 public and 4 private studies, 8 redacted study reports and 44
+  analysis rows checked, 0 leaks. `.peykar/stacking_drop_one.py`: removing
+  `acu-pmc7774118` alone would flip H5.
+- `publish_retina_population_1_3.py --sealed ... --output
+  experiments/eye/retina/model-1.3/sealed-test-2026-10-30`: exit 0; H1 fails (234/257 =
+  0.911 at 80%), H2–H4 pass (5.70 against 6.43/19.00/7.89/7.87; 7.72 against
+  10.67/10.41/11.88; 11.62 against 15.44), H5 fails (11.62 against 11.61). 1.1.0's own
+  H1 fails there too (0.903). Redaction check: 39 public and 28 private studies, 56
+  redacted study reports and 177 analysis rows checked, 0 leaks. Drop-one: removing any
+  of 15 studies would flip H5.
+- Post hoc on consumed data (`.peykar/posthoc_stacking.py` with retinal-acuity x3's
+  development and sealed reports): stacked 4.10/5.44/8.65 letters against the model's
+  4.51/5.85/8.82, still worse than the pooled-curve increment (3.82/4.52); 80% coverage
+  0.662. Not a test.
+- Both figures rendered with `.peykar/cornea-native47/bin/python .../plot-results.py`
+  (exit 0) and inspected through a local `http.server` and Playwright; the retina figure
+  was re-rendered four times (unpaired comparators, all-series by-treatment gains,
+  overlapping labels), the acuity figure twice (an empty panel, a legend over a label).
+  One inspection loaded the previous image because it ran in the same tool batch as the
+  render.
+- `make check-docker` before the results commit: 939 tests passed in 176.13 s, 89%
+  coverage, mypy 171 source files, all packages built, EXIT=0
+  (`.peykar/stacking-results-check-docker-20261030.log`); `check_frozen_protocols.py`
+  after every documentation edit: no problem.
 ## Retinal-acuity tranches 3–4 and model 1.2 development: 2026-10-29 (night)
 Commands run from the repository root; outcomes observed. Start state: main at
 `a3489c25` (= origin; tranches 3–4 reserved before triage).

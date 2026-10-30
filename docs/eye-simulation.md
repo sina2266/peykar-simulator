@@ -12,12 +12,12 @@ version, its sealed-test result and its context of use.
 
 | component | model | quantity (unit) | context | sealed test |
 |---|---|---|---|---|
-| `retina-thickness` | 1.1.0 (`s5`) | central retinal thickness (µm) | `human/<indication>/<treatment>` | tranche 2: H1–H4 pass, H5 fails ([README](../experiments/eye/retina/model-1.1/README.md)) |
+| `retina-thickness` | 1.1.0 (`s5`) | central retinal thickness (µm) | `human/<indication>/<treatment>` | tranche 2: H1–H4 pass, H5 fails; tranche 3 (reference of the 1.3 test, reported): H2–H4 hold, 80% coverage 0.903, just above its window ([README](../experiments/eye/retina/model-1.1/README.md)) |
 | `iop` | 1.2.0 (`c1`) | intraocular pressure (mmHg) | `human/<procedure>` | tranche 3: all five hypotheses pass; tranche 4 (reference of the 1.3 test, reported): H1–H4 hold ([README](../experiments/eye/iop/model-1.2/README.md)) |
 | `corneal-endothelium` | 1.0.0 | endothelial cell density (cells/mm²) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/endothelium/README.md)) |
 | `corneal-thickness` | 1.0.0 | central corneal thickness (µm) | `<species>/<procedure>` | H1–H4 pass ([README](../experiments/vcornea/thickness/README.md)) |
 | `refraction` | 1.0.0 (`f1`) | spherical equivalent after laser refractive surgery (D) | `human/<refractive error>/<procedure>` | all five hypotheses pass on 13 series ([README](../experiments/eye/refraction/model-1.0/README.md)) |
-| `acuity` | 1.0.0 (`a0`) | corrected distance visual acuity after keratoplasty or cross-linking (logMAR) | `human/<procedure>` (pk, dalk, dsaek, dmek, cxl, other) | H1–H4 pass on 21 series, mostly cross-linking and DMEK; failed H2/H3 on development ([README](../experiments/eye/acuity/model-1.0/README.md)) |
+| `acuity` | 1.0.0 (`a0`) | corrected distance visual acuity after keratoplasty or cross-linking (logMAR) | `human/<procedure>` (pk, dalk, dsaek, dmek, cxl, other) | H1–H4 pass on 21 series, mostly cross-linking and DMEK; failed H2/H3 on development; tranche 2 (reference of the 1.2 test, reported): H1–H4 hold ([README](../experiments/eye/acuity/model-1.0/README.md)) |
 
 `retina-thickness` and `iop` run on the generic eye model version 2
 (`peykar.model_learning.eye_recovery_population2`); their fits can be stored as JSON.
@@ -37,7 +37,13 @@ that passed are offered. A newer version replaces an offered one only when it pa
 all its declared hypotheses, including the comparison with its predecessor, or when the
 predecessor fails H1–H4 on the newer sealed set: retinal thickness 1.1.0 replaced 1.0.0,
 whose intervals missed H1 on tranche 2, while IOP 1.3.0 failed its comparison with 1.2.0
-([README](../experiments/eye/iop/model-1.3/README.md)) and 1.2.0 stays.
+([README](../experiments/eye/iop/model-1.3/README.md)) and 1.2.0 stays. Acuity 1.2.0
+(model 1.0.0 with forecast stacking) improved both forecast tasks on tranche 2 but its
+stacked initial state was worse than 1.0.0's from the same fit
+([README](../experiments/eye/acuity/model-1.2/README.md)), so 1.0.0 stays. Retinal
+thickness 1.3.0 (1.1.0 with forecast stacking) improved both forecast tasks on tranche
+3 but failed H1 (80% coverage 0.911) and H5 (initial state 0.01 pp worse)
+([README](../experiments/eye/retina/model-1.3/README.md)), so 1.1.0 stays.
 
 Each component uses its own tested primary methods:
 
