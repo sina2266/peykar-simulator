@@ -83,3 +83,69 @@ candidate combined with the next-best qualifying change, when the two are compat
 (the support hold excludes deviations), against the adopted one under the same rule.
 Each candidate runs as one process over the 25 studies; the comparison is
 `.peykar/kmax_compare.py`.
+
+## Round 1 — results (2026-10-30)
+
+LOSO over the 25 training studies (39 next-observation and landmark targets of human
+group means, 60 initial-state targets of control group means;
+`.peykar/kmax_compare.py`, `.peykar/kmax-1.0-dev/round1-compare.txt`; RMSE in pp of
+0.1 D, signed error = forecast − observed, positive = forecast steeper than observed).
+Each run took about two minutes.
+
+| candidate | primary | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|---|
+| k0 | Gaussian (no variant inside) | 7.053 (+0.06) | 11.433 (−0.16) | 15.574 (+2.50) | 0.692 / 0.744 |
+| k1 (no transient) | Gaussian (none inside) | 6.518 (−0.09) | 11.078 (−0.55) | 15.406 (+2.45) | 0.667 / 0.718 |
+| k2 (family level) | Student-t | 6.763 (+0.05) | 11.599 (−0.91) | 15.513 (+0.79) | 0.718 / 0.821 |
+| k3 (support hold) | Gaussian (none inside) | 6.795 (−0.12) | 10.995 (−0.95) | 15.357 (+2.29) | 0.692 / 0.744 |
+| k4 (deviations) | Gaussian (none inside) | 6.748 (+0.14) | 11.452 (−0.22) | 15.574 (+2.50) | 0.667 / 0.769 |
+| k5 (one-month term) | anchored Student-t | 7.127 (−0.78) | 15.705 (−3.90) | 17.660 (+6.03) | 0.718 / 0.846 |
+| persistence | — | 6.592 (+2.15) | 12.364 (+3.64) | — | — |
+| pooled-curve increment | — | 7.992 (+0.50) | 12.175 (+0.68) | — | — |
+| analog kNN | — | 7.409 (−2.36) | 17.452 (−8.89) | — | — |
+| pooled training curve | — | — | — | 13.889 (+1.56) | — |
+
+- **No candidate meets the rule.** k1 gains 0.168, 0.536 and 0.356 pp (initial state,
+  next observation, landmark) and k3 0.217, 0.258 and 0.438 pp, but neither has a
+  population variant inside both coverage windows. k2 gains 0.061 and 0.291 pp and loses
+  0.165 pp in the landmark task; k4 gains 0.305 pp in the next observation only and
+  loses 0.018 pp in the landmark task; k5 loses in every task (its one-month term is read
+  as a large early flattening).
+- The 7-day transient of k0 is fitted from almost no data: at the species level its
+  value at day 1 is −0.51 model units (about −2.5 D) with an SD of 0.75. Removing it
+  (k1) or holding the law before the earliest training visit (k3) improves all three
+  tasks; this is the retinal-acuity failure seen in development before any sealed test.
+- **Intervals are too narrow.** Twelve of 39 next-observation targets fall outside k0's
+  80% interval: the continued flattening of one study's cross-linking groups from 3 to
+  8 years (−3.6 and −3.3 D observed against −2.1 and −1.9 D forecast), the steepening of
+  untreated eyes, and the late re-steepening of one transepithelial series. The noise
+  centre of group means is the median of six studies' residual SDs (0.040 model units,
+  0.20 D); the other studies have no residual degree of freedom.
+- **Initial state:** the population law is better than the pooled training curve for
+  epithelium-off and accelerated cross-linking (9.63 against 10.66 pp and 10.63 against
+  10.85), and worse for transepithelial cross-linking (16.00 against 8.34), observation
+  (12.11 against 8.28) and the combined treatments; ring segments have the largest
+  errors under both (24.86 and 24.33 pp: segment flattening differs by several dioptres
+  between studies). Two of the three transepithelial studies form an author cluster and
+  leave training together.
+- The population law beats persistence and the pooled-curve increment for
+  epithelium-off and accelerated cross-linking, where Kmax keeps flattening, and loses to
+  persistence for ring segments, transepithelial cross-linking and untreated eyes, where
+  it changes little after the first visit.
+
+## Round 2 — declared before results (2026-10-30)
+
+Both candidates start from k1, the round-1 change with the largest summed gain, and
+target its interval coverage:
+
+- **k6**: k1 with forecast-only pooled noise (`forecast_noise_pooling = "pooled"`, as
+  retina model 1.1): forecasts add independent noise so that their noise centre is the
+  pooled residual variance (summed squares over summed degrees of freedom), which is
+  unbiased when each study has few degrees of freedom; likelihoods and posteriors keep
+  the median centre, so point forecasts stay close to k1's.
+- **k7**: k1 with pooled noise in likelihoods and forecasts (`noise_pooling =
+  "pooled"`).
+
+Adoption rule as in round 1, against k0. If both meet it, the one with the larger
+summed gain is adopted. If neither meets it, k0 stays the model 1.0 candidate and the
+freeze decision records its development failures. No round 3 is planned.

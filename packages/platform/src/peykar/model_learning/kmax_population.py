@@ -14,7 +14,7 @@ moves from its early post-treatment change towards a long-term change (negative 
 flattening) that may depend on the baseline Kmax through ``b``. Scores are in tenths of
 a dioptre through ``eye_additive_evaluation4`` (one reported pp is 0.1 D).
 
-Candidates (round 1 of ``experiments/eye/kmax/model-1.0/development-log.md``):
+Candidates (rounds of ``experiments/eye/kmax/model-1.0/development-log.md``):
 
 - ``k0``: contexts ``human/procedure`` (cxl_epi_off, cxl_accelerated, cxl_epi_on,
   cxl_combined, icrs, observation, other), grouping ``("context",)``, a study effect per
@@ -32,6 +32,11 @@ Candidates (round 1 of ``experiments/eye/kmax/model-1.0/development-log.md``):
 - ``k5``: ``k0`` with a one-month instead of a 7-day early term (``transient_months =
   1``), for the steepening in the first month after cross-linking that the monotone
   recovery term cannot follow together with the slow later flattening.
+- ``k6`` (round 2): ``k1`` with forecast-only pooled noise (``forecast_noise_pooling =
+  "pooled"``): forecast intervals use the pooled residual variance, likelihoods keep the
+  median noise centre.
+- ``k7`` (round 2): ``k1`` with pooled noise in likelihoods and forecasts
+  (``noise_pooling = "pooled"``).
 
 ``FAMILY_CANDIDATES`` names the candidates whose series carry the family part
 (``adapter``). Each development round adds a named candidate and never changes an
@@ -93,16 +98,20 @@ def _config(version: str) -> RecoveryConfig:
     return RecoveryConfig(**_fields(version))
 
 
+def _without_transient(version: str) -> RecoveryConfig:
+    return replace(
+        _config(version),
+        transient_months=None,
+        penalty_modes=(0.1, 0.1, 0.5),
+        robust_sd=(0.3, 0.3, 2.0),
+    )
+
+
 DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     # k0: one level per procedure context.
     "k0": _config("1.0.0-k0"),
     # k1: no 7-day early transient.
-    "k1": replace(
-        _config("1.0.0-k1"),
-        transient_months=None,
-        penalty_modes=(0.1, 0.1, 0.5),
-        robust_sd=(0.3, 0.3, 2.0),
-    ),
+    "k1": _without_transient("1.0.0-k1"),
     # k2: species -> treatment family -> procedure.
     "k2": replace(_config("1.0.0-k2"), grouping=("treatment", "context")),
     # k3: the support hold before a context's earliest training visit.
@@ -116,6 +125,10 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     ),
     # k5: a one-month early term instead of the 7-day transient.
     "k5": replace(_config("1.0.0-k5"), transient_months=1.0),
+    # k6 (round 2): k1 with forecast-only pooled noise.
+    "k6": replace(_without_transient("1.0.0-k6"), forecast_noise_pooling="pooled"),
+    # k7 (round 2): k1 with pooled noise in likelihoods and forecasts.
+    "k7": replace(_without_transient("1.0.0-k7"), noise_pooling="pooled"),
 }
 
 FAMILY_CANDIDATES: frozenset[str] = frozenset({"k2"})
