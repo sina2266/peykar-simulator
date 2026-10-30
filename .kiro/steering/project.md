@@ -1,4 +1,31 @@
 # Peykar continuation context
+## Retina 1.4 (stacking 2.0.0) FAILED H3/H5; IOP tranche 5 in custody, 2026-10-30 morning
+- New generic `peykar.model_learning.eye_stacking2` 2.0.0 (HistoryStackingSpec with
+  optional `scale_tasks`, HistoryStackedCandidate, HistoryStacking with optional
+  `task_scales`, scale_quantiles) and `peykar.validation.eye_stacking_evaluation2` 2.0.0
+  (calibration_rows, calibrate_scale, fit_history, stack_study2, stack_report2,
+  nested_stack_report2, development_comparison2). PINNED by the retina 1.4 protocol:
+  never edit; make new versions. Tests `tests/unit/test_eye_stacking2.py` (6).
+- Retina 1.4 (`retina_thickness_population_1_4`: e0 = s5, k2 one scale, k3 per-task
+  scales; operator/publisher `scripts/evaluate|publish_retina_population_1_4.py`; dev
+  `.peykar/retina-1.4-dev`): k3 adopted (weights 0.729/0.212/0.058, scales 0.79/1.00).
+  Protocol `ea054039`, freeze `c1dbd266`. Sealed once on tranche 4 (1,760 s,
+  `.peykar/retina14-sealed-test-2026-10-30`): H1 pass (0.793/0.839), H2 pass, H4 pass;
+  H3 FAIL (landmark 10.58 vs pooled-curve increment 9.80), H5 FAIL (10.58 vs 1.1.0's
+  9.99). 1.1.0's own H3 also fails there. `peykar eye` keeps retina 1.1.0. Retina
+  dataset fully consumed (new screen needed). Results: experiments/eye/retina/model-1.4/.
+- Lesson of 3 stacking tests: forecasts from follow-up gained twice, lost once; a fixed
+  persistence weight hurts when new trajectories change more after the first visit.
+  Scaled next-observation intervals worked. Do not reuse history stacking as is.
+- IOP tranche 5 (19 articles): reserved before triage (`6c12224e`), one blind reviewer
+  (17 admitted with one percent-rule override), reservation 308 dev / 17 sealed, overlap
+  135 pairs / 43 dev clusters (`559dde92`); two custodians: 14 records, 24 series
+  (`.peykar/iop-tranche5-sealed-2026-10-30`, verifier
+  `.peykar/verify_iop_tranche5_custody.py` clean; `0b690e9d`). STILL SEALED AND UNREAD.
+  The developer opened C1's custody report (structure only; disclosed). NEVER open
+  C2's. It is the sealed set of IOP model 1.4 (training: tranches 1–4, 308 studies).
+- Next: decide IOP 1.4's design on development data only (round 0 = IOP 1.2.0 `c1`
+  LOSO over 308 studies, 16 shards, harness 2), then declare round 1 before results.
 ## Forecast stacking: acuity 1.2 and retina 1.3 sealed tests, 2026-10-30 night
 - New generic `peykar.model_learning.eye_stacking` 1.0.0 (StackingSpec, StackedCandidate,
   StackingWeights, simplex_least_squares, combine, shift_quantiles) and
