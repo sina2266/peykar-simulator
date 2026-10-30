@@ -13,6 +13,17 @@ Candidates (rounds of ``experiments/eye/myopia/model-1.1/development-log.md``):
 
 - ``n0`` (round 0): model 1.0.0 unchanged apart from its version string, refitted on
   the 33 training records; the reference of round 1.
+- ``n1`` (round 1): ``n0`` with group-mean noise not scaled by group size
+  (``max_noise_exponent = 0``): the residual of a group mean around the law is taken as
+  a visit-level error that does not shrink with the number of children.
+- ``n2`` (round 1): ``n0`` with the zero-start law written in its initial rate
+  (``start = "zero_rate"``, ``R = 12`` months), ``change(t) / 1 mm = v (tau / 12)(1 -
+  r(t))``, so the hierarchy, the covariate and the anchored variants act on the
+  elongation per year at the start (the law of 1.0 candidate ``m3``).
+- ``n3`` (round 1): ``n0`` with persistent deviations in forecasting only: 0.8 of each
+  series' residual variance follows an Ornstein-Uhlenbeck process with a 12-month
+  correlation time, so a forecast carries the current deviation of its series forward;
+  the population is fitted under working independence.
 
 ``REFERENCES`` names frozen earlier versions that a sealed run may score in the same run
 with the same training (``"1.0.0"``: ``m4`` itself). Every candidate and reference reads
@@ -27,6 +38,7 @@ from collections.abc import Callable, Mapping
 from dataclasses import replace
 from typing import Any
 
+from peykar.model_learning import eye_recovery_population5 as version5
 from peykar.model_learning import myopia_population as version1
 from peykar.model_learning.eye_recovery_population2 import RecoveryConfig
 from peykar.validation.myopia_axial_data import AxialSeries
@@ -39,7 +51,16 @@ __all__ = [
 ]
 
 MODEL_ID = version1.MODEL_ID
-VERSION1 = version1.DEVELOPMENT_CANDIDATES["m4"]
+
+
+def _version1() -> version5.RecoveryConfig:
+    config = version1.DEVELOPMENT_CANDIDATES["m4"]
+    if not isinstance(config, version5.RecoveryConfig):
+        raise TypeError("Model 1.0.0 must be a generic eye model 5 configuration")
+    return config
+
+
+VERSION1 = _version1()
 
 REFERENCES: dict[str, RecoveryConfig] = {
     # Model 1.0.0 as frozen by its protocol (protocol-1.0.0.json, candidate m4).
@@ -49,6 +70,18 @@ REFERENCES: dict[str, RecoveryConfig] = {
 DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     # n0 (round 0): model 1.0.0 refitted on the 33 training records.
     "n0": replace(VERSION1, model_version="1.1.0-n0"),
+    # n1 (round 1): group-mean noise not scaled by group size.
+    "n1": replace(VERSION1, model_version="1.1.0-n1", max_noise_exponent=0.0),
+    # n2 (round 1): the zero-start law in its initial rate per year.
+    "n2": replace(VERSION1, model_version="1.1.0-n2", start="zero_rate"),
+    # n3 (round 1): forecast-only persistent deviations (0.8, 12 months).
+    "n3": replace(
+        VERSION1,
+        model_version="1.1.0-n3",
+        deviation_fraction=0.8,
+        deviation_months=12.0,
+        deviation_in_population_fit=False,
+    ),
 }
 
 
