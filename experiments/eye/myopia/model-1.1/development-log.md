@@ -179,3 +179,74 @@ every candidate that met the rule against the adopted one under the same rule. I
 meets it, n0 is the model 1.1 candidate (model 1.0.0 refitted on the 33 studies) and H5 is
 not tested. Each candidate runs as one process over the 33 studies. Reported only:
 coverage of the groups of 150 or more children and the diagnostics of round 0.
+
+## Round 1 — results (2026-10-30)
+
+LOSO over the same 33 studies (`.peykar/myopia-1.1-dev/round1-n1`, `round1-n2`,
+`round1-n3`, `round1-compare.txt`, diagnostics `round1-<name>-diagnostics.txt`; the three
+runs took under a minute each, in parallel):
+
+| candidate | primary | next observation | landmark | initial state | next-obs coverage 80/90% | interval score |
+|---|---|---|---|---|---|---|
+| n0 (round 0) | Gaussian | 10.035 (−3.87) | 13.217 (−6.71) | 13.982 (−3.73) | 0.800 / 0.904 | 85.167 |
+| n1 (noise not scaled by group size) | Gaussian | 10.096 (−3.92) | 13.436 (−6.86) | 14.068 (−3.93) | 0.861 / 0.922 | 86.882 |
+| n2 (zero-rate law) | robust | 9.673 (−3.57) | 14.697 (−6.55) | 14.368 (+2.35) | 0.826 / 0.922 | 84.472 |
+| n3 (forecast-only deviations) | Gaussian | 9.389 (−3.49) | 12.865 (−6.84) | 13.982 (−3.73) | 0.843 / 0.922 | 77.109 |
+
+- **n3 meets the rule by both clauses**: it gains 0.646 pp (next observation), 0.352 pp
+  (landmark) and 0.000 pp (initial state; the deviations act only once a series has an
+  observation), and its interval score is 9.46% lower. **n1 does not** (it loses 0.085,
+  0.061 and 0.219 pp and its interval score is 2.01% higher), **nor does n2** (it gains
+  0.362 pp in the next observation but loses 1.481 pp in the landmark task and 0.386 pp in
+  the initial state). n3 is adopted; it is the only candidate that met the rule, so there
+  is no round-2 combination.
+- Reported: under n1 the groups of 150 or more children cover 0.75/0.83 (n0 0.50/0.67),
+  but the groups of 50–149 children cover 0.94/0.98 and those under 50 0.80/0.88: one
+  noise level for every group size widens the middle groups' intervals more than it
+  helps the large ones. Under n3 the large groups still cover only 0.67/0.75 (12 targets,
+  80% half-width 5.4 pp); this weakness stays in model 1.1.
+- Under n3 the next-observation RMSE falls in every size class (under 50 children 11.97
+  against n0's 12.41 pp, 50–149 6.36 against 7.28, 150 or more 7.76 against 8.97). Far
+  ahead the forecasts stay too short: landmark targets more than 12 months after the first
+  visit 22.50 pp (−17.85), as under n0.
+
+## Freeze decision (2026-10-30)
+
+Model 1.1.0 is **n3**: model 1.0.0 (generic eye model 5 with the zero-start law
+`change(t)/1 mm = ell (1 − r(t))`, `ell = context level + b (AL0 − 24.5 mm)/1 mm`; the
+hierarchy species → treatment family → treatment; a study effect per family; forecast-only
+pooled noise) with persistent deviations in forecasting only (an Ornstein–Uhlenbeck
+process carrying 0.8 of each series' residual variance with a 12-month correlation time;
+the population is fitted under working independence), as the round-1 rule decided.
+Primaries: `population_assimilation` for the next observation (U2) and the landmark task
+(U3), `population_initial_state` for the initial state (U1). The development analysis by
+the frozen 1.1 publisher (`development-loso-2026-10-30/`,
+`scripts/publish_myopia_population_1_1.py --development`, with n0 as the 1.0.0 reference)
+is the development reference of the protocol:
+
+- H1 passes: 97/115 = 0.843 inside the 80% interval (window 0.70–0.90) and 106/115 =
+  0.922 inside the 90% interval (window 0.80–0.97).
+- H2 passes: 9.39 pp against persistence 18.22, the last-two trend 14.71 and the
+  pooled-curve increment 14.33 on 115 targets, and 9.07 against analog kNN 9.80 on 111.
+- H3 passes: 12.86 pp against persistence 38.17 and the pooled-curve increment 21.75 on
+  115 targets, and 12.61 against analog kNN 15.18 on 111.
+- H4 passes: 13.98 pp against the pooled training curve's 18.89 over 197 targets of 82
+  control group means; 30/82 groups within 5/10 pp (pooled curve 25/82).
+- H5 passes against n0 (model 1.0.0 refitted on the same folds): 9.39 against 10.04 pp
+  (next observation) and 12.86 against 13.22 pp (landmark) on 115 common targets.
+- Reported only: landmark coverage 0.809/0.896; initial-state coverage 0.893/0.954; per
+  series 36/58 within 5/10 pp for the next observation and 30/58 for the landmark task.
+
+Known weaknesses on development: groups of 150 or more children undercovered (0.67/0.75
+on 12 targets); forecasts more than a year ahead too short (landmark −17.85 pp beyond 12
+months); atropine arms 17.79 pp for the next observation and an initial state worse than
+the pooled training curve (16.24 against 12.82 pp). The protocol keeps H1–H5 as declared
+before round 0; H5's reference is model 1.0.0 (candidate m4 of `myopia_population`, its
+frozen configuration) fitted on the same 33 records in the same sealed run.
+`.peykar/check_myopia11_redaction.py development` found no value of the 16 private studies
+in the public development files. The sealed set (structure seen through the custody
+verifier only, plus custodian C4's report as disclosed above): 26 records with 60 series
+(56 group means and 4 per-child series, which are reported but not tested); orthokeratology
+15, defocus spectacles 14, single vision 12, atropine 7, multifocal contact lenses 6,
+combinations 5, `other` 1; 18 series with one follow-up visit and 42 with two or more;
+author overlap removes 7 training studies from the training sets of 6 sealed studies.
