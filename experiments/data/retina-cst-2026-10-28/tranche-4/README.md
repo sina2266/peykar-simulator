@@ -58,3 +58,38 @@ dataset's screening receipts copied to `screening/` for the link script) found 8
 linked pairs: 8 tranche-4 studies lose linked training studies, 2 pairs link two
 tranche-4 studies, and 21 development clusters leave training together in
 leave-one-study-out.
+
+## Extraction outcome (2026-10-30)
+
+**Custodians.** Three custodian sub-agents (C1–C3) extracted the 22 reserved studies
+under extraction protocol 1.0.0, the tranche-1 brief and a tranche-4 addendum
+(`.peykar/retina-tranche4-extraction-brief.md`, SHA-256 28b55825…; the tranche-3
+addendum with tranche-4 paths, every ruling copied verbatim). Assignments are in
+`.peykar/retina-tranche4-extraction-assignments.json` (SHA-256 277b1fc4…; C1 8 studies,
+C2 and C3 7 each). Records, specs, raw copies and one custody report per custodian are
+private in `.peykar/retina-tranche4-sealed-2026-10-30/`. Reports state
+`contains_outcome_values: false`.
+
+**Result.** 17 records with 26 series (24 group means, 2 individual eyes; 22 control
+and 4 treated); 5 studies excluded: medians only (3, one of them also restricted to
+eyes classed as improved), changes from baseline in a reduction convention with no
+absolute follow-up value (1), and an exclusion criterion removing eyes with surgery or
+laser during follow-up from every visit (1).
+
+**Blind custody check.** `.peykar/verify_retina_tranche4_custody.py` (the tranche-3
+check with tranche-4 paths) rebuilt every record from the screened full text: 17 of 17
+are identical byte for byte. Every record is declared `sealed_test` and is a reserved
+study; every reserved study was assigned exactly once and reported; every raw copy (20)
+equals its screened source; no stray record file exists. The check prints structure
+only.
+
+Structure (series per context): DME anti-VEGF 5, DME steroid implant 5, nAMD anti-VEGF
+7, nAMD combination 3, other vitrectomy 2, and one each of DME combination, RVO
+anti-VEGF, RVO combination and other/other. By the custodians' classification 6
+records carry a CC BY or CC0 licence and 11 do not.
+
+**Process notes.** Each custodian issued some spec writes and builds in one tool
+batch; two builds failed before their inputs existed and wrote nothing, and every
+record was rebuilt with an identical SHA-256. The model developer read the three
+custody reports (structure, decisions and hashes only; no thickness value), which the
+custody design allows but which earlier runs avoided by using the verifier only.
