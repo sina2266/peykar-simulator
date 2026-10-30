@@ -1,0 +1,95 @@
+{
+ "schema": "eye.myopia-axial-author-overlap-1.0.0",
+ "utc": "2026-10-30T13:32:29.860735+00:00",
+ "rule": "reserved studies sharing at least 2 normalized Europe PMC author names",
+ "inputs": {
+  "split_reservation": {
+   "path": "experiments/data/myopia-axial-2026-10-30/split-reservation-1.0.0.json",
+   "sha256": "c6050d69713e1b848237238141d6e14a4a42f0577a5b6b86a07f748e5df84bd1"
+  },
+  "europe_pmc_lite_search_files": [
+   {
+    "file": "search-axial_length_myopia_control_abstract_open-0.json",
+    "sha256": "ce42bd3f603cced042cb391bd71b922a663a153606880c20f2ea142e26860b1c"
+   },
+   {
+    "file": "search-myopia_title_axial_text_open-0.json",
+    "sha256": "7fe384b58069c4d81f0957125191476e74dcf2097aa7bf3db99f0e6987c2eb1d"
+   }
+  ]
+ },
+ "outcome_values_read": false,
+ "pairs": [
+  {
+   "studies": [
+    "myo-pmc10656815",
+    "myo-pmc8592985"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 2
+  },
+  {
+   "studies": [
+    "myo-pmc10656815",
+    "myo-pmc9665032"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "myo-pmc12955131",
+    "myo-pmc8842419"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  },
+  {
+   "studies": [
+    "myo-pmc6990884",
+    "myo-pmc9812803"
+   ],
+   "splits": [
+    "sealed_test",
+    "development"
+   ],
+   "shared": 6
+  },
+  {
+   "studies": [
+    "myo-pmc8592985",
+    "myo-pmc9665032"
+   ],
+   "splits": [
+    "development",
+    "development"
+   ],
+   "shared": 3
+  }
+ ],
+ "development_clusters": [
+  [
+   "myo-pmc10656815",
+   "myo-pmc8592985",
+   "myo-pmc9665032"
+  ],
+  [
+   "myo-pmc12955131",
+   "myo-pmc8842419"
+  ]
+ ],
+ "sealed_training_exclusions": {
+  "myo-pmc6990884": [
+   "myo-pmc9812803"
+  ]
+ }
+}

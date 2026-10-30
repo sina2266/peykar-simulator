@@ -57,3 +57,24 @@ evaluation protocol is frozen.
 No axial-length value of these articles had been read by the model developer when the
 queries, the rule, the reserved list, the tranche order and the extraction protocol
 were committed.
+
+## Triage and split (2026-10-30)
+
+[Triage 1.0.0](triage-1.0.0.json): `screening/triage_chunks.py --tranche 1 --chunks 4`
+built four chunks of 30 articles (no decimal, no ± followed by a digit and no digit
+followed by % outside the identifier lines). Four reviewer sub-agents followed
+`.peykar/myopia-triage-brief.md` and saw masked previews only; there is no owner override
+rule. **54 admitted, 66 excluded.** The exclusions were mostly axial-length changes
+without the groups' baseline in any shown table (about 20), baseline-only tables (10),
+model-adjusted values only (9), reviews and meta-analyses (9) and out-of-scope
+populations (7: premyopic or non-myopic children, adults, an animal study, an unselected
+school cohort); the rest were outcome-selected groups, medians only, a study protocol,
+pooled randomized arms and tables without exact follow-up times.
+
+[`split-reservation-1.0.0.json`](split-reservation-1.0.0.json)
+(`scripts/reserve_myopia_split.py`, salt `peykar-myopia-axial-holdout-v1:`): **34
+development and 20 sealed-test studies.**
+[`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (`scripts/link_study_authors.py`
+over the Europe PMC search results of the screen): 5 linked pairs; 2 development clusters
+(3 and 2 studies) leave training together, and one sealed study loses one linked
+training study. Tranche 2 (94 articles) stays untriaged and unread.
