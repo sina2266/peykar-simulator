@@ -212,6 +212,7 @@ def test_builder_reads_cells_and_checks_hashes() -> None:
 
 
 def test_myopia_candidates_centre_the_covariate_and_read_family_contexts() -> None:
+    from peykar.model_learning import eye_recovery_population5 as version5
     from peykar.model_learning.eye_recovery_population import level_covariate
     from peykar.model_learning.myopia_population import (
         DEVELOPMENT_CANDIDATES,
@@ -219,13 +220,21 @@ def test_myopia_candidates_centre_the_covariate_and_read_family_contexts() -> No
         family_context,
     )
 
-    assert set(DEVELOPMENT_CANDIDATES) == {"m0", "m1", "m2"}
+    assert set(DEVELOPMENT_CANDIDATES) == {"m0", "m1", "m2", "m3", "m4"}
     base = DEVELOPMENT_CANDIDATES["m0"]
     assert base.transient_months is None and base.dimensions == 3
     assert base.forecast_noise_pooling == "pooled" and base.noise_pooling == "median"
     assert base.study_effects == "per_group" and base.grouping == ("context",)
     assert DEVELOPMENT_CANDIDATES["m1"].grouping == ("treatment", "context")
     assert DEVELOPMENT_CANDIDATES["m2"].forecast_noise_pooling is None
+    rate, level = DEVELOPMENT_CANDIDATES["m3"], DEVELOPMENT_CANDIDATES["m4"]
+    assert isinstance(rate, version5.RecoveryConfig) and rate.start == "zero_rate"
+    assert isinstance(level, version5.RecoveryConfig) and level.start == "zero_level"
+    assert rate.dimensions == level.dimensions == 2 and rate.rate_months == 12.0
+    assert rate.grouping == level.grouping == ("treatment", "context")
+    assert [s.context for s in adapter("m3")(_record())] == [
+        s.context for s in adapter("m1")(_record())
+    ]
     series = adapter("m0")(_record())
     # The level covariate is (AL0 - 24.5 mm) / 1 mm.
     assert level_covariate(base, series[0]) == pytest.approx(24.70 - 24.5)

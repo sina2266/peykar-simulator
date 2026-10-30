@@ -10,7 +10,7 @@ analysis are reused with the myopia primaries. H2 and H3 keep its comparators
 last-two trend), and H4 its comparison of the population initial state with the pooled
 training curve over common control group-mean targets. The no-change comparator is
 ``baseline_level`` (the baseline axial length), reported only. Every reported pp is
-0.01 mm of axial-length change (``eye_additive_evaluation4``). Declared changes
+0.01 mm of axial-length change (``eye_additive_evaluation5``). Declared changes
 against the IOP analysis:
 
 - Only human series are tested (here every series), with the summary recomputed.
@@ -32,7 +32,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
-from peykar.validation import eye_additive_evaluation4 as additive
+from peykar.validation import eye_additive_evaluation5 as additive
 
 ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "experiments/data/myopia-axial-2026-10-30"

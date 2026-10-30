@@ -7,7 +7,7 @@ Training data are the development record studies of dataset ``myopia-axial-2026-
 declared configuration of ``myopia_population``; linked studies (author-overlap file,
 development clusters) leave training together. Each candidate reads its series through
 ``myopia_population.adapter`` (treatment or treatment-and-family contexts). Every study
-result is scored on the additive scale of ``eye_additive_evaluation4`` (one reported pp
+result is scored on the additive scale of ``eye_additive_evaluation5`` (one reported pp
 = 0.01 mm of axial-length change from the baseline axial length). ``--shard i/n``
 holds out only every n-th study from the i-th; ``--merge <dir> ...`` joins the shares
 of one run into the report a single run would write. ``--sealed`` refuses to run
@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 from peykar.model_learning.myopia_population import DEVELOPMENT_CANDIDATES, adapter
-from peykar.validation import eye_additive_evaluation4 as additive
+from peykar.validation import eye_additive_evaluation5 as additive
 from peykar.validation.myopia_axial_data import (
     COVARIATE_UNIT_MM,
     MODEL_UNIT_MM,

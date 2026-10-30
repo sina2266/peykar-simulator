@@ -109,3 +109,73 @@ two changes are compatible) against the adopted one under the same rule. If no c
 meets the rule, m0 is the model 1.0 candidate, provided its own primary lies inside both
 windows; otherwise round 2 targets its coverage. Each candidate runs as one process over
 the 22 studies; the comparison is `.peykar/myopia_compare.py`.
+
+## Round 1 — results (2026-10-30)
+
+LOSO over the 22 training studies (68 next-observation and landmark targets of human
+group means, 127 initial-state targets of 59 control group means;
+`.peykar/myopia_compare.py`, `.peykar/myopia-1.0-dev/round1-compare.txt`; RMSE in pp of
+0.01 mm, signed error = forecast − observed in parentheses, positive = forecast longer
+than observed). Each run took under a minute.
+
+| candidate | primary | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|---|
+| m0 | anchored Student-t | 15.385 (+2.90) | 27.496 (+3.43) | 35.876 (−26.56) | 0.824 / 0.912 |
+| m1 (family level) | anchored Student-t | 15.143 (+2.65) | 27.320 (+3.29) | 35.480 (−24.94) | 0.838 / 0.912 |
+| m2 (median forecast noise) | anchored Student-t | 15.386 (+2.90) | 27.497 (+3.43) | 35.877 (−26.56) | 0.824 / 0.912 |
+| persistence | — | 18.525 (−13.29) | 34.828 (−21.60) | — | — |
+| last-two trend | — | 15.752 (−0.66) | 20.063 (−1.06) | — | — |
+| pooled-curve increment | — | 18.327 (−3.60) | 27.039 (−7.18) | — | — |
+| analog kNN (64 targets) | — | 9.138 (−0.35) | 9.924 (−1.04) | — | — |
+| pooled training curve | — | — | — | 21.716 (−2.03) | — |
+
+- **m1 meets the rule** against m0: it gains 0.396 pp (initial state), 0.242 pp (next
+  observation) and 0.176 pp (landmark), and its anchored Student-t variant lies inside
+  both windows. **m2 does not** (−0.001 pp in every task; its primary's intervals equal
+  m0's to three decimals). m1 is adopted.
+- **The free-start law is wrong for this quantity.** Over the 22 LOSO fits the species
+  law of m0 gives a change of −0.66 mm at day 1 (median; range −0.76 to −0.51 mm), and
+  m1 −0.64 mm (−0.76 to −0.52): the population reads the value at the reference time from the curvature
+  of visits at 3 to 24 months, as the Kmax transient was read from no data. A concave
+  exponential that passes through near-linear growth must start below zero. Every
+  context's initial state is too short (signed error −7 to −36 pp under m1) and worse
+  than the pooled training curve: single vision 48.3 against 35.3 pp, orthokeratology
+  37.0 against 21.5, combinations 32.8 against 8.8, atropine 25.9 against 14.3, defocus
+  spectacles 21.9 against 11.8.
+- **Forecasts follow the population slope rather than the series.** Given a first visit,
+  a free start can explain it by the start value instead of the slope, so the next
+  forecast keeps the population's growth: after a 6-month change of 0.06 mm the forecast
+  of month 12 was 0.33 mm (observed 0.14; the line from the baseline through the first
+  visit gives 0.12). On the 64 targets that have an analog forecast, m1's primary has
+  12.54 pp against analog kNN 9.14, the pooled-curve increment 9.35 and the line from the
+  baseline through the last visit 11.71. The four targets without an analog are the
+  84- and 132-month visits of the one 11-year study, which every method misses by 0.3 to
+  0.7 mm.
+
+## Round 2 — declared before results (2026-10-30)
+
+Both candidates start from m1 and replace its free start by a law that is unchanged at
+the reference time, with new generic eye model version 5
+(`peykar.model_learning.eye_recovery_population5`, unit-tested to reproduce version 2
+exactly with a free start) and harness 7 (`eye_recovery_evaluation7`) through
+`eye_additive_evaluation5` 5.0.0:
+
+- **m3**: m1 with the zero-start law written in its initial rate (`start =
+  "zero_rate"`, `R = 12` months): `change(t)/1 mm = v (tau/12)(1 − r(t))`, parameters
+  `(v, ln tau)` with `v` the elongation per year at the start and `v tau/12` the
+  long-term change. The family hierarchy, the study effects, the baseline covariate
+  (`v = context rate + b (AL0 − 24.5 mm)`) and the anchored variants then act on the
+  rate, which series of one or two years identify. Penalty modes (0.1, 0.5) and robust
+  SDs (0.3, 2.0) for `(v, ln tau)`; everything else as m1.
+- **m4**: m1 with the same law written in its long-term change (`start =
+  "zero_level"`): `change(t)/1 mm = ell (1 − r(t))`, parameters `(ell, ln tau)`; the
+  same constants. It differs from m3 only in which parameter the hierarchy and the
+  covariate act on.
+
+The operator now scores every candidate through `eye_additive_evaluation5`, which sends
+version-2 configurations (m0–m2) to harness 6 exactly as before; m1 is rerun with it
+before the round-2 runs, and its report must equal round 1's apart from the evaluation
+versions. Adoption rule as in round 1, against m1. If both meet it, the one with the
+larger summed gain is adopted; if neither, m1 stays the model 1.0 candidate and the
+freeze decision records its development failures. A round 3, if any, is declared here
+before it runs.

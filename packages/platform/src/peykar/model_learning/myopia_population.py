@@ -1,7 +1,8 @@
 """Axial length in childhood myopia, treated or not, model 1.0: configurations.
 
-The model is generic eye model version 2 (``eye_recovery_population2``) on the change of
-the ocular axial length (AL) from its baseline value. The series of
+The model is generic eye model version 2 (``eye_recovery_population2``; version 5,
+``eye_recovery_population5``, for the zero-start candidates) on the change of the ocular
+axial length (AL) from its baseline value. The series of
 ``myopia_axial_data`` hand the model the change as the pseudo-fraction
 ``exp(change / 1 mm)`` and the baseline axial length as the pseudo-reference
 ``exp(AL0 / 1 mm)``. With ``covariate_reference = exp(24.5)`` the level covariate is
@@ -31,6 +32,12 @@ Candidates (rounds of ``experiments/eye/myopia/model-1.0/development-log.md``):
   (uncorrected or single-vision control, optical defocus, atropine, light) → treatment;
   an untrained optical treatment uses the optical family instead of the species mean.
 - ``m2``: ``m0`` with the median noise centre in forecasts too (no forecast pooling).
+- ``m3`` (round 2): ``m1`` with the zero-start law of generic model 5 written in its
+  initial rate (``start = "zero_rate"``, ``R = 12`` months):
+  ``change(t) / 1 mm = v (tau / 12)(1 - r(t))``, parameters ``(v, ln tau)``, so the
+  hierarchy, the covariate and the anchored variants act on the elongation per year.
+- ``m4`` (round 2): ``m1`` with the zero-start law written in its long-term change
+  (``start = "zero_level"``): ``change(t) / 1 mm = ell (1 - r(t))``.
 
 ``FAMILY_CANDIDATES`` names the candidates whose series carry the family part
 (``adapter``). Each development round adds a named candidate and never changes an
@@ -44,6 +51,7 @@ from collections.abc import Callable, Mapping
 from dataclasses import replace
 from typing import Any
 
+from peykar.model_learning import eye_recovery_population5 as version5
 from peykar.model_learning.eye_recovery_population2 import RecoveryConfig
 from peykar.validation.myopia_axial_data import COVARIATE_UNIT_MM, AxialSeries, to_axial_series
 
@@ -96,6 +104,19 @@ def _config(version: str) -> RecoveryConfig:
     return RecoveryConfig(**_fields(version), forecast_noise_pooling="pooled")
 
 
+def _zero_start(version: str, start: str) -> version5.RecoveryConfig:
+    """m1 with a zero-start law of generic model 5 (two parameters: the rate or the
+    long-term change, and ln tau)."""
+    fields = {**_fields(version), "penalty_modes": (0.1, 0.5), "robust_sd": (0.3, 2.0)}
+    return version5.RecoveryConfig(
+        **fields,
+        forecast_noise_pooling="pooled",
+        grouping=("treatment", "context"),
+        start=start,
+        rate_months=12.0,
+    )
+
+
 DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     # m0: one level per treatment context, no transient, forecast-only pooled noise.
     "m0": _config("1.0.0-m0"),
@@ -103,9 +124,13 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     "m1": replace(_config("1.0.0-m1"), grouping=("treatment", "context")),
     # m2: m0 with the median noise centre in forecasts too.
     "m2": replace(_config("1.0.0-m2"), forecast_noise_pooling=None),
+    # m3 (round 2): m1 with the zero-start law in its initial rate per year.
+    "m3": _zero_start("1.0.0-m3", "zero_rate"),
+    # m4 (round 2): m1 with the zero-start law in its long-term change.
+    "m4": _zero_start("1.0.0-m4", "zero_level"),
 }
 
-FAMILY_CANDIDATES: frozenset[str] = frozenset({"m1"})
+FAMILY_CANDIDATES: frozenset[str] = frozenset({"m1", "m3", "m4"})
 
 
 def family_context(context: str) -> str:
