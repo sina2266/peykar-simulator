@@ -45,6 +45,21 @@ def test_round_zero_candidates_are_the_frozen_versions_refitted() -> None:
         adapter("n3")
 
 
+def test_round_one_candidates_scale_declared_bases() -> None:
+    p0g = DEVELOPMENT_CANDIDATES["p0g"]
+    differing = _differing(p0g.describe(), DEVELOPMENT_CANDIDATES["p0"].describe())
+    assert differing == {"model_version", "max_noise_exponent"}
+    assert p0g.max_noise_exponent == 0.0
+    bases = {name: c.base for name, c in SCALED_CANDIDATES.items()}
+    assert bases == {"p1": "p0", "p2": "p0g", "p3": "p0m"}
+    for candidate in SCALED_CANDIDATES.values():
+        spec = candidate.spec
+        assert spec.members.history_model == "population_assimilation"
+        assert spec.scale_tasks == ("next_observation", "landmark")
+        assert (spec.calibration_level, spec.target_coverage) == ("80", "0.80")
+        assert candidate.describe()["base"] == candidate.base
+
+
 def test_overlap_clusters_are_connected_components_among_training_studies() -> None:
     operator = _operator()
     overlap = {

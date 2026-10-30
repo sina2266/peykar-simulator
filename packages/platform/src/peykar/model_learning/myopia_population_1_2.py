@@ -13,6 +13,12 @@ Candidates (rounds of ``experiments/eye/myopia/model-1.2/development-log.md``):
   59 records; the reference of round 1.
 - ``p0m`` (round 0): model 1.0.0 unchanged apart from its version string, refitted on
   the 59 records.
+- ``p0g`` (round 1, a base only): ``p0`` with group-mean noise not scaled by group size
+  (``max_noise_exponent = 0``).
+- ``p1``, ``p2``, ``p3`` (round 1): the scaled candidates of ``p0``, ``p0g`` and ``p0m``:
+  the Gaussian variant's (``population_assimilation``) points, its intervals scaled by
+  one factor per forecast task, each chosen so that the pooled coverage of that task's
+  80% intervals is closest to 0.80 (grid 0.30 to 3.00 by 0.01).
 
 ``SCALED_CANDIDATES`` names candidates that keep a population candidate's point
 forecasts and scale its intervals by a factor chosen on development forecasts
@@ -32,6 +38,7 @@ from typing import Any
 from peykar.model_learning import myopia_population as version1
 from peykar.model_learning import myopia_population_1_1 as version1_1
 from peykar.model_learning.eye_recovery_population2 import RecoveryConfig
+from peykar.model_learning.eye_stacking import StackingSpec
 from peykar.model_learning.eye_stacking2 import HistoryStackingSpec
 from peykar.validation.myopia_axial_data import AxialSeries
 
@@ -60,6 +67,8 @@ DEVELOPMENT_CANDIDATES: dict[str, RecoveryConfig] = {
     "p0": replace(VERSION1_1, model_version="1.2.0-p0"),
     # p0m (round 0): model 1.0.0 refitted on the 59 consumed records.
     "p0m": replace(VERSION1_0, model_version="1.2.0-p0m"),
+    # p0g (round 1, base of p2): p0 with noise not scaled by group size.
+    "p0g": replace(VERSION1_1, model_version="1.2.0-p0g", max_noise_exponent=0.0),
 }
 
 
@@ -79,7 +88,21 @@ class ScaledCandidate:
         }
 
 
-SCALED_CANDIDATES: dict[str, ScaledCandidate] = {}
+# Round 1: one factor per forecast task, each chosen on that task's 80% intervals.
+_SCALING = HistoryStackingSpec(
+    members=StackingSpec(history_model="population_assimilation"),
+    calibration_task="next_observation",
+    calibration_level="80",
+    target_coverage="0.80",
+    scale_grid=("0.30", "3.00", "0.01"),
+    scale_tasks=("next_observation", "landmark"),
+)
+
+SCALED_CANDIDATES: dict[str, ScaledCandidate] = {
+    "p1": ScaledCandidate(base="p0", spec=_SCALING),
+    "p2": ScaledCandidate(base="p0g", spec=_SCALING),
+    "p3": ScaledCandidate(base="p0m", spec=_SCALING),
+}
 
 
 def adapter(name: str) -> Callable[[Mapping[str, Any]], list[AxialSeries]]:
