@@ -209,3 +209,65 @@ def test_builder_reads_cells_and_checks_hashes() -> None:
     with pytest.raises(InvalidRequest):
         build_record(spec, {"a.xml": XML + b" "})
     assert axial_number("\u2212.05 \u00b1 .2") == pytest.approx(-0.05)
+
+
+def test_myopia_candidates_centre_the_covariate_and_read_family_contexts() -> None:
+    from peykar.model_learning.eye_recovery_population import level_covariate
+    from peykar.model_learning.myopia_population import (
+        DEVELOPMENT_CANDIDATES,
+        adapter,
+        family_context,
+    )
+
+    assert set(DEVELOPMENT_CANDIDATES) == {"m0", "m1", "m2"}
+    base = DEVELOPMENT_CANDIDATES["m0"]
+    assert base.transient_months is None and base.dimensions == 3
+    assert base.forecast_noise_pooling == "pooled" and base.noise_pooling == "median"
+    assert base.study_effects == "per_group" and base.grouping == ("context",)
+    assert DEVELOPMENT_CANDIDATES["m1"].grouping == ("treatment", "context")
+    assert DEVELOPMENT_CANDIDATES["m2"].forecast_noise_pooling is None
+    series = adapter("m0")(_record())
+    # The level covariate is (AL0 - 24.5 mm) / 1 mm.
+    assert level_covariate(base, series[0]) == pytest.approx(24.70 - 24.5)
+    assert [s.context for s in series] == [
+        "human/atropine",
+        "human/single_vision",
+        "human/orthokeratology",
+    ]
+    assert [s.context for s in adapter("m1")(_record())] == [
+        "human/atropine/atropine",
+        "human/single_vision/control",
+        "human/orthokeratology/optical",
+    ]
+    assert family_context("human/multifocal_contacts") == "human/multifocal_contacts/optical"
+    assert family_context("human/combination") == "human/combination/atropine"
+    assert family_context("human/red_light") == "human/red_light/light"
+
+
+def test_myopia_publisher_keeps_iop_comparators_and_redacts_initial_states() -> None:
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[2] / "scripts/publish_myopia_population.py"
+    spec = importlib.util.spec_from_file_location("publish_myopia_population", path)
+    assert spec is not None and spec.loader is not None
+    publish = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publish)
+    assert publish.base.H3_COMPARATORS == ("persistence", "pooled_curve_ratio", "analog_knn")
+    assert publish.base.PRIMARY == publish.PRIMARY
+    assert "baseline_level" in publish.base.REPORTED
+    entry = {
+        "series_id": "s",
+        "context": "human/atropine",
+        "kind": "group_mean",
+        "reference_value": 24.7,
+        "observed": [1.28],
+        "months": [12.0],
+        "predictions": {"population_initial_state": [1.3]},
+        "initial_state_intervals": {"population_initial_state": {"0.1": [1.2]}},
+        "scores": {},
+    }
+    redacted = publish.redact({"initial_state": [entry], "next_observation": [], "landmark": []})
+    assert set(redacted["initial_state"][0]) <= publish.INITIAL_STATE_PUBLIC_FIELDS
+    assert "reference_value" not in redacted["initial_state"][0]
+    assert "initial_state_intervals" not in redacted["initial_state"][0]
