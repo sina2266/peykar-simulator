@@ -1,0 +1,130 @@
+{
+ "study_id": "myo-pmc9521881",
+ "doi": "10.1007/s40123-022-00572-1",
+ "pmcid": "PMC9521881",
+ "title": "Efficacy and Safety of Consecutive Use of 1% and 0.01% Atropine for Myopia Control in Chinese Children: The Atropine for Children and Adolescent Myopia Progression Study",
+ "species": "human",
+ "treatment": "atropine",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9521881.xml",
+   "sha256": "f2e04fac82382206f02e25d25f637a44b9842bf7efdc677e057056d0b278172b",
+   "bytes": 109195,
+   "origin": "Europe PMC fullTextXML (myopia literature screen 2026-10-30)"
+  }
+ ],
+ "groups": [
+  {
+   "group": "atropine-1-weekly",
+   "role": "control",
+   "treatment": "atropine",
+   "atropine_percent": 1.0,
+   "region": "east_asia",
+   "mean_age_years": 8.97,
+   "n_reported": 91,
+   "description": "Group A: 1% atropine sulfate eye gel once weekly in both eyes (after a 1-week daily loading dose) for 6 months, then switched to 0.01% atropine nightly at the 6-month (24-week) visit; extracted up to the switch; 91 completers with good compliance of 104 randomised; Shanghai Eye Disease Prevention and Treatment Centre, China; mean age of the completers (Table 1)"
+  },
+  {
+   "group": "atropine-0.01",
+   "role": "control",
+   "treatment": "atropine",
+   "atropine_percent": 0.01,
+   "region": "east_asia",
+   "mean_age_years": 8.89,
+   "n_reported": 80,
+   "description": "Group B: 0.01% atropine sulfate eyedrops once nightly in both eyes for 1 year; 80 completers with good compliance of 103 randomised; Shanghai, China; mean age of the completers (Table 1)"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "atropine-1-weekly/al-change-re",
+   "group": "atropine-1-weekly",
+   "kind": "group_mean",
+   "n": 91,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    5.5195
+   ],
+   "cells": [
+    {
+     "definition": "definition:Table 2 footnote 'The data are the changes from baseline visits for each group' (change at baseline = 0)",
+     "value": 0
+    },
+    "PMC9521881.xml::Tab2!R10C2"
+   ],
+   "reference_cell": "PMC9521881.xml::Tab1!R7C5",
+   "baseline_label": "Axial length (mm), Completed 1 year, Group A (Table 1)",
+   "notes": "raw mean (SD) change from baseline of Table 2 row 'Baseline to 6 months' (the 24-week visit, 24 x 7/30.4375 months); right eyes; reference = baseline axial length of the same 91 completers (Table 1); later rows are after the switch to 0.01% atropine and are not extracted; 91 of 104 randomised (87.5%)"
+  },
+  {
+   "series_id": "atropine-0.01/al-change-re",
+   "group": "atropine-0.01",
+   "kind": "group_mean",
+   "n": 80,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    5.5195,
+    11.039
+   ],
+   "cells": [
+    {
+     "definition": "definition:Table 2 footnote 'The data are the changes from baseline visits for each group' (change at baseline = 0)",
+     "value": 0
+    },
+    "PMC9521881.xml::Tab2!R10C4",
+    "PMC9521881.xml::Tab2!R9C4"
+   ],
+   "reference_cell": "PMC9521881.xml::Tab1!R7C6",
+   "baseline_label": "Axial length (mm), Completed 1 year, Group B (Table 1)",
+   "notes": "raw mean (SD) changes from baseline of Table 2 rows 'Baseline to 6 months' and 'Baseline to 12 months' (the 24- and 48-week visits, weeks x 7/30.4375 months); right eyes; reference = baseline axial length of the same 80 completers (Table 1); 80 of 103 randomised (77.7%); 48-week visits delayed by 3-4 weeks in 16 participants of both groups"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Group A rows 'Baseline to 12 months' and '6 to 12 months' of Table 2 (axial length)",
+   "reason": "phase after the group switched from weekly 1% to nightly 0.01% atropine at the 6-month visit (protocol inclusion 8); the article reports rebound after the switch"
+  },
+  {
+   "what": "Group B row '6 to 12 months' of Table 2 (axial length)",
+   "reason": "interval change from the previous visit, not from baseline (only the first interval is admissible)"
+  },
+  {
+   "what": "Range columns of Table 2",
+   "reason": "ranges are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "P value rows and columns of Tables 1 and 2 (including the GEE comparison)",
+   "reason": "p-values and model estimates are not admissible"
+  },
+  {
+   "what": "Table 1 'Total' and 'Did not complete 1 year' columns",
+   "reason": "baseline only, not the tabulated follow-up sets"
+  },
+  {
+   "what": "Spherical equivalent, lens power, visual acuity, pupil size and accommodation rows",
+   "reason": "not axial length (protocol inclusion 1)"
+  },
+  {
+   "what": "Supplementary Table 1 (per-visit data, PDF, not in the article XML)",
+   "reason": "not part of the cited source file"
+  }
+ ],
+ "notes": [
+  "Randomised, controlled, non-masked trial (ACAMP, NCT03949101), May 2019 to August 2020, Shanghai Eye Disease Prevention and Treatment Centre, China; 207 children aged 6-12 years randomised 1:1 (Group A 104, Group B 103).",
+  "Analysis set: children who completed 1 year with good compliance (adherence of at least 80%): Group A 91 (87.5% of randomised), Group B 80 (77.7%); both at least 70% (protocol inclusion 5), so admitted; baseline values of this set are tabulated in Table 1 ('Completed 1 year').",
+  "Visits at 1, 12, 24 and 48 weeks; the 36-week visit was cancelled because of COVID-19. Table 2 '6 months' and '12 months' are the 24- and 48-week visits and are converted as weeks x 7/30.4375 months.",
+  "Only right eyes were analysed (Statistical Analysis).",
+  "Axial length by IOL-Master 700; lens power, anterior chamber depth, lens thickness and corneal power are also tabulated, not extracted.",
+  "Photochromic and reading-add (presbyopic) glasses were provided to children with glare or near-vision difficulty."
+ ]
+}

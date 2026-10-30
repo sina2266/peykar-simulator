@@ -1,0 +1,83 @@
+{
+ "study_id": "myo-pmc12123784",
+ "doi": "10.1186/s12886-025-04151-3",
+ "pmcid": "PMC12123784",
+ "title": "Longitudinal safety and efficacy of dual treatment with orthokeratology lenses and 0.01% atropine eye drops: a focus on epithelial changes and tear film stability",
+ "species": "human",
+ "treatment": "combination",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12123784.xml",
+   "sha256": "cd0374e8b4dc8cdc4a71f866f906194bc4d34d9d11d23e2534d9a537db4f76d8",
+   "bytes": 119100,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "group-a-ok-atropine-0.01",
+   "role": "control",
+   "treatment": "combination",
+   "atropine_percent": 0.01,
+   "region": "east_asia",
+   "mean_age_years": 12.5,
+   "n_reported": 50,
+   "description": "Group A (randomised): overnight orthokeratology lenses plus 0.01% atropine eye drops at bedtime; mean age Tab1!R2C2"
+  },
+  {
+   "group": "group-b-ok",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 13.0,
+   "n_reported": 50,
+   "description": "Group B (randomised): overnight orthokeratology lenses alone; mean age Tab1!R2C3"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "group-a-ok-atropine-0.01/al",
+   "group": "group-a-ok-atropine-0.01",
+   "kind": "group_mean",
+   "n": 50,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 1, 3, 6, 12],
+   "cells": ["PMC12123784.xml::Tab4!R2C3", "PMC12123784.xml::Tab4!R3C3", "PMC12123784.xml::Tab4!R4C3", "PMC12123784.xml::Tab4!R5C3", "PMC12123784.xml::Tab4!R6C3"],
+   "baseline_label": "Group A Baseline, Axial Length (mm), Table 4",
+   "notes": "mean +/- SD as printed; IOLMaster 700; eye(s) analysed not stated; intention-to-treat with last observation carried forward for missing data (number of imputed or lost participants not reported); n = 50 randomised"
+  },
+  {
+   "series_id": "group-b-ok/al",
+   "group": "group-b-ok",
+   "kind": "group_mean",
+   "n": 50,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 1, 3, 6, 12],
+   "cells": ["PMC12123784.xml::Tab4!R7C3", "PMC12123784.xml::Tab4!R8C3", "PMC12123784.xml::Tab4!R9C3", "PMC12123784.xml::Tab4!R10C3", "PMC12123784.xml::Tab4!R11C3"],
+   "baseline_label": "Group B Baseline, Axial Length (mm), Table 4",
+   "notes": "mean +/- SD as printed; IOLMaster 700; eye(s) analysed not stated; intention-to-treat with last observation carried forward for missing data (number of imputed or lost participants not reported); n = 50 randomised"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 4 row R12 (p-value A vs. B)", "reason": "p-values are not admissible"},
+  {"what": "Table 1 row R5 (baseline axial length)", "reason": "duplicates the baseline rows of Table 4; Table 4 cited"},
+  {"what": "Table 4 columns C2, C4-C7 (spherical equivalent, BCVA, contrast sensitivity, pupil diameter, refractive stability)", "reason": "not axial length (protocol inclusion 1)"},
+  {"what": "Tables 2, 3, 5 and 6", "reason": "tear film, corneal, intraocular pressure, safety and questionnaire outcomes; not axial length"}
+ ],
+ "notes": [
+  "Prospective randomised trial at Foshan Fosun Chancheng Hospital, Guangdong, China (January 2022 to March 2023); 100 children and adolescents aged 8-18 years with progressive myopia (SER -1.00 to -6.00 D), 50 randomised per group.",
+  "Primary outcomes analysed by intention to treat with last observation carried forward; the article does not report how many participants were lost or imputed. The tabulated means are raw (not model-adjusted).",
+  "Times as tabulated: baseline, 1, 3, 6 and 12 months of treatment.",
+  "Device: IOLMaster 700 (Carl Zeiss Meditec). Units: millimetres (column label 'Axial Length (mm)').",
+  "Spherical equivalent, BCVA, contrast sensitivity, pupil diameter, corneal epithelial and total thickness, endothelial cell count, corneal biomechanics, tear film and intraocular pressure are tabulated and not extracted.",
+  "The Results text and Table 1 disagree on one Group A covariate unrelated to axial length (BMI); noted only as a reporting inconsistency."
+ ]
+}

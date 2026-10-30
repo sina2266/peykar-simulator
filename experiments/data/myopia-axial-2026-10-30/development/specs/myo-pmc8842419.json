@@ -1,0 +1,88 @@
+{
+ "study_id": "myo-pmc8842419",
+ "doi": "10.1167/tvst.11.2.18",
+ "pmcid": "PMC8842419",
+ "title": "Change in Corneal Power Distribution in Orthokeratology: A Predictor for the Change in Axial Length",
+ "species": "human",
+ "treatment": "orthokeratology",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8842419.xml",
+   "sha256": "cdc951894a7a0cea2b85f045fcc20fba9ff8e5a7fba03c456afa37b43598c9f1",
+   "bytes": 69010,
+   "origin": "Europe PMC fullTextXML (myopia literature screen 2026-10-30)"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ortho-k",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 10.02,
+   "n_reported": 67,
+   "description": "single cohort fitted with Paragon CRT orthokeratology lenses, worn nightly for at least 8 consecutive hours; 67 completed cases of 76 enrolled; Fudan University Eye and ENT Hospital, Shanghai, China; mean age of the completed cases (Table 2)"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ortho-k/al-re",
+   "group": "ortho-k",
+   "kind": "group_mean",
+   "n": 67,
+   "device": "unstated",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "cells": [
+    "PMC8842419.xml::tbl3!R3C2",
+    "PMC8842419.xml::tbl3!R3C5",
+    "PMC8842419.xml::tbl3!R3C7"
+   ],
+   "baseline_label": "AL (mm) Baseline (Table 3)",
+   "notes": "mean ± SD of Table 3 row 'AL (mm)' (baseline, 6 Month, 1 Year); right eyes only; the 67 completed cases of 76 enrolled (88%); axial length device not stated"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "Table 3 row 'AL elongation (mm)' at 6 months and 1 year",
+   "reason": "change series of the same group; the absolute series is used when both are given"
+  },
+  {
+   "what": "Table 2 column 'Dropouts (n = 9)' and its baseline AL",
+   "reason": "baseline only, no follow-up axial length"
+  },
+  {
+   "what": "Table 2 'Completed Cases' baseline AL",
+   "reason": "baseline duplicated by Table 3 baseline, which is cited instead"
+  },
+  {
+   "what": "Table 3 1-month, 3-month and 9-month columns of the AL row",
+   "reason": "not measured (printed as a dash)"
+  },
+  {
+   "what": "regression equation and standardized coefficients (Results)",
+   "reason": "model estimates are not admissible"
+  },
+  {
+   "what": "Table 3 SER, Ymax, Xmax and power exponent rows; P value column",
+   "reason": "not axial length; p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "Prospective single-arm orthokeratology study, November 2019 to November 2020, Fudan University Eye and ENT Hospital, Shanghai, China; children aged 8-13 years.",
+  "76 enrolled; 9 who missed two or more visits were dropouts and were excluded from the analysis; 67 completed (88% of enrolled, at least 70%, protocol inclusion 5), with baseline data of completers and dropouts compared in Table 2.",
+  "Only right eyes were analysed (Statistical Analyses).",
+  "Axial length measured at baseline, 6 months and one year; the biometer is not named in the article.",
+  "Manifest refraction and corneal topography metrics are tabulated (Table 3) and are not extracted."
+ ]
+}

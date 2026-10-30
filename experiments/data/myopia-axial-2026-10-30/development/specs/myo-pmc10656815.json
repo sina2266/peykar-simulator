@@ -1,0 +1,129 @@
+{
+ "study_id": "myo-pmc10656815",
+ "doi": "10.3389/fmed.2023.1266354",
+ "pmcid": "PMC10656815",
+ "title": "Changes in axial length in anisometropic children wearing orthokeratology lenses",
+ "species": "human",
+ "treatment": "orthokeratology",
+ "split": "development",
+ "license": {
+  "statement": "CC BY (article <license>: 'Creative Commons Attribution License (CC BY)'; version not stated)",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC10656815.xml",
+   "sha256": "503efc22d8023fe3b39982516bf504ecdd930a0d39b74c74adc360d85a84143d",
+   "bytes": 98334,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "ok-fellow-low-myopia",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 11.1,
+   "n_reported": 37,
+   "description": "more myopic eye wearing a unilateral four-zone five-curve reverse-geometry orthokeratology lens (Boston XO, Autek, Hefei), 8-10 h nightly; subgroup whose untreated fellow eye had low myopia (SER <= -0.50 D) at baseline; one treated eye per child; mean age T1!R4C5"
+  },
+  {
+   "group": "ok-fellow-emmetropia",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 11.6,
+   "n_reported": 76,
+   "description": "more myopic eye wearing a unilateral orthokeratology lens; subgroup whose untreated fellow eye was emmetropic (SER +0.49 to -0.49 D) at baseline; one treated eye per child; mean age T1!R4C6"
+  },
+  {
+   "group": "ok-fellow-low-hyperopia",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 11.6,
+   "n_reported": 35,
+   "description": "more myopic eye wearing a unilateral orthokeratology lens; subgroup whose untreated fellow eye had low hyperopia (SER >= +0.50 D) at baseline; one treated eye per child; mean age T1!R4C7"
+  },
+  {
+   "group": "uncorrected-fellow-low-myopia",
+   "role": "control",
+   "treatment": "other",
+   "region": "east_asia",
+   "mean_age_years": 11.1,
+   "n_reported": 37,
+   "description": "untreated low-myopic fellow eye (SER <= -0.50 D at baseline) without any optical correction ('not indicated for visual correction') of the same 37 children whose more myopic eye wore an orthokeratology lens (group ok-fellow-low-myopia); one eye per child; mean age of these children T1!R4C5"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "ok-fellow-low-myopia/al",
+   "group": "ok-fellow-low-myopia",
+   "kind": "group_mean",
+   "n": 37,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 12],
+   "cells": ["PMC10656815.xml::T2!R5C5", "PMC10656815.xml::T2!R6C5"],
+   "baseline_label": "AL at baseline (mm), Table 2",
+   "notes": "mean +/- SD (Table 2 caption 'mean +/- SD or median (Q1, Q3)'; AL rows printed as mean +/- SD); treated (more myopic) eye, one eye per child; 1 year = 12 months; IOLMaster-500; 37 eyes at both times"
+  },
+  {
+   "series_id": "ok-fellow-emmetropia/al",
+   "group": "ok-fellow-emmetropia",
+   "kind": "group_mean",
+   "n": 76,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 12],
+   "cells": ["PMC10656815.xml::T2!R5C6", "PMC10656815.xml::T2!R6C6"],
+   "baseline_label": "AL at baseline (mm), Table 2",
+   "notes": "mean +/- SD; treated (more myopic) eye, one eye per child; 1 year = 12 months; IOLMaster-500; 76 eyes at both times"
+  },
+  {
+   "series_id": "ok-fellow-low-hyperopia/al",
+   "group": "ok-fellow-low-hyperopia",
+   "kind": "group_mean",
+   "n": 35,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 12],
+   "cells": ["PMC10656815.xml::T2!R5C7", "PMC10656815.xml::T2!R6C7"],
+   "baseline_label": "AL at baseline (mm), Table 2",
+   "notes": "mean +/- SD; treated (more myopic) eye, one eye per child; 1 year = 12 months; IOLMaster-500; 35 eyes at both times"
+  },
+  {
+   "series_id": "uncorrected-fellow-low-myopia/al",
+   "group": "uncorrected-fellow-low-myopia",
+   "kind": "group_mean",
+   "n": 37,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 12],
+   "cells": ["PMC10656815.xml::T2!R5C9", "PMC10656815.xml::T2!R6C9"],
+   "baseline_label": "AL at baseline (mm), Table 2",
+   "notes": "mean +/- SD; untreated low-myopic fellow eye, one eye per child (same children as ok-fellow-low-myopia, other eye); 1 year = 12 months; IOLMaster-500; 37 eyes at both times"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 column C2 (all treated eyes) and Table 1 column C2", "reason": "whole cohort tabulated together with its pre-treatment subgroups (by baseline SER of the fellow eye); extracted as the subgroups so no child is counted twice (protocol inclusion 6)"},
+  {"what": "Table 2 column C3 (all untreated eyes)", "reason": "whole cohort of untreated fellow eyes that pools emmetropic and hyperopic eyes (out of scope) with the low-myopia subgroup extracted separately"},
+  {"what": "Table 2 columns C10 and C11 (untreated emmetropic and low-hyperopic fellow eyes)", "reason": "emmetropic or hyperopic eyes without treatment are out of scope (protocol scope)"},
+  {"what": "Table 2 row R7 (change in AL at 1 year)", "reason": "the same series is tabulated as absolute axial length; the absolute series is used"},
+  {"what": "Table 2 rows R8-R10 (interocular AL difference and its reduction)", "reason": "between-eye differences, not the axial length of a group"},
+  {"what": "Table 1 row R7 (baseline AL)", "reason": "duplicates Table 2 row R5; Table 2 cited"},
+  {"what": "Table 3", "reason": "multivariate linear regression estimates (model-adjusted, protocol inclusion 4)"},
+  {"what": "Table 4", "reason": "results of other published studies, not data of this study"},
+  {"what": "p-value columns C4, C8, C12", "reason": "p-values are not admissible"}
+ ],
+ "notes": [
+  "Retrospective chart review of 148 children with myopic anisometropia aged 8-14 years at the First Affiliated Hospital of Zhengzhou University (China), January 2017 to September 2019; the authors state that all patients meeting the inclusion criteria were included; the number of children screened or lost is not reported, and every included child is tabulated at baseline and 1 year.",
+  "Inclusion required a treatment-zone decentration < 1 mm during orthokeratology wear (a lens-fitting criterion assessed during treatment, not an axial-length outcome).",
+  "Subgroups are defined by the baseline SER of the untreated fellow eye (low myopia, emmetropia, low hyperopia), i.e. before treatment.",
+  "Eyes are not right/left: each series is one eye per child (the treated more myopic eye or the untreated fellow eye).",
+  "Units: millimetres (row labels 'AL ... (mm)'). Device: IOLMaster-500 (Carl Zeiss).",
+  "SER, corneal power, corneal astigmatism, central corneal thickness, intraocular pressure and anterior chamber depth are tabulated in Table 1 and not extracted; SER at baseline is also in Table 2 row R4."
+ ]
+}

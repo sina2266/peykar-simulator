@@ -1,0 +1,138 @@
+{
+ "study_id": "myo-pmc12101883",
+ "doi": "10.1097/OPX.0000000000002255",
+ "pmcid": "PMC12101883",
+ "title": "Eleven years of orthokeratology contact lens wear for slowing myopia progression in children",
+ "species": "human",
+ "treatment": "orthokeratology",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-ND 4.0 (article <license>: Creative Commons Attribution-Non Commercial-No Derivatives License 4.0); private",
+  "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12101883.xml",
+   "sha256": "0e0c834e4a8813a7f055243e8ec2c6e3a7558e5cef1d452a7ec19b1499c1d39e",
+   "bytes": 76071,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "orthokeratology",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "europe",
+   "mean_age_years": 9.67,
+   "n_reported": 31,
+   "description": "overnight orthokeratology (Menicon Z Night, tisilfocon A), chosen at baseline; nonrandomized MCOS trial, Madrid, Spain; White European children (mean age of the 31 recruited, T1)"
+  },
+  {
+   "group": "single-vision",
+   "role": "control",
+   "treatment": "single_vision",
+   "region": "europe",
+   "mean_age_years": 9.84,
+   "n_reported": 30,
+   "description": "distance single-vision spectacles, chosen at baseline; controls who changed to single-vision soft contact lenses after the first 2 years stayed in this group (mean age of the 30 recruited, T1)"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "orthokeratology/al-change",
+   "group": "orthokeratology",
+   "kind": "group_mean",
+   "n": 31,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24,
+    84,
+    132
+   ],
+   "cells": [
+    {
+     "definition": "definition:T2 caption 'Mean unadjusted changes in axial length (from baseline)'; the change at baseline is 0",
+     "value": 0
+    },
+    "PMC12101883.xml::T2!R2C4",
+    "PMC12101883.xml::T2!R4C4",
+    "PMC12101883.xml::T2!R6C4",
+    "PMC12101883.xml::T2!R8C4",
+    "PMC12101883.xml::T2!R10C4",
+    "PMC12101883.xml::T2!R12C4"
+   ],
+   "reference_cell": "PMC12101883.xml::T1!R7C2",
+   "baseline_label": "Baseline axial length, orthokeratology, all 31 recruited (T1)",
+   "notes": "unadjusted mean change from baseline ± SEM; right eyes only; children per visit (T2 'No. subjects') 30, 30, 28, 29, 14, 10 at 0.5, 1, 1.5, 2, 7, 11 y (ordinary attrition); 7 y and 11 y are the labelled visit times (approximately; 11-year attendees had completed a mean of 11.27 years)"
+  },
+  {
+   "series_id": "single-vision/al-change",
+   "group": "single-vision",
+   "kind": "group_mean",
+   "n": 30,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12,
+    18,
+    24,
+    84,
+    132
+   ],
+   "cells": [
+    {
+     "definition": "definition:T2 caption 'Mean unadjusted changes in axial length (from baseline)'; the change at baseline is 0",
+     "value": 0
+    },
+    "PMC12101883.xml::T2!R3C3",
+    "PMC12101883.xml::T2!R5C3",
+    "PMC12101883.xml::T2!R7C3",
+    "PMC12101883.xml::T2!R9C3",
+    "PMC12101883.xml::T2!R11C3",
+    "PMC12101883.xml::T2!R13C3"
+   ],
+   "reference_cell": "PMC12101883.xml::T1!R7C5",
+   "baseline_label": "Baseline axial length, control, all 30 recruited (T1)",
+   "notes": "unadjusted mean change from baseline ± SEM; right eyes only; control rows of T2 have no visit cell (row span), so the change is in C3; children per visit 23, 23, 25, 24, 16, 15 at 0.5, 1, 1.5, 2, 7, 11 y (ordinary attrition); 7 y and 11 y are the labelled visit times (approximately; 11-year attendees had completed a mean of 11.00 years)"
+  }
+ ],
+ "exclusions": [
+  {
+   "what": "T3 estimated marginal means of the change in axial length (linear mixed model)",
+   "reason": "model-adjusted estimates are not admissible (protocol inclusion 4); the unadjusted means of T2 are used"
+  },
+  {
+   "what": "T2 'Difference', 95% confidence interval and p-value columns",
+   "reason": "between-group differences, interval bounds and p-values are not admissible"
+  },
+  {
+   "what": "T1 baseline columns of the 'Retained' and 'Dropout' subsets at 11 years",
+   "reason": "baseline-only subsets defined by attendance at the 11-year visit; the baseline of all recruited children is the reference of each change series"
+  },
+  {
+   "what": "T1 MSE, mean K, corneal p value and pupil diameter rows",
+   "reason": "not axial length (protocol inclusion 1)"
+  },
+  {
+   "what": "T4 (other published studies) and Figures 3–5 (regressions)",
+   "reason": "other cohorts or figure-only results; every value must cite a table cell of this study's groups"
+  }
+ ],
+ "notes": [
+  "Part of a nonrandomized clinical trial (MCOS; ClinicalTrials.gov NTC04806763 and NTC04806711): White European children 6–12 years, myopia −0.75 to −4.00 DS, astigmatism ≤ 1.00 DC, free choice at baseline of orthokeratology or distance single-vision spectacles (a pre-treatment allocation); Novovision clinic, Madrid, Spain.",
+  "AL by IOLMaster 500 (Zeiss), mean of three measurements; right eye only; units mm (T1 and T2).",
+  "Visits every 6 months for the first 2 years; subjects were contacted about 5 and 9 years after the 2-year study (about 7 and 11 years from baseline). Recruited 31 orthokeratology and 30 control; 29 and 24 completed 2 years; 14 and 16 attended at 7 years; 10 and 15 at 11 years.",
+  "Subjects who switched lens modality were excluded from the analyses; control subjects who changed from single-vision spectacles to single-vision soft contact lenses after 2 years were retained; interruptions of orthokeratology wear after 2 years were not systematically recorded (Discussion).",
+  "Refraction (MSE), keratometry, corneal shape and pupil diameter are tabulated (T1) and not used.",
+  "Licence CC BY-NC-ND: record kept private, no raw copy in the repository."
+ ]
+}

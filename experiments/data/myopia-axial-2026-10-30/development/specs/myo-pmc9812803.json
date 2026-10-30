@@ -1,0 +1,82 @@
+{
+ "study_id": "myo-pmc9812803",
+ "doi": "10.7150/ijms.79496",
+ "pmcid": "PMC9812803",
+ "title": "Effects of Long-Term Wear and Discontinuation of Orthokeratology Lenses on the Eyeball Parameters in Children with Myopia",
+ "species": "human",
+ "treatment": "orthokeratology",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC9812803.xml",
+   "sha256": "853c6eb365cf5bd122177d31b633febe1033c3b79a91477b81a39653144e142e",
+   "bytes": 73602,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "orthok",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 9.18,
+   "n_reported": 142,
+   "description": "randomised arm wearing overnight orthokeratology lenses (Boston XO, diameter 9.80-11.60 mm) for 12 months, then a 1-month withdrawal; analysis set = the 142 of 154 randomised children who completed the 13-month follow-up; mean age T1!R3C2"
+  },
+  {
+   "group": "svs",
+   "role": "control",
+   "treatment": "single_vision",
+   "region": "east_asia",
+   "mean_age_years": 9.23,
+   "n_reported": 137,
+   "description": "randomised arm wearing single-vision spectacles for 12 months, then a 1-month withdrawal period; analysis set = the 137 of 154 randomised children who completed the 13-month follow-up; mean age T1!R3C3"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "orthok/al",
+   "group": "orthok",
+   "kind": "group_mean",
+   "n": 142,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 6, 12],
+   "cells": ["PMC9812803.xml::T2!R2C2", "PMC9812803.xml::T2!R2C3", "PMC9812803.xml::T2!R2C4"],
+   "baseline_label": "Before Wearing, Table 2",
+   "notes": "mean +/- SD (Methods: data expressed as mean +/- SD); IOLMaster 700; Table 2 prints no n: the analysis set is taken as the 13-month completers of Table 1 (142 of 154 randomised, 92.2%); eye(s) analysed not stated; the 1-month post-withdrawal column is not extracted"
+  },
+  {
+   "series_id": "svs/al",
+   "group": "svs",
+   "kind": "group_mean",
+   "n": 137,
+   "device": "iolmaster",
+   "value_kind": "axial_absolute",
+   "months": [0, 6, 12],
+   "cells": ["PMC9812803.xml::T2!R3C2", "PMC9812803.xml::T2!R3C3", "PMC9812803.xml::T2!R3C4"],
+   "baseline_label": "Before Wearing, Table 2",
+   "notes": "mean +/- SD (Methods: data expressed as mean +/- SD); IOLMaster 700; Table 2 prints no n: the analysis set is taken as the 13-month completers of Table 1 (137 of 154 randomised, 89.0%); eye(s) analysed not stated; the 1-month post-withdrawal column is not extracted"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 2 column C5 (1 Month after Withdrawal, month 13)", "reason": "phase after the treatment was stopped (washout) is not extracted (protocol inclusion 8)"},
+  {"what": "Table 2 columns C6-C7 and rows R4-R5 (F, t and p statistics)", "reason": "test statistics and p-values are not admissible"},
+  {"what": "Table 1 row R5 (AL at baseline)", "reason": "prints a baseline axial length for the same groups that differs from Table 2 'Before Wearing'; the time series of Table 2 (baseline and follow-ups in one table) is cited and the discrepancy is noted"},
+  {"what": "29 randomised children who did not complete the 13-month follow-up (Orth-K 12, SVS 17)", "reason": "not tabulated; the completers set holds at least 70% of each randomised arm (protocol inclusion 5), so it is admitted"},
+  {"what": "Tables 3-5 (central corneal thickness, anterior chamber depth, central lens thickness)", "reason": "not axial length (protocol inclusion 1)"}
+ ],
+ "notes": [
+  "Prospective randomised study at the First Affiliated Hospital of Kunming Medical University and the Affiliated Hospital of Yunnan University, China (December 2019 to December 2021); 308 myopic children aged 8-12 years randomised 154/154 to orthokeratology or single-vision spectacles for 12 months, followed by a 1-month withdrawal; 279 completed the 13-month follow-up (Orth-K 142, SVS 137).",
+  "Table 1 (baseline characteristics) is headed n = 142 and n = 137, so the analysis set is the completers; Table 2 prints no n and is assumed to cover the same set.",
+  "Internal inconsistency: Table 1 and Table 2 give different baseline axial lengths for the same groups; Table 2 is cited because it holds the baseline and the follow-ups of the same series.",
+  "Device: IOLMaster 700 (Carl Zeiss). Units: millimetres (Table 2 caption 'AL levels (mm)'). Eye(s) analysed are not stated.",
+  "Spherical equivalent refraction, central corneal thickness, anterior chamber depth and central lens thickness are tabulated and not extracted."
+ ]
+}

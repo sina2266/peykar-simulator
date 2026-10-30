@@ -1,0 +1,149 @@
+{
+ "schema": "eye.myopia-axial-record-1.0.0",
+ "study_id": "myo-pmc12930210",
+ "doi": "10.1155/joph/3220557",
+ "pmcid": "PMC12930210",
+ "title": "Myopia Control Efficacy of Grid Dimension Multiregion Spectacle Lenses: A One-Year Randomized Double-Masked Controlled Trial",
+ "species": "human",
+ "treatment": "defocus_spectacles",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC12930210.xml",
+   "sha256": "5a4d5f5f9eef8fdf2967e6f1be8d84458d43d2dfd2edbc6e7eb63754175d6fc0",
+   "bytes": 103371,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "gdm",
+   "role": "control",
+   "treatment": "defocus_spectacles",
+   "region": "east_asia",
+   "mean_age_years": 10.13,
+   "n_reported": 62,
+   "description": "grid dimension multiregion (GDM) myopia-control spectacle lenses (9 mm central zone, 13 annular zones of microlenses and microcylindrical lenses), worn at least 12 h daily; randomised arm; tabulated set = children who completed the 12-month visit; mean age tbl-0001!R2C2"
+  },
+  {
+   "group": "hal",
+   "role": "control",
+   "treatment": "defocus_spectacles",
+   "region": "east_asia",
+   "mean_age_years": 10.58,
+   "n_reported": 69,
+   "description": "highly aspherical lenslets (HAL) myopia-control spectacle lenses, worn at least 12 h daily; randomised arm; tabulated set = children who completed the 12-month visit; mean age tbl-0001!R2C3"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "19 randomised participants who withdrew (GDM 13, HAL 6)",
+   "reason": "not tabulated; the completers set holds at least 70% of each randomised arm (protocol inclusion 5), so it is admitted"
+  },
+  {
+   "what": "Table 2 columns C4 and C5 (p-values, between-group differences with 95% CI)",
+   "reason": "p-values and between-group differences are not admissible"
+  },
+  {
+   "what": "Table 3 and the GEE-adjusted mean changes in the Results text",
+   "reason": "model-adjusted estimates (generalized estimating equations) are not admissible"
+  },
+  {
+   "what": "Table 4",
+   "reason": "correlation coefficients, not axial length"
+  },
+  {
+   "what": "Table 5",
+   "reason": "questionnaire scores, not axial length"
+  },
+  {
+   "what": "Figure 5 (proportions without elongation)",
+   "reason": "proportions are not admissible; figures are not cited"
+  },
+  {
+   "what": "Table 2 rows R3-R4 (change in SER)",
+   "reason": "refraction, not axial length (protocol inclusion 1)"
+  }
+ ],
+ "notes": [
+  "Prospective randomised double-masked trial at the Hangzhou Campus of the Eye Hospital of Wenzhou Medical University, China (recruitment December 2022 to July 2023); 150 children aged 6-13 years randomised 1:1 to GDM or HAL spectacle lenses; no single-vision arm.",
+  "Analysis set: only participants who completed all visits (131 of 150). Per arm: GDM 62 completed and 13 withdrew (75 randomised), HAL 69 completed and 6 withdrew (75 randomised); reasons: refusal of cycloplegia, missed visits, lost contact, chose other myopia control methods.",
+  "Right eyes only (Methods 2.7 and Results 3.1).",
+  "Device: Tomey OA-2000 optical biometer (device class 'other'). Units: millimetres.",
+  "Table 2 gives unadjusted mean +/- SD changes from baseline at 6 and 12 months; the baseline axial length of the same completers is in Table 1 and is the reference of each change series.",
+  "Spherical equivalent refraction (cycloplegic, Topcon KR-800) is tabulated and not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "gdm/al",
+   "group": "gdm",
+   "kind": "group_mean",
+   "n": 62,
+   "device": "other",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "reference_cell": "PMC12930210.xml::tbl-0001!R7C2",
+   "baseline_label": "Axial length (mm) at baseline of the 12-month completers, Table 1",
+   "notes": "unadjusted mean +/- SD change from baseline (Table 2); right eyes only; Tomey OA-2000 optical biometer; completers set of 62 of 75 randomised (82.7%; 13 withdrew); baseline reference from Table 1 (same completers)",
+   "values": [
+    0.0,
+    0.01,
+    0.07
+   ],
+   "source_cells": [
+    "definition:Table 2 'Change in AL (mm)' is the change from the baseline axial length (protocol: the change at month 0 is 0)",
+    "PMC12930210.xml::tbl-0002!R6C2",
+    "PMC12930210.xml::tbl-0002!R7C2"
+   ],
+   "source_cell_texts": [
+    "",
+    "0.01 ± 0.11",
+    "0.07 ± 0.17"
+   ],
+   "reference_value": 24.44,
+   "reference_cell_text": "24.44 ± 0.70"
+  },
+  {
+   "series_id": "hal/al",
+   "group": "hal",
+   "kind": "group_mean",
+   "n": 69,
+   "device": "other",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "reference_cell": "PMC12930210.xml::tbl-0001!R7C3",
+   "baseline_label": "Axial length (mm) at baseline of the 12-month completers, Table 1",
+   "notes": "unadjusted mean +/- SD change from baseline (Table 2); right eyes only; Tomey OA-2000 optical biometer; completers set of 69 of 75 randomised (92.0%; 6 withdrew); baseline reference from Table 1 (same completers)",
+   "values": [
+    0.0,
+    0.04,
+    0.11
+   ],
+   "source_cells": [
+    "definition:Table 2 'Change in AL (mm)' is the change from the baseline axial length (protocol: the change at month 0 is 0)",
+    "PMC12930210.xml::tbl-0002!R6C3",
+    "PMC12930210.xml::tbl-0002!R7C3"
+   ],
+   "source_cell_texts": [
+    "",
+    "0.04 ± 0.11",
+    "0.11 ± 0.15"
+   ],
+   "reference_value": 24.56,
+   "reference_cell_text": "24.56 ± 0.72"
+  }
+ ]
+}

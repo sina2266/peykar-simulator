@@ -1,0 +1,62 @@
+{
+ "study_id": "myo-pmc8186620",
+ "doi": "10.4103/ijo.IJO_3157_20",
+ "pmcid": "PMC8186620",
+ "title": "Efficacy of low-dose atropine to reduce myopia progression among Indian children",
+ "species": "human",
+ "treatment": "atropine",
+ "split": "development",
+ "license": {
+  "statement": "CC BY-NC-SA 4.0 (article <license>: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License)",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC8186620.xml",
+   "sha256": "ed943d267a1b972b8de0d348914738940b0edcc3f15d17b2bb8d0e83c9b80e5a",
+   "bytes": 24045,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "atropine-0.01",
+   "role": "control",
+   "treatment": "atropine",
+   "atropine_percent": 0.01,
+   "region": "south_asia",
+   "mean_age_years": null,
+   "n_reported": 60,
+   "description": "single open-label group of 60 children treated with 0.01% atropine eye drops for 1 year at a tertiary eye care centre in south India; age not reported"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "series": [
+  {
+   "series_id": "atropine-0.01/al-od",
+   "group": "atropine-0.01",
+   "kind": "group_mean",
+   "n": 60,
+   "device": "unstated",
+   "value_kind": "axial_absolute",
+   "months": [0, 12],
+   "cells": ["PMC8186620.xml::T1!R2C4", "PMC8186620.xml::T1!R3C4"],
+   "baseline_label": "Baseline, Axial Length (OD), Table 1",
+   "notes": "right eyes (OD) only; mean +/- SD, the baseline cell also prints the range; '1 year follow-up' = 12 months; biometry device not stated; units not stated in the table, the text gives axial increases in mm"
+  }
+ ],
+ "exclusions": [
+  {"what": "Table 1 column C5 (Axial Length OS)", "reason": "right and left eyes of the same children are tabulated separately; only right eyes are extracted (protocol inclusion 7)"},
+  {"what": "Table 1 row R4 (P*)", "reason": "p-values are not admissible"},
+  {"what": "Table 1 columns C2-C3 (spherical equivalent and rate of myopia progression)", "reason": "refraction, not axial length (protocol inclusion 1)"},
+  {"what": "Ranges in the baseline cells", "reason": "ranges are not admissible as values; only the leading mean is read"}
+ ],
+ "notes": [
+  "Letter to the editor reporting an open trial of 0.01% atropine for 1 year in 60 children recruited at a tertiary eye care centre in south India; no comparison group.",
+  "The letter classifies 10 of the 60 children as non-responders by refractive progression; Table 1 covers all 60 children, so the extracted set is not selected by outcome.",
+  "Mean age, biometry device and dropouts are not reported; all 60 children are described at 1 year.",
+  "Units: the table does not print units; the text reports axial-length increases in millimetres, so millimetres are assumed.",
+  "The mean axial increases quoted in the text do not equal the differences of the tabulated means; the tabulated means are cited.",
+  "Spherical equivalent at baseline and 1 year and the rate of myopia progression are tabulated and not extracted."
+ ]
+}

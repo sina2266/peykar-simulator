@@ -1,0 +1,185 @@
+{
+ "schema": "eye.myopia-axial-record-1.0.0",
+ "study_id": "myo-pmc7861936",
+ "doi": "10.1155/2021/8915867",
+ "pmcid": "PMC7861936",
+ "title": "Orthokeratology and Low-Intensity Laser Therapy for Slowing the Progression of Myopia in Children",
+ "species": "human",
+ "treatment": "single_vision",
+ "split": "development",
+ "license": {
+  "statement": "CC BY, version not stated (article <license>: 'distributed under the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium')",
+  "url": null
+ },
+ "source_files": [
+  {
+   "name": "PMC7861936.xml",
+   "sha256": "bd53e585c3d0b014d39f0e648ab057978b65adf88b364c6ef228498bdf5b424a",
+   "bytes": 104263,
+   "origin": "Europe PMC fullTextXML (myopia literature screen 2026-10-30)"
+  }
+ ],
+ "groups": [
+  {
+   "group": "control",
+   "role": "control",
+   "treatment": "single_vision",
+   "region": "east_asia",
+   "mean_age_years": 10.33,
+   "n_reported": 74,
+   "description": "single-vision distance spectacles worn the entire day; 74 completers of 100 randomised; Nanchang University Affiliated Eye Hospital, Nanchang, China"
+  },
+  {
+   "group": "ok",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 10.88,
+   "n_reported": 81,
+   "description": "overnight orthokeratology (Euclid Systems Ortho-k), at least 7 consecutive hours nightly; 81 completers of 100 randomised; Nanchang, China"
+  },
+  {
+   "group": "lllt",
+   "role": "control",
+   "treatment": "red_light",
+   "region": "east_asia",
+   "mean_age_years": 10.22,
+   "n_reported": 74,
+   "description": "low-level laser therapy ('LILI' in the tables): 650 nm, 2 ± 0.5 mW, twice daily for 3 minutes, with single-vision distance spectacles; 74 completers of 100 randomised; Nanchang, China"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 3 'Change in AL (mm)' at 1, 3 and 6 months",
+   "reason": "change series of the same groups; the absolute series of Table 2 is used when both are given"
+  },
+  {
+   "what": "Table 1 row 'AL (mm)'",
+   "reason": "baseline axial length duplicated by the Table 2 baseline row, which is cited instead"
+  },
+  {
+   "what": "F main-effect and crossover-effect rows of Table 2; F and p columns of Tables 1 and 3",
+   "reason": "test statistics and p-values are not admissible"
+  },
+  {
+   "what": "SER and SFChT blocks of Tables 1-3",
+   "reason": "refraction and choroidal thickness are not axial length (protocol inclusion 1)"
+  },
+  {
+   "what": "regression formulas and correlations (Results)",
+   "reason": "model estimates are not admissible and are not tabulated values"
+  }
+ ],
+ "notes": [
+  "300 children randomly assigned to control, orthokeratology or low-level laser therapy (100 each); 229 completed the 6-month study (control 74, OK 81, LLLT 74) and are tabulated; the tabulated sets are at least 70% of the randomised groups (protocol inclusion 5), so they are admitted.",
+  "Only left eyes were analysed (one eye per child), used as tabulated (protocol inclusion 7).",
+  "Visits at baseline, 1, 3 and 6 months; axial length device named only by manufacturer (Carl Zeiss Meditec), recorded as unstated.",
+  "The low-level laser (650 nm red light, 2 mW, twice daily) is classified as repeated low-level red-light therapy (red_light).",
+  "Subfoveal choroidal thickness and spherical equivalent refraction are tabulated (Tables 1-3), not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "control/al-le",
+   "group": "control",
+   "kind": "group_mean",
+   "n": 74,
+   "device": "unstated",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "AL (mm) Baseline, Control (Table 2)",
+   "notes": "mean ± SD of Table 2 'AL (mm)' block (baseline, one, three and six months); left eyes only, one eye per child (Data Analysis); axial length measured with a Carl Zeiss Meditec device whose model is not named; completers of the 6-month study; n = 74 of 100 randomised (74%)",
+   "values": [
+    25.07,
+    25.09,
+    25.16,
+    25.3
+   ],
+   "source_cells": [
+    "PMC7861936.xml::tab2!R9C3",
+    "PMC7861936.xml::tab2!R10C2",
+    "PMC7861936.xml::tab2!R11C2",
+    "PMC7861936.xml::tab2!R12C2"
+   ],
+   "source_cell_texts": [
+    "25.07 ± 0.87",
+    "25.09 ± 0.87",
+    "25.16 ± 0.87",
+    "25.30 ± 0.86"
+   ]
+  },
+  {
+   "series_id": "ok/al-le",
+   "group": "ok",
+   "kind": "group_mean",
+   "n": 81,
+   "device": "unstated",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "AL (mm) Baseline, OK (Table 2)",
+   "notes": "mean ± SD of Table 2 'AL (mm)' block (baseline, one, three and six months); left eyes only, one eye per child (Data Analysis); axial length measured with a Carl Zeiss Meditec device whose model is not named; completers of the 6-month study; n = 81 of 100 randomised (81%)",
+   "values": [
+    25.07,
+    25.07,
+    25.09,
+    25.13
+   ],
+   "source_cells": [
+    "PMC7861936.xml::tab2!R9C4",
+    "PMC7861936.xml::tab2!R10C3",
+    "PMC7861936.xml::tab2!R11C3",
+    "PMC7861936.xml::tab2!R12C3"
+   ],
+   "source_cell_texts": [
+    "25.07 ± 0.92",
+    "25.07 ± 0.91",
+    "25.09 ± 0.88",
+    "25.13 ± 0.89"
+   ]
+  },
+  {
+   "series_id": "lllt/al-le",
+   "group": "lllt",
+   "kind": "group_mean",
+   "n": 74,
+   "device": "unstated",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    1,
+    3,
+    6
+   ],
+   "baseline_label": "AL (mm) Baseline, LILI (Table 2)",
+   "notes": "mean ± SD of Table 2 'AL (mm)' block (baseline, one, three and six months); left eyes only, one eye per child (Data Analysis); axial length measured with a Carl Zeiss Meditec device whose model is not named; completers of the 6-month study; n = 74 of 100 randomised (74%)",
+   "values": [
+    25.06,
+    25.01,
+    24.99,
+    25.0
+   ],
+   "source_cells": [
+    "PMC7861936.xml::tab2!R9C5",
+    "PMC7861936.xml::tab2!R10C4",
+    "PMC7861936.xml::tab2!R11C4",
+    "PMC7861936.xml::tab2!R12C4"
+   ],
+   "source_cell_texts": [
+    "25.06 ± 1.14",
+    "25.01 ± 1.14",
+    "24.99 ± 1.11",
+    "25.00 ± 1.11"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,222 @@
+{
+ "schema": "eye.myopia-axial-record-1.0.0",
+ "study_id": "myo-pmc7943497",
+ "doi": "10.1007/s10792-020-01658-0",
+ "pmcid": "PMC7943497",
+ "title": "Clinical efficacy of 0.01% atropine in retarding the progression of myopia in children",
+ "species": "human",
+ "treatment": "single_vision",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC7943497.xml",
+   "sha256": "decb849db9ae5d0ef8b5607086af500bdedd481c49fad000a0bb25694b0f0d59",
+   "bytes": 70447,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "single-vision",
+   "role": "control",
+   "treatment": "single_vision",
+   "region": "east_asia",
+   "mean_age_years": 9.7,
+   "n_reported": 20,
+   "description": "single-vision spectacles only (S group), randomised against SA; Dalian, China"
+  },
+  {
+   "group": "atropine-0.01",
+   "role": "control",
+   "treatment": "atropine",
+   "atropine_percent": 0.01,
+   "region": "east_asia",
+   "mean_age_years": 9.65,
+   "n_reported": 20,
+   "description": "spectacles plus 0.01% atropine once nightly in both eyes (SA group)"
+  },
+  {
+   "group": "orthokeratology",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 11.0,
+   "n_reported": 20,
+   "description": "orthokeratology lenses only (OK group); children who had worn ortho-K lenses for 3 months, randomised against OKA"
+  },
+  {
+   "group": "orthokeratology-atropine-0.01",
+   "role": "control",
+   "treatment": "combination",
+   "atropine_percent": 0.01,
+   "region": "east_asia",
+   "mean_age_years": 10.9,
+   "n_reported": 20,
+   "description": "orthokeratology plus 0.01% atropine once nightly (lenses inserted 10 minutes after the drops) (OKA group)"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Tab1 AL 'Change over 3/6/12 mo' rows (change from baseline)",
+   "reason": "the same table gives the absolute axial length; the absolute series is used (protocol: Values)"
+  },
+  {
+   "what": "Tab1 SE, Schirmer's test and TBuT rows; Tab2 and Tab3 (Schirmer's test, TBuT)",
+   "reason": "not axial length (protocol inclusion 1)"
+  },
+  {
+   "what": "Tab1 p-value columns",
+   "reason": "p-values are not admissible"
+  }
+ ],
+ "notes": [
+  "80 children aged 5–14 years with myopia (cycloplegic SE at least −1.00 D, sphere −1.00 to −6.00 DS), Second Affiliated Hospital of Dalian Medical University, January 2019 to April 2020: 40 randomised to spectacles (S) or spectacles plus 0.01% atropine (SA); 40 who had worn ortho-K lenses for 3 months randomised to ortho-K (OK) or ortho-K plus 0.01% atropine (OKA).",
+  "AL by an LS 900 biometer (Lenstar), mean of five measurements; units mm (Tab1); visits every 3 months, AL tabulated at 3, 6 and 12 months.",
+  "Methods state that patients ceased wearing ortho-K lenses and were examined weekly until corneal curvature regressed and refraction stabilised 'during the follow-up visit' (a refraction procedure); its timing relative to the AL measurements is not stated.",
+  "Spherical equivalent, Schirmer's test and tear break-up time are tabulated and not used.",
+  "Licence CC BY 4.0: raw XML copied to development/raw."
+ ],
+ "series": [
+  {
+   "series_id": "single-vision/al",
+   "group": "single-vision",
+   "kind": "group_mean",
+   "n": 20,
+   "device": "lenstar",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline AL, S group (Table 1)",
+   "notes": "mean (SD); Tab1 rows labelled 'Change at 3/6/12 mo' tabulate the axial length at those visits and the 'Change over 3/6/12 mo' rows the change from baseline, so the absolute series is used; the study included both eyes (160 eyes of 80 children) and the table gives n = 20 children per group, used as tabulated; no dropouts reported",
+   "values": [
+    24.28,
+    24.41,
+    24.62,
+    25.0
+   ],
+   "source_cells": [
+    "PMC7943497.xml::Tab1!R14C2",
+    "PMC7943497.xml::Tab1!R15C2",
+    "PMC7943497.xml::Tab1!R16C2",
+    "PMC7943497.xml::Tab1!R17C2"
+   ],
+   "source_cell_texts": [
+    "24.28 (0.83)",
+    "24.41 (0.82)",
+    "24.62 (0.83)",
+    "25.00 (0.87)"
+   ]
+  },
+  {
+   "series_id": "atropine-0.01/al",
+   "group": "atropine-0.01",
+   "kind": "group_mean",
+   "n": 20,
+   "device": "lenstar",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline AL, SA group (Table 1)",
+   "notes": "mean (SD); Tab1 rows labelled 'Change at 3/6/12 mo' tabulate the axial length at those visits and the 'Change over 3/6/12 mo' rows the change from baseline, so the absolute series is used; the study included both eyes (160 eyes of 80 children) and the table gives n = 20 children per group, used as tabulated; no dropouts reported; the 6-month cell of this group (R16C3) has the same text as the OKA 6-month cell (R16C6) and does not agree with this group's 'Change over 6 mo' cell (R19C3); cited as printed",
+   "values": [
+    24.17,
+    24.21,
+    24.64,
+    24.46
+   ],
+   "source_cells": [
+    "PMC7943497.xml::Tab1!R14C3",
+    "PMC7943497.xml::Tab1!R15C3",
+    "PMC7943497.xml::Tab1!R16C3",
+    "PMC7943497.xml::Tab1!R17C3"
+   ],
+   "source_cell_texts": [
+    "24.17 (0.68)",
+    "24.21 (0.69)",
+    "24.64 (0.39)",
+    "24.46 (0.69)"
+   ]
+  },
+  {
+   "series_id": "orthokeratology/al",
+   "group": "orthokeratology",
+   "kind": "group_mean",
+   "n": 20,
+   "device": "lenstar",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline AL, OK group (Table 1)",
+   "notes": "mean (SD); Tab1 rows labelled 'Change at 3/6/12 mo' tabulate the axial length at those visits and the 'Change over 3/6/12 mo' rows the change from baseline, so the absolute series is used; the study included both eyes (160 eyes of 80 children) and the table gives n = 20 children per group, used as tabulated; no dropouts reported; baseline = AL after 3 months of ortho-K wear (stabilised central corneal thickness), as defined by the article",
+   "values": [
+    24.42,
+    24.49,
+    24.62,
+    24.72
+   ],
+   "source_cells": [
+    "PMC7943497.xml::Tab1!R14C5",
+    "PMC7943497.xml::Tab1!R15C5",
+    "PMC7943497.xml::Tab1!R16C5",
+    "PMC7943497.xml::Tab1!R17C5"
+   ],
+   "source_cell_texts": [
+    "24.42 (0.48)",
+    "24.49 (0.48)",
+    "24.62 (0.51)",
+    "24.72 (0.51)"
+   ]
+  },
+  {
+   "series_id": "orthokeratology-atropine-0.01/al",
+   "group": "orthokeratology-atropine-0.01",
+   "kind": "group_mean",
+   "n": 20,
+   "device": "lenstar",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    3,
+    6,
+    12
+   ],
+   "baseline_label": "Baseline AL, OKA group (Table 1)",
+   "notes": "mean (SD); Tab1 rows labelled 'Change at 3/6/12 mo' tabulate the axial length at those visits and the 'Change over 3/6/12 mo' rows the change from baseline, so the absolute series is used; the study included both eyes (160 eyes of 80 children) and the table gives n = 20 children per group, used as tabulated; no dropouts reported; baseline = AL after 3 months of ortho-K wear, when atropine was added, as defined by the article",
+   "values": [
+    24.56,
+    24.58,
+    24.64,
+    24.68
+   ],
+   "source_cells": [
+    "PMC7943497.xml::Tab1!R14C6",
+    "PMC7943497.xml::Tab1!R15C6",
+    "PMC7943497.xml::Tab1!R16C6",
+    "PMC7943497.xml::Tab1!R17C6"
+   ],
+   "source_cell_texts": [
+    "24.56 (0.39)",
+    "24.58 (0.39)",
+    "24.64 (0.39)",
+    "24.68 (0.40)"
+   ]
+  }
+ ]
+}

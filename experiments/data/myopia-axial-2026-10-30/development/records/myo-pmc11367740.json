@@ -1,0 +1,138 @@
+{
+ "schema": "eye.myopia-axial-record-1.0.0",
+ "study_id": "myo-pmc11367740",
+ "doi": "10.1186/s40662-024-00403-3",
+ "pmcid": "PMC11367740",
+ "title": "Efficacy of orthokeratology lens with the modified small treatment zone on myopia progression and visual quality: a randomized clinical trial",
+ "species": "human",
+ "treatment": "orthokeratology",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>: Creative Commons Attribution 4.0 International License; © The Author(s) 2024)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC11367740.xml",
+   "sha256": "38cc19484646fcd72243d80a617269faea4d65c82cf0d6238bcc888b6d052774",
+   "bytes": 147975,
+   "origin": "Europe PMC fullTextXML"
+  }
+ ],
+ "groups": [
+  {
+   "group": "stz-orthok",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 9.94,
+   "n_reported": 68,
+   "description": "modified three-zone small-treatment-zone (STZ) orthokeratology lens (HDS 100, BOZD 6.0 mm), randomised 1:1, Qingdao Eye Hospital, China; ages 8-12 years; mean age of the analysed set (Table 1)"
+  },
+  {
+   "group": "ctz-orthok",
+   "role": "control",
+   "treatment": "orthokeratology",
+   "region": "east_asia",
+   "mean_age_years": 10.17,
+   "n_reported": 63,
+   "description": "conventional four-zone reverse-geometry treatment-zone (CTZ) orthokeratology lens (Alpha Corp., BOZD 6.0 mm), randomised 1:1, Qingdao Eye Hospital, China; ages 8-12 years; mean age of the analysed set (Table 1)"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 1 sphere, astigmatism, SER, UCVA, pupil diameter; Table 2 SER/UCVA at 1 month, HOA, spherical aberration and treatment-zone/defocus topography rows; Table 3 OQAS-II optical quality",
+   "reason": "not axial length (protocol inclusion 1); mentioned here only"
+  },
+  {
+   "what": "Table 2 t and P values; regression coefficients (Table S2, text)",
+   "reason": "p-values and model estimates are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Fig. 3 axial elongation plot",
+   "reason": "figure only; the same means are tabulated in Table 2"
+  }
+ ],
+ "notes": [
+  "Randomised double-masked trial (ChiCTR1900027218), Qingdao, China; recruitment from January 2021; 18-month follow-up; AL by IOLMaster 500 at baseline and every visit.",
+  "Per-group randomised numbers are derived from the reported total (140, 1:1) and the per-group losses (2 STZ, 7 CTZ) with 68 and 63 analysed; the flow diagram (Fig. 2) is an image.",
+  "Refraction, UCVA, corneal topography and optical-quality data are tabulated but are not axial length."
+ ],
+ "series": [
+  {
+   "series_id": "stz-orthok/al",
+   "group": "stz-orthok",
+   "kind": "group_mean",
+   "n": 68,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12,
+    18
+   ],
+   "reference_cell": "PMC11367740.xml::Tab1!R9C2",
+   "baseline_label": "Baseline AL (mm), Table 1 row 'AL (mm)'",
+   "notes": "mean ± SD (raw, tables state mean ± SD; ANCOVA used only for tests); right eye of each child only (Statistical analysis); IOLMaster 500; analysed set = children who completed follow-up: 140 randomised 1:1, 2 STZ children lost to follow-up and excluded, so 68 of 70 randomised (97%) are tabulated (protocol inclusion 5: >=70%, admitted); baseline and follow-up n = 68",
+   "values": [
+    0.0,
+    0.01,
+    0.07,
+    0.17
+   ],
+   "source_cells": [
+    "definition:Table 2 'AL changes at 6/12/18 months' are elongation from baseline (Fig. 3 caption: axial elongation from baseline); change at baseline is 0",
+    "PMC11367740.xml::Tab2!R4C2",
+    "PMC11367740.xml::Tab2!R5C2",
+    "PMC11367740.xml::Tab2!R6C2"
+   ],
+   "source_cell_texts": [
+    "",
+    "0.01 ± 0.09",
+    "0.07 ± 0.11",
+    "0.17 ± 0.15"
+   ],
+   "reference_value": 24.39,
+   "reference_cell_text": "24.39 ± 0.61"
+  },
+  {
+   "series_id": "ctz-orthok/al",
+   "group": "ctz-orthok",
+   "kind": "group_mean",
+   "n": 63,
+   "device": "iolmaster",
+   "value_kind": "axial_change",
+   "months": [
+    0,
+    6,
+    12,
+    18
+   ],
+   "reference_cell": "PMC11367740.xml::Tab1!R9C3",
+   "baseline_label": "Baseline AL (mm), Table 1 row 'AL (mm)'",
+   "notes": "mean ± SD (raw, tables state mean ± SD; ANCOVA used only for tests); right eye of each child only (Statistical analysis); IOLMaster 500; analysed set = children who completed follow-up: 140 randomised 1:1, 7 CTZ children lost to follow-up and excluded, so 63 of 70 randomised (90%) are tabulated (protocol inclusion 5: >=70%, admitted); per the Safety section, 4 CTZ children withdrew because they were dissatisfied with myopia control and 1 after recurrent corneal staining (outcome-related attrition, kept as ordinary attrition under the 70% rule); baseline and follow-up n = 63",
+   "values": [
+    0.0,
+    0.05,
+    0.14,
+    0.26
+   ],
+   "source_cells": [
+    "definition:Table 2 'AL changes at 6/12/18 months' are elongation from baseline (Fig. 3 caption: axial elongation from baseline); change at baseline is 0",
+    "PMC11367740.xml::Tab2!R4C3",
+    "PMC11367740.xml::Tab2!R5C3",
+    "PMC11367740.xml::Tab2!R6C3"
+   ],
+   "source_cell_texts": [
+    "",
+    "0.05 ± 0.09",
+    "0.14 ± 0.12",
+    "0.26 ± 0.16"
+   ],
+   "reference_value": 24.61,
+   "reference_cell_text": "24.61 ± 0.76"
+  }
+ ]
+}

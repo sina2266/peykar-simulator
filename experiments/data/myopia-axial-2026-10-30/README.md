@@ -78,3 +78,53 @@ development and 20 sealed-test studies.**
 over the Europe PMC search results of the screen): 5 linked pairs; 2 development clusters
 (3 and 2 studies) leave training together, and one sealed study loses one linked
 training study. Tranche 2 (94 articles) stays untriaged and unread.
+
+## Extraction outcome (2026-10-30)
+
+Four development extractors (D1–D4: 9, 9, 8 and 8 studies) and three sealed custodians
+(C1–C3: 7, 7 and 6), all sub-agents, followed `.peykar/myopia-extraction-brief.md`
+(SHA-256 7cb5022e…) with assignments `.peykar/myopia-extraction-assignments.json`
+(SHA-256 99bd1107…). The brief included from the start the rules that the Kmax dataset
+had needed an addendum for (nested follow-up cohorts) and asked development extractors
+to write their decisions to a file. After D1 and D2, three readings were settled for D3,
+D4 and the custodians, from the extractors' structural replies only: a retrospective
+cohort whose inclusion criterion already requires the last tabulated follow-up and that
+reports no number of children who started treatment is a complete-case set (excluded);
+intention-to-treat means with the last observation carried forward are raw means; an
+untreated, uncorrected fellow eye of a treated child may be its own group with treatment
+`other`; a listed treatment plus a drug that is not a listed treatment is `other`.
+
+**Development: 22 records with 59 series** (all group means): defocus spectacles 15
+series (6 studies), orthokeratology 13 (10), single vision 13 (9), atropine 8 (6;
+concentrations 0.01–1%), combinations 6 (5), other 3 (2) and red-light therapy 1 (1);
+East Asia 47 series, Europe 8, South Asia 2, Southeast Asia 2; IOLMaster 43, Lenstar 7,
+other 4, device not stated 5; 43 absolute and 16 change series; 19 series have one
+follow-up visit and 40 have two or more, up to 11 years. The 12 CC BY records are in
+`development/records/` with their source XML in `development/raw/`; the 10 records under
+non-commercial or share-alike licences are private
+(`.peykar/myopia-development-private/records/`). Specs (`development/specs/`) cite cells
+and copy no values. Twelve development studies have no record; their reasons are the
+extractors' own ([`development/no-record-reasons-1.0.0.json`](development/no-record-reasons-1.0.0.json)):
+nine complete-case sets (eight retrospective cohorts restricted to children who reached
+the last tabulated visit without a count of those who started, and one trial whose
+completers were below 70% of each arm), two with model-adjusted estimates only, and one
+analysis set from which a child was removed for fast progression.
+
+**Sealed:** the custodians built **11 records with 23 series** (all group means;
+atropine 6, single vision 5, orthokeratology 4, combinations 2, multifocal contacts 2,
+red-light therapy 2, defocus spectacles 1, other 1; East Asia 16, Europe 6, Southeast
+Asia 1; 18 series with two or more follow-up visits; 5 records in the public licence
+class and 6 in the private class) and reported only structure and hashes. Nine sealed
+studies have no record: seven complete-case sets, one analysis set with withdrawals by an
+outcome-based rule, and one with least-squares estimates only.
+`.peykar/verify_myopia_custody.py` (output `.peykar/myopia-custody-check.json`) found
+every reserved sealed study assigned once and reported once, every screened source and
+raw copy equal to its assignment hash, all 11 records rebuilt byte for byte from their
+specs, no record outside a record decision, and no value-like key in the custody
+reports. The developer did not open any custody report.
+
+No axial-length value of these articles had been read by the model developer when the
+rule, the tranche order, the extraction protocol, the triage and the split were
+committed (commits `766a4ed4`, `fb4c0ef0`). Development records are now read for model
+development; sealed records stay private and unread until the evaluation protocol is
+frozen.

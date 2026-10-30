@@ -1,0 +1,142 @@
+{
+ "schema": "eye.myopia-axial-record-1.0.0",
+ "study_id": "myo-pmc13405324",
+ "doi": "10.3390/bioengineering13070802",
+ "pmcid": "PMC13405324",
+ "title": "Defocus-Incorporated Multiple-Segment (DIMS) Spectacle Lenses Versus Single-Vision Lenses for Myopia Control in a South-Eastern European Population",
+ "species": "human",
+ "treatment": "defocus_spectacles",
+ "split": "development",
+ "license": {
+  "statement": "CC BY 4.0 (article <license>)",
+  "url": "https://creativecommons.org/licenses/by/4.0/"
+ },
+ "source_files": [
+  {
+   "name": "PMC13405324.xml",
+   "sha256": "5e21df8c18ebb7f96ad2e620f15f8ea5ae7abecc292f3ba01fb8dbaa9ab6a41e",
+   "bytes": 119591,
+   "origin": "Europe PMC fullTextXML (myopia literature screen 2026-10-30)"
+  }
+ ],
+ "groups": [
+  {
+   "group": "dims",
+   "role": "control",
+   "treatment": "defocus_spectacles",
+   "region": "europe",
+   "mean_age_years": 10.9,
+   "n_reported": 104,
+   "description": "Defocus Incorporated Multiple Segments (DIMS) spectacle lenses alone; 104 analysed of 119 who met the inclusion criteria; Victor Babes University of Medicine and Pharmacy, Timisoara, Romania"
+  },
+  {
+   "group": "sv",
+   "role": "control",
+   "treatment": "single_vision",
+   "region": "europe",
+   "mean_age_years": 10.94,
+   "n_reported": 97,
+   "description": "single-vision spectacle lenses alone; 97 analysed of 118 who met the inclusion criteria; Timisoara, Romania"
+  }
+ ],
+ "extraction_protocol": "myopia-axial-extraction-protocol-1.0.0",
+ "exclusions": [
+  {
+   "what": "Table 2 row 'AL LE (mm)'",
+   "reason": "right and left eyes of the same children tabulated separately: only right eyes are extracted (protocol inclusion 7)"
+  },
+  {
+   "what": "Table 3 (differences from baseline at 6 and 12 months)",
+   "reason": "change series of the same groups; the absolute series of Table 2 is used when both are given"
+  },
+  {
+   "what": "Table 1 rows 'AL RE (mm)' and 'AL LE (mm)'",
+   "reason": "baseline values duplicated by Table 2 'Initial' (right eyes) or left eyes"
+  },
+  {
+   "what": "median and range printed in the Table 1 and Table 2 cells after the mean ± SD",
+   "reason": "medians and ranges are not admissible (protocol inclusion 4)"
+  },
+  {
+   "what": "Table 4 (multiple linear regression) and p-values",
+   "reason": "model estimates and p-values are not admissible"
+  },
+  {
+   "what": "Table 1 and 2 SER rows",
+   "reason": "refraction is not axial length (protocol inclusion 1)"
+  },
+  {
+   "what": "Table 1 'Total (n = 201)' column",
+   "reason": "whole cohort tabulated with its two groups; baseline only"
+  }
+ ],
+ "notes": [
+  "Retrospective cohort study (medical records, January 2023 to December 2025), Ophthalmology Department, Victor Babes University of Medicine and Pharmacy, Timisoara, Romania; treatment chosen by parents or caregivers (not randomised).",
+  "237 children met the inclusion criteria (DIMS 119, SV 118); 36 were excluded for incomplete data (16), follow-up shorter than 365 ± 30 days (13) or partial compliance (7); 201 analysed (DIMS 104, SV 97). The analysed sets are 87% and 82% of the groups that met the inclusion criteria, at least 70% (protocol inclusion 5), so they are admitted.",
+  "Inclusion required baseline axial length between 22 and 26 mm and spherical equivalent between -0.50 and -6.00 D (pre-treatment criteria); spectacles worn 10-12 h a day; lenses replaced when myopia progressed by more than 0.5 D.",
+  "Right eye designated as the primary outcome; left eyes tabulated separately and not extracted.",
+  "Spherical equivalent refraction is also tabulated (Tables 1-3), not extracted."
+ ],
+ "series": [
+  {
+   "series_id": "dims/al-re",
+   "group": "dims",
+   "kind": "group_mean",
+   "n": 104,
+   "device": "other",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "baseline_label": "Initial, DIMS (Table 2, AL RE)",
+   "notes": "right eyes (row 'AL RE (mm)' of Table 2); each cell prints mean ± SD followed by the median and range, the leading number (the mean) is read; ARGOS optical biometer (Movu); visits at baseline, 6 months and one year (follow-up of at least 365 ± 30 days); n = 104 at every visit (column headers); 104 of 119 children who met the inclusion criteria (87%)",
+   "values": [
+    24.11,
+    24.13,
+    24.2
+   ],
+   "source_cells": [
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C2",
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C4",
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C6"
+   ],
+   "source_cell_texts": [
+    "24.11 ± 0.7224.04 (22.7 to 25.98)",
+    "24.13 ± 0.7224.09 (22.72 to 26.07)",
+    "24.2 ± 0.7424.13 (22.74 to 26.13)"
+   ]
+  },
+  {
+   "series_id": "sv/al-re",
+   "group": "sv",
+   "kind": "group_mean",
+   "n": 97,
+   "device": "other",
+   "value_kind": "axial_absolute",
+   "months": [
+    0,
+    6,
+    12
+   ],
+   "baseline_label": "Initial, SV (Table 2, AL RE)",
+   "notes": "right eyes (row 'AL RE (mm)' of Table 2); each cell prints mean ± SD followed by the median and range, the leading number (the mean) is read; ARGOS optical biometer (Movu); visits at baseline, 6 months and one year (follow-up of at least 365 ± 30 days); n = 97 at every visit (column headers); 97 of 118 children who met the inclusion criteria (82%)",
+   "values": [
+    24.22,
+    24.28,
+    24.36
+   ],
+   "source_cells": [
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C3",
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C5",
+    "PMC13405324.xml::bioengineering-13-00802-t002!R5C7"
+   ],
+   "source_cell_texts": [
+    "24.22 ± 0.5824.11 (23.06 to 25.92)",
+    "24.28 ± 0.5724.2 (23.08 to 25.93)",
+    "24.36 ± 0.5824.28 (23.1 to 26)"
+   ]
+  }
+ ]
+}
