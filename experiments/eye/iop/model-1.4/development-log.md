@@ -107,3 +107,39 @@ MIGS; reader `peykar.validation.eye_iop_data_1_4`, unit-tested to equal model 1.
 reader when every rule procedure is selected and model 1.2's series otherwise). Its
 series carry the same values as d0's (checked on the 779 training series). LOSO by
 harness 2 in 16 shards, joined by `--merge`.
+
+## Round 1 — results (2026-10-30)
+
+d1s run by harness 2 in 16 shards (`.peykar/iop-1.4-dev/round1-d1s`, joined by `--merge`;
+exit 0 for all shards). `.peykar/compare_iop_12.py round0-d0 round1-d1s`
+(`.peykar/iop-1.4-dev/round1-compare.txt`), human group means; by the selection rule the
+primary of both d0 and d1s is the Gaussian variant (`population_assimilation`):
+
+| candidate | next observation | landmark | initial state | next-obs coverage 80/90% |
+|---|---|---|---|---|
+| d0 (model 1.2.0) | 6.553 pp (2,015 targets) | 8.232 | 10.268 (2,263 targets) | 0.793 / 0.894 |
+| d1s | 6.512 | 8.087 | 10.054 | 0.796 / 0.895 |
+
+**d1s meets the adoption rule**: it gains 0.041 pp (next observation), 0.145 pp
+(landmark) and 0.214 pp (initial state), loses in no task, and its coverage lies inside
+both windows. The initial-state gain comes from the selected procedures:
+cyclodestruction 13.16 → 11.65 pp (mean signed error −5.95 → −4.43) and subconjunctival
+MIGS 9.45 → 9.09; every other procedure changes by at most 0.1 pp except `other`
+(7.49 → 7.23) and the single laser-trabeculoplasty study (25.31 → 24.82).
+
+## Freeze decision (2026-10-30)
+
+Model 1.4.0 is **d1s** (model 1.2.0 with the sub-procedure level for cyclodestruction and
+subconjunctival MIGS only), with primaries `population_assimilation` for U2 and U3 and
+`population_initial_state` for U1, and model 1.2.0 (d0) as the reference scored in the
+same sealed run. The publisher `scripts/publish_iop_population_1_4.py` (the 1.3 publisher
+with the tranche-5 record sets and the H5 declared in round 1) gives on development
+(`development-loso-2026-10-30/`, reference d0): H1 passes (1,603/2,015 = 0.796 and
+1,804/2,015 = 0.895), H2 passes (6.51 against persistence 7.91, the last-two trend 38.34,
+the pooled-curve increment 8.29 and analog kNN 9.71), H3 passes (8.09 against 14.02,
+15.29 and 15.37), H4 passes (10.05 against the pooled training curve 16.87), and H5 passes
+(initial state 10.05 against 10.27; next observation 6.51 against 6.55 and landmark 8.09
+against 8.23, both within the 0.05 pp allowance). `.peykar/check_iop_redaction_1_4.py`
+found no value of the 170 private studies in the public development files. The sealed
+set has 6 series of the selected procedures (subconjunctival MIGS 5, cyclodestruction 1)
+of its 24, so H5 rests mostly on procedures where d1s equals d0.
