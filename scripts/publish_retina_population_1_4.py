@@ -56,7 +56,7 @@ REFERENCE_PRIMARY = {
     "landmark": "population_assimilation",
     "initial_state": "population_initial_state",
 }
-MODEL_VERSION = "1.4.0-k2"
+MODEL_VERSION = "1.4.0-k3"
 TASKS = ("initial_state", "next_observation", "landmark")
 TESTED_PREFIX = "human/"
 H5_RMSE_TOLERANCE_PP = 0.05

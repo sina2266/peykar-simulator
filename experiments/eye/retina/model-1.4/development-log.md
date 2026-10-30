@@ -154,3 +154,34 @@ the round-2 code: its report must be identical).
   declared in round 1.
 - The declared hypotheses are unchanged: H1 tests next-observation coverage only;
   landmark coverage stays reported, not tested, as in every earlier protocol.
+
+## Round 2 — results (2026-10-30)
+
+- k2 rerun with the round-2 code (`.peykar/retina-1.4-dev/round2-k2-rerun`): report and
+  comparison identical byte for byte to round 1.
+- Nested LOSO of k3 (`.peykar/retina-1.4-dev/round2-k3`): point forecasts and
+  next-observation entries identical to k2's (checked); next observation 6.623 pp and
+  landmark 8.673 pp (e0 6.752 and 8.850), next-observation coverage 0.797/0.877 as k2.
+  **Landmark coverage 593/750 = 0.791 at 80% and 673/750 = 0.897 at 90%, inside both
+  windows: k3 is adopted.**
+- Fitted on all 195 studies: weights as k2 (0.729 model, 0.212 persistence, 0.058
+  pooled-curve increment), scales 0.79 (next observation) and 1.00 (landmark; pooled
+  80% landmark coverage 0.796). Over the 195 nested fits the landmark scale ranged
+  0.99–1.05 (median 1.01). The landmark intervals are thus e0's, moved to the stacked
+  point.
+- The declared development analysis (`scripts/publish_retina_population_1_4.py
+  --development` with e0's round-0 report as reference;
+  `.peykar/retina-1.4-dev/round2-k3-analysis`) passes H1–H5: H1 0.797/0.877; H2 6.62 pp
+  against persistence 7.74, last-two trend 22.41, pooled-curve increment 8.76 and analog
+  8.53 (6.63 on its 744 targets); H3 8.67 against 11.36, 11.46 and 12.48 (8.65 on 744);
+  H4 12.20 against the pooled training curve 14.81 (e0's own initial states); H5 6.62
+  and 8.67 against e0's 6.75 and 8.85.
+
+## Freeze decision (2026-10-30)
+
+Model 1.4.0 is k3: e0's configuration and fit (model 1.1.0) with the weights and the two
+interval scales above frozen. The protocol is `protocol-1.4.0.json`; it pins the
+stacking, the code, the 195 training records and the 17 tranche-4 records (structure
+only seen). Its one sealed run fits e0 on the 195 training studies (minus studies
+linked to a sealed study), scores tranche 4 once, and writes e0's unstacked report (the
+H5 reference) and the stacked report of model 1.4.0 from the same fit.
