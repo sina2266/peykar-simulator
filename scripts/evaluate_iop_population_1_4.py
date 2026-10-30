@@ -46,6 +46,7 @@ from peykar.model_learning import eye_recovery_population3 as version3
 from peykar.model_learning.eye_stacking2 import HistoryStacking
 from peykar.model_learning.iop_population_1_4 import (
     DEVELOPMENT_CANDIDATES,
+    SELECTED_PROCEDURES,
     SERIES_READERS,
     STACKED_CANDIDATES,
 )
@@ -54,6 +55,7 @@ from peykar.validation import eye_recovery_evaluation3 as evaluation3
 from peykar.validation import eye_stacking_evaluation2 as stacking
 from peykar.validation.eye_iop_data_1_2 import IopSeries, to_iop_series
 from peykar.validation.eye_iop_data_1_3 import to_iop_series_1_3
+from peykar.validation.eye_iop_data_1_4 import to_iop_series_1_4
 
 ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "experiments/data/iop-glaucoma-surgery-2026-10-28"
@@ -99,7 +101,12 @@ def harness(name: str) -> Any:
 
 
 def adapter(name: str) -> Callable[[Mapping[str, Any]], list[IopSeries]]:
-    return READERS[SERIES_READERS.get(population(name), "1.2")]
+    base = population(name)
+    reader = SERIES_READERS.get(base, "1.2")
+    if reader == "1.4-selective":
+        selected = SELECTED_PROCEDURES[base]
+        return lambda record: to_iop_series_1_4(record, selected)
+    return READERS[reader]
 
 
 def training_paths() -> list[Path]:
@@ -338,6 +345,8 @@ def main(argv: list[str] | None = None) -> int:
         record["candidate"] = args.candidate
         record["evaluation_version"] = harness(args.candidate).EVALUATION_VERSION
         record["series_reader"] = SERIES_READERS.get(args.candidate, "1.2")
+        if args.candidate in SELECTED_PROCEDURES:
+            record["selected_procedures"] = sorted(SELECTED_PROCEDURES[args.candidate])
         record["model_configuration"] = config.describe()
         report = harness(args.candidate).leave_one_study_out(
             config,

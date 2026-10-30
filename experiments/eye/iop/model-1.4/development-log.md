@@ -73,3 +73,37 @@ Written while the round-0 shards run; no LOSO number over the 308 studies has be
 - If d1s is adopted, the 1.4 protocol's H5 against model 1.2.0 from the same fit is:
   pooled initial-state RMSE of human control group means lower, and pooled
   next-observation and landmark RMSE each at most 0.05 pp higher.
+
+## Round 0 — results (2026-10-30)
+
+d0 run by harness 2 in 16 shards (`.peykar/iop-1.4-dev/round0-d0`, joined by `--merge`;
+7,118–7,894 s per shard; report SHA-256 `d1f7f315…`). Out-of-sample errors of the
+Gaussian primary on human group means (`.peykar/iop14_diagnostics.py`, output
+`.peykar/iop14-diagnostics.txt`): next observation 6.55 pp (2,015 targets, 80%
+coverage 0.79), landmark 8.23 pp (coverage 0.77), initial state 10.27 pp (2,263 targets,
+mean signed error −1.46 pp).
+
+Initial-state mean signed error by sub-procedure (studies, pp), for the procedures with
+keyword rules:
+
+| procedure | sub-procedures |
+|---|---|
+| angle MIGS | canaloplasty −3.02 (15), goniotomy −2.23 (52), stent −3.11 (27), trabeculotomy −0.00 (48), other −0.25 (3) |
+| cyclodestruction | continuous −0.75 (10), endoscopic +6.07 (4), micropulse −10.58 (16), ultrasound −8.23 (4) |
+| subconjunctival MIGS | PreserFlo +8.32 (6), XEN −1.74 (11) |
+| tube | non-valved +0.62 (15), valved −0.03 (14) |
+
+**The declared selection rule selects cyclodestruction** (largest difference between
+kept sub-procedures 16.65 pp) **and subconjunctival MIGS** (10.06 pp); angle MIGS (3.11
+pp) and tubes (0.65 pp) stay at one level. Other notable biases, not addressed by
+round 1: the first postoperative week after trabeculectomy (−7.37 pp, 30 studies) and
+after angle MIGS (−4.82, 76), the only laser-trabeculoplasty study (−24.47).
+
+## Round 1 — the candidate as run (2026-10-30)
+
+d1s as declared, with the selected procedures fixed by the rule above
+(`iop_population_1_4.SELECTED_PROCEDURES["d1s"]` = cyclodestruction and subconjunctival
+MIGS; reader `peykar.validation.eye_iop_data_1_4`, unit-tested to equal model 1.3's
+reader when every rule procedure is selected and model 1.2's series otherwise). Its
+series carry the same values as d0's (checked on the 779 training series). LOSO by
+harness 2 in 16 shards, joined by `--merge`.
