@@ -34,3 +34,27 @@ values by then.
 Known exposure before this declaration: on 2026-10-28 a web search result listed the
 title of one tranche-4 article (PMC12744596), without any value. No other tranche-4
 article has been seen.
+
+## Triage outcome (2026-10-30)
+
+**Triage.** The unchanged chunk script first rebuilt the tranche-1, tranche-2 and
+tranche-3 chunks byte for byte, then built two tranche-4 chunks (18 and 17 articles; no
+decimal, no ± followed by a digit and no digit followed by % outside identifier lines).
+Two reviewer sub-agents followed `.peykar/retina-tranche4-triage-brief.md` (SHA-256
+f5b49713…, the tranche-3 brief with tranche-4 paths; 58 criterion lines unchanged) and
+saw masked previews only ([`triage-1.0.0.json`](triage-1.0.0.json)). Retina has no owner
+rule, so there was no override. **22 admitted, 13 excluded.** The exclusions were one
+follow-up time only (3), medians or percentiles only (2), a review or meta-analysis (2;
+one also without a DOI), a change without a baseline, model-adjusted (MMRM) values, a
+regression table, adjusted p-values only, incidence counts only and groups defined by a
+post-treatment pressure rise.
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 195 record studies of tranches 1–3 as development (training of model 1.4) and all
+22 admits as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (the
+dataset's screening receipts copied to `screening/` for the link script) found 82
+linked pairs: 8 tranche-4 studies lose linked training studies, 2 pairs link two
+tranche-4 studies, and 21 development clusters leave training together in
+leave-one-study-out.

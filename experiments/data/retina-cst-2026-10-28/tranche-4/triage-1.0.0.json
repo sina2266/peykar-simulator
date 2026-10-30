@@ -1,0 +1,313 @@
+{
+ "schema": "eye.retina-triage-1.0.0",
+ "utc": "2026-10-30T01:26:29.080413+00:00",
+ "tranche": 4,
+ "basis": "Masked article-table previews only (data cells hidden; decimals, ±, %, n/N and equations hidden in labels), captions, footnotes and titles; no thickness value read.",
+ "chunks": "experiments/data/retina-cst-2026-10-28/screening/triage_chunks.py --tranche 4 --chunks 2 (2 chunks, round-robin by rank)",
+ "tranche_order": "experiments/data/retina-cst-2026-10-28/tranche-order-1.0.0.json",
+ "reviewers": "two sub-agents following .peykar/retina-tranche4-triage-brief.md (the earlier brief with tranche-4 paths); owner overrides listed per entry",
+ "extraction_protocol": "experiments/data/retina-cst-2026-10-28/extraction-protocol-1.0.0.md",
+ "studies": [
+  {
+   "pmcid": "PMC3627626",
+   "doi": "10.1186/1471-2415-13-10",
+   "study_key": null,
+   "fulltext_sha256": "bac4ef60334b3a9e185836f0df476049bebdb6785f5eae99b620e45c2aeaf64a",
+   "decision": "exclude",
+   "reason": "Tab2: mean and median (IQR) change in CRT at months 1/3/6/12 (total, typical nAMD, PCV) with no baseline CRT in the table (change without baseline); decided from the preview, a baseline, if reported, is in a table not shown"
+  },
+  {
+   "pmcid": "PMC13271562",
+   "doi": "10.4103/IJO.IJO_2656_25",
+   "study_key": null,
+   "fulltext_sha256": "38093c7699e0c278da4cd4c309b9284dce4011c1b68a0f40412fcd75bdd1e979",
+   "decision": "exclude",
+   "reason": "per-eye foveal thickness only at ME diagnosis and at an untimed final follow-up (one follow-up time, time not stated); case series of macular edema after acute retinal necrosis with mixed treatments"
+  },
+  {
+   "pmcid": "PMC12553390",
+   "doi": "10.2147/OPTH.S549584",
+   "study_key": "ret-pmc12553390",
+   "fulltext_sha256": "bb8d98113371055fa03c0e3fc08723b8ebf1603852baf27cd1151c1c49dc3fe3",
+   "decision": "admit",
+   "reason": "Tab2: CFT mean (SD) at baseline and months 1/2/3 with change from baseline, faricimab in refractory (previously treated) nAMD",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC11756025",
+   "doi": "10.1186/s12886-025-03846-x",
+   "study_key": "ret-pmc11756025",
+   "fulltext_sha256": "bbd2a93464f14e761cea262b3b640b5c3a72b415f1676222632a7c1df5ec88aa",
+   "decision": "admit",
+   "reason": "Tab2: CMT baseline and months 1/3/6, innovator vs biosimilar ranibizumab with expansile gas for submacular hemorrhage; polyp-regression rows suggest nAMD/PCV, aetiology not shown in the preview",
+   "context_hint": "namd/combination"
+  },
+  {
+   "pmcid": "PMC6501156",
+   "doi": "10.1155/2019/2648267",
+   "study_key": null,
+   "fulltext_sha256": "8a70555c4014c30ddddb1f77a9ce7761b7344f41b8d1a6b5b25ffbf85bb52580",
+   "decision": "exclude",
+   "reason": "systematic review/meta-analysis (pooled mean differences)"
+  },
+  {
+   "pmcid": "PMC4342561",
+   "doi": "10.1038/srep08627",
+   "study_key": "ret-pmc4342561",
+   "fulltext_sha256": "b7e1eb0a0ff07a6c61cda6c479c35b8660f379b587adcd4ff9d55ec0ba7bbffe",
+   "decision": "admit",
+   "reason": "t2: macular thickness N/mean/SD at day 0, days 2/6/15 and months 1-6 after intravitreal dexamethasone + bevacizumab in exudative AMD; preview does not show whether this is the central or the average macular thickness, extractor to verify",
+   "context_hint": "namd/combination"
+  },
+  {
+   "pmcid": "PMC5813472",
+   "doi": "10.17925/EE.2017.13.02.91",
+   "study_key": null,
+   "fulltext_sha256": "3e57018021a7cafae5d417474b568375798261e6a90e81bbe91b136ca1929a41",
+   "decision": "exclude",
+   "reason": "Tab3: patient counts and incidence rates only (e.g. CRT <275 µm at month 12), no thickness means over time; benefit-risk reanalysis of RESTORE"
+  },
+  {
+   "pmcid": "PMC12744596",
+   "doi": "10.2147/OPTH.S555873",
+   "study_key": "ret-pmc12744596",
+   "fulltext_sha256": "c844bdf9aa3c52e280889286174c6fbe1ecd5f338b2a7ca8e008aabedce1e765",
+   "decision": "admit",
+   "reason": "t0002: CMT mean ± SD baseline and months 1/2/3/6/9/12 after dexamethasone implant in DME; t0004 same split into treatment-naive and recalcitrant eyes (baseline subgroups)",
+   "context_hint": "dme/steroid_implant"
+  },
+  {
+   "pmcid": "PMC4470980",
+   "doi": "10.1007/s40123-015-0028-0",
+   "study_key": "ret-pmc4470980",
+   "fulltext_sha256": "06caab1a76aa69e6a5735a883f87ee66266c2a74be7d5b8b986fe4216e741bf2",
+   "decision": "admit",
+   "reason": "Tab1: per-eye CMT of both eyes after fluocinolone acetonide implant in DME, left eye at baseline and +1/+3/+7/+9/+13 months (right-eye time labels masked); single-patient case report, footnotes note extra ranibizumab injections before one visit and cataract surgery at 13 months",
+   "context_hint": "dme/steroid_implant"
+  },
+  {
+   "pmcid": "PMC12271028",
+   "doi": "10.1007/s40123-025-01163-6",
+   "study_key": null,
+   "fulltext_sha256": "0757351597da6009ce339bc3eb575e0ce59532942ca4b870d23f136124385c70",
+   "decision": "exclude",
+   "reason": "medians (25th, 75th percentiles) only per table header"
+  },
+  {
+   "pmcid": "PMC13331159",
+   "doi": "10.1136/bmjophth-2025-002637",
+   "study_key": null,
+   "fulltext_sha256": "88daa213cf96df36f5aa599f7ca65b0b92cdf0c4a11663703c6a8e3af2dfcea0",
+   "decision": "exclude",
+   "reason": "Tab3 caption: CST change from baseline summarized by MMRM (model-adjusted); CST rows not visible in the preview (only BCVA rows shown); extension study with a switch arm"
+  },
+  {
+   "pmcid": "PMC8291850",
+   "doi": "10.2147/OPTH.S307746",
+   "study_key": "ret-pmc8291850",
+   "fulltext_sha256": "005e26913f64340806f2c24e1186fa40cd66092a5234583a33f2438dcb302618",
+   "decision": "admit",
+   "reason": "t0003: CMT mean (with median) absolute values and change from baseline at screening and weeks 4-20 (preview truncated), biosimilar vs reference ranibizumab in nAMD; per-protocol population, no separate SD row shown",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC11668226",
+   "doi": "10.4103/IJO.IJO_3024_22",
+   "study_key": "ret-pmc11668226",
+   "fulltext_sha256": "318465517ea54d646d8240216923d8804e094a751b3e03e23d47835da1923801",
+   "decision": "admit",
+   "reason": "Tab1: CMT mean (SD) at days 0/1/7/30/60/120/150/180 with difference from baseline, steroid implant vs combination therapy in DME",
+   "context_hint": "dme/steroid_implant"
+  },
+  {
+   "pmcid": "PMC2915853",
+   "doi": "10.2147/opth.s12042",
+   "study_key": "ret-pmc2915853",
+   "fulltext_sha256": "d9ebcba6aa2c97494c6deb457477e3adbf93e03f5b649cd3e14216cb42150f2a",
+   "decision": "admit",
+   "reason": "t1-opth-4-689: central foveal thickness before and 3/12 months after vitrectomy with ILM peeling for idiopathic ERM; fellow-eye column is not a treated series",
+   "context_hint": "other/vitrectomy"
+  },
+  {
+   "pmcid": "PMC11613385",
+   "doi": "10.12669/pjms.40.11.9439",
+   "study_key": "ret-pmc11613385",
+   "fulltext_sha256": "5ef2a04b517bfb3a84291454bbf1892cd6f04f67cf18b283a4b58512605e238f",
+   "decision": "admit",
+   "reason": "Tab-IV: CRT mean (SD) before treatment and at months 1/3/6/12, anti-VEGF injection group vs control group in diabetic retinopathy (DME status and control treatment not shown)",
+   "context_hint": "dme/anti_vegf"
+  },
+  {
+   "pmcid": "PMC13194788",
+   "doi": "10.1038/s41598-026-47416-7",
+   "study_key": "ret-pmc13194788",
+   "fulltext_sha256": "749ff5951d64147be589f0fbeb7f1e6d997ac4f535d12c284e7cae472254253d",
+   "decision": "admit",
+   "reason": "Tab3: CMT baseline and months 3/6/12 after anti-VEGF in DME, by baseline OCT pattern (DRT/CME/SRD)",
+   "context_hint": "dme/anti_vegf"
+  },
+  {
+   "pmcid": "PMC7890830",
+   "doi": "10.1186/s12886-021-01829-2",
+   "study_key": null,
+   "fulltext_sha256": "8ed64bc5f670db22a7c1429977a0f654f8662367a4f1674cda75c64dffe0e0af",
+   "decision": "exclude",
+   "reason": "Tab2: retinal thickness at baseline and 12 months only (one follow-up time)"
+  },
+  {
+   "pmcid": "PMC12987708",
+   "doi": "10.2147/OPTH.S589150",
+   "study_key": "ret-pmc12987708",
+   "fulltext_sha256": "104a938b92e9d28a5b401c33dd5788a73c4493a5aa890c64eb3eac45c4da4d9d",
+   "decision": "admit",
+   "reason": "t0002: CMT baseline and months 1/3/6 after vitrectomy with subretinal tPA for submacular hemorrhage of mixed aetiologies",
+   "context_hint": "other/vitrectomy"
+  },
+  {
+   "pmcid": "PMC13670456",
+   "doi": "10.1186/s12886-026-05131-x",
+   "study_key": "ret-pmc13670456",
+   "fulltext_sha256": "723c5013e267f3ed1db6c1e23d5bcceb83b50950aed2cfc6850eae0e34a81155",
+   "decision": "admit",
+   "reason": "Tab4: mean CST at baseline and months 1/2/3/4/6/9/12 with mean change from baseline, faricimab in real-world nAMD",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC9419407",
+   "doi": "10.1186/s40942-022-00406-z",
+   "study_key": "ret-pmc9419407",
+   "fulltext_sha256": "fbd32751e274d7ba75b61c8858dc90228b968777b35a54bde3022b4455c8e36d",
+   "decision": "admit",
+   "reason": "Tab2: CST baseline and months 1/3/6 after intravitreal anti-VEGF in DME",
+   "context_hint": "dme/anti_vegf"
+  },
+  {
+   "pmcid": "PMC7794500",
+   "doi": "10.1038/s41598-020-79699-9",
+   "study_key": null,
+   "fulltext_sha256": "c6ad7cbf2a52b620b93a5a15e10db287de1e356e0c8f82c46974138b30a28808",
+   "decision": "exclude",
+   "reason": "Tab1: adjusted p-values only, no thickness values"
+  },
+  {
+   "pmcid": "PMC9034893",
+   "doi": "10.2147/OPTH.S361636",
+   "study_key": "ret-pmc9034893",
+   "fulltext_sha256": "1beb5f4eea089bdd7e2052258086485f44d0ef0fffc0a9fa1038aba529fdc11c",
+   "decision": "admit",
+   "reason": "t0002: CMT baseline and months 1/3/6/12 for two groups of a suprachoroidal triamcinolone + intravitreal ranibizumab study in BRVO (group labels masked)",
+   "context_hint": "rvo/combination"
+  },
+  {
+   "pmcid": "PMC13565891",
+   "doi": "10.3390/jcm15176835",
+   "study_key": null,
+   "fulltext_sha256": "91ceec9026bcf8ed8b0f3e879c844d517f078243d325b8136df5a2beb9be1301",
+   "decision": "exclude",
+   "reason": "Tab6: univariable Cox regression (hazard ratios); cohort selected by complete fluid resolution after loading (outcome-selected)"
+  },
+  {
+   "pmcid": "PMC13600504",
+   "doi": "10.1371/journal.pone.0358993",
+   "study_key": "ret-pmc13600504",
+   "fulltext_sha256": "55a93d515617ad1a8f5e83ecd10155269a852dc448295a9349b23eb283924fc6",
+   "decision": "admit",
+   "reason": "pone.0358993.t003: CMT mean ± SD baseline and months 3/6/12 on faricimab, refractory vs treatment-naive DME (baseline subgroups); GEE used for the comparisons only",
+   "context_hint": "dme/anti_vegf"
+  },
+  {
+   "pmcid": "PMC11961644",
+   "doi": "10.3389/fmed.2025.1505530",
+   "study_key": "ret-pmc11961644",
+   "fulltext_sha256": "2f157dc2a0470c09388ea8e77d5194e9f620fd155f1edddbed039405ee8d50b9",
+   "decision": "admit",
+   "reason": "Tab1: CST pre-treatment vs 24 h and 1 month after anti-VEGF in macular edema of unstated type (no CST row at 3 months shown); footnote reports Wilcoxon tests for non-normal data, so values may be medians, but the preview does not say so"
+  },
+  {
+   "pmcid": "PMC5551529",
+   "doi": "10.1155/2017/4834201",
+   "study_key": null,
+   "fulltext_sha256": "c3b33a25673f35f1e922bf2add1b397d0acf632c986b2e241d23b58cebc443c1",
+   "decision": "exclude",
+   "reason": "CMT only at baseline and 3 months (one follow-up time), by kidney-function group"
+  },
+  {
+   "pmcid": "PMC8888519",
+   "doi": "10.3389/fmed.2022.777549",
+   "study_key": "ret-pmc8888519",
+   "fulltext_sha256": "8a7a9028e64ed443a1a8778671eb764033d1cea8d11901b79e305fa4410780ae",
+   "decision": "admit",
+   "reason": "Tab1: CMT before injection and at 2 weeks/1/3/6 months, filtered low-dose triamcinolone vs ranibizumab in pseudophakic CME; Tab2 same visits stratified by diabetes",
+   "context_hint": "cme_postoperative/steroid_injection"
+  },
+  {
+   "pmcid": "PMC9792597",
+   "doi": "10.3389/fmed.2022.1065397",
+   "study_key": "ret-pmc9792597",
+   "fulltext_sha256": "7387edb6d2e701169c138ed644ef9846889b18ca8ab20c0a0bbee52365d12c6c",
+   "decision": "admit",
+   "reason": "T2: CMT baseline and months 1/3/6/12 after anti-VEGF in myopic CNV, by baseline perforating-scleral-vessel features",
+   "context_hint": "myopic_cnv/anti_vegf"
+  },
+  {
+   "pmcid": "PMC8975682",
+   "doi": "10.1155/2022/2659714",
+   "study_key": "ret-pmc8975682",
+   "fulltext_sha256": "1c37eb0ac6cfea4e5d21ecb011a22bea20835d40b1851a7294889e138c4e0eb5",
+   "decision": "admit",
+   "reason": "Tab2: mean CRT (SD) at baseline and weeks 4/8/16/20, brolucizumab in treatment-naive nAMD",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC7564688",
+   "doi": "10.3390/jcm9092692",
+   "study_key": null,
+   "fulltext_sha256": "bcd8cd108823b72d9af1f5354503d1a7807f11795ad9982bb8ec391947650ed9",
+   "decision": "exclude",
+   "reason": "CST shown only for groups defined by post-implant IOP increase (IIOP vs nIIOP), an outcome-selected grouping; no whole-cohort series shown"
+  },
+  {
+   "pmcid": "PMC13306098",
+   "doi": "10.3390/pharmaceutics18060675",
+   "study_key": null,
+   "fulltext_sha256": "7e915005d92d6a21b8240579d89f3e426f8c8c03651fc591cef2d047372179bf",
+   "decision": "exclude",
+   "reason": "Tab3: CST median (IQR) only; visits are time windows"
+  },
+  {
+   "pmcid": "PMC10361423",
+   "doi": "10.4103/tjo.TJO-D-22-00135",
+   "study_key": "ret-pmc10361423",
+   "fulltext_sha256": "41777119e8b7da0748a495307b0dc05a96749cc9ebc9683f03611aac28091d8c",
+   "decision": "admit",
+   "reason": "tjo.TJO-D-22-00135-t001: CMT with n at baseline and months 6/12/24/36/48/60, whole cohort, aflibercept modified treat-and-extend in naive nAMD",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC2701127",
+   "doi": "",
+   "study_key": null,
+   "fulltext_sha256": "5ae103c4241c42257f658a1fcb6ae0fb3d617804f43f6d2d31cf0b45de88e74b",
+   "decision": "exclude",
+   "reason": "review of published studies; no DOI"
+  },
+  {
+   "pmcid": "PMC11826782",
+   "doi": "10.5935/0004-2749.20210036",
+   "study_key": "ret-pmc11826782",
+   "fulltext_sha256": "dcb1f345f2c74239de40c7d5d5475fb4e379b1291d748186b7c68980dc065552",
+   "decision": "admit",
+   "reason": "t2: CMT mean ± SD (IQR) before switch and months 6/12/18/24/30 after switching to aflibercept in nAMD",
+   "context_hint": "namd/anti_vegf"
+  },
+  {
+   "pmcid": "PMC12997637",
+   "doi": "10.5935/0004-2749.2025-0098",
+   "study_key": "ret-pmc12997637",
+   "fulltext_sha256": "6c566ce714b09e791750bc353d82eb429f5b923cb655aa9d2daf00e8b8461843",
+   "decision": "admit",
+   "reason": "Tab3: CMT change from day 0 to days 3/7/30/60/90 as mean percent change and mean µm change (SD), aflibercept plus dexamethasone phosphate vs aflibercept alone in DME; no absolute baseline in this table, admitted for the percent change (admissible per protocol)",
+   "context_hint": "dme/combination"
+  }
+ ]
+}
