@@ -1,0 +1,802 @@
+{
+ "schema": "eye.myopia-axial-triage-1.0.0",
+ "utc": "2026-10-30T17:37:58.440843+00:00",
+ "tranche": 2,
+ "basis": "Masked article-table previews only (data cells hidden; decimals, ±, %, n/N and equations hidden in labels), captions, footnotes and titles; no axial-length value read.",
+ "chunks": "experiments/data/myopia-axial-2026-10-30/screening/triage_chunks.py --tranche 2 --chunks 3 (chunks of 32, 31 and 31, round-robin by rank)",
+ "tranche_order": "experiments/data/myopia-axial-2026-10-30/tranche-order-1.0.0.json",
+ "reviewers": "three sub-agents following .peykar/myopia-tranche2-triage-brief.md (the earlier brief with tranche-2 paths); owner overrides listed per entry",
+ "extraction_protocol": "experiments/data/myopia-axial-2026-10-30/extraction-protocol-1.0.0.md",
+ "studies": [
+  {
+   "pmcid": "PMC13471525",
+   "doi": "10.1186/s12886-026-05144-6",
+   "study_key": null,
+   "fulltext_sha256": "e9d182d6b9d547a3e6ad9d1b9926f36dd56883e1a546f0e46de2049312085079",
+   "decision": "exclude",
+   "reason": "Tab2/Tab3: AL change from baseline only as linear mixed-model estimates (the 'unadjusted' rows are also model estimates); no baseline AL table shown"
+  },
+  {
+   "pmcid": "PMC9300108",
+   "doi": "10.1111/opo.12930",
+   "study_key": null,
+   "fulltext_sha256": "fe78c02cfec180e9aa042ce27c967fc3aec7b48a42e1b555ad9cf6a586826b22",
+   "decision": "exclude",
+   "reason": "regression results only (factors associated with AL elongation); AL baseline/follow-up values not tabulated"
+  },
+  {
+   "pmcid": "PMC13135896",
+   "doi": "10.2147/OPTH.S579775",
+   "study_key": "myo-pmc13135896",
+   "fulltext_sha256": "385bdbae94b0650a4c4664685e08c46039c2ef1fcddc8d6afc5105051ab45bb7",
+   "decision": "admit",
+   "reason": "Tab2: mean AL +/- SD at baseline, 6, 12, 18 and 24 months for spherical vs astigmatism groups (defined at baseline), combined Asian and Caucasian datasets; Tab1 lists both SV and DIMS wearers, so these groups may mix SV and DIMS (treatment per group not shown; check at extraction)",
+   "context_hint": "defocus_spectacles/mixed"
+  },
+  {
+   "pmcid": "PMC10887607",
+   "doi": "10.3390/children11020177",
+   "study_key": "myo-pmc10887607",
+   "fulltext_sha256": "ea22b518c35d60a8ff15270092c5521124a5e0d7686404248e1da156d7128233",
+   "decision": "admit",
+   "reason": "Tab3: AL mean ± SD at initial, 6- and 12-month visits, asymmetric myopic peripheral defocus lens vs single-vision lens (mm shown on the change rows; age not shown, journal Children)",
+   "context_hint": "defocus_spectacles/europe"
+  },
+  {
+   "pmcid": "PMC7831104",
+   "doi": "10.3390/jcm10020336",
+   "study_key": "myo-pmc7831104",
+   "fulltext_sha256": "54a815d9cc8e4dceca4e6dfd3bba03a37539a148e53998af566d963a129cc4ab",
+   "decision": "admit",
+   "reason": "Tab2: AL baseline and 12 months (and change), two orthokeratology groups by lens back optic zone diameter (>5 vs <=5 mm); age not shown",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC13369626",
+   "doi": "10.1007/s44402-026-00073-9",
+   "study_key": null,
+   "fulltext_sha256": "6e7b9b54558a163bfa0eb6464b8f9df7cf094a80c63bb5728176203c8957956a",
+   "decision": "exclude",
+   "reason": "out of scope: pre-myopic children; Tab1 baseline characteristics only (propensity-matched sub-datasets)"
+  },
+  {
+   "pmcid": "PMC12905191",
+   "doi": "10.1038/s41598-026-36545-8",
+   "study_key": "myo-pmc12905191",
+   "fulltext_sha256": "de0683427ae4c40e373fb51f6a692ed2c1e1f3169c6482ccaae329b8f646e3e8",
+   "decision": "admit",
+   "reason": "Tab2: AL (SD) mm at baseline and after 1 year, DIMS vs control (control correction not shown)",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC11629838",
+   "doi": "10.1111/opo.13401",
+   "study_key": null,
+   "fulltext_sha256": "9acb9e2578f5a111e9479f3d293517f56ad5d48055644fb44ee03d92af8c13e1",
+   "decision": "exclude",
+   "reason": "follow-up AL only as GEE model-based estimates; baseline table mixes myopic and non-myopic children"
+  },
+  {
+   "pmcid": "PMC10944170",
+   "doi": "10.2147/OPTH.S453731",
+   "study_key": "myo-pmc10944170",
+   "fulltext_sha256": "bf9c41739865099fc9a34b69fe248871c9d03112667ba4b04b2e86f34c460239",
+   "decision": "admit",
+   "reason": "Tab3: right-eye AL mean +/- SD with numbers at baseline, 6 months and 1 year of DIMS (defocus) spectacle wear, whole cohort; the linear-mixed-model footnote marks the P row only",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC12271023",
+   "doi": "10.1007/s40123-025-01169-0",
+   "study_key": null,
+   "fulltext_sha256": "95db2a54aba0ccd65a2f7d95dda045748271c8b507b1bea8c82ff446a5a761fe",
+   "decision": "exclude",
+   "reason": "Tab2: AL changes (baseline to 3 and 6 months) only; no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC9933422",
+   "doi": "10.1002/14651858.CD014758.pub2",
+   "study_key": null,
+   "fulltext_sha256": "e5215c28dd29983c0564a09a60f884fff7855de43839a11ec41d5b39f93af7c7",
+   "decision": "exclude",
+   "reason": "systematic review and network meta-analysis"
+  },
+  {
+   "pmcid": "PMC7223350",
+   "doi": "10.1136/bmjophth-2019-000345",
+   "study_key": null,
+   "fulltext_sha256": "338e46bc8c5534a2220cf1b272f0995c41d89e71e44c0ec6df5d439d3be3d7d6",
+   "decision": "exclude",
+   "reason": "study design report: the only table shown is a data-collection schedule; axial length values not tabulated"
+  },
+  {
+   "pmcid": "PMC11854278",
+   "doi": "10.3390/children12020191",
+   "study_key": null,
+   "fulltext_sha256": "ed09f9efbaa9b94680fb62574cadc8d82f8735ea29ff600ed162fdc9208a6499",
+   "decision": "exclude",
+   "reason": "Tab4: AL change from initial to 24 months only; no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC12087851",
+   "doi": "10.1111/opo.13517",
+   "study_key": "myo-pmc12087851",
+   "fulltext_sha256": "563ae89d33303d3dd17a7bf0d8c777ee87cf9b2c004b8e80f01b84eb149be086",
+   "decision": "admit",
+   "reason": "Tab2: observed AL progression (n, mean, SD) at 6 and 12 months, CARE vs single-vision lenses; baseline row shows n and mean only, which may be zero progression rather than baseline AL (extractor to confirm)",
+   "context_hint": "defocus_spectacles/europe"
+  },
+  {
+   "pmcid": "PMC13021867",
+   "doi": "10.3389/fcell.2026.1786621",
+   "study_key": null,
+   "fulltext_sha256": "bdf2d295f8d78648718bf676bb1f5acf00faf42997a3c9980b41810d743edc1b",
+   "decision": "exclude",
+   "reason": "medians/IQR only (baseline AL, AL change and 10-year AL as median [IQR]); groups partly defined by AL change (outcome)"
+  },
+  {
+   "pmcid": "PMC12418587",
+   "doi": "10.1136/bjo-2024-326852",
+   "study_key": null,
+   "fulltext_sha256": "e8615fe8061430a6795865fb9ce98883a7cf7047c64e3018cb30536cc94e7fe1",
+   "decision": "exclude",
+   "reason": "T2: AL changes (0-6, 6-12, 0-12 months) only; no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC13452212",
+   "doi": "10.1016/j.xops.2026.101309",
+   "study_key": null,
+   "fulltext_sha256": "2454a6f00dc47e339604cce9ae7eeb8246bfdf2e400025c1f678a7e8f2e154a3",
+   "decision": "exclude",
+   "reason": "only a visit-schedule table shown; axial length values not tabulated"
+  },
+  {
+   "pmcid": "PMC8647107",
+   "doi": "10.1159/000519629",
+   "study_key": "myo-pmc8647107",
+   "fulltext_sha256": "a3807dcd1296cebc83e38dd3391b30e738daf878f51aa2870db86b809d99a7ad",
+   "decision": "admit",
+   "reason": "Tab1: per-child rows (4 children, right and left eyes) with AL at the beginning and at the end of 1 year of atropine plus peripheral defocus soft contact lenses; selection by rapid progression in the year before therapy (pre-treatment); ages masked, species not tagged (case series)",
+   "context_hint": "combination/unstated"
+  },
+  {
+   "pmcid": "PMC11148688",
+   "doi": "10.1001/jamapediatrics.2024.0578",
+   "study_key": null,
+   "fulltext_sha256": "0032e0df26db2b434f868a6c562905032bd19609cd8b4d527e8aa1b5f18b0cea",
+   "decision": "exclude",
+   "reason": "Table 2: AL change from baseline (mean, 95% CI) at 1/3/6 months only; no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC11253518",
+   "doi": "10.1016/j.heliyon.2024.e33341",
+   "study_key": "myo-pmc11253518",
+   "fulltext_sha256": "34c4cb61dd9c9991a88bf557a70181c146cb6441b8fd08bb16c18659c7e82959",
+   "decision": "admit",
+   "reason": "Tab3: AL baseline and 1/3/6 months plus changes, four orthokeratology groups by baseline age and myopia level",
+   "context_hint": "orthokeratology/east_asia"
+  },
+  {
+   "pmcid": "PMC12682106",
+   "doi": "10.1111/opo.70034",
+   "study_key": "myo-pmc12682106",
+   "fulltext_sha256": "7b96c3348ce1dd90dc4a47ec6ff838907abc2f7419044ae2d6273d718a7e277a",
+   "decision": "admit",
+   "reason": "Tab6: DIMS UK arm baseline AL with 12- and 24-month AL change; Tab5: measured AL change with DIMS, mean +/- SD (range), baseline-12 and baseline-24 months; the other Tab6 columns are control arms of other published trials, not this study's groups",
+   "context_hint": "defocus_spectacles/europe"
+  },
+  {
+   "pmcid": "PMC10715521",
+   "doi": "10.1136/bjo-2022-321815",
+   "study_key": "myo-pmc10715521",
+   "fulltext_sha256": "b5155be81042c333a2422130434a0969285a391eb963a8537c92fcf54ac60081",
+   "decision": "admit",
+   "reason": "T1: baseline AL and 2-year AL elongation, mean (SD), HAL vs SAL vs SVL",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC8054625",
+   "doi": "10.1167/iovs.62.4.17",
+   "study_key": null,
+   "fulltext_sha256": "b80087d074d092aaff083a5246576aa5e40bdb6872b77b3beb819d064fd99c5f",
+   "decision": "exclude",
+   "reason": "groups defined by a later outcome (teenage high myopia or AL >= 25 mm); baseline characteristics only, no AL follow-up"
+  },
+  {
+   "pmcid": "PMC10683125",
+   "doi": "10.1186/s12886-023-03211-w",
+   "study_key": null,
+   "fulltext_sha256": "95ea66ab751e33132118b34306b34ae65dba178401d7be0c586115f1caeca84b",
+   "decision": "exclude",
+   "reason": "out of scope: eyes after posterior scleral reinforcement surgery (single case report of congenital myopia)"
+  },
+  {
+   "pmcid": "PMC11839264",
+   "doi": "10.1155/joph/9959251",
+   "study_key": "myo-pmc11839264",
+   "fulltext_sha256": "0db322ef8d832339d3654107313b90989bb7c724abc623b66064857f0b9bcc95",
+   "decision": "admit",
+   "reason": "tab3: AL elongation mean (95% CI) at 3/6/9/12 months; tab1: baseline AL of completed subjects, DIMS vs SV (complete-case set: check enrolled numbers)",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC3994267",
+   "doi": "10.1186/1471-2415-14-40",
+   "study_key": "myo-pmc3994267",
+   "fulltext_sha256": "dfca08a65aac95c508b6b760743fabe378279de0ff1f6e669f70266b33f36166",
+   "decision": "admit",
+   "reason": "Tab2: baseline AL; Tab4: AL increase at years 1/2/3, orthokeratology vs atropine (concentration masked; years 2-3 may be per-year increments)"
+  },
+  {
+   "pmcid": "PMC12746210",
+   "doi": "10.3892/etm.2025.13051",
+   "study_key": "myo-pmc12746210",
+   "fulltext_sha256": "3dfba202aec34493e9c802ab439f7c2a6b420d89f52f340ee4b8b5a155a8bee4",
+   "decision": "admit",
+   "reason": "TabI: AL (mm) mean and SD at baseline and 36 months with mean change, orthokeratology, children with moderate myopia",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC11391804",
+   "doi": "10.1186/s12886-024-03666-5",
+   "study_key": null,
+   "fulltext_sha256": "d1b7377a6a2681d82cfffaa03134004cc54d36e4f14001b50d34d52f44aa0182",
+   "decision": "exclude",
+   "reason": "proportions of AL growth-rate zones and medians only"
+  },
+  {
+   "pmcid": "PMC12998927",
+   "doi": "10.2147/OPTH.S571867",
+   "study_key": null,
+   "fulltext_sha256": "4aad413e3e048706e31b784c617dfe78d78faddc35264f414394e54bd2ed4684",
+   "decision": "exclude",
+   "reason": "follow-up AL only as IPTW-weighted mixed-model adjusted differences"
+  },
+  {
+   "pmcid": "PMC6851825",
+   "doi": "10.1111/opo.12621",
+   "study_key": null,
+   "fulltext_sha256": "b0f3dd63db6e6d12bd9f235a0166d949851a57f35bfb3b65901030d52c62bec4",
+   "decision": "exclude",
+   "reason": "adjusted means only (Tab3); Tab4 AL progression is split by completion status with test lenses combined, and no table with baseline AL is shown"
+  },
+  {
+   "pmcid": "PMC10086781",
+   "doi": "10.1111/ceo.14149",
+   "study_key": null,
+   "fulltext_sha256": "f75272a80775d2d3260be8a67571b19d7a15e0af3b5e559d8a3b153b44d4fd80",
+   "decision": "exclude",
+   "reason": "Tab2: AL changes only, no baseline AL table shown; post-trial phase with groups switched to or stopped from red light (rebound)"
+  },
+  {
+   "pmcid": "PMC13301985",
+   "doi": "10.3390/life16060929",
+   "study_key": "myo-pmc13301985",
+   "fulltext_sha256": "5e89959804781de4281992772f76555b14aa978b073f22754e350963a12fbceb",
+   "decision": "admit",
+   "reason": "Tab1: baseline AL; Tab4: 1- and 2-year axial elongation of the orthokeratology group (other columns are literature controls)",
+   "context_hint": "orthokeratology/europe"
+  },
+  {
+   "pmcid": "PMC10890135",
+   "doi": "10.3390/jpm14020175",
+   "study_key": null,
+   "fulltext_sha256": "390cafe41ff91f6372eac556b5157d3d0e59ba61a9f82f0b7da7eacc5f106852",
+   "decision": "exclude",
+   "reason": "adjusted means only: Tab2 gives linear-mixed-model estimates (placebo totals and differences from placebo)"
+  },
+  {
+   "pmcid": "PMC7785025",
+   "doi": "10.1038/s41433-020-1122-7",
+   "study_key": null,
+   "fulltext_sha256": "7c913ce06bef630da0c99f014363958e08864051df4e045f15dcfa4bfc6f8bfb",
+   "decision": "exclude",
+   "reason": "medians/IQR only"
+  },
+  {
+   "pmcid": "PMC13075465",
+   "doi": "10.2196/90893",
+   "study_key": null,
+   "fulltext_sha256": "a64b620ab4d20e0f929fa997f6cb48f32ba5ffe5740868e6e2e2087fdf132cb2",
+   "decision": "exclude",
+   "reason": "study protocol only"
+  },
+  {
+   "pmcid": "PMC10838978",
+   "doi": "10.3389/fphar.2024.1343698",
+   "study_key": null,
+   "fulltext_sha256": "08576b7e3aa2f8144b9342db0aa1c93b0374b5b729bf578d4267b3b33c2de6a3",
+   "decision": "exclude",
+   "reason": "systematic review and meta-analysis"
+  },
+  {
+   "pmcid": "PMC12602486",
+   "doi": "10.3389/fmed.2025.1681557",
+   "study_key": null,
+   "fulltext_sha256": "93e1fc7419b59e189c29415e2e7982168525f1aefa8ae0ee51845d4e47a08d38",
+   "decision": "exclude",
+   "reason": "baseline-only table shown, no follow-up AL"
+  },
+  {
+   "pmcid": "PMC12839755",
+   "doi": "10.3390/children13010025",
+   "study_key": "myo-pmc12839755",
+   "fulltext_sha256": "0c6ea6260c8c542f019e2b2921a59365b26c26631a50041eeb69782ee870a497",
+   "decision": "admit",
+   "reason": "Tab1: AL baseline, post and 1-year change (mean/SD), two orthokeratology groups by plus power ring distribution, a corneal parameter after lens wear (check rule 5)",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC6162849",
+   "doi": "10.3390/jcm7090259",
+   "study_key": "myo-pmc6162849",
+   "fulltext_sha256": "31980a01c5aaeb91e8613efae37ac7f6c1df8e3fbc2c7972feeb2707fa3d99bc",
+   "decision": "admit",
+   "reason": "Tab1-2: AL (mm) at baseline and 2 years for orthokeratology plus atropine (two concentrations) vs orthokeratology alone, separately for baseline SE <6 D and >=6 D (pre-treatment strata); mean/SD form not stated in the preview",
+   "context_hint": "combination/unstated"
+  },
+  {
+   "pmcid": "PMC13268119",
+   "doi": "10.1097/ICL.0000000000001289",
+   "study_key": "myo-pmc13268119",
+   "fulltext_sha256": "874f7aa334ed202dcd8b069ed60e3d39db551cfef4cca657e7e7349b36cf3ebb",
+   "decision": "admit",
+   "reason": "T2: AL mean ± SD pre and at 6/12/18 months by age group and overall, MiSight and ortho-k",
+   "context_hint": "multifocal_contacts/unstated; orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC4941076",
+   "doi": "10.1038/eye.2016.78",
+   "study_key": "myo-pmc4941076",
+   "fulltext_sha256": "b221887d9826980d6019be932a3269148fe08bbfee977a201bda860133fa154e",
+   "decision": "admit",
+   "reason": "Tab2: AL at atropine start and 12 months after start, children who prolonged vs ceased therapy; groups defined by later continuation (check rules 5 and 8)",
+   "context_hint": "atropine/europe"
+  },
+  {
+   "pmcid": "PMC9292027",
+   "doi": "10.1111/aos.14911",
+   "study_key": "myo-pmc9292027",
+   "fulltext_sha256": "ae7fe2f36d2305e31058d56762506f370ded96d5f0428e1559b33029ffc0c80d",
+   "decision": "admit",
+   "reason": "Tab2: baseline AL mean +/- SD for OK and single-vision groups (all subjects and completers); Tab3: axial progression per group (OKL, SVS, mm) at 12 and 18 months beside mixed-model contrasts; whether these progression values are raw means is not shown (footnote truncated, none at 6 months); completer share to be checked",
+   "context_hint": "orthokeratology/europe"
+  },
+  {
+   "pmcid": "PMC9966043",
+   "doi": "10.3390/jcm12041605",
+   "study_key": null,
+   "fulltext_sha256": "a576463e4c50a4ea4ec7a6b5e9510e6d041445a73ab602641c854864901958f8",
+   "decision": "exclude",
+   "reason": "constrained linear mixed-model estimates only (atropine groups as differences from placebo)"
+  },
+  {
+   "pmcid": "PMC10794606",
+   "doi": "10.3389/fmed.2023.1323851",
+   "study_key": "myo-pmc10794606",
+   "fulltext_sha256": "c6f704182460f90bb4c297c5d1779d50d56cf20fd5130587e70f2d397e8186a6",
+   "decision": "admit",
+   "reason": "Tab3: AL baseline, 6 and 12 months, DRL orthokeratology vs single-vision glasses",
+   "context_hint": "orthokeratology/europe"
+  },
+  {
+   "pmcid": "PMC7995965",
+   "doi": "10.3390/children8030171",
+   "study_key": "myo-pmc7995965",
+   "fulltext_sha256": "fd6f0c0297b68bd0154d0924e72d588314c3d5552c28a427060e40a669c55f0d",
+   "decision": "admit",
+   "reason": "Tab2: AL (mm) at baseline and 1 year (with annual change) for girls with central precocious puberty on GnRH agonist vs controls; myopic status of all girls and their optical correction not shown (check scope at extraction)",
+   "context_hint": "other/unstated"
+  },
+  {
+   "pmcid": "PMC13600350",
+   "doi": "10.1097/ICL.0000000000001294",
+   "study_key": "myo-pmc13600350",
+   "fulltext_sha256": "e2b70aa058f002b05e863037e7ea0c5763673ac1516ee41d20f62c6a01aef251",
+   "decision": "admit",
+   "reason": "T1: AL (mm) at baseline, 6 and 12 months for Mid, Low and Control groups (EDOF lens type not shown)",
+   "context_hint": "multifocal_contacts/east_asia"
+  },
+  {
+   "pmcid": "PMC12086234",
+   "doi": "10.1038/s41598-025-01058-3",
+   "study_key": null,
+   "fulltext_sha256": "f060d392faffdf4af7c1c593f606fd91cf4e6e6b991785078afd640797b6e4a1",
+   "decision": "exclude",
+   "reason": "baseline-only table (follow-up AL not tabulated in the preview)"
+  },
+  {
+   "pmcid": "PMC13694578",
+   "doi": "10.1007/s40123-026-01494-y",
+   "study_key": null,
+   "fulltext_sha256": "102ec3e04bb1f575e66311e3def3048b513d261d251362e24bbc9ad01b850ea8",
+   "decision": "exclude",
+   "reason": "Tab2 gives cumulative AL changes from baseline (mean +/- SD) to 36 months for RLRL and OK, but no shown table gives the groups' baseline AL (Tab3 is medians); a baseline table may exist outside the preview"
+  },
+  {
+   "pmcid": "PMC8624215",
+   "doi": "10.3390/jcm10225462",
+   "study_key": null,
+   "fulltext_sha256": "1af441d1fe23acebe7b9bc4768cb7d8927dad1e09a29532fca7ad825ff59dee0",
+   "decision": "exclude",
+   "reason": "least-squares means from mixed-effects models only"
+  },
+  {
+   "pmcid": "PMC7041503",
+   "doi": "10.1136/bjophthalmol-2018-313739",
+   "study_key": null,
+   "fulltext_sha256": "367ec79bd3ecd785d391851879a31e276ba7174707633bb4477052b896306a66",
+   "decision": "exclude",
+   "reason": "AL changes from baseline at 6-24 months only; no shown table gives the groups' baseline AL (decided from the preview)"
+  },
+  {
+   "pmcid": "PMC11443923",
+   "doi": "10.1186/s12886-024-03678-1",
+   "study_key": null,
+   "fulltext_sha256": "68d670632c76f2c783e12860a38c8e290ec84d563b5813c0030285cda2ac49c1",
+   "decision": "exclude",
+   "reason": "Tab2 gives only changes from baseline in 'adjusted AL'; no table with baseline AL shown"
+  },
+  {
+   "pmcid": "PMC9805073",
+   "doi": "10.1111/opo.13042",
+   "study_key": null,
+   "fulltext_sha256": "91e4c6ebd3003d5df3dfd6d71c973da220bb40f734c64b9ffb457e1373e3d930",
+   "decision": "exclude",
+   "reason": "baseline-only table shown, no follow-up AL"
+  },
+  {
+   "pmcid": "PMC12021850",
+   "doi": "10.3389/fbioe.2025.1554432",
+   "study_key": "myo-pmc12021850",
+   "fulltext_sha256": "9027cfd1c9968a5eb2ca93a6f15aed996a8014f71b003e137c0659ac1cb65906",
+   "decision": "admit",
+   "reason": "Tab1-4: AL baseline, 6 and 12 months (atropine also 3 months), orthokeratology, red-light and atropine once- and twice-daily groups"
+  },
+  {
+   "pmcid": "PMC12398944",
+   "doi": "10.1016/j.optom.2025.100578",
+   "study_key": null,
+   "fulltext_sha256": "3d95e2fd0c535ffba24da65fa07964315f3adb4c4442f3b95c376e402b8d24d8",
+   "decision": "exclude",
+   "reason": "Tab2 gives only 3-month AL changes (mean +/- SE) per eye group; no table with baseline AL shown"
+  },
+  {
+   "pmcid": "PMC10100030",
+   "doi": "10.1111/opo.13070",
+   "study_key": null,
+   "fulltext_sha256": "6fbb8d8938374f7f297df45ab60a3eedfc7545c8983056f7dbb60aba76038342",
+   "decision": "exclude",
+   "reason": "baseline-only table shown, no follow-up AL"
+  },
+  {
+   "pmcid": "PMC9253228",
+   "doi": "10.1007/s40123-022-00536-5",
+   "study_key": "myo-pmc9253228",
+   "fulltext_sha256": "9cb0f09862142c887c2d2135d6e0071073b2ff2b37e72e1ce89062e6e103d511",
+   "decision": "admit",
+   "reason": "Tab2: AXL mean/SD at baseline and weeks 1-52, EDOF soft contact lens vs control (eyes)",
+   "context_hint": "multifocal_contacts/unstated"
+  },
+  {
+   "pmcid": "PMC10495229",
+   "doi": "10.1155/2023/3110478",
+   "study_key": "myo-pmc10495229",
+   "fulltext_sha256": "e041984aecdb343df5748e9775f33dd5d2230c7bce12e3445919487364b97b14",
+   "decision": "admit",
+   "reason": "Tab2: baseline AL and 1-year AL (mm) of the myopic eyes under orthokeratology in unilateral myopic anisometropia (paired comparison); the non-myopic fellow eyes are out of scope",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC9762188",
+   "doi": "10.1016/j.xops.2022.100232",
+   "study_key": null,
+   "fulltext_sha256": "02bc2da2f75370bb0ccee599ff75c6aa842cbc79f4e8bf9852979308cc2fd10d",
+   "decision": "exclude",
+   "reason": "baseline-only table shown, no follow-up AL"
+  },
+  {
+   "pmcid": "PMC8465690",
+   "doi": "10.1186/s12886-021-02087-y",
+   "study_key": null,
+   "fulltext_sha256": "4f7e37cf5001999f41094a9a5c0596a8346f24f9738d52c5e418ac3306cc73d8",
+   "decision": "exclude",
+   "reason": "out of scope: adults with myopic traction maculopathy (pathological myopia)"
+  },
+  {
+   "pmcid": "PMC12606493",
+   "doi": "10.1136/bmjophth-2025-002329",
+   "study_key": "myo-pmc12606493",
+   "fulltext_sha256": "d234ca47c432287d3fe0fb1377ad38dad429670aec424a8614d62835eed50780",
+   "decision": "admit",
+   "reason": "Tab1: baseline AXL mean +/- SE (and median); Tab2: 1-year mean AXL change +/- SE; atropine vs DIMS, by age band (pre-treatment)",
+   "context_hint": "atropine/europe"
+  },
+  {
+   "pmcid": "PMC11396143",
+   "doi": "10.3390/jcm13175003",
+   "study_key": "myo-pmc11396143",
+   "fulltext_sha256": "bea2ce51300b3e433a4b71529e66d584171717e58601e4c201dd74d336dfc224",
+   "decision": "admit",
+   "reason": "Table 1: baseline AL and AL change/year at 12 months, alternating monocular atropine vs control; Table 3: AL at baseline and 1 year (treatment group)",
+   "context_hint": "atropine/east_asia"
+  },
+  {
+   "pmcid": "PMC8364521",
+   "doi": "10.1007/s10792-021-01855-5",
+   "study_key": "myo-pmc8364521",
+   "fulltext_sha256": "e312de37e0cf11ad0deb2df525b24de8ba1611191fefc6d86a3e1d18b4f506aa",
+   "decision": "admit",
+   "reason": "Tab1: baseline AL; Tab2: AL changes at 1/6/12 months, atropine alone, orthokeratology and their combination"
+  },
+  {
+   "pmcid": "PMC9893609",
+   "doi": "10.1186/s40662-022-00324-z",
+   "study_key": null,
+   "fulltext_sha256": "fa824f02cb509f236e5dda0fdc8a6258c598b3cad8c557825d7ea78b635a2f7f",
+   "decision": "exclude",
+   "reason": "explicitly outcome-selected groups (AL reduction vs AL elongation group under orthokeratology)"
+  },
+  {
+   "pmcid": "PMC12664307",
+   "doi": "10.2147/OPTO.S544550",
+   "study_key": "myo-pmc12664307",
+   "fulltext_sha256": "06a6034fbe813036e5cb47fe833b0a1c33925ca09eed1d7ed676b610fbc5da65",
+   "decision": "admit",
+   "reason": "Table 5: AL mean ± SD at baseline, 6 and 12 months, ortho-k vs single-vision spectacles",
+   "context_hint": "orthokeratology/southeast_asia"
+  },
+  {
+   "pmcid": "PMC12418564",
+   "doi": "10.1136/bjo-2024-326918",
+   "study_key": null,
+   "fulltext_sha256": "4da6d6a99c64531e455db3d98ed3aa430cdf75a257eb63b674c6bee8eca11c83",
+   "decision": "exclude",
+   "reason": "linear mixed model estimates only, and only washout-period visits (30 and 36 months)"
+  },
+  {
+   "pmcid": "PMC8571279",
+   "doi": "10.1038/s41598-021-00923-1",
+   "study_key": "myo-pmc8571279",
+   "fulltext_sha256": "9b092d6b21b80b27152269babcdd8c0e813d0a0ce3d1810c94e5ebf4fe137fc7",
+   "decision": "admit",
+   "reason": "Tab2: AL mean +/- SD at baseline and 12 months with mean change, single-arm atropine; Tab4 is a literature overview, not this study's data",
+   "context_hint": "atropine/europe"
+  },
+  {
+   "pmcid": "PMC9772008",
+   "doi": "10.3389/fmed.2022.979334",
+   "study_key": "myo-pmc9772008",
+   "fulltext_sha256": "6d46f433270442f8368f3bb0b5fcb78a2e4ab29f11f7df4590cc0447e1ebc5a8",
+   "decision": "admit",
+   "reason": "T3: AL mean ± SD before lens wear and at 1/3/6/12 months, ortho-k",
+   "context_hint": "orthokeratology/east_asia"
+  },
+  {
+   "pmcid": "PMC9604591",
+   "doi": "10.3390/jcm11206200",
+   "study_key": "myo-pmc9604591",
+   "fulltext_sha256": "43b7bfc6b16b313eaba3235324876c2f207cb093aef63d1ab91524a4094fae06",
+   "decision": "admit",
+   "reason": "Tab2: measured AL (mean/SD) at baseline and after 1 year in a longitudinal child sample; treatment and myopia status not shown (check scope)"
+  },
+  {
+   "pmcid": "PMC11919413",
+   "doi": "10.1016/j.xops.2024.100688",
+   "study_key": "myo-pmc11919413",
+   "fulltext_sha256": "f33cc3f3beab123c50d03065a48a4ffe5caeb5cbbb433b2dfd7e57af261a1056",
+   "decision": "admit",
+   "reason": "Tab2: whole-cohort AL (mm) at baseline, 2 and 4 years (Boramae myopia cohort); Tab3 progression vs stable groups are outcome-defined and not extractable; myopic status of every child and the optical correction not shown",
+   "context_hint": "single_vision/unstated"
+  },
+  {
+   "pmcid": "PMC13386215",
+   "doi": "10.3389/fmed.2026.1872078",
+   "study_key": null,
+   "fulltext_sha256": "d69cea1255d487629c4ab17bae2bfcce1d034819229ac12b58c0ef54a34c0248",
+   "decision": "exclude",
+   "reason": "out of scope: premyopic children followed to myopia onset (groups of children who progressed)"
+  },
+  {
+   "pmcid": "PMC10863466",
+   "doi": "10.2147/OPTO.S448815",
+   "study_key": "myo-pmc10863466",
+   "fulltext_sha256": "e0f89a37def67c03dccf9aee6cf487a6d5a164c3b3a60d70f90e1ea56c8787c0",
+   "decision": "admit",
+   "reason": "Tab2: AL (A-scan) baseline and 12 months, orthokeratology vs single-vision spectacles",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC13524474",
+   "doi": "10.1016/j.xops.2026.101334",
+   "study_key": null,
+   "fulltext_sha256": "5bc90c5b54d612e6d5f888be578e76da73d29ff6165b3a5a4126934d4420f833",
+   "decision": "exclude",
+   "reason": "Tab2 gives only AL changes (baseline to 6 months, then from 6 months after a stepwise concentration increase); no table with baseline AL shown"
+  },
+  {
+   "pmcid": "PMC6502071",
+   "doi": "10.1167/tvst.8.3.2",
+   "study_key": null,
+   "fulltext_sha256": "7ea0b96b5f37be0bab58b485fbdc67424f17e448ddf862cd3932e18b417cf5eb",
+   "decision": "exclude",
+   "reason": "out of scope: school children of mixed refraction (the total includes non-myopic children; only a non-myopic subgroup is tabulated separately)"
+  },
+  {
+   "pmcid": "PMC11044302",
+   "doi": "10.1186/s40662-024-00383-4",
+   "study_key": "myo-pmc11044302",
+   "fulltext_sha256": "b14ef9922cd84215f21fe2b9f419e90ed4622aaee82c786e095b12803979ce1f",
+   "decision": "admit",
+   "reason": "Tab1: baseline AL and 6-month/1-year AL elongation, HAL, SAL->HAL, SVL->HAL and new-SVL groups; switched groups are post-crossover and HAL a continuation year (check rules 3 and 8)",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC8251614",
+   "doi": "10.1111/opo.12834",
+   "study_key": "myo-pmc8251614",
+   "fulltext_sha256": "9a20a4b6c39e6d65c6201cbca3fad8d2abe901e56cb5977f3da490e1e4d72fe5",
+   "decision": "admit",
+   "reason": "Tab3: baseline AL (all and completers); Tab6: AL change 6M-BL and 12M-BL for 6-mm and 5-mm optic-zone orthokeratology groups; cells are median [range] or mean +/- SD by distribution (check at extraction)",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC12719902",
+   "doi": "10.1016/j.xops.2025.100973",
+   "study_key": null,
+   "fulltext_sha256": "3e17645e527cea3f1db14d966843926e9f96a345f1e05c27784d094f40dba3c3",
+   "decision": "exclude",
+   "reason": "Table 2: raw mean AL changes only; no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC10338965",
+   "doi": "10.3389/fmed.2023.1166429",
+   "study_key": "myo-pmc10338965",
+   "fulltext_sha256": "0d5b98337402a85542f84859ce2bb365f1b878fb893fec882ab5cffab1c8ce49",
+   "decision": "admit",
+   "reason": "Tab1: AL mean/SD at baseline and 3 months of orthokeratology",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC8282033",
+   "doi": "10.1371/journal.pone.0254061",
+   "study_key": null,
+   "fulltext_sha256": "7327befdbe800ba40e7cc62c5187cdb19dc5d6cbc7bda783d11027b3f8407f67",
+   "decision": "exclude",
+   "reason": "groups defined as slow vs fast progressors; only AL growth rates shown, no table with baseline AL"
+  },
+  {
+   "pmcid": "PMC10653269",
+   "doi": "10.1167/tvst.12.11.15",
+   "study_key": null,
+   "fulltext_sha256": "31a752cee81d4f00bd2c63ee703cc93f97d6cee20cf1c7d3d6ae9f22ece39392",
+   "decision": "exclude",
+   "reason": "Table 2: AL changes only (unadjusted and adjusted); no table with the groups' baseline AL shown in the preview"
+  },
+  {
+   "pmcid": "PMC8026293",
+   "doi": "10.1155/2021/7430576",
+   "study_key": null,
+   "fulltext_sha256": "871e7d40bbb72300bf5e9665d683c44d661d537c9da9bc47a086473fb6e139b5",
+   "decision": "exclude",
+   "reason": "school cohort of 7- and 8-year-olds grouped by grade, not shown to be myopic children under correction or treatment (refractive status masked)"
+  },
+  {
+   "pmcid": "PMC6296196",
+   "doi": "10.2147/OPTH.S187949",
+   "study_key": "myo-pmc6296196",
+   "fulltext_sha256": "dedbc9b86bdf98e0cb3c7a9bb5009c11254221bb9194e4e11b58e83e905f86e7",
+   "decision": "admit",
+   "reason": "Tab2: AL at baseline, 6, 12, 18 and 24 months, bilberry extract (Difrarel) vs control, children with high myopia; unit not shown",
+   "context_hint": "other/unstated"
+  },
+  {
+   "pmcid": "PMC7745623",
+   "doi": "10.1167/iovs.61.14.15",
+   "study_key": "myo-pmc7745623",
+   "fulltext_sha256": "ddc4ffb835f405f65f0d237159c8b5f6b7f74b6856240bcbe4983a345564fc4d",
+   "decision": "admit",
+   "reason": "tbl2: AL change mean (SD) at 1 week, 3 and 6 months; tbl1: baseline AL of the included participants, Group A vs Group B (analysis set: check numbers included)",
+   "context_hint": "atropine/unstated"
+  },
+  {
+   "pmcid": "PMC12651224",
+   "doi": "10.3390/children12111435",
+   "study_key": null,
+   "fulltext_sha256": "8521d667516e2e9a8bf24c0d43a5a557c247f3d0f4e71db50946555b62f0922c",
+   "decision": "exclude",
+   "reason": "baseline-only table (follow-up AL not tabulated in the preview)"
+  },
+  {
+   "pmcid": "PMC12273196",
+   "doi": "10.1016/j.optom.2025.100567",
+   "study_key": "myo-pmc12273196",
+   "fulltext_sha256": "0041c4aa9b335f3844b686869a9a6af4ada5f6aee83769919fa16fca166ee2ef",
+   "decision": "admit",
+   "reason": "Tab2: AL (mm) mean +/- SD at baseline, 6, 12, 18 and 24 months, single-vision spectacles vs progressive multifocal soft contact lenses, Caucasian children",
+   "context_hint": "multifocal_contacts/unstated"
+  },
+  {
+   "pmcid": "PMC12331118",
+   "doi": "10.1371/journal.pone.0327354",
+   "study_key": null,
+   "fulltext_sha256": "087f0a676e16f406f59754978b91232c1da2c235f49427b11e1bcd95a54706c8",
+   "decision": "exclude",
+   "reason": "regression (GEE) results only"
+  },
+  {
+   "pmcid": "PMC13231797",
+   "doi": "10.1186/s12886-026-04845-2",
+   "study_key": null,
+   "fulltext_sha256": "294fa6b6ecc1464c36aa05eea9de9a4dab8889e1ca9448596c85950bfc61c4ab",
+   "decision": "exclude",
+   "reason": "meta-analysis and systematic review"
+  },
+  {
+   "pmcid": "PMC12842358",
+   "doi": "10.3390/jcm15020484",
+   "study_key": "myo-pmc12842358",
+   "fulltext_sha256": "49c3ea34e8e1bb7a7c700dd903990770dd84380fe91879a6bdbd1160046abace",
+   "decision": "admit",
+   "reason": "Tab3: AL (mm) mean +/- SD at baseline, 6 and 12 months, standard single-vision vs HALT lenses; children with myopia of prematurity (special myopia type; prior ROP treatment not shown; check scope at extraction)",
+   "context_hint": "defocus_spectacles/unstated"
+  },
+  {
+   "pmcid": "PMC12413386",
+   "doi": "10.1007/s40123-025-01210-2",
+   "study_key": "myo-pmc12413386",
+   "fulltext_sha256": "6b626ff01086ec90b5210a21175edcfcda4a64ff6c066b02e56f427056ba7d35",
+   "decision": "admit",
+   "reason": "Tab1: total cohort baseline AL and 12-month AL elongation, ortho-k; the slow/fast progression columns are outcome-defined and not usable",
+   "context_hint": "orthokeratology/unstated"
+  },
+  {
+   "pmcid": "PMC12615687",
+   "doi": "10.1038/s41598-025-23501-1",
+   "study_key": null,
+   "fulltext_sha256": "e2e11476480ab94529316b184ab31fdc0362146ebba68496caa697cdba4c9583",
+   "decision": "exclude",
+   "reason": "adjusted means only (least-squares means from a mixed model for repeated measures)"
+  },
+  {
+   "pmcid": "PMC13358070",
+   "doi": "10.1038/s41598-026-50070-8",
+   "study_key": null,
+   "fulltext_sha256": "38d1d9aa4a382bac84c8f716904558da63a0ee481c2825841f516d1ab064a465",
+   "decision": "exclude",
+   "reason": "groups defined by response to DIMS (non-responders, responders as control) and post-treatment subgroups; the atropine group switched from DIMS to DIMS plus atropine within the tabulated follow-up"
+  },
+  {
+   "pmcid": "PMC13248434",
+   "doi": "10.1186/s40662-026-00495-z",
+   "study_key": null,
+   "fulltext_sha256": "2c336f9dd76a327e1eea2c0ec37eef985d10c15a38d760ee6b4558a8015cf59a",
+   "decision": "exclude",
+   "reason": "animal study (guinea pigs)"
+  },
+  {
+   "pmcid": "PMC7132157",
+   "doi": "10.1016/j.heliyon.2020.e03642",
+   "study_key": null,
+   "fulltext_sha256": "cfba71e5f3feff18b40cf50ea0cfc1cb383ccc056115c6f8b20b85f0047dfca9",
+   "decision": "exclude",
+   "reason": "1-year AL elongation only; no shown table gives the groups' baseline AL"
+  },
+  {
+   "pmcid": "PMC9194730",
+   "doi": "10.3341/kjo.2021.0170",
+   "study_key": null,
+   "fulltext_sha256": "dd7c7572a89f1dacb5cc8b39666ea9ae01a16b9d4d41cfc1a478dd089c40fea4",
+   "decision": "exclude",
+   "reason": "school children not restricted to myopes (groups by school daylight level and baseline AL stratum); exposure is classroom illuminance"
+  },
+  {
+   "pmcid": "PMC11697794",
+   "doi": "10.1186/s40662-024-00418-w",
+   "study_key": null,
+   "fulltext_sha256": "0faa05be429048c00bb7ce670398a97a4344e74afbb71e8feb63800da93386d4",
+   "decision": "exclude",
+   "reason": "linear mixed-model regression results only"
+  }
+ ]
+}

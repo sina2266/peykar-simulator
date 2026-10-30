@@ -34,3 +34,31 @@ then; the tranche order was committed with the screen (`766a4ed4`).
    set.
 7. No later tranche exists; a version after 1.1 needs a new screen whose test part is
    reserved before triage.
+
+## Triage outcome (2026-10-30)
+
+**Chunks.** The unchanged `screening/triage_chunks.py` rebuilt the four tranche-1 chunks
+byte for byte and built three tranche-2 chunks (32, 31 and 31 articles; no decimal, no ±
+followed by a digit and no digit followed by % outside the identifier lines). The model
+developer did not read the chunks.
+
+**Triage.** Three reviewer sub-agents worked from masked previews only
+([`triage-1.0.0.json`](triage-1.0.0.json)); there is no owner override. **42 admitted,
+52 excluded.** The exclusions were mostly axial-length changes without the groups'
+baseline in any shown table, model-adjusted or mixed-model estimates only, baseline-only
+tables, medians only, outcome-defined groups (fast against slow progressors, responders
+against non-responders), out-of-scope populations (premyopic or mixed-refraction school
+children, an animal study, eyes after scleral surgery), a review and a study design
+report. Several admits carry reviewer notes for the custodians (complete-case sets to
+check against the 70% rule, outcome-defined columns not to extract, groups of uncertain
+scope).
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json) lists
+the 33 tranche-1 record studies as development (training of model 1.1) and all 42 admits
+as `sealed_test`.
+
+**Author overlap.** [`author-overlap-1.0.0.json`](author-overlap-1.0.0.json) (the
+dataset's screening receipts copied to `screening/` for the link script) found 20 linked
+pairs: 7 tranche-2 studies lose 9 linked training studies, 7 pairs link two tranche-2
+studies, and the 2 development clusters of tranche 1 (3 and 2 studies) leave training
+together in leave-one-study-out.
