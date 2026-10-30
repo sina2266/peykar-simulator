@@ -1,4 +1,24 @@
 # Peykar continuation context
+## Myopia 1.0 FAILED all four (tenth component); generic eye model 5, 2026-10-30 night
+- Generic eye model 5 `peykar.model_learning.eye_recovery_population5` (harness
+  `validation/eye_recovery_evaluation7`, additive `eye_additive_evaluation5` 5.0.0):
+  `start` = "free" (= model 2 bit for bit), "zero_level" `ln f = ell (1 − r(t))`,
+  "zero_rate" `ln f = v (tau/R)(1 − r(t))`; zero starts have 2 parameters (no transient).
+  Tests `tests/unit/test_eye_recovery_version5.py` (5). Now PINNED by the myopia protocol.
+- Myopia round 2: m3 (zero_rate) and m4 (zero_level) both met the rule vs m1; m4 adopted
+  by summed gain (9.722/15.663/14.026 pp). Dev H3 failed vs kNN (10.11 vs 9.92 on 64).
+  Protocol `da2a3a89` (89 pins), freeze `17ba8feb`. Sealed once (12.5 s,
+  `.peykar/myopia10-sealed-test-2026-10-30`, report `2976d530`): ALL FOUR FAIL (coverage
+  0.638/0.787; next obs 12.01 vs pooled-curve 11.14 / kNN 10.20; landmark 18.07 vs
+  17.11; initial 19.15 vs pooled curve 17.32). Post hoc (`.peykar/myopia10_sealed_breakdown.py`):
+  myo-pmc7447800 (retrospective anisomyopia cohort, atropine groups 18/36 and 13/36 left
+  at month 24) decides H1–H3; myo-pmc6990884 (4-year trial, placebo grew 0.42 mm/yr)
+  decides H4. NOT in `peykar eye`. Published `experiments/eye/myopia/` (redaction clean).
+- Next: myopia 1.1 — reserve tranche 2 (94 UNREAD articles) BEFORE triage, triage blind,
+  custodians; develop on all 33 consumed records (22 dev + 11 sealed 1.0). Ideas declared
+  now: age-dependent slowing (the generic model has one covariate), per-visit group
+  sizes in a new extraction protocol (attrition cohorts tested separately).
+- Image viewer cache: each re-read of a changed PNG needs a NEW `offset` value (1, 2, 3...).
 ## IOP 1.4 FAILED H5; myopia axial length (tenth component) in development, 2026-10-30 evening
 - IOP 1.4.0 (d1s) frozen `dfd88dbb` (protocol `a0499d76`, 69 pins), sealed once on
   tranche 5 (5,427 s; `.peykar/iop14-sealed-test-2026-10-30`): H1–H4 pass (0.764/0.903;

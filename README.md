@@ -299,6 +299,24 @@ kept flattening for five years while the law levelled off after the first year; 
 not offered by `peykar eye`
 ([model 1.0](experiments/eye/kmax/model-1.0/README.md),
 [Persian results](experiments/eye/kmax/model-1.0/results.fa.md)).
+The tenth eye component is
+[axial length in childhood myopia](experiments/eye/myopia/README.md), treated or not
+(atropine, orthokeratology, myopia-control spectacles and contact lenses, red light). Its
+[outcome-blind dataset](experiments/data/myopia-axial-2026-10-30/README.md) comes from
+1,004 screened open-access articles: 214 passed a masked-table rule, the 120 of tranche 1
+were triaged blind (54 admitted, split 34/20 before any value was read) and the 94 of
+tranche 2 stay unread for the next version. With the free start of the generic model the
+population read a shortening of 0.66 mm at day 1, so generic eye model version 5 adds
+laws that are unchanged at the start. **Myopia model 1.0.0** (such a law with a
+treatment-family hierarchy; frozen and pushed as `17ba8feb`) failed all four
+hypotheses of its sealed test: coverage 63.8%/78.7%, next follow-up 0.120 mm against
+0.111 mm for the pooled-curve increment and 0.102 mm for analog kNN, landmark 0.181 mm
+against 0.171 mm, initial state 0.192 mm against 0.173 mm for the pooled curve. A
+retrospective cohort that lost half or more of its atropine children by month 24 and a
+4-year trial whose controls grew 0.42 mm a year throughout decide the verdicts; it is not
+offered by `peykar eye`
+([model 1.0](experiments/eye/myopia/model-1.0/README.md),
+[Persian results](experiments/eye/myopia/model-1.0/results.fa.md)).
 The tested eye components can be run as forecasters with `peykar eye`
 ([guide](docs/eye-simulation.md)): give a group's context, baseline, size and any
 follow-ups seen so far, and it returns the frozen model's forecasts with 80% and 90%

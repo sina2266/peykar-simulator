@@ -573,6 +573,26 @@ triage (17 admitted, 14 custodian records).
 - [ ] A sub-procedure reader tested on device names with numerals (the frozen rule
   read XEN45 as `other`), and a new IOP screen with a test part reserved before triage
   (every article of the 2026-10-28 screen is consumed).
+### 2026-10-30 axial length in childhood myopia (myopia 1.0, generic eye model 5)
+[Myopia 1.0.0](../experiments/eye/myopia/model-1.0/README.md), the tenth eye component,
+was frozen (commit `17ba8feb`; protocol `da2a3a89`) before its one-shot sealed test on 11
+custodian records (23 series) reserved before any value was read.
+- [x] Dataset `myopia-axial-2026-10-30`: 1,004 screened full texts, 214 articles by the
+  masked-table rule, tranche 1 triaged blind (54 admitted), salted split 34/20, 22
+  development records (59 series) and 11 sealed records; tranche 2 (94) reserved unread.
+- [x] Generic eye model 5 (`eye_recovery_population5`), harness 7 and
+  `eye_additive_evaluation5` 5.0.0: laws unchanged at the reference time (written in the
+  long-term change or the initial rate); a free start reproduces model 2 exactly.
+- [x] Development: the free start read a −0.66 mm change at day 1; the zero start (m4)
+  lowered the errors by 36/43/60% (next observation/landmark/initial state); development
+  H3 fails against analog kNN.
+- [x] Sealed: H1 (0.638/0.787), H2 (12.01 against the pooled-curve increment 11.14 and
+  analog kNN 10.20), H3 (18.07 against 17.11) and H4 (19.15 against 17.32) fail. A
+  retrospective cohort with heavy attrition decides H1–H3 and a 4-year trial whose
+  controls grew steadily decides H4. Not offered by `peykar eye`.
+- [ ] Myopia 1.1 developed on the 33 consumed records and tested once on tranche 2: a law
+  whose slowing depends on age rather than on the time since baseline, and per-visit
+  group sizes recorded so that cohorts whose membership changes are tested separately.
 ## S0 — preservation and platform contracts
 
 - [x] S0.1 Preserve original licenses, historical model/schema versions and source blueprint.

@@ -1,5 +1,5 @@
 # Verification record
-## Myopia axial-length dataset 1.0.0, IOP model 1.4 (one-shot sealed test) and myopia model 1.0 round 1: 2026-10-30
+## Myopia axial-length dataset 1.0.0, IOP model 1.4, generic eye model 5 and myopia model 1.0 (one-shot sealed tests): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `80eea0c5` (= origin).
 - Myopia screen: `scripts/screen_corneal_wound_literature.py --queries
@@ -85,7 +85,25 @@ Commands run from the repository root; outcomes observed. Start state: main at
   (`.peykar/myopia-freeze-check-docker-20261030.log`).
 - `.peykar/write_myopia_protocol.py`: protocol SHA-256 `da2a3a89…`, 89 pinned files, 22
   training and 11 sealed record hashes; `.peykar/check_frozen_protocols.py`: no problem in
-  any of the 22 frozen protocols (retina 1.2.0 has none).
+  any of the 22 frozen protocols (retina 1.2.0 has none). Freeze commit `17ba8feb`,
+  pushed (remote SHA equal).
+- Then, once: `... evaluate_myopia_population.py --sealed --protocol
+  experiments/eye/myopia/model-1.0/protocol-1.0.0.json --output
+  .peykar/myopia10-sealed-test-2026-10-30` (detached; EXIT=0, 12.5 s; report
+  `2976d530…`).
+- `publish_myopia_population.py --sealed --report ... --output
+  experiments/eye/myopia/model-1.0/sealed-test-2026-10-30`: exit 0; H1 fails (30/47 and
+  37/47), H2 fails (12.01 against 17.78/13.06/11.14/10.20), H3 fails (18.07 against
+  42.54/17.11/19.71), H4 fails (19.15 against 17.32). `check_myopia_redaction.py sealed`:
+  6 private studies, 0 leaks. `.peykar/myopia10_sealed_breakdown.py` (post hoc): without
+  myo-pmc7447800 H2 and H3 would pass and the coverage would be 0.711/0.816; without
+  myo-pmc6990884 H4 would pass while H2 and H3 would fail against other comparators; no
+  other single study changes a verdict.
+- The myopia figure was rendered with `.peykar/cornea-native47/bin/python
+  .../plot-results.py` (exit 0) four times (the legend covered a bar label; two atropine
+  groups had the same label; two titles and a count label were corrected) and inspected
+  as an image. `.peykar/check_frozen_protocols.py` after the results files: 22
+  protocols, no problem.
 ## IOP model 1.4 round 0, Kmax dataset 1.0.0 and Kmax model 1.0 (one-shot sealed test): 2026-10-30
 Commands run from the repository root; outcomes observed. Start state: main at
 `2d1e965d` (= origin).
