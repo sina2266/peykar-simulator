@@ -43,8 +43,33 @@ They give fresh studies that no model of this dataset has seen.
    baseline axial length, is excluded with that reason. The custodians report only
    structure and hashes, their records stay in `.peykar/myopia-registry1-sealed-2026-10-30/`,
    and the developer opens no custody report before the 1.2 protocol is frozen. Registry
-   results are public-domain US government data: their records are in the public licence
-   class.
+   records are in the **private** licence class (revised before any extraction; the first
+   wording said public): the posted results carry no open licence statement (the
+   [ClinicalTrials.gov terms](https://classic.clinicaltrials.gov/ct2/about-site/terms-conditions)
+   describe a US Government database, not a CC licence), and the publishers' frozen
+   classifier makes public only CC BY and CC0 statements. Their per-series metrics are
+   published; their values are not.
 6. Possibly shared cohorts that the NCT check misses are handled as in the screens:
    `scripts/link_study_authors.py` cannot link registry records (they have no author
    list), so registry records keep their full training sets; this is a known limitation.
+
+## Screen outcome (2026-10-30)
+
+**Fetch.** `fetch_registry.py` returned one page with 21 records
+([`registry-fetch-summary.json`](registry-fetch-summary.json); receipts with SHA-256 of
+every page and record in [`registry-receipts.json`](registry-receipts.json)).
+
+**Structure screen** ([`registry-screen-1.0.0.json`](registry-screen-1.0.0.json); no
+value read): **17 kept, 4 dropped**: three without a posted axial-length outcome in
+millimetres (one of them a presbyopia implant trial in adults, one a trial named in the
+article of the consumed study myo-pmc10887607) and one whose eligibility reaches age 19.
+None of the 17 kept trials is named in a consumed or screen-2 article.
+
+**Tables.** `registry_tables.py` 1.1.0 (version 1.0.0 plus a table `l1` of sites per
+country, added before any extraction so that custodians can give each group's region)
+converted the 17 kept records ([`registry-tables-1.1.0.json`](registry-tables-1.1.0.json):
+SHA-256 of every derived file; the files stay in `.peykar/myopia-registry-1-2026-10-30/tables/`).
+
+**Reservation.** [`split-reservation-1.0.0.json`](split-reservation-1.0.0.json): the 59
+consumed record studies as development and the 17 kept records as `sealed_test`
+(study keys `myo-nct…`, with their registry URLs).

@@ -10,6 +10,7 @@ unchanged record builder (rows are every ``<tr>`` in document order, cells every
 a row, both from 1):
 
 - ``a1`` arms: one row per arm group (label, type, description, interventions);
+- ``l1`` locations: one row per country with its number of sites (version 1.1.0);
 - ``b1`` baseline measures: a header row of the baseline groups, one row per denominator
   ("number analysed (<units>)"), then one row per measure, class and category;
 - ``o1``, ``o2``, ... one table per posted outcome measure in posted order, its caption
@@ -32,7 +33,7 @@ from pathlib import Path
 from typing import Any
 from xml.sax.saxutils import escape
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 
 def _cell(text: object, tag: str = "td") -> str:
@@ -111,6 +112,12 @@ def convert(study: dict[str, Any], raw_sha256: str) -> bytes:
     parts.append(
         _wrap("a1", "Arms", "Arm groups", ["arm", "type", "description", "interventions"], arm_rows)
     )
+    sites: dict[str, int] = {}
+    for location in protocol.get("contactsLocationsModule", {}).get("locations", []):
+        country = location.get("country") or "not given"
+        sites[country] = sites.get(country, 0) + 1
+    site_rows = [_row([_cell(country), _cell(count)]) for country, count in sorted(sites.items())]
+    parts.append(_wrap("l1", "Locations", "Sites per country", ["country", "sites"], site_rows))
     baseline = results.get("baselineCharacteristicsModule", {})
     groups = baseline.get("groups", [])
     ids = [g["id"] for g in groups]
